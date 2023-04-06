@@ -5,27 +5,25 @@
 pub struct Fl_Widget {
     _unused: [u8; 0],
 }
-pub type Fl_Callback = ::core::option::Option<
-    unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
->;
+pub type Fl_Callback =
+    ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void)>;
 pub type custom_handler_callback = ::core::option::Option<
     unsafe extern "C" fn(
         arg1: *mut Fl_Widget,
-        arg2: core::ffi::c_int,
-        arg3: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int,
+        arg2: cty::c_int,
+        arg3: *mut cty::c_void,
+    ) -> cty::c_int,
 >;
-pub type custom_draw_callback = ::core::option::Option<
-    unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
->;
+pub type custom_draw_callback =
+    ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void)>;
 pub type Fl_Text_Modify_Cb = ::core::option::Option<
     unsafe extern "C" fn(
-        pos: core::ffi::c_int,
-        nInserted: core::ffi::c_int,
-        nDeleted: core::ffi::c_int,
-        nRestyled: core::ffi::c_int,
-        deletedText: *const core::ffi::c_char,
-        cbArg: *mut core::ffi::c_void,
+        pos: cty::c_int,
+        nInserted: cty::c_int,
+        nDeleted: cty::c_int,
+        nRestyled: cty::c_int,
+        deletedText: *const cty::c_char,
+        cbArg: *mut cty::c_void,
     ),
 >;
 #[repr(C)]
@@ -40,91 +38,80 @@ extern "C" {
     pub fn Fl_Text_Buffer_delete(arg1: *mut Fl_Text_Buffer);
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_text(self_: *mut Fl_Text_Buffer) -> *const core::ffi::c_char;
+    pub fn Fl_Text_Buffer_text(self_: *mut Fl_Text_Buffer) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_set_text(self_: *mut Fl_Text_Buffer, txt: *const core::ffi::c_char);
+    pub fn Fl_Text_Buffer_set_text(self_: *mut Fl_Text_Buffer, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_append(self_: *mut Fl_Text_Buffer, txt: *const core::ffi::c_char);
+    pub fn Fl_Text_Buffer_append(self_: *mut Fl_Text_Buffer, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_remove(
-        self_: *mut Fl_Text_Buffer,
-        start: core::ffi::c_int,
-        end: core::ffi::c_int,
-    );
+    pub fn Fl_Text_Buffer_remove(self_: *mut Fl_Text_Buffer, start: cty::c_int, end: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_length(self_: *const Fl_Text_Buffer) -> core::ffi::c_int;
+    pub fn Fl_Text_Buffer_length(self_: *const Fl_Text_Buffer) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_text_range(
         self_: *const Fl_Text_Buffer,
-        start: core::ffi::c_int,
-        end: core::ffi::c_int,
-    ) -> *mut core::ffi::c_char;
+        start: cty::c_int,
+        end: cty::c_int,
+    ) -> *mut cty::c_char;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_insert(
         self_: *mut Fl_Text_Buffer,
-        pos: core::ffi::c_int,
-        text: *const core::ffi::c_char,
+        pos: cty::c_int,
+        text: *const cty::c_char,
     );
 }
 extern "C" {
     pub fn Fl_Text_Buffer_replace(
         self_: *mut Fl_Text_Buffer,
-        start: core::ffi::c_int,
-        end: core::ffi::c_int,
-        text: *const core::ffi::c_char,
+        start: cty::c_int,
+        end: cty::c_int,
+        text: *const cty::c_char,
     );
 }
 extern "C" {
     pub fn Fl_Text_Buffer_copy(
         self_: *mut Fl_Text_Buffer,
         fromBuf: *mut Fl_Text_Buffer,
-        fromStart: core::ffi::c_int,
-        fromEnd: core::ffi::c_int,
-        toPos: core::ffi::c_int,
+        fromStart: cty::c_int,
+        fromEnd: cty::c_int,
+        toPos: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_undo(
-        self_: *mut Fl_Text_Buffer,
-        cp: *mut core::ffi::c_int,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Text_Buffer_undo(self_: *mut Fl_Text_Buffer, cp: *mut cty::c_int) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_canUndo(self_: *mut Fl_Text_Buffer, flag: core::ffi::c_char);
+    pub fn Fl_Text_Buffer_canUndo(self_: *mut Fl_Text_Buffer, flag: cty::c_char);
 }
 extern "C" {
     pub fn Fl_Text_Buffer_load_file(
         self_: *mut Fl_Text_Buffer,
-        file: *const core::ffi::c_char,
-    ) -> core::ffi::c_int;
+        file: *const cty::c_char,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_save_file(
         self_: *mut Fl_Text_Buffer,
-        file: *const core::ffi::c_char,
-    ) -> core::ffi::c_int;
+        file: *const cty::c_char,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_tab_distance(self_: *const Fl_Text_Buffer) -> core::ffi::c_int;
+    pub fn Fl_Text_Buffer_tab_distance(self_: *const Fl_Text_Buffer) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_set_tab_distance(self_: *mut Fl_Text_Buffer, tabDist: core::ffi::c_int);
+    pub fn Fl_Text_Buffer_set_tab_distance(self_: *mut Fl_Text_Buffer, tabDist: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_select(
-        self_: *mut Fl_Text_Buffer,
-        start: core::ffi::c_int,
-        end: core::ffi::c_int,
-    );
+    pub fn Fl_Text_Buffer_select(self_: *mut Fl_Text_Buffer, start: cty::c_int, end: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_selected(self_: *const Fl_Text_Buffer) -> core::ffi::c_int;
+    pub fn Fl_Text_Buffer_selected(self_: *const Fl_Text_Buffer) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_unselect(self_: *mut Fl_Text_Buffer);
@@ -132,31 +119,28 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Buffer_selection_position(
         self_: *mut Fl_Text_Buffer,
-        start: *mut core::ffi::c_int,
-        end: *mut core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        start: *mut cty::c_int,
+        end: *mut cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_selection_text(self_: *mut Fl_Text_Buffer) -> *mut core::ffi::c_char;
+    pub fn Fl_Text_Buffer_selection_text(self_: *mut Fl_Text_Buffer) -> *mut cty::c_char;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_remove_selection(self_: *mut Fl_Text_Buffer);
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_replace_selection(
-        self_: *mut Fl_Text_Buffer,
-        text: *const core::ffi::c_char,
-    );
+    pub fn Fl_Text_Buffer_replace_selection(self_: *mut Fl_Text_Buffer, text: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Text_Buffer_secondary_select(
         self_: *mut Fl_Text_Buffer,
-        start: core::ffi::c_int,
-        end: core::ffi::c_int,
+        start: cty::c_int,
+        end: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_secondary_selected(self_: *mut Fl_Text_Buffer) -> core::ffi::c_int;
+    pub fn Fl_Text_Buffer_secondary_selected(self_: *mut Fl_Text_Buffer) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_secondary_unselect(self_: *mut Fl_Text_Buffer);
@@ -164,14 +148,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Buffer_secondary_selection_position(
         self_: *mut Fl_Text_Buffer,
-        start: *mut core::ffi::c_int,
-        end: *mut core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        start: *mut cty::c_int,
+        end: *mut cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_secondary_selection_text(
-        self_: *mut Fl_Text_Buffer,
-    ) -> *mut core::ffi::c_char;
+    pub fn Fl_Text_Buffer_secondary_selection_text(self_: *mut Fl_Text_Buffer) -> *mut cty::c_char;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_remove_secondary_selection(self_: *mut Fl_Text_Buffer);
@@ -179,18 +161,14 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Buffer_replace_secondary_selection(
         self_: *mut Fl_Text_Buffer,
-        text: *const core::ffi::c_char,
+        text: *const cty::c_char,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_highlight(
-        self_: *mut Fl_Text_Buffer,
-        start: core::ffi::c_int,
-        end: core::ffi::c_int,
-    );
+    pub fn Fl_Text_Buffer_highlight(self_: *mut Fl_Text_Buffer, start: cty::c_int, end: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_is_highlighted(self_: *mut Fl_Text_Buffer) -> core::ffi::c_int;
+    pub fn Fl_Text_Buffer_is_highlighted(self_: *mut Fl_Text_Buffer) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_unhighlight(self_: *mut Fl_Text_Buffer);
@@ -198,56 +176,47 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Buffer_highlight_position(
         self_: *mut Fl_Text_Buffer,
-        start: *mut core::ffi::c_int,
-        end: *mut core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        start: *mut cty::c_int,
+        end: *mut cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_highlight_text(self_: *mut Fl_Text_Buffer) -> *mut core::ffi::c_char;
+    pub fn Fl_Text_Buffer_highlight_text(self_: *mut Fl_Text_Buffer) -> *mut cty::c_char;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_line_text(
         self_: *const Fl_Text_Buffer,
-        pos: core::ffi::c_int,
-    ) -> *mut core::ffi::c_char;
+        pos: cty::c_int,
+    ) -> *mut cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_line_start(
-        self_: *const Fl_Text_Buffer,
-        pos: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Text_Buffer_line_start(self_: *const Fl_Text_Buffer, pos: cty::c_int) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_word_start(
-        self_: *const Fl_Text_Buffer,
-        pos: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Text_Buffer_word_start(self_: *const Fl_Text_Buffer, pos: cty::c_int) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_word_end(
-        self_: *const Fl_Text_Buffer,
-        pos: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Text_Buffer_word_end(self_: *const Fl_Text_Buffer, pos: cty::c_int) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_count_lines(
         self_: *const Fl_Text_Buffer,
-        startPos: core::ffi::c_int,
-        endPos: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        startPos: cty::c_int,
+        endPos: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_add_modify_callback(
         self_: *mut Fl_Text_Buffer,
         bufModifiedCB: Fl_Text_Modify_Cb,
-        cbArg: *mut core::ffi::c_void,
+        cbArg: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Text_Buffer_remove_modify_callback(
         self_: *mut Fl_Text_Buffer,
         bufModifiedCB: Fl_Text_Modify_Cb,
-        cbArg: *mut core::ffi::c_void,
+        cbArg: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -256,36 +225,36 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Buffer_search_forward(
         self_: *const Fl_Text_Buffer,
-        start_pos: core::ffi::c_int,
-        search_string: *const core::ffi::c_char,
-        found_pos: *mut core::ffi::c_int,
-        match_case: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        start_pos: cty::c_int,
+        search_string: *const cty::c_char,
+        found_pos: *mut cty::c_int,
+        match_case: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_search_backward(
         self_: *const Fl_Text_Buffer,
-        start_pos: core::ffi::c_int,
-        search_string: *const core::ffi::c_char,
-        found_pos: *mut core::ffi::c_int,
-        match_case: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        start_pos: cty::c_int,
+        search_string: *const cty::c_char,
+        found_pos: *mut cty::c_int,
+        match_case: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_findchar_forward(
         self_: *const Fl_Text_Buffer,
-        start_pos: core::ffi::c_int,
-        search_char: core::ffi::c_uint,
-        found_pos: *mut core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        start_pos: cty::c_int,
+        search_char: cty::c_uint,
+        found_pos: *mut cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_findchar_backward(
         self_: *const Fl_Text_Buffer,
-        start_pos: core::ffi::c_int,
-        search_char: core::ffi::c_uint,
-        found_pos: *mut core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        start_pos: cty::c_int,
+        search_char: cty::c_uint,
+        found_pos: *mut cty::c_int,
+    ) -> cty::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -294,30 +263,30 @@ pub struct Fl_Text_Display {
 }
 extern "C" {
     pub fn Fl_Text_Display_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Text_Display;
 }
 extern "C" {
-    pub fn Fl_Text_Display_x(arg1: *mut Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_x(arg1: *mut Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_y(arg1: *mut Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_y(arg1: *mut Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_width(arg1: *mut Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_width(arg1: *mut Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_height(arg1: *mut Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_height(arg1: *mut Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_label(arg1: *mut Fl_Text_Display) -> *const core::ffi::c_char;
+    pub fn Fl_Text_Display_label(arg1: *mut Fl_Text_Display) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_label(arg1: *mut Fl_Text_Display, title: *const core::ffi::c_char);
+    pub fn Fl_Text_Display_set_label(arg1: *mut Fl_Text_Display, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Text_Display_redraw(arg1: *mut Fl_Text_Display);
@@ -340,78 +309,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Display_resize(
         arg1: *mut Fl_Text_Display,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Text_Display_widget_resize(
         arg1: *mut Fl_Text_Display,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Display_tooltip(arg1: *mut Fl_Text_Display) -> *const core::ffi::c_char;
+    pub fn Fl_Text_Display_tooltip(arg1: *mut Fl_Text_Display) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_tooltip(arg1: *mut Fl_Text_Display, txt: *const core::ffi::c_char);
+    pub fn Fl_Text_Display_set_tooltip(arg1: *mut Fl_Text_Display, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Text_Display_get_type(arg1: *mut Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_get_type(arg1: *mut Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_type(arg1: *mut Fl_Text_Display, typ: core::ffi::c_int);
+    pub fn Fl_Text_Display_set_type(arg1: *mut Fl_Text_Display, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_color(arg1: *mut Fl_Text_Display) -> core::ffi::c_uint;
+    pub fn Fl_Text_Display_color(arg1: *mut Fl_Text_Display) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_color(arg1: *mut Fl_Text_Display, color: core::ffi::c_uint);
+    pub fn Fl_Text_Display_set_color(arg1: *mut Fl_Text_Display, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Text_Display_measure_label(
         arg1: *const Fl_Text_Display,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Display_label_color(arg1: *mut Fl_Text_Display) -> core::ffi::c_uint;
+    pub fn Fl_Text_Display_label_color(arg1: *mut Fl_Text_Display) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_label_color(arg1: *mut Fl_Text_Display, color: core::ffi::c_uint);
+    pub fn Fl_Text_Display_set_label_color(arg1: *mut Fl_Text_Display, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Text_Display_label_font(arg1: *mut Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_label_font(arg1: *mut Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_label_font(arg1: *mut Fl_Text_Display, font: core::ffi::c_int);
+    pub fn Fl_Text_Display_set_label_font(arg1: *mut Fl_Text_Display, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_label_size(arg1: *mut Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_label_size(arg1: *mut Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_label_size(arg1: *mut Fl_Text_Display, sz: core::ffi::c_int);
+    pub fn Fl_Text_Display_set_label_size(arg1: *mut Fl_Text_Display, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_label_type(arg1: *mut Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_label_type(arg1: *mut Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_label_type(arg1: *mut Fl_Text_Display, typ: core::ffi::c_int);
+    pub fn Fl_Text_Display_set_label_type(arg1: *mut Fl_Text_Display, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_box(arg1: *mut Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_box(arg1: *mut Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_box(arg1: *mut Fl_Text_Display, typ: core::ffi::c_int);
+    pub fn Fl_Text_Display_set_box(arg1: *mut Fl_Text_Display, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_changed(arg1: *mut Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_changed(arg1: *mut Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_set_changed(arg1: *mut Fl_Text_Display);
@@ -420,32 +389,32 @@ extern "C" {
     pub fn Fl_Text_Display_clear_changed(arg1: *mut Fl_Text_Display);
 }
 extern "C" {
-    pub fn Fl_Text_Display_align(arg1: *mut Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_align(arg1: *mut Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_align(arg1: *mut Fl_Text_Display, typ: core::ffi::c_int);
+    pub fn Fl_Text_Display_set_align(arg1: *mut Fl_Text_Display, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Text_Display_delete(arg1: *mut Fl_Text_Display);
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_image(arg1: *mut Fl_Text_Display, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Text_Display_set_image(arg1: *mut Fl_Text_Display, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Text_Display_handle(
         self_: *mut Fl_Text_Display,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Display_handle_event(self_: *mut Fl_Text_Display, event: core::ffi::c_int);
+    pub fn Fl_Text_Display_handle_event(self_: *mut Fl_Text_Display, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Text_Display_draw(
         self_: *mut Fl_Text_Display,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -454,36 +423,33 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_when(arg1: *mut Fl_Text_Display, arg2: core::ffi::c_int);
+    pub fn Fl_Text_Display_set_when(arg1: *mut Fl_Text_Display, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_when(arg1: *const Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_when(arg1: *const Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_image(arg1: *const Fl_Text_Display) -> *const core::ffi::c_void;
+    pub fn Fl_Text_Display_image(arg1: *const Fl_Text_Display) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Display_parent(self_: *const Fl_Text_Display) -> *mut core::ffi::c_void;
+    pub fn Fl_Text_Display_parent(self_: *const Fl_Text_Display) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Display_selection_color(arg1: *mut Fl_Text_Display) -> core::ffi::c_uint;
+    pub fn Fl_Text_Display_selection_color(arg1: *mut Fl_Text_Display) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_selection_color(
-        arg1: *mut Fl_Text_Display,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Text_Display_set_selection_color(arg1: *mut Fl_Text_Display, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Text_Display_do_callback(arg1: *mut Fl_Text_Display);
@@ -491,23 +457,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Display_inside(
         self_: *const Fl_Text_Display,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_window(arg1: *const Fl_Text_Display) -> *mut core::ffi::c_void;
+    pub fn Fl_Text_Display_window(arg1: *const Fl_Text_Display) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Display_top_window(arg1: *const Fl_Text_Display) -> *mut core::ffi::c_void;
+    pub fn Fl_Text_Display_top_window(arg1: *const Fl_Text_Display) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Display_takes_events(arg1: *const Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_takes_events(arg1: *const Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_user_data(arg1: *const Fl_Text_Display) -> *mut core::ffi::c_void;
+    pub fn Fl_Text_Display_user_data(arg1: *const Fl_Text_Display) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Display_take_focus(self_: *mut Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_take_focus(self_: *mut Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_set_visible_focus(self_: *mut Fl_Text_Display);
@@ -516,84 +482,81 @@ extern "C" {
     pub fn Fl_Text_Display_clear_visible_focus(self_: *mut Fl_Text_Display);
 }
 extern "C" {
-    pub fn Fl_Text_Display_visible_focus(self_: *mut Fl_Text_Display, v: core::ffi::c_int);
+    pub fn Fl_Text_Display_visible_focus(self_: *mut Fl_Text_Display, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_has_visible_focus(self_: *mut Fl_Text_Display) -> core::ffi::c_uint;
+    pub fn Fl_Text_Display_has_visible_focus(self_: *mut Fl_Text_Display) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_user_data(arg1: *mut Fl_Text_Display, data: *mut core::ffi::c_void);
+    pub fn Fl_Text_Display_set_user_data(arg1: *mut Fl_Text_Display, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Text_Display_draw_data(self_: *const Fl_Text_Display) -> *mut core::ffi::c_void;
+    pub fn Fl_Text_Display_draw_data(self_: *const Fl_Text_Display) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Display_handle_data(self_: *const Fl_Text_Display) -> *mut core::ffi::c_void;
+    pub fn Fl_Text_Display_handle_data(self_: *const Fl_Text_Display) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_draw_data(self_: *mut Fl_Text_Display, data: *mut core::ffi::c_void);
+    pub fn Fl_Text_Display_set_draw_data(self_: *mut Fl_Text_Display, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_handle_data(
-        self_: *mut Fl_Text_Display,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Text_Display_set_handle_data(self_: *mut Fl_Text_Display, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Text_Display_damage(self_: *const Fl_Text_Display) -> core::ffi::c_uchar;
+    pub fn Fl_Text_Display_damage(self_: *const Fl_Text_Display) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_damage(self_: *mut Fl_Text_Display, flag: core::ffi::c_uchar);
+    pub fn Fl_Text_Display_set_damage(self_: *mut Fl_Text_Display, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Text_Display_set_damage_area(
         self_: *mut Fl_Text_Display,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Text_Display_clear_damage(self_: *mut Fl_Text_Display);
 }
 extern "C" {
-    pub fn Fl_Text_Display_as_window(self_: *mut Fl_Text_Display) -> *mut core::ffi::c_void;
+    pub fn Fl_Text_Display_as_window(self_: *mut Fl_Text_Display) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Display_as_group(self_: *mut Fl_Text_Display) -> *mut core::ffi::c_void;
+    pub fn Fl_Text_Display_as_group(self_: *mut Fl_Text_Display) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_deimage(arg1: *mut Fl_Text_Display, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Text_Display_set_deimage(arg1: *mut Fl_Text_Display, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Text_Display_deimage(arg1: *const Fl_Text_Display) -> *const core::ffi::c_void;
+    pub fn Fl_Text_Display_deimage(arg1: *const Fl_Text_Display) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Text_Display_set_callback(
         arg1: *mut Fl_Text_Display,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Text_Display_set_deleter(
         arg1: *mut Fl_Text_Display,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Display_visible(self_: *const Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_visible(self_: *const Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_visible_r(self_: *const Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_visible_r(self_: *const Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_active(self_: *const Fl_Text_Display) -> core::ffi::c_uint;
+    pub fn Fl_Text_Display_active(self_: *const Fl_Text_Display) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Display_active_r(self_: *const Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_active_r(self_: *const Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_callback(self_: *const Fl_Text_Display) -> Fl_Callback;
@@ -602,16 +565,16 @@ extern "C" {
     pub fn Fl_Text_Display_set_deletion_callback(
         self_: *mut Fl_Text_Display,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Text_Display_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Text_Display;
 }
 extern "C" {
-    pub fn Fl_Text_Display_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Text_Display_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Text_Display_init(arg1: *mut Fl_Text_Display);
@@ -626,139 +589,131 @@ extern "C" {
     pub fn Fl_Text_Display_get_style_buffer(arg1: *mut Fl_Text_Display) -> *mut Fl_Text_Buffer;
 }
 extern "C" {
-    pub fn Fl_Text_Display_text_font(arg1: *const Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_text_font(arg1: *const Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_text_font(arg1: *mut Fl_Text_Display, s: core::ffi::c_int);
+    pub fn Fl_Text_Display_set_text_font(arg1: *mut Fl_Text_Display, s: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_text_size(arg1: *const Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_text_size(arg1: *const Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_text_size(arg1: *mut Fl_Text_Display, s: core::ffi::c_int);
+    pub fn Fl_Text_Display_set_text_size(arg1: *mut Fl_Text_Display, s: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_text_color(arg1: *const Fl_Text_Display) -> core::ffi::c_uint;
+    pub fn Fl_Text_Display_text_color(arg1: *const Fl_Text_Display) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_text_color(arg1: *mut Fl_Text_Display, n: core::ffi::c_uint);
+    pub fn Fl_Text_Display_set_text_color(arg1: *mut Fl_Text_Display, n: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Text_Display_scroll(
         arg1: *mut Fl_Text_Display,
-        topLineNum: core::ffi::c_int,
-        horizOffset: core::ffi::c_int,
+        topLineNum: cty::c_int,
+        horizOffset: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Display_insert(arg1: *mut Fl_Text_Display, text: *const core::ffi::c_char);
+    pub fn Fl_Text_Display_insert(arg1: *mut Fl_Text_Display, text: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_insert_position(
-        arg1: *mut Fl_Text_Display,
-        newPos: core::ffi::c_int,
-    );
+    pub fn Fl_Text_Display_set_insert_position(arg1: *mut Fl_Text_Display, newPos: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_insert_position(arg1: *const Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_insert_position(arg1: *const Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_position_to_xy(
         self_: *const Fl_Text_Display,
-        pos: core::ffi::c_int,
-        x: *mut core::ffi::c_int,
-        y: *mut core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        pos: cty::c_int,
+        x: *mut cty::c_int,
+        y: *mut cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_count_lines(
         arg1: *const Fl_Text_Display,
-        start: core::ffi::c_int,
-        end: core::ffi::c_int,
-        start_pos_is_line_start: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        start: cty::c_int,
+        end: cty::c_int,
+        start_pos_is_line_start: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_move_right(arg1: *mut Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_move_right(arg1: *mut Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_move_left(arg1: *mut Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_move_left(arg1: *mut Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_move_up(arg1: *mut Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_move_up(arg1: *mut Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_move_down(arg1: *mut Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_move_down(arg1: *mut Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_show_cursor(arg1: *mut Fl_Text_Display, boolean: core::ffi::c_int);
+    pub fn Fl_Text_Display_show_cursor(arg1: *mut Fl_Text_Display, boolean: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Text_Display_set_highlight_data(
         self_: *mut Fl_Text_Display,
-        sbuff: *mut core::ffi::c_void,
-        color: *mut core::ffi::c_uint,
-        font: *mut core::ffi::c_int,
-        fontsz: *mut core::ffi::c_int,
-        attr: *mut core::ffi::c_uint,
-        bgcolor: *mut core::ffi::c_uint,
-        sz: core::ffi::c_int,
+        sbuff: *mut cty::c_void,
+        color: *mut cty::c_uint,
+        font: *mut cty::c_int,
+        fontsz: *mut cty::c_int,
+        attr: *mut cty::c_uint,
+        bgcolor: *mut cty::c_uint,
+        sz: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_cursor_style(arg1: *mut Fl_Text_Display, style: core::ffi::c_int);
+    pub fn Fl_Text_Display_set_cursor_style(arg1: *mut Fl_Text_Display, style: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_cursor_color(arg1: *mut Fl_Text_Display, color: core::ffi::c_uint);
+    pub fn Fl_Text_Display_set_cursor_color(arg1: *mut Fl_Text_Display, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_scrollbar_size(
-        arg1: *mut Fl_Text_Display,
-        newSize: core::ffi::c_int,
-    );
+    pub fn Fl_Text_Display_set_scrollbar_size(arg1: *mut Fl_Text_Display, newSize: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_scrollbar_align(arg1: *mut Fl_Text_Display, align: core::ffi::c_int);
+    pub fn Fl_Text_Display_set_scrollbar_align(arg1: *mut Fl_Text_Display, align: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_cursor_style(arg1: *mut Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_cursor_style(arg1: *mut Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_cursor_color(arg1: *mut Fl_Text_Display) -> core::ffi::c_uint;
+    pub fn Fl_Text_Display_cursor_color(arg1: *mut Fl_Text_Display) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Display_scrollbar_size(arg1: *mut Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_scrollbar_size(arg1: *mut Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_scrollbar_align(arg1: *mut Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_scrollbar_align(arg1: *mut Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_line_start(
-        self_: *const Fl_Text_Display,
-        pos: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_line_start(self_: *const Fl_Text_Display, pos: cty::c_int)
+        -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_line_end(
         self_: *const Fl_Text_Display,
-        startPos: core::ffi::c_int,
-        startPosIsLineStart: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        startPos: cty::c_int,
+        startPosIsLineStart: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_skip_lines(
         self_: *mut Fl_Text_Display,
-        startPos: core::ffi::c_int,
-        nLines: core::ffi::c_int,
-        startPosIsLineStart: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        startPos: cty::c_int,
+        nLines: cty::c_int,
+        startPosIsLineStart: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_rewind_lines(
         self_: *mut Fl_Text_Display,
-        startPos: core::ffi::c_int,
-        nLines: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        startPos: cty::c_int,
+        nLines: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_next_word(self_: *mut Fl_Text_Display);
@@ -767,16 +722,11 @@ extern "C" {
     pub fn Fl_Text_Display_previous_word(self_: *mut Fl_Text_Display);
 }
 extern "C" {
-    pub fn Fl_Text_Display_word_start(
-        self_: *const Fl_Text_Display,
-        pos: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_word_start(self_: *const Fl_Text_Display, pos: cty::c_int)
+        -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_word_end(
-        self_: *const Fl_Text_Display,
-        pos: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_word_end(self_: *const Fl_Text_Display, pos: cty::c_int) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_x_to_col(self_: *const Fl_Text_Display, x: f64) -> f64;
@@ -785,115 +735,100 @@ extern "C" {
     pub fn Fl_Text_Display_col_to_x(self_: *const Fl_Text_Display, col: f64) -> f64;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_linenumber_width(
-        self_: *mut Fl_Text_Display,
-        width: core::ffi::c_int,
-    );
+    pub fn Fl_Text_Display_set_linenumber_width(self_: *mut Fl_Text_Display, width: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_linenumber_width(self_: *const Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_linenumber_width(self_: *const Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_linenumber_font(self_: *mut Fl_Text_Display, val: core::ffi::c_int);
+    pub fn Fl_Text_Display_set_linenumber_font(self_: *mut Fl_Text_Display, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_linenumber_font(self_: *const Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_linenumber_font(self_: *const Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_linenumber_size(self_: *mut Fl_Text_Display, val: core::ffi::c_int);
+    pub fn Fl_Text_Display_set_linenumber_size(self_: *mut Fl_Text_Display, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_linenumber_size(self_: *const Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_linenumber_size(self_: *const Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_linenumber_fgcolor(
-        self_: *mut Fl_Text_Display,
-        val: core::ffi::c_uint,
-    );
+    pub fn Fl_Text_Display_set_linenumber_fgcolor(self_: *mut Fl_Text_Display, val: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Text_Display_linenumber_fgcolor(self_: *const Fl_Text_Display) -> core::ffi::c_uint;
+    pub fn Fl_Text_Display_linenumber_fgcolor(self_: *const Fl_Text_Display) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_linenumber_bgcolor(
-        self_: *mut Fl_Text_Display,
-        val: core::ffi::c_uint,
-    );
+    pub fn Fl_Text_Display_set_linenumber_bgcolor(self_: *mut Fl_Text_Display, val: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Text_Display_linenumber_bgcolor(self_: *const Fl_Text_Display) -> core::ffi::c_uint;
+    pub fn Fl_Text_Display_linenumber_bgcolor(self_: *const Fl_Text_Display) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_linenumber_align(self_: *mut Fl_Text_Display, val: core::ffi::c_int);
+    pub fn Fl_Text_Display_set_linenumber_align(self_: *mut Fl_Text_Display, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_linenumber_align(self_: *const Fl_Text_Display) -> core::ffi::c_int;
+    pub fn Fl_Text_Display_linenumber_align(self_: *const Fl_Text_Display) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_in_selection(
         self_: *const Fl_Text_Display,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        x: cty::c_int,
+        y: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_wrap_mode(
         self_: *mut Fl_Text_Display,
-        wrap: core::ffi::c_int,
-        wrap_margin: core::ffi::c_int,
+        wrap: cty::c_int,
+        wrap_margin: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Text_Display_wrapped_column(
         self_: *const Fl_Text_Display,
-        row: core::ffi::c_int,
-        column: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        row: cty::c_int,
+        column: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_wrapped_row(
         self_: *const Fl_Text_Display,
-        row: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        row: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_set_grammar_underline_color(
         self_: *mut Fl_Text_Display,
-        color: core::ffi::c_uint,
+        color: cty::c_uint,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Display_grammar_underline_color(
-        self_: *const Fl_Text_Display,
-    ) -> core::ffi::c_uint;
+    pub fn Fl_Text_Display_grammar_underline_color(self_: *const Fl_Text_Display) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Text_Display_set_spelling_underline_color(
         self_: *mut Fl_Text_Display,
-        color: core::ffi::c_uint,
+        color: cty::c_uint,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Display_spelling_underline_color(
-        self_: *const Fl_Text_Display,
-    ) -> core::ffi::c_uint;
+    pub fn Fl_Text_Display_spelling_underline_color(self_: *const Fl_Text_Display) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Text_Display_set_secondary_selection_color(
         self_: *mut Fl_Text_Display,
-        color: core::ffi::c_uint,
+        color: cty::c_uint,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Display_secondary_selection_color(
-        self_: *const Fl_Text_Display,
-    ) -> core::ffi::c_uint;
+    pub fn Fl_Text_Display_secondary_selection_color(self_: *const Fl_Text_Display) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Text_Display_show_insert_position(self_: *mut Fl_Text_Display);
 }
 extern "C" {
-    pub fn Fl_Text_Display_overstrike(self_: *mut Fl_Text_Display, text: *const core::ffi::c_char);
+    pub fn Fl_Text_Display_overstrike(self_: *mut Fl_Text_Display, text: *const cty::c_char);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -902,30 +837,30 @@ pub struct Fl_Text_Editor {
 }
 extern "C" {
     pub fn Fl_Text_Editor_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Text_Editor;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_x(arg1: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_x(arg1: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_y(arg1: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_y(arg1: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_width(arg1: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_width(arg1: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_height(arg1: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_height(arg1: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_label(arg1: *mut Fl_Text_Editor) -> *const core::ffi::c_char;
+    pub fn Fl_Text_Editor_label(arg1: *mut Fl_Text_Editor) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_label(arg1: *mut Fl_Text_Editor, title: *const core::ffi::c_char);
+    pub fn Fl_Text_Editor_set_label(arg1: *mut Fl_Text_Editor, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Text_Editor_redraw(arg1: *mut Fl_Text_Editor);
@@ -948,78 +883,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Editor_resize(
         arg1: *mut Fl_Text_Editor,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Text_Editor_widget_resize(
         arg1: *mut Fl_Text_Editor,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_tooltip(arg1: *mut Fl_Text_Editor) -> *const core::ffi::c_char;
+    pub fn Fl_Text_Editor_tooltip(arg1: *mut Fl_Text_Editor) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_tooltip(arg1: *mut Fl_Text_Editor, txt: *const core::ffi::c_char);
+    pub fn Fl_Text_Editor_set_tooltip(arg1: *mut Fl_Text_Editor, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_get_type(arg1: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_get_type(arg1: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_type(arg1: *mut Fl_Text_Editor, typ: core::ffi::c_int);
+    pub fn Fl_Text_Editor_set_type(arg1: *mut Fl_Text_Editor, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_color(arg1: *mut Fl_Text_Editor) -> core::ffi::c_uint;
+    pub fn Fl_Text_Editor_color(arg1: *mut Fl_Text_Editor) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_color(arg1: *mut Fl_Text_Editor, color: core::ffi::c_uint);
+    pub fn Fl_Text_Editor_set_color(arg1: *mut Fl_Text_Editor, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Text_Editor_measure_label(
         arg1: *const Fl_Text_Editor,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_label_color(arg1: *mut Fl_Text_Editor) -> core::ffi::c_uint;
+    pub fn Fl_Text_Editor_label_color(arg1: *mut Fl_Text_Editor) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_label_color(arg1: *mut Fl_Text_Editor, color: core::ffi::c_uint);
+    pub fn Fl_Text_Editor_set_label_color(arg1: *mut Fl_Text_Editor, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_label_font(arg1: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_label_font(arg1: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_label_font(arg1: *mut Fl_Text_Editor, font: core::ffi::c_int);
+    pub fn Fl_Text_Editor_set_label_font(arg1: *mut Fl_Text_Editor, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_label_size(arg1: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_label_size(arg1: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_label_size(arg1: *mut Fl_Text_Editor, sz: core::ffi::c_int);
+    pub fn Fl_Text_Editor_set_label_size(arg1: *mut Fl_Text_Editor, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_label_type(arg1: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_label_type(arg1: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_label_type(arg1: *mut Fl_Text_Editor, typ: core::ffi::c_int);
+    pub fn Fl_Text_Editor_set_label_type(arg1: *mut Fl_Text_Editor, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_box(arg1: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_box(arg1: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_box(arg1: *mut Fl_Text_Editor, typ: core::ffi::c_int);
+    pub fn Fl_Text_Editor_set_box(arg1: *mut Fl_Text_Editor, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_changed(arg1: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_changed(arg1: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_changed(arg1: *mut Fl_Text_Editor);
@@ -1028,32 +963,32 @@ extern "C" {
     pub fn Fl_Text_Editor_clear_changed(arg1: *mut Fl_Text_Editor);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_align(arg1: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_align(arg1: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_align(arg1: *mut Fl_Text_Editor, typ: core::ffi::c_int);
+    pub fn Fl_Text_Editor_set_align(arg1: *mut Fl_Text_Editor, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Text_Editor_delete(arg1: *mut Fl_Text_Editor);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_image(arg1: *mut Fl_Text_Editor, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Text_Editor_set_image(arg1: *mut Fl_Text_Editor, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Text_Editor_handle(
         self_: *mut Fl_Text_Editor,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_handle_event(self_: *mut Fl_Text_Editor, event: core::ffi::c_int);
+    pub fn Fl_Text_Editor_handle_event(self_: *mut Fl_Text_Editor, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Text_Editor_draw(
         self_: *mut Fl_Text_Editor,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -1062,33 +997,33 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_when(arg1: *mut Fl_Text_Editor, arg2: core::ffi::c_int);
+    pub fn Fl_Text_Editor_set_when(arg1: *mut Fl_Text_Editor, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_when(arg1: *const Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_when(arg1: *const Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_image(arg1: *const Fl_Text_Editor) -> *const core::ffi::c_void;
+    pub fn Fl_Text_Editor_image(arg1: *const Fl_Text_Editor) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_parent(self_: *const Fl_Text_Editor) -> *mut core::ffi::c_void;
+    pub fn Fl_Text_Editor_parent(self_: *const Fl_Text_Editor) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_selection_color(arg1: *mut Fl_Text_Editor) -> core::ffi::c_uint;
+    pub fn Fl_Text_Editor_selection_color(arg1: *mut Fl_Text_Editor) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_selection_color(arg1: *mut Fl_Text_Editor, color: core::ffi::c_uint);
+    pub fn Fl_Text_Editor_set_selection_color(arg1: *mut Fl_Text_Editor, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Text_Editor_do_callback(arg1: *mut Fl_Text_Editor);
@@ -1096,23 +1031,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Editor_inside(
         self_: *const Fl_Text_Editor,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_window(arg1: *const Fl_Text_Editor) -> *mut core::ffi::c_void;
+    pub fn Fl_Text_Editor_window(arg1: *const Fl_Text_Editor) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_top_window(arg1: *const Fl_Text_Editor) -> *mut core::ffi::c_void;
+    pub fn Fl_Text_Editor_top_window(arg1: *const Fl_Text_Editor) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_takes_events(arg1: *const Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_takes_events(arg1: *const Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_user_data(arg1: *const Fl_Text_Editor) -> *mut core::ffi::c_void;
+    pub fn Fl_Text_Editor_user_data(arg1: *const Fl_Text_Editor) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_take_focus(self_: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_take_focus(self_: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_visible_focus(self_: *mut Fl_Text_Editor);
@@ -1121,81 +1056,81 @@ extern "C" {
     pub fn Fl_Text_Editor_clear_visible_focus(self_: *mut Fl_Text_Editor);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_visible_focus(self_: *mut Fl_Text_Editor, v: core::ffi::c_int);
+    pub fn Fl_Text_Editor_visible_focus(self_: *mut Fl_Text_Editor, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_has_visible_focus(self_: *mut Fl_Text_Editor) -> core::ffi::c_uint;
+    pub fn Fl_Text_Editor_has_visible_focus(self_: *mut Fl_Text_Editor) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_user_data(arg1: *mut Fl_Text_Editor, data: *mut core::ffi::c_void);
+    pub fn Fl_Text_Editor_set_user_data(arg1: *mut Fl_Text_Editor, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_draw_data(self_: *const Fl_Text_Editor) -> *mut core::ffi::c_void;
+    pub fn Fl_Text_Editor_draw_data(self_: *const Fl_Text_Editor) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_handle_data(self_: *const Fl_Text_Editor) -> *mut core::ffi::c_void;
+    pub fn Fl_Text_Editor_handle_data(self_: *const Fl_Text_Editor) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_draw_data(self_: *mut Fl_Text_Editor, data: *mut core::ffi::c_void);
+    pub fn Fl_Text_Editor_set_draw_data(self_: *mut Fl_Text_Editor, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_handle_data(self_: *mut Fl_Text_Editor, data: *mut core::ffi::c_void);
+    pub fn Fl_Text_Editor_set_handle_data(self_: *mut Fl_Text_Editor, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_damage(self_: *const Fl_Text_Editor) -> core::ffi::c_uchar;
+    pub fn Fl_Text_Editor_damage(self_: *const Fl_Text_Editor) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_damage(self_: *mut Fl_Text_Editor, flag: core::ffi::c_uchar);
+    pub fn Fl_Text_Editor_set_damage(self_: *mut Fl_Text_Editor, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_damage_area(
         self_: *mut Fl_Text_Editor,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Text_Editor_clear_damage(self_: *mut Fl_Text_Editor);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_as_window(self_: *mut Fl_Text_Editor) -> *mut core::ffi::c_void;
+    pub fn Fl_Text_Editor_as_window(self_: *mut Fl_Text_Editor) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_as_group(self_: *mut Fl_Text_Editor) -> *mut core::ffi::c_void;
+    pub fn Fl_Text_Editor_as_group(self_: *mut Fl_Text_Editor) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_deimage(arg1: *mut Fl_Text_Editor, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Text_Editor_set_deimage(arg1: *mut Fl_Text_Editor, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_deimage(arg1: *const Fl_Text_Editor) -> *const core::ffi::c_void;
+    pub fn Fl_Text_Editor_deimage(arg1: *const Fl_Text_Editor) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_callback(
         arg1: *mut Fl_Text_Editor,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_deleter(
         arg1: *mut Fl_Text_Editor,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_visible(self_: *const Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_visible(self_: *const Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_visible_r(self_: *const Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_visible_r(self_: *const Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_active(self_: *const Fl_Text_Editor) -> core::ffi::c_uint;
+    pub fn Fl_Text_Editor_active(self_: *const Fl_Text_Editor) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_active_r(self_: *const Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_active_r(self_: *const Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_callback(self_: *const Fl_Text_Editor) -> Fl_Callback;
@@ -1204,16 +1139,16 @@ extern "C" {
     pub fn Fl_Text_Editor_set_deletion_callback(
         self_: *mut Fl_Text_Editor,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Text_Editor_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Text_Editor;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Text_Editor_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Text_Editor_init(arg1: *mut Fl_Text_Editor);
@@ -1228,133 +1163,130 @@ extern "C" {
     pub fn Fl_Text_Editor_get_style_buffer(arg1: *mut Fl_Text_Editor) -> *mut Fl_Text_Buffer;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_text_font(arg1: *const Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_text_font(arg1: *const Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_text_font(arg1: *mut Fl_Text_Editor, s: core::ffi::c_int);
+    pub fn Fl_Text_Editor_set_text_font(arg1: *mut Fl_Text_Editor, s: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_text_size(arg1: *const Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_text_size(arg1: *const Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_text_size(arg1: *mut Fl_Text_Editor, s: core::ffi::c_int);
+    pub fn Fl_Text_Editor_set_text_size(arg1: *mut Fl_Text_Editor, s: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_text_color(arg1: *const Fl_Text_Editor) -> core::ffi::c_uint;
+    pub fn Fl_Text_Editor_text_color(arg1: *const Fl_Text_Editor) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_text_color(arg1: *mut Fl_Text_Editor, n: core::ffi::c_uint);
+    pub fn Fl_Text_Editor_set_text_color(arg1: *mut Fl_Text_Editor, n: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Text_Editor_scroll(
         arg1: *mut Fl_Text_Editor,
-        topLineNum: core::ffi::c_int,
-        horizOffset: core::ffi::c_int,
+        topLineNum: cty::c_int,
+        horizOffset: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_insert(arg1: *mut Fl_Text_Editor, text: *const core::ffi::c_char);
+    pub fn Fl_Text_Editor_insert(arg1: *mut Fl_Text_Editor, text: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_insert_position(arg1: *mut Fl_Text_Editor, newPos: core::ffi::c_int);
+    pub fn Fl_Text_Editor_set_insert_position(arg1: *mut Fl_Text_Editor, newPos: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_insert_position(arg1: *const Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_insert_position(arg1: *const Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_position_to_xy(
         self_: *const Fl_Text_Editor,
-        pos: core::ffi::c_int,
-        x: *mut core::ffi::c_int,
-        y: *mut core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        pos: cty::c_int,
+        x: *mut cty::c_int,
+        y: *mut cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_count_lines(
         arg1: *const Fl_Text_Editor,
-        start: core::ffi::c_int,
-        end: core::ffi::c_int,
-        start_pos_is_line_start: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        start: cty::c_int,
+        end: cty::c_int,
+        start_pos_is_line_start: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_move_right(arg1: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_move_right(arg1: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_move_left(arg1: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_move_left(arg1: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_move_up(arg1: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_move_up(arg1: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_move_down(arg1: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_move_down(arg1: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_show_cursor(arg1: *mut Fl_Text_Editor, boolean: core::ffi::c_int);
+    pub fn Fl_Text_Editor_show_cursor(arg1: *mut Fl_Text_Editor, boolean: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_highlight_data(
         self_: *mut Fl_Text_Editor,
-        sbuff: *mut core::ffi::c_void,
-        color: *mut core::ffi::c_uint,
-        font: *mut core::ffi::c_int,
-        fontsz: *mut core::ffi::c_int,
-        attr: *mut core::ffi::c_uint,
-        bgcolor: *mut core::ffi::c_uint,
-        sz: core::ffi::c_int,
+        sbuff: *mut cty::c_void,
+        color: *mut cty::c_uint,
+        font: *mut cty::c_int,
+        fontsz: *mut cty::c_int,
+        attr: *mut cty::c_uint,
+        bgcolor: *mut cty::c_uint,
+        sz: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_cursor_style(arg1: *mut Fl_Text_Editor, style: core::ffi::c_int);
+    pub fn Fl_Text_Editor_set_cursor_style(arg1: *mut Fl_Text_Editor, style: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_cursor_color(arg1: *mut Fl_Text_Editor, color: core::ffi::c_uint);
+    pub fn Fl_Text_Editor_set_cursor_color(arg1: *mut Fl_Text_Editor, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_scrollbar_size(arg1: *mut Fl_Text_Editor, newSize: core::ffi::c_int);
+    pub fn Fl_Text_Editor_set_scrollbar_size(arg1: *mut Fl_Text_Editor, newSize: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_scrollbar_align(arg1: *mut Fl_Text_Editor, align: core::ffi::c_int);
+    pub fn Fl_Text_Editor_set_scrollbar_align(arg1: *mut Fl_Text_Editor, align: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_cursor_style(arg1: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_cursor_style(arg1: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_cursor_color(arg1: *mut Fl_Text_Editor) -> core::ffi::c_uint;
+    pub fn Fl_Text_Editor_cursor_color(arg1: *mut Fl_Text_Editor) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_scrollbar_size(arg1: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_scrollbar_size(arg1: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_scrollbar_align(arg1: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_scrollbar_align(arg1: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_line_start(
-        self_: *const Fl_Text_Editor,
-        pos: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_line_start(self_: *const Fl_Text_Editor, pos: cty::c_int) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_line_end(
         self_: *const Fl_Text_Editor,
-        startPos: core::ffi::c_int,
-        startPosIsLineStart: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        startPos: cty::c_int,
+        startPosIsLineStart: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_skip_lines(
         self_: *mut Fl_Text_Editor,
-        startPos: core::ffi::c_int,
-        nLines: core::ffi::c_int,
-        startPosIsLineStart: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        startPos: cty::c_int,
+        nLines: cty::c_int,
+        startPosIsLineStart: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_rewind_lines(
         self_: *mut Fl_Text_Editor,
-        startPos: core::ffi::c_int,
-        nLines: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        startPos: cty::c_int,
+        nLines: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_next_word(self_: *mut Fl_Text_Editor);
@@ -1363,16 +1295,10 @@ extern "C" {
     pub fn Fl_Text_Editor_previous_word(self_: *mut Fl_Text_Editor);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_word_start(
-        self_: *const Fl_Text_Editor,
-        pos: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_word_start(self_: *const Fl_Text_Editor, pos: cty::c_int) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_word_end(
-        self_: *const Fl_Text_Editor,
-        pos: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_word_end(self_: *const Fl_Text_Editor, pos: cty::c_int) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_x_to_col(self_: *const Fl_Text_Editor, x: f64) -> f64;
@@ -1381,239 +1307,200 @@ extern "C" {
     pub fn Fl_Text_Editor_col_to_x(self_: *const Fl_Text_Editor, col: f64) -> f64;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_linenumber_width(self_: *mut Fl_Text_Editor, width: core::ffi::c_int);
+    pub fn Fl_Text_Editor_set_linenumber_width(self_: *mut Fl_Text_Editor, width: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_linenumber_width(self_: *const Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_linenumber_width(self_: *const Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_linenumber_font(self_: *mut Fl_Text_Editor, val: core::ffi::c_int);
+    pub fn Fl_Text_Editor_set_linenumber_font(self_: *mut Fl_Text_Editor, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_linenumber_font(self_: *const Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_linenumber_font(self_: *const Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_linenumber_size(self_: *mut Fl_Text_Editor, val: core::ffi::c_int);
+    pub fn Fl_Text_Editor_set_linenumber_size(self_: *mut Fl_Text_Editor, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_linenumber_size(self_: *const Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_linenumber_size(self_: *const Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_linenumber_fgcolor(
-        self_: *mut Fl_Text_Editor,
-        val: core::ffi::c_uint,
-    );
+    pub fn Fl_Text_Editor_set_linenumber_fgcolor(self_: *mut Fl_Text_Editor, val: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_linenumber_fgcolor(self_: *const Fl_Text_Editor) -> core::ffi::c_uint;
+    pub fn Fl_Text_Editor_linenumber_fgcolor(self_: *const Fl_Text_Editor) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_linenumber_bgcolor(
-        self_: *mut Fl_Text_Editor,
-        val: core::ffi::c_uint,
-    );
+    pub fn Fl_Text_Editor_set_linenumber_bgcolor(self_: *mut Fl_Text_Editor, val: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_linenumber_bgcolor(self_: *const Fl_Text_Editor) -> core::ffi::c_uint;
+    pub fn Fl_Text_Editor_linenumber_bgcolor(self_: *const Fl_Text_Editor) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_linenumber_align(self_: *mut Fl_Text_Editor, val: core::ffi::c_int);
+    pub fn Fl_Text_Editor_set_linenumber_align(self_: *mut Fl_Text_Editor, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_linenumber_align(self_: *const Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_linenumber_align(self_: *const Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_in_selection(
         self_: *const Fl_Text_Editor,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        x: cty::c_int,
+        y: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_wrap_mode(
         self_: *mut Fl_Text_Editor,
-        wrap: core::ffi::c_int,
-        wrap_margin: core::ffi::c_int,
+        wrap: cty::c_int,
+        wrap_margin: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Text_Editor_wrapped_column(
         self_: *const Fl_Text_Editor,
-        row: core::ffi::c_int,
-        column: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        row: cty::c_int,
+        column: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_wrapped_row(
-        self_: *const Fl_Text_Editor,
-        row: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_wrapped_row(self_: *const Fl_Text_Editor, row: cty::c_int) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_grammar_underline_color(
         self_: *mut Fl_Text_Editor,
-        color: core::ffi::c_uint,
+        color: cty::c_uint,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_grammar_underline_color(
-        self_: *const Fl_Text_Editor,
-    ) -> core::ffi::c_uint;
+    pub fn Fl_Text_Editor_grammar_underline_color(self_: *const Fl_Text_Editor) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_spelling_underline_color(
         self_: *mut Fl_Text_Editor,
-        color: core::ffi::c_uint,
+        color: cty::c_uint,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_spelling_underline_color(
-        self_: *const Fl_Text_Editor,
-    ) -> core::ffi::c_uint;
+    pub fn Fl_Text_Editor_spelling_underline_color(self_: *const Fl_Text_Editor) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_secondary_selection_color(
         self_: *mut Fl_Text_Editor,
-        color: core::ffi::c_uint,
+        color: cty::c_uint,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_secondary_selection_color(
-        self_: *const Fl_Text_Editor,
-    ) -> core::ffi::c_uint;
+    pub fn Fl_Text_Editor_secondary_selection_color(self_: *const Fl_Text_Editor) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Text_Editor_show_insert_position(self_: *mut Fl_Text_Editor);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_overstrike(self_: *mut Fl_Text_Editor, text: *const core::ffi::c_char);
+    pub fn Fl_Text_Editor_overstrike(self_: *mut Fl_Text_Editor, text: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_copy(e: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_copy(e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_cut(e: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_cut(e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_paste(e: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_paste(e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_undo(e: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_undo(e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_default(
-        c: core::ffi::c_int,
-        e: *mut Fl_Text_Editor,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_default(c: cty::c_int, e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_ignore(
-        c: core::ffi::c_int,
-        e: *mut Fl_Text_Editor,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_ignore(c: cty::c_int, e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_backspace(e: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_backspace(e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_enter(e: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_enter(e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_move(c: core::ffi::c_int, e: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_move(c: cty::c_int, e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_shift_move(
-        c: core::ffi::c_int,
-        e: *mut Fl_Text_Editor,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_shift_move(c: cty::c_int, e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_ctrl_move(
-        c: core::ffi::c_int,
-        e: *mut Fl_Text_Editor,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_ctrl_move(c: cty::c_int, e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_c_s_move(
-        c: core::ffi::c_int,
-        e: *mut Fl_Text_Editor,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_c_s_move(c: cty::c_int, e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_meta_move(
-        c: core::ffi::c_int,
-        e: *mut Fl_Text_Editor,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_meta_move(c: cty::c_int, e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_m_s_move(
-        c: core::ffi::c_int,
-        e: *mut Fl_Text_Editor,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_m_s_move(c: cty::c_int, e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_home(e: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_home(e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_end(e: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_end(e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_left(e: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_left(e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_up(e: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_up(e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_right(e: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_right(e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_down(e: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_down(e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_page_up(e: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_page_up(e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_page_down(e: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_page_down(e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_insert(e: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_insert(e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_delete(e: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_delete(e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_select_all(e: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_kf_select_all(e: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_insert_mode(self_: *mut Fl_Text_Editor, b: core::ffi::c_int);
+    pub fn Fl_Text_Editor_set_insert_mode(self_: *mut Fl_Text_Editor, b: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_insert_mode(self_: *mut Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_insert_mode(self_: *mut Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_tab_nav(self_: *mut Fl_Text_Editor, val: core::ffi::c_int);
+    pub fn Fl_Text_Editor_set_tab_nav(self_: *mut Fl_Text_Editor, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_tab_nav(self_: *const Fl_Text_Editor) -> core::ffi::c_int;
+    pub fn Fl_Text_Editor_tab_nav(self_: *const Fl_Text_Editor) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_add_key_binding(
         self_: *mut Fl_Text_Editor,
-        key: core::ffi::c_int,
-        state: core::ffi::c_int,
+        key: cty::c_int,
+        state: cty::c_int,
         kf: ::core::option::Option<
-            unsafe extern "C" fn(
-                arg1: core::ffi::c_int,
-                arg2: *mut Fl_Text_Editor,
-            ) -> core::ffi::c_int,
+            unsafe extern "C" fn(arg1: cty::c_int, arg2: *mut Fl_Text_Editor) -> cty::c_int,
         >,
     );
 }
 extern "C" {
     pub fn Fl_Text_Editor_remove_key_binding(
         self_: *mut Fl_Text_Editor,
-        key: core::ffi::c_int,
-        state: core::ffi::c_int,
+        key: cty::c_int,
+        state: cty::c_int,
     );
 }
 #[repr(C)]
@@ -1623,33 +1510,30 @@ pub struct Fl_Simple_Terminal {
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Simple_Terminal;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_x(arg1: *mut Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_x(arg1: *mut Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_y(arg1: *mut Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_y(arg1: *mut Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_width(arg1: *mut Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_width(arg1: *mut Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_height(arg1: *mut Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_height(arg1: *mut Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_label(arg1: *mut Fl_Simple_Terminal) -> *const core::ffi::c_char;
+    pub fn Fl_Simple_Terminal_label(arg1: *mut Fl_Simple_Terminal) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_label(
-        arg1: *mut Fl_Simple_Terminal,
-        title: *const core::ffi::c_char,
-    );
+    pub fn Fl_Simple_Terminal_set_label(arg1: *mut Fl_Simple_Terminal, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_redraw(arg1: *mut Fl_Simple_Terminal);
@@ -1672,84 +1556,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Simple_Terminal_resize(
         arg1: *mut Fl_Simple_Terminal,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_widget_resize(
         arg1: *mut Fl_Simple_Terminal,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_tooltip(arg1: *mut Fl_Simple_Terminal) -> *const core::ffi::c_char;
+    pub fn Fl_Simple_Terminal_tooltip(arg1: *mut Fl_Simple_Terminal) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_tooltip(
-        arg1: *mut Fl_Simple_Terminal,
-        txt: *const core::ffi::c_char,
-    );
+    pub fn Fl_Simple_Terminal_set_tooltip(arg1: *mut Fl_Simple_Terminal, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_get_type(arg1: *mut Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_get_type(arg1: *mut Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_type(arg1: *mut Fl_Simple_Terminal, typ: core::ffi::c_int);
+    pub fn Fl_Simple_Terminal_set_type(arg1: *mut Fl_Simple_Terminal, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_color(arg1: *mut Fl_Simple_Terminal) -> core::ffi::c_uint;
+    pub fn Fl_Simple_Terminal_color(arg1: *mut Fl_Simple_Terminal) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_color(arg1: *mut Fl_Simple_Terminal, color: core::ffi::c_uint);
+    pub fn Fl_Simple_Terminal_set_color(arg1: *mut Fl_Simple_Terminal, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_measure_label(
         arg1: *const Fl_Simple_Terminal,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_label_color(arg1: *mut Fl_Simple_Terminal) -> core::ffi::c_uint;
+    pub fn Fl_Simple_Terminal_label_color(arg1: *mut Fl_Simple_Terminal) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_label_color(
-        arg1: *mut Fl_Simple_Terminal,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Simple_Terminal_set_label_color(arg1: *mut Fl_Simple_Terminal, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_label_font(arg1: *mut Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_label_font(arg1: *mut Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_label_font(arg1: *mut Fl_Simple_Terminal, font: core::ffi::c_int);
+    pub fn Fl_Simple_Terminal_set_label_font(arg1: *mut Fl_Simple_Terminal, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_label_size(arg1: *mut Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_label_size(arg1: *mut Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_label_size(arg1: *mut Fl_Simple_Terminal, sz: core::ffi::c_int);
+    pub fn Fl_Simple_Terminal_set_label_size(arg1: *mut Fl_Simple_Terminal, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_label_type(arg1: *mut Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_label_type(arg1: *mut Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_label_type(arg1: *mut Fl_Simple_Terminal, typ: core::ffi::c_int);
+    pub fn Fl_Simple_Terminal_set_label_type(arg1: *mut Fl_Simple_Terminal, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_box(arg1: *mut Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_box(arg1: *mut Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_box(arg1: *mut Fl_Simple_Terminal, typ: core::ffi::c_int);
+    pub fn Fl_Simple_Terminal_set_box(arg1: *mut Fl_Simple_Terminal, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_changed(arg1: *mut Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_changed(arg1: *mut Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_changed(arg1: *mut Fl_Simple_Terminal);
@@ -1758,35 +1636,32 @@ extern "C" {
     pub fn Fl_Simple_Terminal_clear_changed(arg1: *mut Fl_Simple_Terminal);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_align(arg1: *mut Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_align(arg1: *mut Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_align(arg1: *mut Fl_Simple_Terminal, typ: core::ffi::c_int);
+    pub fn Fl_Simple_Terminal_set_align(arg1: *mut Fl_Simple_Terminal, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_delete(arg1: *mut Fl_Simple_Terminal);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_image(
-        arg1: *mut Fl_Simple_Terminal,
-        arg2: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Simple_Terminal_set_image(arg1: *mut Fl_Simple_Terminal, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_handle(
         self_: *mut Fl_Simple_Terminal,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_handle_event(self_: *mut Fl_Simple_Terminal, event: core::ffi::c_int);
+    pub fn Fl_Simple_Terminal_handle_event(self_: *mut Fl_Simple_Terminal, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_draw(
         self_: *mut Fl_Simple_Terminal,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -1795,35 +1670,35 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_when(arg1: *mut Fl_Simple_Terminal, arg2: core::ffi::c_int);
+    pub fn Fl_Simple_Terminal_set_when(arg1: *mut Fl_Simple_Terminal, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_when(arg1: *const Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_when(arg1: *const Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_image(arg1: *const Fl_Simple_Terminal) -> *const core::ffi::c_void;
+    pub fn Fl_Simple_Terminal_image(arg1: *const Fl_Simple_Terminal) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_parent(self_: *const Fl_Simple_Terminal) -> *mut core::ffi::c_void;
+    pub fn Fl_Simple_Terminal_parent(self_: *const Fl_Simple_Terminal) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_selection_color(arg1: *mut Fl_Simple_Terminal) -> core::ffi::c_uint;
+    pub fn Fl_Simple_Terminal_selection_color(arg1: *mut Fl_Simple_Terminal) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_selection_color(
         arg1: *mut Fl_Simple_Terminal,
-        color: core::ffi::c_uint,
+        color: cty::c_uint,
     );
 }
 extern "C" {
@@ -1832,24 +1707,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Simple_Terminal_inside(
         self_: *const Fl_Simple_Terminal,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_window(arg1: *const Fl_Simple_Terminal) -> *mut core::ffi::c_void;
+    pub fn Fl_Simple_Terminal_window(arg1: *const Fl_Simple_Terminal) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_top_window(arg1: *const Fl_Simple_Terminal)
-        -> *mut core::ffi::c_void;
+    pub fn Fl_Simple_Terminal_top_window(arg1: *const Fl_Simple_Terminal) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_takes_events(arg1: *const Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_takes_events(arg1: *const Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_user_data(arg1: *const Fl_Simple_Terminal) -> *mut core::ffi::c_void;
+    pub fn Fl_Simple_Terminal_user_data(arg1: *const Fl_Simple_Terminal) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_take_focus(self_: *mut Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_take_focus(self_: *mut Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_visible_focus(self_: *mut Fl_Simple_Terminal);
@@ -1858,98 +1732,84 @@ extern "C" {
     pub fn Fl_Simple_Terminal_clear_visible_focus(self_: *mut Fl_Simple_Terminal);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_visible_focus(self_: *mut Fl_Simple_Terminal, v: core::ffi::c_int);
+    pub fn Fl_Simple_Terminal_visible_focus(self_: *mut Fl_Simple_Terminal, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_has_visible_focus(
-        self_: *mut Fl_Simple_Terminal,
-    ) -> core::ffi::c_uint;
+    pub fn Fl_Simple_Terminal_has_visible_focus(self_: *mut Fl_Simple_Terminal) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_user_data(
-        arg1: *mut Fl_Simple_Terminal,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Simple_Terminal_set_user_data(arg1: *mut Fl_Simple_Terminal, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_draw_data(self_: *const Fl_Simple_Terminal)
-        -> *mut core::ffi::c_void;
+    pub fn Fl_Simple_Terminal_draw_data(self_: *const Fl_Simple_Terminal) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_handle_data(
-        self_: *const Fl_Simple_Terminal,
-    ) -> *mut core::ffi::c_void;
+    pub fn Fl_Simple_Terminal_handle_data(self_: *const Fl_Simple_Terminal) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_draw_data(
-        self_: *mut Fl_Simple_Terminal,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Simple_Terminal_set_draw_data(self_: *mut Fl_Simple_Terminal, data: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_handle_data(
         self_: *mut Fl_Simple_Terminal,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_damage(self_: *const Fl_Simple_Terminal) -> core::ffi::c_uchar;
+    pub fn Fl_Simple_Terminal_damage(self_: *const Fl_Simple_Terminal) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_damage(self_: *mut Fl_Simple_Terminal, flag: core::ffi::c_uchar);
+    pub fn Fl_Simple_Terminal_set_damage(self_: *mut Fl_Simple_Terminal, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_damage_area(
         self_: *mut Fl_Simple_Terminal,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_clear_damage(self_: *mut Fl_Simple_Terminal);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_as_window(self_: *mut Fl_Simple_Terminal) -> *mut core::ffi::c_void;
+    pub fn Fl_Simple_Terminal_as_window(self_: *mut Fl_Simple_Terminal) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_as_group(self_: *mut Fl_Simple_Terminal) -> *mut core::ffi::c_void;
+    pub fn Fl_Simple_Terminal_as_group(self_: *mut Fl_Simple_Terminal) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_deimage(
-        arg1: *mut Fl_Simple_Terminal,
-        arg2: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Simple_Terminal_set_deimage(arg1: *mut Fl_Simple_Terminal, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_deimage(arg1: *const Fl_Simple_Terminal) -> *const core::ffi::c_void;
+    pub fn Fl_Simple_Terminal_deimage(arg1: *const Fl_Simple_Terminal) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_callback(
         arg1: *mut Fl_Simple_Terminal,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_deleter(
         arg1: *mut Fl_Simple_Terminal,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_visible(self_: *const Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_visible(self_: *const Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_visible_r(self_: *const Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_visible_r(self_: *const Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_active(self_: *const Fl_Simple_Terminal) -> core::ffi::c_uint;
+    pub fn Fl_Simple_Terminal_active(self_: *const Fl_Simple_Terminal) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_active_r(self_: *const Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_active_r(self_: *const Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_callback(self_: *const Fl_Simple_Terminal) -> Fl_Callback;
@@ -1958,16 +1818,16 @@ extern "C" {
     pub fn Fl_Simple_Terminal_set_deletion_callback(
         self_: *mut Fl_Simple_Terminal,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Simple_Terminal;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Simple_Terminal_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_init(arg1: *mut Fl_Simple_Terminal);
@@ -1984,44 +1844,38 @@ extern "C" {
     ) -> *mut Fl_Text_Buffer;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_stay_at_bottom(
-        self_: *mut Fl_Simple_Terminal,
-        arg1: core::ffi::c_int,
-    );
+    pub fn Fl_Simple_Terminal_set_stay_at_bottom(self_: *mut Fl_Simple_Terminal, arg1: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_stay_at_bottom(self_: *const Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_stay_at_bottom(self_: *const Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_history_lines(
-        self_: *mut Fl_Simple_Terminal,
-        arg1: core::ffi::c_int,
-    );
+    pub fn Fl_Simple_Terminal_set_history_lines(self_: *mut Fl_Simple_Terminal, arg1: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_history_lines(self_: *const Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_history_lines(self_: *const Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_ansi(self_: *mut Fl_Simple_Terminal, val: core::ffi::c_int);
+    pub fn Fl_Simple_Terminal_set_ansi(self_: *mut Fl_Simple_Terminal, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_ansi(self_: *const Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_ansi(self_: *const Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_append(self_: *mut Fl_Simple_Terminal, s: *const core::ffi::c_char);
+    pub fn Fl_Simple_Terminal_append(self_: *mut Fl_Simple_Terminal, s: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_append2(
         self_: *mut Fl_Simple_Terminal,
-        s: *const core::ffi::c_char,
-        len: core::ffi::c_int,
+        s: *const cty::c_char,
+        len: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_text(self_: *mut Fl_Simple_Terminal, s: *const core::ffi::c_char);
+    pub fn Fl_Simple_Terminal_set_text(self_: *mut Fl_Simple_Terminal, s: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_text(self_: *const Fl_Simple_Terminal) -> *const core::ffi::c_char;
+    pub fn Fl_Simple_Terminal_text(self_: *const Fl_Simple_Terminal) -> *const cty::c_char;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_clear(self_: *mut Fl_Simple_Terminal);
@@ -2029,153 +1883,144 @@ extern "C" {
 extern "C" {
     pub fn Fl_Simple_Terminal_remove_lines(
         self_: *mut Fl_Simple_Terminal,
-        start: core::ffi::c_int,
-        count: core::ffi::c_int,
+        start: cty::c_int,
+        count: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_text_font(arg1: *const Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_text_font(arg1: *const Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_text_font(arg1: *mut Fl_Simple_Terminal, s: core::ffi::c_int);
+    pub fn Fl_Simple_Terminal_set_text_font(arg1: *mut Fl_Simple_Terminal, s: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_text_size(arg1: *const Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_text_size(arg1: *const Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_text_size(arg1: *mut Fl_Simple_Terminal, s: core::ffi::c_int);
+    pub fn Fl_Simple_Terminal_set_text_size(arg1: *mut Fl_Simple_Terminal, s: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_text_color(arg1: *const Fl_Simple_Terminal) -> core::ffi::c_uint;
+    pub fn Fl_Simple_Terminal_text_color(arg1: *const Fl_Simple_Terminal) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_text_color(arg1: *mut Fl_Simple_Terminal, n: core::ffi::c_uint);
+    pub fn Fl_Simple_Terminal_set_text_color(arg1: *mut Fl_Simple_Terminal, n: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_scroll(
         arg1: *mut Fl_Simple_Terminal,
-        topLineNum: core::ffi::c_int,
-        horizOffset: core::ffi::c_int,
+        topLineNum: cty::c_int,
+        horizOffset: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_insert(arg1: *mut Fl_Simple_Terminal, text: *const core::ffi::c_char);
+    pub fn Fl_Simple_Terminal_insert(arg1: *mut Fl_Simple_Terminal, text: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_insert_position(
         arg1: *mut Fl_Simple_Terminal,
-        newPos: core::ffi::c_int,
+        newPos: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_insert_position(arg1: *const Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_insert_position(arg1: *const Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_position_to_xy(
         self_: *const Fl_Simple_Terminal,
-        pos: core::ffi::c_int,
-        x: *mut core::ffi::c_int,
-        y: *mut core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        pos: cty::c_int,
+        x: *mut cty::c_int,
+        y: *mut cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_count_lines(
         arg1: *const Fl_Simple_Terminal,
-        start: core::ffi::c_int,
-        end: core::ffi::c_int,
-        start_pos_is_line_start: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        start: cty::c_int,
+        end: cty::c_int,
+        start_pos_is_line_start: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_move_right(arg1: *mut Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_move_right(arg1: *mut Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_move_left(arg1: *mut Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_move_left(arg1: *mut Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_move_up(arg1: *mut Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_move_up(arg1: *mut Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_move_down(arg1: *mut Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_move_down(arg1: *mut Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_show_cursor(arg1: *mut Fl_Simple_Terminal, boolean: core::ffi::c_int);
+    pub fn Fl_Simple_Terminal_show_cursor(arg1: *mut Fl_Simple_Terminal, boolean: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_highlight_data(
         self_: *mut Fl_Simple_Terminal,
-        sbuff: *mut core::ffi::c_void,
-        color: *mut core::ffi::c_uint,
-        font: *mut core::ffi::c_int,
-        fontsz: *mut core::ffi::c_int,
-        attr: *mut core::ffi::c_uint,
-        bgcolor: *mut core::ffi::c_uint,
-        sz: core::ffi::c_int,
+        sbuff: *mut cty::c_void,
+        color: *mut cty::c_uint,
+        font: *mut cty::c_int,
+        fontsz: *mut cty::c_int,
+        attr: *mut cty::c_uint,
+        bgcolor: *mut cty::c_uint,
+        sz: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_cursor_style(
-        arg1: *mut Fl_Simple_Terminal,
-        style: core::ffi::c_int,
-    );
+    pub fn Fl_Simple_Terminal_set_cursor_style(arg1: *mut Fl_Simple_Terminal, style: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_cursor_color(
-        arg1: *mut Fl_Simple_Terminal,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Simple_Terminal_set_cursor_color(arg1: *mut Fl_Simple_Terminal, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_scrollbar_size(
         arg1: *mut Fl_Simple_Terminal,
-        newSize: core::ffi::c_int,
+        newSize: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_scrollbar_align(
-        arg1: *mut Fl_Simple_Terminal,
-        align: core::ffi::c_int,
-    );
+    pub fn Fl_Simple_Terminal_set_scrollbar_align(arg1: *mut Fl_Simple_Terminal, align: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_cursor_style(arg1: *mut Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_cursor_style(arg1: *mut Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_cursor_color(arg1: *mut Fl_Simple_Terminal) -> core::ffi::c_uint;
+    pub fn Fl_Simple_Terminal_cursor_color(arg1: *mut Fl_Simple_Terminal) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_scrollbar_size(arg1: *mut Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_scrollbar_size(arg1: *mut Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_scrollbar_align(arg1: *mut Fl_Simple_Terminal) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_scrollbar_align(arg1: *mut Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_line_start(
         self_: *const Fl_Simple_Terminal,
-        pos: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        pos: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_line_end(
         self_: *const Fl_Simple_Terminal,
-        startPos: core::ffi::c_int,
-        startPosIsLineStart: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        startPos: cty::c_int,
+        startPosIsLineStart: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_skip_lines(
         self_: *mut Fl_Simple_Terminal,
-        startPos: core::ffi::c_int,
-        nLines: core::ffi::c_int,
-        startPosIsLineStart: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        startPos: cty::c_int,
+        nLines: cty::c_int,
+        startPosIsLineStart: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_rewind_lines(
         self_: *mut Fl_Simple_Terminal,
-        startPos: core::ffi::c_int,
-        nLines: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        startPos: cty::c_int,
+        nLines: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_next_word(self_: *mut Fl_Simple_Terminal);
@@ -2186,14 +2031,14 @@ extern "C" {
 extern "C" {
     pub fn Fl_Simple_Terminal_word_start(
         self_: *const Fl_Simple_Terminal,
-        pos: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        pos: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_word_end(
         self_: *const Fl_Simple_Terminal,
-        pos: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        pos: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_x_to_col(self_: *const Fl_Simple_Terminal, x: f64) -> f64;
@@ -2204,136 +2049,114 @@ extern "C" {
 extern "C" {
     pub fn Fl_Simple_Terminal_set_linenumber_width(
         self_: *mut Fl_Simple_Terminal,
-        width: core::ffi::c_int,
+        width: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_linenumber_width(
-        self_: *const Fl_Simple_Terminal,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_linenumber_width(self_: *const Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_linenumber_font(
-        self_: *mut Fl_Simple_Terminal,
-        val: core::ffi::c_int,
-    );
+    pub fn Fl_Simple_Terminal_set_linenumber_font(self_: *mut Fl_Simple_Terminal, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_linenumber_font(self_: *const Fl_Simple_Terminal)
-        -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_linenumber_font(self_: *const Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_linenumber_size(
-        self_: *mut Fl_Simple_Terminal,
-        val: core::ffi::c_int,
-    );
+    pub fn Fl_Simple_Terminal_set_linenumber_size(self_: *mut Fl_Simple_Terminal, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_linenumber_size(self_: *const Fl_Simple_Terminal)
-        -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_linenumber_size(self_: *const Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_linenumber_fgcolor(
         self_: *mut Fl_Simple_Terminal,
-        val: core::ffi::c_uint,
+        val: cty::c_uint,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_linenumber_fgcolor(
-        self_: *const Fl_Simple_Terminal,
-    ) -> core::ffi::c_uint;
+    pub fn Fl_Simple_Terminal_linenumber_fgcolor(self_: *const Fl_Simple_Terminal) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_linenumber_bgcolor(
         self_: *mut Fl_Simple_Terminal,
-        val: core::ffi::c_uint,
+        val: cty::c_uint,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_linenumber_bgcolor(
-        self_: *const Fl_Simple_Terminal,
-    ) -> core::ffi::c_uint;
+    pub fn Fl_Simple_Terminal_linenumber_bgcolor(self_: *const Fl_Simple_Terminal) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_linenumber_align(
-        self_: *mut Fl_Simple_Terminal,
-        val: core::ffi::c_int,
-    );
+    pub fn Fl_Simple_Terminal_set_linenumber_align(self_: *mut Fl_Simple_Terminal, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_linenumber_align(
-        self_: *const Fl_Simple_Terminal,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Simple_Terminal_linenumber_align(self_: *const Fl_Simple_Terminal) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_in_selection(
         self_: *const Fl_Simple_Terminal,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        x: cty::c_int,
+        y: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_wrap_mode(
         self_: *mut Fl_Simple_Terminal,
-        wrap: core::ffi::c_int,
-        wrap_margin: core::ffi::c_int,
+        wrap: cty::c_int,
+        wrap_margin: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_wrapped_column(
         self_: *const Fl_Simple_Terminal,
-        row: core::ffi::c_int,
-        column: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        row: cty::c_int,
+        column: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_wrapped_row(
         self_: *const Fl_Simple_Terminal,
-        row: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        row: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_grammar_underline_color(
         self_: *mut Fl_Simple_Terminal,
-        color: core::ffi::c_uint,
+        color: cty::c_uint,
     );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_grammar_underline_color(
         self_: *const Fl_Simple_Terminal,
-    ) -> core::ffi::c_uint;
+    ) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_spelling_underline_color(
         self_: *mut Fl_Simple_Terminal,
-        color: core::ffi::c_uint,
+        color: cty::c_uint,
     );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_spelling_underline_color(
         self_: *const Fl_Simple_Terminal,
-    ) -> core::ffi::c_uint;
+    ) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_secondary_selection_color(
         self_: *mut Fl_Simple_Terminal,
-        color: core::ffi::c_uint,
+        color: cty::c_uint,
     );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_secondary_selection_color(
         self_: *const Fl_Simple_Terminal,
-    ) -> core::ffi::c_uint;
+    ) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_show_insert_position(self_: *mut Fl_Simple_Terminal);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_overstrike(
-        self_: *mut Fl_Simple_Terminal,
-        text: *const core::ffi::c_char,
-    );
+    pub fn Fl_Simple_Terminal_overstrike(self_: *mut Fl_Simple_Terminal, text: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_delete_stable(arg1: *mut core::ffi::c_void);
+    pub fn Fl_delete_stable(arg1: *mut cty::c_void);
 }

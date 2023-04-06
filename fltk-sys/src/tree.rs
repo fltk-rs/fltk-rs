@@ -5,19 +5,17 @@
 pub struct Fl_Widget {
     _unused: [u8; 0],
 }
-pub type Fl_Callback = ::core::option::Option<
-    unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
->;
+pub type Fl_Callback =
+    ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void)>;
 pub type custom_handler_callback = ::core::option::Option<
     unsafe extern "C" fn(
         arg1: *mut Fl_Widget,
-        arg2: core::ffi::c_int,
-        arg3: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int,
+        arg2: cty::c_int,
+        arg3: *mut cty::c_void,
+    ) -> cty::c_int,
 >;
-pub type custom_draw_callback = ::core::option::Option<
-    unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
->;
+pub type custom_draw_callback =
+    ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void)>;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Tree {
@@ -25,30 +23,30 @@ pub struct Fl_Tree {
 }
 extern "C" {
     pub fn Fl_Tree_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Tree;
 }
 extern "C" {
-    pub fn Fl_Tree_x(arg1: *mut Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_x(arg1: *mut Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_y(arg1: *mut Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_y(arg1: *mut Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_width(arg1: *mut Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_width(arg1: *mut Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_height(arg1: *mut Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_height(arg1: *mut Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_label(arg1: *mut Fl_Tree) -> *const core::ffi::c_char;
+    pub fn Fl_Tree_label(arg1: *mut Fl_Tree) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Tree_set_label(arg1: *mut Fl_Tree, title: *const core::ffi::c_char);
+    pub fn Fl_Tree_set_label(arg1: *mut Fl_Tree, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Tree_redraw(arg1: *mut Fl_Tree);
@@ -71,78 +69,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Tree_resize(
         arg1: *mut Fl_Tree,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Tree_widget_resize(
         arg1: *mut Fl_Tree,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Tree_tooltip(arg1: *mut Fl_Tree) -> *const core::ffi::c_char;
+    pub fn Fl_Tree_tooltip(arg1: *mut Fl_Tree) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Tree_set_tooltip(arg1: *mut Fl_Tree, txt: *const core::ffi::c_char);
+    pub fn Fl_Tree_set_tooltip(arg1: *mut Fl_Tree, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Tree_get_type(arg1: *mut Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_get_type(arg1: *mut Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_type(arg1: *mut Fl_Tree, typ: core::ffi::c_int);
+    pub fn Fl_Tree_set_type(arg1: *mut Fl_Tree, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_color(arg1: *mut Fl_Tree) -> core::ffi::c_uint;
+    pub fn Fl_Tree_color(arg1: *mut Fl_Tree) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Tree_set_color(arg1: *mut Fl_Tree, color: core::ffi::c_uint);
+    pub fn Fl_Tree_set_color(arg1: *mut Fl_Tree, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Tree_measure_label(
         arg1: *const Fl_Tree,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Tree_label_color(arg1: *mut Fl_Tree) -> core::ffi::c_uint;
+    pub fn Fl_Tree_label_color(arg1: *mut Fl_Tree) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Tree_set_label_color(arg1: *mut Fl_Tree, color: core::ffi::c_uint);
+    pub fn Fl_Tree_set_label_color(arg1: *mut Fl_Tree, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Tree_label_font(arg1: *mut Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_label_font(arg1: *mut Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_label_font(arg1: *mut Fl_Tree, font: core::ffi::c_int);
+    pub fn Fl_Tree_set_label_font(arg1: *mut Fl_Tree, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_label_size(arg1: *mut Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_label_size(arg1: *mut Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_label_size(arg1: *mut Fl_Tree, sz: core::ffi::c_int);
+    pub fn Fl_Tree_set_label_size(arg1: *mut Fl_Tree, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_label_type(arg1: *mut Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_label_type(arg1: *mut Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_label_type(arg1: *mut Fl_Tree, typ: core::ffi::c_int);
+    pub fn Fl_Tree_set_label_type(arg1: *mut Fl_Tree, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_box(arg1: *mut Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_box(arg1: *mut Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_box(arg1: *mut Fl_Tree, typ: core::ffi::c_int);
+    pub fn Fl_Tree_set_box(arg1: *mut Fl_Tree, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_changed(arg1: *mut Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_changed(arg1: *mut Fl_Tree) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_set_changed(arg1: *mut Fl_Tree);
@@ -151,33 +149,25 @@ extern "C" {
     pub fn Fl_Tree_clear_changed(arg1: *mut Fl_Tree);
 }
 extern "C" {
-    pub fn Fl_Tree_align(arg1: *mut Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_align(arg1: *mut Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_align(arg1: *mut Fl_Tree, typ: core::ffi::c_int);
+    pub fn Fl_Tree_set_align(arg1: *mut Fl_Tree, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Tree_delete(arg1: *mut Fl_Tree);
 }
 extern "C" {
-    pub fn Fl_Tree_set_image(arg1: *mut Fl_Tree, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Tree_set_image(arg1: *mut Fl_Tree, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Tree_handle(
-        self_: *mut Fl_Tree,
-        cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Tree_handle(self_: *mut Fl_Tree, cb: custom_handler_callback, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Tree_handle_event(self_: *mut Fl_Tree, event: core::ffi::c_int);
+    pub fn Fl_Tree_handle_event(self_: *mut Fl_Tree, event: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_draw(
-        self_: *mut Fl_Tree,
-        cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Tree_draw(self_: *mut Fl_Tree, cb: custom_draw_callback, data: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Tree_resize_callback(
@@ -185,54 +175,54 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Tree_set_when(arg1: *mut Fl_Tree, arg2: core::ffi::c_int);
+    pub fn Fl_Tree_set_when(arg1: *mut Fl_Tree, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_when(arg1: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_when(arg1: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_image(arg1: *const Fl_Tree) -> *const core::ffi::c_void;
+    pub fn Fl_Tree_image(arg1: *const Fl_Tree) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Tree_parent(self_: *const Fl_Tree) -> *mut core::ffi::c_void;
+    pub fn Fl_Tree_parent(self_: *const Fl_Tree) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Tree_selection_color(arg1: *mut Fl_Tree) -> core::ffi::c_uint;
+    pub fn Fl_Tree_selection_color(arg1: *mut Fl_Tree) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Tree_set_selection_color(arg1: *mut Fl_Tree, color: core::ffi::c_uint);
+    pub fn Fl_Tree_set_selection_color(arg1: *mut Fl_Tree, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Tree_do_callback(arg1: *mut Fl_Tree);
 }
 extern "C" {
-    pub fn Fl_Tree_inside(self_: *const Fl_Tree, arg1: *mut core::ffi::c_void) -> core::ffi::c_int;
+    pub fn Fl_Tree_inside(self_: *const Fl_Tree, arg1: *mut cty::c_void) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_window(arg1: *const Fl_Tree) -> *mut core::ffi::c_void;
+    pub fn Fl_Tree_window(arg1: *const Fl_Tree) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Tree_top_window(arg1: *const Fl_Tree) -> *mut core::ffi::c_void;
+    pub fn Fl_Tree_top_window(arg1: *const Fl_Tree) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Tree_takes_events(arg1: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_takes_events(arg1: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_user_data(arg1: *const Fl_Tree) -> *mut core::ffi::c_void;
+    pub fn Fl_Tree_user_data(arg1: *const Fl_Tree) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Tree_take_focus(self_: *mut Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_take_focus(self_: *mut Fl_Tree) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_set_visible_focus(self_: *mut Fl_Tree);
@@ -241,81 +231,77 @@ extern "C" {
     pub fn Fl_Tree_clear_visible_focus(self_: *mut Fl_Tree);
 }
 extern "C" {
-    pub fn Fl_Tree_visible_focus(self_: *mut Fl_Tree, v: core::ffi::c_int);
+    pub fn Fl_Tree_visible_focus(self_: *mut Fl_Tree, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_has_visible_focus(self_: *mut Fl_Tree) -> core::ffi::c_uint;
+    pub fn Fl_Tree_has_visible_focus(self_: *mut Fl_Tree) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Tree_set_user_data(arg1: *mut Fl_Tree, data: *mut core::ffi::c_void);
+    pub fn Fl_Tree_set_user_data(arg1: *mut Fl_Tree, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Tree_draw_data(self_: *const Fl_Tree) -> *mut core::ffi::c_void;
+    pub fn Fl_Tree_draw_data(self_: *const Fl_Tree) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Tree_handle_data(self_: *const Fl_Tree) -> *mut core::ffi::c_void;
+    pub fn Fl_Tree_handle_data(self_: *const Fl_Tree) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Tree_set_draw_data(self_: *mut Fl_Tree, data: *mut core::ffi::c_void);
+    pub fn Fl_Tree_set_draw_data(self_: *mut Fl_Tree, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Tree_set_handle_data(self_: *mut Fl_Tree, data: *mut core::ffi::c_void);
+    pub fn Fl_Tree_set_handle_data(self_: *mut Fl_Tree, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Tree_damage(self_: *const Fl_Tree) -> core::ffi::c_uchar;
+    pub fn Fl_Tree_damage(self_: *const Fl_Tree) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Tree_set_damage(self_: *mut Fl_Tree, flag: core::ffi::c_uchar);
+    pub fn Fl_Tree_set_damage(self_: *mut Fl_Tree, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Tree_set_damage_area(
         self_: *mut Fl_Tree,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Tree_clear_damage(self_: *mut Fl_Tree);
 }
 extern "C" {
-    pub fn Fl_Tree_as_window(self_: *mut Fl_Tree) -> *mut core::ffi::c_void;
+    pub fn Fl_Tree_as_window(self_: *mut Fl_Tree) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Tree_as_group(self_: *mut Fl_Tree) -> *mut core::ffi::c_void;
+    pub fn Fl_Tree_as_group(self_: *mut Fl_Tree) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Tree_set_deimage(arg1: *mut Fl_Tree, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Tree_set_deimage(arg1: *mut Fl_Tree, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Tree_deimage(arg1: *const Fl_Tree) -> *const core::ffi::c_void;
+    pub fn Fl_Tree_deimage(arg1: *const Fl_Tree) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Tree_set_callback(
-        arg1: *mut Fl_Tree,
-        arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Tree_set_callback(arg1: *mut Fl_Tree, arg2: Fl_Callback, arg3: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Tree_set_deleter(
         arg1: *mut Fl_Tree,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Tree_visible(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_visible(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_visible_r(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_visible_r(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_active(self_: *const Fl_Tree) -> core::ffi::c_uint;
+    pub fn Fl_Tree_active(self_: *const Fl_Tree) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Tree_active_r(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_active_r(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_callback(self_: *const Fl_Tree) -> Fl_Callback;
@@ -324,16 +310,16 @@ extern "C" {
     pub fn Fl_Tree_set_deletion_callback(
         self_: *mut Fl_Tree,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Tree_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Tree;
 }
 extern "C" {
-    pub fn Fl_Tree_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Tree_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -355,7 +341,7 @@ extern "C" {
     pub fn Fl_Tree_show_self(self_: *mut Fl_Tree);
 }
 extern "C" {
-    pub fn Fl_Tree_root_label(self_: *mut Fl_Tree, new_label: *const core::ffi::c_char);
+    pub fn Fl_Tree_root_label(self_: *mut Fl_Tree, new_label: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Tree_root(self_: *mut Fl_Tree) -> *mut Fl_Tree_Item;
@@ -364,12 +350,12 @@ extern "C" {
     pub fn Fl_Tree_set_root(self_: *mut Fl_Tree, newitem: *mut Fl_Tree_Item);
 }
 extern "C" {
-    pub fn Fl_Tree_add(self_: *mut Fl_Tree, name: *const core::ffi::c_char) -> *mut Fl_Tree_Item;
+    pub fn Fl_Tree_add(self_: *mut Fl_Tree, name: *const cty::c_char) -> *mut Fl_Tree_Item;
 }
 extern "C" {
     pub fn Fl_Tree_add_item(
         self_: *mut Fl_Tree,
-        name: *const core::ffi::c_char,
+        name: *const cty::c_char,
         item: *mut Fl_Tree_Item,
     ) -> *mut Fl_Tree_Item;
 }
@@ -377,31 +363,31 @@ extern "C" {
     pub fn Fl_Tree_insert_above(
         self_: *mut Fl_Tree,
         above: *mut Fl_Tree_Item,
-        name: *const core::ffi::c_char,
+        name: *const cty::c_char,
     ) -> *mut Fl_Tree_Item;
 }
 extern "C" {
     pub fn Fl_Tree_insert(
         self_: *mut Fl_Tree,
         item: *mut Fl_Tree_Item,
-        name: *const core::ffi::c_char,
-        pos: core::ffi::c_int,
+        name: *const cty::c_char,
+        pos: cty::c_int,
     ) -> *mut Fl_Tree_Item;
 }
 extern "C" {
     pub fn Fl_Tree_find_item(
         self_: *const Fl_Tree,
-        path: *const core::ffi::c_char,
+        path: *const cty::c_char,
     ) -> *const Fl_Tree_Item;
 }
 extern "C" {
     pub fn Fl_Tree_find_item_mut(
         self_: *mut Fl_Tree,
-        path: *const core::ffi::c_char,
+        path: *const cty::c_char,
     ) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn Fl_Tree_remove(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item) -> core::ffi::c_int;
+    pub fn Fl_Tree_remove(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_clear(self_: *mut Fl_Tree);
@@ -410,10 +396,7 @@ extern "C" {
     pub fn Fl_Tree_clear_children(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item);
 }
 extern "C" {
-    pub fn Fl_Tree_find_clicked(
-        self_: *const Fl_Tree,
-        yonly: core::ffi::c_int,
-    ) -> *const Fl_Tree_Item;
+    pub fn Fl_Tree_find_clicked(self_: *const Fl_Tree, yonly: cty::c_int) -> *const Fl_Tree_Item;
 }
 extern "C" {
     pub fn Fl_Tree_item_clicked(self_: *mut Fl_Tree) -> *mut Fl_Tree_Item;
@@ -440,7 +423,7 @@ extern "C" {
     pub fn Fl_Tree_next_visible_item(
         self_: *mut Fl_Tree,
         start: *mut Fl_Tree_Item,
-        dir: core::ffi::c_int,
+        dir: cty::c_int,
     ) -> *mut Fl_Tree_Item;
 }
 extern "C" {
@@ -453,122 +436,113 @@ extern "C" {
     pub fn Fl_Tree_next_item(
         self_: *mut Fl_Tree,
         item: *mut Fl_Tree_Item,
-        dir: core::ffi::c_int,
-        visible: core::ffi::c_int,
+        dir: cty::c_int,
+        visible: cty::c_int,
     ) -> *mut Fl_Tree_Item;
 }
 extern "C" {
     pub fn Fl_Tree_next_selected_item(
         self_: *mut Fl_Tree,
         item: *mut Fl_Tree_Item,
-        dir: core::ffi::c_int,
+        dir: cty::c_int,
     ) -> *mut Fl_Tree_Item;
 }
 extern "C" {
     pub fn Fl_Tree_get_selected_items(
         self_: *mut Fl_Tree,
         arr: *mut *mut Fl_Tree_Item_Array,
-    ) -> core::ffi::c_int;
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_get_items(
-        self_: *mut Fl_Tree,
-        arr: *mut *mut Fl_Tree_Item_Array,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Tree_get_items(self_: *mut Fl_Tree, arr: *mut *mut Fl_Tree_Item_Array) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_open(
         self_: *mut Fl_Tree,
-        path: *const core::ffi::c_char,
-        docallback: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        path: *const cty::c_char,
+        docallback: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_open_toggle(
         self_: *mut Fl_Tree,
         item: *mut Fl_Tree_Item,
-        docallback: core::ffi::c_int,
+        docallback: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Tree_close(
         self_: *mut Fl_Tree,
-        path: *const core::ffi::c_char,
-        docallback: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        path: *const cty::c_char,
+        docallback: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_is_open(
-        self_: *const Fl_Tree,
-        path: *const core::ffi::c_char,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Tree_is_open(self_: *const Fl_Tree, path: *const cty::c_char) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_is_close(
-        self_: *const Fl_Tree,
-        path: *const core::ffi::c_char,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Tree_is_close(self_: *const Fl_Tree, path: *const cty::c_char) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_select(
         self_: *mut Fl_Tree,
-        path: *const core::ffi::c_char,
-        docallback: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        path: *const cty::c_char,
+        docallback: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_select_toggle(
         self_: *mut Fl_Tree,
         item: *mut Fl_Tree_Item,
-        docallback: core::ffi::c_int,
+        docallback: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Tree_deselect(
         self_: *mut Fl_Tree,
-        path: *const core::ffi::c_char,
-        docallback: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        path: *const cty::c_char,
+        docallback: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_deselect_all(
         self_: *mut Fl_Tree,
         item: *mut Fl_Tree_Item,
-        docallback: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        docallback: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_select_only(
         self_: *mut Fl_Tree,
         selitem: *mut Fl_Tree_Item,
-        docallback: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        docallback: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_select_all(
         self_: *mut Fl_Tree,
         item: *mut Fl_Tree_Item,
-        docallback: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        docallback: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_extend_selection_dir(
         self_: *mut Fl_Tree,
         from: *mut Fl_Tree_Item,
         to: *mut Fl_Tree_Item,
-        dir: core::ffi::c_int,
-        val: core::ffi::c_int,
-        visible: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        dir: cty::c_int,
+        val: cty::c_int,
+        visible: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_extend_selection(
         self_: *mut Fl_Tree,
         from: *mut Fl_Tree_Item,
         to: *mut Fl_Tree_Item,
-        val: core::ffi::c_int,
-        visible: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        val: cty::c_int,
+        visible: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_set_item_focus(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item);
@@ -577,160 +551,157 @@ extern "C" {
     pub fn Fl_Tree_get_item_focus(self_: *const Fl_Tree) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn Fl_Tree_is_selected(
-        self_: *mut Fl_Tree,
-        path: *const core::ffi::c_char,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Tree_is_selected(self_: *mut Fl_Tree, path: *const cty::c_char) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_item_labelfont(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_item_labelfont(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_item_labelfont(self_: *mut Fl_Tree, val: core::ffi::c_int);
+    pub fn Fl_Tree_set_item_labelfont(self_: *mut Fl_Tree, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_item_labelsize(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_item_labelsize(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_item_labelsize(self_: *mut Fl_Tree, val: core::ffi::c_int);
+    pub fn Fl_Tree_set_item_labelsize(self_: *mut Fl_Tree, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_item_labelfgcolor(self_: *const Fl_Tree) -> core::ffi::c_uint;
+    pub fn Fl_Tree_item_labelfgcolor(self_: *const Fl_Tree) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Tree_set_item_labelfgcolor(self_: *mut Fl_Tree, val: core::ffi::c_uint);
+    pub fn Fl_Tree_set_item_labelfgcolor(self_: *mut Fl_Tree, val: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Tree_item_labelbgcolor(self_: *const Fl_Tree) -> core::ffi::c_uint;
+    pub fn Fl_Tree_item_labelbgcolor(self_: *const Fl_Tree) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Tree_set_item_labelbgcolor(self_: *mut Fl_Tree, val: core::ffi::c_uint);
+    pub fn Fl_Tree_set_item_labelbgcolor(self_: *mut Fl_Tree, val: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Tree_connectorcolor(self_: *const Fl_Tree) -> core::ffi::c_uint;
+    pub fn Fl_Tree_connectorcolor(self_: *const Fl_Tree) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Tree_set_connectorcolor(self_: *mut Fl_Tree, val: core::ffi::c_uint);
+    pub fn Fl_Tree_set_connectorcolor(self_: *mut Fl_Tree, val: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Tree_marginleft(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_marginleft(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_marginleft(self_: *mut Fl_Tree, val: core::ffi::c_int);
+    pub fn Fl_Tree_set_marginleft(self_: *mut Fl_Tree, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_margintop(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_margintop(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_margintop(self_: *mut Fl_Tree, val: core::ffi::c_int);
+    pub fn Fl_Tree_set_margintop(self_: *mut Fl_Tree, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_marginbottom(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_marginbottom(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_marginbottom(self_: *mut Fl_Tree, val: core::ffi::c_int);
+    pub fn Fl_Tree_set_marginbottom(self_: *mut Fl_Tree, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_linespacing(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_linespacing(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_linespacing(self_: *mut Fl_Tree, val: core::ffi::c_int);
+    pub fn Fl_Tree_set_linespacing(self_: *mut Fl_Tree, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_openchild_marginbottom(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_openchild_marginbottom(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_openchild_marginbottom(self_: *mut Fl_Tree, val: core::ffi::c_int);
+    pub fn Fl_Tree_set_openchild_marginbottom(self_: *mut Fl_Tree, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_usericonmarginleft(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_usericonmarginleft(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_usericonmarginleft(self_: *mut Fl_Tree, val: core::ffi::c_int);
+    pub fn Fl_Tree_set_usericonmarginleft(self_: *mut Fl_Tree, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_labelmarginleft(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_labelmarginleft(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_labelmarginleft(self_: *mut Fl_Tree, val: core::ffi::c_int);
+    pub fn Fl_Tree_set_labelmarginleft(self_: *mut Fl_Tree, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_widgetmarginleft(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_widgetmarginleft(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_widgetmarginleft(self_: *mut Fl_Tree, val: core::ffi::c_int);
+    pub fn Fl_Tree_set_widgetmarginleft(self_: *mut Fl_Tree, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_connectorwidth(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_connectorwidth(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_connectorwidth(self_: *mut Fl_Tree, val: core::ffi::c_int);
+    pub fn Fl_Tree_set_connectorwidth(self_: *mut Fl_Tree, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_usericon(self_: *const Fl_Tree) -> *mut core::ffi::c_void;
+    pub fn Fl_Tree_usericon(self_: *const Fl_Tree) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Tree_set_usericon(self_: *mut Fl_Tree, val: *mut core::ffi::c_void);
+    pub fn Fl_Tree_set_usericon(self_: *mut Fl_Tree, val: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Tree_openicon(self_: *const Fl_Tree) -> *mut core::ffi::c_void;
+    pub fn Fl_Tree_openicon(self_: *const Fl_Tree) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Tree_set_openicon(self_: *mut Fl_Tree, val: *mut core::ffi::c_void);
+    pub fn Fl_Tree_set_openicon(self_: *mut Fl_Tree, val: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Tree_closeicon(self_: *const Fl_Tree) -> *mut core::ffi::c_void;
+    pub fn Fl_Tree_closeicon(self_: *const Fl_Tree) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Tree_set_closeicon(self_: *mut Fl_Tree, val: *mut core::ffi::c_void);
+    pub fn Fl_Tree_set_closeicon(self_: *mut Fl_Tree, val: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Tree_showcollapse(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_showcollapse(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_showcollapse(self_: *mut Fl_Tree, val: core::ffi::c_int);
+    pub fn Fl_Tree_set_showcollapse(self_: *mut Fl_Tree, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_showroot(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_showroot(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_showroot(self_: *mut Fl_Tree, val: core::ffi::c_int);
+    pub fn Fl_Tree_set_showroot(self_: *mut Fl_Tree, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_connectorstyle(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_connectorstyle(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_connectorstyle(self_: *mut Fl_Tree, val: core::ffi::c_int);
+    pub fn Fl_Tree_set_connectorstyle(self_: *mut Fl_Tree, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_sortorder(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_sortorder(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_sortorder(self_: *mut Fl_Tree, val: core::ffi::c_int);
+    pub fn Fl_Tree_set_sortorder(self_: *mut Fl_Tree, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_selectbox(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_selectbox(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_selectbox(self_: *mut Fl_Tree, val: core::ffi::c_int);
+    pub fn Fl_Tree_set_selectbox(self_: *mut Fl_Tree, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_selectmode(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_selectmode(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_selectmode(self_: *mut Fl_Tree, val: core::ffi::c_int);
+    pub fn Fl_Tree_set_selectmode(self_: *mut Fl_Tree, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_item_reselect_mode(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_item_reselect_mode(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_item_reselect_mode(self_: *mut Fl_Tree, mode: core::ffi::c_int);
+    pub fn Fl_Tree_set_item_reselect_mode(self_: *mut Fl_Tree, mode: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_item_draw_mode(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_item_draw_mode(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_item_draw_mode(self_: *mut Fl_Tree, mode: core::ffi::c_int);
+    pub fn Fl_Tree_set_item_draw_mode(self_: *mut Fl_Tree, mode: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Tree_calc_dimensions(self_: *mut Fl_Tree);
@@ -742,10 +713,10 @@ extern "C" {
     pub fn Fl_Tree_recalc_tree(self_: *mut Fl_Tree);
 }
 extern "C" {
-    pub fn Fl_Tree_displayed(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item) -> core::ffi::c_int;
+    pub fn Fl_Tree_displayed(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_show_item(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item, yoff: core::ffi::c_int);
+    pub fn Fl_Tree_show_item(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item, yoff: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Tree_show_item_top(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item);
@@ -760,31 +731,31 @@ extern "C" {
     pub fn Fl_Tree_display(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item);
 }
 extern "C" {
-    pub fn Fl_Tree_vposition(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_vposition(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_vposition(self_: *mut Fl_Tree, pos: core::ffi::c_int);
+    pub fn Fl_Tree_set_vposition(self_: *mut Fl_Tree, pos: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_hposition(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_hposition(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_hposition(self_: *mut Fl_Tree, pos: core::ffi::c_int);
+    pub fn Fl_Tree_set_hposition(self_: *mut Fl_Tree, pos: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_is_scrollbar(self_: *mut Fl_Tree, w: *mut Fl_Widget) -> core::ffi::c_int;
+    pub fn Fl_Tree_is_scrollbar(self_: *mut Fl_Tree, w: *mut Fl_Widget) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_scrollbar_size(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_scrollbar_size(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_set_scrollbar_size(self_: *mut Fl_Tree, size: core::ffi::c_int);
+    pub fn Fl_Tree_set_scrollbar_size(self_: *mut Fl_Tree, size: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_is_vscroll_visible(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_is_vscroll_visible(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_is_hscroll_visible(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_is_hscroll_visible(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_set_callback_item(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item);
@@ -793,22 +764,21 @@ extern "C" {
     pub fn Fl_Tree_callback_item(self_: *mut Fl_Tree) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn Fl_Tree_set_callback_reason(self_: *mut Fl_Tree, reason: core::ffi::c_int);
+    pub fn Fl_Tree_set_callback_reason(self_: *mut Fl_Tree, reason: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_callback_reason(self_: *const Fl_Tree) -> core::ffi::c_int;
+    pub fn Fl_Tree_callback_reason(self_: *const Fl_Tree) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_item_pathname(
         self_: *const Fl_Tree,
-        pathname: *mut core::ffi::c_char,
-        pathnamelen: core::ffi::c_int,
+        pathname: *mut cty::c_char,
+        pathnamelen: cty::c_int,
         item: *const Fl_Tree_Item,
-    ) -> core::ffi::c_int;
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_new(tree: *mut Fl_Tree, txt: *const core::ffi::c_char)
-        -> *mut Fl_Tree_Item;
+    pub fn Fl_Tree_Item_new(tree: *mut Fl_Tree, txt: *const cty::c_char) -> *mut Fl_Tree_Item;
 }
 extern "C" {
     pub fn Fl_Tree_Item_draw_item_content(
@@ -816,81 +786,81 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 self_: *mut Fl_Tree_Item,
-                arg1: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
-            ) -> core::ffi::c_int,
+                arg1: cty::c_int,
+                arg2: *mut cty::c_void,
+            ) -> cty::c_int,
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Tree_Item_set_user_data(item: *mut Fl_Tree_Item, data: *mut core::ffi::c_void);
+    pub fn Fl_Tree_Item_set_user_data(item: *mut Fl_Tree_Item, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Tree_Item_user_data(item: *const Fl_Tree_Item) -> *mut core::ffi::c_void;
+    pub fn Fl_Tree_Item_user_data(item: *const Fl_Tree_Item) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_x(self_: *const Fl_Tree_Item) -> core::ffi::c_int;
+    pub fn Fl_Tree_Item_x(self_: *const Fl_Tree_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_y(self_: *const Fl_Tree_Item) -> core::ffi::c_int;
+    pub fn Fl_Tree_Item_y(self_: *const Fl_Tree_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_w(self_: *const Fl_Tree_Item) -> core::ffi::c_int;
+    pub fn Fl_Tree_Item_w(self_: *const Fl_Tree_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_h(self_: *const Fl_Tree_Item) -> core::ffi::c_int;
+    pub fn Fl_Tree_Item_h(self_: *const Fl_Tree_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_label_x(self_: *const Fl_Tree_Item) -> core::ffi::c_int;
+    pub fn Fl_Tree_Item_label_x(self_: *const Fl_Tree_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_label_y(self_: *const Fl_Tree_Item) -> core::ffi::c_int;
+    pub fn Fl_Tree_Item_label_y(self_: *const Fl_Tree_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_label_w(self_: *const Fl_Tree_Item) -> core::ffi::c_int;
+    pub fn Fl_Tree_Item_label_w(self_: *const Fl_Tree_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_label_h(self_: *const Fl_Tree_Item) -> core::ffi::c_int;
+    pub fn Fl_Tree_Item_label_h(self_: *const Fl_Tree_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_show_self(self_: *const Fl_Tree_Item, indent: *const core::ffi::c_char);
+    pub fn Fl_Tree_Item_show_self(self_: *const Fl_Tree_Item, indent: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Tree_set_Item_label(self_: *mut Fl_Tree_Item, val: *const core::ffi::c_char);
+    pub fn Fl_Tree_set_Item_label(self_: *mut Fl_Tree_Item, val: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Tree_Item_label(self_: *const Fl_Tree_Item) -> *const core::ffi::c_char;
+    pub fn Fl_Tree_Item_label(self_: *const Fl_Tree_Item) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_set_labelfont(self_: *mut Fl_Tree_Item, val: core::ffi::c_int);
+    pub fn Fl_Tree_Item_set_labelfont(self_: *mut Fl_Tree_Item, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_Item_labelfont(self_: *const Fl_Tree_Item) -> core::ffi::c_int;
+    pub fn Fl_Tree_Item_labelfont(self_: *const Fl_Tree_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_set_labelsize(self_: *mut Fl_Tree_Item, val: core::ffi::c_int);
+    pub fn Fl_Tree_Item_set_labelsize(self_: *mut Fl_Tree_Item, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_Item_labelsize(self_: *const Fl_Tree_Item) -> core::ffi::c_int;
+    pub fn Fl_Tree_Item_labelsize(self_: *const Fl_Tree_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_set_labelfgcolor(self_: *mut Fl_Tree_Item, val: core::ffi::c_uint);
+    pub fn Fl_Tree_Item_set_labelfgcolor(self_: *mut Fl_Tree_Item, val: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Tree_Item_labelfgcolor(self_: *const Fl_Tree_Item) -> core::ffi::c_uint;
+    pub fn Fl_Tree_Item_labelfgcolor(self_: *const Fl_Tree_Item) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_set_labelcolor(self_: *mut Fl_Tree_Item, val: core::ffi::c_uint);
+    pub fn Fl_Tree_Item_set_labelcolor(self_: *mut Fl_Tree_Item, val: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Tree_Item_labelcolor(self_: *const Fl_Tree_Item) -> core::ffi::c_uint;
+    pub fn Fl_Tree_Item_labelcolor(self_: *const Fl_Tree_Item) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_set_labelbgcolor(self_: *mut Fl_Tree_Item, val: core::ffi::c_uint);
+    pub fn Fl_Tree_Item_set_labelbgcolor(self_: *mut Fl_Tree_Item, val: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Tree_Item_labelbgcolor(self_: *const Fl_Tree_Item) -> core::ffi::c_uint;
+    pub fn Fl_Tree_Item_labelbgcolor(self_: *const Fl_Tree_Item) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Tree_Item_set_widget(self_: *mut Fl_Tree_Item, val: *mut Fl_Widget);
@@ -899,28 +869,25 @@ extern "C" {
     pub fn Fl_Tree_Item_widget(self_: *const Fl_Tree_Item) -> *mut Fl_Widget;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_children(self_: *const Fl_Tree_Item) -> core::ffi::c_int;
+    pub fn Fl_Tree_Item_children(self_: *const Fl_Tree_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_child(
-        self_: *const Fl_Tree_Item,
-        t: core::ffi::c_int,
-    ) -> *const Fl_Tree_Item;
+    pub fn Fl_Tree_Item_child(self_: *const Fl_Tree_Item, t: cty::c_int) -> *const Fl_Tree_Item;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_has_children(self_: *const Fl_Tree_Item) -> core::ffi::c_int;
+    pub fn Fl_Tree_Item_has_children(self_: *const Fl_Tree_Item) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_Item_find_child(
         self_: *mut Fl_Tree_Item,
-        name: *const core::ffi::c_char,
-    ) -> core::ffi::c_int;
+        name: *const cty::c_char,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_Item_remove_child(
         self_: *mut Fl_Tree_Item,
-        new_label: *const core::ffi::c_char,
-    ) -> core::ffi::c_int;
+        new_label: *const cty::c_char,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_Item_clear_children(self_: *mut Fl_Tree_Item);
@@ -930,12 +897,12 @@ extern "C" {
         self_: *mut Fl_Tree_Item,
         a: *mut Fl_Tree_Item,
         b: *mut Fl_Tree_Item,
-    ) -> core::ffi::c_int;
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_Item_find_child_item(
         self_: *const Fl_Tree_Item,
-        name: *const core::ffi::c_char,
+        name: *const cty::c_char,
     ) -> *const Fl_Tree_Item;
 }
 extern "C" {
@@ -952,46 +919,39 @@ extern "C" {
     ) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_deparent(
-        self_: *mut Fl_Tree_Item,
-        index: core::ffi::c_int,
-    ) -> *mut Fl_Tree_Item;
+    pub fn Fl_Tree_Item_deparent(self_: *mut Fl_Tree_Item, index: cty::c_int) -> *mut Fl_Tree_Item;
 }
 extern "C" {
     pub fn Fl_Tree_Item_reparent(
         self_: *mut Fl_Tree_Item,
         newchild: *mut Fl_Tree_Item,
-        index: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        index: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_Item_move(
         self_: *mut Fl_Tree_Item,
-        to: core::ffi::c_int,
-        from: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        to: cty::c_int,
+        from: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_move_above(
-        self_: *mut Fl_Tree_Item,
-        item: *mut Fl_Tree_Item,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Tree_Item_move_above(self_: *mut Fl_Tree_Item, item: *mut Fl_Tree_Item)
+        -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_move_below(
-        self_: *mut Fl_Tree_Item,
-        item: *mut Fl_Tree_Item,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Tree_Item_move_below(self_: *mut Fl_Tree_Item, item: *mut Fl_Tree_Item)
+        -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_Item_move_into(
         self_: *mut Fl_Tree_Item,
         item: *mut Fl_Tree_Item,
-        pos: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        pos: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_depth(self_: *const Fl_Tree_Item) -> core::ffi::c_int;
+    pub fn Fl_Tree_Item_depth(self_: *const Fl_Tree_Item) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_Item_prev(self_: *mut Fl_Tree_Item) -> *mut Fl_Tree_Item;
@@ -1006,7 +966,7 @@ extern "C" {
     pub fn Fl_Tree_Item_prev_sibling(self_: *mut Fl_Tree_Item) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_update_prev_next(self_: *mut Fl_Tree_Item, index: core::ffi::c_int);
+    pub fn Fl_Tree_Item_update_prev_next(self_: *mut Fl_Tree_Item, index: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Tree_Item_parent(self_: *const Fl_Tree_Item) -> *const Fl_Tree_Item;
@@ -1024,80 +984,76 @@ extern "C" {
     pub fn Fl_Tree_Item_close(self_: *mut Fl_Tree_Item);
 }
 extern "C" {
-    pub fn Fl_Tree_Item_is_open(self_: *const Fl_Tree_Item) -> core::ffi::c_int;
+    pub fn Fl_Tree_Item_is_open(self_: *const Fl_Tree_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_is_close(self_: *const Fl_Tree_Item) -> core::ffi::c_int;
+    pub fn Fl_Tree_Item_is_close(self_: *const Fl_Tree_Item) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_Item_open_toggle(self_: *mut Fl_Tree_Item);
 }
 extern "C" {
-    pub fn Fl_Tree_Item_select(self_: *mut Fl_Tree_Item, val: core::ffi::c_int);
+    pub fn Fl_Tree_Item_select(self_: *mut Fl_Tree_Item, val: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Tree_Item_select_toggle(self_: *mut Fl_Tree_Item);
 }
 extern "C" {
-    pub fn Fl_Tree_Item_select_all(self_: *mut Fl_Tree_Item) -> core::ffi::c_int;
+    pub fn Fl_Tree_Item_select_all(self_: *mut Fl_Tree_Item) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_Item_deselect(self_: *mut Fl_Tree_Item);
 }
 extern "C" {
-    pub fn Fl_Tree_Item_deselect_all(self_: *mut Fl_Tree_Item) -> core::ffi::c_int;
+    pub fn Fl_Tree_Item_deselect_all(self_: *mut Fl_Tree_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_is_root(self_: *const Fl_Tree_Item) -> core::ffi::c_int;
+    pub fn Fl_Tree_Item_is_root(self_: *const Fl_Tree_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_is_visible(self_: *const Fl_Tree_Item) -> core::ffi::c_int;
+    pub fn Fl_Tree_Item_is_visible(self_: *const Fl_Tree_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_is_active(self_: *const Fl_Tree_Item) -> core::ffi::c_char;
+    pub fn Fl_Tree_Item_is_active(self_: *const Fl_Tree_Item) -> cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_is_activated(self_: *const Fl_Tree_Item) -> core::ffi::c_char;
+    pub fn Fl_Tree_Item_is_activated(self_: *const Fl_Tree_Item) -> cty::c_char;
 }
 extern "C" {
     pub fn Fl_Tree_Item_deactivate(self_: *mut Fl_Tree_Item);
 }
 extern "C" {
-    pub fn Fl_Tree_Item_activate(self_: *mut Fl_Tree_Item, val: core::ffi::c_int);
+    pub fn Fl_Tree_Item_activate(self_: *mut Fl_Tree_Item, val: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Tree_Item_is_selected(self_: *const Fl_Tree_Item) -> core::ffi::c_char;
+    pub fn Fl_Tree_Item_is_selected(self_: *const Fl_Tree_Item) -> cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_Array_total(self_: *const Fl_Tree_Item_Array) -> core::ffi::c_int;
+    pub fn Fl_Tree_Item_Array_total(self_: *const Fl_Tree_Item_Array) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_Array_swap(
-        self_: *mut Fl_Tree_Item_Array,
-        ax: core::ffi::c_int,
-        bx: core::ffi::c_int,
-    );
+    pub fn Fl_Tree_Item_Array_swap(self_: *mut Fl_Tree_Item_Array, ax: cty::c_int, bx: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Tree_Item_Array_move(
         self_: *mut Fl_Tree_Item_Array,
-        to: core::ffi::c_int,
-        from: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        to: cty::c_int,
+        from: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_Item_Array_deparent(
         self_: *mut Fl_Tree_Item_Array,
-        pos: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        pos: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_Item_Array_reparent(
         self_: *mut Fl_Tree_Item_Array,
         item: *mut Fl_Tree_Item,
         newparent: *mut Fl_Tree_Item,
-        pos: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        pos: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_Item_Array_clear(self_: *mut Fl_Tree_Item_Array);
@@ -1108,38 +1064,38 @@ extern "C" {
 extern "C" {
     pub fn Fl_Tree_Item_Array_insert(
         self_: *mut Fl_Tree_Item_Array,
-        pos: core::ffi::c_int,
+        pos: cty::c_int,
         new_item: *mut Fl_Tree_Item,
     );
 }
 extern "C" {
     pub fn Fl_Tree_Item_Array_replace(
         self_: *mut Fl_Tree_Item_Array,
-        pos: core::ffi::c_int,
+        pos: cty::c_int,
         new_item: *mut Fl_Tree_Item,
     );
 }
 extern "C" {
-    pub fn Fl_Tree_Item_Array_remove(self_: *mut Fl_Tree_Item_Array, index: core::ffi::c_int);
+    pub fn Fl_Tree_Item_Array_remove(self_: *mut Fl_Tree_Item_Array, index: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Tree_Item_Array_remove_item(
         self_: *mut Fl_Tree_Item_Array,
         item: *mut Fl_Tree_Item,
-    ) -> core::ffi::c_int;
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_Item_Array_at(
         self_: *mut Fl_Tree_Item_Array,
-        index: core::ffi::c_int,
+        index: cty::c_int,
     ) -> *mut Fl_Tree_Item;
 }
 extern "C" {
     pub fn Fl_Tree_Item_Array_delete(self_: *mut Fl_Tree_Item_Array);
 }
 extern "C" {
-    pub fn Fl_Tree_Item_usericon(self_: *const Fl_Tree_Item) -> *mut core::ffi::c_void;
+    pub fn Fl_Tree_Item_usericon(self_: *const Fl_Tree_Item) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Tree_Item_set_usericon(self_: *mut Fl_Tree_Item, val: *mut core::ffi::c_void);
+    pub fn Fl_Tree_Item_set_usericon(self_: *mut Fl_Tree_Item, val: *mut cty::c_void);
 }

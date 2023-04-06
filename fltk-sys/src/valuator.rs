@@ -5,19 +5,17 @@
 pub struct Fl_Widget {
     _unused: [u8; 0],
 }
-pub type Fl_Callback = ::core::option::Option<
-    unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
->;
+pub type Fl_Callback =
+    ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void)>;
 pub type custom_handler_callback = ::core::option::Option<
     unsafe extern "C" fn(
         arg1: *mut Fl_Widget,
-        arg2: core::ffi::c_int,
-        arg3: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int,
+        arg2: cty::c_int,
+        arg3: *mut cty::c_void,
+    ) -> cty::c_int,
 >;
-pub type custom_draw_callback = ::core::option::Option<
-    unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
->;
+pub type custom_draw_callback =
+    ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void)>;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Slider {
@@ -25,30 +23,30 @@ pub struct Fl_Slider {
 }
 extern "C" {
     pub fn Fl_Slider_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Slider;
 }
 extern "C" {
-    pub fn Fl_Slider_x(arg1: *mut Fl_Slider) -> core::ffi::c_int;
+    pub fn Fl_Slider_x(arg1: *mut Fl_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Slider_y(arg1: *mut Fl_Slider) -> core::ffi::c_int;
+    pub fn Fl_Slider_y(arg1: *mut Fl_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Slider_width(arg1: *mut Fl_Slider) -> core::ffi::c_int;
+    pub fn Fl_Slider_width(arg1: *mut Fl_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Slider_height(arg1: *mut Fl_Slider) -> core::ffi::c_int;
+    pub fn Fl_Slider_height(arg1: *mut Fl_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Slider_label(arg1: *mut Fl_Slider) -> *const core::ffi::c_char;
+    pub fn Fl_Slider_label(arg1: *mut Fl_Slider) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Slider_set_label(arg1: *mut Fl_Slider, title: *const core::ffi::c_char);
+    pub fn Fl_Slider_set_label(arg1: *mut Fl_Slider, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Slider_redraw(arg1: *mut Fl_Slider);
@@ -71,78 +69,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Slider_resize(
         arg1: *mut Fl_Slider,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Slider_widget_resize(
         arg1: *mut Fl_Slider,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Slider_tooltip(arg1: *mut Fl_Slider) -> *const core::ffi::c_char;
+    pub fn Fl_Slider_tooltip(arg1: *mut Fl_Slider) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Slider_set_tooltip(arg1: *mut Fl_Slider, txt: *const core::ffi::c_char);
+    pub fn Fl_Slider_set_tooltip(arg1: *mut Fl_Slider, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Slider_get_type(arg1: *mut Fl_Slider) -> core::ffi::c_int;
+    pub fn Fl_Slider_get_type(arg1: *mut Fl_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Slider_set_type(arg1: *mut Fl_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Slider_set_type(arg1: *mut Fl_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Slider_color(arg1: *mut Fl_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Slider_color(arg1: *mut Fl_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Slider_set_color(arg1: *mut Fl_Slider, color: core::ffi::c_uint);
+    pub fn Fl_Slider_set_color(arg1: *mut Fl_Slider, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Slider_measure_label(
         arg1: *const Fl_Slider,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Slider_label_color(arg1: *mut Fl_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Slider_label_color(arg1: *mut Fl_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Slider_set_label_color(arg1: *mut Fl_Slider, color: core::ffi::c_uint);
+    pub fn Fl_Slider_set_label_color(arg1: *mut Fl_Slider, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Slider_label_font(arg1: *mut Fl_Slider) -> core::ffi::c_int;
+    pub fn Fl_Slider_label_font(arg1: *mut Fl_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Slider_set_label_font(arg1: *mut Fl_Slider, font: core::ffi::c_int);
+    pub fn Fl_Slider_set_label_font(arg1: *mut Fl_Slider, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Slider_label_size(arg1: *mut Fl_Slider) -> core::ffi::c_int;
+    pub fn Fl_Slider_label_size(arg1: *mut Fl_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Slider_set_label_size(arg1: *mut Fl_Slider, sz: core::ffi::c_int);
+    pub fn Fl_Slider_set_label_size(arg1: *mut Fl_Slider, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Slider_label_type(arg1: *mut Fl_Slider) -> core::ffi::c_int;
+    pub fn Fl_Slider_label_type(arg1: *mut Fl_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Slider_set_label_type(arg1: *mut Fl_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Slider_set_label_type(arg1: *mut Fl_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Slider_box(arg1: *mut Fl_Slider) -> core::ffi::c_int;
+    pub fn Fl_Slider_box(arg1: *mut Fl_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Slider_set_box(arg1: *mut Fl_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Slider_set_box(arg1: *mut Fl_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Slider_changed(arg1: *mut Fl_Slider) -> core::ffi::c_int;
+    pub fn Fl_Slider_changed(arg1: *mut Fl_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Slider_set_changed(arg1: *mut Fl_Slider);
@@ -151,33 +149,29 @@ extern "C" {
     pub fn Fl_Slider_clear_changed(arg1: *mut Fl_Slider);
 }
 extern "C" {
-    pub fn Fl_Slider_align(arg1: *mut Fl_Slider) -> core::ffi::c_int;
+    pub fn Fl_Slider_align(arg1: *mut Fl_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Slider_set_align(arg1: *mut Fl_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Slider_set_align(arg1: *mut Fl_Slider, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Slider_delete(arg1: *mut Fl_Slider);
 }
 extern "C" {
-    pub fn Fl_Slider_set_image(arg1: *mut Fl_Slider, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Slider_set_image(arg1: *mut Fl_Slider, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Slider_handle(
         self_: *mut Fl_Slider,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Slider_handle_event(self_: *mut Fl_Slider, event: core::ffi::c_int);
+    pub fn Fl_Slider_handle_event(self_: *mut Fl_Slider, event: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Slider_draw(
-        self_: *mut Fl_Slider,
-        cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Slider_draw(self_: *mut Fl_Slider, cb: custom_draw_callback, data: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Slider_resize_callback(
@@ -185,57 +179,54 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Slider_set_when(arg1: *mut Fl_Slider, arg2: core::ffi::c_int);
+    pub fn Fl_Slider_set_when(arg1: *mut Fl_Slider, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Slider_when(arg1: *const Fl_Slider) -> core::ffi::c_int;
+    pub fn Fl_Slider_when(arg1: *const Fl_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Slider_image(arg1: *const Fl_Slider) -> *const core::ffi::c_void;
+    pub fn Fl_Slider_image(arg1: *const Fl_Slider) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Slider_parent(self_: *const Fl_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Slider_parent(self_: *const Fl_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Slider_selection_color(arg1: *mut Fl_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Slider_selection_color(arg1: *mut Fl_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Slider_set_selection_color(arg1: *mut Fl_Slider, color: core::ffi::c_uint);
+    pub fn Fl_Slider_set_selection_color(arg1: *mut Fl_Slider, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Slider_do_callback(arg1: *mut Fl_Slider);
 }
 extern "C" {
-    pub fn Fl_Slider_inside(
-        self_: *const Fl_Slider,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Slider_inside(self_: *const Fl_Slider, arg1: *mut cty::c_void) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Slider_window(arg1: *const Fl_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Slider_window(arg1: *const Fl_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Slider_top_window(arg1: *const Fl_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Slider_top_window(arg1: *const Fl_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Slider_takes_events(arg1: *const Fl_Slider) -> core::ffi::c_int;
+    pub fn Fl_Slider_takes_events(arg1: *const Fl_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Slider_user_data(arg1: *const Fl_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Slider_user_data(arg1: *const Fl_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Slider_take_focus(self_: *mut Fl_Slider) -> core::ffi::c_int;
+    pub fn Fl_Slider_take_focus(self_: *mut Fl_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Slider_set_visible_focus(self_: *mut Fl_Slider);
@@ -244,81 +235,77 @@ extern "C" {
     pub fn Fl_Slider_clear_visible_focus(self_: *mut Fl_Slider);
 }
 extern "C" {
-    pub fn Fl_Slider_visible_focus(self_: *mut Fl_Slider, v: core::ffi::c_int);
+    pub fn Fl_Slider_visible_focus(self_: *mut Fl_Slider, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Slider_has_visible_focus(self_: *mut Fl_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Slider_has_visible_focus(self_: *mut Fl_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Slider_set_user_data(arg1: *mut Fl_Slider, data: *mut core::ffi::c_void);
+    pub fn Fl_Slider_set_user_data(arg1: *mut Fl_Slider, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Slider_draw_data(self_: *const Fl_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Slider_draw_data(self_: *const Fl_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Slider_handle_data(self_: *const Fl_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Slider_handle_data(self_: *const Fl_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Slider_set_draw_data(self_: *mut Fl_Slider, data: *mut core::ffi::c_void);
+    pub fn Fl_Slider_set_draw_data(self_: *mut Fl_Slider, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Slider_set_handle_data(self_: *mut Fl_Slider, data: *mut core::ffi::c_void);
+    pub fn Fl_Slider_set_handle_data(self_: *mut Fl_Slider, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Slider_damage(self_: *const Fl_Slider) -> core::ffi::c_uchar;
+    pub fn Fl_Slider_damage(self_: *const Fl_Slider) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Slider_set_damage(self_: *mut Fl_Slider, flag: core::ffi::c_uchar);
+    pub fn Fl_Slider_set_damage(self_: *mut Fl_Slider, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Slider_set_damage_area(
         self_: *mut Fl_Slider,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Slider_clear_damage(self_: *mut Fl_Slider);
 }
 extern "C" {
-    pub fn Fl_Slider_as_window(self_: *mut Fl_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Slider_as_window(self_: *mut Fl_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Slider_as_group(self_: *mut Fl_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Slider_as_group(self_: *mut Fl_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Slider_set_deimage(arg1: *mut Fl_Slider, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Slider_set_deimage(arg1: *mut Fl_Slider, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Slider_deimage(arg1: *const Fl_Slider) -> *const core::ffi::c_void;
+    pub fn Fl_Slider_deimage(arg1: *const Fl_Slider) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Slider_set_callback(
-        arg1: *mut Fl_Slider,
-        arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Slider_set_callback(arg1: *mut Fl_Slider, arg2: Fl_Callback, arg3: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Slider_set_deleter(
         arg1: *mut Fl_Slider,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Slider_visible(self_: *const Fl_Slider) -> core::ffi::c_int;
+    pub fn Fl_Slider_visible(self_: *const Fl_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Slider_visible_r(self_: *const Fl_Slider) -> core::ffi::c_int;
+    pub fn Fl_Slider_visible_r(self_: *const Fl_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Slider_active(self_: *const Fl_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Slider_active(self_: *const Fl_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Slider_active_r(self_: *const Fl_Slider) -> core::ffi::c_int;
+    pub fn Fl_Slider_active_r(self_: *const Fl_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Slider_callback(self_: *const Fl_Slider) -> Fl_Callback;
@@ -327,16 +314,16 @@ extern "C" {
     pub fn Fl_Slider_set_deletion_callback(
         self_: *mut Fl_Slider,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Slider_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Slider;
 }
 extern "C" {
-    pub fn Fl_Slider_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Slider_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Slider_slider_size(self_: *const Fl_Slider) -> f32;
@@ -345,10 +332,10 @@ extern "C" {
     pub fn Fl_Slider_set_slider_size(self_: *mut Fl_Slider, v: f32);
 }
 extern "C" {
-    pub fn Fl_Slider_slider_box(self_: *const Fl_Slider) -> core::ffi::c_int;
+    pub fn Fl_Slider_slider_box(self_: *const Fl_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Slider_set_slider_box(self_: *mut Fl_Slider, c: core::ffi::c_int);
+    pub fn Fl_Slider_set_slider_box(self_: *mut Fl_Slider, c: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Slider_set_bounds(arg1: *mut Fl_Slider, a: f64, b: f64);
@@ -369,23 +356,22 @@ extern "C" {
     pub fn Fl_Slider_set_range(arg1: *mut Fl_Slider, a: f64, b: f64);
 }
 extern "C" {
-    pub fn Fl_Slider_set_step(arg1: *mut Fl_Slider, a: f64, b: core::ffi::c_int);
+    pub fn Fl_Slider_set_step(arg1: *mut Fl_Slider, a: f64, b: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Slider_step(arg1: *mut Fl_Slider) -> f64;
 }
 extern "C" {
-    pub fn Fl_Slider_set_precision(arg1: *mut Fl_Slider, digits: core::ffi::c_int);
+    pub fn Fl_Slider_set_precision(arg1: *mut Fl_Slider, digits: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Slider_value(arg1: *mut Fl_Slider) -> f64;
 }
 extern "C" {
-    pub fn Fl_Slider_set_value(arg1: *mut Fl_Slider, arg2: f64) -> core::ffi::c_int;
+    pub fn Fl_Slider_set_value(arg1: *mut Fl_Slider, arg2: f64) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Slider_format(arg1: *mut Fl_Slider, arg2: *mut core::ffi::c_char)
-        -> core::ffi::c_int;
+    pub fn Fl_Slider_format(arg1: *mut Fl_Slider, arg2: *mut cty::c_char) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Slider_round(arg1: *mut Fl_Slider, arg2: f64) -> f64;
@@ -394,7 +380,7 @@ extern "C" {
     pub fn Fl_Slider_clamp(arg1: *mut Fl_Slider, arg2: f64) -> f64;
 }
 extern "C" {
-    pub fn Fl_Slider_increment(arg1: *mut Fl_Slider, arg2: f64, arg3: core::ffi::c_int) -> f64;
+    pub fn Fl_Slider_increment(arg1: *mut Fl_Slider, arg2: f64, arg3: cty::c_int) -> f64;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -403,30 +389,30 @@ pub struct Fl_Nice_Slider {
 }
 extern "C" {
     pub fn Fl_Nice_Slider_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Nice_Slider;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_x(arg1: *mut Fl_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Nice_Slider_x(arg1: *mut Fl_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_y(arg1: *mut Fl_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Nice_Slider_y(arg1: *mut Fl_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_width(arg1: *mut Fl_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Nice_Slider_width(arg1: *mut Fl_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_height(arg1: *mut Fl_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Nice_Slider_height(arg1: *mut Fl_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_label(arg1: *mut Fl_Nice_Slider) -> *const core::ffi::c_char;
+    pub fn Fl_Nice_Slider_label(arg1: *mut Fl_Nice_Slider) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_set_label(arg1: *mut Fl_Nice_Slider, title: *const core::ffi::c_char);
+    pub fn Fl_Nice_Slider_set_label(arg1: *mut Fl_Nice_Slider, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Nice_Slider_redraw(arg1: *mut Fl_Nice_Slider);
@@ -449,78 +435,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Nice_Slider_resize(
         arg1: *mut Fl_Nice_Slider,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Nice_Slider_widget_resize(
         arg1: *mut Fl_Nice_Slider,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_tooltip(arg1: *mut Fl_Nice_Slider) -> *const core::ffi::c_char;
+    pub fn Fl_Nice_Slider_tooltip(arg1: *mut Fl_Nice_Slider) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_set_tooltip(arg1: *mut Fl_Nice_Slider, txt: *const core::ffi::c_char);
+    pub fn Fl_Nice_Slider_set_tooltip(arg1: *mut Fl_Nice_Slider, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_get_type(arg1: *mut Fl_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Nice_Slider_get_type(arg1: *mut Fl_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_set_type(arg1: *mut Fl_Nice_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Nice_Slider_set_type(arg1: *mut Fl_Nice_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_color(arg1: *mut Fl_Nice_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Nice_Slider_color(arg1: *mut Fl_Nice_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_set_color(arg1: *mut Fl_Nice_Slider, color: core::ffi::c_uint);
+    pub fn Fl_Nice_Slider_set_color(arg1: *mut Fl_Nice_Slider, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Nice_Slider_measure_label(
         arg1: *const Fl_Nice_Slider,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_label_color(arg1: *mut Fl_Nice_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Nice_Slider_label_color(arg1: *mut Fl_Nice_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_set_label_color(arg1: *mut Fl_Nice_Slider, color: core::ffi::c_uint);
+    pub fn Fl_Nice_Slider_set_label_color(arg1: *mut Fl_Nice_Slider, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_label_font(arg1: *mut Fl_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Nice_Slider_label_font(arg1: *mut Fl_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_set_label_font(arg1: *mut Fl_Nice_Slider, font: core::ffi::c_int);
+    pub fn Fl_Nice_Slider_set_label_font(arg1: *mut Fl_Nice_Slider, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_label_size(arg1: *mut Fl_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Nice_Slider_label_size(arg1: *mut Fl_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_set_label_size(arg1: *mut Fl_Nice_Slider, sz: core::ffi::c_int);
+    pub fn Fl_Nice_Slider_set_label_size(arg1: *mut Fl_Nice_Slider, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_label_type(arg1: *mut Fl_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Nice_Slider_label_type(arg1: *mut Fl_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_set_label_type(arg1: *mut Fl_Nice_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Nice_Slider_set_label_type(arg1: *mut Fl_Nice_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_box(arg1: *mut Fl_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Nice_Slider_box(arg1: *mut Fl_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_set_box(arg1: *mut Fl_Nice_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Nice_Slider_set_box(arg1: *mut Fl_Nice_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_changed(arg1: *mut Fl_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Nice_Slider_changed(arg1: *mut Fl_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Nice_Slider_set_changed(arg1: *mut Fl_Nice_Slider);
@@ -529,32 +515,32 @@ extern "C" {
     pub fn Fl_Nice_Slider_clear_changed(arg1: *mut Fl_Nice_Slider);
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_align(arg1: *mut Fl_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Nice_Slider_align(arg1: *mut Fl_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_set_align(arg1: *mut Fl_Nice_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Nice_Slider_set_align(arg1: *mut Fl_Nice_Slider, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Nice_Slider_delete(arg1: *mut Fl_Nice_Slider);
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_set_image(arg1: *mut Fl_Nice_Slider, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Nice_Slider_set_image(arg1: *mut Fl_Nice_Slider, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Nice_Slider_handle(
         self_: *mut Fl_Nice_Slider,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_handle_event(self_: *mut Fl_Nice_Slider, event: core::ffi::c_int);
+    pub fn Fl_Nice_Slider_handle_event(self_: *mut Fl_Nice_Slider, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Nice_Slider_draw(
         self_: *mut Fl_Nice_Slider,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -563,33 +549,33 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_set_when(arg1: *mut Fl_Nice_Slider, arg2: core::ffi::c_int);
+    pub fn Fl_Nice_Slider_set_when(arg1: *mut Fl_Nice_Slider, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_when(arg1: *const Fl_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Nice_Slider_when(arg1: *const Fl_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_image(arg1: *const Fl_Nice_Slider) -> *const core::ffi::c_void;
+    pub fn Fl_Nice_Slider_image(arg1: *const Fl_Nice_Slider) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_parent(self_: *const Fl_Nice_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Nice_Slider_parent(self_: *const Fl_Nice_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_selection_color(arg1: *mut Fl_Nice_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Nice_Slider_selection_color(arg1: *mut Fl_Nice_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_set_selection_color(arg1: *mut Fl_Nice_Slider, color: core::ffi::c_uint);
+    pub fn Fl_Nice_Slider_set_selection_color(arg1: *mut Fl_Nice_Slider, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Nice_Slider_do_callback(arg1: *mut Fl_Nice_Slider);
@@ -597,23 +583,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Nice_Slider_inside(
         self_: *const Fl_Nice_Slider,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_window(arg1: *const Fl_Nice_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Nice_Slider_window(arg1: *const Fl_Nice_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_top_window(arg1: *const Fl_Nice_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Nice_Slider_top_window(arg1: *const Fl_Nice_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_takes_events(arg1: *const Fl_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Nice_Slider_takes_events(arg1: *const Fl_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_user_data(arg1: *const Fl_Nice_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Nice_Slider_user_data(arg1: *const Fl_Nice_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_take_focus(self_: *mut Fl_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Nice_Slider_take_focus(self_: *mut Fl_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Nice_Slider_set_visible_focus(self_: *mut Fl_Nice_Slider);
@@ -622,81 +608,81 @@ extern "C" {
     pub fn Fl_Nice_Slider_clear_visible_focus(self_: *mut Fl_Nice_Slider);
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_visible_focus(self_: *mut Fl_Nice_Slider, v: core::ffi::c_int);
+    pub fn Fl_Nice_Slider_visible_focus(self_: *mut Fl_Nice_Slider, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_has_visible_focus(self_: *mut Fl_Nice_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Nice_Slider_has_visible_focus(self_: *mut Fl_Nice_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_set_user_data(arg1: *mut Fl_Nice_Slider, data: *mut core::ffi::c_void);
+    pub fn Fl_Nice_Slider_set_user_data(arg1: *mut Fl_Nice_Slider, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_draw_data(self_: *const Fl_Nice_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Nice_Slider_draw_data(self_: *const Fl_Nice_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_handle_data(self_: *const Fl_Nice_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Nice_Slider_handle_data(self_: *const Fl_Nice_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_set_draw_data(self_: *mut Fl_Nice_Slider, data: *mut core::ffi::c_void);
+    pub fn Fl_Nice_Slider_set_draw_data(self_: *mut Fl_Nice_Slider, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_set_handle_data(self_: *mut Fl_Nice_Slider, data: *mut core::ffi::c_void);
+    pub fn Fl_Nice_Slider_set_handle_data(self_: *mut Fl_Nice_Slider, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_damage(self_: *const Fl_Nice_Slider) -> core::ffi::c_uchar;
+    pub fn Fl_Nice_Slider_damage(self_: *const Fl_Nice_Slider) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_set_damage(self_: *mut Fl_Nice_Slider, flag: core::ffi::c_uchar);
+    pub fn Fl_Nice_Slider_set_damage(self_: *mut Fl_Nice_Slider, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Nice_Slider_set_damage_area(
         self_: *mut Fl_Nice_Slider,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Nice_Slider_clear_damage(self_: *mut Fl_Nice_Slider);
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_as_window(self_: *mut Fl_Nice_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Nice_Slider_as_window(self_: *mut Fl_Nice_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_as_group(self_: *mut Fl_Nice_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Nice_Slider_as_group(self_: *mut Fl_Nice_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_set_deimage(arg1: *mut Fl_Nice_Slider, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Nice_Slider_set_deimage(arg1: *mut Fl_Nice_Slider, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_deimage(arg1: *const Fl_Nice_Slider) -> *const core::ffi::c_void;
+    pub fn Fl_Nice_Slider_deimage(arg1: *const Fl_Nice_Slider) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Nice_Slider_set_callback(
         arg1: *mut Fl_Nice_Slider,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Nice_Slider_set_deleter(
         arg1: *mut Fl_Nice_Slider,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_visible(self_: *const Fl_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Nice_Slider_visible(self_: *const Fl_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_visible_r(self_: *const Fl_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Nice_Slider_visible_r(self_: *const Fl_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_active(self_: *const Fl_Nice_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Nice_Slider_active(self_: *const Fl_Nice_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_active_r(self_: *const Fl_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Nice_Slider_active_r(self_: *const Fl_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Nice_Slider_callback(self_: *const Fl_Nice_Slider) -> Fl_Callback;
@@ -705,16 +691,16 @@ extern "C" {
     pub fn Fl_Nice_Slider_set_deletion_callback(
         self_: *mut Fl_Nice_Slider,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Nice_Slider_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Nice_Slider;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Nice_Slider_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Nice_Slider_set_bounds(arg1: *mut Fl_Nice_Slider, a: f64, b: f64);
@@ -735,25 +721,22 @@ extern "C" {
     pub fn Fl_Nice_Slider_set_range(arg1: *mut Fl_Nice_Slider, a: f64, b: f64);
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_set_step(arg1: *mut Fl_Nice_Slider, a: f64, b: core::ffi::c_int);
+    pub fn Fl_Nice_Slider_set_step(arg1: *mut Fl_Nice_Slider, a: f64, b: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Nice_Slider_step(arg1: *mut Fl_Nice_Slider) -> f64;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_set_precision(arg1: *mut Fl_Nice_Slider, digits: core::ffi::c_int);
+    pub fn Fl_Nice_Slider_set_precision(arg1: *mut Fl_Nice_Slider, digits: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Nice_Slider_value(arg1: *mut Fl_Nice_Slider) -> f64;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_set_value(arg1: *mut Fl_Nice_Slider, arg2: f64) -> core::ffi::c_int;
+    pub fn Fl_Nice_Slider_set_value(arg1: *mut Fl_Nice_Slider, arg2: f64) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_format(
-        arg1: *mut Fl_Nice_Slider,
-        arg2: *mut core::ffi::c_char,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Nice_Slider_format(arg1: *mut Fl_Nice_Slider, arg2: *mut cty::c_char) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Nice_Slider_round(arg1: *mut Fl_Nice_Slider, arg2: f64) -> f64;
@@ -762,11 +745,7 @@ extern "C" {
     pub fn Fl_Nice_Slider_clamp(arg1: *mut Fl_Nice_Slider, arg2: f64) -> f64;
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_increment(
-        arg1: *mut Fl_Nice_Slider,
-        arg2: f64,
-        arg3: core::ffi::c_int,
-    ) -> f64;
+    pub fn Fl_Nice_Slider_increment(arg1: *mut Fl_Nice_Slider, arg2: f64, arg3: cty::c_int) -> f64;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -775,30 +754,30 @@ pub struct Fl_Counter {
 }
 extern "C" {
     pub fn Fl_Counter_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Counter;
 }
 extern "C" {
-    pub fn Fl_Counter_x(arg1: *mut Fl_Counter) -> core::ffi::c_int;
+    pub fn Fl_Counter_x(arg1: *mut Fl_Counter) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Counter_y(arg1: *mut Fl_Counter) -> core::ffi::c_int;
+    pub fn Fl_Counter_y(arg1: *mut Fl_Counter) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Counter_width(arg1: *mut Fl_Counter) -> core::ffi::c_int;
+    pub fn Fl_Counter_width(arg1: *mut Fl_Counter) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Counter_height(arg1: *mut Fl_Counter) -> core::ffi::c_int;
+    pub fn Fl_Counter_height(arg1: *mut Fl_Counter) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Counter_label(arg1: *mut Fl_Counter) -> *const core::ffi::c_char;
+    pub fn Fl_Counter_label(arg1: *mut Fl_Counter) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Counter_set_label(arg1: *mut Fl_Counter, title: *const core::ffi::c_char);
+    pub fn Fl_Counter_set_label(arg1: *mut Fl_Counter, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Counter_redraw(arg1: *mut Fl_Counter);
@@ -821,78 +800,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Counter_resize(
         arg1: *mut Fl_Counter,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Counter_widget_resize(
         arg1: *mut Fl_Counter,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Counter_tooltip(arg1: *mut Fl_Counter) -> *const core::ffi::c_char;
+    pub fn Fl_Counter_tooltip(arg1: *mut Fl_Counter) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Counter_set_tooltip(arg1: *mut Fl_Counter, txt: *const core::ffi::c_char);
+    pub fn Fl_Counter_set_tooltip(arg1: *mut Fl_Counter, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Counter_get_type(arg1: *mut Fl_Counter) -> core::ffi::c_int;
+    pub fn Fl_Counter_get_type(arg1: *mut Fl_Counter) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Counter_set_type(arg1: *mut Fl_Counter, typ: core::ffi::c_int);
+    pub fn Fl_Counter_set_type(arg1: *mut Fl_Counter, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Counter_color(arg1: *mut Fl_Counter) -> core::ffi::c_uint;
+    pub fn Fl_Counter_color(arg1: *mut Fl_Counter) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Counter_set_color(arg1: *mut Fl_Counter, color: core::ffi::c_uint);
+    pub fn Fl_Counter_set_color(arg1: *mut Fl_Counter, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Counter_measure_label(
         arg1: *const Fl_Counter,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Counter_label_color(arg1: *mut Fl_Counter) -> core::ffi::c_uint;
+    pub fn Fl_Counter_label_color(arg1: *mut Fl_Counter) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Counter_set_label_color(arg1: *mut Fl_Counter, color: core::ffi::c_uint);
+    pub fn Fl_Counter_set_label_color(arg1: *mut Fl_Counter, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Counter_label_font(arg1: *mut Fl_Counter) -> core::ffi::c_int;
+    pub fn Fl_Counter_label_font(arg1: *mut Fl_Counter) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Counter_set_label_font(arg1: *mut Fl_Counter, font: core::ffi::c_int);
+    pub fn Fl_Counter_set_label_font(arg1: *mut Fl_Counter, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Counter_label_size(arg1: *mut Fl_Counter) -> core::ffi::c_int;
+    pub fn Fl_Counter_label_size(arg1: *mut Fl_Counter) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Counter_set_label_size(arg1: *mut Fl_Counter, sz: core::ffi::c_int);
+    pub fn Fl_Counter_set_label_size(arg1: *mut Fl_Counter, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Counter_label_type(arg1: *mut Fl_Counter) -> core::ffi::c_int;
+    pub fn Fl_Counter_label_type(arg1: *mut Fl_Counter) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Counter_set_label_type(arg1: *mut Fl_Counter, typ: core::ffi::c_int);
+    pub fn Fl_Counter_set_label_type(arg1: *mut Fl_Counter, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Counter_box(arg1: *mut Fl_Counter) -> core::ffi::c_int;
+    pub fn Fl_Counter_box(arg1: *mut Fl_Counter) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Counter_set_box(arg1: *mut Fl_Counter, typ: core::ffi::c_int);
+    pub fn Fl_Counter_set_box(arg1: *mut Fl_Counter, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Counter_changed(arg1: *mut Fl_Counter) -> core::ffi::c_int;
+    pub fn Fl_Counter_changed(arg1: *mut Fl_Counter) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Counter_set_changed(arg1: *mut Fl_Counter);
@@ -901,32 +880,32 @@ extern "C" {
     pub fn Fl_Counter_clear_changed(arg1: *mut Fl_Counter);
 }
 extern "C" {
-    pub fn Fl_Counter_align(arg1: *mut Fl_Counter) -> core::ffi::c_int;
+    pub fn Fl_Counter_align(arg1: *mut Fl_Counter) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Counter_set_align(arg1: *mut Fl_Counter, typ: core::ffi::c_int);
+    pub fn Fl_Counter_set_align(arg1: *mut Fl_Counter, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Counter_delete(arg1: *mut Fl_Counter);
 }
 extern "C" {
-    pub fn Fl_Counter_set_image(arg1: *mut Fl_Counter, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Counter_set_image(arg1: *mut Fl_Counter, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Counter_handle(
         self_: *mut Fl_Counter,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Counter_handle_event(self_: *mut Fl_Counter, event: core::ffi::c_int);
+    pub fn Fl_Counter_handle_event(self_: *mut Fl_Counter, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Counter_draw(
         self_: *mut Fl_Counter,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -935,57 +914,54 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Counter_set_when(arg1: *mut Fl_Counter, arg2: core::ffi::c_int);
+    pub fn Fl_Counter_set_when(arg1: *mut Fl_Counter, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Counter_when(arg1: *const Fl_Counter) -> core::ffi::c_int;
+    pub fn Fl_Counter_when(arg1: *const Fl_Counter) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Counter_image(arg1: *const Fl_Counter) -> *const core::ffi::c_void;
+    pub fn Fl_Counter_image(arg1: *const Fl_Counter) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Counter_parent(self_: *const Fl_Counter) -> *mut core::ffi::c_void;
+    pub fn Fl_Counter_parent(self_: *const Fl_Counter) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Counter_selection_color(arg1: *mut Fl_Counter) -> core::ffi::c_uint;
+    pub fn Fl_Counter_selection_color(arg1: *mut Fl_Counter) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Counter_set_selection_color(arg1: *mut Fl_Counter, color: core::ffi::c_uint);
+    pub fn Fl_Counter_set_selection_color(arg1: *mut Fl_Counter, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Counter_do_callback(arg1: *mut Fl_Counter);
 }
 extern "C" {
-    pub fn Fl_Counter_inside(
-        self_: *const Fl_Counter,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Counter_inside(self_: *const Fl_Counter, arg1: *mut cty::c_void) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Counter_window(arg1: *const Fl_Counter) -> *mut core::ffi::c_void;
+    pub fn Fl_Counter_window(arg1: *const Fl_Counter) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Counter_top_window(arg1: *const Fl_Counter) -> *mut core::ffi::c_void;
+    pub fn Fl_Counter_top_window(arg1: *const Fl_Counter) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Counter_takes_events(arg1: *const Fl_Counter) -> core::ffi::c_int;
+    pub fn Fl_Counter_takes_events(arg1: *const Fl_Counter) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Counter_user_data(arg1: *const Fl_Counter) -> *mut core::ffi::c_void;
+    pub fn Fl_Counter_user_data(arg1: *const Fl_Counter) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Counter_take_focus(self_: *mut Fl_Counter) -> core::ffi::c_int;
+    pub fn Fl_Counter_take_focus(self_: *mut Fl_Counter) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Counter_set_visible_focus(self_: *mut Fl_Counter);
@@ -994,81 +970,81 @@ extern "C" {
     pub fn Fl_Counter_clear_visible_focus(self_: *mut Fl_Counter);
 }
 extern "C" {
-    pub fn Fl_Counter_visible_focus(self_: *mut Fl_Counter, v: core::ffi::c_int);
+    pub fn Fl_Counter_visible_focus(self_: *mut Fl_Counter, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Counter_has_visible_focus(self_: *mut Fl_Counter) -> core::ffi::c_uint;
+    pub fn Fl_Counter_has_visible_focus(self_: *mut Fl_Counter) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Counter_set_user_data(arg1: *mut Fl_Counter, data: *mut core::ffi::c_void);
+    pub fn Fl_Counter_set_user_data(arg1: *mut Fl_Counter, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Counter_draw_data(self_: *const Fl_Counter) -> *mut core::ffi::c_void;
+    pub fn Fl_Counter_draw_data(self_: *const Fl_Counter) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Counter_handle_data(self_: *const Fl_Counter) -> *mut core::ffi::c_void;
+    pub fn Fl_Counter_handle_data(self_: *const Fl_Counter) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Counter_set_draw_data(self_: *mut Fl_Counter, data: *mut core::ffi::c_void);
+    pub fn Fl_Counter_set_draw_data(self_: *mut Fl_Counter, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Counter_set_handle_data(self_: *mut Fl_Counter, data: *mut core::ffi::c_void);
+    pub fn Fl_Counter_set_handle_data(self_: *mut Fl_Counter, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Counter_damage(self_: *const Fl_Counter) -> core::ffi::c_uchar;
+    pub fn Fl_Counter_damage(self_: *const Fl_Counter) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Counter_set_damage(self_: *mut Fl_Counter, flag: core::ffi::c_uchar);
+    pub fn Fl_Counter_set_damage(self_: *mut Fl_Counter, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Counter_set_damage_area(
         self_: *mut Fl_Counter,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Counter_clear_damage(self_: *mut Fl_Counter);
 }
 extern "C" {
-    pub fn Fl_Counter_as_window(self_: *mut Fl_Counter) -> *mut core::ffi::c_void;
+    pub fn Fl_Counter_as_window(self_: *mut Fl_Counter) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Counter_as_group(self_: *mut Fl_Counter) -> *mut core::ffi::c_void;
+    pub fn Fl_Counter_as_group(self_: *mut Fl_Counter) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Counter_set_deimage(arg1: *mut Fl_Counter, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Counter_set_deimage(arg1: *mut Fl_Counter, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Counter_deimage(arg1: *const Fl_Counter) -> *const core::ffi::c_void;
+    pub fn Fl_Counter_deimage(arg1: *const Fl_Counter) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Counter_set_callback(
         arg1: *mut Fl_Counter,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Counter_set_deleter(
         arg1: *mut Fl_Counter,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Counter_visible(self_: *const Fl_Counter) -> core::ffi::c_int;
+    pub fn Fl_Counter_visible(self_: *const Fl_Counter) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Counter_visible_r(self_: *const Fl_Counter) -> core::ffi::c_int;
+    pub fn Fl_Counter_visible_r(self_: *const Fl_Counter) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Counter_active(self_: *const Fl_Counter) -> core::ffi::c_uint;
+    pub fn Fl_Counter_active(self_: *const Fl_Counter) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Counter_active_r(self_: *const Fl_Counter) -> core::ffi::c_int;
+    pub fn Fl_Counter_active_r(self_: *const Fl_Counter) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Counter_callback(self_: *const Fl_Counter) -> Fl_Callback;
@@ -1077,16 +1053,16 @@ extern "C" {
     pub fn Fl_Counter_set_deletion_callback(
         self_: *mut Fl_Counter,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Counter_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Counter;
 }
 extern "C" {
-    pub fn Fl_Counter_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Counter_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Counter_set_bounds(arg1: *mut Fl_Counter, a: f64, b: f64);
@@ -1107,25 +1083,22 @@ extern "C" {
     pub fn Fl_Counter_set_range(arg1: *mut Fl_Counter, a: f64, b: f64);
 }
 extern "C" {
-    pub fn Fl_Counter_set_step(arg1: *mut Fl_Counter, a: f64, b: core::ffi::c_int);
+    pub fn Fl_Counter_set_step(arg1: *mut Fl_Counter, a: f64, b: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Counter_step(arg1: *mut Fl_Counter) -> f64;
 }
 extern "C" {
-    pub fn Fl_Counter_set_precision(arg1: *mut Fl_Counter, digits: core::ffi::c_int);
+    pub fn Fl_Counter_set_precision(arg1: *mut Fl_Counter, digits: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Counter_value(arg1: *mut Fl_Counter) -> f64;
 }
 extern "C" {
-    pub fn Fl_Counter_set_value(arg1: *mut Fl_Counter, arg2: f64) -> core::ffi::c_int;
+    pub fn Fl_Counter_set_value(arg1: *mut Fl_Counter, arg2: f64) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Counter_format(
-        arg1: *mut Fl_Counter,
-        arg2: *mut core::ffi::c_char,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Counter_format(arg1: *mut Fl_Counter, arg2: *mut cty::c_char) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Counter_round(arg1: *mut Fl_Counter, arg2: f64) -> f64;
@@ -1134,7 +1107,7 @@ extern "C" {
     pub fn Fl_Counter_clamp(arg1: *mut Fl_Counter, arg2: f64) -> f64;
 }
 extern "C" {
-    pub fn Fl_Counter_increment(arg1: *mut Fl_Counter, arg2: f64, arg3: core::ffi::c_int) -> f64;
+    pub fn Fl_Counter_increment(arg1: *mut Fl_Counter, arg2: f64, arg3: cty::c_int) -> f64;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1143,30 +1116,30 @@ pub struct Fl_Dial {
 }
 extern "C" {
     pub fn Fl_Dial_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Dial;
 }
 extern "C" {
-    pub fn Fl_Dial_x(arg1: *mut Fl_Dial) -> core::ffi::c_int;
+    pub fn Fl_Dial_x(arg1: *mut Fl_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Dial_y(arg1: *mut Fl_Dial) -> core::ffi::c_int;
+    pub fn Fl_Dial_y(arg1: *mut Fl_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Dial_width(arg1: *mut Fl_Dial) -> core::ffi::c_int;
+    pub fn Fl_Dial_width(arg1: *mut Fl_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Dial_height(arg1: *mut Fl_Dial) -> core::ffi::c_int;
+    pub fn Fl_Dial_height(arg1: *mut Fl_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Dial_label(arg1: *mut Fl_Dial) -> *const core::ffi::c_char;
+    pub fn Fl_Dial_label(arg1: *mut Fl_Dial) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Dial_set_label(arg1: *mut Fl_Dial, title: *const core::ffi::c_char);
+    pub fn Fl_Dial_set_label(arg1: *mut Fl_Dial, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Dial_redraw(arg1: *mut Fl_Dial);
@@ -1189,78 +1162,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Dial_resize(
         arg1: *mut Fl_Dial,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Dial_widget_resize(
         arg1: *mut Fl_Dial,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Dial_tooltip(arg1: *mut Fl_Dial) -> *const core::ffi::c_char;
+    pub fn Fl_Dial_tooltip(arg1: *mut Fl_Dial) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Dial_set_tooltip(arg1: *mut Fl_Dial, txt: *const core::ffi::c_char);
+    pub fn Fl_Dial_set_tooltip(arg1: *mut Fl_Dial, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Dial_get_type(arg1: *mut Fl_Dial) -> core::ffi::c_int;
+    pub fn Fl_Dial_get_type(arg1: *mut Fl_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Dial_set_type(arg1: *mut Fl_Dial, typ: core::ffi::c_int);
+    pub fn Fl_Dial_set_type(arg1: *mut Fl_Dial, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Dial_color(arg1: *mut Fl_Dial) -> core::ffi::c_uint;
+    pub fn Fl_Dial_color(arg1: *mut Fl_Dial) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Dial_set_color(arg1: *mut Fl_Dial, color: core::ffi::c_uint);
+    pub fn Fl_Dial_set_color(arg1: *mut Fl_Dial, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Dial_measure_label(
         arg1: *const Fl_Dial,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Dial_label_color(arg1: *mut Fl_Dial) -> core::ffi::c_uint;
+    pub fn Fl_Dial_label_color(arg1: *mut Fl_Dial) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Dial_set_label_color(arg1: *mut Fl_Dial, color: core::ffi::c_uint);
+    pub fn Fl_Dial_set_label_color(arg1: *mut Fl_Dial, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Dial_label_font(arg1: *mut Fl_Dial) -> core::ffi::c_int;
+    pub fn Fl_Dial_label_font(arg1: *mut Fl_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Dial_set_label_font(arg1: *mut Fl_Dial, font: core::ffi::c_int);
+    pub fn Fl_Dial_set_label_font(arg1: *mut Fl_Dial, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Dial_label_size(arg1: *mut Fl_Dial) -> core::ffi::c_int;
+    pub fn Fl_Dial_label_size(arg1: *mut Fl_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Dial_set_label_size(arg1: *mut Fl_Dial, sz: core::ffi::c_int);
+    pub fn Fl_Dial_set_label_size(arg1: *mut Fl_Dial, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Dial_label_type(arg1: *mut Fl_Dial) -> core::ffi::c_int;
+    pub fn Fl_Dial_label_type(arg1: *mut Fl_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Dial_set_label_type(arg1: *mut Fl_Dial, typ: core::ffi::c_int);
+    pub fn Fl_Dial_set_label_type(arg1: *mut Fl_Dial, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Dial_box(arg1: *mut Fl_Dial) -> core::ffi::c_int;
+    pub fn Fl_Dial_box(arg1: *mut Fl_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Dial_set_box(arg1: *mut Fl_Dial, typ: core::ffi::c_int);
+    pub fn Fl_Dial_set_box(arg1: *mut Fl_Dial, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Dial_changed(arg1: *mut Fl_Dial) -> core::ffi::c_int;
+    pub fn Fl_Dial_changed(arg1: *mut Fl_Dial) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Dial_set_changed(arg1: *mut Fl_Dial);
@@ -1269,33 +1242,25 @@ extern "C" {
     pub fn Fl_Dial_clear_changed(arg1: *mut Fl_Dial);
 }
 extern "C" {
-    pub fn Fl_Dial_align(arg1: *mut Fl_Dial) -> core::ffi::c_int;
+    pub fn Fl_Dial_align(arg1: *mut Fl_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Dial_set_align(arg1: *mut Fl_Dial, typ: core::ffi::c_int);
+    pub fn Fl_Dial_set_align(arg1: *mut Fl_Dial, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Dial_delete(arg1: *mut Fl_Dial);
 }
 extern "C" {
-    pub fn Fl_Dial_set_image(arg1: *mut Fl_Dial, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Dial_set_image(arg1: *mut Fl_Dial, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Dial_handle(
-        self_: *mut Fl_Dial,
-        cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Dial_handle(self_: *mut Fl_Dial, cb: custom_handler_callback, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Dial_handle_event(self_: *mut Fl_Dial, event: core::ffi::c_int);
+    pub fn Fl_Dial_handle_event(self_: *mut Fl_Dial, event: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Dial_draw(
-        self_: *mut Fl_Dial,
-        cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Dial_draw(self_: *mut Fl_Dial, cb: custom_draw_callback, data: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Dial_resize_callback(
@@ -1303,54 +1268,54 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Dial_set_when(arg1: *mut Fl_Dial, arg2: core::ffi::c_int);
+    pub fn Fl_Dial_set_when(arg1: *mut Fl_Dial, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Dial_when(arg1: *const Fl_Dial) -> core::ffi::c_int;
+    pub fn Fl_Dial_when(arg1: *const Fl_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Dial_image(arg1: *const Fl_Dial) -> *const core::ffi::c_void;
+    pub fn Fl_Dial_image(arg1: *const Fl_Dial) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Dial_parent(self_: *const Fl_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Dial_parent(self_: *const Fl_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Dial_selection_color(arg1: *mut Fl_Dial) -> core::ffi::c_uint;
+    pub fn Fl_Dial_selection_color(arg1: *mut Fl_Dial) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Dial_set_selection_color(arg1: *mut Fl_Dial, color: core::ffi::c_uint);
+    pub fn Fl_Dial_set_selection_color(arg1: *mut Fl_Dial, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Dial_do_callback(arg1: *mut Fl_Dial);
 }
 extern "C" {
-    pub fn Fl_Dial_inside(self_: *const Fl_Dial, arg1: *mut core::ffi::c_void) -> core::ffi::c_int;
+    pub fn Fl_Dial_inside(self_: *const Fl_Dial, arg1: *mut cty::c_void) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Dial_window(arg1: *const Fl_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Dial_window(arg1: *const Fl_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Dial_top_window(arg1: *const Fl_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Dial_top_window(arg1: *const Fl_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Dial_takes_events(arg1: *const Fl_Dial) -> core::ffi::c_int;
+    pub fn Fl_Dial_takes_events(arg1: *const Fl_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Dial_user_data(arg1: *const Fl_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Dial_user_data(arg1: *const Fl_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Dial_take_focus(self_: *mut Fl_Dial) -> core::ffi::c_int;
+    pub fn Fl_Dial_take_focus(self_: *mut Fl_Dial) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Dial_set_visible_focus(self_: *mut Fl_Dial);
@@ -1359,81 +1324,77 @@ extern "C" {
     pub fn Fl_Dial_clear_visible_focus(self_: *mut Fl_Dial);
 }
 extern "C" {
-    pub fn Fl_Dial_visible_focus(self_: *mut Fl_Dial, v: core::ffi::c_int);
+    pub fn Fl_Dial_visible_focus(self_: *mut Fl_Dial, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Dial_has_visible_focus(self_: *mut Fl_Dial) -> core::ffi::c_uint;
+    pub fn Fl_Dial_has_visible_focus(self_: *mut Fl_Dial) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Dial_set_user_data(arg1: *mut Fl_Dial, data: *mut core::ffi::c_void);
+    pub fn Fl_Dial_set_user_data(arg1: *mut Fl_Dial, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Dial_draw_data(self_: *const Fl_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Dial_draw_data(self_: *const Fl_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Dial_handle_data(self_: *const Fl_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Dial_handle_data(self_: *const Fl_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Dial_set_draw_data(self_: *mut Fl_Dial, data: *mut core::ffi::c_void);
+    pub fn Fl_Dial_set_draw_data(self_: *mut Fl_Dial, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Dial_set_handle_data(self_: *mut Fl_Dial, data: *mut core::ffi::c_void);
+    pub fn Fl_Dial_set_handle_data(self_: *mut Fl_Dial, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Dial_damage(self_: *const Fl_Dial) -> core::ffi::c_uchar;
+    pub fn Fl_Dial_damage(self_: *const Fl_Dial) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Dial_set_damage(self_: *mut Fl_Dial, flag: core::ffi::c_uchar);
+    pub fn Fl_Dial_set_damage(self_: *mut Fl_Dial, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Dial_set_damage_area(
         self_: *mut Fl_Dial,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Dial_clear_damage(self_: *mut Fl_Dial);
 }
 extern "C" {
-    pub fn Fl_Dial_as_window(self_: *mut Fl_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Dial_as_window(self_: *mut Fl_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Dial_as_group(self_: *mut Fl_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Dial_as_group(self_: *mut Fl_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Dial_set_deimage(arg1: *mut Fl_Dial, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Dial_set_deimage(arg1: *mut Fl_Dial, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Dial_deimage(arg1: *const Fl_Dial) -> *const core::ffi::c_void;
+    pub fn Fl_Dial_deimage(arg1: *const Fl_Dial) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Dial_set_callback(
-        arg1: *mut Fl_Dial,
-        arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Dial_set_callback(arg1: *mut Fl_Dial, arg2: Fl_Callback, arg3: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Dial_set_deleter(
         arg1: *mut Fl_Dial,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Dial_visible(self_: *const Fl_Dial) -> core::ffi::c_int;
+    pub fn Fl_Dial_visible(self_: *const Fl_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Dial_visible_r(self_: *const Fl_Dial) -> core::ffi::c_int;
+    pub fn Fl_Dial_visible_r(self_: *const Fl_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Dial_active(self_: *const Fl_Dial) -> core::ffi::c_uint;
+    pub fn Fl_Dial_active(self_: *const Fl_Dial) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Dial_active_r(self_: *const Fl_Dial) -> core::ffi::c_int;
+    pub fn Fl_Dial_active_r(self_: *const Fl_Dial) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Dial_callback(self_: *const Fl_Dial) -> Fl_Callback;
@@ -1442,28 +1403,28 @@ extern "C" {
     pub fn Fl_Dial_set_deletion_callback(
         self_: *mut Fl_Dial,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Dial_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Dial;
 }
 extern "C" {
-    pub fn Fl_Dial_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Dial_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Dial_angle1(self_: *const Fl_Dial) -> core::ffi::c_short;
+    pub fn Fl_Dial_angle1(self_: *const Fl_Dial) -> cty::c_short;
 }
 extern "C" {
-    pub fn Fl_Dial_angle2(self_: *const Fl_Dial) -> core::ffi::c_short;
+    pub fn Fl_Dial_angle2(self_: *const Fl_Dial) -> cty::c_short;
 }
 extern "C" {
-    pub fn Fl_Dial_set_angle1(self_: *mut Fl_Dial, val: core::ffi::c_short);
+    pub fn Fl_Dial_set_angle1(self_: *mut Fl_Dial, val: cty::c_short);
 }
 extern "C" {
-    pub fn Fl_Dial_set_angle2(self_: *mut Fl_Dial, val: core::ffi::c_short);
+    pub fn Fl_Dial_set_angle2(self_: *mut Fl_Dial, val: cty::c_short);
 }
 extern "C" {
     pub fn Fl_Dial_set_bounds(arg1: *mut Fl_Dial, a: f64, b: f64);
@@ -1484,22 +1445,22 @@ extern "C" {
     pub fn Fl_Dial_set_range(arg1: *mut Fl_Dial, a: f64, b: f64);
 }
 extern "C" {
-    pub fn Fl_Dial_set_step(arg1: *mut Fl_Dial, a: f64, b: core::ffi::c_int);
+    pub fn Fl_Dial_set_step(arg1: *mut Fl_Dial, a: f64, b: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Dial_step(arg1: *mut Fl_Dial) -> f64;
 }
 extern "C" {
-    pub fn Fl_Dial_set_precision(arg1: *mut Fl_Dial, digits: core::ffi::c_int);
+    pub fn Fl_Dial_set_precision(arg1: *mut Fl_Dial, digits: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Dial_value(arg1: *mut Fl_Dial) -> f64;
 }
 extern "C" {
-    pub fn Fl_Dial_set_value(arg1: *mut Fl_Dial, arg2: f64) -> core::ffi::c_int;
+    pub fn Fl_Dial_set_value(arg1: *mut Fl_Dial, arg2: f64) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Dial_format(arg1: *mut Fl_Dial, arg2: *mut core::ffi::c_char) -> core::ffi::c_int;
+    pub fn Fl_Dial_format(arg1: *mut Fl_Dial, arg2: *mut cty::c_char) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Dial_round(arg1: *mut Fl_Dial, arg2: f64) -> f64;
@@ -1508,7 +1469,7 @@ extern "C" {
     pub fn Fl_Dial_clamp(arg1: *mut Fl_Dial, arg2: f64) -> f64;
 }
 extern "C" {
-    pub fn Fl_Dial_increment(arg1: *mut Fl_Dial, arg2: f64, arg3: core::ffi::c_int) -> f64;
+    pub fn Fl_Dial_increment(arg1: *mut Fl_Dial, arg2: f64, arg3: cty::c_int) -> f64;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1517,30 +1478,30 @@ pub struct Fl_Line_Dial {
 }
 extern "C" {
     pub fn Fl_Line_Dial_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Line_Dial;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_x(arg1: *mut Fl_Line_Dial) -> core::ffi::c_int;
+    pub fn Fl_Line_Dial_x(arg1: *mut Fl_Line_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_y(arg1: *mut Fl_Line_Dial) -> core::ffi::c_int;
+    pub fn Fl_Line_Dial_y(arg1: *mut Fl_Line_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_width(arg1: *mut Fl_Line_Dial) -> core::ffi::c_int;
+    pub fn Fl_Line_Dial_width(arg1: *mut Fl_Line_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_height(arg1: *mut Fl_Line_Dial) -> core::ffi::c_int;
+    pub fn Fl_Line_Dial_height(arg1: *mut Fl_Line_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_label(arg1: *mut Fl_Line_Dial) -> *const core::ffi::c_char;
+    pub fn Fl_Line_Dial_label(arg1: *mut Fl_Line_Dial) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_set_label(arg1: *mut Fl_Line_Dial, title: *const core::ffi::c_char);
+    pub fn Fl_Line_Dial_set_label(arg1: *mut Fl_Line_Dial, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Line_Dial_redraw(arg1: *mut Fl_Line_Dial);
@@ -1563,78 +1524,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Line_Dial_resize(
         arg1: *mut Fl_Line_Dial,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Line_Dial_widget_resize(
         arg1: *mut Fl_Line_Dial,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Line_Dial_tooltip(arg1: *mut Fl_Line_Dial) -> *const core::ffi::c_char;
+    pub fn Fl_Line_Dial_tooltip(arg1: *mut Fl_Line_Dial) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_set_tooltip(arg1: *mut Fl_Line_Dial, txt: *const core::ffi::c_char);
+    pub fn Fl_Line_Dial_set_tooltip(arg1: *mut Fl_Line_Dial, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Line_Dial_get_type(arg1: *mut Fl_Line_Dial) -> core::ffi::c_int;
+    pub fn Fl_Line_Dial_get_type(arg1: *mut Fl_Line_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_set_type(arg1: *mut Fl_Line_Dial, typ: core::ffi::c_int);
+    pub fn Fl_Line_Dial_set_type(arg1: *mut Fl_Line_Dial, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Line_Dial_color(arg1: *mut Fl_Line_Dial) -> core::ffi::c_uint;
+    pub fn Fl_Line_Dial_color(arg1: *mut Fl_Line_Dial) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_set_color(arg1: *mut Fl_Line_Dial, color: core::ffi::c_uint);
+    pub fn Fl_Line_Dial_set_color(arg1: *mut Fl_Line_Dial, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Line_Dial_measure_label(
         arg1: *const Fl_Line_Dial,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Line_Dial_label_color(arg1: *mut Fl_Line_Dial) -> core::ffi::c_uint;
+    pub fn Fl_Line_Dial_label_color(arg1: *mut Fl_Line_Dial) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_set_label_color(arg1: *mut Fl_Line_Dial, color: core::ffi::c_uint);
+    pub fn Fl_Line_Dial_set_label_color(arg1: *mut Fl_Line_Dial, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Line_Dial_label_font(arg1: *mut Fl_Line_Dial) -> core::ffi::c_int;
+    pub fn Fl_Line_Dial_label_font(arg1: *mut Fl_Line_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_set_label_font(arg1: *mut Fl_Line_Dial, font: core::ffi::c_int);
+    pub fn Fl_Line_Dial_set_label_font(arg1: *mut Fl_Line_Dial, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Line_Dial_label_size(arg1: *mut Fl_Line_Dial) -> core::ffi::c_int;
+    pub fn Fl_Line_Dial_label_size(arg1: *mut Fl_Line_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_set_label_size(arg1: *mut Fl_Line_Dial, sz: core::ffi::c_int);
+    pub fn Fl_Line_Dial_set_label_size(arg1: *mut Fl_Line_Dial, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Line_Dial_label_type(arg1: *mut Fl_Line_Dial) -> core::ffi::c_int;
+    pub fn Fl_Line_Dial_label_type(arg1: *mut Fl_Line_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_set_label_type(arg1: *mut Fl_Line_Dial, typ: core::ffi::c_int);
+    pub fn Fl_Line_Dial_set_label_type(arg1: *mut Fl_Line_Dial, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Line_Dial_box(arg1: *mut Fl_Line_Dial) -> core::ffi::c_int;
+    pub fn Fl_Line_Dial_box(arg1: *mut Fl_Line_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_set_box(arg1: *mut Fl_Line_Dial, typ: core::ffi::c_int);
+    pub fn Fl_Line_Dial_set_box(arg1: *mut Fl_Line_Dial, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Line_Dial_changed(arg1: *mut Fl_Line_Dial) -> core::ffi::c_int;
+    pub fn Fl_Line_Dial_changed(arg1: *mut Fl_Line_Dial) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Line_Dial_set_changed(arg1: *mut Fl_Line_Dial);
@@ -1643,32 +1604,32 @@ extern "C" {
     pub fn Fl_Line_Dial_clear_changed(arg1: *mut Fl_Line_Dial);
 }
 extern "C" {
-    pub fn Fl_Line_Dial_align(arg1: *mut Fl_Line_Dial) -> core::ffi::c_int;
+    pub fn Fl_Line_Dial_align(arg1: *mut Fl_Line_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_set_align(arg1: *mut Fl_Line_Dial, typ: core::ffi::c_int);
+    pub fn Fl_Line_Dial_set_align(arg1: *mut Fl_Line_Dial, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Line_Dial_delete(arg1: *mut Fl_Line_Dial);
 }
 extern "C" {
-    pub fn Fl_Line_Dial_set_image(arg1: *mut Fl_Line_Dial, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Line_Dial_set_image(arg1: *mut Fl_Line_Dial, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Line_Dial_handle(
         self_: *mut Fl_Line_Dial,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Line_Dial_handle_event(self_: *mut Fl_Line_Dial, event: core::ffi::c_int);
+    pub fn Fl_Line_Dial_handle_event(self_: *mut Fl_Line_Dial, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Line_Dial_draw(
         self_: *mut Fl_Line_Dial,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -1677,57 +1638,54 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Line_Dial_set_when(arg1: *mut Fl_Line_Dial, arg2: core::ffi::c_int);
+    pub fn Fl_Line_Dial_set_when(arg1: *mut Fl_Line_Dial, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Line_Dial_when(arg1: *const Fl_Line_Dial) -> core::ffi::c_int;
+    pub fn Fl_Line_Dial_when(arg1: *const Fl_Line_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_image(arg1: *const Fl_Line_Dial) -> *const core::ffi::c_void;
+    pub fn Fl_Line_Dial_image(arg1: *const Fl_Line_Dial) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_parent(self_: *const Fl_Line_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Line_Dial_parent(self_: *const Fl_Line_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_selection_color(arg1: *mut Fl_Line_Dial) -> core::ffi::c_uint;
+    pub fn Fl_Line_Dial_selection_color(arg1: *mut Fl_Line_Dial) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_set_selection_color(arg1: *mut Fl_Line_Dial, color: core::ffi::c_uint);
+    pub fn Fl_Line_Dial_set_selection_color(arg1: *mut Fl_Line_Dial, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Line_Dial_do_callback(arg1: *mut Fl_Line_Dial);
 }
 extern "C" {
-    pub fn Fl_Line_Dial_inside(
-        self_: *const Fl_Line_Dial,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Line_Dial_inside(self_: *const Fl_Line_Dial, arg1: *mut cty::c_void) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_window(arg1: *const Fl_Line_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Line_Dial_window(arg1: *const Fl_Line_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_top_window(arg1: *const Fl_Line_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Line_Dial_top_window(arg1: *const Fl_Line_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_takes_events(arg1: *const Fl_Line_Dial) -> core::ffi::c_int;
+    pub fn Fl_Line_Dial_takes_events(arg1: *const Fl_Line_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_user_data(arg1: *const Fl_Line_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Line_Dial_user_data(arg1: *const Fl_Line_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_take_focus(self_: *mut Fl_Line_Dial) -> core::ffi::c_int;
+    pub fn Fl_Line_Dial_take_focus(self_: *mut Fl_Line_Dial) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Line_Dial_set_visible_focus(self_: *mut Fl_Line_Dial);
@@ -1736,81 +1694,81 @@ extern "C" {
     pub fn Fl_Line_Dial_clear_visible_focus(self_: *mut Fl_Line_Dial);
 }
 extern "C" {
-    pub fn Fl_Line_Dial_visible_focus(self_: *mut Fl_Line_Dial, v: core::ffi::c_int);
+    pub fn Fl_Line_Dial_visible_focus(self_: *mut Fl_Line_Dial, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Line_Dial_has_visible_focus(self_: *mut Fl_Line_Dial) -> core::ffi::c_uint;
+    pub fn Fl_Line_Dial_has_visible_focus(self_: *mut Fl_Line_Dial) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_set_user_data(arg1: *mut Fl_Line_Dial, data: *mut core::ffi::c_void);
+    pub fn Fl_Line_Dial_set_user_data(arg1: *mut Fl_Line_Dial, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Line_Dial_draw_data(self_: *const Fl_Line_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Line_Dial_draw_data(self_: *const Fl_Line_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_handle_data(self_: *const Fl_Line_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Line_Dial_handle_data(self_: *const Fl_Line_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_set_draw_data(self_: *mut Fl_Line_Dial, data: *mut core::ffi::c_void);
+    pub fn Fl_Line_Dial_set_draw_data(self_: *mut Fl_Line_Dial, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Line_Dial_set_handle_data(self_: *mut Fl_Line_Dial, data: *mut core::ffi::c_void);
+    pub fn Fl_Line_Dial_set_handle_data(self_: *mut Fl_Line_Dial, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Line_Dial_damage(self_: *const Fl_Line_Dial) -> core::ffi::c_uchar;
+    pub fn Fl_Line_Dial_damage(self_: *const Fl_Line_Dial) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_set_damage(self_: *mut Fl_Line_Dial, flag: core::ffi::c_uchar);
+    pub fn Fl_Line_Dial_set_damage(self_: *mut Fl_Line_Dial, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Line_Dial_set_damage_area(
         self_: *mut Fl_Line_Dial,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Line_Dial_clear_damage(self_: *mut Fl_Line_Dial);
 }
 extern "C" {
-    pub fn Fl_Line_Dial_as_window(self_: *mut Fl_Line_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Line_Dial_as_window(self_: *mut Fl_Line_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_as_group(self_: *mut Fl_Line_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Line_Dial_as_group(self_: *mut Fl_Line_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_set_deimage(arg1: *mut Fl_Line_Dial, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Line_Dial_set_deimage(arg1: *mut Fl_Line_Dial, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Line_Dial_deimage(arg1: *const Fl_Line_Dial) -> *const core::ffi::c_void;
+    pub fn Fl_Line_Dial_deimage(arg1: *const Fl_Line_Dial) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Line_Dial_set_callback(
         arg1: *mut Fl_Line_Dial,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Line_Dial_set_deleter(
         arg1: *mut Fl_Line_Dial,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Line_Dial_visible(self_: *const Fl_Line_Dial) -> core::ffi::c_int;
+    pub fn Fl_Line_Dial_visible(self_: *const Fl_Line_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_visible_r(self_: *const Fl_Line_Dial) -> core::ffi::c_int;
+    pub fn Fl_Line_Dial_visible_r(self_: *const Fl_Line_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_active(self_: *const Fl_Line_Dial) -> core::ffi::c_uint;
+    pub fn Fl_Line_Dial_active(self_: *const Fl_Line_Dial) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_active_r(self_: *const Fl_Line_Dial) -> core::ffi::c_int;
+    pub fn Fl_Line_Dial_active_r(self_: *const Fl_Line_Dial) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Line_Dial_callback(self_: *const Fl_Line_Dial) -> Fl_Callback;
@@ -1819,16 +1777,16 @@ extern "C" {
     pub fn Fl_Line_Dial_set_deletion_callback(
         self_: *mut Fl_Line_Dial,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Line_Dial_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Line_Dial;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Line_Dial_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Line_Dial_set_bounds(arg1: *mut Fl_Line_Dial, a: f64, b: f64);
@@ -1849,25 +1807,22 @@ extern "C" {
     pub fn Fl_Line_Dial_set_range(arg1: *mut Fl_Line_Dial, a: f64, b: f64);
 }
 extern "C" {
-    pub fn Fl_Line_Dial_set_step(arg1: *mut Fl_Line_Dial, a: f64, b: core::ffi::c_int);
+    pub fn Fl_Line_Dial_set_step(arg1: *mut Fl_Line_Dial, a: f64, b: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Line_Dial_step(arg1: *mut Fl_Line_Dial) -> f64;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_set_precision(arg1: *mut Fl_Line_Dial, digits: core::ffi::c_int);
+    pub fn Fl_Line_Dial_set_precision(arg1: *mut Fl_Line_Dial, digits: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Line_Dial_value(arg1: *mut Fl_Line_Dial) -> f64;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_set_value(arg1: *mut Fl_Line_Dial, arg2: f64) -> core::ffi::c_int;
+    pub fn Fl_Line_Dial_set_value(arg1: *mut Fl_Line_Dial, arg2: f64) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_format(
-        arg1: *mut Fl_Line_Dial,
-        arg2: *mut core::ffi::c_char,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Line_Dial_format(arg1: *mut Fl_Line_Dial, arg2: *mut cty::c_char) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Line_Dial_round(arg1: *mut Fl_Line_Dial, arg2: f64) -> f64;
@@ -1876,11 +1831,7 @@ extern "C" {
     pub fn Fl_Line_Dial_clamp(arg1: *mut Fl_Line_Dial, arg2: f64) -> f64;
 }
 extern "C" {
-    pub fn Fl_Line_Dial_increment(
-        arg1: *mut Fl_Line_Dial,
-        arg2: f64,
-        arg3: core::ffi::c_int,
-    ) -> f64;
+    pub fn Fl_Line_Dial_increment(arg1: *mut Fl_Line_Dial, arg2: f64, arg3: cty::c_int) -> f64;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1889,30 +1840,30 @@ pub struct Fl_Roller {
 }
 extern "C" {
     pub fn Fl_Roller_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Roller;
 }
 extern "C" {
-    pub fn Fl_Roller_x(arg1: *mut Fl_Roller) -> core::ffi::c_int;
+    pub fn Fl_Roller_x(arg1: *mut Fl_Roller) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Roller_y(arg1: *mut Fl_Roller) -> core::ffi::c_int;
+    pub fn Fl_Roller_y(arg1: *mut Fl_Roller) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Roller_width(arg1: *mut Fl_Roller) -> core::ffi::c_int;
+    pub fn Fl_Roller_width(arg1: *mut Fl_Roller) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Roller_height(arg1: *mut Fl_Roller) -> core::ffi::c_int;
+    pub fn Fl_Roller_height(arg1: *mut Fl_Roller) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Roller_label(arg1: *mut Fl_Roller) -> *const core::ffi::c_char;
+    pub fn Fl_Roller_label(arg1: *mut Fl_Roller) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Roller_set_label(arg1: *mut Fl_Roller, title: *const core::ffi::c_char);
+    pub fn Fl_Roller_set_label(arg1: *mut Fl_Roller, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Roller_redraw(arg1: *mut Fl_Roller);
@@ -1935,78 +1886,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Roller_resize(
         arg1: *mut Fl_Roller,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Roller_widget_resize(
         arg1: *mut Fl_Roller,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Roller_tooltip(arg1: *mut Fl_Roller) -> *const core::ffi::c_char;
+    pub fn Fl_Roller_tooltip(arg1: *mut Fl_Roller) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Roller_set_tooltip(arg1: *mut Fl_Roller, txt: *const core::ffi::c_char);
+    pub fn Fl_Roller_set_tooltip(arg1: *mut Fl_Roller, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Roller_get_type(arg1: *mut Fl_Roller) -> core::ffi::c_int;
+    pub fn Fl_Roller_get_type(arg1: *mut Fl_Roller) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Roller_set_type(arg1: *mut Fl_Roller, typ: core::ffi::c_int);
+    pub fn Fl_Roller_set_type(arg1: *mut Fl_Roller, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Roller_color(arg1: *mut Fl_Roller) -> core::ffi::c_uint;
+    pub fn Fl_Roller_color(arg1: *mut Fl_Roller) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Roller_set_color(arg1: *mut Fl_Roller, color: core::ffi::c_uint);
+    pub fn Fl_Roller_set_color(arg1: *mut Fl_Roller, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Roller_measure_label(
         arg1: *const Fl_Roller,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Roller_label_color(arg1: *mut Fl_Roller) -> core::ffi::c_uint;
+    pub fn Fl_Roller_label_color(arg1: *mut Fl_Roller) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Roller_set_label_color(arg1: *mut Fl_Roller, color: core::ffi::c_uint);
+    pub fn Fl_Roller_set_label_color(arg1: *mut Fl_Roller, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Roller_label_font(arg1: *mut Fl_Roller) -> core::ffi::c_int;
+    pub fn Fl_Roller_label_font(arg1: *mut Fl_Roller) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Roller_set_label_font(arg1: *mut Fl_Roller, font: core::ffi::c_int);
+    pub fn Fl_Roller_set_label_font(arg1: *mut Fl_Roller, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Roller_label_size(arg1: *mut Fl_Roller) -> core::ffi::c_int;
+    pub fn Fl_Roller_label_size(arg1: *mut Fl_Roller) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Roller_set_label_size(arg1: *mut Fl_Roller, sz: core::ffi::c_int);
+    pub fn Fl_Roller_set_label_size(arg1: *mut Fl_Roller, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Roller_label_type(arg1: *mut Fl_Roller) -> core::ffi::c_int;
+    pub fn Fl_Roller_label_type(arg1: *mut Fl_Roller) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Roller_set_label_type(arg1: *mut Fl_Roller, typ: core::ffi::c_int);
+    pub fn Fl_Roller_set_label_type(arg1: *mut Fl_Roller, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Roller_box(arg1: *mut Fl_Roller) -> core::ffi::c_int;
+    pub fn Fl_Roller_box(arg1: *mut Fl_Roller) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Roller_set_box(arg1: *mut Fl_Roller, typ: core::ffi::c_int);
+    pub fn Fl_Roller_set_box(arg1: *mut Fl_Roller, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Roller_changed(arg1: *mut Fl_Roller) -> core::ffi::c_int;
+    pub fn Fl_Roller_changed(arg1: *mut Fl_Roller) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Roller_set_changed(arg1: *mut Fl_Roller);
@@ -2015,33 +1966,29 @@ extern "C" {
     pub fn Fl_Roller_clear_changed(arg1: *mut Fl_Roller);
 }
 extern "C" {
-    pub fn Fl_Roller_align(arg1: *mut Fl_Roller) -> core::ffi::c_int;
+    pub fn Fl_Roller_align(arg1: *mut Fl_Roller) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Roller_set_align(arg1: *mut Fl_Roller, typ: core::ffi::c_int);
+    pub fn Fl_Roller_set_align(arg1: *mut Fl_Roller, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Roller_delete(arg1: *mut Fl_Roller);
 }
 extern "C" {
-    pub fn Fl_Roller_set_image(arg1: *mut Fl_Roller, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Roller_set_image(arg1: *mut Fl_Roller, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Roller_handle(
         self_: *mut Fl_Roller,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Roller_handle_event(self_: *mut Fl_Roller, event: core::ffi::c_int);
+    pub fn Fl_Roller_handle_event(self_: *mut Fl_Roller, event: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Roller_draw(
-        self_: *mut Fl_Roller,
-        cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Roller_draw(self_: *mut Fl_Roller, cb: custom_draw_callback, data: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Roller_resize_callback(
@@ -2049,57 +1996,54 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Roller_set_when(arg1: *mut Fl_Roller, arg2: core::ffi::c_int);
+    pub fn Fl_Roller_set_when(arg1: *mut Fl_Roller, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Roller_when(arg1: *const Fl_Roller) -> core::ffi::c_int;
+    pub fn Fl_Roller_when(arg1: *const Fl_Roller) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Roller_image(arg1: *const Fl_Roller) -> *const core::ffi::c_void;
+    pub fn Fl_Roller_image(arg1: *const Fl_Roller) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Roller_parent(self_: *const Fl_Roller) -> *mut core::ffi::c_void;
+    pub fn Fl_Roller_parent(self_: *const Fl_Roller) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Roller_selection_color(arg1: *mut Fl_Roller) -> core::ffi::c_uint;
+    pub fn Fl_Roller_selection_color(arg1: *mut Fl_Roller) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Roller_set_selection_color(arg1: *mut Fl_Roller, color: core::ffi::c_uint);
+    pub fn Fl_Roller_set_selection_color(arg1: *mut Fl_Roller, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Roller_do_callback(arg1: *mut Fl_Roller);
 }
 extern "C" {
-    pub fn Fl_Roller_inside(
-        self_: *const Fl_Roller,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Roller_inside(self_: *const Fl_Roller, arg1: *mut cty::c_void) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Roller_window(arg1: *const Fl_Roller) -> *mut core::ffi::c_void;
+    pub fn Fl_Roller_window(arg1: *const Fl_Roller) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Roller_top_window(arg1: *const Fl_Roller) -> *mut core::ffi::c_void;
+    pub fn Fl_Roller_top_window(arg1: *const Fl_Roller) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Roller_takes_events(arg1: *const Fl_Roller) -> core::ffi::c_int;
+    pub fn Fl_Roller_takes_events(arg1: *const Fl_Roller) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Roller_user_data(arg1: *const Fl_Roller) -> *mut core::ffi::c_void;
+    pub fn Fl_Roller_user_data(arg1: *const Fl_Roller) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Roller_take_focus(self_: *mut Fl_Roller) -> core::ffi::c_int;
+    pub fn Fl_Roller_take_focus(self_: *mut Fl_Roller) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Roller_set_visible_focus(self_: *mut Fl_Roller);
@@ -2108,81 +2052,77 @@ extern "C" {
     pub fn Fl_Roller_clear_visible_focus(self_: *mut Fl_Roller);
 }
 extern "C" {
-    pub fn Fl_Roller_visible_focus(self_: *mut Fl_Roller, v: core::ffi::c_int);
+    pub fn Fl_Roller_visible_focus(self_: *mut Fl_Roller, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Roller_has_visible_focus(self_: *mut Fl_Roller) -> core::ffi::c_uint;
+    pub fn Fl_Roller_has_visible_focus(self_: *mut Fl_Roller) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Roller_set_user_data(arg1: *mut Fl_Roller, data: *mut core::ffi::c_void);
+    pub fn Fl_Roller_set_user_data(arg1: *mut Fl_Roller, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Roller_draw_data(self_: *const Fl_Roller) -> *mut core::ffi::c_void;
+    pub fn Fl_Roller_draw_data(self_: *const Fl_Roller) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Roller_handle_data(self_: *const Fl_Roller) -> *mut core::ffi::c_void;
+    pub fn Fl_Roller_handle_data(self_: *const Fl_Roller) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Roller_set_draw_data(self_: *mut Fl_Roller, data: *mut core::ffi::c_void);
+    pub fn Fl_Roller_set_draw_data(self_: *mut Fl_Roller, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Roller_set_handle_data(self_: *mut Fl_Roller, data: *mut core::ffi::c_void);
+    pub fn Fl_Roller_set_handle_data(self_: *mut Fl_Roller, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Roller_damage(self_: *const Fl_Roller) -> core::ffi::c_uchar;
+    pub fn Fl_Roller_damage(self_: *const Fl_Roller) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Roller_set_damage(self_: *mut Fl_Roller, flag: core::ffi::c_uchar);
+    pub fn Fl_Roller_set_damage(self_: *mut Fl_Roller, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Roller_set_damage_area(
         self_: *mut Fl_Roller,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Roller_clear_damage(self_: *mut Fl_Roller);
 }
 extern "C" {
-    pub fn Fl_Roller_as_window(self_: *mut Fl_Roller) -> *mut core::ffi::c_void;
+    pub fn Fl_Roller_as_window(self_: *mut Fl_Roller) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Roller_as_group(self_: *mut Fl_Roller) -> *mut core::ffi::c_void;
+    pub fn Fl_Roller_as_group(self_: *mut Fl_Roller) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Roller_set_deimage(arg1: *mut Fl_Roller, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Roller_set_deimage(arg1: *mut Fl_Roller, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Roller_deimage(arg1: *const Fl_Roller) -> *const core::ffi::c_void;
+    pub fn Fl_Roller_deimage(arg1: *const Fl_Roller) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Roller_set_callback(
-        arg1: *mut Fl_Roller,
-        arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Roller_set_callback(arg1: *mut Fl_Roller, arg2: Fl_Callback, arg3: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Roller_set_deleter(
         arg1: *mut Fl_Roller,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Roller_visible(self_: *const Fl_Roller) -> core::ffi::c_int;
+    pub fn Fl_Roller_visible(self_: *const Fl_Roller) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Roller_visible_r(self_: *const Fl_Roller) -> core::ffi::c_int;
+    pub fn Fl_Roller_visible_r(self_: *const Fl_Roller) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Roller_active(self_: *const Fl_Roller) -> core::ffi::c_uint;
+    pub fn Fl_Roller_active(self_: *const Fl_Roller) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Roller_active_r(self_: *const Fl_Roller) -> core::ffi::c_int;
+    pub fn Fl_Roller_active_r(self_: *const Fl_Roller) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Roller_callback(self_: *const Fl_Roller) -> Fl_Callback;
@@ -2191,16 +2131,16 @@ extern "C" {
     pub fn Fl_Roller_set_deletion_callback(
         self_: *mut Fl_Roller,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Roller_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Roller;
 }
 extern "C" {
-    pub fn Fl_Roller_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Roller_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Roller_set_bounds(arg1: *mut Fl_Roller, a: f64, b: f64);
@@ -2221,23 +2161,22 @@ extern "C" {
     pub fn Fl_Roller_set_range(arg1: *mut Fl_Roller, a: f64, b: f64);
 }
 extern "C" {
-    pub fn Fl_Roller_set_step(arg1: *mut Fl_Roller, a: f64, b: core::ffi::c_int);
+    pub fn Fl_Roller_set_step(arg1: *mut Fl_Roller, a: f64, b: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Roller_step(arg1: *mut Fl_Roller) -> f64;
 }
 extern "C" {
-    pub fn Fl_Roller_set_precision(arg1: *mut Fl_Roller, digits: core::ffi::c_int);
+    pub fn Fl_Roller_set_precision(arg1: *mut Fl_Roller, digits: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Roller_value(arg1: *mut Fl_Roller) -> f64;
 }
 extern "C" {
-    pub fn Fl_Roller_set_value(arg1: *mut Fl_Roller, arg2: f64) -> core::ffi::c_int;
+    pub fn Fl_Roller_set_value(arg1: *mut Fl_Roller, arg2: f64) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Roller_format(arg1: *mut Fl_Roller, arg2: *mut core::ffi::c_char)
-        -> core::ffi::c_int;
+    pub fn Fl_Roller_format(arg1: *mut Fl_Roller, arg2: *mut cty::c_char) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Roller_round(arg1: *mut Fl_Roller, arg2: f64) -> f64;
@@ -2246,7 +2185,7 @@ extern "C" {
     pub fn Fl_Roller_clamp(arg1: *mut Fl_Roller, arg2: f64) -> f64;
 }
 extern "C" {
-    pub fn Fl_Roller_increment(arg1: *mut Fl_Roller, arg2: f64, arg3: core::ffi::c_int) -> f64;
+    pub fn Fl_Roller_increment(arg1: *mut Fl_Roller, arg2: f64, arg3: cty::c_int) -> f64;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2255,30 +2194,30 @@ pub struct Fl_Scrollbar {
 }
 extern "C" {
     pub fn Fl_Scrollbar_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Scrollbar;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_x(arg1: *mut Fl_Scrollbar) -> core::ffi::c_int;
+    pub fn Fl_Scrollbar_x(arg1: *mut Fl_Scrollbar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_y(arg1: *mut Fl_Scrollbar) -> core::ffi::c_int;
+    pub fn Fl_Scrollbar_y(arg1: *mut Fl_Scrollbar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_width(arg1: *mut Fl_Scrollbar) -> core::ffi::c_int;
+    pub fn Fl_Scrollbar_width(arg1: *mut Fl_Scrollbar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_height(arg1: *mut Fl_Scrollbar) -> core::ffi::c_int;
+    pub fn Fl_Scrollbar_height(arg1: *mut Fl_Scrollbar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_label(arg1: *mut Fl_Scrollbar) -> *const core::ffi::c_char;
+    pub fn Fl_Scrollbar_label(arg1: *mut Fl_Scrollbar) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_label(arg1: *mut Fl_Scrollbar, title: *const core::ffi::c_char);
+    pub fn Fl_Scrollbar_set_label(arg1: *mut Fl_Scrollbar, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Scrollbar_redraw(arg1: *mut Fl_Scrollbar);
@@ -2301,78 +2240,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Scrollbar_resize(
         arg1: *mut Fl_Scrollbar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Scrollbar_widget_resize(
         arg1: *mut Fl_Scrollbar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Scrollbar_tooltip(arg1: *mut Fl_Scrollbar) -> *const core::ffi::c_char;
+    pub fn Fl_Scrollbar_tooltip(arg1: *mut Fl_Scrollbar) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_tooltip(arg1: *mut Fl_Scrollbar, txt: *const core::ffi::c_char);
+    pub fn Fl_Scrollbar_set_tooltip(arg1: *mut Fl_Scrollbar, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Scrollbar_get_type(arg1: *mut Fl_Scrollbar) -> core::ffi::c_int;
+    pub fn Fl_Scrollbar_get_type(arg1: *mut Fl_Scrollbar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_type(arg1: *mut Fl_Scrollbar, typ: core::ffi::c_int);
+    pub fn Fl_Scrollbar_set_type(arg1: *mut Fl_Scrollbar, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Scrollbar_color(arg1: *mut Fl_Scrollbar) -> core::ffi::c_uint;
+    pub fn Fl_Scrollbar_color(arg1: *mut Fl_Scrollbar) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_color(arg1: *mut Fl_Scrollbar, color: core::ffi::c_uint);
+    pub fn Fl_Scrollbar_set_color(arg1: *mut Fl_Scrollbar, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Scrollbar_measure_label(
         arg1: *const Fl_Scrollbar,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Scrollbar_label_color(arg1: *mut Fl_Scrollbar) -> core::ffi::c_uint;
+    pub fn Fl_Scrollbar_label_color(arg1: *mut Fl_Scrollbar) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_label_color(arg1: *mut Fl_Scrollbar, color: core::ffi::c_uint);
+    pub fn Fl_Scrollbar_set_label_color(arg1: *mut Fl_Scrollbar, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Scrollbar_label_font(arg1: *mut Fl_Scrollbar) -> core::ffi::c_int;
+    pub fn Fl_Scrollbar_label_font(arg1: *mut Fl_Scrollbar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_label_font(arg1: *mut Fl_Scrollbar, font: core::ffi::c_int);
+    pub fn Fl_Scrollbar_set_label_font(arg1: *mut Fl_Scrollbar, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Scrollbar_label_size(arg1: *mut Fl_Scrollbar) -> core::ffi::c_int;
+    pub fn Fl_Scrollbar_label_size(arg1: *mut Fl_Scrollbar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_label_size(arg1: *mut Fl_Scrollbar, sz: core::ffi::c_int);
+    pub fn Fl_Scrollbar_set_label_size(arg1: *mut Fl_Scrollbar, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Scrollbar_label_type(arg1: *mut Fl_Scrollbar) -> core::ffi::c_int;
+    pub fn Fl_Scrollbar_label_type(arg1: *mut Fl_Scrollbar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_label_type(arg1: *mut Fl_Scrollbar, typ: core::ffi::c_int);
+    pub fn Fl_Scrollbar_set_label_type(arg1: *mut Fl_Scrollbar, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Scrollbar_box(arg1: *mut Fl_Scrollbar) -> core::ffi::c_int;
+    pub fn Fl_Scrollbar_box(arg1: *mut Fl_Scrollbar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_box(arg1: *mut Fl_Scrollbar, typ: core::ffi::c_int);
+    pub fn Fl_Scrollbar_set_box(arg1: *mut Fl_Scrollbar, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Scrollbar_changed(arg1: *mut Fl_Scrollbar) -> core::ffi::c_int;
+    pub fn Fl_Scrollbar_changed(arg1: *mut Fl_Scrollbar) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Scrollbar_set_changed(arg1: *mut Fl_Scrollbar);
@@ -2381,32 +2320,32 @@ extern "C" {
     pub fn Fl_Scrollbar_clear_changed(arg1: *mut Fl_Scrollbar);
 }
 extern "C" {
-    pub fn Fl_Scrollbar_align(arg1: *mut Fl_Scrollbar) -> core::ffi::c_int;
+    pub fn Fl_Scrollbar_align(arg1: *mut Fl_Scrollbar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_align(arg1: *mut Fl_Scrollbar, typ: core::ffi::c_int);
+    pub fn Fl_Scrollbar_set_align(arg1: *mut Fl_Scrollbar, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Scrollbar_delete(arg1: *mut Fl_Scrollbar);
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_image(arg1: *mut Fl_Scrollbar, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Scrollbar_set_image(arg1: *mut Fl_Scrollbar, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Scrollbar_handle(
         self_: *mut Fl_Scrollbar,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Scrollbar_handle_event(self_: *mut Fl_Scrollbar, event: core::ffi::c_int);
+    pub fn Fl_Scrollbar_handle_event(self_: *mut Fl_Scrollbar, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Scrollbar_draw(
         self_: *mut Fl_Scrollbar,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -2415,57 +2354,54 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_when(arg1: *mut Fl_Scrollbar, arg2: core::ffi::c_int);
+    pub fn Fl_Scrollbar_set_when(arg1: *mut Fl_Scrollbar, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Scrollbar_when(arg1: *const Fl_Scrollbar) -> core::ffi::c_int;
+    pub fn Fl_Scrollbar_when(arg1: *const Fl_Scrollbar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_image(arg1: *const Fl_Scrollbar) -> *const core::ffi::c_void;
+    pub fn Fl_Scrollbar_image(arg1: *const Fl_Scrollbar) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_parent(self_: *const Fl_Scrollbar) -> *mut core::ffi::c_void;
+    pub fn Fl_Scrollbar_parent(self_: *const Fl_Scrollbar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_selection_color(arg1: *mut Fl_Scrollbar) -> core::ffi::c_uint;
+    pub fn Fl_Scrollbar_selection_color(arg1: *mut Fl_Scrollbar) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_selection_color(arg1: *mut Fl_Scrollbar, color: core::ffi::c_uint);
+    pub fn Fl_Scrollbar_set_selection_color(arg1: *mut Fl_Scrollbar, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Scrollbar_do_callback(arg1: *mut Fl_Scrollbar);
 }
 extern "C" {
-    pub fn Fl_Scrollbar_inside(
-        self_: *const Fl_Scrollbar,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Scrollbar_inside(self_: *const Fl_Scrollbar, arg1: *mut cty::c_void) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_window(arg1: *const Fl_Scrollbar) -> *mut core::ffi::c_void;
+    pub fn Fl_Scrollbar_window(arg1: *const Fl_Scrollbar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_top_window(arg1: *const Fl_Scrollbar) -> *mut core::ffi::c_void;
+    pub fn Fl_Scrollbar_top_window(arg1: *const Fl_Scrollbar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_takes_events(arg1: *const Fl_Scrollbar) -> core::ffi::c_int;
+    pub fn Fl_Scrollbar_takes_events(arg1: *const Fl_Scrollbar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_user_data(arg1: *const Fl_Scrollbar) -> *mut core::ffi::c_void;
+    pub fn Fl_Scrollbar_user_data(arg1: *const Fl_Scrollbar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_take_focus(self_: *mut Fl_Scrollbar) -> core::ffi::c_int;
+    pub fn Fl_Scrollbar_take_focus(self_: *mut Fl_Scrollbar) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Scrollbar_set_visible_focus(self_: *mut Fl_Scrollbar);
@@ -2474,81 +2410,81 @@ extern "C" {
     pub fn Fl_Scrollbar_clear_visible_focus(self_: *mut Fl_Scrollbar);
 }
 extern "C" {
-    pub fn Fl_Scrollbar_visible_focus(self_: *mut Fl_Scrollbar, v: core::ffi::c_int);
+    pub fn Fl_Scrollbar_visible_focus(self_: *mut Fl_Scrollbar, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Scrollbar_has_visible_focus(self_: *mut Fl_Scrollbar) -> core::ffi::c_uint;
+    pub fn Fl_Scrollbar_has_visible_focus(self_: *mut Fl_Scrollbar) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_user_data(arg1: *mut Fl_Scrollbar, data: *mut core::ffi::c_void);
+    pub fn Fl_Scrollbar_set_user_data(arg1: *mut Fl_Scrollbar, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Scrollbar_draw_data(self_: *const Fl_Scrollbar) -> *mut core::ffi::c_void;
+    pub fn Fl_Scrollbar_draw_data(self_: *const Fl_Scrollbar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_handle_data(self_: *const Fl_Scrollbar) -> *mut core::ffi::c_void;
+    pub fn Fl_Scrollbar_handle_data(self_: *const Fl_Scrollbar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_draw_data(self_: *mut Fl_Scrollbar, data: *mut core::ffi::c_void);
+    pub fn Fl_Scrollbar_set_draw_data(self_: *mut Fl_Scrollbar, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_handle_data(self_: *mut Fl_Scrollbar, data: *mut core::ffi::c_void);
+    pub fn Fl_Scrollbar_set_handle_data(self_: *mut Fl_Scrollbar, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Scrollbar_damage(self_: *const Fl_Scrollbar) -> core::ffi::c_uchar;
+    pub fn Fl_Scrollbar_damage(self_: *const Fl_Scrollbar) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_damage(self_: *mut Fl_Scrollbar, flag: core::ffi::c_uchar);
+    pub fn Fl_Scrollbar_set_damage(self_: *mut Fl_Scrollbar, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Scrollbar_set_damage_area(
         self_: *mut Fl_Scrollbar,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Scrollbar_clear_damage(self_: *mut Fl_Scrollbar);
 }
 extern "C" {
-    pub fn Fl_Scrollbar_as_window(self_: *mut Fl_Scrollbar) -> *mut core::ffi::c_void;
+    pub fn Fl_Scrollbar_as_window(self_: *mut Fl_Scrollbar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_as_group(self_: *mut Fl_Scrollbar) -> *mut core::ffi::c_void;
+    pub fn Fl_Scrollbar_as_group(self_: *mut Fl_Scrollbar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_deimage(arg1: *mut Fl_Scrollbar, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Scrollbar_set_deimage(arg1: *mut Fl_Scrollbar, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Scrollbar_deimage(arg1: *const Fl_Scrollbar) -> *const core::ffi::c_void;
+    pub fn Fl_Scrollbar_deimage(arg1: *const Fl_Scrollbar) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Scrollbar_set_callback(
         arg1: *mut Fl_Scrollbar,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Scrollbar_set_deleter(
         arg1: *mut Fl_Scrollbar,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Scrollbar_visible(self_: *const Fl_Scrollbar) -> core::ffi::c_int;
+    pub fn Fl_Scrollbar_visible(self_: *const Fl_Scrollbar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_visible_r(self_: *const Fl_Scrollbar) -> core::ffi::c_int;
+    pub fn Fl_Scrollbar_visible_r(self_: *const Fl_Scrollbar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_active(self_: *const Fl_Scrollbar) -> core::ffi::c_uint;
+    pub fn Fl_Scrollbar_active(self_: *const Fl_Scrollbar) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_active_r(self_: *const Fl_Scrollbar) -> core::ffi::c_int;
+    pub fn Fl_Scrollbar_active_r(self_: *const Fl_Scrollbar) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Scrollbar_callback(self_: *const Fl_Scrollbar) -> Fl_Callback;
@@ -2557,16 +2493,16 @@ extern "C" {
     pub fn Fl_Scrollbar_set_deletion_callback(
         self_: *mut Fl_Scrollbar,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Scrollbar_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Scrollbar;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Scrollbar_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Scrollbar_set_bounds(arg1: *mut Fl_Scrollbar, a: f64, b: f64);
@@ -2587,25 +2523,22 @@ extern "C" {
     pub fn Fl_Scrollbar_set_range(arg1: *mut Fl_Scrollbar, a: f64, b: f64);
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_step(arg1: *mut Fl_Scrollbar, a: f64, b: core::ffi::c_int);
+    pub fn Fl_Scrollbar_set_step(arg1: *mut Fl_Scrollbar, a: f64, b: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Scrollbar_step(arg1: *mut Fl_Scrollbar) -> f64;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_precision(arg1: *mut Fl_Scrollbar, digits: core::ffi::c_int);
+    pub fn Fl_Scrollbar_set_precision(arg1: *mut Fl_Scrollbar, digits: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Scrollbar_value(arg1: *mut Fl_Scrollbar) -> f64;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_value(arg1: *mut Fl_Scrollbar, arg2: f64) -> core::ffi::c_int;
+    pub fn Fl_Scrollbar_set_value(arg1: *mut Fl_Scrollbar, arg2: f64) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_format(
-        arg1: *mut Fl_Scrollbar,
-        arg2: *mut core::ffi::c_char,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Scrollbar_format(arg1: *mut Fl_Scrollbar, arg2: *mut cty::c_char) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Scrollbar_round(arg1: *mut Fl_Scrollbar, arg2: f64) -> f64;
@@ -2614,11 +2547,7 @@ extern "C" {
     pub fn Fl_Scrollbar_clamp(arg1: *mut Fl_Scrollbar, arg2: f64) -> f64;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_increment(
-        arg1: *mut Fl_Scrollbar,
-        arg2: f64,
-        arg3: core::ffi::c_int,
-    ) -> f64;
+    pub fn Fl_Scrollbar_increment(arg1: *mut Fl_Scrollbar, arg2: f64, arg3: cty::c_int) -> f64;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2627,30 +2556,30 @@ pub struct Fl_Value_Slider {
 }
 extern "C" {
     pub fn Fl_Value_Slider_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Value_Slider;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_x(arg1: *mut Fl_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Value_Slider_x(arg1: *mut Fl_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_y(arg1: *mut Fl_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Value_Slider_y(arg1: *mut Fl_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_width(arg1: *mut Fl_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Value_Slider_width(arg1: *mut Fl_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_height(arg1: *mut Fl_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Value_Slider_height(arg1: *mut Fl_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_label(arg1: *mut Fl_Value_Slider) -> *const core::ffi::c_char;
+    pub fn Fl_Value_Slider_label(arg1: *mut Fl_Value_Slider) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_label(arg1: *mut Fl_Value_Slider, title: *const core::ffi::c_char);
+    pub fn Fl_Value_Slider_set_label(arg1: *mut Fl_Value_Slider, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Value_Slider_redraw(arg1: *mut Fl_Value_Slider);
@@ -2673,78 +2602,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Value_Slider_resize(
         arg1: *mut Fl_Value_Slider,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Value_Slider_widget_resize(
         arg1: *mut Fl_Value_Slider,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Value_Slider_tooltip(arg1: *mut Fl_Value_Slider) -> *const core::ffi::c_char;
+    pub fn Fl_Value_Slider_tooltip(arg1: *mut Fl_Value_Slider) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_tooltip(arg1: *mut Fl_Value_Slider, txt: *const core::ffi::c_char);
+    pub fn Fl_Value_Slider_set_tooltip(arg1: *mut Fl_Value_Slider, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_get_type(arg1: *mut Fl_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Value_Slider_get_type(arg1: *mut Fl_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_type(arg1: *mut Fl_Value_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Value_Slider_set_type(arg1: *mut Fl_Value_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_color(arg1: *mut Fl_Value_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Value_Slider_color(arg1: *mut Fl_Value_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_color(arg1: *mut Fl_Value_Slider, color: core::ffi::c_uint);
+    pub fn Fl_Value_Slider_set_color(arg1: *mut Fl_Value_Slider, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Value_Slider_measure_label(
         arg1: *const Fl_Value_Slider,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Value_Slider_label_color(arg1: *mut Fl_Value_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Value_Slider_label_color(arg1: *mut Fl_Value_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_label_color(arg1: *mut Fl_Value_Slider, color: core::ffi::c_uint);
+    pub fn Fl_Value_Slider_set_label_color(arg1: *mut Fl_Value_Slider, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_label_font(arg1: *mut Fl_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Value_Slider_label_font(arg1: *mut Fl_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_label_font(arg1: *mut Fl_Value_Slider, font: core::ffi::c_int);
+    pub fn Fl_Value_Slider_set_label_font(arg1: *mut Fl_Value_Slider, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_label_size(arg1: *mut Fl_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Value_Slider_label_size(arg1: *mut Fl_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_label_size(arg1: *mut Fl_Value_Slider, sz: core::ffi::c_int);
+    pub fn Fl_Value_Slider_set_label_size(arg1: *mut Fl_Value_Slider, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_label_type(arg1: *mut Fl_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Value_Slider_label_type(arg1: *mut Fl_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_label_type(arg1: *mut Fl_Value_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Value_Slider_set_label_type(arg1: *mut Fl_Value_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_box(arg1: *mut Fl_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Value_Slider_box(arg1: *mut Fl_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_box(arg1: *mut Fl_Value_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Value_Slider_set_box(arg1: *mut Fl_Value_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_changed(arg1: *mut Fl_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Value_Slider_changed(arg1: *mut Fl_Value_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Value_Slider_set_changed(arg1: *mut Fl_Value_Slider);
@@ -2753,32 +2682,32 @@ extern "C" {
     pub fn Fl_Value_Slider_clear_changed(arg1: *mut Fl_Value_Slider);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_align(arg1: *mut Fl_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Value_Slider_align(arg1: *mut Fl_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_align(arg1: *mut Fl_Value_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Value_Slider_set_align(arg1: *mut Fl_Value_Slider, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Value_Slider_delete(arg1: *mut Fl_Value_Slider);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_image(arg1: *mut Fl_Value_Slider, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Value_Slider_set_image(arg1: *mut Fl_Value_Slider, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Value_Slider_handle(
         self_: *mut Fl_Value_Slider,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Value_Slider_handle_event(self_: *mut Fl_Value_Slider, event: core::ffi::c_int);
+    pub fn Fl_Value_Slider_handle_event(self_: *mut Fl_Value_Slider, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Value_Slider_draw(
         self_: *mut Fl_Value_Slider,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -2787,36 +2716,33 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_when(arg1: *mut Fl_Value_Slider, arg2: core::ffi::c_int);
+    pub fn Fl_Value_Slider_set_when(arg1: *mut Fl_Value_Slider, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_when(arg1: *const Fl_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Value_Slider_when(arg1: *const Fl_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_image(arg1: *const Fl_Value_Slider) -> *const core::ffi::c_void;
+    pub fn Fl_Value_Slider_image(arg1: *const Fl_Value_Slider) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_parent(self_: *const Fl_Value_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Slider_parent(self_: *const Fl_Value_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_selection_color(arg1: *mut Fl_Value_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Value_Slider_selection_color(arg1: *mut Fl_Value_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_selection_color(
-        arg1: *mut Fl_Value_Slider,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Value_Slider_set_selection_color(arg1: *mut Fl_Value_Slider, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Value_Slider_do_callback(arg1: *mut Fl_Value_Slider);
@@ -2824,23 +2750,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Value_Slider_inside(
         self_: *const Fl_Value_Slider,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_window(arg1: *const Fl_Value_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Slider_window(arg1: *const Fl_Value_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_top_window(arg1: *const Fl_Value_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Slider_top_window(arg1: *const Fl_Value_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_takes_events(arg1: *const Fl_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Value_Slider_takes_events(arg1: *const Fl_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_user_data(arg1: *const Fl_Value_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Slider_user_data(arg1: *const Fl_Value_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_take_focus(self_: *mut Fl_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Value_Slider_take_focus(self_: *mut Fl_Value_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Value_Slider_set_visible_focus(self_: *mut Fl_Value_Slider);
@@ -2849,84 +2775,81 @@ extern "C" {
     pub fn Fl_Value_Slider_clear_visible_focus(self_: *mut Fl_Value_Slider);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_visible_focus(self_: *mut Fl_Value_Slider, v: core::ffi::c_int);
+    pub fn Fl_Value_Slider_visible_focus(self_: *mut Fl_Value_Slider, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_has_visible_focus(self_: *mut Fl_Value_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Value_Slider_has_visible_focus(self_: *mut Fl_Value_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_user_data(arg1: *mut Fl_Value_Slider, data: *mut core::ffi::c_void);
+    pub fn Fl_Value_Slider_set_user_data(arg1: *mut Fl_Value_Slider, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_draw_data(self_: *const Fl_Value_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Slider_draw_data(self_: *const Fl_Value_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_handle_data(self_: *const Fl_Value_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Slider_handle_data(self_: *const Fl_Value_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_draw_data(self_: *mut Fl_Value_Slider, data: *mut core::ffi::c_void);
+    pub fn Fl_Value_Slider_set_draw_data(self_: *mut Fl_Value_Slider, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_handle_data(
-        self_: *mut Fl_Value_Slider,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Value_Slider_set_handle_data(self_: *mut Fl_Value_Slider, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_damage(self_: *const Fl_Value_Slider) -> core::ffi::c_uchar;
+    pub fn Fl_Value_Slider_damage(self_: *const Fl_Value_Slider) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_damage(self_: *mut Fl_Value_Slider, flag: core::ffi::c_uchar);
+    pub fn Fl_Value_Slider_set_damage(self_: *mut Fl_Value_Slider, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Value_Slider_set_damage_area(
         self_: *mut Fl_Value_Slider,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Value_Slider_clear_damage(self_: *mut Fl_Value_Slider);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_as_window(self_: *mut Fl_Value_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Slider_as_window(self_: *mut Fl_Value_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_as_group(self_: *mut Fl_Value_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Slider_as_group(self_: *mut Fl_Value_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_deimage(arg1: *mut Fl_Value_Slider, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Value_Slider_set_deimage(arg1: *mut Fl_Value_Slider, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_deimage(arg1: *const Fl_Value_Slider) -> *const core::ffi::c_void;
+    pub fn Fl_Value_Slider_deimage(arg1: *const Fl_Value_Slider) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Value_Slider_set_callback(
         arg1: *mut Fl_Value_Slider,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Value_Slider_set_deleter(
         arg1: *mut Fl_Value_Slider,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Value_Slider_visible(self_: *const Fl_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Value_Slider_visible(self_: *const Fl_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_visible_r(self_: *const Fl_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Value_Slider_visible_r(self_: *const Fl_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_active(self_: *const Fl_Value_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Value_Slider_active(self_: *const Fl_Value_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_active_r(self_: *const Fl_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Value_Slider_active_r(self_: *const Fl_Value_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Value_Slider_callback(self_: *const Fl_Value_Slider) -> Fl_Callback;
@@ -2935,34 +2858,34 @@ extern "C" {
     pub fn Fl_Value_Slider_set_deletion_callback(
         self_: *mut Fl_Value_Slider,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Value_Slider_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Value_Slider;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Value_Slider_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_text_color(self_: *mut Fl_Value_Slider, c: core::ffi::c_uint);
+    pub fn Fl_Value_Slider_set_text_color(self_: *mut Fl_Value_Slider, c: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_text_color(self_: *mut Fl_Value_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Value_Slider_text_color(self_: *mut Fl_Value_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_text_font(self_: *mut Fl_Value_Slider, f: core::ffi::c_int);
+    pub fn Fl_Value_Slider_set_text_font(self_: *mut Fl_Value_Slider, f: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_text_font(self_: *mut Fl_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Value_Slider_text_font(self_: *mut Fl_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_text_size(self_: *mut Fl_Value_Slider, s: core::ffi::c_int);
+    pub fn Fl_Value_Slider_set_text_size(self_: *mut Fl_Value_Slider, s: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_text_size(self_: *mut Fl_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Value_Slider_text_size(self_: *mut Fl_Value_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Value_Slider_set_bounds(arg1: *mut Fl_Value_Slider, a: f64, b: f64);
@@ -2983,25 +2906,23 @@ extern "C" {
     pub fn Fl_Value_Slider_set_range(arg1: *mut Fl_Value_Slider, a: f64, b: f64);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_step(arg1: *mut Fl_Value_Slider, a: f64, b: core::ffi::c_int);
+    pub fn Fl_Value_Slider_set_step(arg1: *mut Fl_Value_Slider, a: f64, b: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Value_Slider_step(arg1: *mut Fl_Value_Slider) -> f64;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_precision(arg1: *mut Fl_Value_Slider, digits: core::ffi::c_int);
+    pub fn Fl_Value_Slider_set_precision(arg1: *mut Fl_Value_Slider, digits: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Value_Slider_value(arg1: *mut Fl_Value_Slider) -> f64;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_value(arg1: *mut Fl_Value_Slider, arg2: f64) -> core::ffi::c_int;
+    pub fn Fl_Value_Slider_set_value(arg1: *mut Fl_Value_Slider, arg2: f64) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_format(
-        arg1: *mut Fl_Value_Slider,
-        arg2: *mut core::ffi::c_char,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Value_Slider_format(arg1: *mut Fl_Value_Slider, arg2: *mut cty::c_char)
+        -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Value_Slider_round(arg1: *mut Fl_Value_Slider, arg2: f64) -> f64;
@@ -3013,7 +2934,7 @@ extern "C" {
     pub fn Fl_Value_Slider_increment(
         arg1: *mut Fl_Value_Slider,
         arg2: f64,
-        arg3: core::ffi::c_int,
+        arg3: cty::c_int,
     ) -> f64;
 }
 #[repr(C)]
@@ -3023,30 +2944,30 @@ pub struct Fl_Adjuster {
 }
 extern "C" {
     pub fn Fl_Adjuster_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Adjuster;
 }
 extern "C" {
-    pub fn Fl_Adjuster_x(arg1: *mut Fl_Adjuster) -> core::ffi::c_int;
+    pub fn Fl_Adjuster_x(arg1: *mut Fl_Adjuster) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Adjuster_y(arg1: *mut Fl_Adjuster) -> core::ffi::c_int;
+    pub fn Fl_Adjuster_y(arg1: *mut Fl_Adjuster) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Adjuster_width(arg1: *mut Fl_Adjuster) -> core::ffi::c_int;
+    pub fn Fl_Adjuster_width(arg1: *mut Fl_Adjuster) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Adjuster_height(arg1: *mut Fl_Adjuster) -> core::ffi::c_int;
+    pub fn Fl_Adjuster_height(arg1: *mut Fl_Adjuster) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Adjuster_label(arg1: *mut Fl_Adjuster) -> *const core::ffi::c_char;
+    pub fn Fl_Adjuster_label(arg1: *mut Fl_Adjuster) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_label(arg1: *mut Fl_Adjuster, title: *const core::ffi::c_char);
+    pub fn Fl_Adjuster_set_label(arg1: *mut Fl_Adjuster, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Adjuster_redraw(arg1: *mut Fl_Adjuster);
@@ -3069,78 +2990,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Adjuster_resize(
         arg1: *mut Fl_Adjuster,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Adjuster_widget_resize(
         arg1: *mut Fl_Adjuster,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Adjuster_tooltip(arg1: *mut Fl_Adjuster) -> *const core::ffi::c_char;
+    pub fn Fl_Adjuster_tooltip(arg1: *mut Fl_Adjuster) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_tooltip(arg1: *mut Fl_Adjuster, txt: *const core::ffi::c_char);
+    pub fn Fl_Adjuster_set_tooltip(arg1: *mut Fl_Adjuster, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Adjuster_get_type(arg1: *mut Fl_Adjuster) -> core::ffi::c_int;
+    pub fn Fl_Adjuster_get_type(arg1: *mut Fl_Adjuster) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_type(arg1: *mut Fl_Adjuster, typ: core::ffi::c_int);
+    pub fn Fl_Adjuster_set_type(arg1: *mut Fl_Adjuster, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Adjuster_color(arg1: *mut Fl_Adjuster) -> core::ffi::c_uint;
+    pub fn Fl_Adjuster_color(arg1: *mut Fl_Adjuster) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_color(arg1: *mut Fl_Adjuster, color: core::ffi::c_uint);
+    pub fn Fl_Adjuster_set_color(arg1: *mut Fl_Adjuster, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Adjuster_measure_label(
         arg1: *const Fl_Adjuster,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Adjuster_label_color(arg1: *mut Fl_Adjuster) -> core::ffi::c_uint;
+    pub fn Fl_Adjuster_label_color(arg1: *mut Fl_Adjuster) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_label_color(arg1: *mut Fl_Adjuster, color: core::ffi::c_uint);
+    pub fn Fl_Adjuster_set_label_color(arg1: *mut Fl_Adjuster, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Adjuster_label_font(arg1: *mut Fl_Adjuster) -> core::ffi::c_int;
+    pub fn Fl_Adjuster_label_font(arg1: *mut Fl_Adjuster) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_label_font(arg1: *mut Fl_Adjuster, font: core::ffi::c_int);
+    pub fn Fl_Adjuster_set_label_font(arg1: *mut Fl_Adjuster, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Adjuster_label_size(arg1: *mut Fl_Adjuster) -> core::ffi::c_int;
+    pub fn Fl_Adjuster_label_size(arg1: *mut Fl_Adjuster) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_label_size(arg1: *mut Fl_Adjuster, sz: core::ffi::c_int);
+    pub fn Fl_Adjuster_set_label_size(arg1: *mut Fl_Adjuster, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Adjuster_label_type(arg1: *mut Fl_Adjuster) -> core::ffi::c_int;
+    pub fn Fl_Adjuster_label_type(arg1: *mut Fl_Adjuster) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_label_type(arg1: *mut Fl_Adjuster, typ: core::ffi::c_int);
+    pub fn Fl_Adjuster_set_label_type(arg1: *mut Fl_Adjuster, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Adjuster_box(arg1: *mut Fl_Adjuster) -> core::ffi::c_int;
+    pub fn Fl_Adjuster_box(arg1: *mut Fl_Adjuster) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_box(arg1: *mut Fl_Adjuster, typ: core::ffi::c_int);
+    pub fn Fl_Adjuster_set_box(arg1: *mut Fl_Adjuster, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Adjuster_changed(arg1: *mut Fl_Adjuster) -> core::ffi::c_int;
+    pub fn Fl_Adjuster_changed(arg1: *mut Fl_Adjuster) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Adjuster_set_changed(arg1: *mut Fl_Adjuster);
@@ -3149,32 +3070,32 @@ extern "C" {
     pub fn Fl_Adjuster_clear_changed(arg1: *mut Fl_Adjuster);
 }
 extern "C" {
-    pub fn Fl_Adjuster_align(arg1: *mut Fl_Adjuster) -> core::ffi::c_int;
+    pub fn Fl_Adjuster_align(arg1: *mut Fl_Adjuster) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_align(arg1: *mut Fl_Adjuster, typ: core::ffi::c_int);
+    pub fn Fl_Adjuster_set_align(arg1: *mut Fl_Adjuster, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Adjuster_delete(arg1: *mut Fl_Adjuster);
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_image(arg1: *mut Fl_Adjuster, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Adjuster_set_image(arg1: *mut Fl_Adjuster, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Adjuster_handle(
         self_: *mut Fl_Adjuster,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Adjuster_handle_event(self_: *mut Fl_Adjuster, event: core::ffi::c_int);
+    pub fn Fl_Adjuster_handle_event(self_: *mut Fl_Adjuster, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Adjuster_draw(
         self_: *mut Fl_Adjuster,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -3183,57 +3104,54 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_when(arg1: *mut Fl_Adjuster, arg2: core::ffi::c_int);
+    pub fn Fl_Adjuster_set_when(arg1: *mut Fl_Adjuster, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Adjuster_when(arg1: *const Fl_Adjuster) -> core::ffi::c_int;
+    pub fn Fl_Adjuster_when(arg1: *const Fl_Adjuster) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Adjuster_image(arg1: *const Fl_Adjuster) -> *const core::ffi::c_void;
+    pub fn Fl_Adjuster_image(arg1: *const Fl_Adjuster) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Adjuster_parent(self_: *const Fl_Adjuster) -> *mut core::ffi::c_void;
+    pub fn Fl_Adjuster_parent(self_: *const Fl_Adjuster) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Adjuster_selection_color(arg1: *mut Fl_Adjuster) -> core::ffi::c_uint;
+    pub fn Fl_Adjuster_selection_color(arg1: *mut Fl_Adjuster) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_selection_color(arg1: *mut Fl_Adjuster, color: core::ffi::c_uint);
+    pub fn Fl_Adjuster_set_selection_color(arg1: *mut Fl_Adjuster, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Adjuster_do_callback(arg1: *mut Fl_Adjuster);
 }
 extern "C" {
-    pub fn Fl_Adjuster_inside(
-        self_: *const Fl_Adjuster,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Adjuster_inside(self_: *const Fl_Adjuster, arg1: *mut cty::c_void) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Adjuster_window(arg1: *const Fl_Adjuster) -> *mut core::ffi::c_void;
+    pub fn Fl_Adjuster_window(arg1: *const Fl_Adjuster) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Adjuster_top_window(arg1: *const Fl_Adjuster) -> *mut core::ffi::c_void;
+    pub fn Fl_Adjuster_top_window(arg1: *const Fl_Adjuster) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Adjuster_takes_events(arg1: *const Fl_Adjuster) -> core::ffi::c_int;
+    pub fn Fl_Adjuster_takes_events(arg1: *const Fl_Adjuster) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Adjuster_user_data(arg1: *const Fl_Adjuster) -> *mut core::ffi::c_void;
+    pub fn Fl_Adjuster_user_data(arg1: *const Fl_Adjuster) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Adjuster_take_focus(self_: *mut Fl_Adjuster) -> core::ffi::c_int;
+    pub fn Fl_Adjuster_take_focus(self_: *mut Fl_Adjuster) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Adjuster_set_visible_focus(self_: *mut Fl_Adjuster);
@@ -3242,81 +3160,81 @@ extern "C" {
     pub fn Fl_Adjuster_clear_visible_focus(self_: *mut Fl_Adjuster);
 }
 extern "C" {
-    pub fn Fl_Adjuster_visible_focus(self_: *mut Fl_Adjuster, v: core::ffi::c_int);
+    pub fn Fl_Adjuster_visible_focus(self_: *mut Fl_Adjuster, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Adjuster_has_visible_focus(self_: *mut Fl_Adjuster) -> core::ffi::c_uint;
+    pub fn Fl_Adjuster_has_visible_focus(self_: *mut Fl_Adjuster) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_user_data(arg1: *mut Fl_Adjuster, data: *mut core::ffi::c_void);
+    pub fn Fl_Adjuster_set_user_data(arg1: *mut Fl_Adjuster, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Adjuster_draw_data(self_: *const Fl_Adjuster) -> *mut core::ffi::c_void;
+    pub fn Fl_Adjuster_draw_data(self_: *const Fl_Adjuster) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Adjuster_handle_data(self_: *const Fl_Adjuster) -> *mut core::ffi::c_void;
+    pub fn Fl_Adjuster_handle_data(self_: *const Fl_Adjuster) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_draw_data(self_: *mut Fl_Adjuster, data: *mut core::ffi::c_void);
+    pub fn Fl_Adjuster_set_draw_data(self_: *mut Fl_Adjuster, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_handle_data(self_: *mut Fl_Adjuster, data: *mut core::ffi::c_void);
+    pub fn Fl_Adjuster_set_handle_data(self_: *mut Fl_Adjuster, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Adjuster_damage(self_: *const Fl_Adjuster) -> core::ffi::c_uchar;
+    pub fn Fl_Adjuster_damage(self_: *const Fl_Adjuster) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_damage(self_: *mut Fl_Adjuster, flag: core::ffi::c_uchar);
+    pub fn Fl_Adjuster_set_damage(self_: *mut Fl_Adjuster, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Adjuster_set_damage_area(
         self_: *mut Fl_Adjuster,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Adjuster_clear_damage(self_: *mut Fl_Adjuster);
 }
 extern "C" {
-    pub fn Fl_Adjuster_as_window(self_: *mut Fl_Adjuster) -> *mut core::ffi::c_void;
+    pub fn Fl_Adjuster_as_window(self_: *mut Fl_Adjuster) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Adjuster_as_group(self_: *mut Fl_Adjuster) -> *mut core::ffi::c_void;
+    pub fn Fl_Adjuster_as_group(self_: *mut Fl_Adjuster) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_deimage(arg1: *mut Fl_Adjuster, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Adjuster_set_deimage(arg1: *mut Fl_Adjuster, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Adjuster_deimage(arg1: *const Fl_Adjuster) -> *const core::ffi::c_void;
+    pub fn Fl_Adjuster_deimage(arg1: *const Fl_Adjuster) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Adjuster_set_callback(
         arg1: *mut Fl_Adjuster,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Adjuster_set_deleter(
         arg1: *mut Fl_Adjuster,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Adjuster_visible(self_: *const Fl_Adjuster) -> core::ffi::c_int;
+    pub fn Fl_Adjuster_visible(self_: *const Fl_Adjuster) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Adjuster_visible_r(self_: *const Fl_Adjuster) -> core::ffi::c_int;
+    pub fn Fl_Adjuster_visible_r(self_: *const Fl_Adjuster) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Adjuster_active(self_: *const Fl_Adjuster) -> core::ffi::c_uint;
+    pub fn Fl_Adjuster_active(self_: *const Fl_Adjuster) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Adjuster_active_r(self_: *const Fl_Adjuster) -> core::ffi::c_int;
+    pub fn Fl_Adjuster_active_r(self_: *const Fl_Adjuster) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Adjuster_callback(self_: *const Fl_Adjuster) -> Fl_Callback;
@@ -3325,16 +3243,16 @@ extern "C" {
     pub fn Fl_Adjuster_set_deletion_callback(
         self_: *mut Fl_Adjuster,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Adjuster_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Adjuster;
 }
 extern "C" {
-    pub fn Fl_Adjuster_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Adjuster_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Adjuster_set_bounds(arg1: *mut Fl_Adjuster, a: f64, b: f64);
@@ -3355,25 +3273,22 @@ extern "C" {
     pub fn Fl_Adjuster_set_range(arg1: *mut Fl_Adjuster, a: f64, b: f64);
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_step(arg1: *mut Fl_Adjuster, a: f64, b: core::ffi::c_int);
+    pub fn Fl_Adjuster_set_step(arg1: *mut Fl_Adjuster, a: f64, b: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Adjuster_step(arg1: *mut Fl_Adjuster) -> f64;
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_precision(arg1: *mut Fl_Adjuster, digits: core::ffi::c_int);
+    pub fn Fl_Adjuster_set_precision(arg1: *mut Fl_Adjuster, digits: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Adjuster_value(arg1: *mut Fl_Adjuster) -> f64;
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_value(arg1: *mut Fl_Adjuster, arg2: f64) -> core::ffi::c_int;
+    pub fn Fl_Adjuster_set_value(arg1: *mut Fl_Adjuster, arg2: f64) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Adjuster_format(
-        arg1: *mut Fl_Adjuster,
-        arg2: *mut core::ffi::c_char,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Adjuster_format(arg1: *mut Fl_Adjuster, arg2: *mut cty::c_char) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Adjuster_round(arg1: *mut Fl_Adjuster, arg2: f64) -> f64;
@@ -3382,7 +3297,7 @@ extern "C" {
     pub fn Fl_Adjuster_clamp(arg1: *mut Fl_Adjuster, arg2: f64) -> f64;
 }
 extern "C" {
-    pub fn Fl_Adjuster_increment(arg1: *mut Fl_Adjuster, arg2: f64, arg3: core::ffi::c_int) -> f64;
+    pub fn Fl_Adjuster_increment(arg1: *mut Fl_Adjuster, arg2: f64, arg3: cty::c_int) -> f64;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -3391,30 +3306,30 @@ pub struct Fl_Value_Input {
 }
 extern "C" {
     pub fn Fl_Value_Input_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Value_Input;
 }
 extern "C" {
-    pub fn Fl_Value_Input_x(arg1: *mut Fl_Value_Input) -> core::ffi::c_int;
+    pub fn Fl_Value_Input_x(arg1: *mut Fl_Value_Input) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Input_y(arg1: *mut Fl_Value_Input) -> core::ffi::c_int;
+    pub fn Fl_Value_Input_y(arg1: *mut Fl_Value_Input) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Input_width(arg1: *mut Fl_Value_Input) -> core::ffi::c_int;
+    pub fn Fl_Value_Input_width(arg1: *mut Fl_Value_Input) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Input_height(arg1: *mut Fl_Value_Input) -> core::ffi::c_int;
+    pub fn Fl_Value_Input_height(arg1: *mut Fl_Value_Input) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Input_label(arg1: *mut Fl_Value_Input) -> *const core::ffi::c_char;
+    pub fn Fl_Value_Input_label(arg1: *mut Fl_Value_Input) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_label(arg1: *mut Fl_Value_Input, title: *const core::ffi::c_char);
+    pub fn Fl_Value_Input_set_label(arg1: *mut Fl_Value_Input, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Value_Input_redraw(arg1: *mut Fl_Value_Input);
@@ -3437,78 +3352,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Value_Input_resize(
         arg1: *mut Fl_Value_Input,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Value_Input_widget_resize(
         arg1: *mut Fl_Value_Input,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Value_Input_tooltip(arg1: *mut Fl_Value_Input) -> *const core::ffi::c_char;
+    pub fn Fl_Value_Input_tooltip(arg1: *mut Fl_Value_Input) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_tooltip(arg1: *mut Fl_Value_Input, txt: *const core::ffi::c_char);
+    pub fn Fl_Value_Input_set_tooltip(arg1: *mut Fl_Value_Input, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Value_Input_get_type(arg1: *mut Fl_Value_Input) -> core::ffi::c_int;
+    pub fn Fl_Value_Input_get_type(arg1: *mut Fl_Value_Input) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_type(arg1: *mut Fl_Value_Input, typ: core::ffi::c_int);
+    pub fn Fl_Value_Input_set_type(arg1: *mut Fl_Value_Input, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Input_color(arg1: *mut Fl_Value_Input) -> core::ffi::c_uint;
+    pub fn Fl_Value_Input_color(arg1: *mut Fl_Value_Input) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_color(arg1: *mut Fl_Value_Input, color: core::ffi::c_uint);
+    pub fn Fl_Value_Input_set_color(arg1: *mut Fl_Value_Input, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Value_Input_measure_label(
         arg1: *const Fl_Value_Input,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Value_Input_label_color(arg1: *mut Fl_Value_Input) -> core::ffi::c_uint;
+    pub fn Fl_Value_Input_label_color(arg1: *mut Fl_Value_Input) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_label_color(arg1: *mut Fl_Value_Input, color: core::ffi::c_uint);
+    pub fn Fl_Value_Input_set_label_color(arg1: *mut Fl_Value_Input, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Value_Input_label_font(arg1: *mut Fl_Value_Input) -> core::ffi::c_int;
+    pub fn Fl_Value_Input_label_font(arg1: *mut Fl_Value_Input) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_label_font(arg1: *mut Fl_Value_Input, font: core::ffi::c_int);
+    pub fn Fl_Value_Input_set_label_font(arg1: *mut Fl_Value_Input, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Input_label_size(arg1: *mut Fl_Value_Input) -> core::ffi::c_int;
+    pub fn Fl_Value_Input_label_size(arg1: *mut Fl_Value_Input) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_label_size(arg1: *mut Fl_Value_Input, sz: core::ffi::c_int);
+    pub fn Fl_Value_Input_set_label_size(arg1: *mut Fl_Value_Input, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Input_label_type(arg1: *mut Fl_Value_Input) -> core::ffi::c_int;
+    pub fn Fl_Value_Input_label_type(arg1: *mut Fl_Value_Input) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_label_type(arg1: *mut Fl_Value_Input, typ: core::ffi::c_int);
+    pub fn Fl_Value_Input_set_label_type(arg1: *mut Fl_Value_Input, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Input_box(arg1: *mut Fl_Value_Input) -> core::ffi::c_int;
+    pub fn Fl_Value_Input_box(arg1: *mut Fl_Value_Input) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_box(arg1: *mut Fl_Value_Input, typ: core::ffi::c_int);
+    pub fn Fl_Value_Input_set_box(arg1: *mut Fl_Value_Input, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Input_changed(arg1: *mut Fl_Value_Input) -> core::ffi::c_int;
+    pub fn Fl_Value_Input_changed(arg1: *mut Fl_Value_Input) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Value_Input_set_changed(arg1: *mut Fl_Value_Input);
@@ -3517,32 +3432,32 @@ extern "C" {
     pub fn Fl_Value_Input_clear_changed(arg1: *mut Fl_Value_Input);
 }
 extern "C" {
-    pub fn Fl_Value_Input_align(arg1: *mut Fl_Value_Input) -> core::ffi::c_int;
+    pub fn Fl_Value_Input_align(arg1: *mut Fl_Value_Input) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_align(arg1: *mut Fl_Value_Input, typ: core::ffi::c_int);
+    pub fn Fl_Value_Input_set_align(arg1: *mut Fl_Value_Input, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Value_Input_delete(arg1: *mut Fl_Value_Input);
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_image(arg1: *mut Fl_Value_Input, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Value_Input_set_image(arg1: *mut Fl_Value_Input, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Value_Input_handle(
         self_: *mut Fl_Value_Input,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Value_Input_handle_event(self_: *mut Fl_Value_Input, event: core::ffi::c_int);
+    pub fn Fl_Value_Input_handle_event(self_: *mut Fl_Value_Input, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Value_Input_draw(
         self_: *mut Fl_Value_Input,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -3551,33 +3466,33 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_when(arg1: *mut Fl_Value_Input, arg2: core::ffi::c_int);
+    pub fn Fl_Value_Input_set_when(arg1: *mut Fl_Value_Input, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Input_when(arg1: *const Fl_Value_Input) -> core::ffi::c_int;
+    pub fn Fl_Value_Input_when(arg1: *const Fl_Value_Input) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Input_image(arg1: *const Fl_Value_Input) -> *const core::ffi::c_void;
+    pub fn Fl_Value_Input_image(arg1: *const Fl_Value_Input) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Input_parent(self_: *const Fl_Value_Input) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Input_parent(self_: *const Fl_Value_Input) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Input_selection_color(arg1: *mut Fl_Value_Input) -> core::ffi::c_uint;
+    pub fn Fl_Value_Input_selection_color(arg1: *mut Fl_Value_Input) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_selection_color(arg1: *mut Fl_Value_Input, color: core::ffi::c_uint);
+    pub fn Fl_Value_Input_set_selection_color(arg1: *mut Fl_Value_Input, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Value_Input_do_callback(arg1: *mut Fl_Value_Input);
@@ -3585,23 +3500,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Value_Input_inside(
         self_: *const Fl_Value_Input,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Input_window(arg1: *const Fl_Value_Input) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Input_window(arg1: *const Fl_Value_Input) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Input_top_window(arg1: *const Fl_Value_Input) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Input_top_window(arg1: *const Fl_Value_Input) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Input_takes_events(arg1: *const Fl_Value_Input) -> core::ffi::c_int;
+    pub fn Fl_Value_Input_takes_events(arg1: *const Fl_Value_Input) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Input_user_data(arg1: *const Fl_Value_Input) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Input_user_data(arg1: *const Fl_Value_Input) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Input_take_focus(self_: *mut Fl_Value_Input) -> core::ffi::c_int;
+    pub fn Fl_Value_Input_take_focus(self_: *mut Fl_Value_Input) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Value_Input_set_visible_focus(self_: *mut Fl_Value_Input);
@@ -3610,81 +3525,81 @@ extern "C" {
     pub fn Fl_Value_Input_clear_visible_focus(self_: *mut Fl_Value_Input);
 }
 extern "C" {
-    pub fn Fl_Value_Input_visible_focus(self_: *mut Fl_Value_Input, v: core::ffi::c_int);
+    pub fn Fl_Value_Input_visible_focus(self_: *mut Fl_Value_Input, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Input_has_visible_focus(self_: *mut Fl_Value_Input) -> core::ffi::c_uint;
+    pub fn Fl_Value_Input_has_visible_focus(self_: *mut Fl_Value_Input) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_user_data(arg1: *mut Fl_Value_Input, data: *mut core::ffi::c_void);
+    pub fn Fl_Value_Input_set_user_data(arg1: *mut Fl_Value_Input, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Value_Input_draw_data(self_: *const Fl_Value_Input) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Input_draw_data(self_: *const Fl_Value_Input) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Input_handle_data(self_: *const Fl_Value_Input) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Input_handle_data(self_: *const Fl_Value_Input) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_draw_data(self_: *mut Fl_Value_Input, data: *mut core::ffi::c_void);
+    pub fn Fl_Value_Input_set_draw_data(self_: *mut Fl_Value_Input, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_handle_data(self_: *mut Fl_Value_Input, data: *mut core::ffi::c_void);
+    pub fn Fl_Value_Input_set_handle_data(self_: *mut Fl_Value_Input, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Value_Input_damage(self_: *const Fl_Value_Input) -> core::ffi::c_uchar;
+    pub fn Fl_Value_Input_damage(self_: *const Fl_Value_Input) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_damage(self_: *mut Fl_Value_Input, flag: core::ffi::c_uchar);
+    pub fn Fl_Value_Input_set_damage(self_: *mut Fl_Value_Input, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Value_Input_set_damage_area(
         self_: *mut Fl_Value_Input,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Value_Input_clear_damage(self_: *mut Fl_Value_Input);
 }
 extern "C" {
-    pub fn Fl_Value_Input_as_window(self_: *mut Fl_Value_Input) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Input_as_window(self_: *mut Fl_Value_Input) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Input_as_group(self_: *mut Fl_Value_Input) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Input_as_group(self_: *mut Fl_Value_Input) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_deimage(arg1: *mut Fl_Value_Input, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Value_Input_set_deimage(arg1: *mut Fl_Value_Input, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Value_Input_deimage(arg1: *const Fl_Value_Input) -> *const core::ffi::c_void;
+    pub fn Fl_Value_Input_deimage(arg1: *const Fl_Value_Input) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Value_Input_set_callback(
         arg1: *mut Fl_Value_Input,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Value_Input_set_deleter(
         arg1: *mut Fl_Value_Input,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Value_Input_visible(self_: *const Fl_Value_Input) -> core::ffi::c_int;
+    pub fn Fl_Value_Input_visible(self_: *const Fl_Value_Input) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Input_visible_r(self_: *const Fl_Value_Input) -> core::ffi::c_int;
+    pub fn Fl_Value_Input_visible_r(self_: *const Fl_Value_Input) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Input_active(self_: *const Fl_Value_Input) -> core::ffi::c_uint;
+    pub fn Fl_Value_Input_active(self_: *const Fl_Value_Input) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Value_Input_active_r(self_: *const Fl_Value_Input) -> core::ffi::c_int;
+    pub fn Fl_Value_Input_active_r(self_: *const Fl_Value_Input) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Value_Input_callback(self_: *const Fl_Value_Input) -> Fl_Callback;
@@ -3693,40 +3608,40 @@ extern "C" {
     pub fn Fl_Value_Input_set_deletion_callback(
         self_: *mut Fl_Value_Input,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Value_Input_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Value_Input;
 }
 extern "C" {
-    pub fn Fl_Value_Input_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Value_Input_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_text_color(self_: *mut Fl_Value_Input, c: core::ffi::c_uint);
+    pub fn Fl_Value_Input_set_text_color(self_: *mut Fl_Value_Input, c: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Value_Input_text_color(self_: *mut Fl_Value_Input) -> core::ffi::c_uint;
+    pub fn Fl_Value_Input_text_color(self_: *mut Fl_Value_Input) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_text_font(self_: *mut Fl_Value_Input, f: core::ffi::c_int);
+    pub fn Fl_Value_Input_set_text_font(self_: *mut Fl_Value_Input, f: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Input_text_font(self_: *mut Fl_Value_Input) -> core::ffi::c_int;
+    pub fn Fl_Value_Input_text_font(self_: *mut Fl_Value_Input) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_text_size(self_: *mut Fl_Value_Input, s: core::ffi::c_int);
+    pub fn Fl_Value_Input_set_text_size(self_: *mut Fl_Value_Input, s: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Input_text_size(self_: *mut Fl_Value_Input) -> core::ffi::c_int;
+    pub fn Fl_Value_Input_text_size(self_: *mut Fl_Value_Input) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_soft(self_: *mut Fl_Value_Input, val: core::ffi::c_char);
+    pub fn Fl_Value_Input_set_soft(self_: *mut Fl_Value_Input, val: cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Value_Input_soft(self_: *const Fl_Value_Input) -> core::ffi::c_char;
+    pub fn Fl_Value_Input_soft(self_: *const Fl_Value_Input) -> cty::c_char;
 }
 extern "C" {
     pub fn Fl_Value_Input_set_bounds(arg1: *mut Fl_Value_Input, a: f64, b: f64);
@@ -3747,25 +3662,22 @@ extern "C" {
     pub fn Fl_Value_Input_set_range(arg1: *mut Fl_Value_Input, a: f64, b: f64);
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_step(arg1: *mut Fl_Value_Input, a: f64, b: core::ffi::c_int);
+    pub fn Fl_Value_Input_set_step(arg1: *mut Fl_Value_Input, a: f64, b: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Value_Input_step(arg1: *mut Fl_Value_Input) -> f64;
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_precision(arg1: *mut Fl_Value_Input, digits: core::ffi::c_int);
+    pub fn Fl_Value_Input_set_precision(arg1: *mut Fl_Value_Input, digits: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Value_Input_value(arg1: *mut Fl_Value_Input) -> f64;
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_value(arg1: *mut Fl_Value_Input, arg2: f64) -> core::ffi::c_int;
+    pub fn Fl_Value_Input_set_value(arg1: *mut Fl_Value_Input, arg2: f64) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Input_format(
-        arg1: *mut Fl_Value_Input,
-        arg2: *mut core::ffi::c_char,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Value_Input_format(arg1: *mut Fl_Value_Input, arg2: *mut cty::c_char) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Value_Input_round(arg1: *mut Fl_Value_Input, arg2: f64) -> f64;
@@ -3774,11 +3686,7 @@ extern "C" {
     pub fn Fl_Value_Input_clamp(arg1: *mut Fl_Value_Input, arg2: f64) -> f64;
 }
 extern "C" {
-    pub fn Fl_Value_Input_increment(
-        arg1: *mut Fl_Value_Input,
-        arg2: f64,
-        arg3: core::ffi::c_int,
-    ) -> f64;
+    pub fn Fl_Value_Input_increment(arg1: *mut Fl_Value_Input, arg2: f64, arg3: cty::c_int) -> f64;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -3787,30 +3695,30 @@ pub struct Fl_Value_Output {
 }
 extern "C" {
     pub fn Fl_Value_Output_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Value_Output;
 }
 extern "C" {
-    pub fn Fl_Value_Output_x(arg1: *mut Fl_Value_Output) -> core::ffi::c_int;
+    pub fn Fl_Value_Output_x(arg1: *mut Fl_Value_Output) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Output_y(arg1: *mut Fl_Value_Output) -> core::ffi::c_int;
+    pub fn Fl_Value_Output_y(arg1: *mut Fl_Value_Output) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Output_width(arg1: *mut Fl_Value_Output) -> core::ffi::c_int;
+    pub fn Fl_Value_Output_width(arg1: *mut Fl_Value_Output) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Output_height(arg1: *mut Fl_Value_Output) -> core::ffi::c_int;
+    pub fn Fl_Value_Output_height(arg1: *mut Fl_Value_Output) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Output_label(arg1: *mut Fl_Value_Output) -> *const core::ffi::c_char;
+    pub fn Fl_Value_Output_label(arg1: *mut Fl_Value_Output) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_label(arg1: *mut Fl_Value_Output, title: *const core::ffi::c_char);
+    pub fn Fl_Value_Output_set_label(arg1: *mut Fl_Value_Output, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Value_Output_redraw(arg1: *mut Fl_Value_Output);
@@ -3833,78 +3741,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Value_Output_resize(
         arg1: *mut Fl_Value_Output,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Value_Output_widget_resize(
         arg1: *mut Fl_Value_Output,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Value_Output_tooltip(arg1: *mut Fl_Value_Output) -> *const core::ffi::c_char;
+    pub fn Fl_Value_Output_tooltip(arg1: *mut Fl_Value_Output) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_tooltip(arg1: *mut Fl_Value_Output, txt: *const core::ffi::c_char);
+    pub fn Fl_Value_Output_set_tooltip(arg1: *mut Fl_Value_Output, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Value_Output_get_type(arg1: *mut Fl_Value_Output) -> core::ffi::c_int;
+    pub fn Fl_Value_Output_get_type(arg1: *mut Fl_Value_Output) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_type(arg1: *mut Fl_Value_Output, typ: core::ffi::c_int);
+    pub fn Fl_Value_Output_set_type(arg1: *mut Fl_Value_Output, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Output_color(arg1: *mut Fl_Value_Output) -> core::ffi::c_uint;
+    pub fn Fl_Value_Output_color(arg1: *mut Fl_Value_Output) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_color(arg1: *mut Fl_Value_Output, color: core::ffi::c_uint);
+    pub fn Fl_Value_Output_set_color(arg1: *mut Fl_Value_Output, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Value_Output_measure_label(
         arg1: *const Fl_Value_Output,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Value_Output_label_color(arg1: *mut Fl_Value_Output) -> core::ffi::c_uint;
+    pub fn Fl_Value_Output_label_color(arg1: *mut Fl_Value_Output) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_label_color(arg1: *mut Fl_Value_Output, color: core::ffi::c_uint);
+    pub fn Fl_Value_Output_set_label_color(arg1: *mut Fl_Value_Output, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Value_Output_label_font(arg1: *mut Fl_Value_Output) -> core::ffi::c_int;
+    pub fn Fl_Value_Output_label_font(arg1: *mut Fl_Value_Output) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_label_font(arg1: *mut Fl_Value_Output, font: core::ffi::c_int);
+    pub fn Fl_Value_Output_set_label_font(arg1: *mut Fl_Value_Output, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Output_label_size(arg1: *mut Fl_Value_Output) -> core::ffi::c_int;
+    pub fn Fl_Value_Output_label_size(arg1: *mut Fl_Value_Output) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_label_size(arg1: *mut Fl_Value_Output, sz: core::ffi::c_int);
+    pub fn Fl_Value_Output_set_label_size(arg1: *mut Fl_Value_Output, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Output_label_type(arg1: *mut Fl_Value_Output) -> core::ffi::c_int;
+    pub fn Fl_Value_Output_label_type(arg1: *mut Fl_Value_Output) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_label_type(arg1: *mut Fl_Value_Output, typ: core::ffi::c_int);
+    pub fn Fl_Value_Output_set_label_type(arg1: *mut Fl_Value_Output, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Output_box(arg1: *mut Fl_Value_Output) -> core::ffi::c_int;
+    pub fn Fl_Value_Output_box(arg1: *mut Fl_Value_Output) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_box(arg1: *mut Fl_Value_Output, typ: core::ffi::c_int);
+    pub fn Fl_Value_Output_set_box(arg1: *mut Fl_Value_Output, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Output_changed(arg1: *mut Fl_Value_Output) -> core::ffi::c_int;
+    pub fn Fl_Value_Output_changed(arg1: *mut Fl_Value_Output) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Value_Output_set_changed(arg1: *mut Fl_Value_Output);
@@ -3913,32 +3821,32 @@ extern "C" {
     pub fn Fl_Value_Output_clear_changed(arg1: *mut Fl_Value_Output);
 }
 extern "C" {
-    pub fn Fl_Value_Output_align(arg1: *mut Fl_Value_Output) -> core::ffi::c_int;
+    pub fn Fl_Value_Output_align(arg1: *mut Fl_Value_Output) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_align(arg1: *mut Fl_Value_Output, typ: core::ffi::c_int);
+    pub fn Fl_Value_Output_set_align(arg1: *mut Fl_Value_Output, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Value_Output_delete(arg1: *mut Fl_Value_Output);
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_image(arg1: *mut Fl_Value_Output, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Value_Output_set_image(arg1: *mut Fl_Value_Output, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Value_Output_handle(
         self_: *mut Fl_Value_Output,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Value_Output_handle_event(self_: *mut Fl_Value_Output, event: core::ffi::c_int);
+    pub fn Fl_Value_Output_handle_event(self_: *mut Fl_Value_Output, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Value_Output_draw(
         self_: *mut Fl_Value_Output,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -3947,36 +3855,33 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_when(arg1: *mut Fl_Value_Output, arg2: core::ffi::c_int);
+    pub fn Fl_Value_Output_set_when(arg1: *mut Fl_Value_Output, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Output_when(arg1: *const Fl_Value_Output) -> core::ffi::c_int;
+    pub fn Fl_Value_Output_when(arg1: *const Fl_Value_Output) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Output_image(arg1: *const Fl_Value_Output) -> *const core::ffi::c_void;
+    pub fn Fl_Value_Output_image(arg1: *const Fl_Value_Output) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Output_parent(self_: *const Fl_Value_Output) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Output_parent(self_: *const Fl_Value_Output) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Output_selection_color(arg1: *mut Fl_Value_Output) -> core::ffi::c_uint;
+    pub fn Fl_Value_Output_selection_color(arg1: *mut Fl_Value_Output) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_selection_color(
-        arg1: *mut Fl_Value_Output,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Value_Output_set_selection_color(arg1: *mut Fl_Value_Output, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Value_Output_do_callback(arg1: *mut Fl_Value_Output);
@@ -3984,23 +3889,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Value_Output_inside(
         self_: *const Fl_Value_Output,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Output_window(arg1: *const Fl_Value_Output) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Output_window(arg1: *const Fl_Value_Output) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Output_top_window(arg1: *const Fl_Value_Output) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Output_top_window(arg1: *const Fl_Value_Output) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Output_takes_events(arg1: *const Fl_Value_Output) -> core::ffi::c_int;
+    pub fn Fl_Value_Output_takes_events(arg1: *const Fl_Value_Output) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Output_user_data(arg1: *const Fl_Value_Output) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Output_user_data(arg1: *const Fl_Value_Output) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Output_take_focus(self_: *mut Fl_Value_Output) -> core::ffi::c_int;
+    pub fn Fl_Value_Output_take_focus(self_: *mut Fl_Value_Output) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Value_Output_set_visible_focus(self_: *mut Fl_Value_Output);
@@ -4009,84 +3914,81 @@ extern "C" {
     pub fn Fl_Value_Output_clear_visible_focus(self_: *mut Fl_Value_Output);
 }
 extern "C" {
-    pub fn Fl_Value_Output_visible_focus(self_: *mut Fl_Value_Output, v: core::ffi::c_int);
+    pub fn Fl_Value_Output_visible_focus(self_: *mut Fl_Value_Output, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Output_has_visible_focus(self_: *mut Fl_Value_Output) -> core::ffi::c_uint;
+    pub fn Fl_Value_Output_has_visible_focus(self_: *mut Fl_Value_Output) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_user_data(arg1: *mut Fl_Value_Output, data: *mut core::ffi::c_void);
+    pub fn Fl_Value_Output_set_user_data(arg1: *mut Fl_Value_Output, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Value_Output_draw_data(self_: *const Fl_Value_Output) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Output_draw_data(self_: *const Fl_Value_Output) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Output_handle_data(self_: *const Fl_Value_Output) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Output_handle_data(self_: *const Fl_Value_Output) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_draw_data(self_: *mut Fl_Value_Output, data: *mut core::ffi::c_void);
+    pub fn Fl_Value_Output_set_draw_data(self_: *mut Fl_Value_Output, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_handle_data(
-        self_: *mut Fl_Value_Output,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Value_Output_set_handle_data(self_: *mut Fl_Value_Output, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Value_Output_damage(self_: *const Fl_Value_Output) -> core::ffi::c_uchar;
+    pub fn Fl_Value_Output_damage(self_: *const Fl_Value_Output) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_damage(self_: *mut Fl_Value_Output, flag: core::ffi::c_uchar);
+    pub fn Fl_Value_Output_set_damage(self_: *mut Fl_Value_Output, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Value_Output_set_damage_area(
         self_: *mut Fl_Value_Output,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Value_Output_clear_damage(self_: *mut Fl_Value_Output);
 }
 extern "C" {
-    pub fn Fl_Value_Output_as_window(self_: *mut Fl_Value_Output) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Output_as_window(self_: *mut Fl_Value_Output) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Output_as_group(self_: *mut Fl_Value_Output) -> *mut core::ffi::c_void;
+    pub fn Fl_Value_Output_as_group(self_: *mut Fl_Value_Output) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_deimage(arg1: *mut Fl_Value_Output, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Value_Output_set_deimage(arg1: *mut Fl_Value_Output, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Value_Output_deimage(arg1: *const Fl_Value_Output) -> *const core::ffi::c_void;
+    pub fn Fl_Value_Output_deimage(arg1: *const Fl_Value_Output) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Value_Output_set_callback(
         arg1: *mut Fl_Value_Output,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Value_Output_set_deleter(
         arg1: *mut Fl_Value_Output,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Value_Output_visible(self_: *const Fl_Value_Output) -> core::ffi::c_int;
+    pub fn Fl_Value_Output_visible(self_: *const Fl_Value_Output) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Output_visible_r(self_: *const Fl_Value_Output) -> core::ffi::c_int;
+    pub fn Fl_Value_Output_visible_r(self_: *const Fl_Value_Output) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Output_active(self_: *const Fl_Value_Output) -> core::ffi::c_uint;
+    pub fn Fl_Value_Output_active(self_: *const Fl_Value_Output) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Value_Output_active_r(self_: *const Fl_Value_Output) -> core::ffi::c_int;
+    pub fn Fl_Value_Output_active_r(self_: *const Fl_Value_Output) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Value_Output_callback(self_: *const Fl_Value_Output) -> Fl_Callback;
@@ -4095,34 +3997,34 @@ extern "C" {
     pub fn Fl_Value_Output_set_deletion_callback(
         self_: *mut Fl_Value_Output,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Value_Output_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Value_Output;
 }
 extern "C" {
-    pub fn Fl_Value_Output_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Value_Output_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_text_color(self_: *mut Fl_Value_Output, c: core::ffi::c_uint);
+    pub fn Fl_Value_Output_set_text_color(self_: *mut Fl_Value_Output, c: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Value_Output_text_color(self_: *mut Fl_Value_Output) -> core::ffi::c_uint;
+    pub fn Fl_Value_Output_text_color(self_: *mut Fl_Value_Output) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_text_font(self_: *mut Fl_Value_Output, f: core::ffi::c_int);
+    pub fn Fl_Value_Output_set_text_font(self_: *mut Fl_Value_Output, f: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Output_text_font(self_: *mut Fl_Value_Output) -> core::ffi::c_int;
+    pub fn Fl_Value_Output_text_font(self_: *mut Fl_Value_Output) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_text_size(self_: *mut Fl_Value_Output, s: core::ffi::c_int);
+    pub fn Fl_Value_Output_set_text_size(self_: *mut Fl_Value_Output, s: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Output_text_size(self_: *mut Fl_Value_Output) -> core::ffi::c_int;
+    pub fn Fl_Value_Output_text_size(self_: *mut Fl_Value_Output) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Value_Output_set_bounds(arg1: *mut Fl_Value_Output, a: f64, b: f64);
@@ -4143,25 +4045,23 @@ extern "C" {
     pub fn Fl_Value_Output_set_range(arg1: *mut Fl_Value_Output, a: f64, b: f64);
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_step(arg1: *mut Fl_Value_Output, a: f64, b: core::ffi::c_int);
+    pub fn Fl_Value_Output_set_step(arg1: *mut Fl_Value_Output, a: f64, b: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Value_Output_step(arg1: *mut Fl_Value_Output) -> f64;
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_precision(arg1: *mut Fl_Value_Output, digits: core::ffi::c_int);
+    pub fn Fl_Value_Output_set_precision(arg1: *mut Fl_Value_Output, digits: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Value_Output_value(arg1: *mut Fl_Value_Output) -> f64;
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_value(arg1: *mut Fl_Value_Output, arg2: f64) -> core::ffi::c_int;
+    pub fn Fl_Value_Output_set_value(arg1: *mut Fl_Value_Output, arg2: f64) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Value_Output_format(
-        arg1: *mut Fl_Value_Output,
-        arg2: *mut core::ffi::c_char,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Value_Output_format(arg1: *mut Fl_Value_Output, arg2: *mut cty::c_char)
+        -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Value_Output_round(arg1: *mut Fl_Value_Output, arg2: f64) -> f64;
@@ -4173,7 +4073,7 @@ extern "C" {
     pub fn Fl_Value_Output_increment(
         arg1: *mut Fl_Value_Output,
         arg2: f64,
-        arg3: core::ffi::c_int,
+        arg3: cty::c_int,
     ) -> f64;
 }
 #[repr(C)]
@@ -4183,30 +4083,30 @@ pub struct Fl_Fill_Slider {
 }
 extern "C" {
     pub fn Fl_Fill_Slider_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Fill_Slider;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_x(arg1: *mut Fl_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Fill_Slider_x(arg1: *mut Fl_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_y(arg1: *mut Fl_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Fill_Slider_y(arg1: *mut Fl_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_width(arg1: *mut Fl_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Fill_Slider_width(arg1: *mut Fl_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_height(arg1: *mut Fl_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Fill_Slider_height(arg1: *mut Fl_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_label(arg1: *mut Fl_Fill_Slider) -> *const core::ffi::c_char;
+    pub fn Fl_Fill_Slider_label(arg1: *mut Fl_Fill_Slider) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_set_label(arg1: *mut Fl_Fill_Slider, title: *const core::ffi::c_char);
+    pub fn Fl_Fill_Slider_set_label(arg1: *mut Fl_Fill_Slider, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Fill_Slider_redraw(arg1: *mut Fl_Fill_Slider);
@@ -4229,78 +4129,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Fill_Slider_resize(
         arg1: *mut Fl_Fill_Slider,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Fill_Slider_widget_resize(
         arg1: *mut Fl_Fill_Slider,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_tooltip(arg1: *mut Fl_Fill_Slider) -> *const core::ffi::c_char;
+    pub fn Fl_Fill_Slider_tooltip(arg1: *mut Fl_Fill_Slider) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_set_tooltip(arg1: *mut Fl_Fill_Slider, txt: *const core::ffi::c_char);
+    pub fn Fl_Fill_Slider_set_tooltip(arg1: *mut Fl_Fill_Slider, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_get_type(arg1: *mut Fl_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Fill_Slider_get_type(arg1: *mut Fl_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_set_type(arg1: *mut Fl_Fill_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Fill_Slider_set_type(arg1: *mut Fl_Fill_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_color(arg1: *mut Fl_Fill_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Fill_Slider_color(arg1: *mut Fl_Fill_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_set_color(arg1: *mut Fl_Fill_Slider, color: core::ffi::c_uint);
+    pub fn Fl_Fill_Slider_set_color(arg1: *mut Fl_Fill_Slider, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Fill_Slider_measure_label(
         arg1: *const Fl_Fill_Slider,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_label_color(arg1: *mut Fl_Fill_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Fill_Slider_label_color(arg1: *mut Fl_Fill_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_set_label_color(arg1: *mut Fl_Fill_Slider, color: core::ffi::c_uint);
+    pub fn Fl_Fill_Slider_set_label_color(arg1: *mut Fl_Fill_Slider, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_label_font(arg1: *mut Fl_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Fill_Slider_label_font(arg1: *mut Fl_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_set_label_font(arg1: *mut Fl_Fill_Slider, font: core::ffi::c_int);
+    pub fn Fl_Fill_Slider_set_label_font(arg1: *mut Fl_Fill_Slider, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_label_size(arg1: *mut Fl_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Fill_Slider_label_size(arg1: *mut Fl_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_set_label_size(arg1: *mut Fl_Fill_Slider, sz: core::ffi::c_int);
+    pub fn Fl_Fill_Slider_set_label_size(arg1: *mut Fl_Fill_Slider, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_label_type(arg1: *mut Fl_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Fill_Slider_label_type(arg1: *mut Fl_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_set_label_type(arg1: *mut Fl_Fill_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Fill_Slider_set_label_type(arg1: *mut Fl_Fill_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_box(arg1: *mut Fl_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Fill_Slider_box(arg1: *mut Fl_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_set_box(arg1: *mut Fl_Fill_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Fill_Slider_set_box(arg1: *mut Fl_Fill_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_changed(arg1: *mut Fl_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Fill_Slider_changed(arg1: *mut Fl_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Fill_Slider_set_changed(arg1: *mut Fl_Fill_Slider);
@@ -4309,32 +4209,32 @@ extern "C" {
     pub fn Fl_Fill_Slider_clear_changed(arg1: *mut Fl_Fill_Slider);
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_align(arg1: *mut Fl_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Fill_Slider_align(arg1: *mut Fl_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_set_align(arg1: *mut Fl_Fill_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Fill_Slider_set_align(arg1: *mut Fl_Fill_Slider, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Fill_Slider_delete(arg1: *mut Fl_Fill_Slider);
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_set_image(arg1: *mut Fl_Fill_Slider, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Fill_Slider_set_image(arg1: *mut Fl_Fill_Slider, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Fill_Slider_handle(
         self_: *mut Fl_Fill_Slider,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_handle_event(self_: *mut Fl_Fill_Slider, event: core::ffi::c_int);
+    pub fn Fl_Fill_Slider_handle_event(self_: *mut Fl_Fill_Slider, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Fill_Slider_draw(
         self_: *mut Fl_Fill_Slider,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -4343,33 +4243,33 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_set_when(arg1: *mut Fl_Fill_Slider, arg2: core::ffi::c_int);
+    pub fn Fl_Fill_Slider_set_when(arg1: *mut Fl_Fill_Slider, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_when(arg1: *const Fl_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Fill_Slider_when(arg1: *const Fl_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_image(arg1: *const Fl_Fill_Slider) -> *const core::ffi::c_void;
+    pub fn Fl_Fill_Slider_image(arg1: *const Fl_Fill_Slider) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_parent(self_: *const Fl_Fill_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Fill_Slider_parent(self_: *const Fl_Fill_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_selection_color(arg1: *mut Fl_Fill_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Fill_Slider_selection_color(arg1: *mut Fl_Fill_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_set_selection_color(arg1: *mut Fl_Fill_Slider, color: core::ffi::c_uint);
+    pub fn Fl_Fill_Slider_set_selection_color(arg1: *mut Fl_Fill_Slider, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Fill_Slider_do_callback(arg1: *mut Fl_Fill_Slider);
@@ -4377,23 +4277,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Fill_Slider_inside(
         self_: *const Fl_Fill_Slider,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_window(arg1: *const Fl_Fill_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Fill_Slider_window(arg1: *const Fl_Fill_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_top_window(arg1: *const Fl_Fill_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Fill_Slider_top_window(arg1: *const Fl_Fill_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_takes_events(arg1: *const Fl_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Fill_Slider_takes_events(arg1: *const Fl_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_user_data(arg1: *const Fl_Fill_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Fill_Slider_user_data(arg1: *const Fl_Fill_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_take_focus(self_: *mut Fl_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Fill_Slider_take_focus(self_: *mut Fl_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Fill_Slider_set_visible_focus(self_: *mut Fl_Fill_Slider);
@@ -4402,81 +4302,81 @@ extern "C" {
     pub fn Fl_Fill_Slider_clear_visible_focus(self_: *mut Fl_Fill_Slider);
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_visible_focus(self_: *mut Fl_Fill_Slider, v: core::ffi::c_int);
+    pub fn Fl_Fill_Slider_visible_focus(self_: *mut Fl_Fill_Slider, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_has_visible_focus(self_: *mut Fl_Fill_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Fill_Slider_has_visible_focus(self_: *mut Fl_Fill_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_set_user_data(arg1: *mut Fl_Fill_Slider, data: *mut core::ffi::c_void);
+    pub fn Fl_Fill_Slider_set_user_data(arg1: *mut Fl_Fill_Slider, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_draw_data(self_: *const Fl_Fill_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Fill_Slider_draw_data(self_: *const Fl_Fill_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_handle_data(self_: *const Fl_Fill_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Fill_Slider_handle_data(self_: *const Fl_Fill_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_set_draw_data(self_: *mut Fl_Fill_Slider, data: *mut core::ffi::c_void);
+    pub fn Fl_Fill_Slider_set_draw_data(self_: *mut Fl_Fill_Slider, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_set_handle_data(self_: *mut Fl_Fill_Slider, data: *mut core::ffi::c_void);
+    pub fn Fl_Fill_Slider_set_handle_data(self_: *mut Fl_Fill_Slider, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_damage(self_: *const Fl_Fill_Slider) -> core::ffi::c_uchar;
+    pub fn Fl_Fill_Slider_damage(self_: *const Fl_Fill_Slider) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_set_damage(self_: *mut Fl_Fill_Slider, flag: core::ffi::c_uchar);
+    pub fn Fl_Fill_Slider_set_damage(self_: *mut Fl_Fill_Slider, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Fill_Slider_set_damage_area(
         self_: *mut Fl_Fill_Slider,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Fill_Slider_clear_damage(self_: *mut Fl_Fill_Slider);
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_as_window(self_: *mut Fl_Fill_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Fill_Slider_as_window(self_: *mut Fl_Fill_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_as_group(self_: *mut Fl_Fill_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Fill_Slider_as_group(self_: *mut Fl_Fill_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_set_deimage(arg1: *mut Fl_Fill_Slider, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Fill_Slider_set_deimage(arg1: *mut Fl_Fill_Slider, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_deimage(arg1: *const Fl_Fill_Slider) -> *const core::ffi::c_void;
+    pub fn Fl_Fill_Slider_deimage(arg1: *const Fl_Fill_Slider) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Fill_Slider_set_callback(
         arg1: *mut Fl_Fill_Slider,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Fill_Slider_set_deleter(
         arg1: *mut Fl_Fill_Slider,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_visible(self_: *const Fl_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Fill_Slider_visible(self_: *const Fl_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_visible_r(self_: *const Fl_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Fill_Slider_visible_r(self_: *const Fl_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_active(self_: *const Fl_Fill_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Fill_Slider_active(self_: *const Fl_Fill_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_active_r(self_: *const Fl_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Fill_Slider_active_r(self_: *const Fl_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Fill_Slider_callback(self_: *const Fl_Fill_Slider) -> Fl_Callback;
@@ -4485,16 +4385,16 @@ extern "C" {
     pub fn Fl_Fill_Slider_set_deletion_callback(
         self_: *mut Fl_Fill_Slider,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Fill_Slider_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Fill_Slider;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Fill_Slider_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Fill_Slider_set_bounds(arg1: *mut Fl_Fill_Slider, a: f64, b: f64);
@@ -4515,25 +4415,22 @@ extern "C" {
     pub fn Fl_Fill_Slider_set_range(arg1: *mut Fl_Fill_Slider, a: f64, b: f64);
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_set_step(arg1: *mut Fl_Fill_Slider, a: f64, b: core::ffi::c_int);
+    pub fn Fl_Fill_Slider_set_step(arg1: *mut Fl_Fill_Slider, a: f64, b: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Fill_Slider_step(arg1: *mut Fl_Fill_Slider) -> f64;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_set_precision(arg1: *mut Fl_Fill_Slider, digits: core::ffi::c_int);
+    pub fn Fl_Fill_Slider_set_precision(arg1: *mut Fl_Fill_Slider, digits: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Fill_Slider_value(arg1: *mut Fl_Fill_Slider) -> f64;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_set_value(arg1: *mut Fl_Fill_Slider, arg2: f64) -> core::ffi::c_int;
+    pub fn Fl_Fill_Slider_set_value(arg1: *mut Fl_Fill_Slider, arg2: f64) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_format(
-        arg1: *mut Fl_Fill_Slider,
-        arg2: *mut core::ffi::c_char,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Fill_Slider_format(arg1: *mut Fl_Fill_Slider, arg2: *mut cty::c_char) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Fill_Slider_round(arg1: *mut Fl_Fill_Slider, arg2: f64) -> f64;
@@ -4542,11 +4439,7 @@ extern "C" {
     pub fn Fl_Fill_Slider_clamp(arg1: *mut Fl_Fill_Slider, arg2: f64) -> f64;
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_increment(
-        arg1: *mut Fl_Fill_Slider,
-        arg2: f64,
-        arg3: core::ffi::c_int,
-    ) -> f64;
+    pub fn Fl_Fill_Slider_increment(arg1: *mut Fl_Fill_Slider, arg2: f64, arg3: cty::c_int) -> f64;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -4555,30 +4448,30 @@ pub struct Fl_Fill_Dial {
 }
 extern "C" {
     pub fn Fl_Fill_Dial_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Fill_Dial;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_x(arg1: *mut Fl_Fill_Dial) -> core::ffi::c_int;
+    pub fn Fl_Fill_Dial_x(arg1: *mut Fl_Fill_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_y(arg1: *mut Fl_Fill_Dial) -> core::ffi::c_int;
+    pub fn Fl_Fill_Dial_y(arg1: *mut Fl_Fill_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_width(arg1: *mut Fl_Fill_Dial) -> core::ffi::c_int;
+    pub fn Fl_Fill_Dial_width(arg1: *mut Fl_Fill_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_height(arg1: *mut Fl_Fill_Dial) -> core::ffi::c_int;
+    pub fn Fl_Fill_Dial_height(arg1: *mut Fl_Fill_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_label(arg1: *mut Fl_Fill_Dial) -> *const core::ffi::c_char;
+    pub fn Fl_Fill_Dial_label(arg1: *mut Fl_Fill_Dial) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_set_label(arg1: *mut Fl_Fill_Dial, title: *const core::ffi::c_char);
+    pub fn Fl_Fill_Dial_set_label(arg1: *mut Fl_Fill_Dial, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Fill_Dial_redraw(arg1: *mut Fl_Fill_Dial);
@@ -4601,78 +4494,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Fill_Dial_resize(
         arg1: *mut Fl_Fill_Dial,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Fill_Dial_widget_resize(
         arg1: *mut Fl_Fill_Dial,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_tooltip(arg1: *mut Fl_Fill_Dial) -> *const core::ffi::c_char;
+    pub fn Fl_Fill_Dial_tooltip(arg1: *mut Fl_Fill_Dial) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_set_tooltip(arg1: *mut Fl_Fill_Dial, txt: *const core::ffi::c_char);
+    pub fn Fl_Fill_Dial_set_tooltip(arg1: *mut Fl_Fill_Dial, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_get_type(arg1: *mut Fl_Fill_Dial) -> core::ffi::c_int;
+    pub fn Fl_Fill_Dial_get_type(arg1: *mut Fl_Fill_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_set_type(arg1: *mut Fl_Fill_Dial, typ: core::ffi::c_int);
+    pub fn Fl_Fill_Dial_set_type(arg1: *mut Fl_Fill_Dial, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_color(arg1: *mut Fl_Fill_Dial) -> core::ffi::c_uint;
+    pub fn Fl_Fill_Dial_color(arg1: *mut Fl_Fill_Dial) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_set_color(arg1: *mut Fl_Fill_Dial, color: core::ffi::c_uint);
+    pub fn Fl_Fill_Dial_set_color(arg1: *mut Fl_Fill_Dial, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Fill_Dial_measure_label(
         arg1: *const Fl_Fill_Dial,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_label_color(arg1: *mut Fl_Fill_Dial) -> core::ffi::c_uint;
+    pub fn Fl_Fill_Dial_label_color(arg1: *mut Fl_Fill_Dial) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_set_label_color(arg1: *mut Fl_Fill_Dial, color: core::ffi::c_uint);
+    pub fn Fl_Fill_Dial_set_label_color(arg1: *mut Fl_Fill_Dial, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_label_font(arg1: *mut Fl_Fill_Dial) -> core::ffi::c_int;
+    pub fn Fl_Fill_Dial_label_font(arg1: *mut Fl_Fill_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_set_label_font(arg1: *mut Fl_Fill_Dial, font: core::ffi::c_int);
+    pub fn Fl_Fill_Dial_set_label_font(arg1: *mut Fl_Fill_Dial, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_label_size(arg1: *mut Fl_Fill_Dial) -> core::ffi::c_int;
+    pub fn Fl_Fill_Dial_label_size(arg1: *mut Fl_Fill_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_set_label_size(arg1: *mut Fl_Fill_Dial, sz: core::ffi::c_int);
+    pub fn Fl_Fill_Dial_set_label_size(arg1: *mut Fl_Fill_Dial, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_label_type(arg1: *mut Fl_Fill_Dial) -> core::ffi::c_int;
+    pub fn Fl_Fill_Dial_label_type(arg1: *mut Fl_Fill_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_set_label_type(arg1: *mut Fl_Fill_Dial, typ: core::ffi::c_int);
+    pub fn Fl_Fill_Dial_set_label_type(arg1: *mut Fl_Fill_Dial, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_box(arg1: *mut Fl_Fill_Dial) -> core::ffi::c_int;
+    pub fn Fl_Fill_Dial_box(arg1: *mut Fl_Fill_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_set_box(arg1: *mut Fl_Fill_Dial, typ: core::ffi::c_int);
+    pub fn Fl_Fill_Dial_set_box(arg1: *mut Fl_Fill_Dial, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_changed(arg1: *mut Fl_Fill_Dial) -> core::ffi::c_int;
+    pub fn Fl_Fill_Dial_changed(arg1: *mut Fl_Fill_Dial) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Fill_Dial_set_changed(arg1: *mut Fl_Fill_Dial);
@@ -4681,32 +4574,32 @@ extern "C" {
     pub fn Fl_Fill_Dial_clear_changed(arg1: *mut Fl_Fill_Dial);
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_align(arg1: *mut Fl_Fill_Dial) -> core::ffi::c_int;
+    pub fn Fl_Fill_Dial_align(arg1: *mut Fl_Fill_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_set_align(arg1: *mut Fl_Fill_Dial, typ: core::ffi::c_int);
+    pub fn Fl_Fill_Dial_set_align(arg1: *mut Fl_Fill_Dial, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Fill_Dial_delete(arg1: *mut Fl_Fill_Dial);
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_set_image(arg1: *mut Fl_Fill_Dial, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Fill_Dial_set_image(arg1: *mut Fl_Fill_Dial, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Fill_Dial_handle(
         self_: *mut Fl_Fill_Dial,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_handle_event(self_: *mut Fl_Fill_Dial, event: core::ffi::c_int);
+    pub fn Fl_Fill_Dial_handle_event(self_: *mut Fl_Fill_Dial, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Fill_Dial_draw(
         self_: *mut Fl_Fill_Dial,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -4715,57 +4608,54 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_set_when(arg1: *mut Fl_Fill_Dial, arg2: core::ffi::c_int);
+    pub fn Fl_Fill_Dial_set_when(arg1: *mut Fl_Fill_Dial, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_when(arg1: *const Fl_Fill_Dial) -> core::ffi::c_int;
+    pub fn Fl_Fill_Dial_when(arg1: *const Fl_Fill_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_image(arg1: *const Fl_Fill_Dial) -> *const core::ffi::c_void;
+    pub fn Fl_Fill_Dial_image(arg1: *const Fl_Fill_Dial) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_parent(self_: *const Fl_Fill_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Fill_Dial_parent(self_: *const Fl_Fill_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_selection_color(arg1: *mut Fl_Fill_Dial) -> core::ffi::c_uint;
+    pub fn Fl_Fill_Dial_selection_color(arg1: *mut Fl_Fill_Dial) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_set_selection_color(arg1: *mut Fl_Fill_Dial, color: core::ffi::c_uint);
+    pub fn Fl_Fill_Dial_set_selection_color(arg1: *mut Fl_Fill_Dial, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Fill_Dial_do_callback(arg1: *mut Fl_Fill_Dial);
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_inside(
-        self_: *const Fl_Fill_Dial,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Fill_Dial_inside(self_: *const Fl_Fill_Dial, arg1: *mut cty::c_void) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_window(arg1: *const Fl_Fill_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Fill_Dial_window(arg1: *const Fl_Fill_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_top_window(arg1: *const Fl_Fill_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Fill_Dial_top_window(arg1: *const Fl_Fill_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_takes_events(arg1: *const Fl_Fill_Dial) -> core::ffi::c_int;
+    pub fn Fl_Fill_Dial_takes_events(arg1: *const Fl_Fill_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_user_data(arg1: *const Fl_Fill_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Fill_Dial_user_data(arg1: *const Fl_Fill_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_take_focus(self_: *mut Fl_Fill_Dial) -> core::ffi::c_int;
+    pub fn Fl_Fill_Dial_take_focus(self_: *mut Fl_Fill_Dial) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Fill_Dial_set_visible_focus(self_: *mut Fl_Fill_Dial);
@@ -4774,81 +4664,81 @@ extern "C" {
     pub fn Fl_Fill_Dial_clear_visible_focus(self_: *mut Fl_Fill_Dial);
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_visible_focus(self_: *mut Fl_Fill_Dial, v: core::ffi::c_int);
+    pub fn Fl_Fill_Dial_visible_focus(self_: *mut Fl_Fill_Dial, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_has_visible_focus(self_: *mut Fl_Fill_Dial) -> core::ffi::c_uint;
+    pub fn Fl_Fill_Dial_has_visible_focus(self_: *mut Fl_Fill_Dial) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_set_user_data(arg1: *mut Fl_Fill_Dial, data: *mut core::ffi::c_void);
+    pub fn Fl_Fill_Dial_set_user_data(arg1: *mut Fl_Fill_Dial, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_draw_data(self_: *const Fl_Fill_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Fill_Dial_draw_data(self_: *const Fl_Fill_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_handle_data(self_: *const Fl_Fill_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Fill_Dial_handle_data(self_: *const Fl_Fill_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_set_draw_data(self_: *mut Fl_Fill_Dial, data: *mut core::ffi::c_void);
+    pub fn Fl_Fill_Dial_set_draw_data(self_: *mut Fl_Fill_Dial, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_set_handle_data(self_: *mut Fl_Fill_Dial, data: *mut core::ffi::c_void);
+    pub fn Fl_Fill_Dial_set_handle_data(self_: *mut Fl_Fill_Dial, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_damage(self_: *const Fl_Fill_Dial) -> core::ffi::c_uchar;
+    pub fn Fl_Fill_Dial_damage(self_: *const Fl_Fill_Dial) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_set_damage(self_: *mut Fl_Fill_Dial, flag: core::ffi::c_uchar);
+    pub fn Fl_Fill_Dial_set_damage(self_: *mut Fl_Fill_Dial, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Fill_Dial_set_damage_area(
         self_: *mut Fl_Fill_Dial,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Fill_Dial_clear_damage(self_: *mut Fl_Fill_Dial);
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_as_window(self_: *mut Fl_Fill_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Fill_Dial_as_window(self_: *mut Fl_Fill_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_as_group(self_: *mut Fl_Fill_Dial) -> *mut core::ffi::c_void;
+    pub fn Fl_Fill_Dial_as_group(self_: *mut Fl_Fill_Dial) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_set_deimage(arg1: *mut Fl_Fill_Dial, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Fill_Dial_set_deimage(arg1: *mut Fl_Fill_Dial, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_deimage(arg1: *const Fl_Fill_Dial) -> *const core::ffi::c_void;
+    pub fn Fl_Fill_Dial_deimage(arg1: *const Fl_Fill_Dial) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Fill_Dial_set_callback(
         arg1: *mut Fl_Fill_Dial,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Fill_Dial_set_deleter(
         arg1: *mut Fl_Fill_Dial,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_visible(self_: *const Fl_Fill_Dial) -> core::ffi::c_int;
+    pub fn Fl_Fill_Dial_visible(self_: *const Fl_Fill_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_visible_r(self_: *const Fl_Fill_Dial) -> core::ffi::c_int;
+    pub fn Fl_Fill_Dial_visible_r(self_: *const Fl_Fill_Dial) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_active(self_: *const Fl_Fill_Dial) -> core::ffi::c_uint;
+    pub fn Fl_Fill_Dial_active(self_: *const Fl_Fill_Dial) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_active_r(self_: *const Fl_Fill_Dial) -> core::ffi::c_int;
+    pub fn Fl_Fill_Dial_active_r(self_: *const Fl_Fill_Dial) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Fill_Dial_callback(self_: *const Fl_Fill_Dial) -> Fl_Callback;
@@ -4857,16 +4747,16 @@ extern "C" {
     pub fn Fl_Fill_Dial_set_deletion_callback(
         self_: *mut Fl_Fill_Dial,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Fill_Dial_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Fill_Dial;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Fill_Dial_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Fill_Dial_set_bounds(arg1: *mut Fl_Fill_Dial, a: f64, b: f64);
@@ -4887,25 +4777,22 @@ extern "C" {
     pub fn Fl_Fill_Dial_set_range(arg1: *mut Fl_Fill_Dial, a: f64, b: f64);
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_set_step(arg1: *mut Fl_Fill_Dial, a: f64, b: core::ffi::c_int);
+    pub fn Fl_Fill_Dial_set_step(arg1: *mut Fl_Fill_Dial, a: f64, b: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Fill_Dial_step(arg1: *mut Fl_Fill_Dial) -> f64;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_set_precision(arg1: *mut Fl_Fill_Dial, digits: core::ffi::c_int);
+    pub fn Fl_Fill_Dial_set_precision(arg1: *mut Fl_Fill_Dial, digits: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Fill_Dial_value(arg1: *mut Fl_Fill_Dial) -> f64;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_set_value(arg1: *mut Fl_Fill_Dial, arg2: f64) -> core::ffi::c_int;
+    pub fn Fl_Fill_Dial_set_value(arg1: *mut Fl_Fill_Dial, arg2: f64) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_format(
-        arg1: *mut Fl_Fill_Dial,
-        arg2: *mut core::ffi::c_char,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Fill_Dial_format(arg1: *mut Fl_Fill_Dial, arg2: *mut cty::c_char) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Fill_Dial_round(arg1: *mut Fl_Fill_Dial, arg2: f64) -> f64;
@@ -4914,11 +4801,7 @@ extern "C" {
     pub fn Fl_Fill_Dial_clamp(arg1: *mut Fl_Fill_Dial, arg2: f64) -> f64;
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_increment(
-        arg1: *mut Fl_Fill_Dial,
-        arg2: f64,
-        arg3: core::ffi::c_int,
-    ) -> f64;
+    pub fn Fl_Fill_Dial_increment(arg1: *mut Fl_Fill_Dial, arg2: f64, arg3: cty::c_int) -> f64;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -4927,30 +4810,30 @@ pub struct Fl_Hor_Slider {
 }
 extern "C" {
     pub fn Fl_Hor_Slider_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Hor_Slider;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_x(arg1: *mut Fl_Hor_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Slider_x(arg1: *mut Fl_Hor_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_y(arg1: *mut Fl_Hor_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Slider_y(arg1: *mut Fl_Hor_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_width(arg1: *mut Fl_Hor_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Slider_width(arg1: *mut Fl_Hor_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_height(arg1: *mut Fl_Hor_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Slider_height(arg1: *mut Fl_Hor_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_label(arg1: *mut Fl_Hor_Slider) -> *const core::ffi::c_char;
+    pub fn Fl_Hor_Slider_label(arg1: *mut Fl_Hor_Slider) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_set_label(arg1: *mut Fl_Hor_Slider, title: *const core::ffi::c_char);
+    pub fn Fl_Hor_Slider_set_label(arg1: *mut Fl_Hor_Slider, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Hor_Slider_redraw(arg1: *mut Fl_Hor_Slider);
@@ -4973,78 +4856,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hor_Slider_resize(
         arg1: *mut Fl_Hor_Slider,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Hor_Slider_widget_resize(
         arg1: *mut Fl_Hor_Slider,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_tooltip(arg1: *mut Fl_Hor_Slider) -> *const core::ffi::c_char;
+    pub fn Fl_Hor_Slider_tooltip(arg1: *mut Fl_Hor_Slider) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_set_tooltip(arg1: *mut Fl_Hor_Slider, txt: *const core::ffi::c_char);
+    pub fn Fl_Hor_Slider_set_tooltip(arg1: *mut Fl_Hor_Slider, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_get_type(arg1: *mut Fl_Hor_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Slider_get_type(arg1: *mut Fl_Hor_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_set_type(arg1: *mut Fl_Hor_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Hor_Slider_set_type(arg1: *mut Fl_Hor_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_color(arg1: *mut Fl_Hor_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Hor_Slider_color(arg1: *mut Fl_Hor_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_set_color(arg1: *mut Fl_Hor_Slider, color: core::ffi::c_uint);
+    pub fn Fl_Hor_Slider_set_color(arg1: *mut Fl_Hor_Slider, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Hor_Slider_measure_label(
         arg1: *const Fl_Hor_Slider,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_label_color(arg1: *mut Fl_Hor_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Hor_Slider_label_color(arg1: *mut Fl_Hor_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_set_label_color(arg1: *mut Fl_Hor_Slider, color: core::ffi::c_uint);
+    pub fn Fl_Hor_Slider_set_label_color(arg1: *mut Fl_Hor_Slider, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_label_font(arg1: *mut Fl_Hor_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Slider_label_font(arg1: *mut Fl_Hor_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_set_label_font(arg1: *mut Fl_Hor_Slider, font: core::ffi::c_int);
+    pub fn Fl_Hor_Slider_set_label_font(arg1: *mut Fl_Hor_Slider, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_label_size(arg1: *mut Fl_Hor_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Slider_label_size(arg1: *mut Fl_Hor_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_set_label_size(arg1: *mut Fl_Hor_Slider, sz: core::ffi::c_int);
+    pub fn Fl_Hor_Slider_set_label_size(arg1: *mut Fl_Hor_Slider, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_label_type(arg1: *mut Fl_Hor_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Slider_label_type(arg1: *mut Fl_Hor_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_set_label_type(arg1: *mut Fl_Hor_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Hor_Slider_set_label_type(arg1: *mut Fl_Hor_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_box(arg1: *mut Fl_Hor_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Slider_box(arg1: *mut Fl_Hor_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_set_box(arg1: *mut Fl_Hor_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Hor_Slider_set_box(arg1: *mut Fl_Hor_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_changed(arg1: *mut Fl_Hor_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Slider_changed(arg1: *mut Fl_Hor_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Hor_Slider_set_changed(arg1: *mut Fl_Hor_Slider);
@@ -5053,32 +4936,32 @@ extern "C" {
     pub fn Fl_Hor_Slider_clear_changed(arg1: *mut Fl_Hor_Slider);
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_align(arg1: *mut Fl_Hor_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Slider_align(arg1: *mut Fl_Hor_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_set_align(arg1: *mut Fl_Hor_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Hor_Slider_set_align(arg1: *mut Fl_Hor_Slider, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Slider_delete(arg1: *mut Fl_Hor_Slider);
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_set_image(arg1: *mut Fl_Hor_Slider, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Hor_Slider_set_image(arg1: *mut Fl_Hor_Slider, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Hor_Slider_handle(
         self_: *mut Fl_Hor_Slider,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_handle_event(self_: *mut Fl_Hor_Slider, event: core::ffi::c_int);
+    pub fn Fl_Hor_Slider_handle_event(self_: *mut Fl_Hor_Slider, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Slider_draw(
         self_: *mut Fl_Hor_Slider,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -5087,57 +4970,54 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_set_when(arg1: *mut Fl_Hor_Slider, arg2: core::ffi::c_int);
+    pub fn Fl_Hor_Slider_set_when(arg1: *mut Fl_Hor_Slider, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_when(arg1: *const Fl_Hor_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Slider_when(arg1: *const Fl_Hor_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_image(arg1: *const Fl_Hor_Slider) -> *const core::ffi::c_void;
+    pub fn Fl_Hor_Slider_image(arg1: *const Fl_Hor_Slider) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_parent(self_: *const Fl_Hor_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Slider_parent(self_: *const Fl_Hor_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_selection_color(arg1: *mut Fl_Hor_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Hor_Slider_selection_color(arg1: *mut Fl_Hor_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_set_selection_color(arg1: *mut Fl_Hor_Slider, color: core::ffi::c_uint);
+    pub fn Fl_Hor_Slider_set_selection_color(arg1: *mut Fl_Hor_Slider, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Hor_Slider_do_callback(arg1: *mut Fl_Hor_Slider);
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_inside(
-        self_: *const Fl_Hor_Slider,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Hor_Slider_inside(self_: *const Fl_Hor_Slider, arg1: *mut cty::c_void) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_window(arg1: *const Fl_Hor_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Slider_window(arg1: *const Fl_Hor_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_top_window(arg1: *const Fl_Hor_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Slider_top_window(arg1: *const Fl_Hor_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_takes_events(arg1: *const Fl_Hor_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Slider_takes_events(arg1: *const Fl_Hor_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_user_data(arg1: *const Fl_Hor_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Slider_user_data(arg1: *const Fl_Hor_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_take_focus(self_: *mut Fl_Hor_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Slider_take_focus(self_: *mut Fl_Hor_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Hor_Slider_set_visible_focus(self_: *mut Fl_Hor_Slider);
@@ -5146,81 +5026,81 @@ extern "C" {
     pub fn Fl_Hor_Slider_clear_visible_focus(self_: *mut Fl_Hor_Slider);
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_visible_focus(self_: *mut Fl_Hor_Slider, v: core::ffi::c_int);
+    pub fn Fl_Hor_Slider_visible_focus(self_: *mut Fl_Hor_Slider, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_has_visible_focus(self_: *mut Fl_Hor_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Hor_Slider_has_visible_focus(self_: *mut Fl_Hor_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_set_user_data(arg1: *mut Fl_Hor_Slider, data: *mut core::ffi::c_void);
+    pub fn Fl_Hor_Slider_set_user_data(arg1: *mut Fl_Hor_Slider, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_draw_data(self_: *const Fl_Hor_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Slider_draw_data(self_: *const Fl_Hor_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_handle_data(self_: *const Fl_Hor_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Slider_handle_data(self_: *const Fl_Hor_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_set_draw_data(self_: *mut Fl_Hor_Slider, data: *mut core::ffi::c_void);
+    pub fn Fl_Hor_Slider_set_draw_data(self_: *mut Fl_Hor_Slider, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_set_handle_data(self_: *mut Fl_Hor_Slider, data: *mut core::ffi::c_void);
+    pub fn Fl_Hor_Slider_set_handle_data(self_: *mut Fl_Hor_Slider, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_damage(self_: *const Fl_Hor_Slider) -> core::ffi::c_uchar;
+    pub fn Fl_Hor_Slider_damage(self_: *const Fl_Hor_Slider) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_set_damage(self_: *mut Fl_Hor_Slider, flag: core::ffi::c_uchar);
+    pub fn Fl_Hor_Slider_set_damage(self_: *mut Fl_Hor_Slider, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Hor_Slider_set_damage_area(
         self_: *mut Fl_Hor_Slider,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Hor_Slider_clear_damage(self_: *mut Fl_Hor_Slider);
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_as_window(self_: *mut Fl_Hor_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Slider_as_window(self_: *mut Fl_Hor_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_as_group(self_: *mut Fl_Hor_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Slider_as_group(self_: *mut Fl_Hor_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_set_deimage(arg1: *mut Fl_Hor_Slider, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Hor_Slider_set_deimage(arg1: *mut Fl_Hor_Slider, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_deimage(arg1: *const Fl_Hor_Slider) -> *const core::ffi::c_void;
+    pub fn Fl_Hor_Slider_deimage(arg1: *const Fl_Hor_Slider) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Hor_Slider_set_callback(
         arg1: *mut Fl_Hor_Slider,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Hor_Slider_set_deleter(
         arg1: *mut Fl_Hor_Slider,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_visible(self_: *const Fl_Hor_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Slider_visible(self_: *const Fl_Hor_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_visible_r(self_: *const Fl_Hor_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Slider_visible_r(self_: *const Fl_Hor_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_active(self_: *const Fl_Hor_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Hor_Slider_active(self_: *const Fl_Hor_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_active_r(self_: *const Fl_Hor_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Slider_active_r(self_: *const Fl_Hor_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Hor_Slider_callback(self_: *const Fl_Hor_Slider) -> Fl_Callback;
@@ -5229,16 +5109,16 @@ extern "C" {
     pub fn Fl_Hor_Slider_set_deletion_callback(
         self_: *mut Fl_Hor_Slider,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Hor_Slider_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Hor_Slider;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Hor_Slider_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Slider_set_bounds(arg1: *mut Fl_Hor_Slider, a: f64, b: f64);
@@ -5259,25 +5139,22 @@ extern "C" {
     pub fn Fl_Hor_Slider_set_range(arg1: *mut Fl_Hor_Slider, a: f64, b: f64);
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_set_step(arg1: *mut Fl_Hor_Slider, a: f64, b: core::ffi::c_int);
+    pub fn Fl_Hor_Slider_set_step(arg1: *mut Fl_Hor_Slider, a: f64, b: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Slider_step(arg1: *mut Fl_Hor_Slider) -> f64;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_set_precision(arg1: *mut Fl_Hor_Slider, digits: core::ffi::c_int);
+    pub fn Fl_Hor_Slider_set_precision(arg1: *mut Fl_Hor_Slider, digits: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Slider_value(arg1: *mut Fl_Hor_Slider) -> f64;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_set_value(arg1: *mut Fl_Hor_Slider, arg2: f64) -> core::ffi::c_int;
+    pub fn Fl_Hor_Slider_set_value(arg1: *mut Fl_Hor_Slider, arg2: f64) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_format(
-        arg1: *mut Fl_Hor_Slider,
-        arg2: *mut core::ffi::c_char,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Hor_Slider_format(arg1: *mut Fl_Hor_Slider, arg2: *mut cty::c_char) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Hor_Slider_round(arg1: *mut Fl_Hor_Slider, arg2: f64) -> f64;
@@ -5286,11 +5163,7 @@ extern "C" {
     pub fn Fl_Hor_Slider_clamp(arg1: *mut Fl_Hor_Slider, arg2: f64) -> f64;
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_increment(
-        arg1: *mut Fl_Hor_Slider,
-        arg2: f64,
-        arg3: core::ffi::c_int,
-    ) -> f64;
+    pub fn Fl_Hor_Slider_increment(arg1: *mut Fl_Hor_Slider, arg2: f64, arg3: cty::c_int) -> f64;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -5299,33 +5172,30 @@ pub struct Fl_Hor_Fill_Slider {
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Hor_Fill_Slider;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_x(arg1: *mut Fl_Hor_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Fill_Slider_x(arg1: *mut Fl_Hor_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_y(arg1: *mut Fl_Hor_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Fill_Slider_y(arg1: *mut Fl_Hor_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_width(arg1: *mut Fl_Hor_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Fill_Slider_width(arg1: *mut Fl_Hor_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_height(arg1: *mut Fl_Hor_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Fill_Slider_height(arg1: *mut Fl_Hor_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_label(arg1: *mut Fl_Hor_Fill_Slider) -> *const core::ffi::c_char;
+    pub fn Fl_Hor_Fill_Slider_label(arg1: *mut Fl_Hor_Fill_Slider) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_set_label(
-        arg1: *mut Fl_Hor_Fill_Slider,
-        title: *const core::ffi::c_char,
-    );
+    pub fn Fl_Hor_Fill_Slider_set_label(arg1: *mut Fl_Hor_Fill_Slider, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_redraw(arg1: *mut Fl_Hor_Fill_Slider);
@@ -5348,84 +5218,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_resize(
         arg1: *mut Fl_Hor_Fill_Slider,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_widget_resize(
         arg1: *mut Fl_Hor_Fill_Slider,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_tooltip(arg1: *mut Fl_Hor_Fill_Slider) -> *const core::ffi::c_char;
+    pub fn Fl_Hor_Fill_Slider_tooltip(arg1: *mut Fl_Hor_Fill_Slider) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_set_tooltip(
-        arg1: *mut Fl_Hor_Fill_Slider,
-        txt: *const core::ffi::c_char,
-    );
+    pub fn Fl_Hor_Fill_Slider_set_tooltip(arg1: *mut Fl_Hor_Fill_Slider, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_get_type(arg1: *mut Fl_Hor_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Fill_Slider_get_type(arg1: *mut Fl_Hor_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_set_type(arg1: *mut Fl_Hor_Fill_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Hor_Fill_Slider_set_type(arg1: *mut Fl_Hor_Fill_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_color(arg1: *mut Fl_Hor_Fill_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Hor_Fill_Slider_color(arg1: *mut Fl_Hor_Fill_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_set_color(arg1: *mut Fl_Hor_Fill_Slider, color: core::ffi::c_uint);
+    pub fn Fl_Hor_Fill_Slider_set_color(arg1: *mut Fl_Hor_Fill_Slider, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_measure_label(
         arg1: *const Fl_Hor_Fill_Slider,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_label_color(arg1: *mut Fl_Hor_Fill_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Hor_Fill_Slider_label_color(arg1: *mut Fl_Hor_Fill_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_set_label_color(
-        arg1: *mut Fl_Hor_Fill_Slider,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Hor_Fill_Slider_set_label_color(arg1: *mut Fl_Hor_Fill_Slider, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_label_font(arg1: *mut Fl_Hor_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Fill_Slider_label_font(arg1: *mut Fl_Hor_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_set_label_font(arg1: *mut Fl_Hor_Fill_Slider, font: core::ffi::c_int);
+    pub fn Fl_Hor_Fill_Slider_set_label_font(arg1: *mut Fl_Hor_Fill_Slider, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_label_size(arg1: *mut Fl_Hor_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Fill_Slider_label_size(arg1: *mut Fl_Hor_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_set_label_size(arg1: *mut Fl_Hor_Fill_Slider, sz: core::ffi::c_int);
+    pub fn Fl_Hor_Fill_Slider_set_label_size(arg1: *mut Fl_Hor_Fill_Slider, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_label_type(arg1: *mut Fl_Hor_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Fill_Slider_label_type(arg1: *mut Fl_Hor_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_set_label_type(arg1: *mut Fl_Hor_Fill_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Hor_Fill_Slider_set_label_type(arg1: *mut Fl_Hor_Fill_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_box(arg1: *mut Fl_Hor_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Fill_Slider_box(arg1: *mut Fl_Hor_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_set_box(arg1: *mut Fl_Hor_Fill_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Hor_Fill_Slider_set_box(arg1: *mut Fl_Hor_Fill_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_changed(arg1: *mut Fl_Hor_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Fill_Slider_changed(arg1: *mut Fl_Hor_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_set_changed(arg1: *mut Fl_Hor_Fill_Slider);
@@ -5434,35 +5298,32 @@ extern "C" {
     pub fn Fl_Hor_Fill_Slider_clear_changed(arg1: *mut Fl_Hor_Fill_Slider);
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_align(arg1: *mut Fl_Hor_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Fill_Slider_align(arg1: *mut Fl_Hor_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_set_align(arg1: *mut Fl_Hor_Fill_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Hor_Fill_Slider_set_align(arg1: *mut Fl_Hor_Fill_Slider, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_delete(arg1: *mut Fl_Hor_Fill_Slider);
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_set_image(
-        arg1: *mut Fl_Hor_Fill_Slider,
-        arg2: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Hor_Fill_Slider_set_image(arg1: *mut Fl_Hor_Fill_Slider, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_handle(
         self_: *mut Fl_Hor_Fill_Slider,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_handle_event(self_: *mut Fl_Hor_Fill_Slider, event: core::ffi::c_int);
+    pub fn Fl_Hor_Fill_Slider_handle_event(self_: *mut Fl_Hor_Fill_Slider, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_draw(
         self_: *mut Fl_Hor_Fill_Slider,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -5471,35 +5332,35 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_set_when(arg1: *mut Fl_Hor_Fill_Slider, arg2: core::ffi::c_int);
+    pub fn Fl_Hor_Fill_Slider_set_when(arg1: *mut Fl_Hor_Fill_Slider, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_when(arg1: *const Fl_Hor_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Fill_Slider_when(arg1: *const Fl_Hor_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_image(arg1: *const Fl_Hor_Fill_Slider) -> *const core::ffi::c_void;
+    pub fn Fl_Hor_Fill_Slider_image(arg1: *const Fl_Hor_Fill_Slider) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_parent(self_: *const Fl_Hor_Fill_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Fill_Slider_parent(self_: *const Fl_Hor_Fill_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_selection_color(arg1: *mut Fl_Hor_Fill_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Hor_Fill_Slider_selection_color(arg1: *mut Fl_Hor_Fill_Slider) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_set_selection_color(
         arg1: *mut Fl_Hor_Fill_Slider,
-        color: core::ffi::c_uint,
+        color: cty::c_uint,
     );
 }
 extern "C" {
@@ -5508,24 +5369,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_inside(
         self_: *const Fl_Hor_Fill_Slider,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_window(arg1: *const Fl_Hor_Fill_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Fill_Slider_window(arg1: *const Fl_Hor_Fill_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_top_window(arg1: *const Fl_Hor_Fill_Slider)
-        -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Fill_Slider_top_window(arg1: *const Fl_Hor_Fill_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_takes_events(arg1: *const Fl_Hor_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Fill_Slider_takes_events(arg1: *const Fl_Hor_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_user_data(arg1: *const Fl_Hor_Fill_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Fill_Slider_user_data(arg1: *const Fl_Hor_Fill_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_take_focus(self_: *mut Fl_Hor_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Fill_Slider_take_focus(self_: *mut Fl_Hor_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_set_visible_focus(self_: *mut Fl_Hor_Fill_Slider);
@@ -5534,98 +5394,84 @@ extern "C" {
     pub fn Fl_Hor_Fill_Slider_clear_visible_focus(self_: *mut Fl_Hor_Fill_Slider);
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_visible_focus(self_: *mut Fl_Hor_Fill_Slider, v: core::ffi::c_int);
+    pub fn Fl_Hor_Fill_Slider_visible_focus(self_: *mut Fl_Hor_Fill_Slider, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_has_visible_focus(
-        self_: *mut Fl_Hor_Fill_Slider,
-    ) -> core::ffi::c_uint;
+    pub fn Fl_Hor_Fill_Slider_has_visible_focus(self_: *mut Fl_Hor_Fill_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_set_user_data(
-        arg1: *mut Fl_Hor_Fill_Slider,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Hor_Fill_Slider_set_user_data(arg1: *mut Fl_Hor_Fill_Slider, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_draw_data(self_: *const Fl_Hor_Fill_Slider)
-        -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Fill_Slider_draw_data(self_: *const Fl_Hor_Fill_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_handle_data(
-        self_: *const Fl_Hor_Fill_Slider,
-    ) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Fill_Slider_handle_data(self_: *const Fl_Hor_Fill_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_set_draw_data(
-        self_: *mut Fl_Hor_Fill_Slider,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Hor_Fill_Slider_set_draw_data(self_: *mut Fl_Hor_Fill_Slider, data: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_set_handle_data(
         self_: *mut Fl_Hor_Fill_Slider,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_damage(self_: *const Fl_Hor_Fill_Slider) -> core::ffi::c_uchar;
+    pub fn Fl_Hor_Fill_Slider_damage(self_: *const Fl_Hor_Fill_Slider) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_set_damage(self_: *mut Fl_Hor_Fill_Slider, flag: core::ffi::c_uchar);
+    pub fn Fl_Hor_Fill_Slider_set_damage(self_: *mut Fl_Hor_Fill_Slider, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_set_damage_area(
         self_: *mut Fl_Hor_Fill_Slider,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_clear_damage(self_: *mut Fl_Hor_Fill_Slider);
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_as_window(self_: *mut Fl_Hor_Fill_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Fill_Slider_as_window(self_: *mut Fl_Hor_Fill_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_as_group(self_: *mut Fl_Hor_Fill_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Fill_Slider_as_group(self_: *mut Fl_Hor_Fill_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_set_deimage(
-        arg1: *mut Fl_Hor_Fill_Slider,
-        arg2: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Hor_Fill_Slider_set_deimage(arg1: *mut Fl_Hor_Fill_Slider, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_deimage(arg1: *const Fl_Hor_Fill_Slider) -> *const core::ffi::c_void;
+    pub fn Fl_Hor_Fill_Slider_deimage(arg1: *const Fl_Hor_Fill_Slider) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_set_callback(
         arg1: *mut Fl_Hor_Fill_Slider,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_set_deleter(
         arg1: *mut Fl_Hor_Fill_Slider,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_visible(self_: *const Fl_Hor_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Fill_Slider_visible(self_: *const Fl_Hor_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_visible_r(self_: *const Fl_Hor_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Fill_Slider_visible_r(self_: *const Fl_Hor_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_active(self_: *const Fl_Hor_Fill_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Hor_Fill_Slider_active(self_: *const Fl_Hor_Fill_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_active_r(self_: *const Fl_Hor_Fill_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Fill_Slider_active_r(self_: *const Fl_Hor_Fill_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_callback(self_: *const Fl_Hor_Fill_Slider) -> Fl_Callback;
@@ -5634,16 +5480,16 @@ extern "C" {
     pub fn Fl_Hor_Fill_Slider_set_deletion_callback(
         self_: *mut Fl_Hor_Fill_Slider,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Hor_Fill_Slider;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Hor_Fill_Slider_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_set_bounds(arg1: *mut Fl_Hor_Fill_Slider, a: f64, b: f64);
@@ -5664,31 +5510,25 @@ extern "C" {
     pub fn Fl_Hor_Fill_Slider_set_range(arg1: *mut Fl_Hor_Fill_Slider, a: f64, b: f64);
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_set_step(arg1: *mut Fl_Hor_Fill_Slider, a: f64, b: core::ffi::c_int);
+    pub fn Fl_Hor_Fill_Slider_set_step(arg1: *mut Fl_Hor_Fill_Slider, a: f64, b: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_step(arg1: *mut Fl_Hor_Fill_Slider) -> f64;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_set_precision(
-        arg1: *mut Fl_Hor_Fill_Slider,
-        digits: core::ffi::c_int,
-    );
+    pub fn Fl_Hor_Fill_Slider_set_precision(arg1: *mut Fl_Hor_Fill_Slider, digits: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_value(arg1: *mut Fl_Hor_Fill_Slider) -> f64;
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_set_value(
-        arg1: *mut Fl_Hor_Fill_Slider,
-        arg2: f64,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Hor_Fill_Slider_set_value(arg1: *mut Fl_Hor_Fill_Slider, arg2: f64) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_format(
         arg1: *mut Fl_Hor_Fill_Slider,
-        arg2: *mut core::ffi::c_char,
-    ) -> core::ffi::c_int;
+        arg2: *mut cty::c_char,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_round(arg1: *mut Fl_Hor_Fill_Slider, arg2: f64) -> f64;
@@ -5700,7 +5540,7 @@ extern "C" {
     pub fn Fl_Hor_Fill_Slider_increment(
         arg1: *mut Fl_Hor_Fill_Slider,
         arg2: f64,
-        arg3: core::ffi::c_int,
+        arg3: cty::c_int,
     ) -> f64;
 }
 #[repr(C)]
@@ -5710,33 +5550,30 @@ pub struct Fl_Hor_Nice_Slider {
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Hor_Nice_Slider;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_x(arg1: *mut Fl_Hor_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Nice_Slider_x(arg1: *mut Fl_Hor_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_y(arg1: *mut Fl_Hor_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Nice_Slider_y(arg1: *mut Fl_Hor_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_width(arg1: *mut Fl_Hor_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Nice_Slider_width(arg1: *mut Fl_Hor_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_height(arg1: *mut Fl_Hor_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Nice_Slider_height(arg1: *mut Fl_Hor_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_label(arg1: *mut Fl_Hor_Nice_Slider) -> *const core::ffi::c_char;
+    pub fn Fl_Hor_Nice_Slider_label(arg1: *mut Fl_Hor_Nice_Slider) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_set_label(
-        arg1: *mut Fl_Hor_Nice_Slider,
-        title: *const core::ffi::c_char,
-    );
+    pub fn Fl_Hor_Nice_Slider_set_label(arg1: *mut Fl_Hor_Nice_Slider, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_redraw(arg1: *mut Fl_Hor_Nice_Slider);
@@ -5759,84 +5596,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_resize(
         arg1: *mut Fl_Hor_Nice_Slider,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_widget_resize(
         arg1: *mut Fl_Hor_Nice_Slider,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_tooltip(arg1: *mut Fl_Hor_Nice_Slider) -> *const core::ffi::c_char;
+    pub fn Fl_Hor_Nice_Slider_tooltip(arg1: *mut Fl_Hor_Nice_Slider) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_set_tooltip(
-        arg1: *mut Fl_Hor_Nice_Slider,
-        txt: *const core::ffi::c_char,
-    );
+    pub fn Fl_Hor_Nice_Slider_set_tooltip(arg1: *mut Fl_Hor_Nice_Slider, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_get_type(arg1: *mut Fl_Hor_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Nice_Slider_get_type(arg1: *mut Fl_Hor_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_set_type(arg1: *mut Fl_Hor_Nice_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Hor_Nice_Slider_set_type(arg1: *mut Fl_Hor_Nice_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_color(arg1: *mut Fl_Hor_Nice_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Hor_Nice_Slider_color(arg1: *mut Fl_Hor_Nice_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_set_color(arg1: *mut Fl_Hor_Nice_Slider, color: core::ffi::c_uint);
+    pub fn Fl_Hor_Nice_Slider_set_color(arg1: *mut Fl_Hor_Nice_Slider, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_measure_label(
         arg1: *const Fl_Hor_Nice_Slider,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_label_color(arg1: *mut Fl_Hor_Nice_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Hor_Nice_Slider_label_color(arg1: *mut Fl_Hor_Nice_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_set_label_color(
-        arg1: *mut Fl_Hor_Nice_Slider,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Hor_Nice_Slider_set_label_color(arg1: *mut Fl_Hor_Nice_Slider, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_label_font(arg1: *mut Fl_Hor_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Nice_Slider_label_font(arg1: *mut Fl_Hor_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_set_label_font(arg1: *mut Fl_Hor_Nice_Slider, font: core::ffi::c_int);
+    pub fn Fl_Hor_Nice_Slider_set_label_font(arg1: *mut Fl_Hor_Nice_Slider, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_label_size(arg1: *mut Fl_Hor_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Nice_Slider_label_size(arg1: *mut Fl_Hor_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_set_label_size(arg1: *mut Fl_Hor_Nice_Slider, sz: core::ffi::c_int);
+    pub fn Fl_Hor_Nice_Slider_set_label_size(arg1: *mut Fl_Hor_Nice_Slider, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_label_type(arg1: *mut Fl_Hor_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Nice_Slider_label_type(arg1: *mut Fl_Hor_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_set_label_type(arg1: *mut Fl_Hor_Nice_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Hor_Nice_Slider_set_label_type(arg1: *mut Fl_Hor_Nice_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_box(arg1: *mut Fl_Hor_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Nice_Slider_box(arg1: *mut Fl_Hor_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_set_box(arg1: *mut Fl_Hor_Nice_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Hor_Nice_Slider_set_box(arg1: *mut Fl_Hor_Nice_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_changed(arg1: *mut Fl_Hor_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Nice_Slider_changed(arg1: *mut Fl_Hor_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_set_changed(arg1: *mut Fl_Hor_Nice_Slider);
@@ -5845,35 +5676,32 @@ extern "C" {
     pub fn Fl_Hor_Nice_Slider_clear_changed(arg1: *mut Fl_Hor_Nice_Slider);
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_align(arg1: *mut Fl_Hor_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Nice_Slider_align(arg1: *mut Fl_Hor_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_set_align(arg1: *mut Fl_Hor_Nice_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Hor_Nice_Slider_set_align(arg1: *mut Fl_Hor_Nice_Slider, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_delete(arg1: *mut Fl_Hor_Nice_Slider);
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_set_image(
-        arg1: *mut Fl_Hor_Nice_Slider,
-        arg2: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Hor_Nice_Slider_set_image(arg1: *mut Fl_Hor_Nice_Slider, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_handle(
         self_: *mut Fl_Hor_Nice_Slider,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_handle_event(self_: *mut Fl_Hor_Nice_Slider, event: core::ffi::c_int);
+    pub fn Fl_Hor_Nice_Slider_handle_event(self_: *mut Fl_Hor_Nice_Slider, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_draw(
         self_: *mut Fl_Hor_Nice_Slider,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -5882,35 +5710,35 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_set_when(arg1: *mut Fl_Hor_Nice_Slider, arg2: core::ffi::c_int);
+    pub fn Fl_Hor_Nice_Slider_set_when(arg1: *mut Fl_Hor_Nice_Slider, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_when(arg1: *const Fl_Hor_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Nice_Slider_when(arg1: *const Fl_Hor_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_image(arg1: *const Fl_Hor_Nice_Slider) -> *const core::ffi::c_void;
+    pub fn Fl_Hor_Nice_Slider_image(arg1: *const Fl_Hor_Nice_Slider) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_parent(self_: *const Fl_Hor_Nice_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Nice_Slider_parent(self_: *const Fl_Hor_Nice_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_selection_color(arg1: *mut Fl_Hor_Nice_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Hor_Nice_Slider_selection_color(arg1: *mut Fl_Hor_Nice_Slider) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_set_selection_color(
         arg1: *mut Fl_Hor_Nice_Slider,
-        color: core::ffi::c_uint,
+        color: cty::c_uint,
     );
 }
 extern "C" {
@@ -5919,24 +5747,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_inside(
         self_: *const Fl_Hor_Nice_Slider,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_window(arg1: *const Fl_Hor_Nice_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Nice_Slider_window(arg1: *const Fl_Hor_Nice_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_top_window(arg1: *const Fl_Hor_Nice_Slider)
-        -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Nice_Slider_top_window(arg1: *const Fl_Hor_Nice_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_takes_events(arg1: *const Fl_Hor_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Nice_Slider_takes_events(arg1: *const Fl_Hor_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_user_data(arg1: *const Fl_Hor_Nice_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Nice_Slider_user_data(arg1: *const Fl_Hor_Nice_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_take_focus(self_: *mut Fl_Hor_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Nice_Slider_take_focus(self_: *mut Fl_Hor_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_set_visible_focus(self_: *mut Fl_Hor_Nice_Slider);
@@ -5945,98 +5772,84 @@ extern "C" {
     pub fn Fl_Hor_Nice_Slider_clear_visible_focus(self_: *mut Fl_Hor_Nice_Slider);
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_visible_focus(self_: *mut Fl_Hor_Nice_Slider, v: core::ffi::c_int);
+    pub fn Fl_Hor_Nice_Slider_visible_focus(self_: *mut Fl_Hor_Nice_Slider, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_has_visible_focus(
-        self_: *mut Fl_Hor_Nice_Slider,
-    ) -> core::ffi::c_uint;
+    pub fn Fl_Hor_Nice_Slider_has_visible_focus(self_: *mut Fl_Hor_Nice_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_set_user_data(
-        arg1: *mut Fl_Hor_Nice_Slider,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Hor_Nice_Slider_set_user_data(arg1: *mut Fl_Hor_Nice_Slider, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_draw_data(self_: *const Fl_Hor_Nice_Slider)
-        -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Nice_Slider_draw_data(self_: *const Fl_Hor_Nice_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_handle_data(
-        self_: *const Fl_Hor_Nice_Slider,
-    ) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Nice_Slider_handle_data(self_: *const Fl_Hor_Nice_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_set_draw_data(
-        self_: *mut Fl_Hor_Nice_Slider,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Hor_Nice_Slider_set_draw_data(self_: *mut Fl_Hor_Nice_Slider, data: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_set_handle_data(
         self_: *mut Fl_Hor_Nice_Slider,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_damage(self_: *const Fl_Hor_Nice_Slider) -> core::ffi::c_uchar;
+    pub fn Fl_Hor_Nice_Slider_damage(self_: *const Fl_Hor_Nice_Slider) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_set_damage(self_: *mut Fl_Hor_Nice_Slider, flag: core::ffi::c_uchar);
+    pub fn Fl_Hor_Nice_Slider_set_damage(self_: *mut Fl_Hor_Nice_Slider, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_set_damage_area(
         self_: *mut Fl_Hor_Nice_Slider,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_clear_damage(self_: *mut Fl_Hor_Nice_Slider);
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_as_window(self_: *mut Fl_Hor_Nice_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Nice_Slider_as_window(self_: *mut Fl_Hor_Nice_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_as_group(self_: *mut Fl_Hor_Nice_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Nice_Slider_as_group(self_: *mut Fl_Hor_Nice_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_set_deimage(
-        arg1: *mut Fl_Hor_Nice_Slider,
-        arg2: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Hor_Nice_Slider_set_deimage(arg1: *mut Fl_Hor_Nice_Slider, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_deimage(arg1: *const Fl_Hor_Nice_Slider) -> *const core::ffi::c_void;
+    pub fn Fl_Hor_Nice_Slider_deimage(arg1: *const Fl_Hor_Nice_Slider) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_set_callback(
         arg1: *mut Fl_Hor_Nice_Slider,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_set_deleter(
         arg1: *mut Fl_Hor_Nice_Slider,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_visible(self_: *const Fl_Hor_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Nice_Slider_visible(self_: *const Fl_Hor_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_visible_r(self_: *const Fl_Hor_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Nice_Slider_visible_r(self_: *const Fl_Hor_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_active(self_: *const Fl_Hor_Nice_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Hor_Nice_Slider_active(self_: *const Fl_Hor_Nice_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_active_r(self_: *const Fl_Hor_Nice_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Nice_Slider_active_r(self_: *const Fl_Hor_Nice_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_callback(self_: *const Fl_Hor_Nice_Slider) -> Fl_Callback;
@@ -6045,16 +5858,16 @@ extern "C" {
     pub fn Fl_Hor_Nice_Slider_set_deletion_callback(
         self_: *mut Fl_Hor_Nice_Slider,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Hor_Nice_Slider;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Hor_Nice_Slider_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_set_bounds(arg1: *mut Fl_Hor_Nice_Slider, a: f64, b: f64);
@@ -6075,31 +5888,25 @@ extern "C" {
     pub fn Fl_Hor_Nice_Slider_set_range(arg1: *mut Fl_Hor_Nice_Slider, a: f64, b: f64);
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_set_step(arg1: *mut Fl_Hor_Nice_Slider, a: f64, b: core::ffi::c_int);
+    pub fn Fl_Hor_Nice_Slider_set_step(arg1: *mut Fl_Hor_Nice_Slider, a: f64, b: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_step(arg1: *mut Fl_Hor_Nice_Slider) -> f64;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_set_precision(
-        arg1: *mut Fl_Hor_Nice_Slider,
-        digits: core::ffi::c_int,
-    );
+    pub fn Fl_Hor_Nice_Slider_set_precision(arg1: *mut Fl_Hor_Nice_Slider, digits: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_value(arg1: *mut Fl_Hor_Nice_Slider) -> f64;
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_set_value(
-        arg1: *mut Fl_Hor_Nice_Slider,
-        arg2: f64,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Hor_Nice_Slider_set_value(arg1: *mut Fl_Hor_Nice_Slider, arg2: f64) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_format(
         arg1: *mut Fl_Hor_Nice_Slider,
-        arg2: *mut core::ffi::c_char,
-    ) -> core::ffi::c_int;
+        arg2: *mut cty::c_char,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_round(arg1: *mut Fl_Hor_Nice_Slider, arg2: f64) -> f64;
@@ -6111,7 +5918,7 @@ extern "C" {
     pub fn Fl_Hor_Nice_Slider_increment(
         arg1: *mut Fl_Hor_Nice_Slider,
         arg2: f64,
-        arg3: core::ffi::c_int,
+        arg3: cty::c_int,
     ) -> f64;
 }
 #[repr(C)]
@@ -6121,33 +5928,30 @@ pub struct Fl_Hor_Value_Slider {
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Hor_Value_Slider;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_x(arg1: *mut Fl_Hor_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Value_Slider_x(arg1: *mut Fl_Hor_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_y(arg1: *mut Fl_Hor_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Value_Slider_y(arg1: *mut Fl_Hor_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_width(arg1: *mut Fl_Hor_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Value_Slider_width(arg1: *mut Fl_Hor_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_height(arg1: *mut Fl_Hor_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Value_Slider_height(arg1: *mut Fl_Hor_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_label(arg1: *mut Fl_Hor_Value_Slider) -> *const core::ffi::c_char;
+    pub fn Fl_Hor_Value_Slider_label(arg1: *mut Fl_Hor_Value_Slider) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_set_label(
-        arg1: *mut Fl_Hor_Value_Slider,
-        title: *const core::ffi::c_char,
-    );
+    pub fn Fl_Hor_Value_Slider_set_label(arg1: *mut Fl_Hor_Value_Slider, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_redraw(arg1: *mut Fl_Hor_Value_Slider);
@@ -6170,90 +5974,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hor_Value_Slider_resize(
         arg1: *mut Fl_Hor_Value_Slider,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_widget_resize(
         arg1: *mut Fl_Hor_Value_Slider,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_tooltip(arg1: *mut Fl_Hor_Value_Slider) -> *const core::ffi::c_char;
+    pub fn Fl_Hor_Value_Slider_tooltip(arg1: *mut Fl_Hor_Value_Slider) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_set_tooltip(
-        arg1: *mut Fl_Hor_Value_Slider,
-        txt: *const core::ffi::c_char,
-    );
+    pub fn Fl_Hor_Value_Slider_set_tooltip(arg1: *mut Fl_Hor_Value_Slider, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_get_type(arg1: *mut Fl_Hor_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Value_Slider_get_type(arg1: *mut Fl_Hor_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_set_type(arg1: *mut Fl_Hor_Value_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Hor_Value_Slider_set_type(arg1: *mut Fl_Hor_Value_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_color(arg1: *mut Fl_Hor_Value_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Hor_Value_Slider_color(arg1: *mut Fl_Hor_Value_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_set_color(arg1: *mut Fl_Hor_Value_Slider, color: core::ffi::c_uint);
+    pub fn Fl_Hor_Value_Slider_set_color(arg1: *mut Fl_Hor_Value_Slider, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_measure_label(
         arg1: *const Fl_Hor_Value_Slider,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_label_color(arg1: *mut Fl_Hor_Value_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Hor_Value_Slider_label_color(arg1: *mut Fl_Hor_Value_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_set_label_color(
-        arg1: *mut Fl_Hor_Value_Slider,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Hor_Value_Slider_set_label_color(arg1: *mut Fl_Hor_Value_Slider, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_label_font(arg1: *mut Fl_Hor_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Value_Slider_label_font(arg1: *mut Fl_Hor_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_set_label_font(
-        arg1: *mut Fl_Hor_Value_Slider,
-        font: core::ffi::c_int,
-    );
+    pub fn Fl_Hor_Value_Slider_set_label_font(arg1: *mut Fl_Hor_Value_Slider, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_label_size(arg1: *mut Fl_Hor_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Value_Slider_label_size(arg1: *mut Fl_Hor_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_set_label_size(arg1: *mut Fl_Hor_Value_Slider, sz: core::ffi::c_int);
+    pub fn Fl_Hor_Value_Slider_set_label_size(arg1: *mut Fl_Hor_Value_Slider, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_label_type(arg1: *mut Fl_Hor_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Value_Slider_label_type(arg1: *mut Fl_Hor_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_set_label_type(
-        arg1: *mut Fl_Hor_Value_Slider,
-        typ: core::ffi::c_int,
-    );
+    pub fn Fl_Hor_Value_Slider_set_label_type(arg1: *mut Fl_Hor_Value_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_box(arg1: *mut Fl_Hor_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Value_Slider_box(arg1: *mut Fl_Hor_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_set_box(arg1: *mut Fl_Hor_Value_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Hor_Value_Slider_set_box(arg1: *mut Fl_Hor_Value_Slider, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_changed(arg1: *mut Fl_Hor_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Value_Slider_changed(arg1: *mut Fl_Hor_Value_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_set_changed(arg1: *mut Fl_Hor_Value_Slider);
@@ -6262,38 +6054,32 @@ extern "C" {
     pub fn Fl_Hor_Value_Slider_clear_changed(arg1: *mut Fl_Hor_Value_Slider);
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_align(arg1: *mut Fl_Hor_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Value_Slider_align(arg1: *mut Fl_Hor_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_set_align(arg1: *mut Fl_Hor_Value_Slider, typ: core::ffi::c_int);
+    pub fn Fl_Hor_Value_Slider_set_align(arg1: *mut Fl_Hor_Value_Slider, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_delete(arg1: *mut Fl_Hor_Value_Slider);
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_set_image(
-        arg1: *mut Fl_Hor_Value_Slider,
-        arg2: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Hor_Value_Slider_set_image(arg1: *mut Fl_Hor_Value_Slider, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_handle(
         self_: *mut Fl_Hor_Value_Slider,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_handle_event(
-        self_: *mut Fl_Hor_Value_Slider,
-        event: core::ffi::c_int,
-    );
+    pub fn Fl_Hor_Value_Slider_handle_event(self_: *mut Fl_Hor_Value_Slider, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_draw(
         self_: *mut Fl_Hor_Value_Slider,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -6302,36 +6088,35 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_set_when(arg1: *mut Fl_Hor_Value_Slider, arg2: core::ffi::c_int);
+    pub fn Fl_Hor_Value_Slider_set_when(arg1: *mut Fl_Hor_Value_Slider, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_when(arg1: *const Fl_Hor_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Value_Slider_when(arg1: *const Fl_Hor_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_image(arg1: *const Fl_Hor_Value_Slider) -> *const core::ffi::c_void;
+    pub fn Fl_Hor_Value_Slider_image(arg1: *const Fl_Hor_Value_Slider) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_parent(self_: *const Fl_Hor_Value_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Value_Slider_parent(self_: *const Fl_Hor_Value_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_selection_color(arg1: *mut Fl_Hor_Value_Slider)
-        -> core::ffi::c_uint;
+    pub fn Fl_Hor_Value_Slider_selection_color(arg1: *mut Fl_Hor_Value_Slider) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_set_selection_color(
         arg1: *mut Fl_Hor_Value_Slider,
-        color: core::ffi::c_uint,
+        color: cty::c_uint,
     );
 }
 extern "C" {
@@ -6340,27 +6125,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hor_Value_Slider_inside(
         self_: *const Fl_Hor_Value_Slider,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_window(arg1: *const Fl_Hor_Value_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Value_Slider_window(arg1: *const Fl_Hor_Value_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_top_window(
-        arg1: *const Fl_Hor_Value_Slider,
-    ) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Value_Slider_top_window(arg1: *const Fl_Hor_Value_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_takes_events(arg1: *const Fl_Hor_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Value_Slider_takes_events(arg1: *const Fl_Hor_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_user_data(
-        arg1: *const Fl_Hor_Value_Slider,
-    ) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Value_Slider_user_data(arg1: *const Fl_Hor_Value_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_take_focus(self_: *mut Fl_Hor_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Value_Slider_take_focus(self_: *mut Fl_Hor_Value_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_set_visible_focus(self_: *mut Fl_Hor_Value_Slider);
@@ -6369,105 +6150,90 @@ extern "C" {
     pub fn Fl_Hor_Value_Slider_clear_visible_focus(self_: *mut Fl_Hor_Value_Slider);
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_visible_focus(self_: *mut Fl_Hor_Value_Slider, v: core::ffi::c_int);
+    pub fn Fl_Hor_Value_Slider_visible_focus(self_: *mut Fl_Hor_Value_Slider, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_has_visible_focus(
-        self_: *mut Fl_Hor_Value_Slider,
-    ) -> core::ffi::c_uint;
+    pub fn Fl_Hor_Value_Slider_has_visible_focus(self_: *mut Fl_Hor_Value_Slider) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_set_user_data(
         arg1: *mut Fl_Hor_Value_Slider,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_draw_data(
-        self_: *const Fl_Hor_Value_Slider,
-    ) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Value_Slider_draw_data(self_: *const Fl_Hor_Value_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_handle_data(
-        self_: *const Fl_Hor_Value_Slider,
-    ) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Value_Slider_handle_data(self_: *const Fl_Hor_Value_Slider) -> *mut cty::c_void;
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_set_draw_data(
         self_: *mut Fl_Hor_Value_Slider,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_set_handle_data(
         self_: *mut Fl_Hor_Value_Slider,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_damage(self_: *const Fl_Hor_Value_Slider) -> core::ffi::c_uchar;
+    pub fn Fl_Hor_Value_Slider_damage(self_: *const Fl_Hor_Value_Slider) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_set_damage(
-        self_: *mut Fl_Hor_Value_Slider,
-        flag: core::ffi::c_uchar,
-    );
+    pub fn Fl_Hor_Value_Slider_set_damage(self_: *mut Fl_Hor_Value_Slider, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_set_damage_area(
         self_: *mut Fl_Hor_Value_Slider,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_clear_damage(self_: *mut Fl_Hor_Value_Slider);
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_as_window(self_: *mut Fl_Hor_Value_Slider)
-        -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Value_Slider_as_window(self_: *mut Fl_Hor_Value_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_as_group(self_: *mut Fl_Hor_Value_Slider) -> *mut core::ffi::c_void;
+    pub fn Fl_Hor_Value_Slider_as_group(self_: *mut Fl_Hor_Value_Slider) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_set_deimage(
-        arg1: *mut Fl_Hor_Value_Slider,
-        arg2: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Hor_Value_Slider_set_deimage(arg1: *mut Fl_Hor_Value_Slider, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_deimage(
-        arg1: *const Fl_Hor_Value_Slider,
-    ) -> *const core::ffi::c_void;
+    pub fn Fl_Hor_Value_Slider_deimage(arg1: *const Fl_Hor_Value_Slider) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_set_callback(
         arg1: *mut Fl_Hor_Value_Slider,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_set_deleter(
         arg1: *mut Fl_Hor_Value_Slider,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_visible(self_: *const Fl_Hor_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Value_Slider_visible(self_: *const Fl_Hor_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_visible_r(self_: *const Fl_Hor_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Value_Slider_visible_r(self_: *const Fl_Hor_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_active(self_: *const Fl_Hor_Value_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Hor_Value_Slider_active(self_: *const Fl_Hor_Value_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_active_r(self_: *const Fl_Hor_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Value_Slider_active_r(self_: *const Fl_Hor_Value_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_callback(self_: *const Fl_Hor_Value_Slider) -> Fl_Callback;
@@ -6476,37 +6242,34 @@ extern "C" {
     pub fn Fl_Hor_Value_Slider_set_deletion_callback(
         self_: *mut Fl_Hor_Value_Slider,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Hor_Value_Slider;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Hor_Value_Slider_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_set_text_color(
-        self_: *mut Fl_Hor_Value_Slider,
-        c: core::ffi::c_uint,
-    );
+    pub fn Fl_Hor_Value_Slider_set_text_color(self_: *mut Fl_Hor_Value_Slider, c: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_text_color(self_: *mut Fl_Hor_Value_Slider) -> core::ffi::c_uint;
+    pub fn Fl_Hor_Value_Slider_text_color(self_: *mut Fl_Hor_Value_Slider) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_set_text_font(self_: *mut Fl_Hor_Value_Slider, f: core::ffi::c_int);
+    pub fn Fl_Hor_Value_Slider_set_text_font(self_: *mut Fl_Hor_Value_Slider, f: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_text_font(self_: *mut Fl_Hor_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Value_Slider_text_font(self_: *mut Fl_Hor_Value_Slider) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_set_text_size(self_: *mut Fl_Hor_Value_Slider, s: core::ffi::c_int);
+    pub fn Fl_Hor_Value_Slider_set_text_size(self_: *mut Fl_Hor_Value_Slider, s: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_text_size(self_: *mut Fl_Hor_Value_Slider) -> core::ffi::c_int;
+    pub fn Fl_Hor_Value_Slider_text_size(self_: *mut Fl_Hor_Value_Slider) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_set_bounds(arg1: *mut Fl_Hor_Value_Slider, a: f64, b: f64);
@@ -6527,35 +6290,25 @@ extern "C" {
     pub fn Fl_Hor_Value_Slider_set_range(arg1: *mut Fl_Hor_Value_Slider, a: f64, b: f64);
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_set_step(
-        arg1: *mut Fl_Hor_Value_Slider,
-        a: f64,
-        b: core::ffi::c_int,
-    );
+    pub fn Fl_Hor_Value_Slider_set_step(arg1: *mut Fl_Hor_Value_Slider, a: f64, b: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_step(arg1: *mut Fl_Hor_Value_Slider) -> f64;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_set_precision(
-        arg1: *mut Fl_Hor_Value_Slider,
-        digits: core::ffi::c_int,
-    );
+    pub fn Fl_Hor_Value_Slider_set_precision(arg1: *mut Fl_Hor_Value_Slider, digits: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_value(arg1: *mut Fl_Hor_Value_Slider) -> f64;
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_set_value(
-        arg1: *mut Fl_Hor_Value_Slider,
-        arg2: f64,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Hor_Value_Slider_set_value(arg1: *mut Fl_Hor_Value_Slider, arg2: f64) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_format(
         arg1: *mut Fl_Hor_Value_Slider,
-        arg2: *mut core::ffi::c_char,
-    ) -> core::ffi::c_int;
+        arg2: *mut cty::c_char,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_round(arg1: *mut Fl_Hor_Value_Slider, arg2: f64) -> f64;
@@ -6567,6 +6320,6 @@ extern "C" {
     pub fn Fl_Hor_Value_Slider_increment(
         arg1: *mut Fl_Hor_Value_Slider,
         arg2: f64,
-        arg3: core::ffi::c_int,
+        arg3: cty::c_int,
     ) -> f64;
 }

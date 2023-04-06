@@ -5,19 +5,17 @@
 pub struct Fl_Widget {
     _unused: [u8; 0],
 }
-pub type Fl_Callback = ::core::option::Option<
-    unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
->;
+pub type Fl_Callback =
+    ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void)>;
 pub type custom_handler_callback = ::core::option::Option<
     unsafe extern "C" fn(
         arg1: *mut Fl_Widget,
-        arg2: core::ffi::c_int,
-        arg3: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int,
+        arg2: cty::c_int,
+        arg3: *mut cty::c_void,
+    ) -> cty::c_int,
 >;
-pub type custom_draw_callback = ::core::option::Option<
-    unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
->;
+pub type custom_draw_callback =
+    ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void)>;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Button {
@@ -25,30 +23,30 @@ pub struct Fl_Button {
 }
 extern "C" {
     pub fn Fl_Button_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Button;
 }
 extern "C" {
-    pub fn Fl_Button_x(arg1: *mut Fl_Button) -> core::ffi::c_int;
+    pub fn Fl_Button_x(arg1: *mut Fl_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Button_y(arg1: *mut Fl_Button) -> core::ffi::c_int;
+    pub fn Fl_Button_y(arg1: *mut Fl_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Button_width(arg1: *mut Fl_Button) -> core::ffi::c_int;
+    pub fn Fl_Button_width(arg1: *mut Fl_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Button_height(arg1: *mut Fl_Button) -> core::ffi::c_int;
+    pub fn Fl_Button_height(arg1: *mut Fl_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Button_label(arg1: *mut Fl_Button) -> *const core::ffi::c_char;
+    pub fn Fl_Button_label(arg1: *mut Fl_Button) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Button_set_label(arg1: *mut Fl_Button, title: *const core::ffi::c_char);
+    pub fn Fl_Button_set_label(arg1: *mut Fl_Button, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Button_redraw(arg1: *mut Fl_Button);
@@ -71,78 +69,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Button_resize(
         arg1: *mut Fl_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Button_widget_resize(
         arg1: *mut Fl_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Button_tooltip(arg1: *mut Fl_Button) -> *const core::ffi::c_char;
+    pub fn Fl_Button_tooltip(arg1: *mut Fl_Button) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Button_set_tooltip(arg1: *mut Fl_Button, txt: *const core::ffi::c_char);
+    pub fn Fl_Button_set_tooltip(arg1: *mut Fl_Button, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Button_get_type(arg1: *mut Fl_Button) -> core::ffi::c_int;
+    pub fn Fl_Button_get_type(arg1: *mut Fl_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Button_set_type(arg1: *mut Fl_Button, typ: core::ffi::c_int);
+    pub fn Fl_Button_set_type(arg1: *mut Fl_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Button_color(arg1: *mut Fl_Button) -> core::ffi::c_uint;
+    pub fn Fl_Button_color(arg1: *mut Fl_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Button_set_color(arg1: *mut Fl_Button, color: core::ffi::c_uint);
+    pub fn Fl_Button_set_color(arg1: *mut Fl_Button, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Button_measure_label(
         arg1: *const Fl_Button,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Button_label_color(arg1: *mut Fl_Button) -> core::ffi::c_uint;
+    pub fn Fl_Button_label_color(arg1: *mut Fl_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Button_set_label_color(arg1: *mut Fl_Button, color: core::ffi::c_uint);
+    pub fn Fl_Button_set_label_color(arg1: *mut Fl_Button, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Button_label_font(arg1: *mut Fl_Button) -> core::ffi::c_int;
+    pub fn Fl_Button_label_font(arg1: *mut Fl_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Button_set_label_font(arg1: *mut Fl_Button, font: core::ffi::c_int);
+    pub fn Fl_Button_set_label_font(arg1: *mut Fl_Button, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Button_label_size(arg1: *mut Fl_Button) -> core::ffi::c_int;
+    pub fn Fl_Button_label_size(arg1: *mut Fl_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Button_set_label_size(arg1: *mut Fl_Button, sz: core::ffi::c_int);
+    pub fn Fl_Button_set_label_size(arg1: *mut Fl_Button, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Button_label_type(arg1: *mut Fl_Button) -> core::ffi::c_int;
+    pub fn Fl_Button_label_type(arg1: *mut Fl_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Button_set_label_type(arg1: *mut Fl_Button, typ: core::ffi::c_int);
+    pub fn Fl_Button_set_label_type(arg1: *mut Fl_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Button_box(arg1: *mut Fl_Button) -> core::ffi::c_int;
+    pub fn Fl_Button_box(arg1: *mut Fl_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Button_set_box(arg1: *mut Fl_Button, typ: core::ffi::c_int);
+    pub fn Fl_Button_set_box(arg1: *mut Fl_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Button_changed(arg1: *mut Fl_Button) -> core::ffi::c_int;
+    pub fn Fl_Button_changed(arg1: *mut Fl_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Button_set_changed(arg1: *mut Fl_Button);
@@ -151,33 +149,29 @@ extern "C" {
     pub fn Fl_Button_clear_changed(arg1: *mut Fl_Button);
 }
 extern "C" {
-    pub fn Fl_Button_align(arg1: *mut Fl_Button) -> core::ffi::c_int;
+    pub fn Fl_Button_align(arg1: *mut Fl_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Button_set_align(arg1: *mut Fl_Button, typ: core::ffi::c_int);
+    pub fn Fl_Button_set_align(arg1: *mut Fl_Button, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Button_delete(arg1: *mut Fl_Button);
 }
 extern "C" {
-    pub fn Fl_Button_set_image(arg1: *mut Fl_Button, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Button_set_image(arg1: *mut Fl_Button, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Button_handle(
         self_: *mut Fl_Button,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Button_handle_event(self_: *mut Fl_Button, event: core::ffi::c_int);
+    pub fn Fl_Button_handle_event(self_: *mut Fl_Button, event: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Button_draw(
-        self_: *mut Fl_Button,
-        cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Button_draw(self_: *mut Fl_Button, cb: custom_draw_callback, data: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Button_resize_callback(
@@ -185,57 +179,54 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Button_set_when(arg1: *mut Fl_Button, arg2: core::ffi::c_int);
+    pub fn Fl_Button_set_when(arg1: *mut Fl_Button, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Button_when(arg1: *const Fl_Button) -> core::ffi::c_int;
+    pub fn Fl_Button_when(arg1: *const Fl_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Button_image(arg1: *const Fl_Button) -> *const core::ffi::c_void;
+    pub fn Fl_Button_image(arg1: *const Fl_Button) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Button_parent(self_: *const Fl_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Button_parent(self_: *const Fl_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Button_selection_color(arg1: *mut Fl_Button) -> core::ffi::c_uint;
+    pub fn Fl_Button_selection_color(arg1: *mut Fl_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Button_set_selection_color(arg1: *mut Fl_Button, color: core::ffi::c_uint);
+    pub fn Fl_Button_set_selection_color(arg1: *mut Fl_Button, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Button_do_callback(arg1: *mut Fl_Button);
 }
 extern "C" {
-    pub fn Fl_Button_inside(
-        self_: *const Fl_Button,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Button_inside(self_: *const Fl_Button, arg1: *mut cty::c_void) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Button_window(arg1: *const Fl_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Button_window(arg1: *const Fl_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Button_top_window(arg1: *const Fl_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Button_top_window(arg1: *const Fl_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Button_takes_events(arg1: *const Fl_Button) -> core::ffi::c_int;
+    pub fn Fl_Button_takes_events(arg1: *const Fl_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Button_user_data(arg1: *const Fl_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Button_user_data(arg1: *const Fl_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Button_take_focus(self_: *mut Fl_Button) -> core::ffi::c_int;
+    pub fn Fl_Button_take_focus(self_: *mut Fl_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Button_set_visible_focus(self_: *mut Fl_Button);
@@ -244,81 +235,77 @@ extern "C" {
     pub fn Fl_Button_clear_visible_focus(self_: *mut Fl_Button);
 }
 extern "C" {
-    pub fn Fl_Button_visible_focus(self_: *mut Fl_Button, v: core::ffi::c_int);
+    pub fn Fl_Button_visible_focus(self_: *mut Fl_Button, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Button_has_visible_focus(self_: *mut Fl_Button) -> core::ffi::c_uint;
+    pub fn Fl_Button_has_visible_focus(self_: *mut Fl_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Button_set_user_data(arg1: *mut Fl_Button, data: *mut core::ffi::c_void);
+    pub fn Fl_Button_set_user_data(arg1: *mut Fl_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Button_draw_data(self_: *const Fl_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Button_draw_data(self_: *const Fl_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Button_handle_data(self_: *const Fl_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Button_handle_data(self_: *const Fl_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Button_set_draw_data(self_: *mut Fl_Button, data: *mut core::ffi::c_void);
+    pub fn Fl_Button_set_draw_data(self_: *mut Fl_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Button_set_handle_data(self_: *mut Fl_Button, data: *mut core::ffi::c_void);
+    pub fn Fl_Button_set_handle_data(self_: *mut Fl_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Button_damage(self_: *const Fl_Button) -> core::ffi::c_uchar;
+    pub fn Fl_Button_damage(self_: *const Fl_Button) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Button_set_damage(self_: *mut Fl_Button, flag: core::ffi::c_uchar);
+    pub fn Fl_Button_set_damage(self_: *mut Fl_Button, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Button_set_damage_area(
         self_: *mut Fl_Button,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Button_clear_damage(self_: *mut Fl_Button);
 }
 extern "C" {
-    pub fn Fl_Button_as_window(self_: *mut Fl_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Button_as_window(self_: *mut Fl_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Button_as_group(self_: *mut Fl_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Button_as_group(self_: *mut Fl_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Button_set_deimage(arg1: *mut Fl_Button, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Button_set_deimage(arg1: *mut Fl_Button, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Button_deimage(arg1: *const Fl_Button) -> *const core::ffi::c_void;
+    pub fn Fl_Button_deimage(arg1: *const Fl_Button) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Button_set_callback(
-        arg1: *mut Fl_Button,
-        arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Button_set_callback(arg1: *mut Fl_Button, arg2: Fl_Callback, arg3: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Button_set_deleter(
         arg1: *mut Fl_Button,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Button_visible(self_: *const Fl_Button) -> core::ffi::c_int;
+    pub fn Fl_Button_visible(self_: *const Fl_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Button_visible_r(self_: *const Fl_Button) -> core::ffi::c_int;
+    pub fn Fl_Button_visible_r(self_: *const Fl_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Button_active(self_: *const Fl_Button) -> core::ffi::c_uint;
+    pub fn Fl_Button_active(self_: *const Fl_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Button_active_r(self_: *const Fl_Button) -> core::ffi::c_int;
+    pub fn Fl_Button_active_r(self_: *const Fl_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Button_callback(self_: *const Fl_Button) -> Fl_Callback;
@@ -327,37 +314,37 @@ extern "C" {
     pub fn Fl_Button_set_deletion_callback(
         self_: *mut Fl_Button,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Button_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Button;
 }
 extern "C" {
-    pub fn Fl_Button_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Button_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Button_shortcut(self_: *const Fl_Button) -> core::ffi::c_int;
+    pub fn Fl_Button_shortcut(self_: *const Fl_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Button_set_shortcut(self_: *mut Fl_Button, shortcut: core::ffi::c_int);
+    pub fn Fl_Button_set_shortcut(self_: *mut Fl_Button, shortcut: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Button_clear(self_: *mut Fl_Button) -> core::ffi::c_int;
+    pub fn Fl_Button_clear(self_: *mut Fl_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Button_value(self_: *mut Fl_Button) -> core::ffi::c_int;
+    pub fn Fl_Button_value(self_: *mut Fl_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Button_set_value(self_: *mut Fl_Button, flag: core::ffi::c_int);
+    pub fn Fl_Button_set_value(self_: *mut Fl_Button, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Button_set_down_box(self_: *mut Fl_Button, arg1: core::ffi::c_int);
+    pub fn Fl_Button_set_down_box(self_: *mut Fl_Button, arg1: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Button_down_box(self_: *const Fl_Button) -> core::ffi::c_int;
+    pub fn Fl_Button_down_box(self_: *const Fl_Button) -> cty::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -366,30 +353,30 @@ pub struct Fl_Check_Button {
 }
 extern "C" {
     pub fn Fl_Check_Button_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Check_Button;
 }
 extern "C" {
-    pub fn Fl_Check_Button_x(arg1: *mut Fl_Check_Button) -> core::ffi::c_int;
+    pub fn Fl_Check_Button_x(arg1: *mut Fl_Check_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Button_y(arg1: *mut Fl_Check_Button) -> core::ffi::c_int;
+    pub fn Fl_Check_Button_y(arg1: *mut Fl_Check_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Button_width(arg1: *mut Fl_Check_Button) -> core::ffi::c_int;
+    pub fn Fl_Check_Button_width(arg1: *mut Fl_Check_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Button_height(arg1: *mut Fl_Check_Button) -> core::ffi::c_int;
+    pub fn Fl_Check_Button_height(arg1: *mut Fl_Check_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Button_label(arg1: *mut Fl_Check_Button) -> *const core::ffi::c_char;
+    pub fn Fl_Check_Button_label(arg1: *mut Fl_Check_Button) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_label(arg1: *mut Fl_Check_Button, title: *const core::ffi::c_char);
+    pub fn Fl_Check_Button_set_label(arg1: *mut Fl_Check_Button, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Check_Button_redraw(arg1: *mut Fl_Check_Button);
@@ -412,78 +399,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Check_Button_resize(
         arg1: *mut Fl_Check_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Check_Button_widget_resize(
         arg1: *mut Fl_Check_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Check_Button_tooltip(arg1: *mut Fl_Check_Button) -> *const core::ffi::c_char;
+    pub fn Fl_Check_Button_tooltip(arg1: *mut Fl_Check_Button) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_tooltip(arg1: *mut Fl_Check_Button, txt: *const core::ffi::c_char);
+    pub fn Fl_Check_Button_set_tooltip(arg1: *mut Fl_Check_Button, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Check_Button_get_type(arg1: *mut Fl_Check_Button) -> core::ffi::c_int;
+    pub fn Fl_Check_Button_get_type(arg1: *mut Fl_Check_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_type(arg1: *mut Fl_Check_Button, typ: core::ffi::c_int);
+    pub fn Fl_Check_Button_set_type(arg1: *mut Fl_Check_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Button_color(arg1: *mut Fl_Check_Button) -> core::ffi::c_uint;
+    pub fn Fl_Check_Button_color(arg1: *mut Fl_Check_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_color(arg1: *mut Fl_Check_Button, color: core::ffi::c_uint);
+    pub fn Fl_Check_Button_set_color(arg1: *mut Fl_Check_Button, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Check_Button_measure_label(
         arg1: *const Fl_Check_Button,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Check_Button_label_color(arg1: *mut Fl_Check_Button) -> core::ffi::c_uint;
+    pub fn Fl_Check_Button_label_color(arg1: *mut Fl_Check_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_label_color(arg1: *mut Fl_Check_Button, color: core::ffi::c_uint);
+    pub fn Fl_Check_Button_set_label_color(arg1: *mut Fl_Check_Button, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Check_Button_label_font(arg1: *mut Fl_Check_Button) -> core::ffi::c_int;
+    pub fn Fl_Check_Button_label_font(arg1: *mut Fl_Check_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_label_font(arg1: *mut Fl_Check_Button, font: core::ffi::c_int);
+    pub fn Fl_Check_Button_set_label_font(arg1: *mut Fl_Check_Button, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Button_label_size(arg1: *mut Fl_Check_Button) -> core::ffi::c_int;
+    pub fn Fl_Check_Button_label_size(arg1: *mut Fl_Check_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_label_size(arg1: *mut Fl_Check_Button, sz: core::ffi::c_int);
+    pub fn Fl_Check_Button_set_label_size(arg1: *mut Fl_Check_Button, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Button_label_type(arg1: *mut Fl_Check_Button) -> core::ffi::c_int;
+    pub fn Fl_Check_Button_label_type(arg1: *mut Fl_Check_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_label_type(arg1: *mut Fl_Check_Button, typ: core::ffi::c_int);
+    pub fn Fl_Check_Button_set_label_type(arg1: *mut Fl_Check_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Button_box(arg1: *mut Fl_Check_Button) -> core::ffi::c_int;
+    pub fn Fl_Check_Button_box(arg1: *mut Fl_Check_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_box(arg1: *mut Fl_Check_Button, typ: core::ffi::c_int);
+    pub fn Fl_Check_Button_set_box(arg1: *mut Fl_Check_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Button_changed(arg1: *mut Fl_Check_Button) -> core::ffi::c_int;
+    pub fn Fl_Check_Button_changed(arg1: *mut Fl_Check_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Check_Button_set_changed(arg1: *mut Fl_Check_Button);
@@ -492,32 +479,32 @@ extern "C" {
     pub fn Fl_Check_Button_clear_changed(arg1: *mut Fl_Check_Button);
 }
 extern "C" {
-    pub fn Fl_Check_Button_align(arg1: *mut Fl_Check_Button) -> core::ffi::c_int;
+    pub fn Fl_Check_Button_align(arg1: *mut Fl_Check_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_align(arg1: *mut Fl_Check_Button, typ: core::ffi::c_int);
+    pub fn Fl_Check_Button_set_align(arg1: *mut Fl_Check_Button, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Check_Button_delete(arg1: *mut Fl_Check_Button);
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_image(arg1: *mut Fl_Check_Button, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Check_Button_set_image(arg1: *mut Fl_Check_Button, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Check_Button_handle(
         self_: *mut Fl_Check_Button,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Check_Button_handle_event(self_: *mut Fl_Check_Button, event: core::ffi::c_int);
+    pub fn Fl_Check_Button_handle_event(self_: *mut Fl_Check_Button, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Check_Button_draw(
         self_: *mut Fl_Check_Button,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -526,36 +513,33 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_when(arg1: *mut Fl_Check_Button, arg2: core::ffi::c_int);
+    pub fn Fl_Check_Button_set_when(arg1: *mut Fl_Check_Button, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Button_when(arg1: *const Fl_Check_Button) -> core::ffi::c_int;
+    pub fn Fl_Check_Button_when(arg1: *const Fl_Check_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Button_image(arg1: *const Fl_Check_Button) -> *const core::ffi::c_void;
+    pub fn Fl_Check_Button_image(arg1: *const Fl_Check_Button) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Check_Button_parent(self_: *const Fl_Check_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Check_Button_parent(self_: *const Fl_Check_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Check_Button_selection_color(arg1: *mut Fl_Check_Button) -> core::ffi::c_uint;
+    pub fn Fl_Check_Button_selection_color(arg1: *mut Fl_Check_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_selection_color(
-        arg1: *mut Fl_Check_Button,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Check_Button_set_selection_color(arg1: *mut Fl_Check_Button, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Check_Button_do_callback(arg1: *mut Fl_Check_Button);
@@ -563,23 +547,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Check_Button_inside(
         self_: *const Fl_Check_Button,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Button_window(arg1: *const Fl_Check_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Check_Button_window(arg1: *const Fl_Check_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Check_Button_top_window(arg1: *const Fl_Check_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Check_Button_top_window(arg1: *const Fl_Check_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Check_Button_takes_events(arg1: *const Fl_Check_Button) -> core::ffi::c_int;
+    pub fn Fl_Check_Button_takes_events(arg1: *const Fl_Check_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Button_user_data(arg1: *const Fl_Check_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Check_Button_user_data(arg1: *const Fl_Check_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Check_Button_take_focus(self_: *mut Fl_Check_Button) -> core::ffi::c_int;
+    pub fn Fl_Check_Button_take_focus(self_: *mut Fl_Check_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Check_Button_set_visible_focus(self_: *mut Fl_Check_Button);
@@ -588,84 +572,81 @@ extern "C" {
     pub fn Fl_Check_Button_clear_visible_focus(self_: *mut Fl_Check_Button);
 }
 extern "C" {
-    pub fn Fl_Check_Button_visible_focus(self_: *mut Fl_Check_Button, v: core::ffi::c_int);
+    pub fn Fl_Check_Button_visible_focus(self_: *mut Fl_Check_Button, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Button_has_visible_focus(self_: *mut Fl_Check_Button) -> core::ffi::c_uint;
+    pub fn Fl_Check_Button_has_visible_focus(self_: *mut Fl_Check_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_user_data(arg1: *mut Fl_Check_Button, data: *mut core::ffi::c_void);
+    pub fn Fl_Check_Button_set_user_data(arg1: *mut Fl_Check_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Check_Button_draw_data(self_: *const Fl_Check_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Check_Button_draw_data(self_: *const Fl_Check_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Check_Button_handle_data(self_: *const Fl_Check_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Check_Button_handle_data(self_: *const Fl_Check_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_draw_data(self_: *mut Fl_Check_Button, data: *mut core::ffi::c_void);
+    pub fn Fl_Check_Button_set_draw_data(self_: *mut Fl_Check_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_handle_data(
-        self_: *mut Fl_Check_Button,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Check_Button_set_handle_data(self_: *mut Fl_Check_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Check_Button_damage(self_: *const Fl_Check_Button) -> core::ffi::c_uchar;
+    pub fn Fl_Check_Button_damage(self_: *const Fl_Check_Button) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_damage(self_: *mut Fl_Check_Button, flag: core::ffi::c_uchar);
+    pub fn Fl_Check_Button_set_damage(self_: *mut Fl_Check_Button, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Check_Button_set_damage_area(
         self_: *mut Fl_Check_Button,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Check_Button_clear_damage(self_: *mut Fl_Check_Button);
 }
 extern "C" {
-    pub fn Fl_Check_Button_as_window(self_: *mut Fl_Check_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Check_Button_as_window(self_: *mut Fl_Check_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Check_Button_as_group(self_: *mut Fl_Check_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Check_Button_as_group(self_: *mut Fl_Check_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_deimage(arg1: *mut Fl_Check_Button, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Check_Button_set_deimage(arg1: *mut Fl_Check_Button, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Check_Button_deimage(arg1: *const Fl_Check_Button) -> *const core::ffi::c_void;
+    pub fn Fl_Check_Button_deimage(arg1: *const Fl_Check_Button) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Check_Button_set_callback(
         arg1: *mut Fl_Check_Button,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Check_Button_set_deleter(
         arg1: *mut Fl_Check_Button,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Check_Button_visible(self_: *const Fl_Check_Button) -> core::ffi::c_int;
+    pub fn Fl_Check_Button_visible(self_: *const Fl_Check_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Button_visible_r(self_: *const Fl_Check_Button) -> core::ffi::c_int;
+    pub fn Fl_Check_Button_visible_r(self_: *const Fl_Check_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Button_active(self_: *const Fl_Check_Button) -> core::ffi::c_uint;
+    pub fn Fl_Check_Button_active(self_: *const Fl_Check_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Check_Button_active_r(self_: *const Fl_Check_Button) -> core::ffi::c_int;
+    pub fn Fl_Check_Button_active_r(self_: *const Fl_Check_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Check_Button_callback(self_: *const Fl_Check_Button) -> Fl_Callback;
@@ -674,43 +655,43 @@ extern "C" {
     pub fn Fl_Check_Button_set_deletion_callback(
         self_: *mut Fl_Check_Button,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Check_Button_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Check_Button;
 }
 extern "C" {
-    pub fn Fl_Check_Button_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Check_Button_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Button_is_checked(arg1: *mut Fl_Check_Button) -> core::ffi::c_int;
+    pub fn Fl_Check_Button_is_checked(arg1: *mut Fl_Check_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_checked(self_: *mut Fl_Check_Button, checked: core::ffi::c_int);
+    pub fn Fl_Check_Button_set_checked(self_: *mut Fl_Check_Button, checked: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Button_shortcut(self_: *const Fl_Check_Button) -> core::ffi::c_int;
+    pub fn Fl_Check_Button_shortcut(self_: *const Fl_Check_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_shortcut(self_: *mut Fl_Check_Button, shortcut: core::ffi::c_int);
+    pub fn Fl_Check_Button_set_shortcut(self_: *mut Fl_Check_Button, shortcut: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Button_clear(self_: *mut Fl_Check_Button) -> core::ffi::c_int;
+    pub fn Fl_Check_Button_clear(self_: *mut Fl_Check_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Button_value(self_: *mut Fl_Check_Button) -> core::ffi::c_int;
+    pub fn Fl_Check_Button_value(self_: *mut Fl_Check_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_value(self_: *mut Fl_Check_Button, flag: core::ffi::c_int);
+    pub fn Fl_Check_Button_set_value(self_: *mut Fl_Check_Button, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_down_box(self_: *mut Fl_Check_Button, arg1: core::ffi::c_int);
+    pub fn Fl_Check_Button_set_down_box(self_: *mut Fl_Check_Button, arg1: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Button_down_box(self_: *const Fl_Check_Button) -> core::ffi::c_int;
+    pub fn Fl_Check_Button_down_box(self_: *const Fl_Check_Button) -> cty::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -719,30 +700,30 @@ pub struct Fl_Radio_Button {
 }
 extern "C" {
     pub fn Fl_Radio_Button_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Radio_Button;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_x(arg1: *mut Fl_Radio_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Button_x(arg1: *mut Fl_Radio_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_y(arg1: *mut Fl_Radio_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Button_y(arg1: *mut Fl_Radio_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_width(arg1: *mut Fl_Radio_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Button_width(arg1: *mut Fl_Radio_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_height(arg1: *mut Fl_Radio_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Button_height(arg1: *mut Fl_Radio_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_label(arg1: *mut Fl_Radio_Button) -> *const core::ffi::c_char;
+    pub fn Fl_Radio_Button_label(arg1: *mut Fl_Radio_Button) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_set_label(arg1: *mut Fl_Radio_Button, title: *const core::ffi::c_char);
+    pub fn Fl_Radio_Button_set_label(arg1: *mut Fl_Radio_Button, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Radio_Button_redraw(arg1: *mut Fl_Radio_Button);
@@ -765,78 +746,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Radio_Button_resize(
         arg1: *mut Fl_Radio_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Radio_Button_widget_resize(
         arg1: *mut Fl_Radio_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Button_tooltip(arg1: *mut Fl_Radio_Button) -> *const core::ffi::c_char;
+    pub fn Fl_Radio_Button_tooltip(arg1: *mut Fl_Radio_Button) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_set_tooltip(arg1: *mut Fl_Radio_Button, txt: *const core::ffi::c_char);
+    pub fn Fl_Radio_Button_set_tooltip(arg1: *mut Fl_Radio_Button, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_get_type(arg1: *mut Fl_Radio_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Button_get_type(arg1: *mut Fl_Radio_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_set_type(arg1: *mut Fl_Radio_Button, typ: core::ffi::c_int);
+    pub fn Fl_Radio_Button_set_type(arg1: *mut Fl_Radio_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_color(arg1: *mut Fl_Radio_Button) -> core::ffi::c_uint;
+    pub fn Fl_Radio_Button_color(arg1: *mut Fl_Radio_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_set_color(arg1: *mut Fl_Radio_Button, color: core::ffi::c_uint);
+    pub fn Fl_Radio_Button_set_color(arg1: *mut Fl_Radio_Button, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Radio_Button_measure_label(
         arg1: *const Fl_Radio_Button,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Button_label_color(arg1: *mut Fl_Radio_Button) -> core::ffi::c_uint;
+    pub fn Fl_Radio_Button_label_color(arg1: *mut Fl_Radio_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_set_label_color(arg1: *mut Fl_Radio_Button, color: core::ffi::c_uint);
+    pub fn Fl_Radio_Button_set_label_color(arg1: *mut Fl_Radio_Button, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_label_font(arg1: *mut Fl_Radio_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Button_label_font(arg1: *mut Fl_Radio_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_set_label_font(arg1: *mut Fl_Radio_Button, font: core::ffi::c_int);
+    pub fn Fl_Radio_Button_set_label_font(arg1: *mut Fl_Radio_Button, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_label_size(arg1: *mut Fl_Radio_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Button_label_size(arg1: *mut Fl_Radio_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_set_label_size(arg1: *mut Fl_Radio_Button, sz: core::ffi::c_int);
+    pub fn Fl_Radio_Button_set_label_size(arg1: *mut Fl_Radio_Button, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_label_type(arg1: *mut Fl_Radio_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Button_label_type(arg1: *mut Fl_Radio_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_set_label_type(arg1: *mut Fl_Radio_Button, typ: core::ffi::c_int);
+    pub fn Fl_Radio_Button_set_label_type(arg1: *mut Fl_Radio_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_box(arg1: *mut Fl_Radio_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Button_box(arg1: *mut Fl_Radio_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_set_box(arg1: *mut Fl_Radio_Button, typ: core::ffi::c_int);
+    pub fn Fl_Radio_Button_set_box(arg1: *mut Fl_Radio_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_changed(arg1: *mut Fl_Radio_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Button_changed(arg1: *mut Fl_Radio_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Radio_Button_set_changed(arg1: *mut Fl_Radio_Button);
@@ -845,32 +826,32 @@ extern "C" {
     pub fn Fl_Radio_Button_clear_changed(arg1: *mut Fl_Radio_Button);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_align(arg1: *mut Fl_Radio_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Button_align(arg1: *mut Fl_Radio_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_set_align(arg1: *mut Fl_Radio_Button, typ: core::ffi::c_int);
+    pub fn Fl_Radio_Button_set_align(arg1: *mut Fl_Radio_Button, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Radio_Button_delete(arg1: *mut Fl_Radio_Button);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_set_image(arg1: *mut Fl_Radio_Button, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Radio_Button_set_image(arg1: *mut Fl_Radio_Button, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Radio_Button_handle(
         self_: *mut Fl_Radio_Button,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Button_handle_event(self_: *mut Fl_Radio_Button, event: core::ffi::c_int);
+    pub fn Fl_Radio_Button_handle_event(self_: *mut Fl_Radio_Button, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Radio_Button_draw(
         self_: *mut Fl_Radio_Button,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -879,36 +860,33 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Button_set_when(arg1: *mut Fl_Radio_Button, arg2: core::ffi::c_int);
+    pub fn Fl_Radio_Button_set_when(arg1: *mut Fl_Radio_Button, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_when(arg1: *const Fl_Radio_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Button_when(arg1: *const Fl_Radio_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_image(arg1: *const Fl_Radio_Button) -> *const core::ffi::c_void;
+    pub fn Fl_Radio_Button_image(arg1: *const Fl_Radio_Button) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_parent(self_: *const Fl_Radio_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Radio_Button_parent(self_: *const Fl_Radio_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_selection_color(arg1: *mut Fl_Radio_Button) -> core::ffi::c_uint;
+    pub fn Fl_Radio_Button_selection_color(arg1: *mut Fl_Radio_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_set_selection_color(
-        arg1: *mut Fl_Radio_Button,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Radio_Button_set_selection_color(arg1: *mut Fl_Radio_Button, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Radio_Button_do_callback(arg1: *mut Fl_Radio_Button);
@@ -916,23 +894,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Radio_Button_inside(
         self_: *const Fl_Radio_Button,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_window(arg1: *const Fl_Radio_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Radio_Button_window(arg1: *const Fl_Radio_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_top_window(arg1: *const Fl_Radio_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Radio_Button_top_window(arg1: *const Fl_Radio_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_takes_events(arg1: *const Fl_Radio_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Button_takes_events(arg1: *const Fl_Radio_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_user_data(arg1: *const Fl_Radio_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Radio_Button_user_data(arg1: *const Fl_Radio_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_take_focus(self_: *mut Fl_Radio_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Button_take_focus(self_: *mut Fl_Radio_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Radio_Button_set_visible_focus(self_: *mut Fl_Radio_Button);
@@ -941,84 +919,81 @@ extern "C" {
     pub fn Fl_Radio_Button_clear_visible_focus(self_: *mut Fl_Radio_Button);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_visible_focus(self_: *mut Fl_Radio_Button, v: core::ffi::c_int);
+    pub fn Fl_Radio_Button_visible_focus(self_: *mut Fl_Radio_Button, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_has_visible_focus(self_: *mut Fl_Radio_Button) -> core::ffi::c_uint;
+    pub fn Fl_Radio_Button_has_visible_focus(self_: *mut Fl_Radio_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_set_user_data(arg1: *mut Fl_Radio_Button, data: *mut core::ffi::c_void);
+    pub fn Fl_Radio_Button_set_user_data(arg1: *mut Fl_Radio_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_draw_data(self_: *const Fl_Radio_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Radio_Button_draw_data(self_: *const Fl_Radio_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_handle_data(self_: *const Fl_Radio_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Radio_Button_handle_data(self_: *const Fl_Radio_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_set_draw_data(self_: *mut Fl_Radio_Button, data: *mut core::ffi::c_void);
+    pub fn Fl_Radio_Button_set_draw_data(self_: *mut Fl_Radio_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_set_handle_data(
-        self_: *mut Fl_Radio_Button,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Radio_Button_set_handle_data(self_: *mut Fl_Radio_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_damage(self_: *const Fl_Radio_Button) -> core::ffi::c_uchar;
+    pub fn Fl_Radio_Button_damage(self_: *const Fl_Radio_Button) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_set_damage(self_: *mut Fl_Radio_Button, flag: core::ffi::c_uchar);
+    pub fn Fl_Radio_Button_set_damage(self_: *mut Fl_Radio_Button, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Radio_Button_set_damage_area(
         self_: *mut Fl_Radio_Button,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Radio_Button_clear_damage(self_: *mut Fl_Radio_Button);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_as_window(self_: *mut Fl_Radio_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Radio_Button_as_window(self_: *mut Fl_Radio_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_as_group(self_: *mut Fl_Radio_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Radio_Button_as_group(self_: *mut Fl_Radio_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_set_deimage(arg1: *mut Fl_Radio_Button, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Radio_Button_set_deimage(arg1: *mut Fl_Radio_Button, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_deimage(arg1: *const Fl_Radio_Button) -> *const core::ffi::c_void;
+    pub fn Fl_Radio_Button_deimage(arg1: *const Fl_Radio_Button) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Radio_Button_set_callback(
         arg1: *mut Fl_Radio_Button,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Radio_Button_set_deleter(
         arg1: *mut Fl_Radio_Button,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Button_visible(self_: *const Fl_Radio_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Button_visible(self_: *const Fl_Radio_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_visible_r(self_: *const Fl_Radio_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Button_visible_r(self_: *const Fl_Radio_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_active(self_: *const Fl_Radio_Button) -> core::ffi::c_uint;
+    pub fn Fl_Radio_Button_active(self_: *const Fl_Radio_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_active_r(self_: *const Fl_Radio_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Button_active_r(self_: *const Fl_Radio_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Radio_Button_callback(self_: *const Fl_Radio_Button) -> Fl_Callback;
@@ -1027,43 +1002,43 @@ extern "C" {
     pub fn Fl_Radio_Button_set_deletion_callback(
         self_: *mut Fl_Radio_Button,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Radio_Button_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Radio_Button;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Radio_Button_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_is_toggled(arg1: *mut Fl_Radio_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Button_is_toggled(arg1: *mut Fl_Radio_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_toggle(arg1: *mut Fl_Radio_Button, arg2: core::ffi::c_int);
+    pub fn Fl_Radio_Button_toggle(arg1: *mut Fl_Radio_Button, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_shortcut(self_: *const Fl_Radio_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Button_shortcut(self_: *const Fl_Radio_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_set_shortcut(self_: *mut Fl_Radio_Button, shortcut: core::ffi::c_int);
+    pub fn Fl_Radio_Button_set_shortcut(self_: *mut Fl_Radio_Button, shortcut: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_clear(self_: *mut Fl_Radio_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Button_clear(self_: *mut Fl_Radio_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_value(self_: *mut Fl_Radio_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Button_value(self_: *mut Fl_Radio_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_set_value(self_: *mut Fl_Radio_Button, flag: core::ffi::c_int);
+    pub fn Fl_Radio_Button_set_value(self_: *mut Fl_Radio_Button, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_set_down_box(self_: *mut Fl_Radio_Button, arg1: core::ffi::c_int);
+    pub fn Fl_Radio_Button_set_down_box(self_: *mut Fl_Radio_Button, arg1: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_down_box(self_: *const Fl_Radio_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Button_down_box(self_: *const Fl_Radio_Button) -> cty::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1072,30 +1047,30 @@ pub struct Fl_Toggle_Button {
 }
 extern "C" {
     pub fn Fl_Toggle_Button_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Toggle_Button;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_x(arg1: *mut Fl_Toggle_Button) -> core::ffi::c_int;
+    pub fn Fl_Toggle_Button_x(arg1: *mut Fl_Toggle_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_y(arg1: *mut Fl_Toggle_Button) -> core::ffi::c_int;
+    pub fn Fl_Toggle_Button_y(arg1: *mut Fl_Toggle_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_width(arg1: *mut Fl_Toggle_Button) -> core::ffi::c_int;
+    pub fn Fl_Toggle_Button_width(arg1: *mut Fl_Toggle_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_height(arg1: *mut Fl_Toggle_Button) -> core::ffi::c_int;
+    pub fn Fl_Toggle_Button_height(arg1: *mut Fl_Toggle_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_label(arg1: *mut Fl_Toggle_Button) -> *const core::ffi::c_char;
+    pub fn Fl_Toggle_Button_label(arg1: *mut Fl_Toggle_Button) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_set_label(arg1: *mut Fl_Toggle_Button, title: *const core::ffi::c_char);
+    pub fn Fl_Toggle_Button_set_label(arg1: *mut Fl_Toggle_Button, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Toggle_Button_redraw(arg1: *mut Fl_Toggle_Button);
@@ -1118,78 +1093,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Toggle_Button_resize(
         arg1: *mut Fl_Toggle_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Toggle_Button_widget_resize(
         arg1: *mut Fl_Toggle_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_tooltip(arg1: *mut Fl_Toggle_Button) -> *const core::ffi::c_char;
+    pub fn Fl_Toggle_Button_tooltip(arg1: *mut Fl_Toggle_Button) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_set_tooltip(arg1: *mut Fl_Toggle_Button, txt: *const core::ffi::c_char);
+    pub fn Fl_Toggle_Button_set_tooltip(arg1: *mut Fl_Toggle_Button, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_get_type(arg1: *mut Fl_Toggle_Button) -> core::ffi::c_int;
+    pub fn Fl_Toggle_Button_get_type(arg1: *mut Fl_Toggle_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_set_type(arg1: *mut Fl_Toggle_Button, typ: core::ffi::c_int);
+    pub fn Fl_Toggle_Button_set_type(arg1: *mut Fl_Toggle_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_color(arg1: *mut Fl_Toggle_Button) -> core::ffi::c_uint;
+    pub fn Fl_Toggle_Button_color(arg1: *mut Fl_Toggle_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_set_color(arg1: *mut Fl_Toggle_Button, color: core::ffi::c_uint);
+    pub fn Fl_Toggle_Button_set_color(arg1: *mut Fl_Toggle_Button, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Toggle_Button_measure_label(
         arg1: *const Fl_Toggle_Button,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_label_color(arg1: *mut Fl_Toggle_Button) -> core::ffi::c_uint;
+    pub fn Fl_Toggle_Button_label_color(arg1: *mut Fl_Toggle_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_set_label_color(arg1: *mut Fl_Toggle_Button, color: core::ffi::c_uint);
+    pub fn Fl_Toggle_Button_set_label_color(arg1: *mut Fl_Toggle_Button, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_label_font(arg1: *mut Fl_Toggle_Button) -> core::ffi::c_int;
+    pub fn Fl_Toggle_Button_label_font(arg1: *mut Fl_Toggle_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_set_label_font(arg1: *mut Fl_Toggle_Button, font: core::ffi::c_int);
+    pub fn Fl_Toggle_Button_set_label_font(arg1: *mut Fl_Toggle_Button, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_label_size(arg1: *mut Fl_Toggle_Button) -> core::ffi::c_int;
+    pub fn Fl_Toggle_Button_label_size(arg1: *mut Fl_Toggle_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_set_label_size(arg1: *mut Fl_Toggle_Button, sz: core::ffi::c_int);
+    pub fn Fl_Toggle_Button_set_label_size(arg1: *mut Fl_Toggle_Button, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_label_type(arg1: *mut Fl_Toggle_Button) -> core::ffi::c_int;
+    pub fn Fl_Toggle_Button_label_type(arg1: *mut Fl_Toggle_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_set_label_type(arg1: *mut Fl_Toggle_Button, typ: core::ffi::c_int);
+    pub fn Fl_Toggle_Button_set_label_type(arg1: *mut Fl_Toggle_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_box(arg1: *mut Fl_Toggle_Button) -> core::ffi::c_int;
+    pub fn Fl_Toggle_Button_box(arg1: *mut Fl_Toggle_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_set_box(arg1: *mut Fl_Toggle_Button, typ: core::ffi::c_int);
+    pub fn Fl_Toggle_Button_set_box(arg1: *mut Fl_Toggle_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_changed(arg1: *mut Fl_Toggle_Button) -> core::ffi::c_int;
+    pub fn Fl_Toggle_Button_changed(arg1: *mut Fl_Toggle_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Toggle_Button_set_changed(arg1: *mut Fl_Toggle_Button);
@@ -1198,32 +1173,32 @@ extern "C" {
     pub fn Fl_Toggle_Button_clear_changed(arg1: *mut Fl_Toggle_Button);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_align(arg1: *mut Fl_Toggle_Button) -> core::ffi::c_int;
+    pub fn Fl_Toggle_Button_align(arg1: *mut Fl_Toggle_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_set_align(arg1: *mut Fl_Toggle_Button, typ: core::ffi::c_int);
+    pub fn Fl_Toggle_Button_set_align(arg1: *mut Fl_Toggle_Button, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Toggle_Button_delete(arg1: *mut Fl_Toggle_Button);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_set_image(arg1: *mut Fl_Toggle_Button, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Toggle_Button_set_image(arg1: *mut Fl_Toggle_Button, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Toggle_Button_handle(
         self_: *mut Fl_Toggle_Button,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_handle_event(self_: *mut Fl_Toggle_Button, event: core::ffi::c_int);
+    pub fn Fl_Toggle_Button_handle_event(self_: *mut Fl_Toggle_Button, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Toggle_Button_draw(
         self_: *mut Fl_Toggle_Button,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -1232,36 +1207,33 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_set_when(arg1: *mut Fl_Toggle_Button, arg2: core::ffi::c_int);
+    pub fn Fl_Toggle_Button_set_when(arg1: *mut Fl_Toggle_Button, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_when(arg1: *const Fl_Toggle_Button) -> core::ffi::c_int;
+    pub fn Fl_Toggle_Button_when(arg1: *const Fl_Toggle_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_image(arg1: *const Fl_Toggle_Button) -> *const core::ffi::c_void;
+    pub fn Fl_Toggle_Button_image(arg1: *const Fl_Toggle_Button) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_parent(self_: *const Fl_Toggle_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Toggle_Button_parent(self_: *const Fl_Toggle_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_selection_color(arg1: *mut Fl_Toggle_Button) -> core::ffi::c_uint;
+    pub fn Fl_Toggle_Button_selection_color(arg1: *mut Fl_Toggle_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_set_selection_color(
-        arg1: *mut Fl_Toggle_Button,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Toggle_Button_set_selection_color(arg1: *mut Fl_Toggle_Button, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Toggle_Button_do_callback(arg1: *mut Fl_Toggle_Button);
@@ -1269,23 +1241,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Toggle_Button_inside(
         self_: *const Fl_Toggle_Button,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_window(arg1: *const Fl_Toggle_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Toggle_Button_window(arg1: *const Fl_Toggle_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_top_window(arg1: *const Fl_Toggle_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Toggle_Button_top_window(arg1: *const Fl_Toggle_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_takes_events(arg1: *const Fl_Toggle_Button) -> core::ffi::c_int;
+    pub fn Fl_Toggle_Button_takes_events(arg1: *const Fl_Toggle_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_user_data(arg1: *const Fl_Toggle_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Toggle_Button_user_data(arg1: *const Fl_Toggle_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_take_focus(self_: *mut Fl_Toggle_Button) -> core::ffi::c_int;
+    pub fn Fl_Toggle_Button_take_focus(self_: *mut Fl_Toggle_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Toggle_Button_set_visible_focus(self_: *mut Fl_Toggle_Button);
@@ -1294,90 +1266,81 @@ extern "C" {
     pub fn Fl_Toggle_Button_clear_visible_focus(self_: *mut Fl_Toggle_Button);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_visible_focus(self_: *mut Fl_Toggle_Button, v: core::ffi::c_int);
+    pub fn Fl_Toggle_Button_visible_focus(self_: *mut Fl_Toggle_Button, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_has_visible_focus(self_: *mut Fl_Toggle_Button) -> core::ffi::c_uint;
+    pub fn Fl_Toggle_Button_has_visible_focus(self_: *mut Fl_Toggle_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_set_user_data(
-        arg1: *mut Fl_Toggle_Button,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Toggle_Button_set_user_data(arg1: *mut Fl_Toggle_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_draw_data(self_: *const Fl_Toggle_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Toggle_Button_draw_data(self_: *const Fl_Toggle_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_handle_data(self_: *const Fl_Toggle_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Toggle_Button_handle_data(self_: *const Fl_Toggle_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_set_draw_data(
-        self_: *mut Fl_Toggle_Button,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Toggle_Button_set_draw_data(self_: *mut Fl_Toggle_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_set_handle_data(
-        self_: *mut Fl_Toggle_Button,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Toggle_Button_set_handle_data(self_: *mut Fl_Toggle_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_damage(self_: *const Fl_Toggle_Button) -> core::ffi::c_uchar;
+    pub fn Fl_Toggle_Button_damage(self_: *const Fl_Toggle_Button) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_set_damage(self_: *mut Fl_Toggle_Button, flag: core::ffi::c_uchar);
+    pub fn Fl_Toggle_Button_set_damage(self_: *mut Fl_Toggle_Button, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Toggle_Button_set_damage_area(
         self_: *mut Fl_Toggle_Button,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Toggle_Button_clear_damage(self_: *mut Fl_Toggle_Button);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_as_window(self_: *mut Fl_Toggle_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Toggle_Button_as_window(self_: *mut Fl_Toggle_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_as_group(self_: *mut Fl_Toggle_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Toggle_Button_as_group(self_: *mut Fl_Toggle_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_set_deimage(arg1: *mut Fl_Toggle_Button, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Toggle_Button_set_deimage(arg1: *mut Fl_Toggle_Button, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_deimage(arg1: *const Fl_Toggle_Button) -> *const core::ffi::c_void;
+    pub fn Fl_Toggle_Button_deimage(arg1: *const Fl_Toggle_Button) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Toggle_Button_set_callback(
         arg1: *mut Fl_Toggle_Button,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Toggle_Button_set_deleter(
         arg1: *mut Fl_Toggle_Button,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_visible(self_: *const Fl_Toggle_Button) -> core::ffi::c_int;
+    pub fn Fl_Toggle_Button_visible(self_: *const Fl_Toggle_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_visible_r(self_: *const Fl_Toggle_Button) -> core::ffi::c_int;
+    pub fn Fl_Toggle_Button_visible_r(self_: *const Fl_Toggle_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_active(self_: *const Fl_Toggle_Button) -> core::ffi::c_uint;
+    pub fn Fl_Toggle_Button_active(self_: *const Fl_Toggle_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_active_r(self_: *const Fl_Toggle_Button) -> core::ffi::c_int;
+    pub fn Fl_Toggle_Button_active_r(self_: *const Fl_Toggle_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Toggle_Button_callback(self_: *const Fl_Toggle_Button) -> Fl_Callback;
@@ -1386,43 +1349,43 @@ extern "C" {
     pub fn Fl_Toggle_Button_set_deletion_callback(
         self_: *mut Fl_Toggle_Button,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Toggle_Button_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Toggle_Button;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Toggle_Button_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_is_toggled(arg1: *mut Fl_Toggle_Button) -> core::ffi::c_int;
+    pub fn Fl_Toggle_Button_is_toggled(arg1: *mut Fl_Toggle_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_toggle(arg1: *mut Fl_Toggle_Button, arg2: core::ffi::c_int);
+    pub fn Fl_Toggle_Button_toggle(arg1: *mut Fl_Toggle_Button, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_shortcut(self_: *const Fl_Toggle_Button) -> core::ffi::c_int;
+    pub fn Fl_Toggle_Button_shortcut(self_: *const Fl_Toggle_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_set_shortcut(self_: *mut Fl_Toggle_Button, shortcut: core::ffi::c_int);
+    pub fn Fl_Toggle_Button_set_shortcut(self_: *mut Fl_Toggle_Button, shortcut: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_clear(self_: *mut Fl_Toggle_Button) -> core::ffi::c_int;
+    pub fn Fl_Toggle_Button_clear(self_: *mut Fl_Toggle_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_value(self_: *mut Fl_Toggle_Button) -> core::ffi::c_int;
+    pub fn Fl_Toggle_Button_value(self_: *mut Fl_Toggle_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_set_value(self_: *mut Fl_Toggle_Button, flag: core::ffi::c_int);
+    pub fn Fl_Toggle_Button_set_value(self_: *mut Fl_Toggle_Button, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_set_down_box(self_: *mut Fl_Toggle_Button, arg1: core::ffi::c_int);
+    pub fn Fl_Toggle_Button_set_down_box(self_: *mut Fl_Toggle_Button, arg1: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_down_box(self_: *const Fl_Toggle_Button) -> core::ffi::c_int;
+    pub fn Fl_Toggle_Button_down_box(self_: *const Fl_Toggle_Button) -> cty::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1431,30 +1394,30 @@ pub struct Fl_Round_Button {
 }
 extern "C" {
     pub fn Fl_Round_Button_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Round_Button;
 }
 extern "C" {
-    pub fn Fl_Round_Button_x(arg1: *mut Fl_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Round_Button_x(arg1: *mut Fl_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Round_Button_y(arg1: *mut Fl_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Round_Button_y(arg1: *mut Fl_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Round_Button_width(arg1: *mut Fl_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Round_Button_width(arg1: *mut Fl_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Round_Button_height(arg1: *mut Fl_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Round_Button_height(arg1: *mut Fl_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Round_Button_label(arg1: *mut Fl_Round_Button) -> *const core::ffi::c_char;
+    pub fn Fl_Round_Button_label(arg1: *mut Fl_Round_Button) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Round_Button_set_label(arg1: *mut Fl_Round_Button, title: *const core::ffi::c_char);
+    pub fn Fl_Round_Button_set_label(arg1: *mut Fl_Round_Button, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Round_Button_redraw(arg1: *mut Fl_Round_Button);
@@ -1477,78 +1440,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Round_Button_resize(
         arg1: *mut Fl_Round_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Round_Button_widget_resize(
         arg1: *mut Fl_Round_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Round_Button_tooltip(arg1: *mut Fl_Round_Button) -> *const core::ffi::c_char;
+    pub fn Fl_Round_Button_tooltip(arg1: *mut Fl_Round_Button) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Round_Button_set_tooltip(arg1: *mut Fl_Round_Button, txt: *const core::ffi::c_char);
+    pub fn Fl_Round_Button_set_tooltip(arg1: *mut Fl_Round_Button, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Round_Button_get_type(arg1: *mut Fl_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Round_Button_get_type(arg1: *mut Fl_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Round_Button_set_type(arg1: *mut Fl_Round_Button, typ: core::ffi::c_int);
+    pub fn Fl_Round_Button_set_type(arg1: *mut Fl_Round_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Round_Button_color(arg1: *mut Fl_Round_Button) -> core::ffi::c_uint;
+    pub fn Fl_Round_Button_color(arg1: *mut Fl_Round_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Round_Button_set_color(arg1: *mut Fl_Round_Button, color: core::ffi::c_uint);
+    pub fn Fl_Round_Button_set_color(arg1: *mut Fl_Round_Button, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Round_Button_measure_label(
         arg1: *const Fl_Round_Button,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Round_Button_label_color(arg1: *mut Fl_Round_Button) -> core::ffi::c_uint;
+    pub fn Fl_Round_Button_label_color(arg1: *mut Fl_Round_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Round_Button_set_label_color(arg1: *mut Fl_Round_Button, color: core::ffi::c_uint);
+    pub fn Fl_Round_Button_set_label_color(arg1: *mut Fl_Round_Button, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Round_Button_label_font(arg1: *mut Fl_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Round_Button_label_font(arg1: *mut Fl_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Round_Button_set_label_font(arg1: *mut Fl_Round_Button, font: core::ffi::c_int);
+    pub fn Fl_Round_Button_set_label_font(arg1: *mut Fl_Round_Button, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Round_Button_label_size(arg1: *mut Fl_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Round_Button_label_size(arg1: *mut Fl_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Round_Button_set_label_size(arg1: *mut Fl_Round_Button, sz: core::ffi::c_int);
+    pub fn Fl_Round_Button_set_label_size(arg1: *mut Fl_Round_Button, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Round_Button_label_type(arg1: *mut Fl_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Round_Button_label_type(arg1: *mut Fl_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Round_Button_set_label_type(arg1: *mut Fl_Round_Button, typ: core::ffi::c_int);
+    pub fn Fl_Round_Button_set_label_type(arg1: *mut Fl_Round_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Round_Button_box(arg1: *mut Fl_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Round_Button_box(arg1: *mut Fl_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Round_Button_set_box(arg1: *mut Fl_Round_Button, typ: core::ffi::c_int);
+    pub fn Fl_Round_Button_set_box(arg1: *mut Fl_Round_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Round_Button_changed(arg1: *mut Fl_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Round_Button_changed(arg1: *mut Fl_Round_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Round_Button_set_changed(arg1: *mut Fl_Round_Button);
@@ -1557,32 +1520,32 @@ extern "C" {
     pub fn Fl_Round_Button_clear_changed(arg1: *mut Fl_Round_Button);
 }
 extern "C" {
-    pub fn Fl_Round_Button_align(arg1: *mut Fl_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Round_Button_align(arg1: *mut Fl_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Round_Button_set_align(arg1: *mut Fl_Round_Button, typ: core::ffi::c_int);
+    pub fn Fl_Round_Button_set_align(arg1: *mut Fl_Round_Button, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Round_Button_delete(arg1: *mut Fl_Round_Button);
 }
 extern "C" {
-    pub fn Fl_Round_Button_set_image(arg1: *mut Fl_Round_Button, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Round_Button_set_image(arg1: *mut Fl_Round_Button, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Round_Button_handle(
         self_: *mut Fl_Round_Button,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Round_Button_handle_event(self_: *mut Fl_Round_Button, event: core::ffi::c_int);
+    pub fn Fl_Round_Button_handle_event(self_: *mut Fl_Round_Button, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Round_Button_draw(
         self_: *mut Fl_Round_Button,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -1591,36 +1554,33 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Round_Button_set_when(arg1: *mut Fl_Round_Button, arg2: core::ffi::c_int);
+    pub fn Fl_Round_Button_set_when(arg1: *mut Fl_Round_Button, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Round_Button_when(arg1: *const Fl_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Round_Button_when(arg1: *const Fl_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Round_Button_image(arg1: *const Fl_Round_Button) -> *const core::ffi::c_void;
+    pub fn Fl_Round_Button_image(arg1: *const Fl_Round_Button) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Round_Button_parent(self_: *const Fl_Round_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Round_Button_parent(self_: *const Fl_Round_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Round_Button_selection_color(arg1: *mut Fl_Round_Button) -> core::ffi::c_uint;
+    pub fn Fl_Round_Button_selection_color(arg1: *mut Fl_Round_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Round_Button_set_selection_color(
-        arg1: *mut Fl_Round_Button,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Round_Button_set_selection_color(arg1: *mut Fl_Round_Button, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Round_Button_do_callback(arg1: *mut Fl_Round_Button);
@@ -1628,23 +1588,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Round_Button_inside(
         self_: *const Fl_Round_Button,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Round_Button_window(arg1: *const Fl_Round_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Round_Button_window(arg1: *const Fl_Round_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Round_Button_top_window(arg1: *const Fl_Round_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Round_Button_top_window(arg1: *const Fl_Round_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Round_Button_takes_events(arg1: *const Fl_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Round_Button_takes_events(arg1: *const Fl_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Round_Button_user_data(arg1: *const Fl_Round_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Round_Button_user_data(arg1: *const Fl_Round_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Round_Button_take_focus(self_: *mut Fl_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Round_Button_take_focus(self_: *mut Fl_Round_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Round_Button_set_visible_focus(self_: *mut Fl_Round_Button);
@@ -1653,84 +1613,81 @@ extern "C" {
     pub fn Fl_Round_Button_clear_visible_focus(self_: *mut Fl_Round_Button);
 }
 extern "C" {
-    pub fn Fl_Round_Button_visible_focus(self_: *mut Fl_Round_Button, v: core::ffi::c_int);
+    pub fn Fl_Round_Button_visible_focus(self_: *mut Fl_Round_Button, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Round_Button_has_visible_focus(self_: *mut Fl_Round_Button) -> core::ffi::c_uint;
+    pub fn Fl_Round_Button_has_visible_focus(self_: *mut Fl_Round_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Round_Button_set_user_data(arg1: *mut Fl_Round_Button, data: *mut core::ffi::c_void);
+    pub fn Fl_Round_Button_set_user_data(arg1: *mut Fl_Round_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Round_Button_draw_data(self_: *const Fl_Round_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Round_Button_draw_data(self_: *const Fl_Round_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Round_Button_handle_data(self_: *const Fl_Round_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Round_Button_handle_data(self_: *const Fl_Round_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Round_Button_set_draw_data(self_: *mut Fl_Round_Button, data: *mut core::ffi::c_void);
+    pub fn Fl_Round_Button_set_draw_data(self_: *mut Fl_Round_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Round_Button_set_handle_data(
-        self_: *mut Fl_Round_Button,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Round_Button_set_handle_data(self_: *mut Fl_Round_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Round_Button_damage(self_: *const Fl_Round_Button) -> core::ffi::c_uchar;
+    pub fn Fl_Round_Button_damage(self_: *const Fl_Round_Button) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Round_Button_set_damage(self_: *mut Fl_Round_Button, flag: core::ffi::c_uchar);
+    pub fn Fl_Round_Button_set_damage(self_: *mut Fl_Round_Button, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Round_Button_set_damage_area(
         self_: *mut Fl_Round_Button,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Round_Button_clear_damage(self_: *mut Fl_Round_Button);
 }
 extern "C" {
-    pub fn Fl_Round_Button_as_window(self_: *mut Fl_Round_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Round_Button_as_window(self_: *mut Fl_Round_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Round_Button_as_group(self_: *mut Fl_Round_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Round_Button_as_group(self_: *mut Fl_Round_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Round_Button_set_deimage(arg1: *mut Fl_Round_Button, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Round_Button_set_deimage(arg1: *mut Fl_Round_Button, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Round_Button_deimage(arg1: *const Fl_Round_Button) -> *const core::ffi::c_void;
+    pub fn Fl_Round_Button_deimage(arg1: *const Fl_Round_Button) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Round_Button_set_callback(
         arg1: *mut Fl_Round_Button,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Round_Button_set_deleter(
         arg1: *mut Fl_Round_Button,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Round_Button_visible(self_: *const Fl_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Round_Button_visible(self_: *const Fl_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Round_Button_visible_r(self_: *const Fl_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Round_Button_visible_r(self_: *const Fl_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Round_Button_active(self_: *const Fl_Round_Button) -> core::ffi::c_uint;
+    pub fn Fl_Round_Button_active(self_: *const Fl_Round_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Round_Button_active_r(self_: *const Fl_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Round_Button_active_r(self_: *const Fl_Round_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Round_Button_callback(self_: *const Fl_Round_Button) -> Fl_Callback;
@@ -1739,43 +1696,43 @@ extern "C" {
     pub fn Fl_Round_Button_set_deletion_callback(
         self_: *mut Fl_Round_Button,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Round_Button_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Round_Button;
 }
 extern "C" {
-    pub fn Fl_Round_Button_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Round_Button_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Round_Button_is_toggled(arg1: *mut Fl_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Round_Button_is_toggled(arg1: *mut Fl_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Round_Button_toggle(arg1: *mut Fl_Round_Button, arg2: core::ffi::c_int);
+    pub fn Fl_Round_Button_toggle(arg1: *mut Fl_Round_Button, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Round_Button_shortcut(self_: *const Fl_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Round_Button_shortcut(self_: *const Fl_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Round_Button_set_shortcut(self_: *mut Fl_Round_Button, shortcut: core::ffi::c_int);
+    pub fn Fl_Round_Button_set_shortcut(self_: *mut Fl_Round_Button, shortcut: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Round_Button_clear(self_: *mut Fl_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Round_Button_clear(self_: *mut Fl_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Round_Button_value(self_: *mut Fl_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Round_Button_value(self_: *mut Fl_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Round_Button_set_value(self_: *mut Fl_Round_Button, flag: core::ffi::c_int);
+    pub fn Fl_Round_Button_set_value(self_: *mut Fl_Round_Button, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Round_Button_set_down_box(self_: *mut Fl_Round_Button, arg1: core::ffi::c_int);
+    pub fn Fl_Round_Button_set_down_box(self_: *mut Fl_Round_Button, arg1: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Round_Button_down_box(self_: *const Fl_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Round_Button_down_box(self_: *const Fl_Round_Button) -> cty::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1784,34 +1741,32 @@ pub struct Fl_Radio_Round_Button {
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Radio_Round_Button;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_x(arg1: *mut Fl_Radio_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Round_Button_x(arg1: *mut Fl_Radio_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_y(arg1: *mut Fl_Radio_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Round_Button_y(arg1: *mut Fl_Radio_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_width(arg1: *mut Fl_Radio_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Round_Button_width(arg1: *mut Fl_Radio_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_height(arg1: *mut Fl_Radio_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Round_Button_height(arg1: *mut Fl_Radio_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_label(
-        arg1: *mut Fl_Radio_Round_Button,
-    ) -> *const core::ffi::c_char;
+    pub fn Fl_Radio_Round_Button_label(arg1: *mut Fl_Radio_Round_Button) -> *const cty::c_char;
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_set_label(
         arg1: *mut Fl_Radio_Round_Button,
-        title: *const core::ffi::c_char,
+        title: *const cty::c_char,
     );
 }
 extern "C" {
@@ -1835,99 +1790,84 @@ extern "C" {
 extern "C" {
     pub fn Fl_Radio_Round_Button_resize(
         arg1: *mut Fl_Radio_Round_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_widget_resize(
         arg1: *mut Fl_Radio_Round_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_tooltip(
-        arg1: *mut Fl_Radio_Round_Button,
-    ) -> *const core::ffi::c_char;
+    pub fn Fl_Radio_Round_Button_tooltip(arg1: *mut Fl_Radio_Round_Button) -> *const cty::c_char;
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_set_tooltip(
         arg1: *mut Fl_Radio_Round_Button,
-        txt: *const core::ffi::c_char,
+        txt: *const cty::c_char,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_get_type(arg1: *mut Fl_Radio_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Round_Button_get_type(arg1: *mut Fl_Radio_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_set_type(arg1: *mut Fl_Radio_Round_Button, typ: core::ffi::c_int);
+    pub fn Fl_Radio_Round_Button_set_type(arg1: *mut Fl_Radio_Round_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_color(arg1: *mut Fl_Radio_Round_Button) -> core::ffi::c_uint;
+    pub fn Fl_Radio_Round_Button_color(arg1: *mut Fl_Radio_Round_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_set_color(
-        arg1: *mut Fl_Radio_Round_Button,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Radio_Round_Button_set_color(arg1: *mut Fl_Radio_Round_Button, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_measure_label(
         arg1: *const Fl_Radio_Round_Button,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_label_color(arg1: *mut Fl_Radio_Round_Button)
-        -> core::ffi::c_uint;
+    pub fn Fl_Radio_Round_Button_label_color(arg1: *mut Fl_Radio_Round_Button) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_set_label_color(
         arg1: *mut Fl_Radio_Round_Button,
-        color: core::ffi::c_uint,
+        color: cty::c_uint,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_label_font(arg1: *mut Fl_Radio_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Round_Button_label_font(arg1: *mut Fl_Radio_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_set_label_font(
-        arg1: *mut Fl_Radio_Round_Button,
-        font: core::ffi::c_int,
-    );
+    pub fn Fl_Radio_Round_Button_set_label_font(arg1: *mut Fl_Radio_Round_Button, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_label_size(arg1: *mut Fl_Radio_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Round_Button_label_size(arg1: *mut Fl_Radio_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_set_label_size(
-        arg1: *mut Fl_Radio_Round_Button,
-        sz: core::ffi::c_int,
-    );
+    pub fn Fl_Radio_Round_Button_set_label_size(arg1: *mut Fl_Radio_Round_Button, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_label_type(arg1: *mut Fl_Radio_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Round_Button_label_type(arg1: *mut Fl_Radio_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_set_label_type(
-        arg1: *mut Fl_Radio_Round_Button,
-        typ: core::ffi::c_int,
-    );
+    pub fn Fl_Radio_Round_Button_set_label_type(arg1: *mut Fl_Radio_Round_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_box(arg1: *mut Fl_Radio_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Round_Button_box(arg1: *mut Fl_Radio_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_set_box(arg1: *mut Fl_Radio_Round_Button, typ: core::ffi::c_int);
+    pub fn Fl_Radio_Round_Button_set_box(arg1: *mut Fl_Radio_Round_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_changed(arg1: *mut Fl_Radio_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Round_Button_changed(arg1: *mut Fl_Radio_Round_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_set_changed(arg1: *mut Fl_Radio_Round_Button);
@@ -1936,10 +1876,10 @@ extern "C" {
     pub fn Fl_Radio_Round_Button_clear_changed(arg1: *mut Fl_Radio_Round_Button);
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_align(arg1: *mut Fl_Radio_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Round_Button_align(arg1: *mut Fl_Radio_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_set_align(arg1: *mut Fl_Radio_Round_Button, typ: core::ffi::c_int);
+    pub fn Fl_Radio_Round_Button_set_align(arg1: *mut Fl_Radio_Round_Button, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_delete(arg1: *mut Fl_Radio_Round_Button);
@@ -1947,27 +1887,24 @@ extern "C" {
 extern "C" {
     pub fn Fl_Radio_Round_Button_set_image(
         arg1: *mut Fl_Radio_Round_Button,
-        arg2: *mut core::ffi::c_void,
+        arg2: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_handle(
         self_: *mut Fl_Radio_Round_Button,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_handle_event(
-        self_: *mut Fl_Radio_Round_Button,
-        event: core::ffi::c_int,
-    );
+    pub fn Fl_Radio_Round_Button_handle_event(self_: *mut Fl_Radio_Round_Button, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_draw(
         self_: *mut Fl_Radio_Round_Button,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -1976,41 +1913,35 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_set_when(arg1: *mut Fl_Radio_Round_Button, arg2: core::ffi::c_int);
+    pub fn Fl_Radio_Round_Button_set_when(arg1: *mut Fl_Radio_Round_Button, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_when(arg1: *const Fl_Radio_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Round_Button_when(arg1: *const Fl_Radio_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_image(
-        arg1: *const Fl_Radio_Round_Button,
-    ) -> *const core::ffi::c_void;
+    pub fn Fl_Radio_Round_Button_image(arg1: *const Fl_Radio_Round_Button) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_parent(
-        self_: *const Fl_Radio_Round_Button,
-    ) -> *mut core::ffi::c_void;
+    pub fn Fl_Radio_Round_Button_parent(self_: *const Fl_Radio_Round_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_selection_color(
-        arg1: *mut Fl_Radio_Round_Button,
-    ) -> core::ffi::c_uint;
+    pub fn Fl_Radio_Round_Button_selection_color(arg1: *mut Fl_Radio_Round_Button) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_set_selection_color(
         arg1: *mut Fl_Radio_Round_Button,
-        color: core::ffi::c_uint,
+        color: cty::c_uint,
     );
 }
 extern "C" {
@@ -2019,31 +1950,24 @@ extern "C" {
 extern "C" {
     pub fn Fl_Radio_Round_Button_inside(
         self_: *const Fl_Radio_Round_Button,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_window(
-        arg1: *const Fl_Radio_Round_Button,
-    ) -> *mut core::ffi::c_void;
+    pub fn Fl_Radio_Round_Button_window(arg1: *const Fl_Radio_Round_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_top_window(
-        arg1: *const Fl_Radio_Round_Button,
-    ) -> *mut core::ffi::c_void;
+    pub fn Fl_Radio_Round_Button_top_window(arg1: *const Fl_Radio_Round_Button)
+        -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_takes_events(
-        arg1: *const Fl_Radio_Round_Button,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Radio_Round_Button_takes_events(arg1: *const Fl_Radio_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_user_data(
-        arg1: *const Fl_Radio_Round_Button,
-    ) -> *mut core::ffi::c_void;
+    pub fn Fl_Radio_Round_Button_user_data(arg1: *const Fl_Radio_Round_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_take_focus(self_: *mut Fl_Radio_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Round_Button_take_focus(self_: *mut Fl_Radio_Round_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_set_visible_focus(self_: *mut Fl_Radio_Round_Button);
@@ -2052,112 +1976,98 @@ extern "C" {
     pub fn Fl_Radio_Round_Button_clear_visible_focus(self_: *mut Fl_Radio_Round_Button);
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_visible_focus(
-        self_: *mut Fl_Radio_Round_Button,
-        v: core::ffi::c_int,
-    );
+    pub fn Fl_Radio_Round_Button_visible_focus(self_: *mut Fl_Radio_Round_Button, v: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_has_visible_focus(
         self_: *mut Fl_Radio_Round_Button,
-    ) -> core::ffi::c_uint;
+    ) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_set_user_data(
         arg1: *mut Fl_Radio_Round_Button,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_draw_data(
-        self_: *const Fl_Radio_Round_Button,
-    ) -> *mut core::ffi::c_void;
+    pub fn Fl_Radio_Round_Button_draw_data(self_: *const Fl_Radio_Round_Button)
+        -> *mut cty::c_void;
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_handle_data(
         self_: *const Fl_Radio_Round_Button,
-    ) -> *mut core::ffi::c_void;
+    ) -> *mut cty::c_void;
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_set_draw_data(
         self_: *mut Fl_Radio_Round_Button,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_set_handle_data(
         self_: *mut Fl_Radio_Round_Button,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_damage(self_: *const Fl_Radio_Round_Button) -> core::ffi::c_uchar;
+    pub fn Fl_Radio_Round_Button_damage(self_: *const Fl_Radio_Round_Button) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_set_damage(
-        self_: *mut Fl_Radio_Round_Button,
-        flag: core::ffi::c_uchar,
-    );
+    pub fn Fl_Radio_Round_Button_set_damage(self_: *mut Fl_Radio_Round_Button, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_set_damage_area(
         self_: *mut Fl_Radio_Round_Button,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_clear_damage(self_: *mut Fl_Radio_Round_Button);
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_as_window(
-        self_: *mut Fl_Radio_Round_Button,
-    ) -> *mut core::ffi::c_void;
+    pub fn Fl_Radio_Round_Button_as_window(self_: *mut Fl_Radio_Round_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_as_group(
-        self_: *mut Fl_Radio_Round_Button,
-    ) -> *mut core::ffi::c_void;
+    pub fn Fl_Radio_Round_Button_as_group(self_: *mut Fl_Radio_Round_Button) -> *mut cty::c_void;
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_set_deimage(
         arg1: *mut Fl_Radio_Round_Button,
-        arg2: *mut core::ffi::c_void,
+        arg2: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_deimage(
-        arg1: *const Fl_Radio_Round_Button,
-    ) -> *const core::ffi::c_void;
+    pub fn Fl_Radio_Round_Button_deimage(arg1: *const Fl_Radio_Round_Button) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_set_callback(
         arg1: *mut Fl_Radio_Round_Button,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_set_deleter(
         arg1: *mut Fl_Radio_Round_Button,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_visible(self_: *const Fl_Radio_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Round_Button_visible(self_: *const Fl_Radio_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_visible_r(self_: *const Fl_Radio_Round_Button)
-        -> core::ffi::c_int;
+    pub fn Fl_Radio_Round_Button_visible_r(self_: *const Fl_Radio_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_active(self_: *const Fl_Radio_Round_Button) -> core::ffi::c_uint;
+    pub fn Fl_Radio_Round_Button_active(self_: *const Fl_Radio_Round_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_active_r(self_: *const Fl_Radio_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Round_Button_active_r(self_: *const Fl_Radio_Round_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_callback(self_: *const Fl_Radio_Round_Button) -> Fl_Callback;
@@ -2166,52 +2076,46 @@ extern "C" {
     pub fn Fl_Radio_Round_Button_set_deletion_callback(
         self_: *mut Fl_Radio_Round_Button,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Radio_Round_Button;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Radio_Round_Button_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_is_toggled(arg1: *mut Fl_Radio_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Round_Button_is_toggled(arg1: *mut Fl_Radio_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_toggle(arg1: *mut Fl_Radio_Round_Button, arg2: core::ffi::c_int);
+    pub fn Fl_Radio_Round_Button_toggle(arg1: *mut Fl_Radio_Round_Button, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_shortcut(self_: *const Fl_Radio_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Round_Button_shortcut(self_: *const Fl_Radio_Round_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_set_shortcut(
         self_: *mut Fl_Radio_Round_Button,
-        shortcut: core::ffi::c_int,
+        shortcut: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_clear(self_: *mut Fl_Radio_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Round_Button_clear(self_: *mut Fl_Radio_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_value(self_: *mut Fl_Radio_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Round_Button_value(self_: *mut Fl_Radio_Round_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_set_value(
-        self_: *mut Fl_Radio_Round_Button,
-        flag: core::ffi::c_int,
-    );
+    pub fn Fl_Radio_Round_Button_set_value(self_: *mut Fl_Radio_Round_Button, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_set_down_box(
-        self_: *mut Fl_Radio_Round_Button,
-        arg1: core::ffi::c_int,
-    );
+    pub fn Fl_Radio_Round_Button_set_down_box(self_: *mut Fl_Radio_Round_Button, arg1: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_down_box(self_: *const Fl_Radio_Round_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Round_Button_down_box(self_: *const Fl_Radio_Round_Button) -> cty::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2220,34 +2124,32 @@ pub struct Fl_Radio_Light_Button {
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Radio_Light_Button;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_x(arg1: *mut Fl_Radio_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Light_Button_x(arg1: *mut Fl_Radio_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_y(arg1: *mut Fl_Radio_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Light_Button_y(arg1: *mut Fl_Radio_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_width(arg1: *mut Fl_Radio_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Light_Button_width(arg1: *mut Fl_Radio_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_height(arg1: *mut Fl_Radio_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Light_Button_height(arg1: *mut Fl_Radio_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_label(
-        arg1: *mut Fl_Radio_Light_Button,
-    ) -> *const core::ffi::c_char;
+    pub fn Fl_Radio_Light_Button_label(arg1: *mut Fl_Radio_Light_Button) -> *const cty::c_char;
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_set_label(
         arg1: *mut Fl_Radio_Light_Button,
-        title: *const core::ffi::c_char,
+        title: *const cty::c_char,
     );
 }
 extern "C" {
@@ -2271,99 +2173,84 @@ extern "C" {
 extern "C" {
     pub fn Fl_Radio_Light_Button_resize(
         arg1: *mut Fl_Radio_Light_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_widget_resize(
         arg1: *mut Fl_Radio_Light_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_tooltip(
-        arg1: *mut Fl_Radio_Light_Button,
-    ) -> *const core::ffi::c_char;
+    pub fn Fl_Radio_Light_Button_tooltip(arg1: *mut Fl_Radio_Light_Button) -> *const cty::c_char;
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_set_tooltip(
         arg1: *mut Fl_Radio_Light_Button,
-        txt: *const core::ffi::c_char,
+        txt: *const cty::c_char,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_get_type(arg1: *mut Fl_Radio_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Light_Button_get_type(arg1: *mut Fl_Radio_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_set_type(arg1: *mut Fl_Radio_Light_Button, typ: core::ffi::c_int);
+    pub fn Fl_Radio_Light_Button_set_type(arg1: *mut Fl_Radio_Light_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_color(arg1: *mut Fl_Radio_Light_Button) -> core::ffi::c_uint;
+    pub fn Fl_Radio_Light_Button_color(arg1: *mut Fl_Radio_Light_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_set_color(
-        arg1: *mut Fl_Radio_Light_Button,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Radio_Light_Button_set_color(arg1: *mut Fl_Radio_Light_Button, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_measure_label(
         arg1: *const Fl_Radio_Light_Button,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_label_color(arg1: *mut Fl_Radio_Light_Button)
-        -> core::ffi::c_uint;
+    pub fn Fl_Radio_Light_Button_label_color(arg1: *mut Fl_Radio_Light_Button) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_set_label_color(
         arg1: *mut Fl_Radio_Light_Button,
-        color: core::ffi::c_uint,
+        color: cty::c_uint,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_label_font(arg1: *mut Fl_Radio_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Light_Button_label_font(arg1: *mut Fl_Radio_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_set_label_font(
-        arg1: *mut Fl_Radio_Light_Button,
-        font: core::ffi::c_int,
-    );
+    pub fn Fl_Radio_Light_Button_set_label_font(arg1: *mut Fl_Radio_Light_Button, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_label_size(arg1: *mut Fl_Radio_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Light_Button_label_size(arg1: *mut Fl_Radio_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_set_label_size(
-        arg1: *mut Fl_Radio_Light_Button,
-        sz: core::ffi::c_int,
-    );
+    pub fn Fl_Radio_Light_Button_set_label_size(arg1: *mut Fl_Radio_Light_Button, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_label_type(arg1: *mut Fl_Radio_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Light_Button_label_type(arg1: *mut Fl_Radio_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_set_label_type(
-        arg1: *mut Fl_Radio_Light_Button,
-        typ: core::ffi::c_int,
-    );
+    pub fn Fl_Radio_Light_Button_set_label_type(arg1: *mut Fl_Radio_Light_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_box(arg1: *mut Fl_Radio_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Light_Button_box(arg1: *mut Fl_Radio_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_set_box(arg1: *mut Fl_Radio_Light_Button, typ: core::ffi::c_int);
+    pub fn Fl_Radio_Light_Button_set_box(arg1: *mut Fl_Radio_Light_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_changed(arg1: *mut Fl_Radio_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Light_Button_changed(arg1: *mut Fl_Radio_Light_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_set_changed(arg1: *mut Fl_Radio_Light_Button);
@@ -2372,10 +2259,10 @@ extern "C" {
     pub fn Fl_Radio_Light_Button_clear_changed(arg1: *mut Fl_Radio_Light_Button);
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_align(arg1: *mut Fl_Radio_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Light_Button_align(arg1: *mut Fl_Radio_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_set_align(arg1: *mut Fl_Radio_Light_Button, typ: core::ffi::c_int);
+    pub fn Fl_Radio_Light_Button_set_align(arg1: *mut Fl_Radio_Light_Button, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_delete(arg1: *mut Fl_Radio_Light_Button);
@@ -2383,27 +2270,24 @@ extern "C" {
 extern "C" {
     pub fn Fl_Radio_Light_Button_set_image(
         arg1: *mut Fl_Radio_Light_Button,
-        arg2: *mut core::ffi::c_void,
+        arg2: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_handle(
         self_: *mut Fl_Radio_Light_Button,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_handle_event(
-        self_: *mut Fl_Radio_Light_Button,
-        event: core::ffi::c_int,
-    );
+    pub fn Fl_Radio_Light_Button_handle_event(self_: *mut Fl_Radio_Light_Button, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_draw(
         self_: *mut Fl_Radio_Light_Button,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -2412,41 +2296,35 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_set_when(arg1: *mut Fl_Radio_Light_Button, arg2: core::ffi::c_int);
+    pub fn Fl_Radio_Light_Button_set_when(arg1: *mut Fl_Radio_Light_Button, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_when(arg1: *const Fl_Radio_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Light_Button_when(arg1: *const Fl_Radio_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_image(
-        arg1: *const Fl_Radio_Light_Button,
-    ) -> *const core::ffi::c_void;
+    pub fn Fl_Radio_Light_Button_image(arg1: *const Fl_Radio_Light_Button) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_parent(
-        self_: *const Fl_Radio_Light_Button,
-    ) -> *mut core::ffi::c_void;
+    pub fn Fl_Radio_Light_Button_parent(self_: *const Fl_Radio_Light_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_selection_color(
-        arg1: *mut Fl_Radio_Light_Button,
-    ) -> core::ffi::c_uint;
+    pub fn Fl_Radio_Light_Button_selection_color(arg1: *mut Fl_Radio_Light_Button) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_set_selection_color(
         arg1: *mut Fl_Radio_Light_Button,
-        color: core::ffi::c_uint,
+        color: cty::c_uint,
     );
 }
 extern "C" {
@@ -2455,31 +2333,24 @@ extern "C" {
 extern "C" {
     pub fn Fl_Radio_Light_Button_inside(
         self_: *const Fl_Radio_Light_Button,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_window(
-        arg1: *const Fl_Radio_Light_Button,
-    ) -> *mut core::ffi::c_void;
+    pub fn Fl_Radio_Light_Button_window(arg1: *const Fl_Radio_Light_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_top_window(
-        arg1: *const Fl_Radio_Light_Button,
-    ) -> *mut core::ffi::c_void;
+    pub fn Fl_Radio_Light_Button_top_window(arg1: *const Fl_Radio_Light_Button)
+        -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_takes_events(
-        arg1: *const Fl_Radio_Light_Button,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Radio_Light_Button_takes_events(arg1: *const Fl_Radio_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_user_data(
-        arg1: *const Fl_Radio_Light_Button,
-    ) -> *mut core::ffi::c_void;
+    pub fn Fl_Radio_Light_Button_user_data(arg1: *const Fl_Radio_Light_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_take_focus(self_: *mut Fl_Radio_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Light_Button_take_focus(self_: *mut Fl_Radio_Light_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_set_visible_focus(self_: *mut Fl_Radio_Light_Button);
@@ -2488,112 +2359,98 @@ extern "C" {
     pub fn Fl_Radio_Light_Button_clear_visible_focus(self_: *mut Fl_Radio_Light_Button);
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_visible_focus(
-        self_: *mut Fl_Radio_Light_Button,
-        v: core::ffi::c_int,
-    );
+    pub fn Fl_Radio_Light_Button_visible_focus(self_: *mut Fl_Radio_Light_Button, v: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_has_visible_focus(
         self_: *mut Fl_Radio_Light_Button,
-    ) -> core::ffi::c_uint;
+    ) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_set_user_data(
         arg1: *mut Fl_Radio_Light_Button,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_draw_data(
-        self_: *const Fl_Radio_Light_Button,
-    ) -> *mut core::ffi::c_void;
+    pub fn Fl_Radio_Light_Button_draw_data(self_: *const Fl_Radio_Light_Button)
+        -> *mut cty::c_void;
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_handle_data(
         self_: *const Fl_Radio_Light_Button,
-    ) -> *mut core::ffi::c_void;
+    ) -> *mut cty::c_void;
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_set_draw_data(
         self_: *mut Fl_Radio_Light_Button,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_set_handle_data(
         self_: *mut Fl_Radio_Light_Button,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_damage(self_: *const Fl_Radio_Light_Button) -> core::ffi::c_uchar;
+    pub fn Fl_Radio_Light_Button_damage(self_: *const Fl_Radio_Light_Button) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_set_damage(
-        self_: *mut Fl_Radio_Light_Button,
-        flag: core::ffi::c_uchar,
-    );
+    pub fn Fl_Radio_Light_Button_set_damage(self_: *mut Fl_Radio_Light_Button, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_set_damage_area(
         self_: *mut Fl_Radio_Light_Button,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_clear_damage(self_: *mut Fl_Radio_Light_Button);
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_as_window(
-        self_: *mut Fl_Radio_Light_Button,
-    ) -> *mut core::ffi::c_void;
+    pub fn Fl_Radio_Light_Button_as_window(self_: *mut Fl_Radio_Light_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_as_group(
-        self_: *mut Fl_Radio_Light_Button,
-    ) -> *mut core::ffi::c_void;
+    pub fn Fl_Radio_Light_Button_as_group(self_: *mut Fl_Radio_Light_Button) -> *mut cty::c_void;
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_set_deimage(
         arg1: *mut Fl_Radio_Light_Button,
-        arg2: *mut core::ffi::c_void,
+        arg2: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_deimage(
-        arg1: *const Fl_Radio_Light_Button,
-    ) -> *const core::ffi::c_void;
+    pub fn Fl_Radio_Light_Button_deimage(arg1: *const Fl_Radio_Light_Button) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_set_callback(
         arg1: *mut Fl_Radio_Light_Button,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_set_deleter(
         arg1: *mut Fl_Radio_Light_Button,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_visible(self_: *const Fl_Radio_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Light_Button_visible(self_: *const Fl_Radio_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_visible_r(self_: *const Fl_Radio_Light_Button)
-        -> core::ffi::c_int;
+    pub fn Fl_Radio_Light_Button_visible_r(self_: *const Fl_Radio_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_active(self_: *const Fl_Radio_Light_Button) -> core::ffi::c_uint;
+    pub fn Fl_Radio_Light_Button_active(self_: *const Fl_Radio_Light_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_active_r(self_: *const Fl_Radio_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Light_Button_active_r(self_: *const Fl_Radio_Light_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_callback(self_: *const Fl_Radio_Light_Button) -> Fl_Callback;
@@ -2602,52 +2459,46 @@ extern "C" {
     pub fn Fl_Radio_Light_Button_set_deletion_callback(
         self_: *mut Fl_Radio_Light_Button,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Radio_Light_Button;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Radio_Light_Button_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_is_toggled(arg1: *mut Fl_Radio_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Light_Button_is_toggled(arg1: *mut Fl_Radio_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_toggle(arg1: *mut Fl_Radio_Light_Button, arg2: core::ffi::c_int);
+    pub fn Fl_Radio_Light_Button_toggle(arg1: *mut Fl_Radio_Light_Button, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_shortcut(self_: *const Fl_Radio_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Light_Button_shortcut(self_: *const Fl_Radio_Light_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Radio_Light_Button_set_shortcut(
         self_: *mut Fl_Radio_Light_Button,
-        shortcut: core::ffi::c_int,
+        shortcut: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_clear(self_: *mut Fl_Radio_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Light_Button_clear(self_: *mut Fl_Radio_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_value(self_: *mut Fl_Radio_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Light_Button_value(self_: *mut Fl_Radio_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_set_value(
-        self_: *mut Fl_Radio_Light_Button,
-        flag: core::ffi::c_int,
-    );
+    pub fn Fl_Radio_Light_Button_set_value(self_: *mut Fl_Radio_Light_Button, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_set_down_box(
-        self_: *mut Fl_Radio_Light_Button,
-        arg1: core::ffi::c_int,
-    );
+    pub fn Fl_Radio_Light_Button_set_down_box(self_: *mut Fl_Radio_Light_Button, arg1: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_down_box(self_: *const Fl_Radio_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Radio_Light_Button_down_box(self_: *const Fl_Radio_Light_Button) -> cty::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2656,30 +2507,30 @@ pub struct Fl_Light_Button {
 }
 extern "C" {
     pub fn Fl_Light_Button_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Light_Button;
 }
 extern "C" {
-    pub fn Fl_Light_Button_x(arg1: *mut Fl_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Light_Button_x(arg1: *mut Fl_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Light_Button_y(arg1: *mut Fl_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Light_Button_y(arg1: *mut Fl_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Light_Button_width(arg1: *mut Fl_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Light_Button_width(arg1: *mut Fl_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Light_Button_height(arg1: *mut Fl_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Light_Button_height(arg1: *mut Fl_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Light_Button_label(arg1: *mut Fl_Light_Button) -> *const core::ffi::c_char;
+    pub fn Fl_Light_Button_label(arg1: *mut Fl_Light_Button) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Light_Button_set_label(arg1: *mut Fl_Light_Button, title: *const core::ffi::c_char);
+    pub fn Fl_Light_Button_set_label(arg1: *mut Fl_Light_Button, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Light_Button_redraw(arg1: *mut Fl_Light_Button);
@@ -2702,78 +2553,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Light_Button_resize(
         arg1: *mut Fl_Light_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Light_Button_widget_resize(
         arg1: *mut Fl_Light_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Light_Button_tooltip(arg1: *mut Fl_Light_Button) -> *const core::ffi::c_char;
+    pub fn Fl_Light_Button_tooltip(arg1: *mut Fl_Light_Button) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Light_Button_set_tooltip(arg1: *mut Fl_Light_Button, txt: *const core::ffi::c_char);
+    pub fn Fl_Light_Button_set_tooltip(arg1: *mut Fl_Light_Button, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Light_Button_get_type(arg1: *mut Fl_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Light_Button_get_type(arg1: *mut Fl_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Light_Button_set_type(arg1: *mut Fl_Light_Button, typ: core::ffi::c_int);
+    pub fn Fl_Light_Button_set_type(arg1: *mut Fl_Light_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Light_Button_color(arg1: *mut Fl_Light_Button) -> core::ffi::c_uint;
+    pub fn Fl_Light_Button_color(arg1: *mut Fl_Light_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Light_Button_set_color(arg1: *mut Fl_Light_Button, color: core::ffi::c_uint);
+    pub fn Fl_Light_Button_set_color(arg1: *mut Fl_Light_Button, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Light_Button_measure_label(
         arg1: *const Fl_Light_Button,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Light_Button_label_color(arg1: *mut Fl_Light_Button) -> core::ffi::c_uint;
+    pub fn Fl_Light_Button_label_color(arg1: *mut Fl_Light_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Light_Button_set_label_color(arg1: *mut Fl_Light_Button, color: core::ffi::c_uint);
+    pub fn Fl_Light_Button_set_label_color(arg1: *mut Fl_Light_Button, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Light_Button_label_font(arg1: *mut Fl_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Light_Button_label_font(arg1: *mut Fl_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Light_Button_set_label_font(arg1: *mut Fl_Light_Button, font: core::ffi::c_int);
+    pub fn Fl_Light_Button_set_label_font(arg1: *mut Fl_Light_Button, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Light_Button_label_size(arg1: *mut Fl_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Light_Button_label_size(arg1: *mut Fl_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Light_Button_set_label_size(arg1: *mut Fl_Light_Button, sz: core::ffi::c_int);
+    pub fn Fl_Light_Button_set_label_size(arg1: *mut Fl_Light_Button, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Light_Button_label_type(arg1: *mut Fl_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Light_Button_label_type(arg1: *mut Fl_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Light_Button_set_label_type(arg1: *mut Fl_Light_Button, typ: core::ffi::c_int);
+    pub fn Fl_Light_Button_set_label_type(arg1: *mut Fl_Light_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Light_Button_box(arg1: *mut Fl_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Light_Button_box(arg1: *mut Fl_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Light_Button_set_box(arg1: *mut Fl_Light_Button, typ: core::ffi::c_int);
+    pub fn Fl_Light_Button_set_box(arg1: *mut Fl_Light_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Light_Button_changed(arg1: *mut Fl_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Light_Button_changed(arg1: *mut Fl_Light_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Light_Button_set_changed(arg1: *mut Fl_Light_Button);
@@ -2782,32 +2633,32 @@ extern "C" {
     pub fn Fl_Light_Button_clear_changed(arg1: *mut Fl_Light_Button);
 }
 extern "C" {
-    pub fn Fl_Light_Button_align(arg1: *mut Fl_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Light_Button_align(arg1: *mut Fl_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Light_Button_set_align(arg1: *mut Fl_Light_Button, typ: core::ffi::c_int);
+    pub fn Fl_Light_Button_set_align(arg1: *mut Fl_Light_Button, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Light_Button_delete(arg1: *mut Fl_Light_Button);
 }
 extern "C" {
-    pub fn Fl_Light_Button_set_image(arg1: *mut Fl_Light_Button, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Light_Button_set_image(arg1: *mut Fl_Light_Button, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Light_Button_handle(
         self_: *mut Fl_Light_Button,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Light_Button_handle_event(self_: *mut Fl_Light_Button, event: core::ffi::c_int);
+    pub fn Fl_Light_Button_handle_event(self_: *mut Fl_Light_Button, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Light_Button_draw(
         self_: *mut Fl_Light_Button,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -2816,36 +2667,33 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Light_Button_set_when(arg1: *mut Fl_Light_Button, arg2: core::ffi::c_int);
+    pub fn Fl_Light_Button_set_when(arg1: *mut Fl_Light_Button, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Light_Button_when(arg1: *const Fl_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Light_Button_when(arg1: *const Fl_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Light_Button_image(arg1: *const Fl_Light_Button) -> *const core::ffi::c_void;
+    pub fn Fl_Light_Button_image(arg1: *const Fl_Light_Button) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Light_Button_parent(self_: *const Fl_Light_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Light_Button_parent(self_: *const Fl_Light_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Light_Button_selection_color(arg1: *mut Fl_Light_Button) -> core::ffi::c_uint;
+    pub fn Fl_Light_Button_selection_color(arg1: *mut Fl_Light_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Light_Button_set_selection_color(
-        arg1: *mut Fl_Light_Button,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Light_Button_set_selection_color(arg1: *mut Fl_Light_Button, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Light_Button_do_callback(arg1: *mut Fl_Light_Button);
@@ -2853,23 +2701,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Light_Button_inside(
         self_: *const Fl_Light_Button,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Light_Button_window(arg1: *const Fl_Light_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Light_Button_window(arg1: *const Fl_Light_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Light_Button_top_window(arg1: *const Fl_Light_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Light_Button_top_window(arg1: *const Fl_Light_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Light_Button_takes_events(arg1: *const Fl_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Light_Button_takes_events(arg1: *const Fl_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Light_Button_user_data(arg1: *const Fl_Light_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Light_Button_user_data(arg1: *const Fl_Light_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Light_Button_take_focus(self_: *mut Fl_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Light_Button_take_focus(self_: *mut Fl_Light_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Light_Button_set_visible_focus(self_: *mut Fl_Light_Button);
@@ -2878,84 +2726,81 @@ extern "C" {
     pub fn Fl_Light_Button_clear_visible_focus(self_: *mut Fl_Light_Button);
 }
 extern "C" {
-    pub fn Fl_Light_Button_visible_focus(self_: *mut Fl_Light_Button, v: core::ffi::c_int);
+    pub fn Fl_Light_Button_visible_focus(self_: *mut Fl_Light_Button, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Light_Button_has_visible_focus(self_: *mut Fl_Light_Button) -> core::ffi::c_uint;
+    pub fn Fl_Light_Button_has_visible_focus(self_: *mut Fl_Light_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Light_Button_set_user_data(arg1: *mut Fl_Light_Button, data: *mut core::ffi::c_void);
+    pub fn Fl_Light_Button_set_user_data(arg1: *mut Fl_Light_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Light_Button_draw_data(self_: *const Fl_Light_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Light_Button_draw_data(self_: *const Fl_Light_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Light_Button_handle_data(self_: *const Fl_Light_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Light_Button_handle_data(self_: *const Fl_Light_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Light_Button_set_draw_data(self_: *mut Fl_Light_Button, data: *mut core::ffi::c_void);
+    pub fn Fl_Light_Button_set_draw_data(self_: *mut Fl_Light_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Light_Button_set_handle_data(
-        self_: *mut Fl_Light_Button,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Light_Button_set_handle_data(self_: *mut Fl_Light_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Light_Button_damage(self_: *const Fl_Light_Button) -> core::ffi::c_uchar;
+    pub fn Fl_Light_Button_damage(self_: *const Fl_Light_Button) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Light_Button_set_damage(self_: *mut Fl_Light_Button, flag: core::ffi::c_uchar);
+    pub fn Fl_Light_Button_set_damage(self_: *mut Fl_Light_Button, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Light_Button_set_damage_area(
         self_: *mut Fl_Light_Button,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Light_Button_clear_damage(self_: *mut Fl_Light_Button);
 }
 extern "C" {
-    pub fn Fl_Light_Button_as_window(self_: *mut Fl_Light_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Light_Button_as_window(self_: *mut Fl_Light_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Light_Button_as_group(self_: *mut Fl_Light_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Light_Button_as_group(self_: *mut Fl_Light_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Light_Button_set_deimage(arg1: *mut Fl_Light_Button, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Light_Button_set_deimage(arg1: *mut Fl_Light_Button, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Light_Button_deimage(arg1: *const Fl_Light_Button) -> *const core::ffi::c_void;
+    pub fn Fl_Light_Button_deimage(arg1: *const Fl_Light_Button) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Light_Button_set_callback(
         arg1: *mut Fl_Light_Button,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Light_Button_set_deleter(
         arg1: *mut Fl_Light_Button,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Light_Button_visible(self_: *const Fl_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Light_Button_visible(self_: *const Fl_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Light_Button_visible_r(self_: *const Fl_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Light_Button_visible_r(self_: *const Fl_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Light_Button_active(self_: *const Fl_Light_Button) -> core::ffi::c_uint;
+    pub fn Fl_Light_Button_active(self_: *const Fl_Light_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Light_Button_active_r(self_: *const Fl_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Light_Button_active_r(self_: *const Fl_Light_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Light_Button_callback(self_: *const Fl_Light_Button) -> Fl_Callback;
@@ -2964,43 +2809,43 @@ extern "C" {
     pub fn Fl_Light_Button_set_deletion_callback(
         self_: *mut Fl_Light_Button,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Light_Button_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Light_Button;
 }
 extern "C" {
-    pub fn Fl_Light_Button_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Light_Button_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Light_Button_is_on(arg1: *mut Fl_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Light_Button_is_on(arg1: *mut Fl_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Light_Button_turn_on(arg1: *mut Fl_Light_Button, arg2: core::ffi::c_int);
+    pub fn Fl_Light_Button_turn_on(arg1: *mut Fl_Light_Button, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Light_Button_shortcut(self_: *const Fl_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Light_Button_shortcut(self_: *const Fl_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Light_Button_set_shortcut(self_: *mut Fl_Light_Button, shortcut: core::ffi::c_int);
+    pub fn Fl_Light_Button_set_shortcut(self_: *mut Fl_Light_Button, shortcut: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Light_Button_clear(self_: *mut Fl_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Light_Button_clear(self_: *mut Fl_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Light_Button_value(self_: *mut Fl_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Light_Button_value(self_: *mut Fl_Light_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Light_Button_set_value(self_: *mut Fl_Light_Button, flag: core::ffi::c_int);
+    pub fn Fl_Light_Button_set_value(self_: *mut Fl_Light_Button, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Light_Button_set_down_box(self_: *mut Fl_Light_Button, arg1: core::ffi::c_int);
+    pub fn Fl_Light_Button_set_down_box(self_: *mut Fl_Light_Button, arg1: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Light_Button_down_box(self_: *const Fl_Light_Button) -> core::ffi::c_int;
+    pub fn Fl_Light_Button_down_box(self_: *const Fl_Light_Button) -> cty::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -3009,30 +2854,30 @@ pub struct Fl_Repeat_Button {
 }
 extern "C" {
     pub fn Fl_Repeat_Button_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Repeat_Button;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_x(arg1: *mut Fl_Repeat_Button) -> core::ffi::c_int;
+    pub fn Fl_Repeat_Button_x(arg1: *mut Fl_Repeat_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_y(arg1: *mut Fl_Repeat_Button) -> core::ffi::c_int;
+    pub fn Fl_Repeat_Button_y(arg1: *mut Fl_Repeat_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_width(arg1: *mut Fl_Repeat_Button) -> core::ffi::c_int;
+    pub fn Fl_Repeat_Button_width(arg1: *mut Fl_Repeat_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_height(arg1: *mut Fl_Repeat_Button) -> core::ffi::c_int;
+    pub fn Fl_Repeat_Button_height(arg1: *mut Fl_Repeat_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_label(arg1: *mut Fl_Repeat_Button) -> *const core::ffi::c_char;
+    pub fn Fl_Repeat_Button_label(arg1: *mut Fl_Repeat_Button) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_set_label(arg1: *mut Fl_Repeat_Button, title: *const core::ffi::c_char);
+    pub fn Fl_Repeat_Button_set_label(arg1: *mut Fl_Repeat_Button, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Repeat_Button_redraw(arg1: *mut Fl_Repeat_Button);
@@ -3055,78 +2900,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Repeat_Button_resize(
         arg1: *mut Fl_Repeat_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Repeat_Button_widget_resize(
         arg1: *mut Fl_Repeat_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_tooltip(arg1: *mut Fl_Repeat_Button) -> *const core::ffi::c_char;
+    pub fn Fl_Repeat_Button_tooltip(arg1: *mut Fl_Repeat_Button) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_set_tooltip(arg1: *mut Fl_Repeat_Button, txt: *const core::ffi::c_char);
+    pub fn Fl_Repeat_Button_set_tooltip(arg1: *mut Fl_Repeat_Button, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_get_type(arg1: *mut Fl_Repeat_Button) -> core::ffi::c_int;
+    pub fn Fl_Repeat_Button_get_type(arg1: *mut Fl_Repeat_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_set_type(arg1: *mut Fl_Repeat_Button, typ: core::ffi::c_int);
+    pub fn Fl_Repeat_Button_set_type(arg1: *mut Fl_Repeat_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_color(arg1: *mut Fl_Repeat_Button) -> core::ffi::c_uint;
+    pub fn Fl_Repeat_Button_color(arg1: *mut Fl_Repeat_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_set_color(arg1: *mut Fl_Repeat_Button, color: core::ffi::c_uint);
+    pub fn Fl_Repeat_Button_set_color(arg1: *mut Fl_Repeat_Button, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Repeat_Button_measure_label(
         arg1: *const Fl_Repeat_Button,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_label_color(arg1: *mut Fl_Repeat_Button) -> core::ffi::c_uint;
+    pub fn Fl_Repeat_Button_label_color(arg1: *mut Fl_Repeat_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_set_label_color(arg1: *mut Fl_Repeat_Button, color: core::ffi::c_uint);
+    pub fn Fl_Repeat_Button_set_label_color(arg1: *mut Fl_Repeat_Button, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_label_font(arg1: *mut Fl_Repeat_Button) -> core::ffi::c_int;
+    pub fn Fl_Repeat_Button_label_font(arg1: *mut Fl_Repeat_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_set_label_font(arg1: *mut Fl_Repeat_Button, font: core::ffi::c_int);
+    pub fn Fl_Repeat_Button_set_label_font(arg1: *mut Fl_Repeat_Button, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_label_size(arg1: *mut Fl_Repeat_Button) -> core::ffi::c_int;
+    pub fn Fl_Repeat_Button_label_size(arg1: *mut Fl_Repeat_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_set_label_size(arg1: *mut Fl_Repeat_Button, sz: core::ffi::c_int);
+    pub fn Fl_Repeat_Button_set_label_size(arg1: *mut Fl_Repeat_Button, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_label_type(arg1: *mut Fl_Repeat_Button) -> core::ffi::c_int;
+    pub fn Fl_Repeat_Button_label_type(arg1: *mut Fl_Repeat_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_set_label_type(arg1: *mut Fl_Repeat_Button, typ: core::ffi::c_int);
+    pub fn Fl_Repeat_Button_set_label_type(arg1: *mut Fl_Repeat_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_box(arg1: *mut Fl_Repeat_Button) -> core::ffi::c_int;
+    pub fn Fl_Repeat_Button_box(arg1: *mut Fl_Repeat_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_set_box(arg1: *mut Fl_Repeat_Button, typ: core::ffi::c_int);
+    pub fn Fl_Repeat_Button_set_box(arg1: *mut Fl_Repeat_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_changed(arg1: *mut Fl_Repeat_Button) -> core::ffi::c_int;
+    pub fn Fl_Repeat_Button_changed(arg1: *mut Fl_Repeat_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Repeat_Button_set_changed(arg1: *mut Fl_Repeat_Button);
@@ -3135,32 +2980,32 @@ extern "C" {
     pub fn Fl_Repeat_Button_clear_changed(arg1: *mut Fl_Repeat_Button);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_align(arg1: *mut Fl_Repeat_Button) -> core::ffi::c_int;
+    pub fn Fl_Repeat_Button_align(arg1: *mut Fl_Repeat_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_set_align(arg1: *mut Fl_Repeat_Button, typ: core::ffi::c_int);
+    pub fn Fl_Repeat_Button_set_align(arg1: *mut Fl_Repeat_Button, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Repeat_Button_delete(arg1: *mut Fl_Repeat_Button);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_set_image(arg1: *mut Fl_Repeat_Button, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Repeat_Button_set_image(arg1: *mut Fl_Repeat_Button, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Repeat_Button_handle(
         self_: *mut Fl_Repeat_Button,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_handle_event(self_: *mut Fl_Repeat_Button, event: core::ffi::c_int);
+    pub fn Fl_Repeat_Button_handle_event(self_: *mut Fl_Repeat_Button, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Repeat_Button_draw(
         self_: *mut Fl_Repeat_Button,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -3169,36 +3014,33 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_set_when(arg1: *mut Fl_Repeat_Button, arg2: core::ffi::c_int);
+    pub fn Fl_Repeat_Button_set_when(arg1: *mut Fl_Repeat_Button, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_when(arg1: *const Fl_Repeat_Button) -> core::ffi::c_int;
+    pub fn Fl_Repeat_Button_when(arg1: *const Fl_Repeat_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_image(arg1: *const Fl_Repeat_Button) -> *const core::ffi::c_void;
+    pub fn Fl_Repeat_Button_image(arg1: *const Fl_Repeat_Button) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_parent(self_: *const Fl_Repeat_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Repeat_Button_parent(self_: *const Fl_Repeat_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_selection_color(arg1: *mut Fl_Repeat_Button) -> core::ffi::c_uint;
+    pub fn Fl_Repeat_Button_selection_color(arg1: *mut Fl_Repeat_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_set_selection_color(
-        arg1: *mut Fl_Repeat_Button,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Repeat_Button_set_selection_color(arg1: *mut Fl_Repeat_Button, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Repeat_Button_do_callback(arg1: *mut Fl_Repeat_Button);
@@ -3206,23 +3048,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Repeat_Button_inside(
         self_: *const Fl_Repeat_Button,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_window(arg1: *const Fl_Repeat_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Repeat_Button_window(arg1: *const Fl_Repeat_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_top_window(arg1: *const Fl_Repeat_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Repeat_Button_top_window(arg1: *const Fl_Repeat_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_takes_events(arg1: *const Fl_Repeat_Button) -> core::ffi::c_int;
+    pub fn Fl_Repeat_Button_takes_events(arg1: *const Fl_Repeat_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_user_data(arg1: *const Fl_Repeat_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Repeat_Button_user_data(arg1: *const Fl_Repeat_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_take_focus(self_: *mut Fl_Repeat_Button) -> core::ffi::c_int;
+    pub fn Fl_Repeat_Button_take_focus(self_: *mut Fl_Repeat_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Repeat_Button_set_visible_focus(self_: *mut Fl_Repeat_Button);
@@ -3231,90 +3073,81 @@ extern "C" {
     pub fn Fl_Repeat_Button_clear_visible_focus(self_: *mut Fl_Repeat_Button);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_visible_focus(self_: *mut Fl_Repeat_Button, v: core::ffi::c_int);
+    pub fn Fl_Repeat_Button_visible_focus(self_: *mut Fl_Repeat_Button, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_has_visible_focus(self_: *mut Fl_Repeat_Button) -> core::ffi::c_uint;
+    pub fn Fl_Repeat_Button_has_visible_focus(self_: *mut Fl_Repeat_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_set_user_data(
-        arg1: *mut Fl_Repeat_Button,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Repeat_Button_set_user_data(arg1: *mut Fl_Repeat_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_draw_data(self_: *const Fl_Repeat_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Repeat_Button_draw_data(self_: *const Fl_Repeat_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_handle_data(self_: *const Fl_Repeat_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Repeat_Button_handle_data(self_: *const Fl_Repeat_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_set_draw_data(
-        self_: *mut Fl_Repeat_Button,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Repeat_Button_set_draw_data(self_: *mut Fl_Repeat_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_set_handle_data(
-        self_: *mut Fl_Repeat_Button,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Repeat_Button_set_handle_data(self_: *mut Fl_Repeat_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_damage(self_: *const Fl_Repeat_Button) -> core::ffi::c_uchar;
+    pub fn Fl_Repeat_Button_damage(self_: *const Fl_Repeat_Button) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_set_damage(self_: *mut Fl_Repeat_Button, flag: core::ffi::c_uchar);
+    pub fn Fl_Repeat_Button_set_damage(self_: *mut Fl_Repeat_Button, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Repeat_Button_set_damage_area(
         self_: *mut Fl_Repeat_Button,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Repeat_Button_clear_damage(self_: *mut Fl_Repeat_Button);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_as_window(self_: *mut Fl_Repeat_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Repeat_Button_as_window(self_: *mut Fl_Repeat_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_as_group(self_: *mut Fl_Repeat_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Repeat_Button_as_group(self_: *mut Fl_Repeat_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_set_deimage(arg1: *mut Fl_Repeat_Button, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Repeat_Button_set_deimage(arg1: *mut Fl_Repeat_Button, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_deimage(arg1: *const Fl_Repeat_Button) -> *const core::ffi::c_void;
+    pub fn Fl_Repeat_Button_deimage(arg1: *const Fl_Repeat_Button) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Repeat_Button_set_callback(
         arg1: *mut Fl_Repeat_Button,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Repeat_Button_set_deleter(
         arg1: *mut Fl_Repeat_Button,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_visible(self_: *const Fl_Repeat_Button) -> core::ffi::c_int;
+    pub fn Fl_Repeat_Button_visible(self_: *const Fl_Repeat_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_visible_r(self_: *const Fl_Repeat_Button) -> core::ffi::c_int;
+    pub fn Fl_Repeat_Button_visible_r(self_: *const Fl_Repeat_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_active(self_: *const Fl_Repeat_Button) -> core::ffi::c_uint;
+    pub fn Fl_Repeat_Button_active(self_: *const Fl_Repeat_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_active_r(self_: *const Fl_Repeat_Button) -> core::ffi::c_int;
+    pub fn Fl_Repeat_Button_active_r(self_: *const Fl_Repeat_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Repeat_Button_callback(self_: *const Fl_Repeat_Button) -> Fl_Callback;
@@ -3323,37 +3156,37 @@ extern "C" {
     pub fn Fl_Repeat_Button_set_deletion_callback(
         self_: *mut Fl_Repeat_Button,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Repeat_Button_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Repeat_Button;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Repeat_Button_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_shortcut(self_: *const Fl_Repeat_Button) -> core::ffi::c_int;
+    pub fn Fl_Repeat_Button_shortcut(self_: *const Fl_Repeat_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_set_shortcut(self_: *mut Fl_Repeat_Button, shortcut: core::ffi::c_int);
+    pub fn Fl_Repeat_Button_set_shortcut(self_: *mut Fl_Repeat_Button, shortcut: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_clear(self_: *mut Fl_Repeat_Button) -> core::ffi::c_int;
+    pub fn Fl_Repeat_Button_clear(self_: *mut Fl_Repeat_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_value(self_: *mut Fl_Repeat_Button) -> core::ffi::c_int;
+    pub fn Fl_Repeat_Button_value(self_: *mut Fl_Repeat_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_set_value(self_: *mut Fl_Repeat_Button, flag: core::ffi::c_int);
+    pub fn Fl_Repeat_Button_set_value(self_: *mut Fl_Repeat_Button, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_set_down_box(self_: *mut Fl_Repeat_Button, arg1: core::ffi::c_int);
+    pub fn Fl_Repeat_Button_set_down_box(self_: *mut Fl_Repeat_Button, arg1: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_down_box(self_: *const Fl_Repeat_Button) -> core::ffi::c_int;
+    pub fn Fl_Repeat_Button_down_box(self_: *const Fl_Repeat_Button) -> cty::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -3362,30 +3195,30 @@ pub struct Fl_Return_Button {
 }
 extern "C" {
     pub fn Fl_Return_Button_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Return_Button;
 }
 extern "C" {
-    pub fn Fl_Return_Button_x(arg1: *mut Fl_Return_Button) -> core::ffi::c_int;
+    pub fn Fl_Return_Button_x(arg1: *mut Fl_Return_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Return_Button_y(arg1: *mut Fl_Return_Button) -> core::ffi::c_int;
+    pub fn Fl_Return_Button_y(arg1: *mut Fl_Return_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Return_Button_width(arg1: *mut Fl_Return_Button) -> core::ffi::c_int;
+    pub fn Fl_Return_Button_width(arg1: *mut Fl_Return_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Return_Button_height(arg1: *mut Fl_Return_Button) -> core::ffi::c_int;
+    pub fn Fl_Return_Button_height(arg1: *mut Fl_Return_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Return_Button_label(arg1: *mut Fl_Return_Button) -> *const core::ffi::c_char;
+    pub fn Fl_Return_Button_label(arg1: *mut Fl_Return_Button) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Return_Button_set_label(arg1: *mut Fl_Return_Button, title: *const core::ffi::c_char);
+    pub fn Fl_Return_Button_set_label(arg1: *mut Fl_Return_Button, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Return_Button_redraw(arg1: *mut Fl_Return_Button);
@@ -3408,78 +3241,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Return_Button_resize(
         arg1: *mut Fl_Return_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Return_Button_widget_resize(
         arg1: *mut Fl_Return_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Return_Button_tooltip(arg1: *mut Fl_Return_Button) -> *const core::ffi::c_char;
+    pub fn Fl_Return_Button_tooltip(arg1: *mut Fl_Return_Button) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Return_Button_set_tooltip(arg1: *mut Fl_Return_Button, txt: *const core::ffi::c_char);
+    pub fn Fl_Return_Button_set_tooltip(arg1: *mut Fl_Return_Button, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Return_Button_get_type(arg1: *mut Fl_Return_Button) -> core::ffi::c_int;
+    pub fn Fl_Return_Button_get_type(arg1: *mut Fl_Return_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Return_Button_set_type(arg1: *mut Fl_Return_Button, typ: core::ffi::c_int);
+    pub fn Fl_Return_Button_set_type(arg1: *mut Fl_Return_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Return_Button_color(arg1: *mut Fl_Return_Button) -> core::ffi::c_uint;
+    pub fn Fl_Return_Button_color(arg1: *mut Fl_Return_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Return_Button_set_color(arg1: *mut Fl_Return_Button, color: core::ffi::c_uint);
+    pub fn Fl_Return_Button_set_color(arg1: *mut Fl_Return_Button, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Return_Button_measure_label(
         arg1: *const Fl_Return_Button,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Return_Button_label_color(arg1: *mut Fl_Return_Button) -> core::ffi::c_uint;
+    pub fn Fl_Return_Button_label_color(arg1: *mut Fl_Return_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Return_Button_set_label_color(arg1: *mut Fl_Return_Button, color: core::ffi::c_uint);
+    pub fn Fl_Return_Button_set_label_color(arg1: *mut Fl_Return_Button, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Return_Button_label_font(arg1: *mut Fl_Return_Button) -> core::ffi::c_int;
+    pub fn Fl_Return_Button_label_font(arg1: *mut Fl_Return_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Return_Button_set_label_font(arg1: *mut Fl_Return_Button, font: core::ffi::c_int);
+    pub fn Fl_Return_Button_set_label_font(arg1: *mut Fl_Return_Button, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Return_Button_label_size(arg1: *mut Fl_Return_Button) -> core::ffi::c_int;
+    pub fn Fl_Return_Button_label_size(arg1: *mut Fl_Return_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Return_Button_set_label_size(arg1: *mut Fl_Return_Button, sz: core::ffi::c_int);
+    pub fn Fl_Return_Button_set_label_size(arg1: *mut Fl_Return_Button, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Return_Button_label_type(arg1: *mut Fl_Return_Button) -> core::ffi::c_int;
+    pub fn Fl_Return_Button_label_type(arg1: *mut Fl_Return_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Return_Button_set_label_type(arg1: *mut Fl_Return_Button, typ: core::ffi::c_int);
+    pub fn Fl_Return_Button_set_label_type(arg1: *mut Fl_Return_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Return_Button_box(arg1: *mut Fl_Return_Button) -> core::ffi::c_int;
+    pub fn Fl_Return_Button_box(arg1: *mut Fl_Return_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Return_Button_set_box(arg1: *mut Fl_Return_Button, typ: core::ffi::c_int);
+    pub fn Fl_Return_Button_set_box(arg1: *mut Fl_Return_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Return_Button_changed(arg1: *mut Fl_Return_Button) -> core::ffi::c_int;
+    pub fn Fl_Return_Button_changed(arg1: *mut Fl_Return_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Return_Button_set_changed(arg1: *mut Fl_Return_Button);
@@ -3488,32 +3321,32 @@ extern "C" {
     pub fn Fl_Return_Button_clear_changed(arg1: *mut Fl_Return_Button);
 }
 extern "C" {
-    pub fn Fl_Return_Button_align(arg1: *mut Fl_Return_Button) -> core::ffi::c_int;
+    pub fn Fl_Return_Button_align(arg1: *mut Fl_Return_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Return_Button_set_align(arg1: *mut Fl_Return_Button, typ: core::ffi::c_int);
+    pub fn Fl_Return_Button_set_align(arg1: *mut Fl_Return_Button, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Return_Button_delete(arg1: *mut Fl_Return_Button);
 }
 extern "C" {
-    pub fn Fl_Return_Button_set_image(arg1: *mut Fl_Return_Button, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Return_Button_set_image(arg1: *mut Fl_Return_Button, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Return_Button_handle(
         self_: *mut Fl_Return_Button,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Return_Button_handle_event(self_: *mut Fl_Return_Button, event: core::ffi::c_int);
+    pub fn Fl_Return_Button_handle_event(self_: *mut Fl_Return_Button, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Return_Button_draw(
         self_: *mut Fl_Return_Button,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -3522,36 +3355,33 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Return_Button_set_when(arg1: *mut Fl_Return_Button, arg2: core::ffi::c_int);
+    pub fn Fl_Return_Button_set_when(arg1: *mut Fl_Return_Button, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Return_Button_when(arg1: *const Fl_Return_Button) -> core::ffi::c_int;
+    pub fn Fl_Return_Button_when(arg1: *const Fl_Return_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Return_Button_image(arg1: *const Fl_Return_Button) -> *const core::ffi::c_void;
+    pub fn Fl_Return_Button_image(arg1: *const Fl_Return_Button) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Return_Button_parent(self_: *const Fl_Return_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Return_Button_parent(self_: *const Fl_Return_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Return_Button_selection_color(arg1: *mut Fl_Return_Button) -> core::ffi::c_uint;
+    pub fn Fl_Return_Button_selection_color(arg1: *mut Fl_Return_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Return_Button_set_selection_color(
-        arg1: *mut Fl_Return_Button,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Return_Button_set_selection_color(arg1: *mut Fl_Return_Button, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Return_Button_do_callback(arg1: *mut Fl_Return_Button);
@@ -3559,23 +3389,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Return_Button_inside(
         self_: *const Fl_Return_Button,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Return_Button_window(arg1: *const Fl_Return_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Return_Button_window(arg1: *const Fl_Return_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Return_Button_top_window(arg1: *const Fl_Return_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Return_Button_top_window(arg1: *const Fl_Return_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Return_Button_takes_events(arg1: *const Fl_Return_Button) -> core::ffi::c_int;
+    pub fn Fl_Return_Button_takes_events(arg1: *const Fl_Return_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Return_Button_user_data(arg1: *const Fl_Return_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Return_Button_user_data(arg1: *const Fl_Return_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Return_Button_take_focus(self_: *mut Fl_Return_Button) -> core::ffi::c_int;
+    pub fn Fl_Return_Button_take_focus(self_: *mut Fl_Return_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Return_Button_set_visible_focus(self_: *mut Fl_Return_Button);
@@ -3584,90 +3414,81 @@ extern "C" {
     pub fn Fl_Return_Button_clear_visible_focus(self_: *mut Fl_Return_Button);
 }
 extern "C" {
-    pub fn Fl_Return_Button_visible_focus(self_: *mut Fl_Return_Button, v: core::ffi::c_int);
+    pub fn Fl_Return_Button_visible_focus(self_: *mut Fl_Return_Button, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Return_Button_has_visible_focus(self_: *mut Fl_Return_Button) -> core::ffi::c_uint;
+    pub fn Fl_Return_Button_has_visible_focus(self_: *mut Fl_Return_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Return_Button_set_user_data(
-        arg1: *mut Fl_Return_Button,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Return_Button_set_user_data(arg1: *mut Fl_Return_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Return_Button_draw_data(self_: *const Fl_Return_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Return_Button_draw_data(self_: *const Fl_Return_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Return_Button_handle_data(self_: *const Fl_Return_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Return_Button_handle_data(self_: *const Fl_Return_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Return_Button_set_draw_data(
-        self_: *mut Fl_Return_Button,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Return_Button_set_draw_data(self_: *mut Fl_Return_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Return_Button_set_handle_data(
-        self_: *mut Fl_Return_Button,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Return_Button_set_handle_data(self_: *mut Fl_Return_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Return_Button_damage(self_: *const Fl_Return_Button) -> core::ffi::c_uchar;
+    pub fn Fl_Return_Button_damage(self_: *const Fl_Return_Button) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Return_Button_set_damage(self_: *mut Fl_Return_Button, flag: core::ffi::c_uchar);
+    pub fn Fl_Return_Button_set_damage(self_: *mut Fl_Return_Button, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Return_Button_set_damage_area(
         self_: *mut Fl_Return_Button,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Return_Button_clear_damage(self_: *mut Fl_Return_Button);
 }
 extern "C" {
-    pub fn Fl_Return_Button_as_window(self_: *mut Fl_Return_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Return_Button_as_window(self_: *mut Fl_Return_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Return_Button_as_group(self_: *mut Fl_Return_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Return_Button_as_group(self_: *mut Fl_Return_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Return_Button_set_deimage(arg1: *mut Fl_Return_Button, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Return_Button_set_deimage(arg1: *mut Fl_Return_Button, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Return_Button_deimage(arg1: *const Fl_Return_Button) -> *const core::ffi::c_void;
+    pub fn Fl_Return_Button_deimage(arg1: *const Fl_Return_Button) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Return_Button_set_callback(
         arg1: *mut Fl_Return_Button,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Return_Button_set_deleter(
         arg1: *mut Fl_Return_Button,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Return_Button_visible(self_: *const Fl_Return_Button) -> core::ffi::c_int;
+    pub fn Fl_Return_Button_visible(self_: *const Fl_Return_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Return_Button_visible_r(self_: *const Fl_Return_Button) -> core::ffi::c_int;
+    pub fn Fl_Return_Button_visible_r(self_: *const Fl_Return_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Return_Button_active(self_: *const Fl_Return_Button) -> core::ffi::c_uint;
+    pub fn Fl_Return_Button_active(self_: *const Fl_Return_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Return_Button_active_r(self_: *const Fl_Return_Button) -> core::ffi::c_int;
+    pub fn Fl_Return_Button_active_r(self_: *const Fl_Return_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Return_Button_callback(self_: *const Fl_Return_Button) -> Fl_Callback;
@@ -3676,37 +3497,37 @@ extern "C" {
     pub fn Fl_Return_Button_set_deletion_callback(
         self_: *mut Fl_Return_Button,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Return_Button_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Return_Button;
 }
 extern "C" {
-    pub fn Fl_Return_Button_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Return_Button_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Return_Button_shortcut(self_: *const Fl_Return_Button) -> core::ffi::c_int;
+    pub fn Fl_Return_Button_shortcut(self_: *const Fl_Return_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Return_Button_set_shortcut(self_: *mut Fl_Return_Button, shortcut: core::ffi::c_int);
+    pub fn Fl_Return_Button_set_shortcut(self_: *mut Fl_Return_Button, shortcut: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Return_Button_clear(self_: *mut Fl_Return_Button) -> core::ffi::c_int;
+    pub fn Fl_Return_Button_clear(self_: *mut Fl_Return_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Return_Button_value(self_: *mut Fl_Return_Button) -> core::ffi::c_int;
+    pub fn Fl_Return_Button_value(self_: *mut Fl_Return_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Return_Button_set_value(self_: *mut Fl_Return_Button, flag: core::ffi::c_int);
+    pub fn Fl_Return_Button_set_value(self_: *mut Fl_Return_Button, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Return_Button_set_down_box(self_: *mut Fl_Return_Button, arg1: core::ffi::c_int);
+    pub fn Fl_Return_Button_set_down_box(self_: *mut Fl_Return_Button, arg1: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Return_Button_down_box(self_: *const Fl_Return_Button) -> core::ffi::c_int;
+    pub fn Fl_Return_Button_down_box(self_: *const Fl_Return_Button) -> cty::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -3715,33 +3536,30 @@ pub struct Fl_Shortcut_Button {
 }
 extern "C" {
     pub fn Fl_Shortcut_Button_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Shortcut_Button;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_x(arg1: *mut Fl_Shortcut_Button) -> core::ffi::c_int;
+    pub fn Fl_Shortcut_Button_x(arg1: *mut Fl_Shortcut_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_y(arg1: *mut Fl_Shortcut_Button) -> core::ffi::c_int;
+    pub fn Fl_Shortcut_Button_y(arg1: *mut Fl_Shortcut_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_width(arg1: *mut Fl_Shortcut_Button) -> core::ffi::c_int;
+    pub fn Fl_Shortcut_Button_width(arg1: *mut Fl_Shortcut_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_height(arg1: *mut Fl_Shortcut_Button) -> core::ffi::c_int;
+    pub fn Fl_Shortcut_Button_height(arg1: *mut Fl_Shortcut_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_label(arg1: *mut Fl_Shortcut_Button) -> *const core::ffi::c_char;
+    pub fn Fl_Shortcut_Button_label(arg1: *mut Fl_Shortcut_Button) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_set_label(
-        arg1: *mut Fl_Shortcut_Button,
-        title: *const core::ffi::c_char,
-    );
+    pub fn Fl_Shortcut_Button_set_label(arg1: *mut Fl_Shortcut_Button, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Shortcut_Button_redraw(arg1: *mut Fl_Shortcut_Button);
@@ -3764,84 +3582,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Shortcut_Button_resize(
         arg1: *mut Fl_Shortcut_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Shortcut_Button_widget_resize(
         arg1: *mut Fl_Shortcut_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_tooltip(arg1: *mut Fl_Shortcut_Button) -> *const core::ffi::c_char;
+    pub fn Fl_Shortcut_Button_tooltip(arg1: *mut Fl_Shortcut_Button) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_set_tooltip(
-        arg1: *mut Fl_Shortcut_Button,
-        txt: *const core::ffi::c_char,
-    );
+    pub fn Fl_Shortcut_Button_set_tooltip(arg1: *mut Fl_Shortcut_Button, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_get_type(arg1: *mut Fl_Shortcut_Button) -> core::ffi::c_int;
+    pub fn Fl_Shortcut_Button_get_type(arg1: *mut Fl_Shortcut_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_set_type(arg1: *mut Fl_Shortcut_Button, typ: core::ffi::c_int);
+    pub fn Fl_Shortcut_Button_set_type(arg1: *mut Fl_Shortcut_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_color(arg1: *mut Fl_Shortcut_Button) -> core::ffi::c_uint;
+    pub fn Fl_Shortcut_Button_color(arg1: *mut Fl_Shortcut_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_set_color(arg1: *mut Fl_Shortcut_Button, color: core::ffi::c_uint);
+    pub fn Fl_Shortcut_Button_set_color(arg1: *mut Fl_Shortcut_Button, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Shortcut_Button_measure_label(
         arg1: *const Fl_Shortcut_Button,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_label_color(arg1: *mut Fl_Shortcut_Button) -> core::ffi::c_uint;
+    pub fn Fl_Shortcut_Button_label_color(arg1: *mut Fl_Shortcut_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_set_label_color(
-        arg1: *mut Fl_Shortcut_Button,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Shortcut_Button_set_label_color(arg1: *mut Fl_Shortcut_Button, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_label_font(arg1: *mut Fl_Shortcut_Button) -> core::ffi::c_int;
+    pub fn Fl_Shortcut_Button_label_font(arg1: *mut Fl_Shortcut_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_set_label_font(arg1: *mut Fl_Shortcut_Button, font: core::ffi::c_int);
+    pub fn Fl_Shortcut_Button_set_label_font(arg1: *mut Fl_Shortcut_Button, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_label_size(arg1: *mut Fl_Shortcut_Button) -> core::ffi::c_int;
+    pub fn Fl_Shortcut_Button_label_size(arg1: *mut Fl_Shortcut_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_set_label_size(arg1: *mut Fl_Shortcut_Button, sz: core::ffi::c_int);
+    pub fn Fl_Shortcut_Button_set_label_size(arg1: *mut Fl_Shortcut_Button, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_label_type(arg1: *mut Fl_Shortcut_Button) -> core::ffi::c_int;
+    pub fn Fl_Shortcut_Button_label_type(arg1: *mut Fl_Shortcut_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_set_label_type(arg1: *mut Fl_Shortcut_Button, typ: core::ffi::c_int);
+    pub fn Fl_Shortcut_Button_set_label_type(arg1: *mut Fl_Shortcut_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_box(arg1: *mut Fl_Shortcut_Button) -> core::ffi::c_int;
+    pub fn Fl_Shortcut_Button_box(arg1: *mut Fl_Shortcut_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_set_box(arg1: *mut Fl_Shortcut_Button, typ: core::ffi::c_int);
+    pub fn Fl_Shortcut_Button_set_box(arg1: *mut Fl_Shortcut_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_changed(arg1: *mut Fl_Shortcut_Button) -> core::ffi::c_int;
+    pub fn Fl_Shortcut_Button_changed(arg1: *mut Fl_Shortcut_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Shortcut_Button_set_changed(arg1: *mut Fl_Shortcut_Button);
@@ -3850,35 +3662,32 @@ extern "C" {
     pub fn Fl_Shortcut_Button_clear_changed(arg1: *mut Fl_Shortcut_Button);
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_align(arg1: *mut Fl_Shortcut_Button) -> core::ffi::c_int;
+    pub fn Fl_Shortcut_Button_align(arg1: *mut Fl_Shortcut_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_set_align(arg1: *mut Fl_Shortcut_Button, typ: core::ffi::c_int);
+    pub fn Fl_Shortcut_Button_set_align(arg1: *mut Fl_Shortcut_Button, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Shortcut_Button_delete(arg1: *mut Fl_Shortcut_Button);
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_set_image(
-        arg1: *mut Fl_Shortcut_Button,
-        arg2: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Shortcut_Button_set_image(arg1: *mut Fl_Shortcut_Button, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Shortcut_Button_handle(
         self_: *mut Fl_Shortcut_Button,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_handle_event(self_: *mut Fl_Shortcut_Button, event: core::ffi::c_int);
+    pub fn Fl_Shortcut_Button_handle_event(self_: *mut Fl_Shortcut_Button, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Shortcut_Button_draw(
         self_: *mut Fl_Shortcut_Button,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -3887,35 +3696,35 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_set_when(arg1: *mut Fl_Shortcut_Button, arg2: core::ffi::c_int);
+    pub fn Fl_Shortcut_Button_set_when(arg1: *mut Fl_Shortcut_Button, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_when(arg1: *const Fl_Shortcut_Button) -> core::ffi::c_int;
+    pub fn Fl_Shortcut_Button_when(arg1: *const Fl_Shortcut_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_image(arg1: *const Fl_Shortcut_Button) -> *const core::ffi::c_void;
+    pub fn Fl_Shortcut_Button_image(arg1: *const Fl_Shortcut_Button) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_parent(self_: *const Fl_Shortcut_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Shortcut_Button_parent(self_: *const Fl_Shortcut_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_selection_color(arg1: *mut Fl_Shortcut_Button) -> core::ffi::c_uint;
+    pub fn Fl_Shortcut_Button_selection_color(arg1: *mut Fl_Shortcut_Button) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Shortcut_Button_set_selection_color(
         arg1: *mut Fl_Shortcut_Button,
-        color: core::ffi::c_uint,
+        color: cty::c_uint,
     );
 }
 extern "C" {
@@ -3924,24 +3733,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Shortcut_Button_inside(
         self_: *const Fl_Shortcut_Button,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_window(arg1: *const Fl_Shortcut_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Shortcut_Button_window(arg1: *const Fl_Shortcut_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_top_window(arg1: *const Fl_Shortcut_Button)
-        -> *mut core::ffi::c_void;
+    pub fn Fl_Shortcut_Button_top_window(arg1: *const Fl_Shortcut_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_takes_events(arg1: *const Fl_Shortcut_Button) -> core::ffi::c_int;
+    pub fn Fl_Shortcut_Button_takes_events(arg1: *const Fl_Shortcut_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_user_data(arg1: *const Fl_Shortcut_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Shortcut_Button_user_data(arg1: *const Fl_Shortcut_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_take_focus(self_: *mut Fl_Shortcut_Button) -> core::ffi::c_int;
+    pub fn Fl_Shortcut_Button_take_focus(self_: *mut Fl_Shortcut_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Shortcut_Button_set_visible_focus(self_: *mut Fl_Shortcut_Button);
@@ -3950,98 +3758,84 @@ extern "C" {
     pub fn Fl_Shortcut_Button_clear_visible_focus(self_: *mut Fl_Shortcut_Button);
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_visible_focus(self_: *mut Fl_Shortcut_Button, v: core::ffi::c_int);
+    pub fn Fl_Shortcut_Button_visible_focus(self_: *mut Fl_Shortcut_Button, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_has_visible_focus(
-        self_: *mut Fl_Shortcut_Button,
-    ) -> core::ffi::c_uint;
+    pub fn Fl_Shortcut_Button_has_visible_focus(self_: *mut Fl_Shortcut_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_set_user_data(
-        arg1: *mut Fl_Shortcut_Button,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Shortcut_Button_set_user_data(arg1: *mut Fl_Shortcut_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_draw_data(self_: *const Fl_Shortcut_Button)
-        -> *mut core::ffi::c_void;
+    pub fn Fl_Shortcut_Button_draw_data(self_: *const Fl_Shortcut_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_handle_data(
-        self_: *const Fl_Shortcut_Button,
-    ) -> *mut core::ffi::c_void;
+    pub fn Fl_Shortcut_Button_handle_data(self_: *const Fl_Shortcut_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_set_draw_data(
-        self_: *mut Fl_Shortcut_Button,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Shortcut_Button_set_draw_data(self_: *mut Fl_Shortcut_Button, data: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Shortcut_Button_set_handle_data(
         self_: *mut Fl_Shortcut_Button,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_damage(self_: *const Fl_Shortcut_Button) -> core::ffi::c_uchar;
+    pub fn Fl_Shortcut_Button_damage(self_: *const Fl_Shortcut_Button) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_set_damage(self_: *mut Fl_Shortcut_Button, flag: core::ffi::c_uchar);
+    pub fn Fl_Shortcut_Button_set_damage(self_: *mut Fl_Shortcut_Button, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Shortcut_Button_set_damage_area(
         self_: *mut Fl_Shortcut_Button,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Shortcut_Button_clear_damage(self_: *mut Fl_Shortcut_Button);
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_as_window(self_: *mut Fl_Shortcut_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Shortcut_Button_as_window(self_: *mut Fl_Shortcut_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_as_group(self_: *mut Fl_Shortcut_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Shortcut_Button_as_group(self_: *mut Fl_Shortcut_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_set_deimage(
-        arg1: *mut Fl_Shortcut_Button,
-        arg2: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Shortcut_Button_set_deimage(arg1: *mut Fl_Shortcut_Button, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_deimage(arg1: *const Fl_Shortcut_Button) -> *const core::ffi::c_void;
+    pub fn Fl_Shortcut_Button_deimage(arg1: *const Fl_Shortcut_Button) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Shortcut_Button_set_callback(
         arg1: *mut Fl_Shortcut_Button,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Shortcut_Button_set_deleter(
         arg1: *mut Fl_Shortcut_Button,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_visible(self_: *const Fl_Shortcut_Button) -> core::ffi::c_int;
+    pub fn Fl_Shortcut_Button_visible(self_: *const Fl_Shortcut_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_visible_r(self_: *const Fl_Shortcut_Button) -> core::ffi::c_int;
+    pub fn Fl_Shortcut_Button_visible_r(self_: *const Fl_Shortcut_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_active(self_: *const Fl_Shortcut_Button) -> core::ffi::c_uint;
+    pub fn Fl_Shortcut_Button_active(self_: *const Fl_Shortcut_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_active_r(self_: *const Fl_Shortcut_Button) -> core::ffi::c_int;
+    pub fn Fl_Shortcut_Button_active_r(self_: *const Fl_Shortcut_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Shortcut_Button_callback(self_: *const Fl_Shortcut_Button) -> Fl_Callback;
@@ -4050,38 +3844,35 @@ extern "C" {
     pub fn Fl_Shortcut_Button_set_deletion_callback(
         self_: *mut Fl_Shortcut_Button,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Shortcut_Button_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Shortcut_Button;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Shortcut_Button_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_shortcut(self_: *const Fl_Shortcut_Button) -> core::ffi::c_int;
+    pub fn Fl_Shortcut_Button_shortcut(self_: *const Fl_Shortcut_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_set_shortcut(
-        self_: *mut Fl_Shortcut_Button,
-        shortcut: core::ffi::c_int,
-    );
+    pub fn Fl_Shortcut_Button_set_shortcut(self_: *mut Fl_Shortcut_Button, shortcut: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_clear(self_: *mut Fl_Shortcut_Button) -> core::ffi::c_int;
+    pub fn Fl_Shortcut_Button_clear(self_: *mut Fl_Shortcut_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_value(self_: *mut Fl_Shortcut_Button) -> core::ffi::c_int;
+    pub fn Fl_Shortcut_Button_value(self_: *mut Fl_Shortcut_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_set_value(self_: *mut Fl_Shortcut_Button, flag: core::ffi::c_int);
+    pub fn Fl_Shortcut_Button_set_value(self_: *mut Fl_Shortcut_Button, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_set_down_box(self_: *mut Fl_Shortcut_Button, arg1: core::ffi::c_int);
+    pub fn Fl_Shortcut_Button_set_down_box(self_: *mut Fl_Shortcut_Button, arg1: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Shortcut_Button_down_box(self_: *const Fl_Shortcut_Button) -> core::ffi::c_int;
+    pub fn Fl_Shortcut_Button_down_box(self_: *const Fl_Shortcut_Button) -> cty::c_int;
 }

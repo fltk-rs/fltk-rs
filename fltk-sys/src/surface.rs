@@ -9,7 +9,7 @@ extern "C" {
     pub fn Fl_Surface_Device_set_current(self_: *mut Fl_Surface_Device);
 }
 extern "C" {
-    pub fn Fl_Surface_Device_is_current(self_: *mut Fl_Surface_Device) -> core::ffi::c_int;
+    pub fn Fl_Surface_Device_is_current(self_: *mut Fl_Surface_Device) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Surface_Device_surface() -> *mut Fl_Surface_Device;
@@ -27,9 +27,9 @@ pub struct Fl_Image_Surface {
 }
 extern "C" {
     pub fn Fl_Image_Surface_new(
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
-        high_res: core::ffi::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
+        high_res: cty::c_int,
     ) -> *mut Fl_Image_Surface;
 }
 extern "C" {
@@ -39,27 +39,23 @@ extern "C" {
     pub fn Fl_Image_Surface_set_current(self_: *mut Fl_Image_Surface);
 }
 extern "C" {
-    pub fn Fl_Image_Surface_is_current(self_: *mut Fl_Image_Surface) -> core::ffi::c_int;
+    pub fn Fl_Image_Surface_is_current(self_: *mut Fl_Image_Surface) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Image_Surface_image(self_: *mut Fl_Image_Surface) -> *mut core::ffi::c_void;
+    pub fn Fl_Image_Surface_image(self_: *mut Fl_Image_Surface) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Image_Surface_highres_image(self_: *mut Fl_Image_Surface) -> *mut core::ffi::c_void;
+    pub fn Fl_Image_Surface_highres_image(self_: *mut Fl_Image_Surface) -> *mut cty::c_void;
 }
 extern "C" {
     pub fn Fl_Image_Surface_origin(
         self_: *mut Fl_Image_Surface,
-        x: *mut core::ffi::c_int,
-        y: *mut core::ffi::c_int,
+        x: *mut cty::c_int,
+        y: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Image_Surface_set_origin(
-        self_: *mut Fl_Image_Surface,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-    );
+    pub fn Fl_Image_Surface_set_origin(self_: *mut Fl_Image_Surface, x: cty::c_int, y: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Image_Surface_rescale(self_: *mut Fl_Image_Surface);
@@ -67,17 +63,17 @@ extern "C" {
 extern "C" {
     pub fn Fl_Image_Surface_draw(
         self_: *mut Fl_Image_Surface,
-        widget: *mut core::ffi::c_void,
-        delta_x: core::ffi::c_int,
-        delta_y: core::ffi::c_int,
+        widget: *mut cty::c_void,
+        delta_x: cty::c_int,
+        delta_y: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Image_Surface_draw_decorated_window(
         self_: *mut Fl_Image_Surface,
-        widget: *mut core::ffi::c_void,
-        delta_x: core::ffi::c_int,
-        delta_y: core::ffi::c_int,
+        widget: *mut cty::c_void,
+        delta_x: cty::c_int,
+        delta_y: cty::c_int,
     );
 }
 #[repr(C)]
@@ -87,9 +83,9 @@ pub struct Fl_SVG_File_Surface {
 }
 extern "C" {
     pub fn Fl_SVG_File_Surface_new(
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        file: *const core::ffi::c_char,
+        width: cty::c_int,
+        height: cty::c_int,
+        file: *const cty::c_char,
     ) -> *mut Fl_SVG_File_Surface;
 }
 extern "C" {
@@ -98,30 +94,30 @@ extern "C" {
 extern "C" {
     pub fn Fl_SVG_File_Surface_origin(
         self_: *mut Fl_SVG_File_Surface,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_SVG_File_Surface_printable_rect(
         self_: *mut Fl_SVG_File_Surface,
-        w: *mut core::ffi::c_int,
-        h: *mut core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        w: *mut cty::c_int,
+        h: *mut cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_SVG_File_Surface_draw(
         self_: *mut Fl_SVG_File_Surface,
-        widget: *mut core::ffi::c_void,
-        delta_x: core::ffi::c_int,
-        delta_y: core::ffi::c_int,
+        widget: *mut cty::c_void,
+        delta_x: cty::c_int,
+        delta_y: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_SVG_File_Surface_draw_decorated_window(
         self_: *mut Fl_SVG_File_Surface,
-        widget: *mut core::ffi::c_void,
-        delta_x: core::ffi::c_int,
-        delta_y: core::ffi::c_int,
+        widget: *mut cty::c_void,
+        delta_x: cty::c_int,
+        delta_y: cty::c_int,
     );
 }

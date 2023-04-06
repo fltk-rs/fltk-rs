@@ -5,24 +5,22 @@
 pub struct Fl_Widget {
     _unused: [u8; 0],
 }
-pub type Fl_Callback = ::core::option::Option<
-    unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
->;
+pub type Fl_Callback =
+    ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void)>;
 pub type custom_handler_callback = ::core::option::Option<
     unsafe extern "C" fn(
         arg1: *mut Fl_Widget,
-        arg2: core::ffi::c_int,
-        arg3: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int,
+        arg2: cty::c_int,
+        arg3: *mut cty::c_void,
+    ) -> cty::c_int,
 >;
-pub type custom_draw_callback = ::core::option::Option<
-    unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
->;
+pub type custom_draw_callback =
+    ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void)>;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union winid {
-    pub x_id: core::ffi::c_ulong,
-    pub opaque: *mut core::ffi::c_void,
+    pub x_id: cty::c_ulong,
+    pub opaque: *mut cty::c_void,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -31,30 +29,30 @@ pub struct Fl_Window {
 }
 extern "C" {
     pub fn Fl_Window_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Window;
 }
 extern "C" {
-    pub fn Fl_Window_x(arg1: *mut Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_x(arg1: *mut Fl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_y(arg1: *mut Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_y(arg1: *mut Fl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_width(arg1: *mut Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_width(arg1: *mut Fl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_height(arg1: *mut Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_height(arg1: *mut Fl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_label(arg1: *mut Fl_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Window_label(arg1: *mut Fl_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Window_set_label(arg1: *mut Fl_Window, title: *const core::ffi::c_char);
+    pub fn Fl_Window_set_label(arg1: *mut Fl_Window, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Window_redraw(arg1: *mut Fl_Window);
@@ -77,78 +75,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Window_resize(
         arg1: *mut Fl_Window,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Window_widget_resize(
         arg1: *mut Fl_Window,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Window_tooltip(arg1: *mut Fl_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Window_tooltip(arg1: *mut Fl_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Window_set_tooltip(arg1: *mut Fl_Window, txt: *const core::ffi::c_char);
+    pub fn Fl_Window_set_tooltip(arg1: *mut Fl_Window, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Window_get_type(arg1: *mut Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_get_type(arg1: *mut Fl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_set_type(arg1: *mut Fl_Window, typ: core::ffi::c_int);
+    pub fn Fl_Window_set_type(arg1: *mut Fl_Window, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_color(arg1: *mut Fl_Window) -> core::ffi::c_uint;
+    pub fn Fl_Window_color(arg1: *mut Fl_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Window_set_color(arg1: *mut Fl_Window, color: core::ffi::c_uint);
+    pub fn Fl_Window_set_color(arg1: *mut Fl_Window, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Window_measure_label(
         arg1: *const Fl_Window,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Window_label_color(arg1: *mut Fl_Window) -> core::ffi::c_uint;
+    pub fn Fl_Window_label_color(arg1: *mut Fl_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Window_set_label_color(arg1: *mut Fl_Window, color: core::ffi::c_uint);
+    pub fn Fl_Window_set_label_color(arg1: *mut Fl_Window, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Window_label_font(arg1: *mut Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_label_font(arg1: *mut Fl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_set_label_font(arg1: *mut Fl_Window, font: core::ffi::c_int);
+    pub fn Fl_Window_set_label_font(arg1: *mut Fl_Window, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_label_size(arg1: *mut Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_label_size(arg1: *mut Fl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_set_label_size(arg1: *mut Fl_Window, sz: core::ffi::c_int);
+    pub fn Fl_Window_set_label_size(arg1: *mut Fl_Window, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_label_type(arg1: *mut Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_label_type(arg1: *mut Fl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_set_label_type(arg1: *mut Fl_Window, typ: core::ffi::c_int);
+    pub fn Fl_Window_set_label_type(arg1: *mut Fl_Window, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_box(arg1: *mut Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_box(arg1: *mut Fl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_set_box(arg1: *mut Fl_Window, typ: core::ffi::c_int);
+    pub fn Fl_Window_set_box(arg1: *mut Fl_Window, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_changed(arg1: *mut Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_changed(arg1: *mut Fl_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Window_set_changed(arg1: *mut Fl_Window);
@@ -157,33 +155,29 @@ extern "C" {
     pub fn Fl_Window_clear_changed(arg1: *mut Fl_Window);
 }
 extern "C" {
-    pub fn Fl_Window_align(arg1: *mut Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_align(arg1: *mut Fl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_set_align(arg1: *mut Fl_Window, typ: core::ffi::c_int);
+    pub fn Fl_Window_set_align(arg1: *mut Fl_Window, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Window_delete(arg1: *mut Fl_Window);
 }
 extern "C" {
-    pub fn Fl_Window_set_image(arg1: *mut Fl_Window, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Window_set_image(arg1: *mut Fl_Window, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Window_handle(
         self_: *mut Fl_Window,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Window_handle_event(self_: *mut Fl_Window, event: core::ffi::c_int);
+    pub fn Fl_Window_handle_event(self_: *mut Fl_Window, event: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_draw(
-        self_: *mut Fl_Window,
-        cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Window_draw(self_: *mut Fl_Window, cb: custom_draw_callback, data: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Window_resize_callback(
@@ -191,57 +185,54 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Window_set_when(arg1: *mut Fl_Window, arg2: core::ffi::c_int);
+    pub fn Fl_Window_set_when(arg1: *mut Fl_Window, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_when(arg1: *const Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_when(arg1: *const Fl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_image(arg1: *const Fl_Window) -> *const core::ffi::c_void;
+    pub fn Fl_Window_image(arg1: *const Fl_Window) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Window_parent(self_: *const Fl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Window_parent(self_: *const Fl_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Window_selection_color(arg1: *mut Fl_Window) -> core::ffi::c_uint;
+    pub fn Fl_Window_selection_color(arg1: *mut Fl_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Window_set_selection_color(arg1: *mut Fl_Window, color: core::ffi::c_uint);
+    pub fn Fl_Window_set_selection_color(arg1: *mut Fl_Window, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Window_do_callback(arg1: *mut Fl_Window);
 }
 extern "C" {
-    pub fn Fl_Window_inside(
-        self_: *const Fl_Window,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Window_inside(self_: *const Fl_Window, arg1: *mut cty::c_void) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_window(arg1: *const Fl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Window_window(arg1: *const Fl_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Window_top_window(arg1: *const Fl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Window_top_window(arg1: *const Fl_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Window_takes_events(arg1: *const Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_takes_events(arg1: *const Fl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_user_data(arg1: *const Fl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Window_user_data(arg1: *const Fl_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Window_take_focus(self_: *mut Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_take_focus(self_: *mut Fl_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Window_set_visible_focus(self_: *mut Fl_Window);
@@ -250,81 +241,77 @@ extern "C" {
     pub fn Fl_Window_clear_visible_focus(self_: *mut Fl_Window);
 }
 extern "C" {
-    pub fn Fl_Window_visible_focus(self_: *mut Fl_Window, v: core::ffi::c_int);
+    pub fn Fl_Window_visible_focus(self_: *mut Fl_Window, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_has_visible_focus(self_: *mut Fl_Window) -> core::ffi::c_uint;
+    pub fn Fl_Window_has_visible_focus(self_: *mut Fl_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Window_set_user_data(arg1: *mut Fl_Window, data: *mut core::ffi::c_void);
+    pub fn Fl_Window_set_user_data(arg1: *mut Fl_Window, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Window_draw_data(self_: *const Fl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Window_draw_data(self_: *const Fl_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Window_handle_data(self_: *const Fl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Window_handle_data(self_: *const Fl_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Window_set_draw_data(self_: *mut Fl_Window, data: *mut core::ffi::c_void);
+    pub fn Fl_Window_set_draw_data(self_: *mut Fl_Window, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Window_set_handle_data(self_: *mut Fl_Window, data: *mut core::ffi::c_void);
+    pub fn Fl_Window_set_handle_data(self_: *mut Fl_Window, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Window_damage(self_: *const Fl_Window) -> core::ffi::c_uchar;
+    pub fn Fl_Window_damage(self_: *const Fl_Window) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Window_set_damage(self_: *mut Fl_Window, flag: core::ffi::c_uchar);
+    pub fn Fl_Window_set_damage(self_: *mut Fl_Window, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Window_set_damage_area(
         self_: *mut Fl_Window,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Window_clear_damage(self_: *mut Fl_Window);
 }
 extern "C" {
-    pub fn Fl_Window_as_window(self_: *mut Fl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Window_as_window(self_: *mut Fl_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Window_as_group(self_: *mut Fl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Window_as_group(self_: *mut Fl_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Window_set_deimage(arg1: *mut Fl_Window, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Window_set_deimage(arg1: *mut Fl_Window, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Window_deimage(arg1: *const Fl_Window) -> *const core::ffi::c_void;
+    pub fn Fl_Window_deimage(arg1: *const Fl_Window) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Window_set_callback(
-        arg1: *mut Fl_Window,
-        arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Window_set_callback(arg1: *mut Fl_Window, arg2: Fl_Callback, arg3: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Window_set_deleter(
         arg1: *mut Fl_Window,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Window_visible(self_: *const Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_visible(self_: *const Fl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_visible_r(self_: *const Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_visible_r(self_: *const Fl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_active(self_: *const Fl_Window) -> core::ffi::c_uint;
+    pub fn Fl_Window_active(self_: *const Fl_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Window_active_r(self_: *const Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_active_r(self_: *const Fl_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Window_callback(self_: *const Fl_Window) -> Fl_Callback;
@@ -333,16 +320,16 @@ extern "C" {
     pub fn Fl_Window_set_deletion_callback(
         self_: *mut Fl_Window,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Window_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Window;
 }
 extern "C" {
-    pub fn Fl_Window_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Window_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Window_begin(self_: *mut Fl_Window);
@@ -351,44 +338,37 @@ extern "C" {
     pub fn Fl_Window_end(self_: *mut Fl_Window);
 }
 extern "C" {
-    pub fn Fl_Window_find(
-        self_: *mut Fl_Window,
-        arg1: *const core::ffi::c_void,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Window_find(self_: *mut Fl_Window, arg1: *const cty::c_void) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_add(self_: *mut Fl_Window, arg1: *mut core::ffi::c_void);
+    pub fn Fl_Window_add(self_: *mut Fl_Window, arg1: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Window_insert(
-        self_: *mut Fl_Window,
-        arg1: *mut core::ffi::c_void,
-        pos: core::ffi::c_int,
-    );
+    pub fn Fl_Window_insert(self_: *mut Fl_Window, arg1: *mut cty::c_void, pos: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_remove(self_: *mut Fl_Window, wid: *mut core::ffi::c_void);
+    pub fn Fl_Window_remove(self_: *mut Fl_Window, wid: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Window_remove_by_index(self_: *mut Fl_Window, idx: core::ffi::c_int);
+    pub fn Fl_Window_remove_by_index(self_: *mut Fl_Window, idx: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Window_clear(self_: *mut Fl_Window);
 }
 extern "C" {
-    pub fn Fl_Window_children(self_: *mut Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_children(self_: *mut Fl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_child(arg1: *mut Fl_Window, index: core::ffi::c_int) -> *mut Fl_Widget;
+    pub fn Fl_Window_child(arg1: *mut Fl_Window, index: cty::c_int) -> *mut Fl_Widget;
 }
 extern "C" {
-    pub fn Fl_Window_resizable(self_: *mut Fl_Window, arg1: *mut core::ffi::c_void);
+    pub fn Fl_Window_resizable(self_: *mut Fl_Window, arg1: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Window_set_clip_children(self_: *mut Fl_Window, c: core::ffi::c_int);
+    pub fn Fl_Window_set_clip_children(self_: *mut Fl_Window, c: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_clip_children(self_: *mut Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_clip_children(self_: *mut Fl_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Window_init_sizes(self_: *mut Fl_Window);
@@ -406,120 +386,120 @@ extern "C" {
     pub fn Fl_Window_draw_children(self_: *mut Fl_Window);
 }
 extern "C" {
-    pub fn Fl_Window_make_modal(arg1: *mut Fl_Window, boolean: core::ffi::c_uint);
+    pub fn Fl_Window_make_modal(arg1: *mut Fl_Window, boolean: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Window_fullscreen(arg1: *mut Fl_Window, boolean: core::ffi::c_uint);
+    pub fn Fl_Window_fullscreen(arg1: *mut Fl_Window, boolean: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Window_make_current(arg1: *mut Fl_Window);
 }
 extern "C" {
-    pub fn Fl_Window_set_icon(arg1: *mut Fl_Window, arg2: *const core::ffi::c_void);
+    pub fn Fl_Window_set_icon(arg1: *mut Fl_Window, arg2: *const cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Window_icon(arg1: *const Fl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Window_icon(arg1: *const Fl_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Window_set_cursor(self_: *mut Fl_Window, cursor: core::ffi::c_int);
+    pub fn Fl_Window_set_cursor(self_: *mut Fl_Window, cursor: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_shown(self_: *mut Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_shown(self_: *mut Fl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_raw_handle(w: *const Fl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Window_raw_handle(w: *const Fl_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Window_set_border(arg1: *mut Fl_Window, flag: core::ffi::c_int);
+    pub fn Fl_Window_set_border(arg1: *mut Fl_Window, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_border(arg1: *const Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_border(arg1: *const Fl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_region(self_: *const Fl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Window_region(self_: *const Fl_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Window_set_region(self_: *mut Fl_Window, r: *mut core::ffi::c_void);
+    pub fn Fl_Window_set_region(self_: *mut Fl_Window, r: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Window_iconize(self_: *mut Fl_Window);
 }
 extern "C" {
-    pub fn Fl_Window_fullscreen_active(self_: *const Fl_Window) -> core::ffi::c_uint;
+    pub fn Fl_Window_fullscreen_active(self_: *const Fl_Window) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Window_free_position(self_: *mut Fl_Window);
 }
 extern "C" {
-    pub fn Fl_Window_decorated_w(self_: *const Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_decorated_w(self_: *const Fl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_decorated_h(self_: *const Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_decorated_h(self_: *const Fl_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Window_size_range(
         self_: *mut Fl_Window,
-        arg1: core::ffi::c_int,
-        arg2: core::ffi::c_int,
-        arg3: core::ffi::c_int,
-        arg4: core::ffi::c_int,
+        arg1: cty::c_int,
+        arg2: cty::c_int,
+        arg3: cty::c_int,
+        arg4: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Window_hotspot(self_: *mut Fl_Window, wid: *mut Fl_Widget);
 }
 extern "C" {
-    pub fn Fl_Window_set_shape(self_: *mut Fl_Window, image: *const core::ffi::c_void);
+    pub fn Fl_Window_set_shape(self_: *mut Fl_Window, image: *const cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Window_shape(self_: *mut Fl_Window) -> *const core::ffi::c_void;
+    pub fn Fl_Window_shape(self_: *mut Fl_Window) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Window_x_root(self_: *const Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_x_root(self_: *const Fl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_y_root(self_: *const Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_y_root(self_: *const Fl_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Window_set_cursor_image(
         self_: *mut Fl_Window,
-        image: *const core::ffi::c_void,
-        hot_x: core::ffi::c_int,
-        hot_y: core::ffi::c_int,
+        image: *const cty::c_void,
+        hot_x: cty::c_int,
+        hot_y: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Window_default_cursor(self_: *mut Fl_Window, cursor: core::ffi::c_int);
+    pub fn Fl_Window_default_cursor(self_: *mut Fl_Window, cursor: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_screen_num(arg1: *mut Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_screen_num(arg1: *mut Fl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_set_screen_num(arg1: *mut Fl_Window, screen_num: core::ffi::c_int);
+    pub fn Fl_Window_set_screen_num(arg1: *mut Fl_Window, screen_num: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Window_wait_for_expose(arg1: *mut Fl_Window);
 }
 extern "C" {
-    pub fn Fl_Window_set_alpha(self_: *mut Fl_Window, val: core::ffi::c_uchar);
+    pub fn Fl_Window_set_alpha(self_: *mut Fl_Window, val: cty::c_uchar);
 }
 extern "C" {
-    pub fn Fl_Window_alpha(self_: *const Fl_Window) -> core::ffi::c_uchar;
+    pub fn Fl_Window_alpha(self_: *const Fl_Window) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Window_force_position(self_: *mut Fl_Window, flag: core::ffi::c_int);
+    pub fn Fl_Window_force_position(self_: *mut Fl_Window, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_default_xclass() -> *const core::ffi::c_char;
+    pub fn Fl_Window_default_xclass() -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Window_xclass(self_: *const Fl_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Window_xclass(self_: *const Fl_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Window_set_default_xclass(s: *const core::ffi::c_char);
+    pub fn Fl_Window_set_default_xclass(s: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Window_set_xclass(self_: *mut Fl_Window, s: *const core::ffi::c_char);
+    pub fn Fl_Window_set_xclass(self_: *mut Fl_Window, s: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Window_clear_modal_states(self_: *mut Fl_Window);
@@ -528,42 +508,42 @@ extern "C" {
     pub fn Fl_Window_set_override(arg1: *mut Fl_Window);
 }
 extern "C" {
-    pub fn Fl_Window_override(arg1: *const Fl_Window) -> core::ffi::c_int;
+    pub fn Fl_Window_override(arg1: *const Fl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_icon_label(arg1: *const Fl_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Window_icon_label(arg1: *const Fl_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Window_set_icon_label(arg1: *mut Fl_Window, arg2: *const core::ffi::c_char);
+    pub fn Fl_Window_set_icon_label(arg1: *mut Fl_Window, arg2: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Window_set_icons(
         w: *mut Fl_Window,
-        images: *mut *const core::ffi::c_void,
-        length: core::ffi::c_int,
+        images: *mut *const cty::c_void,
+        length: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Window_find_by_handle(handle: *mut core::ffi::c_void) -> *mut Fl_Window;
+    pub fn Fl_Window_find_by_handle(handle: *mut cty::c_void) -> *mut Fl_Window;
 }
 extern "C" {
-    pub fn resolve_raw_handle(handle: *mut core::ffi::c_void) -> winid;
+    pub fn resolve_raw_handle(handle: *mut cty::c_void) -> winid;
 }
 extern "C" {
-    pub fn Fl_display() -> *mut core::ffi::c_void;
+    pub fn Fl_display() -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_gc() -> *mut core::ffi::c_void;
+    pub fn Fl_gc() -> *mut cty::c_void;
 }
 extern "C" {
     pub fn Fl_Window_show_with_args(
         w: *mut Fl_Window,
-        argc: core::ffi::c_int,
-        argv: *mut *mut core::ffi::c_char,
+        argc: cty::c_int,
+        argv: *mut *mut cty::c_char,
     );
 }
 extern "C" {
-    pub fn Fl_Window_set_raw_handle(self_: *mut Fl_Window, handle: *mut core::ffi::c_void);
+    pub fn Fl_Window_set_raw_handle(self_: *mut Fl_Window, handle: *mut cty::c_void);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -572,30 +552,30 @@ pub struct Fl_Single_Window {
 }
 extern "C" {
     pub fn Fl_Single_Window_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Single_Window;
 }
 extern "C" {
-    pub fn Fl_Single_Window_x(arg1: *mut Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_x(arg1: *mut Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_y(arg1: *mut Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_y(arg1: *mut Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_width(arg1: *mut Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_width(arg1: *mut Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_height(arg1: *mut Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_height(arg1: *mut Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_label(arg1: *mut Fl_Single_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Single_Window_label(arg1: *mut Fl_Single_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_label(arg1: *mut Fl_Single_Window, title: *const core::ffi::c_char);
+    pub fn Fl_Single_Window_set_label(arg1: *mut Fl_Single_Window, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Single_Window_redraw(arg1: *mut Fl_Single_Window);
@@ -618,78 +598,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Single_Window_resize(
         arg1: *mut Fl_Single_Window,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Single_Window_widget_resize(
         arg1: *mut Fl_Single_Window,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Single_Window_tooltip(arg1: *mut Fl_Single_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Single_Window_tooltip(arg1: *mut Fl_Single_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_tooltip(arg1: *mut Fl_Single_Window, txt: *const core::ffi::c_char);
+    pub fn Fl_Single_Window_set_tooltip(arg1: *mut Fl_Single_Window, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Single_Window_get_type(arg1: *mut Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_get_type(arg1: *mut Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_type(arg1: *mut Fl_Single_Window, typ: core::ffi::c_int);
+    pub fn Fl_Single_Window_set_type(arg1: *mut Fl_Single_Window, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Single_Window_color(arg1: *mut Fl_Single_Window) -> core::ffi::c_uint;
+    pub fn Fl_Single_Window_color(arg1: *mut Fl_Single_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_color(arg1: *mut Fl_Single_Window, color: core::ffi::c_uint);
+    pub fn Fl_Single_Window_set_color(arg1: *mut Fl_Single_Window, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Single_Window_measure_label(
         arg1: *const Fl_Single_Window,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Single_Window_label_color(arg1: *mut Fl_Single_Window) -> core::ffi::c_uint;
+    pub fn Fl_Single_Window_label_color(arg1: *mut Fl_Single_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_label_color(arg1: *mut Fl_Single_Window, color: core::ffi::c_uint);
+    pub fn Fl_Single_Window_set_label_color(arg1: *mut Fl_Single_Window, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Single_Window_label_font(arg1: *mut Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_label_font(arg1: *mut Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_label_font(arg1: *mut Fl_Single_Window, font: core::ffi::c_int);
+    pub fn Fl_Single_Window_set_label_font(arg1: *mut Fl_Single_Window, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Single_Window_label_size(arg1: *mut Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_label_size(arg1: *mut Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_label_size(arg1: *mut Fl_Single_Window, sz: core::ffi::c_int);
+    pub fn Fl_Single_Window_set_label_size(arg1: *mut Fl_Single_Window, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Single_Window_label_type(arg1: *mut Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_label_type(arg1: *mut Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_label_type(arg1: *mut Fl_Single_Window, typ: core::ffi::c_int);
+    pub fn Fl_Single_Window_set_label_type(arg1: *mut Fl_Single_Window, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Single_Window_box(arg1: *mut Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_box(arg1: *mut Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_box(arg1: *mut Fl_Single_Window, typ: core::ffi::c_int);
+    pub fn Fl_Single_Window_set_box(arg1: *mut Fl_Single_Window, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Single_Window_changed(arg1: *mut Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_changed(arg1: *mut Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Single_Window_set_changed(arg1: *mut Fl_Single_Window);
@@ -698,32 +678,32 @@ extern "C" {
     pub fn Fl_Single_Window_clear_changed(arg1: *mut Fl_Single_Window);
 }
 extern "C" {
-    pub fn Fl_Single_Window_align(arg1: *mut Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_align(arg1: *mut Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_align(arg1: *mut Fl_Single_Window, typ: core::ffi::c_int);
+    pub fn Fl_Single_Window_set_align(arg1: *mut Fl_Single_Window, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Single_Window_delete(arg1: *mut Fl_Single_Window);
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_image(arg1: *mut Fl_Single_Window, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Single_Window_set_image(arg1: *mut Fl_Single_Window, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Single_Window_handle(
         self_: *mut Fl_Single_Window,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Single_Window_handle_event(self_: *mut Fl_Single_Window, event: core::ffi::c_int);
+    pub fn Fl_Single_Window_handle_event(self_: *mut Fl_Single_Window, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Single_Window_draw(
         self_: *mut Fl_Single_Window,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -732,36 +712,33 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_when(arg1: *mut Fl_Single_Window, arg2: core::ffi::c_int);
+    pub fn Fl_Single_Window_set_when(arg1: *mut Fl_Single_Window, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Single_Window_when(arg1: *const Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_when(arg1: *const Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_image(arg1: *const Fl_Single_Window) -> *const core::ffi::c_void;
+    pub fn Fl_Single_Window_image(arg1: *const Fl_Single_Window) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Single_Window_parent(self_: *const Fl_Single_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Single_Window_parent(self_: *const Fl_Single_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Single_Window_selection_color(arg1: *mut Fl_Single_Window) -> core::ffi::c_uint;
+    pub fn Fl_Single_Window_selection_color(arg1: *mut Fl_Single_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_selection_color(
-        arg1: *mut Fl_Single_Window,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Single_Window_set_selection_color(arg1: *mut Fl_Single_Window, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Single_Window_do_callback(arg1: *mut Fl_Single_Window);
@@ -769,23 +746,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Single_Window_inside(
         self_: *const Fl_Single_Window,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_window(arg1: *const Fl_Single_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Single_Window_window(arg1: *const Fl_Single_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Single_Window_top_window(arg1: *const Fl_Single_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Single_Window_top_window(arg1: *const Fl_Single_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Single_Window_takes_events(arg1: *const Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_takes_events(arg1: *const Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_user_data(arg1: *const Fl_Single_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Single_Window_user_data(arg1: *const Fl_Single_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Single_Window_take_focus(self_: *mut Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_take_focus(self_: *mut Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Single_Window_set_visible_focus(self_: *mut Fl_Single_Window);
@@ -794,90 +771,81 @@ extern "C" {
     pub fn Fl_Single_Window_clear_visible_focus(self_: *mut Fl_Single_Window);
 }
 extern "C" {
-    pub fn Fl_Single_Window_visible_focus(self_: *mut Fl_Single_Window, v: core::ffi::c_int);
+    pub fn Fl_Single_Window_visible_focus(self_: *mut Fl_Single_Window, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Single_Window_has_visible_focus(self_: *mut Fl_Single_Window) -> core::ffi::c_uint;
+    pub fn Fl_Single_Window_has_visible_focus(self_: *mut Fl_Single_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_user_data(
-        arg1: *mut Fl_Single_Window,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Single_Window_set_user_data(arg1: *mut Fl_Single_Window, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Single_Window_draw_data(self_: *const Fl_Single_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Single_Window_draw_data(self_: *const Fl_Single_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Single_Window_handle_data(self_: *const Fl_Single_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Single_Window_handle_data(self_: *const Fl_Single_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_draw_data(
-        self_: *mut Fl_Single_Window,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Single_Window_set_draw_data(self_: *mut Fl_Single_Window, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_handle_data(
-        self_: *mut Fl_Single_Window,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Single_Window_set_handle_data(self_: *mut Fl_Single_Window, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Single_Window_damage(self_: *const Fl_Single_Window) -> core::ffi::c_uchar;
+    pub fn Fl_Single_Window_damage(self_: *const Fl_Single_Window) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_damage(self_: *mut Fl_Single_Window, flag: core::ffi::c_uchar);
+    pub fn Fl_Single_Window_set_damage(self_: *mut Fl_Single_Window, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Single_Window_set_damage_area(
         self_: *mut Fl_Single_Window,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Single_Window_clear_damage(self_: *mut Fl_Single_Window);
 }
 extern "C" {
-    pub fn Fl_Single_Window_as_window(self_: *mut Fl_Single_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Single_Window_as_window(self_: *mut Fl_Single_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Single_Window_as_group(self_: *mut Fl_Single_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Single_Window_as_group(self_: *mut Fl_Single_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_deimage(arg1: *mut Fl_Single_Window, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Single_Window_set_deimage(arg1: *mut Fl_Single_Window, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Single_Window_deimage(arg1: *const Fl_Single_Window) -> *const core::ffi::c_void;
+    pub fn Fl_Single_Window_deimage(arg1: *const Fl_Single_Window) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Single_Window_set_callback(
         arg1: *mut Fl_Single_Window,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Single_Window_set_deleter(
         arg1: *mut Fl_Single_Window,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Single_Window_visible(self_: *const Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_visible(self_: *const Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_visible_r(self_: *const Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_visible_r(self_: *const Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_active(self_: *const Fl_Single_Window) -> core::ffi::c_uint;
+    pub fn Fl_Single_Window_active(self_: *const Fl_Single_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Single_Window_active_r(self_: *const Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_active_r(self_: *const Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Single_Window_callback(self_: *const Fl_Single_Window) -> Fl_Callback;
@@ -886,16 +854,16 @@ extern "C" {
     pub fn Fl_Single_Window_set_deletion_callback(
         self_: *mut Fl_Single_Window,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Single_Window_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Single_Window;
 }
 extern "C" {
-    pub fn Fl_Single_Window_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Single_Window_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Single_Window_begin(self_: *mut Fl_Single_Window);
@@ -906,45 +874,43 @@ extern "C" {
 extern "C" {
     pub fn Fl_Single_Window_find(
         self_: *mut Fl_Single_Window,
-        arg1: *const core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *const cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_add(self_: *mut Fl_Single_Window, arg1: *mut core::ffi::c_void);
+    pub fn Fl_Single_Window_add(self_: *mut Fl_Single_Window, arg1: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Single_Window_insert(
         self_: *mut Fl_Single_Window,
-        arg1: *mut core::ffi::c_void,
-        pos: core::ffi::c_int,
+        arg1: *mut cty::c_void,
+        pos: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Single_Window_remove(self_: *mut Fl_Single_Window, wid: *mut core::ffi::c_void);
+    pub fn Fl_Single_Window_remove(self_: *mut Fl_Single_Window, wid: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Single_Window_remove_by_index(self_: *mut Fl_Single_Window, idx: core::ffi::c_int);
+    pub fn Fl_Single_Window_remove_by_index(self_: *mut Fl_Single_Window, idx: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Single_Window_clear(self_: *mut Fl_Single_Window);
 }
 extern "C" {
-    pub fn Fl_Single_Window_children(self_: *mut Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_children(self_: *mut Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_child(
-        arg1: *mut Fl_Single_Window,
-        index: core::ffi::c_int,
-    ) -> *mut Fl_Widget;
+    pub fn Fl_Single_Window_child(arg1: *mut Fl_Single_Window, index: cty::c_int)
+        -> *mut Fl_Widget;
 }
 extern "C" {
-    pub fn Fl_Single_Window_resizable(self_: *mut Fl_Single_Window, arg1: *mut core::ffi::c_void);
+    pub fn Fl_Single_Window_resizable(self_: *mut Fl_Single_Window, arg1: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_clip_children(self_: *mut Fl_Single_Window, c: core::ffi::c_int);
+    pub fn Fl_Single_Window_set_clip_children(self_: *mut Fl_Single_Window, c: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Single_Window_clip_children(self_: *mut Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_clip_children(self_: *mut Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Single_Window_init_sizes(self_: *mut Fl_Single_Window);
@@ -962,126 +928,120 @@ extern "C" {
     pub fn Fl_Single_Window_draw_children(self_: *mut Fl_Single_Window);
 }
 extern "C" {
-    pub fn Fl_Single_Window_make_modal(arg1: *mut Fl_Single_Window, boolean: core::ffi::c_uint);
+    pub fn Fl_Single_Window_make_modal(arg1: *mut Fl_Single_Window, boolean: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Single_Window_fullscreen(arg1: *mut Fl_Single_Window, boolean: core::ffi::c_uint);
+    pub fn Fl_Single_Window_fullscreen(arg1: *mut Fl_Single_Window, boolean: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Single_Window_make_current(arg1: *mut Fl_Single_Window);
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_icon(arg1: *mut Fl_Single_Window, arg2: *const core::ffi::c_void);
+    pub fn Fl_Single_Window_set_icon(arg1: *mut Fl_Single_Window, arg2: *const cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Single_Window_icon(arg1: *const Fl_Single_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Single_Window_icon(arg1: *const Fl_Single_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_cursor(self_: *mut Fl_Single_Window, cursor: core::ffi::c_int);
+    pub fn Fl_Single_Window_set_cursor(self_: *mut Fl_Single_Window, cursor: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Single_Window_shown(self_: *mut Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_shown(self_: *mut Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_raw_handle(w: *const Fl_Single_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Single_Window_raw_handle(w: *const Fl_Single_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_border(arg1: *mut Fl_Single_Window, flag: core::ffi::c_int);
+    pub fn Fl_Single_Window_set_border(arg1: *mut Fl_Single_Window, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Single_Window_border(arg1: *const Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_border(arg1: *const Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_region(self_: *const Fl_Single_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Single_Window_region(self_: *const Fl_Single_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_region(self_: *mut Fl_Single_Window, r: *mut core::ffi::c_void);
+    pub fn Fl_Single_Window_set_region(self_: *mut Fl_Single_Window, r: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Single_Window_iconize(self_: *mut Fl_Single_Window);
 }
 extern "C" {
-    pub fn Fl_Single_Window_fullscreen_active(self_: *const Fl_Single_Window) -> core::ffi::c_uint;
+    pub fn Fl_Single_Window_fullscreen_active(self_: *const Fl_Single_Window) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Single_Window_free_position(self_: *mut Fl_Single_Window);
 }
 extern "C" {
-    pub fn Fl_Single_Window_decorated_w(self_: *const Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_decorated_w(self_: *const Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_decorated_h(self_: *const Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_decorated_h(self_: *const Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Single_Window_size_range(
         self_: *mut Fl_Single_Window,
-        arg1: core::ffi::c_int,
-        arg2: core::ffi::c_int,
-        arg3: core::ffi::c_int,
-        arg4: core::ffi::c_int,
+        arg1: cty::c_int,
+        arg2: cty::c_int,
+        arg3: cty::c_int,
+        arg4: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Single_Window_hotspot(self_: *mut Fl_Single_Window, wid: *mut Fl_Widget);
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_shape(
-        self_: *mut Fl_Single_Window,
-        image: *const core::ffi::c_void,
-    );
+    pub fn Fl_Single_Window_set_shape(self_: *mut Fl_Single_Window, image: *const cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Single_Window_shape(self_: *mut Fl_Single_Window) -> *const core::ffi::c_void;
+    pub fn Fl_Single_Window_shape(self_: *mut Fl_Single_Window) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Single_Window_x_root(self_: *const Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_x_root(self_: *const Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_y_root(self_: *const Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_y_root(self_: *const Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Single_Window_set_cursor_image(
         self_: *mut Fl_Single_Window,
-        image: *const core::ffi::c_void,
-        hot_x: core::ffi::c_int,
-        hot_y: core::ffi::c_int,
+        image: *const cty::c_void,
+        hot_x: cty::c_int,
+        hot_y: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Single_Window_default_cursor(self_: *mut Fl_Single_Window, cursor: core::ffi::c_int);
+    pub fn Fl_Single_Window_default_cursor(self_: *mut Fl_Single_Window, cursor: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Single_Window_screen_num(arg1: *mut Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_screen_num(arg1: *mut Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_screen_num(
-        arg1: *mut Fl_Single_Window,
-        screen_num: core::ffi::c_int,
-    );
+    pub fn Fl_Single_Window_set_screen_num(arg1: *mut Fl_Single_Window, screen_num: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Single_Window_wait_for_expose(arg1: *mut Fl_Single_Window);
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_alpha(self_: *mut Fl_Single_Window, val: core::ffi::c_uchar);
+    pub fn Fl_Single_Window_set_alpha(self_: *mut Fl_Single_Window, val: cty::c_uchar);
 }
 extern "C" {
-    pub fn Fl_Single_Window_alpha(self_: *const Fl_Single_Window) -> core::ffi::c_uchar;
+    pub fn Fl_Single_Window_alpha(self_: *const Fl_Single_Window) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Single_Window_force_position(self_: *mut Fl_Single_Window, flag: core::ffi::c_int);
+    pub fn Fl_Single_Window_force_position(self_: *mut Fl_Single_Window, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Single_Window_default_xclass() -> *const core::ffi::c_char;
+    pub fn Fl_Single_Window_default_xclass() -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Single_Window_xclass(self_: *const Fl_Single_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Single_Window_xclass(self_: *const Fl_Single_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_default_xclass(s: *const core::ffi::c_char);
+    pub fn Fl_Single_Window_set_default_xclass(s: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_xclass(self_: *mut Fl_Single_Window, s: *const core::ffi::c_char);
+    pub fn Fl_Single_Window_set_xclass(self_: *mut Fl_Single_Window, s: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Single_Window_clear_modal_states(self_: *mut Fl_Single_Window);
@@ -1090,22 +1050,19 @@ extern "C" {
     pub fn Fl_Single_Window_set_override(arg1: *mut Fl_Single_Window);
 }
 extern "C" {
-    pub fn Fl_Single_Window_override(arg1: *const Fl_Single_Window) -> core::ffi::c_int;
+    pub fn Fl_Single_Window_override(arg1: *const Fl_Single_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_icon_label(arg1: *const Fl_Single_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Single_Window_icon_label(arg1: *const Fl_Single_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_icon_label(
-        arg1: *mut Fl_Single_Window,
-        arg2: *const core::ffi::c_char,
-    );
+    pub fn Fl_Single_Window_set_icon_label(arg1: *mut Fl_Single_Window, arg2: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Single_Window_set_icons(
         w: *mut Fl_Single_Window,
-        images: *mut *const core::ffi::c_void,
-        length: core::ffi::c_int,
+        images: *mut *const cty::c_void,
+        length: cty::c_int,
     );
 }
 #[repr(C)]
@@ -1115,30 +1072,30 @@ pub struct Fl_Double_Window {
 }
 extern "C" {
     pub fn Fl_Double_Window_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Double_Window;
 }
 extern "C" {
-    pub fn Fl_Double_Window_x(arg1: *mut Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_x(arg1: *mut Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_y(arg1: *mut Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_y(arg1: *mut Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_width(arg1: *mut Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_width(arg1: *mut Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_height(arg1: *mut Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_height(arg1: *mut Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_label(arg1: *mut Fl_Double_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Double_Window_label(arg1: *mut Fl_Double_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_label(arg1: *mut Fl_Double_Window, title: *const core::ffi::c_char);
+    pub fn Fl_Double_Window_set_label(arg1: *mut Fl_Double_Window, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Double_Window_redraw(arg1: *mut Fl_Double_Window);
@@ -1161,78 +1118,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Double_Window_resize(
         arg1: *mut Fl_Double_Window,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Double_Window_widget_resize(
         arg1: *mut Fl_Double_Window,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Double_Window_tooltip(arg1: *mut Fl_Double_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Double_Window_tooltip(arg1: *mut Fl_Double_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_tooltip(arg1: *mut Fl_Double_Window, txt: *const core::ffi::c_char);
+    pub fn Fl_Double_Window_set_tooltip(arg1: *mut Fl_Double_Window, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Double_Window_get_type(arg1: *mut Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_get_type(arg1: *mut Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_type(arg1: *mut Fl_Double_Window, typ: core::ffi::c_int);
+    pub fn Fl_Double_Window_set_type(arg1: *mut Fl_Double_Window, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_color(arg1: *mut Fl_Double_Window) -> core::ffi::c_uint;
+    pub fn Fl_Double_Window_color(arg1: *mut Fl_Double_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_color(arg1: *mut Fl_Double_Window, color: core::ffi::c_uint);
+    pub fn Fl_Double_Window_set_color(arg1: *mut Fl_Double_Window, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Double_Window_measure_label(
         arg1: *const Fl_Double_Window,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Double_Window_label_color(arg1: *mut Fl_Double_Window) -> core::ffi::c_uint;
+    pub fn Fl_Double_Window_label_color(arg1: *mut Fl_Double_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_label_color(arg1: *mut Fl_Double_Window, color: core::ffi::c_uint);
+    pub fn Fl_Double_Window_set_label_color(arg1: *mut Fl_Double_Window, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Double_Window_label_font(arg1: *mut Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_label_font(arg1: *mut Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_label_font(arg1: *mut Fl_Double_Window, font: core::ffi::c_int);
+    pub fn Fl_Double_Window_set_label_font(arg1: *mut Fl_Double_Window, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_label_size(arg1: *mut Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_label_size(arg1: *mut Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_label_size(arg1: *mut Fl_Double_Window, sz: core::ffi::c_int);
+    pub fn Fl_Double_Window_set_label_size(arg1: *mut Fl_Double_Window, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_label_type(arg1: *mut Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_label_type(arg1: *mut Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_label_type(arg1: *mut Fl_Double_Window, typ: core::ffi::c_int);
+    pub fn Fl_Double_Window_set_label_type(arg1: *mut Fl_Double_Window, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_box(arg1: *mut Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_box(arg1: *mut Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_box(arg1: *mut Fl_Double_Window, typ: core::ffi::c_int);
+    pub fn Fl_Double_Window_set_box(arg1: *mut Fl_Double_Window, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_changed(arg1: *mut Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_changed(arg1: *mut Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Double_Window_set_changed(arg1: *mut Fl_Double_Window);
@@ -1241,32 +1198,32 @@ extern "C" {
     pub fn Fl_Double_Window_clear_changed(arg1: *mut Fl_Double_Window);
 }
 extern "C" {
-    pub fn Fl_Double_Window_align(arg1: *mut Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_align(arg1: *mut Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_align(arg1: *mut Fl_Double_Window, typ: core::ffi::c_int);
+    pub fn Fl_Double_Window_set_align(arg1: *mut Fl_Double_Window, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Double_Window_delete(arg1: *mut Fl_Double_Window);
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_image(arg1: *mut Fl_Double_Window, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Double_Window_set_image(arg1: *mut Fl_Double_Window, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Double_Window_handle(
         self_: *mut Fl_Double_Window,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Double_Window_handle_event(self_: *mut Fl_Double_Window, event: core::ffi::c_int);
+    pub fn Fl_Double_Window_handle_event(self_: *mut Fl_Double_Window, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Double_Window_draw(
         self_: *mut Fl_Double_Window,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -1275,36 +1232,33 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_when(arg1: *mut Fl_Double_Window, arg2: core::ffi::c_int);
+    pub fn Fl_Double_Window_set_when(arg1: *mut Fl_Double_Window, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_when(arg1: *const Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_when(arg1: *const Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_image(arg1: *const Fl_Double_Window) -> *const core::ffi::c_void;
+    pub fn Fl_Double_Window_image(arg1: *const Fl_Double_Window) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Double_Window_parent(self_: *const Fl_Double_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Double_Window_parent(self_: *const Fl_Double_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Double_Window_selection_color(arg1: *mut Fl_Double_Window) -> core::ffi::c_uint;
+    pub fn Fl_Double_Window_selection_color(arg1: *mut Fl_Double_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_selection_color(
-        arg1: *mut Fl_Double_Window,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Double_Window_set_selection_color(arg1: *mut Fl_Double_Window, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Double_Window_do_callback(arg1: *mut Fl_Double_Window);
@@ -1312,23 +1266,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Double_Window_inside(
         self_: *const Fl_Double_Window,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_window(arg1: *const Fl_Double_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Double_Window_window(arg1: *const Fl_Double_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Double_Window_top_window(arg1: *const Fl_Double_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Double_Window_top_window(arg1: *const Fl_Double_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Double_Window_takes_events(arg1: *const Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_takes_events(arg1: *const Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_user_data(arg1: *const Fl_Double_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Double_Window_user_data(arg1: *const Fl_Double_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Double_Window_take_focus(self_: *mut Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_take_focus(self_: *mut Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Double_Window_set_visible_focus(self_: *mut Fl_Double_Window);
@@ -1337,90 +1291,81 @@ extern "C" {
     pub fn Fl_Double_Window_clear_visible_focus(self_: *mut Fl_Double_Window);
 }
 extern "C" {
-    pub fn Fl_Double_Window_visible_focus(self_: *mut Fl_Double_Window, v: core::ffi::c_int);
+    pub fn Fl_Double_Window_visible_focus(self_: *mut Fl_Double_Window, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_has_visible_focus(self_: *mut Fl_Double_Window) -> core::ffi::c_uint;
+    pub fn Fl_Double_Window_has_visible_focus(self_: *mut Fl_Double_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_user_data(
-        arg1: *mut Fl_Double_Window,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Double_Window_set_user_data(arg1: *mut Fl_Double_Window, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Double_Window_draw_data(self_: *const Fl_Double_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Double_Window_draw_data(self_: *const Fl_Double_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Double_Window_handle_data(self_: *const Fl_Double_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Double_Window_handle_data(self_: *const Fl_Double_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_draw_data(
-        self_: *mut Fl_Double_Window,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Double_Window_set_draw_data(self_: *mut Fl_Double_Window, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_handle_data(
-        self_: *mut Fl_Double_Window,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Double_Window_set_handle_data(self_: *mut Fl_Double_Window, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Double_Window_damage(self_: *const Fl_Double_Window) -> core::ffi::c_uchar;
+    pub fn Fl_Double_Window_damage(self_: *const Fl_Double_Window) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_damage(self_: *mut Fl_Double_Window, flag: core::ffi::c_uchar);
+    pub fn Fl_Double_Window_set_damage(self_: *mut Fl_Double_Window, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Double_Window_set_damage_area(
         self_: *mut Fl_Double_Window,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Double_Window_clear_damage(self_: *mut Fl_Double_Window);
 }
 extern "C" {
-    pub fn Fl_Double_Window_as_window(self_: *mut Fl_Double_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Double_Window_as_window(self_: *mut Fl_Double_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Double_Window_as_group(self_: *mut Fl_Double_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Double_Window_as_group(self_: *mut Fl_Double_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_deimage(arg1: *mut Fl_Double_Window, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Double_Window_set_deimage(arg1: *mut Fl_Double_Window, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Double_Window_deimage(arg1: *const Fl_Double_Window) -> *const core::ffi::c_void;
+    pub fn Fl_Double_Window_deimage(arg1: *const Fl_Double_Window) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Double_Window_set_callback(
         arg1: *mut Fl_Double_Window,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Double_Window_set_deleter(
         arg1: *mut Fl_Double_Window,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Double_Window_visible(self_: *const Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_visible(self_: *const Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_visible_r(self_: *const Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_visible_r(self_: *const Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_active(self_: *const Fl_Double_Window) -> core::ffi::c_uint;
+    pub fn Fl_Double_Window_active(self_: *const Fl_Double_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Double_Window_active_r(self_: *const Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_active_r(self_: *const Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Double_Window_callback(self_: *const Fl_Double_Window) -> Fl_Callback;
@@ -1429,16 +1374,16 @@ extern "C" {
     pub fn Fl_Double_Window_set_deletion_callback(
         self_: *mut Fl_Double_Window,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Double_Window_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Double_Window;
 }
 extern "C" {
-    pub fn Fl_Double_Window_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Double_Window_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Double_Window_flush(w: *mut Fl_Double_Window);
@@ -1452,45 +1397,43 @@ extern "C" {
 extern "C" {
     pub fn Fl_Double_Window_find(
         self_: *mut Fl_Double_Window,
-        arg1: *const core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *const cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_add(self_: *mut Fl_Double_Window, arg1: *mut core::ffi::c_void);
+    pub fn Fl_Double_Window_add(self_: *mut Fl_Double_Window, arg1: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Double_Window_insert(
         self_: *mut Fl_Double_Window,
-        arg1: *mut core::ffi::c_void,
-        pos: core::ffi::c_int,
+        arg1: *mut cty::c_void,
+        pos: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Double_Window_remove(self_: *mut Fl_Double_Window, wid: *mut core::ffi::c_void);
+    pub fn Fl_Double_Window_remove(self_: *mut Fl_Double_Window, wid: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Double_Window_remove_by_index(self_: *mut Fl_Double_Window, idx: core::ffi::c_int);
+    pub fn Fl_Double_Window_remove_by_index(self_: *mut Fl_Double_Window, idx: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Double_Window_clear(self_: *mut Fl_Double_Window);
 }
 extern "C" {
-    pub fn Fl_Double_Window_children(self_: *mut Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_children(self_: *mut Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_child(
-        arg1: *mut Fl_Double_Window,
-        index: core::ffi::c_int,
-    ) -> *mut Fl_Widget;
+    pub fn Fl_Double_Window_child(arg1: *mut Fl_Double_Window, index: cty::c_int)
+        -> *mut Fl_Widget;
 }
 extern "C" {
-    pub fn Fl_Double_Window_resizable(self_: *mut Fl_Double_Window, arg1: *mut core::ffi::c_void);
+    pub fn Fl_Double_Window_resizable(self_: *mut Fl_Double_Window, arg1: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_clip_children(self_: *mut Fl_Double_Window, c: core::ffi::c_int);
+    pub fn Fl_Double_Window_set_clip_children(self_: *mut Fl_Double_Window, c: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_clip_children(self_: *mut Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_clip_children(self_: *mut Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Double_Window_init_sizes(self_: *mut Fl_Double_Window);
@@ -1508,126 +1451,120 @@ extern "C" {
     pub fn Fl_Double_Window_draw_children(self_: *mut Fl_Double_Window);
 }
 extern "C" {
-    pub fn Fl_Double_Window_make_modal(arg1: *mut Fl_Double_Window, boolean: core::ffi::c_uint);
+    pub fn Fl_Double_Window_make_modal(arg1: *mut Fl_Double_Window, boolean: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Double_Window_fullscreen(arg1: *mut Fl_Double_Window, boolean: core::ffi::c_uint);
+    pub fn Fl_Double_Window_fullscreen(arg1: *mut Fl_Double_Window, boolean: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Double_Window_make_current(arg1: *mut Fl_Double_Window);
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_icon(arg1: *mut Fl_Double_Window, arg2: *const core::ffi::c_void);
+    pub fn Fl_Double_Window_set_icon(arg1: *mut Fl_Double_Window, arg2: *const cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Double_Window_icon(arg1: *const Fl_Double_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Double_Window_icon(arg1: *const Fl_Double_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_cursor(self_: *mut Fl_Double_Window, cursor: core::ffi::c_int);
+    pub fn Fl_Double_Window_set_cursor(self_: *mut Fl_Double_Window, cursor: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_shown(self_: *mut Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_shown(self_: *mut Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_raw_handle(w: *const Fl_Double_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Double_Window_raw_handle(w: *const Fl_Double_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_border(arg1: *mut Fl_Double_Window, flag: core::ffi::c_int);
+    pub fn Fl_Double_Window_set_border(arg1: *mut Fl_Double_Window, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_border(arg1: *const Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_border(arg1: *const Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_region(self_: *const Fl_Double_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Double_Window_region(self_: *const Fl_Double_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_region(self_: *mut Fl_Double_Window, r: *mut core::ffi::c_void);
+    pub fn Fl_Double_Window_set_region(self_: *mut Fl_Double_Window, r: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Double_Window_iconize(self_: *mut Fl_Double_Window);
 }
 extern "C" {
-    pub fn Fl_Double_Window_fullscreen_active(self_: *const Fl_Double_Window) -> core::ffi::c_uint;
+    pub fn Fl_Double_Window_fullscreen_active(self_: *const Fl_Double_Window) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Double_Window_free_position(self_: *mut Fl_Double_Window);
 }
 extern "C" {
-    pub fn Fl_Double_Window_decorated_w(self_: *const Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_decorated_w(self_: *const Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_decorated_h(self_: *const Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_decorated_h(self_: *const Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Double_Window_size_range(
         self_: *mut Fl_Double_Window,
-        arg1: core::ffi::c_int,
-        arg2: core::ffi::c_int,
-        arg3: core::ffi::c_int,
-        arg4: core::ffi::c_int,
+        arg1: cty::c_int,
+        arg2: cty::c_int,
+        arg3: cty::c_int,
+        arg4: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Double_Window_hotspot(self_: *mut Fl_Double_Window, wid: *mut Fl_Widget);
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_shape(
-        self_: *mut Fl_Double_Window,
-        image: *const core::ffi::c_void,
-    );
+    pub fn Fl_Double_Window_set_shape(self_: *mut Fl_Double_Window, image: *const cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Double_Window_shape(self_: *mut Fl_Double_Window) -> *const core::ffi::c_void;
+    pub fn Fl_Double_Window_shape(self_: *mut Fl_Double_Window) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Double_Window_x_root(self_: *const Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_x_root(self_: *const Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_y_root(self_: *const Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_y_root(self_: *const Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Double_Window_set_cursor_image(
         self_: *mut Fl_Double_Window,
-        image: *const core::ffi::c_void,
-        hot_x: core::ffi::c_int,
-        hot_y: core::ffi::c_int,
+        image: *const cty::c_void,
+        hot_x: cty::c_int,
+        hot_y: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Double_Window_default_cursor(self_: *mut Fl_Double_Window, cursor: core::ffi::c_int);
+    pub fn Fl_Double_Window_default_cursor(self_: *mut Fl_Double_Window, cursor: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_screen_num(arg1: *mut Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_screen_num(arg1: *mut Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_screen_num(
-        arg1: *mut Fl_Double_Window,
-        screen_num: core::ffi::c_int,
-    );
+    pub fn Fl_Double_Window_set_screen_num(arg1: *mut Fl_Double_Window, screen_num: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Double_Window_wait_for_expose(arg1: *mut Fl_Double_Window);
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_alpha(self_: *mut Fl_Double_Window, val: core::ffi::c_uchar);
+    pub fn Fl_Double_Window_set_alpha(self_: *mut Fl_Double_Window, val: cty::c_uchar);
 }
 extern "C" {
-    pub fn Fl_Double_Window_alpha(self_: *const Fl_Double_Window) -> core::ffi::c_uchar;
+    pub fn Fl_Double_Window_alpha(self_: *const Fl_Double_Window) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Double_Window_force_position(self_: *mut Fl_Double_Window, flag: core::ffi::c_int);
+    pub fn Fl_Double_Window_force_position(self_: *mut Fl_Double_Window, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_default_xclass() -> *const core::ffi::c_char;
+    pub fn Fl_Double_Window_default_xclass() -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Double_Window_xclass(self_: *const Fl_Double_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Double_Window_xclass(self_: *const Fl_Double_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_default_xclass(s: *const core::ffi::c_char);
+    pub fn Fl_Double_Window_set_default_xclass(s: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_xclass(self_: *mut Fl_Double_Window, s: *const core::ffi::c_char);
+    pub fn Fl_Double_Window_set_xclass(self_: *mut Fl_Double_Window, s: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Double_Window_clear_modal_states(self_: *mut Fl_Double_Window);
@@ -1636,22 +1573,19 @@ extern "C" {
     pub fn Fl_Double_Window_set_override(arg1: *mut Fl_Double_Window);
 }
 extern "C" {
-    pub fn Fl_Double_Window_override(arg1: *const Fl_Double_Window) -> core::ffi::c_int;
+    pub fn Fl_Double_Window_override(arg1: *const Fl_Double_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_icon_label(arg1: *const Fl_Double_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Double_Window_icon_label(arg1: *const Fl_Double_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_icon_label(
-        arg1: *mut Fl_Double_Window,
-        arg2: *const core::ffi::c_char,
-    );
+    pub fn Fl_Double_Window_set_icon_label(arg1: *mut Fl_Double_Window, arg2: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Double_Window_set_icons(
         w: *mut Fl_Double_Window,
-        images: *mut *const core::ffi::c_void,
-        length: core::ffi::c_int,
+        images: *mut *const cty::c_void,
+        length: cty::c_int,
     );
 }
 #[repr(C)]
@@ -1661,30 +1595,30 @@ pub struct Fl_Menu_Window {
 }
 extern "C" {
     pub fn Fl_Menu_Window_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Menu_Window;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_x(arg1: *mut Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_x(arg1: *mut Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_y(arg1: *mut Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_y(arg1: *mut Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_width(arg1: *mut Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_width(arg1: *mut Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_height(arg1: *mut Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_height(arg1: *mut Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_label(arg1: *mut Fl_Menu_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Menu_Window_label(arg1: *mut Fl_Menu_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_label(arg1: *mut Fl_Menu_Window, title: *const core::ffi::c_char);
+    pub fn Fl_Menu_Window_set_label(arg1: *mut Fl_Menu_Window, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Menu_Window_redraw(arg1: *mut Fl_Menu_Window);
@@ -1707,78 +1641,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Window_resize(
         arg1: *mut Fl_Menu_Window,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Menu_Window_widget_resize(
         arg1: *mut Fl_Menu_Window,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Window_tooltip(arg1: *mut Fl_Menu_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Menu_Window_tooltip(arg1: *mut Fl_Menu_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_tooltip(arg1: *mut Fl_Menu_Window, txt: *const core::ffi::c_char);
+    pub fn Fl_Menu_Window_set_tooltip(arg1: *mut Fl_Menu_Window, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_get_type(arg1: *mut Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_get_type(arg1: *mut Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_type(arg1: *mut Fl_Menu_Window, typ: core::ffi::c_int);
+    pub fn Fl_Menu_Window_set_type(arg1: *mut Fl_Menu_Window, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_color(arg1: *mut Fl_Menu_Window) -> core::ffi::c_uint;
+    pub fn Fl_Menu_Window_color(arg1: *mut Fl_Menu_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_color(arg1: *mut Fl_Menu_Window, color: core::ffi::c_uint);
+    pub fn Fl_Menu_Window_set_color(arg1: *mut Fl_Menu_Window, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Menu_Window_measure_label(
         arg1: *const Fl_Menu_Window,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Window_label_color(arg1: *mut Fl_Menu_Window) -> core::ffi::c_uint;
+    pub fn Fl_Menu_Window_label_color(arg1: *mut Fl_Menu_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_label_color(arg1: *mut Fl_Menu_Window, color: core::ffi::c_uint);
+    pub fn Fl_Menu_Window_set_label_color(arg1: *mut Fl_Menu_Window, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_label_font(arg1: *mut Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_label_font(arg1: *mut Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_label_font(arg1: *mut Fl_Menu_Window, font: core::ffi::c_int);
+    pub fn Fl_Menu_Window_set_label_font(arg1: *mut Fl_Menu_Window, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_label_size(arg1: *mut Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_label_size(arg1: *mut Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_label_size(arg1: *mut Fl_Menu_Window, sz: core::ffi::c_int);
+    pub fn Fl_Menu_Window_set_label_size(arg1: *mut Fl_Menu_Window, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_label_type(arg1: *mut Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_label_type(arg1: *mut Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_label_type(arg1: *mut Fl_Menu_Window, typ: core::ffi::c_int);
+    pub fn Fl_Menu_Window_set_label_type(arg1: *mut Fl_Menu_Window, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_box(arg1: *mut Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_box(arg1: *mut Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_box(arg1: *mut Fl_Menu_Window, typ: core::ffi::c_int);
+    pub fn Fl_Menu_Window_set_box(arg1: *mut Fl_Menu_Window, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_changed(arg1: *mut Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_changed(arg1: *mut Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Window_set_changed(arg1: *mut Fl_Menu_Window);
@@ -1787,32 +1721,32 @@ extern "C" {
     pub fn Fl_Menu_Window_clear_changed(arg1: *mut Fl_Menu_Window);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_align(arg1: *mut Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_align(arg1: *mut Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_align(arg1: *mut Fl_Menu_Window, typ: core::ffi::c_int);
+    pub fn Fl_Menu_Window_set_align(arg1: *mut Fl_Menu_Window, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Menu_Window_delete(arg1: *mut Fl_Menu_Window);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_image(arg1: *mut Fl_Menu_Window, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Menu_Window_set_image(arg1: *mut Fl_Menu_Window, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Menu_Window_handle(
         self_: *mut Fl_Menu_Window,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Window_handle_event(self_: *mut Fl_Menu_Window, event: core::ffi::c_int);
+    pub fn Fl_Menu_Window_handle_event(self_: *mut Fl_Menu_Window, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Menu_Window_draw(
         self_: *mut Fl_Menu_Window,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -1821,33 +1755,33 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_when(arg1: *mut Fl_Menu_Window, arg2: core::ffi::c_int);
+    pub fn Fl_Menu_Window_set_when(arg1: *mut Fl_Menu_Window, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_when(arg1: *const Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_when(arg1: *const Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_image(arg1: *const Fl_Menu_Window) -> *const core::ffi::c_void;
+    pub fn Fl_Menu_Window_image(arg1: *const Fl_Menu_Window) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_parent(self_: *const Fl_Menu_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Window_parent(self_: *const Fl_Menu_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_selection_color(arg1: *mut Fl_Menu_Window) -> core::ffi::c_uint;
+    pub fn Fl_Menu_Window_selection_color(arg1: *mut Fl_Menu_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_selection_color(arg1: *mut Fl_Menu_Window, color: core::ffi::c_uint);
+    pub fn Fl_Menu_Window_set_selection_color(arg1: *mut Fl_Menu_Window, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Menu_Window_do_callback(arg1: *mut Fl_Menu_Window);
@@ -1855,23 +1789,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Window_inside(
         self_: *const Fl_Menu_Window,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_window(arg1: *const Fl_Menu_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Window_window(arg1: *const Fl_Menu_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_top_window(arg1: *const Fl_Menu_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Window_top_window(arg1: *const Fl_Menu_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_takes_events(arg1: *const Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_takes_events(arg1: *const Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_user_data(arg1: *const Fl_Menu_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Window_user_data(arg1: *const Fl_Menu_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_take_focus(self_: *mut Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_take_focus(self_: *mut Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Window_set_visible_focus(self_: *mut Fl_Menu_Window);
@@ -1880,81 +1814,81 @@ extern "C" {
     pub fn Fl_Menu_Window_clear_visible_focus(self_: *mut Fl_Menu_Window);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_visible_focus(self_: *mut Fl_Menu_Window, v: core::ffi::c_int);
+    pub fn Fl_Menu_Window_visible_focus(self_: *mut Fl_Menu_Window, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_has_visible_focus(self_: *mut Fl_Menu_Window) -> core::ffi::c_uint;
+    pub fn Fl_Menu_Window_has_visible_focus(self_: *mut Fl_Menu_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_user_data(arg1: *mut Fl_Menu_Window, data: *mut core::ffi::c_void);
+    pub fn Fl_Menu_Window_set_user_data(arg1: *mut Fl_Menu_Window, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_draw_data(self_: *const Fl_Menu_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Window_draw_data(self_: *const Fl_Menu_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_handle_data(self_: *const Fl_Menu_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Window_handle_data(self_: *const Fl_Menu_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_draw_data(self_: *mut Fl_Menu_Window, data: *mut core::ffi::c_void);
+    pub fn Fl_Menu_Window_set_draw_data(self_: *mut Fl_Menu_Window, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_handle_data(self_: *mut Fl_Menu_Window, data: *mut core::ffi::c_void);
+    pub fn Fl_Menu_Window_set_handle_data(self_: *mut Fl_Menu_Window, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_damage(self_: *const Fl_Menu_Window) -> core::ffi::c_uchar;
+    pub fn Fl_Menu_Window_damage(self_: *const Fl_Menu_Window) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_damage(self_: *mut Fl_Menu_Window, flag: core::ffi::c_uchar);
+    pub fn Fl_Menu_Window_set_damage(self_: *mut Fl_Menu_Window, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Menu_Window_set_damage_area(
         self_: *mut Fl_Menu_Window,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Menu_Window_clear_damage(self_: *mut Fl_Menu_Window);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_as_window(self_: *mut Fl_Menu_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Window_as_window(self_: *mut Fl_Menu_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_as_group(self_: *mut Fl_Menu_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Window_as_group(self_: *mut Fl_Menu_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_deimage(arg1: *mut Fl_Menu_Window, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Menu_Window_set_deimage(arg1: *mut Fl_Menu_Window, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_deimage(arg1: *const Fl_Menu_Window) -> *const core::ffi::c_void;
+    pub fn Fl_Menu_Window_deimage(arg1: *const Fl_Menu_Window) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Menu_Window_set_callback(
         arg1: *mut Fl_Menu_Window,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Menu_Window_set_deleter(
         arg1: *mut Fl_Menu_Window,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Window_visible(self_: *const Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_visible(self_: *const Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_visible_r(self_: *const Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_visible_r(self_: *const Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_active(self_: *const Fl_Menu_Window) -> core::ffi::c_uint;
+    pub fn Fl_Menu_Window_active(self_: *const Fl_Menu_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_active_r(self_: *const Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_active_r(self_: *const Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Window_callback(self_: *const Fl_Menu_Window) -> Fl_Callback;
@@ -1963,16 +1897,16 @@ extern "C" {
     pub fn Fl_Menu_Window_set_deletion_callback(
         self_: *mut Fl_Menu_Window,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Menu_Window_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Menu_Window;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Menu_Window_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Menu_Window_begin(self_: *mut Fl_Menu_Window);
@@ -1981,47 +1915,41 @@ extern "C" {
     pub fn Fl_Menu_Window_end(self_: *mut Fl_Menu_Window);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_find(
-        self_: *mut Fl_Menu_Window,
-        arg1: *const core::ffi::c_void,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_find(self_: *mut Fl_Menu_Window, arg1: *const cty::c_void) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_add(self_: *mut Fl_Menu_Window, arg1: *mut core::ffi::c_void);
+    pub fn Fl_Menu_Window_add(self_: *mut Fl_Menu_Window, arg1: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Menu_Window_insert(
         self_: *mut Fl_Menu_Window,
-        arg1: *mut core::ffi::c_void,
-        pos: core::ffi::c_int,
+        arg1: *mut cty::c_void,
+        pos: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Window_remove(self_: *mut Fl_Menu_Window, wid: *mut core::ffi::c_void);
+    pub fn Fl_Menu_Window_remove(self_: *mut Fl_Menu_Window, wid: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_remove_by_index(self_: *mut Fl_Menu_Window, idx: core::ffi::c_int);
+    pub fn Fl_Menu_Window_remove_by_index(self_: *mut Fl_Menu_Window, idx: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Menu_Window_clear(self_: *mut Fl_Menu_Window);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_children(self_: *mut Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_children(self_: *mut Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_child(
-        arg1: *mut Fl_Menu_Window,
-        index: core::ffi::c_int,
-    ) -> *mut Fl_Widget;
+    pub fn Fl_Menu_Window_child(arg1: *mut Fl_Menu_Window, index: cty::c_int) -> *mut Fl_Widget;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_resizable(self_: *mut Fl_Menu_Window, arg1: *mut core::ffi::c_void);
+    pub fn Fl_Menu_Window_resizable(self_: *mut Fl_Menu_Window, arg1: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_clip_children(self_: *mut Fl_Menu_Window, c: core::ffi::c_int);
+    pub fn Fl_Menu_Window_set_clip_children(self_: *mut Fl_Menu_Window, c: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_clip_children(self_: *mut Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_clip_children(self_: *mut Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Window_init_sizes(self_: *mut Fl_Menu_Window);
@@ -2039,120 +1967,120 @@ extern "C" {
     pub fn Fl_Menu_Window_draw_children(self_: *mut Fl_Menu_Window);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_make_modal(arg1: *mut Fl_Menu_Window, boolean: core::ffi::c_uint);
+    pub fn Fl_Menu_Window_make_modal(arg1: *mut Fl_Menu_Window, boolean: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_fullscreen(arg1: *mut Fl_Menu_Window, boolean: core::ffi::c_uint);
+    pub fn Fl_Menu_Window_fullscreen(arg1: *mut Fl_Menu_Window, boolean: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Menu_Window_make_current(arg1: *mut Fl_Menu_Window);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_icon(arg1: *mut Fl_Menu_Window, arg2: *const core::ffi::c_void);
+    pub fn Fl_Menu_Window_set_icon(arg1: *mut Fl_Menu_Window, arg2: *const cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_icon(arg1: *const Fl_Menu_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Window_icon(arg1: *const Fl_Menu_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_cursor(self_: *mut Fl_Menu_Window, cursor: core::ffi::c_int);
+    pub fn Fl_Menu_Window_set_cursor(self_: *mut Fl_Menu_Window, cursor: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_shown(self_: *mut Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_shown(self_: *mut Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_raw_handle(w: *const Fl_Menu_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Window_raw_handle(w: *const Fl_Menu_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_border(arg1: *mut Fl_Menu_Window, flag: core::ffi::c_int);
+    pub fn Fl_Menu_Window_set_border(arg1: *mut Fl_Menu_Window, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_border(arg1: *const Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_border(arg1: *const Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_region(self_: *const Fl_Menu_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Window_region(self_: *const Fl_Menu_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_region(self_: *mut Fl_Menu_Window, r: *mut core::ffi::c_void);
+    pub fn Fl_Menu_Window_set_region(self_: *mut Fl_Menu_Window, r: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Menu_Window_iconize(self_: *mut Fl_Menu_Window);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_fullscreen_active(self_: *const Fl_Menu_Window) -> core::ffi::c_uint;
+    pub fn Fl_Menu_Window_fullscreen_active(self_: *const Fl_Menu_Window) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Menu_Window_free_position(self_: *mut Fl_Menu_Window);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_decorated_w(self_: *const Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_decorated_w(self_: *const Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_decorated_h(self_: *const Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_decorated_h(self_: *const Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Window_size_range(
         self_: *mut Fl_Menu_Window,
-        arg1: core::ffi::c_int,
-        arg2: core::ffi::c_int,
-        arg3: core::ffi::c_int,
-        arg4: core::ffi::c_int,
+        arg1: cty::c_int,
+        arg2: cty::c_int,
+        arg3: cty::c_int,
+        arg4: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Menu_Window_hotspot(self_: *mut Fl_Menu_Window, wid: *mut Fl_Widget);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_shape(self_: *mut Fl_Menu_Window, image: *const core::ffi::c_void);
+    pub fn Fl_Menu_Window_set_shape(self_: *mut Fl_Menu_Window, image: *const cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_shape(self_: *mut Fl_Menu_Window) -> *const core::ffi::c_void;
+    pub fn Fl_Menu_Window_shape(self_: *mut Fl_Menu_Window) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_x_root(self_: *const Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_x_root(self_: *const Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_y_root(self_: *const Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_y_root(self_: *const Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Window_set_cursor_image(
         self_: *mut Fl_Menu_Window,
-        image: *const core::ffi::c_void,
-        hot_x: core::ffi::c_int,
-        hot_y: core::ffi::c_int,
+        image: *const cty::c_void,
+        hot_x: cty::c_int,
+        hot_y: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Window_default_cursor(self_: *mut Fl_Menu_Window, cursor: core::ffi::c_int);
+    pub fn Fl_Menu_Window_default_cursor(self_: *mut Fl_Menu_Window, cursor: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_screen_num(arg1: *mut Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_screen_num(arg1: *mut Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_screen_num(arg1: *mut Fl_Menu_Window, screen_num: core::ffi::c_int);
+    pub fn Fl_Menu_Window_set_screen_num(arg1: *mut Fl_Menu_Window, screen_num: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Menu_Window_wait_for_expose(arg1: *mut Fl_Menu_Window);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_alpha(self_: *mut Fl_Menu_Window, val: core::ffi::c_uchar);
+    pub fn Fl_Menu_Window_set_alpha(self_: *mut Fl_Menu_Window, val: cty::c_uchar);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_alpha(self_: *const Fl_Menu_Window) -> core::ffi::c_uchar;
+    pub fn Fl_Menu_Window_alpha(self_: *const Fl_Menu_Window) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_force_position(self_: *mut Fl_Menu_Window, flag: core::ffi::c_int);
+    pub fn Fl_Menu_Window_force_position(self_: *mut Fl_Menu_Window, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_default_xclass() -> *const core::ffi::c_char;
+    pub fn Fl_Menu_Window_default_xclass() -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_xclass(self_: *const Fl_Menu_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Menu_Window_xclass(self_: *const Fl_Menu_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_default_xclass(s: *const core::ffi::c_char);
+    pub fn Fl_Menu_Window_set_default_xclass(s: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_xclass(self_: *mut Fl_Menu_Window, s: *const core::ffi::c_char);
+    pub fn Fl_Menu_Window_set_xclass(self_: *mut Fl_Menu_Window, s: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Menu_Window_clear_modal_states(self_: *mut Fl_Menu_Window);
@@ -2161,19 +2089,19 @@ extern "C" {
     pub fn Fl_Menu_Window_set_override(arg1: *mut Fl_Menu_Window);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_override(arg1: *const Fl_Menu_Window) -> core::ffi::c_int;
+    pub fn Fl_Menu_Window_override(arg1: *const Fl_Menu_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_icon_label(arg1: *const Fl_Menu_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Menu_Window_icon_label(arg1: *const Fl_Menu_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_icon_label(arg1: *mut Fl_Menu_Window, arg2: *const core::ffi::c_char);
+    pub fn Fl_Menu_Window_set_icon_label(arg1: *mut Fl_Menu_Window, arg2: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Menu_Window_set_icons(
         w: *mut Fl_Menu_Window,
-        images: *mut *const core::ffi::c_void,
-        length: core::ffi::c_int,
+        images: *mut *const cty::c_void,
+        length: cty::c_int,
     );
 }
 #[repr(C)]
@@ -2183,33 +2111,30 @@ pub struct Fl_Overlay_Window {
 }
 extern "C" {
     pub fn Fl_Overlay_Window_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Overlay_Window;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_x(arg1: *mut Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_x(arg1: *mut Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_y(arg1: *mut Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_y(arg1: *mut Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_width(arg1: *mut Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_width(arg1: *mut Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_height(arg1: *mut Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_height(arg1: *mut Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_label(arg1: *mut Fl_Overlay_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Overlay_Window_label(arg1: *mut Fl_Overlay_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_label(
-        arg1: *mut Fl_Overlay_Window,
-        title: *const core::ffi::c_char,
-    );
+    pub fn Fl_Overlay_Window_set_label(arg1: *mut Fl_Overlay_Window, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Overlay_Window_redraw(arg1: *mut Fl_Overlay_Window);
@@ -2232,84 +2157,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Overlay_Window_resize(
         arg1: *mut Fl_Overlay_Window,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Overlay_Window_widget_resize(
         arg1: *mut Fl_Overlay_Window,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_tooltip(arg1: *mut Fl_Overlay_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Overlay_Window_tooltip(arg1: *mut Fl_Overlay_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_tooltip(
-        arg1: *mut Fl_Overlay_Window,
-        txt: *const core::ffi::c_char,
-    );
+    pub fn Fl_Overlay_Window_set_tooltip(arg1: *mut Fl_Overlay_Window, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_get_type(arg1: *mut Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_get_type(arg1: *mut Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_type(arg1: *mut Fl_Overlay_Window, typ: core::ffi::c_int);
+    pub fn Fl_Overlay_Window_set_type(arg1: *mut Fl_Overlay_Window, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_color(arg1: *mut Fl_Overlay_Window) -> core::ffi::c_uint;
+    pub fn Fl_Overlay_Window_color(arg1: *mut Fl_Overlay_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_color(arg1: *mut Fl_Overlay_Window, color: core::ffi::c_uint);
+    pub fn Fl_Overlay_Window_set_color(arg1: *mut Fl_Overlay_Window, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Overlay_Window_measure_label(
         arg1: *const Fl_Overlay_Window,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_label_color(arg1: *mut Fl_Overlay_Window) -> core::ffi::c_uint;
+    pub fn Fl_Overlay_Window_label_color(arg1: *mut Fl_Overlay_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_label_color(
-        arg1: *mut Fl_Overlay_Window,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Overlay_Window_set_label_color(arg1: *mut Fl_Overlay_Window, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_label_font(arg1: *mut Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_label_font(arg1: *mut Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_label_font(arg1: *mut Fl_Overlay_Window, font: core::ffi::c_int);
+    pub fn Fl_Overlay_Window_set_label_font(arg1: *mut Fl_Overlay_Window, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_label_size(arg1: *mut Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_label_size(arg1: *mut Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_label_size(arg1: *mut Fl_Overlay_Window, sz: core::ffi::c_int);
+    pub fn Fl_Overlay_Window_set_label_size(arg1: *mut Fl_Overlay_Window, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_label_type(arg1: *mut Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_label_type(arg1: *mut Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_label_type(arg1: *mut Fl_Overlay_Window, typ: core::ffi::c_int);
+    pub fn Fl_Overlay_Window_set_label_type(arg1: *mut Fl_Overlay_Window, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_box(arg1: *mut Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_box(arg1: *mut Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_box(arg1: *mut Fl_Overlay_Window, typ: core::ffi::c_int);
+    pub fn Fl_Overlay_Window_set_box(arg1: *mut Fl_Overlay_Window, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_changed(arg1: *mut Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_changed(arg1: *mut Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Overlay_Window_set_changed(arg1: *mut Fl_Overlay_Window);
@@ -2318,32 +2237,32 @@ extern "C" {
     pub fn Fl_Overlay_Window_clear_changed(arg1: *mut Fl_Overlay_Window);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_align(arg1: *mut Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_align(arg1: *mut Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_align(arg1: *mut Fl_Overlay_Window, typ: core::ffi::c_int);
+    pub fn Fl_Overlay_Window_set_align(arg1: *mut Fl_Overlay_Window, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Overlay_Window_delete(arg1: *mut Fl_Overlay_Window);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_image(arg1: *mut Fl_Overlay_Window, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Overlay_Window_set_image(arg1: *mut Fl_Overlay_Window, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Overlay_Window_handle(
         self_: *mut Fl_Overlay_Window,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_handle_event(self_: *mut Fl_Overlay_Window, event: core::ffi::c_int);
+    pub fn Fl_Overlay_Window_handle_event(self_: *mut Fl_Overlay_Window, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Overlay_Window_draw(
         self_: *mut Fl_Overlay_Window,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -2352,36 +2271,33 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_when(arg1: *mut Fl_Overlay_Window, arg2: core::ffi::c_int);
+    pub fn Fl_Overlay_Window_set_when(arg1: *mut Fl_Overlay_Window, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_when(arg1: *const Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_when(arg1: *const Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_image(arg1: *const Fl_Overlay_Window) -> *const core::ffi::c_void;
+    pub fn Fl_Overlay_Window_image(arg1: *const Fl_Overlay_Window) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_parent(self_: *const Fl_Overlay_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Overlay_Window_parent(self_: *const Fl_Overlay_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_selection_color(arg1: *mut Fl_Overlay_Window) -> core::ffi::c_uint;
+    pub fn Fl_Overlay_Window_selection_color(arg1: *mut Fl_Overlay_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_selection_color(
-        arg1: *mut Fl_Overlay_Window,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Overlay_Window_set_selection_color(arg1: *mut Fl_Overlay_Window, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Overlay_Window_do_callback(arg1: *mut Fl_Overlay_Window);
@@ -2389,23 +2305,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Overlay_Window_inside(
         self_: *const Fl_Overlay_Window,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_window(arg1: *const Fl_Overlay_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Overlay_Window_window(arg1: *const Fl_Overlay_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_top_window(arg1: *const Fl_Overlay_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Overlay_Window_top_window(arg1: *const Fl_Overlay_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_takes_events(arg1: *const Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_takes_events(arg1: *const Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_user_data(arg1: *const Fl_Overlay_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Overlay_Window_user_data(arg1: *const Fl_Overlay_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_take_focus(self_: *mut Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_take_focus(self_: *mut Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Overlay_Window_set_visible_focus(self_: *mut Fl_Overlay_Window);
@@ -2414,94 +2330,81 @@ extern "C" {
     pub fn Fl_Overlay_Window_clear_visible_focus(self_: *mut Fl_Overlay_Window);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_visible_focus(self_: *mut Fl_Overlay_Window, v: core::ffi::c_int);
+    pub fn Fl_Overlay_Window_visible_focus(self_: *mut Fl_Overlay_Window, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_has_visible_focus(self_: *mut Fl_Overlay_Window) -> core::ffi::c_uint;
+    pub fn Fl_Overlay_Window_has_visible_focus(self_: *mut Fl_Overlay_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_user_data(
-        arg1: *mut Fl_Overlay_Window,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Overlay_Window_set_user_data(arg1: *mut Fl_Overlay_Window, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_draw_data(self_: *const Fl_Overlay_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Overlay_Window_draw_data(self_: *const Fl_Overlay_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_handle_data(self_: *const Fl_Overlay_Window)
-        -> *mut core::ffi::c_void;
+    pub fn Fl_Overlay_Window_handle_data(self_: *const Fl_Overlay_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_draw_data(
-        self_: *mut Fl_Overlay_Window,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Overlay_Window_set_draw_data(self_: *mut Fl_Overlay_Window, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_handle_data(
-        self_: *mut Fl_Overlay_Window,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Overlay_Window_set_handle_data(self_: *mut Fl_Overlay_Window, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_damage(self_: *const Fl_Overlay_Window) -> core::ffi::c_uchar;
+    pub fn Fl_Overlay_Window_damage(self_: *const Fl_Overlay_Window) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_damage(self_: *mut Fl_Overlay_Window, flag: core::ffi::c_uchar);
+    pub fn Fl_Overlay_Window_set_damage(self_: *mut Fl_Overlay_Window, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Overlay_Window_set_damage_area(
         self_: *mut Fl_Overlay_Window,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Overlay_Window_clear_damage(self_: *mut Fl_Overlay_Window);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_as_window(self_: *mut Fl_Overlay_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Overlay_Window_as_window(self_: *mut Fl_Overlay_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_as_group(self_: *mut Fl_Overlay_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Overlay_Window_as_group(self_: *mut Fl_Overlay_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_deimage(
-        arg1: *mut Fl_Overlay_Window,
-        arg2: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Overlay_Window_set_deimage(arg1: *mut Fl_Overlay_Window, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_deimage(arg1: *const Fl_Overlay_Window) -> *const core::ffi::c_void;
+    pub fn Fl_Overlay_Window_deimage(arg1: *const Fl_Overlay_Window) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Overlay_Window_set_callback(
         arg1: *mut Fl_Overlay_Window,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Overlay_Window_set_deleter(
         arg1: *mut Fl_Overlay_Window,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_visible(self_: *const Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_visible(self_: *const Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_visible_r(self_: *const Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_visible_r(self_: *const Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_active(self_: *const Fl_Overlay_Window) -> core::ffi::c_uint;
+    pub fn Fl_Overlay_Window_active(self_: *const Fl_Overlay_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_active_r(self_: *const Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_active_r(self_: *const Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Overlay_Window_callback(self_: *const Fl_Overlay_Window) -> Fl_Callback;
@@ -2510,16 +2413,16 @@ extern "C" {
     pub fn Fl_Overlay_Window_set_deletion_callback(
         self_: *mut Fl_Overlay_Window,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Overlay_Window_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Overlay_Window;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Overlay_Window_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Overlay_Window_begin(self_: *mut Fl_Overlay_Window);
@@ -2530,45 +2433,45 @@ extern "C" {
 extern "C" {
     pub fn Fl_Overlay_Window_find(
         self_: *mut Fl_Overlay_Window,
-        arg1: *const core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *const cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_add(self_: *mut Fl_Overlay_Window, arg1: *mut core::ffi::c_void);
+    pub fn Fl_Overlay_Window_add(self_: *mut Fl_Overlay_Window, arg1: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Overlay_Window_insert(
         self_: *mut Fl_Overlay_Window,
-        arg1: *mut core::ffi::c_void,
-        pos: core::ffi::c_int,
+        arg1: *mut cty::c_void,
+        pos: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_remove(self_: *mut Fl_Overlay_Window, wid: *mut core::ffi::c_void);
+    pub fn Fl_Overlay_Window_remove(self_: *mut Fl_Overlay_Window, wid: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_remove_by_index(self_: *mut Fl_Overlay_Window, idx: core::ffi::c_int);
+    pub fn Fl_Overlay_Window_remove_by_index(self_: *mut Fl_Overlay_Window, idx: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Overlay_Window_clear(self_: *mut Fl_Overlay_Window);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_children(self_: *mut Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_children(self_: *mut Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Overlay_Window_child(
         arg1: *mut Fl_Overlay_Window,
-        index: core::ffi::c_int,
+        index: cty::c_int,
     ) -> *mut Fl_Widget;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_resizable(self_: *mut Fl_Overlay_Window, arg1: *mut core::ffi::c_void);
+    pub fn Fl_Overlay_Window_resizable(self_: *mut Fl_Overlay_Window, arg1: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_clip_children(self_: *mut Fl_Overlay_Window, c: core::ffi::c_int);
+    pub fn Fl_Overlay_Window_set_clip_children(self_: *mut Fl_Overlay_Window, c: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_clip_children(self_: *mut Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_clip_children(self_: *mut Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Overlay_Window_init_sizes(self_: *mut Fl_Overlay_Window);
@@ -2592,141 +2495,130 @@ extern "C" {
     pub fn Fl_Overlay_Window_draw_overlay(
         self_: *mut Fl_Overlay_Window,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Overlay_Window_redraw_overlay(self_: *mut Fl_Overlay_Window);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_can_do_overlay(self_: *mut Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_can_do_overlay(self_: *mut Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_make_modal(arg1: *mut Fl_Overlay_Window, boolean: core::ffi::c_uint);
+    pub fn Fl_Overlay_Window_make_modal(arg1: *mut Fl_Overlay_Window, boolean: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_fullscreen(arg1: *mut Fl_Overlay_Window, boolean: core::ffi::c_uint);
+    pub fn Fl_Overlay_Window_fullscreen(arg1: *mut Fl_Overlay_Window, boolean: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Overlay_Window_make_current(arg1: *mut Fl_Overlay_Window);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_icon(arg1: *mut Fl_Overlay_Window, arg2: *const core::ffi::c_void);
+    pub fn Fl_Overlay_Window_set_icon(arg1: *mut Fl_Overlay_Window, arg2: *const cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_icon(arg1: *const Fl_Overlay_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Overlay_Window_icon(arg1: *const Fl_Overlay_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_cursor(self_: *mut Fl_Overlay_Window, cursor: core::ffi::c_int);
+    pub fn Fl_Overlay_Window_set_cursor(self_: *mut Fl_Overlay_Window, cursor: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_shown(self_: *mut Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_shown(self_: *mut Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_raw_handle(w: *const Fl_Overlay_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Overlay_Window_raw_handle(w: *const Fl_Overlay_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_border(arg1: *mut Fl_Overlay_Window, flag: core::ffi::c_int);
+    pub fn Fl_Overlay_Window_set_border(arg1: *mut Fl_Overlay_Window, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_border(arg1: *const Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_border(arg1: *const Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_region(self_: *const Fl_Overlay_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Overlay_Window_region(self_: *const Fl_Overlay_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_region(self_: *mut Fl_Overlay_Window, r: *mut core::ffi::c_void);
+    pub fn Fl_Overlay_Window_set_region(self_: *mut Fl_Overlay_Window, r: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Overlay_Window_iconize(self_: *mut Fl_Overlay_Window);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_fullscreen_active(
-        self_: *const Fl_Overlay_Window,
-    ) -> core::ffi::c_uint;
+    pub fn Fl_Overlay_Window_fullscreen_active(self_: *const Fl_Overlay_Window) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Overlay_Window_free_position(self_: *mut Fl_Overlay_Window);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_decorated_w(self_: *const Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_decorated_w(self_: *const Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_decorated_h(self_: *const Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_decorated_h(self_: *const Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Overlay_Window_size_range(
         self_: *mut Fl_Overlay_Window,
-        arg1: core::ffi::c_int,
-        arg2: core::ffi::c_int,
-        arg3: core::ffi::c_int,
-        arg4: core::ffi::c_int,
+        arg1: cty::c_int,
+        arg2: cty::c_int,
+        arg3: cty::c_int,
+        arg4: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Overlay_Window_hotspot(self_: *mut Fl_Overlay_Window, wid: *mut Fl_Widget);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_shape(
-        self_: *mut Fl_Overlay_Window,
-        image: *const core::ffi::c_void,
-    );
+    pub fn Fl_Overlay_Window_set_shape(self_: *mut Fl_Overlay_Window, image: *const cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_shape(self_: *mut Fl_Overlay_Window) -> *const core::ffi::c_void;
+    pub fn Fl_Overlay_Window_shape(self_: *mut Fl_Overlay_Window) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_x_root(self_: *const Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_x_root(self_: *const Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_y_root(self_: *const Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_y_root(self_: *const Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Overlay_Window_set_cursor_image(
         self_: *mut Fl_Overlay_Window,
-        image: *const core::ffi::c_void,
-        hot_x: core::ffi::c_int,
-        hot_y: core::ffi::c_int,
+        image: *const cty::c_void,
+        hot_x: cty::c_int,
+        hot_y: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_default_cursor(
-        self_: *mut Fl_Overlay_Window,
-        cursor: core::ffi::c_int,
-    );
+    pub fn Fl_Overlay_Window_default_cursor(self_: *mut Fl_Overlay_Window, cursor: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_screen_num(arg1: *mut Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_screen_num(arg1: *mut Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_screen_num(
-        arg1: *mut Fl_Overlay_Window,
-        screen_num: core::ffi::c_int,
-    );
+    pub fn Fl_Overlay_Window_set_screen_num(arg1: *mut Fl_Overlay_Window, screen_num: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Overlay_Window_wait_for_expose(arg1: *mut Fl_Overlay_Window);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_alpha(self_: *mut Fl_Overlay_Window, val: core::ffi::c_uchar);
+    pub fn Fl_Overlay_Window_set_alpha(self_: *mut Fl_Overlay_Window, val: cty::c_uchar);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_alpha(self_: *const Fl_Overlay_Window) -> core::ffi::c_uchar;
+    pub fn Fl_Overlay_Window_alpha(self_: *const Fl_Overlay_Window) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_force_position(self_: *mut Fl_Overlay_Window, flag: core::ffi::c_int);
+    pub fn Fl_Overlay_Window_force_position(self_: *mut Fl_Overlay_Window, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_default_xclass() -> *const core::ffi::c_char;
+    pub fn Fl_Overlay_Window_default_xclass() -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_xclass(self_: *const Fl_Overlay_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Overlay_Window_xclass(self_: *const Fl_Overlay_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_default_xclass(s: *const core::ffi::c_char);
+    pub fn Fl_Overlay_Window_set_default_xclass(s: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_xclass(self_: *mut Fl_Overlay_Window, s: *const core::ffi::c_char);
+    pub fn Fl_Overlay_Window_set_xclass(self_: *mut Fl_Overlay_Window, s: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Overlay_Window_clear_modal_states(self_: *mut Fl_Overlay_Window);
@@ -2735,23 +2627,19 @@ extern "C" {
     pub fn Fl_Overlay_Window_set_override(arg1: *mut Fl_Overlay_Window);
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_override(arg1: *const Fl_Overlay_Window) -> core::ffi::c_int;
+    pub fn Fl_Overlay_Window_override(arg1: *const Fl_Overlay_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_icon_label(arg1: *const Fl_Overlay_Window)
-        -> *const core::ffi::c_char;
+    pub fn Fl_Overlay_Window_icon_label(arg1: *const Fl_Overlay_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_icon_label(
-        arg1: *mut Fl_Overlay_Window,
-        arg2: *const core::ffi::c_char,
-    );
+    pub fn Fl_Overlay_Window_set_icon_label(arg1: *mut Fl_Overlay_Window, arg2: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Overlay_Window_set_icons(
         w: *mut Fl_Overlay_Window,
-        images: *mut *const core::ffi::c_void,
-        length: core::ffi::c_int,
+        images: *mut *const cty::c_void,
+        length: cty::c_int,
     );
 }
 extern "C" {
@@ -2767,30 +2655,30 @@ pub struct Fl_Gl_Window {
 }
 extern "C" {
     pub fn Fl_Gl_Window_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Gl_Window;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_x(arg1: *mut Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_x(arg1: *mut Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_y(arg1: *mut Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_y(arg1: *mut Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_width(arg1: *mut Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_width(arg1: *mut Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_height(arg1: *mut Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_height(arg1: *mut Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_label(arg1: *mut Fl_Gl_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Gl_Window_label(arg1: *mut Fl_Gl_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_label(arg1: *mut Fl_Gl_Window, title: *const core::ffi::c_char);
+    pub fn Fl_Gl_Window_set_label(arg1: *mut Fl_Gl_Window, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Gl_Window_redraw(arg1: *mut Fl_Gl_Window);
@@ -2813,78 +2701,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Gl_Window_resize(
         arg1: *mut Fl_Gl_Window,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Gl_Window_widget_resize(
         arg1: *mut Fl_Gl_Window,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Gl_Window_tooltip(arg1: *mut Fl_Gl_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Gl_Window_tooltip(arg1: *mut Fl_Gl_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_tooltip(arg1: *mut Fl_Gl_Window, txt: *const core::ffi::c_char);
+    pub fn Fl_Gl_Window_set_tooltip(arg1: *mut Fl_Gl_Window, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_get_type(arg1: *mut Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_get_type(arg1: *mut Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_type(arg1: *mut Fl_Gl_Window, typ: core::ffi::c_int);
+    pub fn Fl_Gl_Window_set_type(arg1: *mut Fl_Gl_Window, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_color(arg1: *mut Fl_Gl_Window) -> core::ffi::c_uint;
+    pub fn Fl_Gl_Window_color(arg1: *mut Fl_Gl_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_color(arg1: *mut Fl_Gl_Window, color: core::ffi::c_uint);
+    pub fn Fl_Gl_Window_set_color(arg1: *mut Fl_Gl_Window, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Gl_Window_measure_label(
         arg1: *const Fl_Gl_Window,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Gl_Window_label_color(arg1: *mut Fl_Gl_Window) -> core::ffi::c_uint;
+    pub fn Fl_Gl_Window_label_color(arg1: *mut Fl_Gl_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_label_color(arg1: *mut Fl_Gl_Window, color: core::ffi::c_uint);
+    pub fn Fl_Gl_Window_set_label_color(arg1: *mut Fl_Gl_Window, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_label_font(arg1: *mut Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_label_font(arg1: *mut Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_label_font(arg1: *mut Fl_Gl_Window, font: core::ffi::c_int);
+    pub fn Fl_Gl_Window_set_label_font(arg1: *mut Fl_Gl_Window, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_label_size(arg1: *mut Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_label_size(arg1: *mut Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_label_size(arg1: *mut Fl_Gl_Window, sz: core::ffi::c_int);
+    pub fn Fl_Gl_Window_set_label_size(arg1: *mut Fl_Gl_Window, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_label_type(arg1: *mut Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_label_type(arg1: *mut Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_label_type(arg1: *mut Fl_Gl_Window, typ: core::ffi::c_int);
+    pub fn Fl_Gl_Window_set_label_type(arg1: *mut Fl_Gl_Window, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_box(arg1: *mut Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_box(arg1: *mut Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_box(arg1: *mut Fl_Gl_Window, typ: core::ffi::c_int);
+    pub fn Fl_Gl_Window_set_box(arg1: *mut Fl_Gl_Window, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_changed(arg1: *mut Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_changed(arg1: *mut Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Gl_Window_set_changed(arg1: *mut Fl_Gl_Window);
@@ -2893,32 +2781,32 @@ extern "C" {
     pub fn Fl_Gl_Window_clear_changed(arg1: *mut Fl_Gl_Window);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_align(arg1: *mut Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_align(arg1: *mut Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_align(arg1: *mut Fl_Gl_Window, typ: core::ffi::c_int);
+    pub fn Fl_Gl_Window_set_align(arg1: *mut Fl_Gl_Window, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Gl_Window_delete(arg1: *mut Fl_Gl_Window);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_image(arg1: *mut Fl_Gl_Window, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Gl_Window_set_image(arg1: *mut Fl_Gl_Window, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Gl_Window_handle(
         self_: *mut Fl_Gl_Window,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Gl_Window_handle_event(self_: *mut Fl_Gl_Window, event: core::ffi::c_int);
+    pub fn Fl_Gl_Window_handle_event(self_: *mut Fl_Gl_Window, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Gl_Window_draw(
         self_: *mut Fl_Gl_Window,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -2927,57 +2815,54 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_when(arg1: *mut Fl_Gl_Window, arg2: core::ffi::c_int);
+    pub fn Fl_Gl_Window_set_when(arg1: *mut Fl_Gl_Window, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_when(arg1: *const Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_when(arg1: *const Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_image(arg1: *const Fl_Gl_Window) -> *const core::ffi::c_void;
+    pub fn Fl_Gl_Window_image(arg1: *const Fl_Gl_Window) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_parent(self_: *const Fl_Gl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Gl_Window_parent(self_: *const Fl_Gl_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_selection_color(arg1: *mut Fl_Gl_Window) -> core::ffi::c_uint;
+    pub fn Fl_Gl_Window_selection_color(arg1: *mut Fl_Gl_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_selection_color(arg1: *mut Fl_Gl_Window, color: core::ffi::c_uint);
+    pub fn Fl_Gl_Window_set_selection_color(arg1: *mut Fl_Gl_Window, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Gl_Window_do_callback(arg1: *mut Fl_Gl_Window);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_inside(
-        self_: *const Fl_Gl_Window,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_inside(self_: *const Fl_Gl_Window, arg1: *mut cty::c_void) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_window(arg1: *const Fl_Gl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Gl_Window_window(arg1: *const Fl_Gl_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_top_window(arg1: *const Fl_Gl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Gl_Window_top_window(arg1: *const Fl_Gl_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_takes_events(arg1: *const Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_takes_events(arg1: *const Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_user_data(arg1: *const Fl_Gl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Gl_Window_user_data(arg1: *const Fl_Gl_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_take_focus(self_: *mut Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_take_focus(self_: *mut Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Gl_Window_set_visible_focus(self_: *mut Fl_Gl_Window);
@@ -2986,81 +2871,81 @@ extern "C" {
     pub fn Fl_Gl_Window_clear_visible_focus(self_: *mut Fl_Gl_Window);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_visible_focus(self_: *mut Fl_Gl_Window, v: core::ffi::c_int);
+    pub fn Fl_Gl_Window_visible_focus(self_: *mut Fl_Gl_Window, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_has_visible_focus(self_: *mut Fl_Gl_Window) -> core::ffi::c_uint;
+    pub fn Fl_Gl_Window_has_visible_focus(self_: *mut Fl_Gl_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_user_data(arg1: *mut Fl_Gl_Window, data: *mut core::ffi::c_void);
+    pub fn Fl_Gl_Window_set_user_data(arg1: *mut Fl_Gl_Window, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_draw_data(self_: *const Fl_Gl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Gl_Window_draw_data(self_: *const Fl_Gl_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_handle_data(self_: *const Fl_Gl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Gl_Window_handle_data(self_: *const Fl_Gl_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_draw_data(self_: *mut Fl_Gl_Window, data: *mut core::ffi::c_void);
+    pub fn Fl_Gl_Window_set_draw_data(self_: *mut Fl_Gl_Window, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_handle_data(self_: *mut Fl_Gl_Window, data: *mut core::ffi::c_void);
+    pub fn Fl_Gl_Window_set_handle_data(self_: *mut Fl_Gl_Window, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_damage(self_: *const Fl_Gl_Window) -> core::ffi::c_uchar;
+    pub fn Fl_Gl_Window_damage(self_: *const Fl_Gl_Window) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_damage(self_: *mut Fl_Gl_Window, flag: core::ffi::c_uchar);
+    pub fn Fl_Gl_Window_set_damage(self_: *mut Fl_Gl_Window, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Gl_Window_set_damage_area(
         self_: *mut Fl_Gl_Window,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Gl_Window_clear_damage(self_: *mut Fl_Gl_Window);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_as_window(self_: *mut Fl_Gl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Gl_Window_as_window(self_: *mut Fl_Gl_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_as_group(self_: *mut Fl_Gl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Gl_Window_as_group(self_: *mut Fl_Gl_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_deimage(arg1: *mut Fl_Gl_Window, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Gl_Window_set_deimage(arg1: *mut Fl_Gl_Window, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_deimage(arg1: *const Fl_Gl_Window) -> *const core::ffi::c_void;
+    pub fn Fl_Gl_Window_deimage(arg1: *const Fl_Gl_Window) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Gl_Window_set_callback(
         arg1: *mut Fl_Gl_Window,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Gl_Window_set_deleter(
         arg1: *mut Fl_Gl_Window,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Gl_Window_visible(self_: *const Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_visible(self_: *const Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_visible_r(self_: *const Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_visible_r(self_: *const Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_active(self_: *const Fl_Gl_Window) -> core::ffi::c_uint;
+    pub fn Fl_Gl_Window_active(self_: *const Fl_Gl_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_active_r(self_: *const Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_active_r(self_: *const Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Gl_Window_callback(self_: *const Fl_Gl_Window) -> Fl_Callback;
@@ -3069,16 +2954,16 @@ extern "C" {
     pub fn Fl_Gl_Window_set_deletion_callback(
         self_: *mut Fl_Gl_Window,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Gl_Window_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Gl_Window;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Gl_Window_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Gl_Window_begin(self_: *mut Fl_Gl_Window);
@@ -3087,44 +2972,37 @@ extern "C" {
     pub fn Fl_Gl_Window_end(self_: *mut Fl_Gl_Window);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_find(
-        self_: *mut Fl_Gl_Window,
-        arg1: *const core::ffi::c_void,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_find(self_: *mut Fl_Gl_Window, arg1: *const cty::c_void) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_add(self_: *mut Fl_Gl_Window, arg1: *mut core::ffi::c_void);
+    pub fn Fl_Gl_Window_add(self_: *mut Fl_Gl_Window, arg1: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_insert(
-        self_: *mut Fl_Gl_Window,
-        arg1: *mut core::ffi::c_void,
-        pos: core::ffi::c_int,
-    );
+    pub fn Fl_Gl_Window_insert(self_: *mut Fl_Gl_Window, arg1: *mut cty::c_void, pos: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_remove(self_: *mut Fl_Gl_Window, wid: *mut core::ffi::c_void);
+    pub fn Fl_Gl_Window_remove(self_: *mut Fl_Gl_Window, wid: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_remove_by_index(self_: *mut Fl_Gl_Window, idx: core::ffi::c_int);
+    pub fn Fl_Gl_Window_remove_by_index(self_: *mut Fl_Gl_Window, idx: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Gl_Window_clear(self_: *mut Fl_Gl_Window);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_children(self_: *mut Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_children(self_: *mut Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_child(arg1: *mut Fl_Gl_Window, index: core::ffi::c_int) -> *mut Fl_Widget;
+    pub fn Fl_Gl_Window_child(arg1: *mut Fl_Gl_Window, index: cty::c_int) -> *mut Fl_Widget;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_resizable(self_: *mut Fl_Gl_Window, arg1: *mut core::ffi::c_void);
+    pub fn Fl_Gl_Window_resizable(self_: *mut Fl_Gl_Window, arg1: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_clip_children(self_: *mut Fl_Gl_Window, c: core::ffi::c_int);
+    pub fn Fl_Gl_Window_set_clip_children(self_: *mut Fl_Gl_Window, c: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_clip_children(self_: *mut Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_clip_children(self_: *mut Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Gl_Window_init_sizes(self_: *mut Fl_Gl_Window);
@@ -3142,120 +3020,120 @@ extern "C" {
     pub fn Fl_Gl_Window_draw_children(self_: *mut Fl_Gl_Window);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_make_modal(arg1: *mut Fl_Gl_Window, boolean: core::ffi::c_uint);
+    pub fn Fl_Gl_Window_make_modal(arg1: *mut Fl_Gl_Window, boolean: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_fullscreen(arg1: *mut Fl_Gl_Window, boolean: core::ffi::c_uint);
+    pub fn Fl_Gl_Window_fullscreen(arg1: *mut Fl_Gl_Window, boolean: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Gl_Window_make_current(arg1: *mut Fl_Gl_Window);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_icon(arg1: *mut Fl_Gl_Window, arg2: *const core::ffi::c_void);
+    pub fn Fl_Gl_Window_set_icon(arg1: *mut Fl_Gl_Window, arg2: *const cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_icon(arg1: *const Fl_Gl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Gl_Window_icon(arg1: *const Fl_Gl_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_cursor(self_: *mut Fl_Gl_Window, cursor: core::ffi::c_int);
+    pub fn Fl_Gl_Window_set_cursor(self_: *mut Fl_Gl_Window, cursor: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_shown(self_: *mut Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_shown(self_: *mut Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_raw_handle(w: *const Fl_Gl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Gl_Window_raw_handle(w: *const Fl_Gl_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_border(arg1: *mut Fl_Gl_Window, flag: core::ffi::c_int);
+    pub fn Fl_Gl_Window_set_border(arg1: *mut Fl_Gl_Window, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_border(arg1: *const Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_border(arg1: *const Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_region(self_: *const Fl_Gl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Gl_Window_region(self_: *const Fl_Gl_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_region(self_: *mut Fl_Gl_Window, r: *mut core::ffi::c_void);
+    pub fn Fl_Gl_Window_set_region(self_: *mut Fl_Gl_Window, r: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Gl_Window_iconize(self_: *mut Fl_Gl_Window);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_fullscreen_active(self_: *const Fl_Gl_Window) -> core::ffi::c_uint;
+    pub fn Fl_Gl_Window_fullscreen_active(self_: *const Fl_Gl_Window) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Gl_Window_free_position(self_: *mut Fl_Gl_Window);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_decorated_w(self_: *const Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_decorated_w(self_: *const Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_decorated_h(self_: *const Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_decorated_h(self_: *const Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Gl_Window_size_range(
         self_: *mut Fl_Gl_Window,
-        arg1: core::ffi::c_int,
-        arg2: core::ffi::c_int,
-        arg3: core::ffi::c_int,
-        arg4: core::ffi::c_int,
+        arg1: cty::c_int,
+        arg2: cty::c_int,
+        arg3: cty::c_int,
+        arg4: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Gl_Window_hotspot(self_: *mut Fl_Gl_Window, wid: *mut Fl_Widget);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_shape(self_: *mut Fl_Gl_Window, image: *const core::ffi::c_void);
+    pub fn Fl_Gl_Window_set_shape(self_: *mut Fl_Gl_Window, image: *const cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_shape(self_: *mut Fl_Gl_Window) -> *const core::ffi::c_void;
+    pub fn Fl_Gl_Window_shape(self_: *mut Fl_Gl_Window) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_x_root(self_: *const Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_x_root(self_: *const Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_y_root(self_: *const Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_y_root(self_: *const Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Gl_Window_set_cursor_image(
         self_: *mut Fl_Gl_Window,
-        image: *const core::ffi::c_void,
-        hot_x: core::ffi::c_int,
-        hot_y: core::ffi::c_int,
+        image: *const cty::c_void,
+        hot_x: cty::c_int,
+        hot_y: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Gl_Window_default_cursor(self_: *mut Fl_Gl_Window, cursor: core::ffi::c_int);
+    pub fn Fl_Gl_Window_default_cursor(self_: *mut Fl_Gl_Window, cursor: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_screen_num(arg1: *mut Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_screen_num(arg1: *mut Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_screen_num(arg1: *mut Fl_Gl_Window, screen_num: core::ffi::c_int);
+    pub fn Fl_Gl_Window_set_screen_num(arg1: *mut Fl_Gl_Window, screen_num: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Gl_Window_wait_for_expose(arg1: *mut Fl_Gl_Window);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_alpha(self_: *mut Fl_Gl_Window, val: core::ffi::c_uchar);
+    pub fn Fl_Gl_Window_set_alpha(self_: *mut Fl_Gl_Window, val: cty::c_uchar);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_alpha(self_: *const Fl_Gl_Window) -> core::ffi::c_uchar;
+    pub fn Fl_Gl_Window_alpha(self_: *const Fl_Gl_Window) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_force_position(self_: *mut Fl_Gl_Window, flag: core::ffi::c_int);
+    pub fn Fl_Gl_Window_force_position(self_: *mut Fl_Gl_Window, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_default_xclass() -> *const core::ffi::c_char;
+    pub fn Fl_Gl_Window_default_xclass() -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_xclass(self_: *const Fl_Gl_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Gl_Window_xclass(self_: *const Fl_Gl_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_default_xclass(s: *const core::ffi::c_char);
+    pub fn Fl_Gl_Window_set_default_xclass(s: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_xclass(self_: *mut Fl_Gl_Window, s: *const core::ffi::c_char);
+    pub fn Fl_Gl_Window_set_xclass(self_: *mut Fl_Gl_Window, s: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Gl_Window_clear_modal_states(self_: *mut Fl_Gl_Window);
@@ -3264,47 +3142,47 @@ extern "C" {
     pub fn Fl_Gl_Window_set_override(arg1: *mut Fl_Gl_Window);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_override(arg1: *const Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_override(arg1: *const Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_icon_label(arg1: *const Fl_Gl_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Gl_Window_icon_label(arg1: *const Fl_Gl_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_icon_label(arg1: *mut Fl_Gl_Window, arg2: *const core::ffi::c_char);
+    pub fn Fl_Gl_Window_set_icon_label(arg1: *mut Fl_Gl_Window, arg2: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Gl_Window_set_icons(
         w: *mut Fl_Gl_Window,
-        images: *mut *const core::ffi::c_void,
-        length: core::ffi::c_int,
+        images: *mut *const cty::c_void,
+        length: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Gl_Window_flush(self_: *mut Fl_Gl_Window);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_valid(self_: *const Fl_Gl_Window) -> core::ffi::c_char;
+    pub fn Fl_Gl_Window_valid(self_: *const Fl_Gl_Window) -> cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_valid(self_: *mut Fl_Gl_Window, v: core::ffi::c_char);
+    pub fn Fl_Gl_Window_set_valid(self_: *mut Fl_Gl_Window, v: cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_context_valid(self_: *const Fl_Gl_Window) -> core::ffi::c_char;
+    pub fn Fl_Gl_Window_context_valid(self_: *const Fl_Gl_Window) -> cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_context_valid(self_: *mut Fl_Gl_Window, v: core::ffi::c_char);
+    pub fn Fl_Gl_Window_set_context_valid(self_: *mut Fl_Gl_Window, v: cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_can_do(self_: *mut Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_can_do(self_: *mut Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_context(self_: *const Fl_Gl_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Gl_Window_context(self_: *const Fl_Gl_Window) -> *mut cty::c_void;
 }
 extern "C" {
     pub fn Fl_Gl_Window_set_context(
         self_: *mut Fl_Gl_Window,
-        ctx: *mut core::ffi::c_void,
-        destroy_flag: core::ffi::c_int,
+        ctx: *mut cty::c_void,
+        destroy_flag: cty::c_int,
     );
 }
 extern "C" {
@@ -3314,7 +3192,7 @@ extern "C" {
     pub fn Fl_Gl_Window_ortho(self_: *mut Fl_Gl_Window);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_can_do_overlay(self_: *mut Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_can_do_overlay(self_: *mut Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Gl_Window_redraw_overlay(self_: *mut Fl_Gl_Window);
@@ -3329,22 +3207,22 @@ extern "C" {
     pub fn Fl_Gl_Window_pixels_per_unit(self_: *mut Fl_Gl_Window) -> f32;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_pixel_w(self_: *mut Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_pixel_w(self_: *mut Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_pixel_h(self_: *mut Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_pixel_h(self_: *mut Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_mode(self_: *const Fl_Gl_Window) -> core::ffi::c_int;
+    pub fn Fl_Gl_Window_mode(self_: *const Fl_Gl_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_mode(self_: *mut Fl_Gl_Window, mode: core::ffi::c_int);
+    pub fn Fl_Gl_Window_set_mode(self_: *mut Fl_Gl_Window, mode: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Gl_Window_get_proc_address(
         self_: *mut Fl_Gl_Window,
-        s: *const core::ffi::c_char,
-    ) -> *mut core::ffi::c_void;
+        s: *const cty::c_char,
+    ) -> *mut cty::c_void;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -3353,30 +3231,30 @@ pub struct Fl_Glut_Window {
 }
 extern "C" {
     pub fn Fl_Glut_Window_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Glut_Window;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_x(arg1: *mut Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_x(arg1: *mut Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_y(arg1: *mut Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_y(arg1: *mut Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_width(arg1: *mut Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_width(arg1: *mut Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_height(arg1: *mut Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_height(arg1: *mut Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_label(arg1: *mut Fl_Glut_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Glut_Window_label(arg1: *mut Fl_Glut_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_label(arg1: *mut Fl_Glut_Window, title: *const core::ffi::c_char);
+    pub fn Fl_Glut_Window_set_label(arg1: *mut Fl_Glut_Window, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Glut_Window_redraw(arg1: *mut Fl_Glut_Window);
@@ -3399,78 +3277,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Glut_Window_resize(
         arg1: *mut Fl_Glut_Window,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Glut_Window_widget_resize(
         arg1: *mut Fl_Glut_Window,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Glut_Window_tooltip(arg1: *mut Fl_Glut_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Glut_Window_tooltip(arg1: *mut Fl_Glut_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_tooltip(arg1: *mut Fl_Glut_Window, txt: *const core::ffi::c_char);
+    pub fn Fl_Glut_Window_set_tooltip(arg1: *mut Fl_Glut_Window, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_get_type(arg1: *mut Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_get_type(arg1: *mut Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_type(arg1: *mut Fl_Glut_Window, typ: core::ffi::c_int);
+    pub fn Fl_Glut_Window_set_type(arg1: *mut Fl_Glut_Window, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_color(arg1: *mut Fl_Glut_Window) -> core::ffi::c_uint;
+    pub fn Fl_Glut_Window_color(arg1: *mut Fl_Glut_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_color(arg1: *mut Fl_Glut_Window, color: core::ffi::c_uint);
+    pub fn Fl_Glut_Window_set_color(arg1: *mut Fl_Glut_Window, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Glut_Window_measure_label(
         arg1: *const Fl_Glut_Window,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Glut_Window_label_color(arg1: *mut Fl_Glut_Window) -> core::ffi::c_uint;
+    pub fn Fl_Glut_Window_label_color(arg1: *mut Fl_Glut_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_label_color(arg1: *mut Fl_Glut_Window, color: core::ffi::c_uint);
+    pub fn Fl_Glut_Window_set_label_color(arg1: *mut Fl_Glut_Window, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_label_font(arg1: *mut Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_label_font(arg1: *mut Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_label_font(arg1: *mut Fl_Glut_Window, font: core::ffi::c_int);
+    pub fn Fl_Glut_Window_set_label_font(arg1: *mut Fl_Glut_Window, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_label_size(arg1: *mut Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_label_size(arg1: *mut Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_label_size(arg1: *mut Fl_Glut_Window, sz: core::ffi::c_int);
+    pub fn Fl_Glut_Window_set_label_size(arg1: *mut Fl_Glut_Window, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_label_type(arg1: *mut Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_label_type(arg1: *mut Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_label_type(arg1: *mut Fl_Glut_Window, typ: core::ffi::c_int);
+    pub fn Fl_Glut_Window_set_label_type(arg1: *mut Fl_Glut_Window, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_box(arg1: *mut Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_box(arg1: *mut Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_box(arg1: *mut Fl_Glut_Window, typ: core::ffi::c_int);
+    pub fn Fl_Glut_Window_set_box(arg1: *mut Fl_Glut_Window, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_changed(arg1: *mut Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_changed(arg1: *mut Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Glut_Window_set_changed(arg1: *mut Fl_Glut_Window);
@@ -3479,32 +3357,32 @@ extern "C" {
     pub fn Fl_Glut_Window_clear_changed(arg1: *mut Fl_Glut_Window);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_align(arg1: *mut Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_align(arg1: *mut Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_align(arg1: *mut Fl_Glut_Window, typ: core::ffi::c_int);
+    pub fn Fl_Glut_Window_set_align(arg1: *mut Fl_Glut_Window, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Glut_Window_delete(arg1: *mut Fl_Glut_Window);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_image(arg1: *mut Fl_Glut_Window, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Glut_Window_set_image(arg1: *mut Fl_Glut_Window, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Glut_Window_handle(
         self_: *mut Fl_Glut_Window,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Glut_Window_handle_event(self_: *mut Fl_Glut_Window, event: core::ffi::c_int);
+    pub fn Fl_Glut_Window_handle_event(self_: *mut Fl_Glut_Window, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Glut_Window_draw(
         self_: *mut Fl_Glut_Window,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -3513,33 +3391,33 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_when(arg1: *mut Fl_Glut_Window, arg2: core::ffi::c_int);
+    pub fn Fl_Glut_Window_set_when(arg1: *mut Fl_Glut_Window, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_when(arg1: *const Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_when(arg1: *const Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_image(arg1: *const Fl_Glut_Window) -> *const core::ffi::c_void;
+    pub fn Fl_Glut_Window_image(arg1: *const Fl_Glut_Window) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_parent(self_: *const Fl_Glut_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Glut_Window_parent(self_: *const Fl_Glut_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_selection_color(arg1: *mut Fl_Glut_Window) -> core::ffi::c_uint;
+    pub fn Fl_Glut_Window_selection_color(arg1: *mut Fl_Glut_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_selection_color(arg1: *mut Fl_Glut_Window, color: core::ffi::c_uint);
+    pub fn Fl_Glut_Window_set_selection_color(arg1: *mut Fl_Glut_Window, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Glut_Window_do_callback(arg1: *mut Fl_Glut_Window);
@@ -3547,23 +3425,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Glut_Window_inside(
         self_: *const Fl_Glut_Window,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_window(arg1: *const Fl_Glut_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Glut_Window_window(arg1: *const Fl_Glut_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_top_window(arg1: *const Fl_Glut_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Glut_Window_top_window(arg1: *const Fl_Glut_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_takes_events(arg1: *const Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_takes_events(arg1: *const Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_user_data(arg1: *const Fl_Glut_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Glut_Window_user_data(arg1: *const Fl_Glut_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_take_focus(self_: *mut Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_take_focus(self_: *mut Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Glut_Window_set_visible_focus(self_: *mut Fl_Glut_Window);
@@ -3572,81 +3450,81 @@ extern "C" {
     pub fn Fl_Glut_Window_clear_visible_focus(self_: *mut Fl_Glut_Window);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_visible_focus(self_: *mut Fl_Glut_Window, v: core::ffi::c_int);
+    pub fn Fl_Glut_Window_visible_focus(self_: *mut Fl_Glut_Window, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_has_visible_focus(self_: *mut Fl_Glut_Window) -> core::ffi::c_uint;
+    pub fn Fl_Glut_Window_has_visible_focus(self_: *mut Fl_Glut_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_user_data(arg1: *mut Fl_Glut_Window, data: *mut core::ffi::c_void);
+    pub fn Fl_Glut_Window_set_user_data(arg1: *mut Fl_Glut_Window, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_draw_data(self_: *const Fl_Glut_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Glut_Window_draw_data(self_: *const Fl_Glut_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_handle_data(self_: *const Fl_Glut_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Glut_Window_handle_data(self_: *const Fl_Glut_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_draw_data(self_: *mut Fl_Glut_Window, data: *mut core::ffi::c_void);
+    pub fn Fl_Glut_Window_set_draw_data(self_: *mut Fl_Glut_Window, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_handle_data(self_: *mut Fl_Glut_Window, data: *mut core::ffi::c_void);
+    pub fn Fl_Glut_Window_set_handle_data(self_: *mut Fl_Glut_Window, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_damage(self_: *const Fl_Glut_Window) -> core::ffi::c_uchar;
+    pub fn Fl_Glut_Window_damage(self_: *const Fl_Glut_Window) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_damage(self_: *mut Fl_Glut_Window, flag: core::ffi::c_uchar);
+    pub fn Fl_Glut_Window_set_damage(self_: *mut Fl_Glut_Window, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Glut_Window_set_damage_area(
         self_: *mut Fl_Glut_Window,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Glut_Window_clear_damage(self_: *mut Fl_Glut_Window);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_as_window(self_: *mut Fl_Glut_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Glut_Window_as_window(self_: *mut Fl_Glut_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_as_group(self_: *mut Fl_Glut_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Glut_Window_as_group(self_: *mut Fl_Glut_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_deimage(arg1: *mut Fl_Glut_Window, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Glut_Window_set_deimage(arg1: *mut Fl_Glut_Window, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_deimage(arg1: *const Fl_Glut_Window) -> *const core::ffi::c_void;
+    pub fn Fl_Glut_Window_deimage(arg1: *const Fl_Glut_Window) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Glut_Window_set_callback(
         arg1: *mut Fl_Glut_Window,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Glut_Window_set_deleter(
         arg1: *mut Fl_Glut_Window,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Glut_Window_visible(self_: *const Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_visible(self_: *const Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_visible_r(self_: *const Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_visible_r(self_: *const Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_active(self_: *const Fl_Glut_Window) -> core::ffi::c_uint;
+    pub fn Fl_Glut_Window_active(self_: *const Fl_Glut_Window) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_active_r(self_: *const Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_active_r(self_: *const Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Glut_Window_callback(self_: *const Fl_Glut_Window) -> Fl_Callback;
@@ -3655,16 +3533,16 @@ extern "C" {
     pub fn Fl_Glut_Window_set_deletion_callback(
         self_: *mut Fl_Glut_Window,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Glut_Window_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Glut_Window;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Glut_Window_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Glut_Window_begin(self_: *mut Fl_Glut_Window);
@@ -3673,47 +3551,41 @@ extern "C" {
     pub fn Fl_Glut_Window_end(self_: *mut Fl_Glut_Window);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_find(
-        self_: *mut Fl_Glut_Window,
-        arg1: *const core::ffi::c_void,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_find(self_: *mut Fl_Glut_Window, arg1: *const cty::c_void) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_add(self_: *mut Fl_Glut_Window, arg1: *mut core::ffi::c_void);
+    pub fn Fl_Glut_Window_add(self_: *mut Fl_Glut_Window, arg1: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Glut_Window_insert(
         self_: *mut Fl_Glut_Window,
-        arg1: *mut core::ffi::c_void,
-        pos: core::ffi::c_int,
+        arg1: *mut cty::c_void,
+        pos: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Glut_Window_remove(self_: *mut Fl_Glut_Window, wid: *mut core::ffi::c_void);
+    pub fn Fl_Glut_Window_remove(self_: *mut Fl_Glut_Window, wid: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_remove_by_index(self_: *mut Fl_Glut_Window, idx: core::ffi::c_int);
+    pub fn Fl_Glut_Window_remove_by_index(self_: *mut Fl_Glut_Window, idx: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Glut_Window_clear(self_: *mut Fl_Glut_Window);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_children(self_: *mut Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_children(self_: *mut Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_child(
-        arg1: *mut Fl_Glut_Window,
-        index: core::ffi::c_int,
-    ) -> *mut Fl_Widget;
+    pub fn Fl_Glut_Window_child(arg1: *mut Fl_Glut_Window, index: cty::c_int) -> *mut Fl_Widget;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_resizable(self_: *mut Fl_Glut_Window, arg1: *mut core::ffi::c_void);
+    pub fn Fl_Glut_Window_resizable(self_: *mut Fl_Glut_Window, arg1: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_clip_children(self_: *mut Fl_Glut_Window, c: core::ffi::c_int);
+    pub fn Fl_Glut_Window_set_clip_children(self_: *mut Fl_Glut_Window, c: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_clip_children(self_: *mut Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_clip_children(self_: *mut Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Glut_Window_init_sizes(self_: *mut Fl_Glut_Window);
@@ -3731,120 +3603,120 @@ extern "C" {
     pub fn Fl_Glut_Window_draw_children(self_: *mut Fl_Glut_Window);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_make_modal(arg1: *mut Fl_Glut_Window, boolean: core::ffi::c_uint);
+    pub fn Fl_Glut_Window_make_modal(arg1: *mut Fl_Glut_Window, boolean: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_fullscreen(arg1: *mut Fl_Glut_Window, boolean: core::ffi::c_uint);
+    pub fn Fl_Glut_Window_fullscreen(arg1: *mut Fl_Glut_Window, boolean: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Glut_Window_make_current(arg1: *mut Fl_Glut_Window);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_icon(arg1: *mut Fl_Glut_Window, arg2: *const core::ffi::c_void);
+    pub fn Fl_Glut_Window_set_icon(arg1: *mut Fl_Glut_Window, arg2: *const cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_icon(arg1: *const Fl_Glut_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Glut_Window_icon(arg1: *const Fl_Glut_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_cursor(self_: *mut Fl_Glut_Window, cursor: core::ffi::c_int);
+    pub fn Fl_Glut_Window_set_cursor(self_: *mut Fl_Glut_Window, cursor: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_shown(self_: *mut Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_shown(self_: *mut Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_raw_handle(w: *const Fl_Glut_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Glut_Window_raw_handle(w: *const Fl_Glut_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_border(arg1: *mut Fl_Glut_Window, flag: core::ffi::c_int);
+    pub fn Fl_Glut_Window_set_border(arg1: *mut Fl_Glut_Window, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_border(arg1: *const Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_border(arg1: *const Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_region(self_: *const Fl_Glut_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Glut_Window_region(self_: *const Fl_Glut_Window) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_region(self_: *mut Fl_Glut_Window, r: *mut core::ffi::c_void);
+    pub fn Fl_Glut_Window_set_region(self_: *mut Fl_Glut_Window, r: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Glut_Window_iconize(self_: *mut Fl_Glut_Window);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_fullscreen_active(self_: *const Fl_Glut_Window) -> core::ffi::c_uint;
+    pub fn Fl_Glut_Window_fullscreen_active(self_: *const Fl_Glut_Window) -> cty::c_uint;
 }
 extern "C" {
     pub fn Fl_Glut_Window_free_position(self_: *mut Fl_Glut_Window);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_decorated_w(self_: *const Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_decorated_w(self_: *const Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_decorated_h(self_: *const Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_decorated_h(self_: *const Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Glut_Window_size_range(
         self_: *mut Fl_Glut_Window,
-        arg1: core::ffi::c_int,
-        arg2: core::ffi::c_int,
-        arg3: core::ffi::c_int,
-        arg4: core::ffi::c_int,
+        arg1: cty::c_int,
+        arg2: cty::c_int,
+        arg3: cty::c_int,
+        arg4: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Glut_Window_hotspot(self_: *mut Fl_Glut_Window, wid: *mut Fl_Widget);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_shape(self_: *mut Fl_Glut_Window, image: *const core::ffi::c_void);
+    pub fn Fl_Glut_Window_set_shape(self_: *mut Fl_Glut_Window, image: *const cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_shape(self_: *mut Fl_Glut_Window) -> *const core::ffi::c_void;
+    pub fn Fl_Glut_Window_shape(self_: *mut Fl_Glut_Window) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_x_root(self_: *const Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_x_root(self_: *const Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_y_root(self_: *const Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_y_root(self_: *const Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Glut_Window_set_cursor_image(
         self_: *mut Fl_Glut_Window,
-        image: *const core::ffi::c_void,
-        hot_x: core::ffi::c_int,
-        hot_y: core::ffi::c_int,
+        image: *const cty::c_void,
+        hot_x: cty::c_int,
+        hot_y: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Glut_Window_default_cursor(self_: *mut Fl_Glut_Window, cursor: core::ffi::c_int);
+    pub fn Fl_Glut_Window_default_cursor(self_: *mut Fl_Glut_Window, cursor: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_screen_num(arg1: *mut Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_screen_num(arg1: *mut Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_screen_num(arg1: *mut Fl_Glut_Window, screen_num: core::ffi::c_int);
+    pub fn Fl_Glut_Window_set_screen_num(arg1: *mut Fl_Glut_Window, screen_num: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Glut_Window_wait_for_expose(arg1: *mut Fl_Glut_Window);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_alpha(self_: *mut Fl_Glut_Window, val: core::ffi::c_uchar);
+    pub fn Fl_Glut_Window_set_alpha(self_: *mut Fl_Glut_Window, val: cty::c_uchar);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_alpha(self_: *const Fl_Glut_Window) -> core::ffi::c_uchar;
+    pub fn Fl_Glut_Window_alpha(self_: *const Fl_Glut_Window) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_force_position(self_: *mut Fl_Glut_Window, flag: core::ffi::c_int);
+    pub fn Fl_Glut_Window_force_position(self_: *mut Fl_Glut_Window, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_default_xclass() -> *const core::ffi::c_char;
+    pub fn Fl_Glut_Window_default_xclass() -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_xclass(self_: *const Fl_Glut_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Glut_Window_xclass(self_: *const Fl_Glut_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_default_xclass(s: *const core::ffi::c_char);
+    pub fn Fl_Glut_Window_set_default_xclass(s: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_xclass(self_: *mut Fl_Glut_Window, s: *const core::ffi::c_char);
+    pub fn Fl_Glut_Window_set_xclass(self_: *mut Fl_Glut_Window, s: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Glut_Window_clear_modal_states(self_: *mut Fl_Glut_Window);
@@ -3853,47 +3725,47 @@ extern "C" {
     pub fn Fl_Glut_Window_set_override(arg1: *mut Fl_Glut_Window);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_override(arg1: *const Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_override(arg1: *const Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_icon_label(arg1: *const Fl_Glut_Window) -> *const core::ffi::c_char;
+    pub fn Fl_Glut_Window_icon_label(arg1: *const Fl_Glut_Window) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_icon_label(arg1: *mut Fl_Glut_Window, arg2: *const core::ffi::c_char);
+    pub fn Fl_Glut_Window_set_icon_label(arg1: *mut Fl_Glut_Window, arg2: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Glut_Window_set_icons(
         w: *mut Fl_Glut_Window,
-        images: *mut *const core::ffi::c_void,
-        length: core::ffi::c_int,
+        images: *mut *const cty::c_void,
+        length: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Glut_Window_flush(self_: *mut Fl_Glut_Window);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_valid(self_: *const Fl_Glut_Window) -> core::ffi::c_char;
+    pub fn Fl_Glut_Window_valid(self_: *const Fl_Glut_Window) -> cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_valid(self_: *mut Fl_Glut_Window, v: core::ffi::c_char);
+    pub fn Fl_Glut_Window_set_valid(self_: *mut Fl_Glut_Window, v: cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_context_valid(self_: *const Fl_Glut_Window) -> core::ffi::c_char;
+    pub fn Fl_Glut_Window_context_valid(self_: *const Fl_Glut_Window) -> cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_context_valid(self_: *mut Fl_Glut_Window, v: core::ffi::c_char);
+    pub fn Fl_Glut_Window_set_context_valid(self_: *mut Fl_Glut_Window, v: cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_can_do(self_: *mut Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_can_do(self_: *mut Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_context(self_: *const Fl_Glut_Window) -> *mut core::ffi::c_void;
+    pub fn Fl_Glut_Window_context(self_: *const Fl_Glut_Window) -> *mut cty::c_void;
 }
 extern "C" {
     pub fn Fl_Glut_Window_set_context(
         self_: *mut Fl_Glut_Window,
-        ctx: *mut core::ffi::c_void,
-        destroy_flag: core::ffi::c_int,
+        ctx: *mut cty::c_void,
+        destroy_flag: cty::c_int,
     );
 }
 extern "C" {
@@ -3903,7 +3775,7 @@ extern "C" {
     pub fn Fl_Glut_Window_ortho(self_: *mut Fl_Glut_Window);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_can_do_overlay(self_: *mut Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_can_do_overlay(self_: *mut Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Glut_Window_redraw_overlay(self_: *mut Fl_Glut_Window);
@@ -3918,20 +3790,20 @@ extern "C" {
     pub fn Fl_Glut_Window_pixels_per_unit(self_: *mut Fl_Glut_Window) -> f32;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_pixel_w(self_: *mut Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_pixel_w(self_: *mut Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_pixel_h(self_: *mut Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_pixel_h(self_: *mut Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_mode(self_: *const Fl_Glut_Window) -> core::ffi::c_int;
+    pub fn Fl_Glut_Window_mode(self_: *const Fl_Glut_Window) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_mode(self_: *mut Fl_Glut_Window, mode: core::ffi::c_int);
+    pub fn Fl_Glut_Window_set_mode(self_: *mut Fl_Glut_Window, mode: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Glut_Window_get_proc_address(
         self_: *mut Fl_Glut_Window,
-        s: *const core::ffi::c_char,
-    ) -> *mut core::ffi::c_void;
+        s: *const cty::c_char,
+    ) -> *mut cty::c_void;
 }

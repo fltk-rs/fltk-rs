@@ -17,6 +17,10 @@ links = "fltk"
 name = "fltk_sys"
 path = "src/lib.rs"
 
+[dependencies]
+# TODO: remove when msrv > 1.63
+cty = "0.2"
+
 [build-dependencies]
 cmake = "0.1"
 

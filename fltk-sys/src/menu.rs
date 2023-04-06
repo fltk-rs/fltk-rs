@@ -5,19 +5,17 @@
 pub struct Fl_Widget {
     _unused: [u8; 0],
 }
-pub type Fl_Callback = ::core::option::Option<
-    unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
->;
+pub type Fl_Callback =
+    ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void)>;
 pub type custom_handler_callback = ::core::option::Option<
     unsafe extern "C" fn(
         arg1: *mut Fl_Widget,
-        arg2: core::ffi::c_int,
-        arg3: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int,
+        arg2: cty::c_int,
+        arg3: *mut cty::c_void,
+    ) -> cty::c_int,
 >;
-pub type custom_draw_callback = ::core::option::Option<
-    unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
->;
+pub type custom_draw_callback =
+    ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void)>;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Item {
@@ -30,30 +28,30 @@ pub struct Fl_Menu_Bar {
 }
 extern "C" {
     pub fn Fl_Menu_Bar_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Menu_Bar;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_x(arg1: *mut Fl_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_x(arg1: *mut Fl_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_y(arg1: *mut Fl_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_y(arg1: *mut Fl_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_width(arg1: *mut Fl_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_width(arg1: *mut Fl_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_height(arg1: *mut Fl_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_height(arg1: *mut Fl_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_label(arg1: *mut Fl_Menu_Bar) -> *const core::ffi::c_char;
+    pub fn Fl_Menu_Bar_label(arg1: *mut Fl_Menu_Bar) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_label(arg1: *mut Fl_Menu_Bar, title: *const core::ffi::c_char);
+    pub fn Fl_Menu_Bar_set_label(arg1: *mut Fl_Menu_Bar, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Menu_Bar_redraw(arg1: *mut Fl_Menu_Bar);
@@ -76,78 +74,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Bar_resize(
         arg1: *mut Fl_Menu_Bar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Menu_Bar_widget_resize(
         arg1: *mut Fl_Menu_Bar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_tooltip(arg1: *mut Fl_Menu_Bar) -> *const core::ffi::c_char;
+    pub fn Fl_Menu_Bar_tooltip(arg1: *mut Fl_Menu_Bar) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_tooltip(arg1: *mut Fl_Menu_Bar, txt: *const core::ffi::c_char);
+    pub fn Fl_Menu_Bar_set_tooltip(arg1: *mut Fl_Menu_Bar, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_get_type(arg1: *mut Fl_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_get_type(arg1: *mut Fl_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_type(arg1: *mut Fl_Menu_Bar, typ: core::ffi::c_int);
+    pub fn Fl_Menu_Bar_set_type(arg1: *mut Fl_Menu_Bar, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_color(arg1: *mut Fl_Menu_Bar) -> core::ffi::c_uint;
+    pub fn Fl_Menu_Bar_color(arg1: *mut Fl_Menu_Bar) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_color(arg1: *mut Fl_Menu_Bar, color: core::ffi::c_uint);
+    pub fn Fl_Menu_Bar_set_color(arg1: *mut Fl_Menu_Bar, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Menu_Bar_measure_label(
         arg1: *const Fl_Menu_Bar,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_label_color(arg1: *mut Fl_Menu_Bar) -> core::ffi::c_uint;
+    pub fn Fl_Menu_Bar_label_color(arg1: *mut Fl_Menu_Bar) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_label_color(arg1: *mut Fl_Menu_Bar, color: core::ffi::c_uint);
+    pub fn Fl_Menu_Bar_set_label_color(arg1: *mut Fl_Menu_Bar, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_label_font(arg1: *mut Fl_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_label_font(arg1: *mut Fl_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_label_font(arg1: *mut Fl_Menu_Bar, font: core::ffi::c_int);
+    pub fn Fl_Menu_Bar_set_label_font(arg1: *mut Fl_Menu_Bar, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_label_size(arg1: *mut Fl_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_label_size(arg1: *mut Fl_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_label_size(arg1: *mut Fl_Menu_Bar, sz: core::ffi::c_int);
+    pub fn Fl_Menu_Bar_set_label_size(arg1: *mut Fl_Menu_Bar, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_label_type(arg1: *mut Fl_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_label_type(arg1: *mut Fl_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_label_type(arg1: *mut Fl_Menu_Bar, typ: core::ffi::c_int);
+    pub fn Fl_Menu_Bar_set_label_type(arg1: *mut Fl_Menu_Bar, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_box(arg1: *mut Fl_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_box(arg1: *mut Fl_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_box(arg1: *mut Fl_Menu_Bar, typ: core::ffi::c_int);
+    pub fn Fl_Menu_Bar_set_box(arg1: *mut Fl_Menu_Bar, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_changed(arg1: *mut Fl_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_changed(arg1: *mut Fl_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_set_changed(arg1: *mut Fl_Menu_Bar);
@@ -156,32 +154,32 @@ extern "C" {
     pub fn Fl_Menu_Bar_clear_changed(arg1: *mut Fl_Menu_Bar);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_align(arg1: *mut Fl_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_align(arg1: *mut Fl_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_align(arg1: *mut Fl_Menu_Bar, typ: core::ffi::c_int);
+    pub fn Fl_Menu_Bar_set_align(arg1: *mut Fl_Menu_Bar, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Menu_Bar_delete(arg1: *mut Fl_Menu_Bar);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_image(arg1: *mut Fl_Menu_Bar, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Menu_Bar_set_image(arg1: *mut Fl_Menu_Bar, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Menu_Bar_handle(
         self_: *mut Fl_Menu_Bar,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_handle_event(self_: *mut Fl_Menu_Bar, event: core::ffi::c_int);
+    pub fn Fl_Menu_Bar_handle_event(self_: *mut Fl_Menu_Bar, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Menu_Bar_draw(
         self_: *mut Fl_Menu_Bar,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -190,57 +188,54 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_when(arg1: *mut Fl_Menu_Bar, arg2: core::ffi::c_int);
+    pub fn Fl_Menu_Bar_set_when(arg1: *mut Fl_Menu_Bar, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_when(arg1: *const Fl_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_when(arg1: *const Fl_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_image(arg1: *const Fl_Menu_Bar) -> *const core::ffi::c_void;
+    pub fn Fl_Menu_Bar_image(arg1: *const Fl_Menu_Bar) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_parent(self_: *const Fl_Menu_Bar) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Bar_parent(self_: *const Fl_Menu_Bar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_selection_color(arg1: *mut Fl_Menu_Bar) -> core::ffi::c_uint;
+    pub fn Fl_Menu_Bar_selection_color(arg1: *mut Fl_Menu_Bar) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_selection_color(arg1: *mut Fl_Menu_Bar, color: core::ffi::c_uint);
+    pub fn Fl_Menu_Bar_set_selection_color(arg1: *mut Fl_Menu_Bar, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Menu_Bar_do_callback(arg1: *mut Fl_Menu_Bar);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_inside(
-        self_: *const Fl_Menu_Bar,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_inside(self_: *const Fl_Menu_Bar, arg1: *mut cty::c_void) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_window(arg1: *const Fl_Menu_Bar) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Bar_window(arg1: *const Fl_Menu_Bar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_top_window(arg1: *const Fl_Menu_Bar) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Bar_top_window(arg1: *const Fl_Menu_Bar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_takes_events(arg1: *const Fl_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_takes_events(arg1: *const Fl_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_user_data(arg1: *const Fl_Menu_Bar) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Bar_user_data(arg1: *const Fl_Menu_Bar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_take_focus(self_: *mut Fl_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_take_focus(self_: *mut Fl_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_set_visible_focus(self_: *mut Fl_Menu_Bar);
@@ -249,81 +244,81 @@ extern "C" {
     pub fn Fl_Menu_Bar_clear_visible_focus(self_: *mut Fl_Menu_Bar);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_visible_focus(self_: *mut Fl_Menu_Bar, v: core::ffi::c_int);
+    pub fn Fl_Menu_Bar_visible_focus(self_: *mut Fl_Menu_Bar, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_has_visible_focus(self_: *mut Fl_Menu_Bar) -> core::ffi::c_uint;
+    pub fn Fl_Menu_Bar_has_visible_focus(self_: *mut Fl_Menu_Bar) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_user_data(arg1: *mut Fl_Menu_Bar, data: *mut core::ffi::c_void);
+    pub fn Fl_Menu_Bar_set_user_data(arg1: *mut Fl_Menu_Bar, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_draw_data(self_: *const Fl_Menu_Bar) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Bar_draw_data(self_: *const Fl_Menu_Bar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_handle_data(self_: *const Fl_Menu_Bar) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Bar_handle_data(self_: *const Fl_Menu_Bar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_draw_data(self_: *mut Fl_Menu_Bar, data: *mut core::ffi::c_void);
+    pub fn Fl_Menu_Bar_set_draw_data(self_: *mut Fl_Menu_Bar, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_handle_data(self_: *mut Fl_Menu_Bar, data: *mut core::ffi::c_void);
+    pub fn Fl_Menu_Bar_set_handle_data(self_: *mut Fl_Menu_Bar, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_damage(self_: *const Fl_Menu_Bar) -> core::ffi::c_uchar;
+    pub fn Fl_Menu_Bar_damage(self_: *const Fl_Menu_Bar) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_damage(self_: *mut Fl_Menu_Bar, flag: core::ffi::c_uchar);
+    pub fn Fl_Menu_Bar_set_damage(self_: *mut Fl_Menu_Bar, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Menu_Bar_set_damage_area(
         self_: *mut Fl_Menu_Bar,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Menu_Bar_clear_damage(self_: *mut Fl_Menu_Bar);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_as_window(self_: *mut Fl_Menu_Bar) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Bar_as_window(self_: *mut Fl_Menu_Bar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_as_group(self_: *mut Fl_Menu_Bar) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Bar_as_group(self_: *mut Fl_Menu_Bar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_deimage(arg1: *mut Fl_Menu_Bar, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Menu_Bar_set_deimage(arg1: *mut Fl_Menu_Bar, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_deimage(arg1: *const Fl_Menu_Bar) -> *const core::ffi::c_void;
+    pub fn Fl_Menu_Bar_deimage(arg1: *const Fl_Menu_Bar) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_set_callback(
         arg1: *mut Fl_Menu_Bar,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Menu_Bar_set_deleter(
         arg1: *mut Fl_Menu_Bar,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_visible(self_: *const Fl_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_visible(self_: *const Fl_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_visible_r(self_: *const Fl_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_visible_r(self_: *const Fl_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_active(self_: *const Fl_Menu_Bar) -> core::ffi::c_uint;
+    pub fn Fl_Menu_Bar_active(self_: *const Fl_Menu_Bar) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_active_r(self_: *const Fl_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_active_r(self_: *const Fl_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_callback(self_: *const Fl_Menu_Bar) -> Fl_Callback;
@@ -332,115 +327,103 @@ extern "C" {
     pub fn Fl_Menu_Bar_set_deletion_callback(
         self_: *mut Fl_Menu_Bar,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Menu_Bar_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Menu_Bar;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Menu_Bar_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Menu_Bar_add(
         arg1: *mut Fl_Menu_Bar,
-        name: *const core::ffi::c_char,
-        shortcut: core::ffi::c_int,
+        name: *const cty::c_char,
+        shortcut: cty::c_int,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
-        arg4: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        arg3: *mut cty::c_void,
+        arg4: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_insert(
         arg1: *mut Fl_Menu_Bar,
-        index: core::ffi::c_int,
-        name: *const core::ffi::c_char,
-        shortcut: core::ffi::c_int,
+        index: cty::c_int,
+        name: *const cty::c_char,
+        shortcut: cty::c_int,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
-        arg4: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        arg3: *mut cty::c_void,
+        arg4: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_get_item(
         arg1: *mut Fl_Menu_Bar,
-        name: *const core::ffi::c_char,
+        name: *const cty::c_char,
     ) -> *mut Fl_Menu_Item;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_item(
-        arg1: *mut Fl_Menu_Bar,
-        item: *mut Fl_Menu_Item,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_set_item(arg1: *mut Fl_Menu_Bar, item: *mut Fl_Menu_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_text_font(arg1: *mut Fl_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_text_font(arg1: *mut Fl_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_text_font(arg1: *mut Fl_Menu_Bar, c: core::ffi::c_int);
+    pub fn Fl_Menu_Bar_set_text_font(arg1: *mut Fl_Menu_Bar, c: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_text_size(arg1: *mut Fl_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_text_size(arg1: *mut Fl_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_text_size(arg1: *mut Fl_Menu_Bar, c: core::ffi::c_int);
+    pub fn Fl_Menu_Bar_set_text_size(arg1: *mut Fl_Menu_Bar, c: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_text_color(arg1: *mut Fl_Menu_Bar) -> core::ffi::c_uint;
+    pub fn Fl_Menu_Bar_text_color(arg1: *mut Fl_Menu_Bar) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_text_color(arg1: *mut Fl_Menu_Bar, c: core::ffi::c_uint);
+    pub fn Fl_Menu_Bar_set_text_color(arg1: *mut Fl_Menu_Bar, c: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_add_choice(
-        arg1: *mut Fl_Menu_Bar,
-        arg2: *const core::ffi::c_char,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_add_choice(arg1: *mut Fl_Menu_Bar, arg2: *const cty::c_char) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_get_choice(arg1: *mut Fl_Menu_Bar) -> *const core::ffi::c_char;
+    pub fn Fl_Menu_Bar_get_choice(arg1: *mut Fl_Menu_Bar) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_value(arg1: *mut Fl_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_value(arg1: *mut Fl_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_value(arg1: *mut Fl_Menu_Bar, v: core::ffi::c_int) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_set_value(arg1: *mut Fl_Menu_Bar, v: cty::c_int) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_clear(arg1: *mut Fl_Menu_Bar);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_clear_submenu(
-        arg1: *mut Fl_Menu_Bar,
-        index: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_clear_submenu(arg1: *mut Fl_Menu_Bar, index: cty::c_int) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_size(arg1: *const Fl_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_size(arg1: *const Fl_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_text(
-        arg1: *const Fl_Menu_Bar,
-        idx: core::ffi::c_int,
-    ) -> *const core::ffi::c_char;
+    pub fn Fl_Menu_Bar_text(arg1: *const Fl_Menu_Bar, idx: cty::c_int) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_at(arg1: *const Fl_Menu_Bar, idx: core::ffi::c_int) -> *const Fl_Menu_Item;
+    pub fn Fl_Menu_Bar_at(arg1: *const Fl_Menu_Bar, idx: cty::c_int) -> *const Fl_Menu_Item;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_mode(self_: *mut Fl_Menu_Bar, i: core::ffi::c_int, fl: core::ffi::c_int);
+    pub fn Fl_Menu_Bar_set_mode(self_: *mut Fl_Menu_Bar, i: cty::c_int, fl: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_mode(self_: *const Fl_Menu_Bar, i: core::ffi::c_int) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_mode(self_: *const Fl_Menu_Bar, i: cty::c_int) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_find_index(
         self_: *const Fl_Menu_Bar,
-        label: *const core::ffi::c_char,
-    ) -> core::ffi::c_int;
+        label: *const cty::c_char,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_menu(self_: *const Fl_Menu_Bar) -> *const Fl_Menu_Item;
@@ -449,13 +432,13 @@ extern "C" {
     pub fn Fl_Menu_Bar_set_menu(self_: *mut Fl_Menu_Bar, item: *const Fl_Menu_Item);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_remove(self_: *mut Fl_Menu_Bar, idx: core::ffi::c_int);
+    pub fn Fl_Menu_Bar_remove(self_: *mut Fl_Menu_Bar, idx: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_down_box(self_: *mut Fl_Menu_Bar, box_: core::ffi::c_int);
+    pub fn Fl_Menu_Bar_set_down_box(self_: *mut Fl_Menu_Bar, box_: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_down_box(self_: *const Fl_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Menu_Bar_down_box(self_: *const Fl_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_global(self_: *mut Fl_Menu_Bar);
@@ -463,10 +446,10 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Bar_item_pathname(
         self_: *const Fl_Menu_Bar,
-        pathname: *mut core::ffi::c_char,
-        pathnamelen: core::ffi::c_int,
+        pathname: *mut cty::c_char,
+        pathnamelen: cty::c_int,
         item: *const Fl_Menu_Item,
-    ) -> core::ffi::c_int;
+    ) -> cty::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -475,30 +458,30 @@ pub struct Fl_Menu_Button {
 }
 extern "C" {
     pub fn Fl_Menu_Button_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Menu_Button;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_x(arg1: *mut Fl_Menu_Button) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_x(arg1: *mut Fl_Menu_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_y(arg1: *mut Fl_Menu_Button) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_y(arg1: *mut Fl_Menu_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_width(arg1: *mut Fl_Menu_Button) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_width(arg1: *mut Fl_Menu_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_height(arg1: *mut Fl_Menu_Button) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_height(arg1: *mut Fl_Menu_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_label(arg1: *mut Fl_Menu_Button) -> *const core::ffi::c_char;
+    pub fn Fl_Menu_Button_label(arg1: *mut Fl_Menu_Button) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_label(arg1: *mut Fl_Menu_Button, title: *const core::ffi::c_char);
+    pub fn Fl_Menu_Button_set_label(arg1: *mut Fl_Menu_Button, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Menu_Button_redraw(arg1: *mut Fl_Menu_Button);
@@ -521,78 +504,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Button_resize(
         arg1: *mut Fl_Menu_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Menu_Button_widget_resize(
         arg1: *mut Fl_Menu_Button,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Button_tooltip(arg1: *mut Fl_Menu_Button) -> *const core::ffi::c_char;
+    pub fn Fl_Menu_Button_tooltip(arg1: *mut Fl_Menu_Button) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_tooltip(arg1: *mut Fl_Menu_Button, txt: *const core::ffi::c_char);
+    pub fn Fl_Menu_Button_set_tooltip(arg1: *mut Fl_Menu_Button, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_get_type(arg1: *mut Fl_Menu_Button) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_get_type(arg1: *mut Fl_Menu_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_type(arg1: *mut Fl_Menu_Button, typ: core::ffi::c_int);
+    pub fn Fl_Menu_Button_set_type(arg1: *mut Fl_Menu_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_color(arg1: *mut Fl_Menu_Button) -> core::ffi::c_uint;
+    pub fn Fl_Menu_Button_color(arg1: *mut Fl_Menu_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_color(arg1: *mut Fl_Menu_Button, color: core::ffi::c_uint);
+    pub fn Fl_Menu_Button_set_color(arg1: *mut Fl_Menu_Button, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Menu_Button_measure_label(
         arg1: *const Fl_Menu_Button,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Button_label_color(arg1: *mut Fl_Menu_Button) -> core::ffi::c_uint;
+    pub fn Fl_Menu_Button_label_color(arg1: *mut Fl_Menu_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_label_color(arg1: *mut Fl_Menu_Button, color: core::ffi::c_uint);
+    pub fn Fl_Menu_Button_set_label_color(arg1: *mut Fl_Menu_Button, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_label_font(arg1: *mut Fl_Menu_Button) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_label_font(arg1: *mut Fl_Menu_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_label_font(arg1: *mut Fl_Menu_Button, font: core::ffi::c_int);
+    pub fn Fl_Menu_Button_set_label_font(arg1: *mut Fl_Menu_Button, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_label_size(arg1: *mut Fl_Menu_Button) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_label_size(arg1: *mut Fl_Menu_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_label_size(arg1: *mut Fl_Menu_Button, sz: core::ffi::c_int);
+    pub fn Fl_Menu_Button_set_label_size(arg1: *mut Fl_Menu_Button, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_label_type(arg1: *mut Fl_Menu_Button) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_label_type(arg1: *mut Fl_Menu_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_label_type(arg1: *mut Fl_Menu_Button, typ: core::ffi::c_int);
+    pub fn Fl_Menu_Button_set_label_type(arg1: *mut Fl_Menu_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_box(arg1: *mut Fl_Menu_Button) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_box(arg1: *mut Fl_Menu_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_box(arg1: *mut Fl_Menu_Button, typ: core::ffi::c_int);
+    pub fn Fl_Menu_Button_set_box(arg1: *mut Fl_Menu_Button, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_changed(arg1: *mut Fl_Menu_Button) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_changed(arg1: *mut Fl_Menu_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Button_set_changed(arg1: *mut Fl_Menu_Button);
@@ -601,32 +584,32 @@ extern "C" {
     pub fn Fl_Menu_Button_clear_changed(arg1: *mut Fl_Menu_Button);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_align(arg1: *mut Fl_Menu_Button) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_align(arg1: *mut Fl_Menu_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_align(arg1: *mut Fl_Menu_Button, typ: core::ffi::c_int);
+    pub fn Fl_Menu_Button_set_align(arg1: *mut Fl_Menu_Button, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Menu_Button_delete(arg1: *mut Fl_Menu_Button);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_image(arg1: *mut Fl_Menu_Button, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Menu_Button_set_image(arg1: *mut Fl_Menu_Button, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Menu_Button_handle(
         self_: *mut Fl_Menu_Button,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Button_handle_event(self_: *mut Fl_Menu_Button, event: core::ffi::c_int);
+    pub fn Fl_Menu_Button_handle_event(self_: *mut Fl_Menu_Button, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Menu_Button_draw(
         self_: *mut Fl_Menu_Button,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -635,33 +618,33 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_when(arg1: *mut Fl_Menu_Button, arg2: core::ffi::c_int);
+    pub fn Fl_Menu_Button_set_when(arg1: *mut Fl_Menu_Button, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_when(arg1: *const Fl_Menu_Button) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_when(arg1: *const Fl_Menu_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_image(arg1: *const Fl_Menu_Button) -> *const core::ffi::c_void;
+    pub fn Fl_Menu_Button_image(arg1: *const Fl_Menu_Button) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_parent(self_: *const Fl_Menu_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Button_parent(self_: *const Fl_Menu_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_selection_color(arg1: *mut Fl_Menu_Button) -> core::ffi::c_uint;
+    pub fn Fl_Menu_Button_selection_color(arg1: *mut Fl_Menu_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_selection_color(arg1: *mut Fl_Menu_Button, color: core::ffi::c_uint);
+    pub fn Fl_Menu_Button_set_selection_color(arg1: *mut Fl_Menu_Button, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Menu_Button_do_callback(arg1: *mut Fl_Menu_Button);
@@ -669,23 +652,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Button_inside(
         self_: *const Fl_Menu_Button,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_window(arg1: *const Fl_Menu_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Button_window(arg1: *const Fl_Menu_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_top_window(arg1: *const Fl_Menu_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Button_top_window(arg1: *const Fl_Menu_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_takes_events(arg1: *const Fl_Menu_Button) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_takes_events(arg1: *const Fl_Menu_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_user_data(arg1: *const Fl_Menu_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Button_user_data(arg1: *const Fl_Menu_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_take_focus(self_: *mut Fl_Menu_Button) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_take_focus(self_: *mut Fl_Menu_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Button_set_visible_focus(self_: *mut Fl_Menu_Button);
@@ -694,81 +677,81 @@ extern "C" {
     pub fn Fl_Menu_Button_clear_visible_focus(self_: *mut Fl_Menu_Button);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_visible_focus(self_: *mut Fl_Menu_Button, v: core::ffi::c_int);
+    pub fn Fl_Menu_Button_visible_focus(self_: *mut Fl_Menu_Button, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_has_visible_focus(self_: *mut Fl_Menu_Button) -> core::ffi::c_uint;
+    pub fn Fl_Menu_Button_has_visible_focus(self_: *mut Fl_Menu_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_user_data(arg1: *mut Fl_Menu_Button, data: *mut core::ffi::c_void);
+    pub fn Fl_Menu_Button_set_user_data(arg1: *mut Fl_Menu_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_draw_data(self_: *const Fl_Menu_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Button_draw_data(self_: *const Fl_Menu_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_handle_data(self_: *const Fl_Menu_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Button_handle_data(self_: *const Fl_Menu_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_draw_data(self_: *mut Fl_Menu_Button, data: *mut core::ffi::c_void);
+    pub fn Fl_Menu_Button_set_draw_data(self_: *mut Fl_Menu_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_handle_data(self_: *mut Fl_Menu_Button, data: *mut core::ffi::c_void);
+    pub fn Fl_Menu_Button_set_handle_data(self_: *mut Fl_Menu_Button, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_damage(self_: *const Fl_Menu_Button) -> core::ffi::c_uchar;
+    pub fn Fl_Menu_Button_damage(self_: *const Fl_Menu_Button) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_damage(self_: *mut Fl_Menu_Button, flag: core::ffi::c_uchar);
+    pub fn Fl_Menu_Button_set_damage(self_: *mut Fl_Menu_Button, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Menu_Button_set_damage_area(
         self_: *mut Fl_Menu_Button,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Menu_Button_clear_damage(self_: *mut Fl_Menu_Button);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_as_window(self_: *mut Fl_Menu_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Button_as_window(self_: *mut Fl_Menu_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_as_group(self_: *mut Fl_Menu_Button) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Button_as_group(self_: *mut Fl_Menu_Button) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_deimage(arg1: *mut Fl_Menu_Button, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Menu_Button_set_deimage(arg1: *mut Fl_Menu_Button, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_deimage(arg1: *const Fl_Menu_Button) -> *const core::ffi::c_void;
+    pub fn Fl_Menu_Button_deimage(arg1: *const Fl_Menu_Button) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Menu_Button_set_callback(
         arg1: *mut Fl_Menu_Button,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Menu_Button_set_deleter(
         arg1: *mut Fl_Menu_Button,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Button_visible(self_: *const Fl_Menu_Button) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_visible(self_: *const Fl_Menu_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_visible_r(self_: *const Fl_Menu_Button) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_visible_r(self_: *const Fl_Menu_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_active(self_: *const Fl_Menu_Button) -> core::ffi::c_uint;
+    pub fn Fl_Menu_Button_active(self_: *const Fl_Menu_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_active_r(self_: *const Fl_Menu_Button) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_active_r(self_: *const Fl_Menu_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Button_callback(self_: *const Fl_Menu_Button) -> Fl_Callback;
@@ -777,16 +760,16 @@ extern "C" {
     pub fn Fl_Menu_Button_set_deletion_callback(
         self_: *mut Fl_Menu_Button,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Menu_Button_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Menu_Button;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Menu_Button_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Menu_Button_popup(self_: *mut Fl_Menu_Button) -> *const Fl_Menu_Item;
@@ -794,114 +777,96 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Button_add(
         arg1: *mut Fl_Menu_Button,
-        name: *const core::ffi::c_char,
-        shortcut: core::ffi::c_int,
+        name: *const cty::c_char,
+        shortcut: cty::c_int,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
-        arg4: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        arg3: *mut cty::c_void,
+        arg4: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Button_insert(
         arg1: *mut Fl_Menu_Button,
-        index: core::ffi::c_int,
-        name: *const core::ffi::c_char,
-        shortcut: core::ffi::c_int,
+        index: cty::c_int,
+        name: *const cty::c_char,
+        shortcut: cty::c_int,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
-        arg4: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        arg3: *mut cty::c_void,
+        arg4: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Button_get_item(
         arg1: *mut Fl_Menu_Button,
-        name: *const core::ffi::c_char,
+        name: *const cty::c_char,
     ) -> *mut Fl_Menu_Item;
 }
 extern "C" {
     pub fn Fl_Menu_Button_set_item(
         arg1: *mut Fl_Menu_Button,
         item: *mut Fl_Menu_Item,
-    ) -> core::ffi::c_int;
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_text_font(arg1: *mut Fl_Menu_Button) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_text_font(arg1: *mut Fl_Menu_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_text_font(arg1: *mut Fl_Menu_Button, c: core::ffi::c_int);
+    pub fn Fl_Menu_Button_set_text_font(arg1: *mut Fl_Menu_Button, c: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_text_size(arg1: *mut Fl_Menu_Button) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_text_size(arg1: *mut Fl_Menu_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_text_size(arg1: *mut Fl_Menu_Button, c: core::ffi::c_int);
+    pub fn Fl_Menu_Button_set_text_size(arg1: *mut Fl_Menu_Button, c: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_text_color(arg1: *mut Fl_Menu_Button) -> core::ffi::c_uint;
+    pub fn Fl_Menu_Button_text_color(arg1: *mut Fl_Menu_Button) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_text_color(arg1: *mut Fl_Menu_Button, c: core::ffi::c_uint);
+    pub fn Fl_Menu_Button_set_text_color(arg1: *mut Fl_Menu_Button, c: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Menu_Button_add_choice(
         arg1: *mut Fl_Menu_Button,
-        arg2: *const core::ffi::c_char,
-    ) -> core::ffi::c_int;
+        arg2: *const cty::c_char,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_get_choice(arg1: *mut Fl_Menu_Button) -> *const core::ffi::c_char;
+    pub fn Fl_Menu_Button_get_choice(arg1: *mut Fl_Menu_Button) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_value(arg1: *mut Fl_Menu_Button) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_value(arg1: *mut Fl_Menu_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_value(
-        arg1: *mut Fl_Menu_Button,
-        v: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_set_value(arg1: *mut Fl_Menu_Button, v: cty::c_int) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Button_clear(arg1: *mut Fl_Menu_Button);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_clear_submenu(
-        arg1: *mut Fl_Menu_Button,
-        index: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_clear_submenu(arg1: *mut Fl_Menu_Button, index: cty::c_int)
+        -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_size(arg1: *const Fl_Menu_Button) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_size(arg1: *const Fl_Menu_Button) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_text(
-        arg1: *const Fl_Menu_Button,
-        idx: core::ffi::c_int,
-    ) -> *const core::ffi::c_char;
+    pub fn Fl_Menu_Button_text(arg1: *const Fl_Menu_Button, idx: cty::c_int) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_at(
-        arg1: *const Fl_Menu_Button,
-        idx: core::ffi::c_int,
-    ) -> *const Fl_Menu_Item;
+    pub fn Fl_Menu_Button_at(arg1: *const Fl_Menu_Button, idx: cty::c_int) -> *const Fl_Menu_Item;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_mode(
-        self_: *mut Fl_Menu_Button,
-        i: core::ffi::c_int,
-        fl: core::ffi::c_int,
-    );
+    pub fn Fl_Menu_Button_set_mode(self_: *mut Fl_Menu_Button, i: cty::c_int, fl: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_mode(
-        self_: *const Fl_Menu_Button,
-        i: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_mode(self_: *const Fl_Menu_Button, i: cty::c_int) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Button_find_index(
         self_: *const Fl_Menu_Button,
-        label: *const core::ffi::c_char,
-    ) -> core::ffi::c_int;
+        label: *const cty::c_char,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Button_menu(self_: *const Fl_Menu_Button) -> *const Fl_Menu_Item;
@@ -910,13 +875,13 @@ extern "C" {
     pub fn Fl_Menu_Button_set_menu(self_: *mut Fl_Menu_Button, item: *const Fl_Menu_Item);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_remove(self_: *mut Fl_Menu_Button, idx: core::ffi::c_int);
+    pub fn Fl_Menu_Button_remove(self_: *mut Fl_Menu_Button, idx: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_down_box(self_: *mut Fl_Menu_Button, box_: core::ffi::c_int);
+    pub fn Fl_Menu_Button_set_down_box(self_: *mut Fl_Menu_Button, box_: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_down_box(self_: *const Fl_Menu_Button) -> core::ffi::c_int;
+    pub fn Fl_Menu_Button_down_box(self_: *const Fl_Menu_Button) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Button_global(self_: *mut Fl_Menu_Button);
@@ -924,10 +889,10 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Button_item_pathname(
         self_: *const Fl_Menu_Button,
-        pathname: *mut core::ffi::c_char,
-        pathnamelen: core::ffi::c_int,
+        pathname: *mut cty::c_char,
+        pathnamelen: cty::c_int,
         item: *const Fl_Menu_Item,
-    ) -> core::ffi::c_int;
+    ) -> cty::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -936,30 +901,30 @@ pub struct Fl_Choice {
 }
 extern "C" {
     pub fn Fl_Choice_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Choice;
 }
 extern "C" {
-    pub fn Fl_Choice_x(arg1: *mut Fl_Choice) -> core::ffi::c_int;
+    pub fn Fl_Choice_x(arg1: *mut Fl_Choice) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_y(arg1: *mut Fl_Choice) -> core::ffi::c_int;
+    pub fn Fl_Choice_y(arg1: *mut Fl_Choice) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_width(arg1: *mut Fl_Choice) -> core::ffi::c_int;
+    pub fn Fl_Choice_width(arg1: *mut Fl_Choice) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_height(arg1: *mut Fl_Choice) -> core::ffi::c_int;
+    pub fn Fl_Choice_height(arg1: *mut Fl_Choice) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_label(arg1: *mut Fl_Choice) -> *const core::ffi::c_char;
+    pub fn Fl_Choice_label(arg1: *mut Fl_Choice) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Choice_set_label(arg1: *mut Fl_Choice, title: *const core::ffi::c_char);
+    pub fn Fl_Choice_set_label(arg1: *mut Fl_Choice, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Choice_redraw(arg1: *mut Fl_Choice);
@@ -982,78 +947,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Choice_resize(
         arg1: *mut Fl_Choice,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Choice_widget_resize(
         arg1: *mut Fl_Choice,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Choice_tooltip(arg1: *mut Fl_Choice) -> *const core::ffi::c_char;
+    pub fn Fl_Choice_tooltip(arg1: *mut Fl_Choice) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Choice_set_tooltip(arg1: *mut Fl_Choice, txt: *const core::ffi::c_char);
+    pub fn Fl_Choice_set_tooltip(arg1: *mut Fl_Choice, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Choice_get_type(arg1: *mut Fl_Choice) -> core::ffi::c_int;
+    pub fn Fl_Choice_get_type(arg1: *mut Fl_Choice) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_set_type(arg1: *mut Fl_Choice, typ: core::ffi::c_int);
+    pub fn Fl_Choice_set_type(arg1: *mut Fl_Choice, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Choice_color(arg1: *mut Fl_Choice) -> core::ffi::c_uint;
+    pub fn Fl_Choice_color(arg1: *mut Fl_Choice) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Choice_set_color(arg1: *mut Fl_Choice, color: core::ffi::c_uint);
+    pub fn Fl_Choice_set_color(arg1: *mut Fl_Choice, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Choice_measure_label(
         arg1: *const Fl_Choice,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Choice_label_color(arg1: *mut Fl_Choice) -> core::ffi::c_uint;
+    pub fn Fl_Choice_label_color(arg1: *mut Fl_Choice) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Choice_set_label_color(arg1: *mut Fl_Choice, color: core::ffi::c_uint);
+    pub fn Fl_Choice_set_label_color(arg1: *mut Fl_Choice, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Choice_label_font(arg1: *mut Fl_Choice) -> core::ffi::c_int;
+    pub fn Fl_Choice_label_font(arg1: *mut Fl_Choice) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_set_label_font(arg1: *mut Fl_Choice, font: core::ffi::c_int);
+    pub fn Fl_Choice_set_label_font(arg1: *mut Fl_Choice, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Choice_label_size(arg1: *mut Fl_Choice) -> core::ffi::c_int;
+    pub fn Fl_Choice_label_size(arg1: *mut Fl_Choice) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_set_label_size(arg1: *mut Fl_Choice, sz: core::ffi::c_int);
+    pub fn Fl_Choice_set_label_size(arg1: *mut Fl_Choice, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Choice_label_type(arg1: *mut Fl_Choice) -> core::ffi::c_int;
+    pub fn Fl_Choice_label_type(arg1: *mut Fl_Choice) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_set_label_type(arg1: *mut Fl_Choice, typ: core::ffi::c_int);
+    pub fn Fl_Choice_set_label_type(arg1: *mut Fl_Choice, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Choice_box(arg1: *mut Fl_Choice) -> core::ffi::c_int;
+    pub fn Fl_Choice_box(arg1: *mut Fl_Choice) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_set_box(arg1: *mut Fl_Choice, typ: core::ffi::c_int);
+    pub fn Fl_Choice_set_box(arg1: *mut Fl_Choice, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Choice_changed(arg1: *mut Fl_Choice) -> core::ffi::c_int;
+    pub fn Fl_Choice_changed(arg1: *mut Fl_Choice) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Choice_set_changed(arg1: *mut Fl_Choice);
@@ -1062,33 +1027,29 @@ extern "C" {
     pub fn Fl_Choice_clear_changed(arg1: *mut Fl_Choice);
 }
 extern "C" {
-    pub fn Fl_Choice_align(arg1: *mut Fl_Choice) -> core::ffi::c_int;
+    pub fn Fl_Choice_align(arg1: *mut Fl_Choice) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_set_align(arg1: *mut Fl_Choice, typ: core::ffi::c_int);
+    pub fn Fl_Choice_set_align(arg1: *mut Fl_Choice, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Choice_delete(arg1: *mut Fl_Choice);
 }
 extern "C" {
-    pub fn Fl_Choice_set_image(arg1: *mut Fl_Choice, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Choice_set_image(arg1: *mut Fl_Choice, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Choice_handle(
         self_: *mut Fl_Choice,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Choice_handle_event(self_: *mut Fl_Choice, event: core::ffi::c_int);
+    pub fn Fl_Choice_handle_event(self_: *mut Fl_Choice, event: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Choice_draw(
-        self_: *mut Fl_Choice,
-        cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Choice_draw(self_: *mut Fl_Choice, cb: custom_draw_callback, data: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Choice_resize_callback(
@@ -1096,57 +1057,54 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Choice_set_when(arg1: *mut Fl_Choice, arg2: core::ffi::c_int);
+    pub fn Fl_Choice_set_when(arg1: *mut Fl_Choice, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Choice_when(arg1: *const Fl_Choice) -> core::ffi::c_int;
+    pub fn Fl_Choice_when(arg1: *const Fl_Choice) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_image(arg1: *const Fl_Choice) -> *const core::ffi::c_void;
+    pub fn Fl_Choice_image(arg1: *const Fl_Choice) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Choice_parent(self_: *const Fl_Choice) -> *mut core::ffi::c_void;
+    pub fn Fl_Choice_parent(self_: *const Fl_Choice) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Choice_selection_color(arg1: *mut Fl_Choice) -> core::ffi::c_uint;
+    pub fn Fl_Choice_selection_color(arg1: *mut Fl_Choice) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Choice_set_selection_color(arg1: *mut Fl_Choice, color: core::ffi::c_uint);
+    pub fn Fl_Choice_set_selection_color(arg1: *mut Fl_Choice, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Choice_do_callback(arg1: *mut Fl_Choice);
 }
 extern "C" {
-    pub fn Fl_Choice_inside(
-        self_: *const Fl_Choice,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Choice_inside(self_: *const Fl_Choice, arg1: *mut cty::c_void) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_window(arg1: *const Fl_Choice) -> *mut core::ffi::c_void;
+    pub fn Fl_Choice_window(arg1: *const Fl_Choice) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Choice_top_window(arg1: *const Fl_Choice) -> *mut core::ffi::c_void;
+    pub fn Fl_Choice_top_window(arg1: *const Fl_Choice) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Choice_takes_events(arg1: *const Fl_Choice) -> core::ffi::c_int;
+    pub fn Fl_Choice_takes_events(arg1: *const Fl_Choice) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_user_data(arg1: *const Fl_Choice) -> *mut core::ffi::c_void;
+    pub fn Fl_Choice_user_data(arg1: *const Fl_Choice) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Choice_take_focus(self_: *mut Fl_Choice) -> core::ffi::c_int;
+    pub fn Fl_Choice_take_focus(self_: *mut Fl_Choice) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Choice_set_visible_focus(self_: *mut Fl_Choice);
@@ -1155,81 +1113,77 @@ extern "C" {
     pub fn Fl_Choice_clear_visible_focus(self_: *mut Fl_Choice);
 }
 extern "C" {
-    pub fn Fl_Choice_visible_focus(self_: *mut Fl_Choice, v: core::ffi::c_int);
+    pub fn Fl_Choice_visible_focus(self_: *mut Fl_Choice, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Choice_has_visible_focus(self_: *mut Fl_Choice) -> core::ffi::c_uint;
+    pub fn Fl_Choice_has_visible_focus(self_: *mut Fl_Choice) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Choice_set_user_data(arg1: *mut Fl_Choice, data: *mut core::ffi::c_void);
+    pub fn Fl_Choice_set_user_data(arg1: *mut Fl_Choice, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Choice_draw_data(self_: *const Fl_Choice) -> *mut core::ffi::c_void;
+    pub fn Fl_Choice_draw_data(self_: *const Fl_Choice) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Choice_handle_data(self_: *const Fl_Choice) -> *mut core::ffi::c_void;
+    pub fn Fl_Choice_handle_data(self_: *const Fl_Choice) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Choice_set_draw_data(self_: *mut Fl_Choice, data: *mut core::ffi::c_void);
+    pub fn Fl_Choice_set_draw_data(self_: *mut Fl_Choice, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Choice_set_handle_data(self_: *mut Fl_Choice, data: *mut core::ffi::c_void);
+    pub fn Fl_Choice_set_handle_data(self_: *mut Fl_Choice, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Choice_damage(self_: *const Fl_Choice) -> core::ffi::c_uchar;
+    pub fn Fl_Choice_damage(self_: *const Fl_Choice) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Choice_set_damage(self_: *mut Fl_Choice, flag: core::ffi::c_uchar);
+    pub fn Fl_Choice_set_damage(self_: *mut Fl_Choice, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Choice_set_damage_area(
         self_: *mut Fl_Choice,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Choice_clear_damage(self_: *mut Fl_Choice);
 }
 extern "C" {
-    pub fn Fl_Choice_as_window(self_: *mut Fl_Choice) -> *mut core::ffi::c_void;
+    pub fn Fl_Choice_as_window(self_: *mut Fl_Choice) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Choice_as_group(self_: *mut Fl_Choice) -> *mut core::ffi::c_void;
+    pub fn Fl_Choice_as_group(self_: *mut Fl_Choice) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Choice_set_deimage(arg1: *mut Fl_Choice, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Choice_set_deimage(arg1: *mut Fl_Choice, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Choice_deimage(arg1: *const Fl_Choice) -> *const core::ffi::c_void;
+    pub fn Fl_Choice_deimage(arg1: *const Fl_Choice) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Choice_set_callback(
-        arg1: *mut Fl_Choice,
-        arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Choice_set_callback(arg1: *mut Fl_Choice, arg2: Fl_Callback, arg3: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Choice_set_deleter(
         arg1: *mut Fl_Choice,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Choice_visible(self_: *const Fl_Choice) -> core::ffi::c_int;
+    pub fn Fl_Choice_visible(self_: *const Fl_Choice) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_visible_r(self_: *const Fl_Choice) -> core::ffi::c_int;
+    pub fn Fl_Choice_visible_r(self_: *const Fl_Choice) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_active(self_: *const Fl_Choice) -> core::ffi::c_uint;
+    pub fn Fl_Choice_active(self_: *const Fl_Choice) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Choice_active_r(self_: *const Fl_Choice) -> core::ffi::c_int;
+    pub fn Fl_Choice_active_r(self_: *const Fl_Choice) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Choice_callback(self_: *const Fl_Choice) -> Fl_Callback;
@@ -1238,112 +1192,97 @@ extern "C" {
     pub fn Fl_Choice_set_deletion_callback(
         self_: *mut Fl_Choice,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Choice_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Choice;
 }
 extern "C" {
-    pub fn Fl_Choice_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Choice_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Choice_add(
         arg1: *mut Fl_Choice,
-        name: *const core::ffi::c_char,
-        shortcut: core::ffi::c_int,
+        name: *const cty::c_char,
+        shortcut: cty::c_int,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
-        arg4: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        arg3: *mut cty::c_void,
+        arg4: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Choice_insert(
         arg1: *mut Fl_Choice,
-        index: core::ffi::c_int,
-        name: *const core::ffi::c_char,
-        shortcut: core::ffi::c_int,
+        index: cty::c_int,
+        name: *const cty::c_char,
+        shortcut: cty::c_int,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
-        arg4: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        arg3: *mut cty::c_void,
+        arg4: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_get_item(
-        arg1: *mut Fl_Choice,
-        name: *const core::ffi::c_char,
-    ) -> *mut Fl_Menu_Item;
+    pub fn Fl_Choice_get_item(arg1: *mut Fl_Choice, name: *const cty::c_char) -> *mut Fl_Menu_Item;
 }
 extern "C" {
-    pub fn Fl_Choice_set_item(arg1: *mut Fl_Choice, item: *mut Fl_Menu_Item) -> core::ffi::c_int;
+    pub fn Fl_Choice_set_item(arg1: *mut Fl_Choice, item: *mut Fl_Menu_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_text_font(arg1: *mut Fl_Choice) -> core::ffi::c_int;
+    pub fn Fl_Choice_text_font(arg1: *mut Fl_Choice) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_set_text_font(arg1: *mut Fl_Choice, c: core::ffi::c_int);
+    pub fn Fl_Choice_set_text_font(arg1: *mut Fl_Choice, c: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Choice_text_size(arg1: *mut Fl_Choice) -> core::ffi::c_int;
+    pub fn Fl_Choice_text_size(arg1: *mut Fl_Choice) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_set_text_size(arg1: *mut Fl_Choice, c: core::ffi::c_int);
+    pub fn Fl_Choice_set_text_size(arg1: *mut Fl_Choice, c: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Choice_text_color(arg1: *mut Fl_Choice) -> core::ffi::c_uint;
+    pub fn Fl_Choice_text_color(arg1: *mut Fl_Choice) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Choice_set_text_color(arg1: *mut Fl_Choice, c: core::ffi::c_uint);
+    pub fn Fl_Choice_set_text_color(arg1: *mut Fl_Choice, c: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Choice_add_choice(
-        arg1: *mut Fl_Choice,
-        arg2: *const core::ffi::c_char,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Choice_add_choice(arg1: *mut Fl_Choice, arg2: *const cty::c_char) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_get_choice(arg1: *mut Fl_Choice) -> *const core::ffi::c_char;
+    pub fn Fl_Choice_get_choice(arg1: *mut Fl_Choice) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Choice_value(arg1: *mut Fl_Choice) -> core::ffi::c_int;
+    pub fn Fl_Choice_value(arg1: *mut Fl_Choice) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_set_value(arg1: *mut Fl_Choice, v: core::ffi::c_int) -> core::ffi::c_int;
+    pub fn Fl_Choice_set_value(arg1: *mut Fl_Choice, v: cty::c_int) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Choice_clear(arg1: *mut Fl_Choice);
 }
 extern "C" {
-    pub fn Fl_Choice_clear_submenu(
-        arg1: *mut Fl_Choice,
-        index: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Choice_clear_submenu(arg1: *mut Fl_Choice, index: cty::c_int) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_size(arg1: *const Fl_Choice) -> core::ffi::c_int;
+    pub fn Fl_Choice_size(arg1: *const Fl_Choice) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_text(
-        arg1: *const Fl_Choice,
-        idx: core::ffi::c_int,
-    ) -> *const core::ffi::c_char;
+    pub fn Fl_Choice_text(arg1: *const Fl_Choice, idx: cty::c_int) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Choice_at(arg1: *const Fl_Choice, idx: core::ffi::c_int) -> *const Fl_Menu_Item;
+    pub fn Fl_Choice_at(arg1: *const Fl_Choice, idx: cty::c_int) -> *const Fl_Menu_Item;
 }
 extern "C" {
-    pub fn Fl_Choice_set_mode(self_: *mut Fl_Choice, i: core::ffi::c_int, fl: core::ffi::c_int);
+    pub fn Fl_Choice_set_mode(self_: *mut Fl_Choice, i: cty::c_int, fl: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Choice_mode(self_: *const Fl_Choice, i: core::ffi::c_int) -> core::ffi::c_int;
+    pub fn Fl_Choice_mode(self_: *const Fl_Choice, i: cty::c_int) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_find_index(
-        self_: *const Fl_Choice,
-        label: *const core::ffi::c_char,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Choice_find_index(self_: *const Fl_Choice, label: *const cty::c_char) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Choice_menu(self_: *const Fl_Choice) -> *const Fl_Menu_Item;
@@ -1352,13 +1291,13 @@ extern "C" {
     pub fn Fl_Choice_set_menu(self_: *mut Fl_Choice, item: *const Fl_Menu_Item);
 }
 extern "C" {
-    pub fn Fl_Choice_remove(self_: *mut Fl_Choice, idx: core::ffi::c_int);
+    pub fn Fl_Choice_remove(self_: *mut Fl_Choice, idx: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Choice_set_down_box(self_: *mut Fl_Choice, box_: core::ffi::c_int);
+    pub fn Fl_Choice_set_down_box(self_: *mut Fl_Choice, box_: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Choice_down_box(self_: *const Fl_Choice) -> core::ffi::c_int;
+    pub fn Fl_Choice_down_box(self_: *const Fl_Choice) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Choice_global(self_: *mut Fl_Choice);
@@ -1366,10 +1305,10 @@ extern "C" {
 extern "C" {
     pub fn Fl_Choice_item_pathname(
         self_: *const Fl_Choice,
-        pathname: *mut core::ffi::c_char,
-        pathnamelen: core::ffi::c_int,
+        pathname: *mut cty::c_char,
+        pathnamelen: cty::c_int,
         item: *const Fl_Menu_Item,
-    ) -> core::ffi::c_int;
+    ) -> cty::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1378,30 +1317,30 @@ pub struct Fl_Sys_Menu_Bar {
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_new(
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
-        title: *const core::ffi::c_char,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
+        title: *const cty::c_char,
     ) -> *mut Fl_Sys_Menu_Bar;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_x(arg1: *mut Fl_Sys_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_x(arg1: *mut Fl_Sys_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_y(arg1: *mut Fl_Sys_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_y(arg1: *mut Fl_Sys_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_width(arg1: *mut Fl_Sys_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_width(arg1: *mut Fl_Sys_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_height(arg1: *mut Fl_Sys_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_height(arg1: *mut Fl_Sys_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_label(arg1: *mut Fl_Sys_Menu_Bar) -> *const core::ffi::c_char;
+    pub fn Fl_Sys_Menu_Bar_label(arg1: *mut Fl_Sys_Menu_Bar) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_label(arg1: *mut Fl_Sys_Menu_Bar, title: *const core::ffi::c_char);
+    pub fn Fl_Sys_Menu_Bar_set_label(arg1: *mut Fl_Sys_Menu_Bar, title: *const cty::c_char);
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_redraw(arg1: *mut Fl_Sys_Menu_Bar);
@@ -1424,78 +1363,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_resize(
         arg1: *mut Fl_Sys_Menu_Bar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_widget_resize(
         arg1: *mut Fl_Sys_Menu_Bar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        width: core::ffi::c_int,
-        height: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        width: cty::c_int,
+        height: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_tooltip(arg1: *mut Fl_Sys_Menu_Bar) -> *const core::ffi::c_char;
+    pub fn Fl_Sys_Menu_Bar_tooltip(arg1: *mut Fl_Sys_Menu_Bar) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_tooltip(arg1: *mut Fl_Sys_Menu_Bar, txt: *const core::ffi::c_char);
+    pub fn Fl_Sys_Menu_Bar_set_tooltip(arg1: *mut Fl_Sys_Menu_Bar, txt: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_get_type(arg1: *mut Fl_Sys_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_get_type(arg1: *mut Fl_Sys_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_type(arg1: *mut Fl_Sys_Menu_Bar, typ: core::ffi::c_int);
+    pub fn Fl_Sys_Menu_Bar_set_type(arg1: *mut Fl_Sys_Menu_Bar, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_color(arg1: *mut Fl_Sys_Menu_Bar) -> core::ffi::c_uint;
+    pub fn Fl_Sys_Menu_Bar_color(arg1: *mut Fl_Sys_Menu_Bar) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_color(arg1: *mut Fl_Sys_Menu_Bar, color: core::ffi::c_uint);
+    pub fn Fl_Sys_Menu_Bar_set_color(arg1: *mut Fl_Sys_Menu_Bar, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_measure_label(
         arg1: *const Fl_Sys_Menu_Bar,
-        arg2: *mut core::ffi::c_int,
-        arg3: *mut core::ffi::c_int,
+        arg2: *mut cty::c_int,
+        arg3: *mut cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_label_color(arg1: *mut Fl_Sys_Menu_Bar) -> core::ffi::c_uint;
+    pub fn Fl_Sys_Menu_Bar_label_color(arg1: *mut Fl_Sys_Menu_Bar) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_label_color(arg1: *mut Fl_Sys_Menu_Bar, color: core::ffi::c_uint);
+    pub fn Fl_Sys_Menu_Bar_set_label_color(arg1: *mut Fl_Sys_Menu_Bar, color: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_label_font(arg1: *mut Fl_Sys_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_label_font(arg1: *mut Fl_Sys_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_label_font(arg1: *mut Fl_Sys_Menu_Bar, font: core::ffi::c_int);
+    pub fn Fl_Sys_Menu_Bar_set_label_font(arg1: *mut Fl_Sys_Menu_Bar, font: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_label_size(arg1: *mut Fl_Sys_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_label_size(arg1: *mut Fl_Sys_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_label_size(arg1: *mut Fl_Sys_Menu_Bar, sz: core::ffi::c_int);
+    pub fn Fl_Sys_Menu_Bar_set_label_size(arg1: *mut Fl_Sys_Menu_Bar, sz: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_label_type(arg1: *mut Fl_Sys_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_label_type(arg1: *mut Fl_Sys_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_label_type(arg1: *mut Fl_Sys_Menu_Bar, typ: core::ffi::c_int);
+    pub fn Fl_Sys_Menu_Bar_set_label_type(arg1: *mut Fl_Sys_Menu_Bar, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_box(arg1: *mut Fl_Sys_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_box(arg1: *mut Fl_Sys_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_box(arg1: *mut Fl_Sys_Menu_Bar, typ: core::ffi::c_int);
+    pub fn Fl_Sys_Menu_Bar_set_box(arg1: *mut Fl_Sys_Menu_Bar, typ: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_changed(arg1: *mut Fl_Sys_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_changed(arg1: *mut Fl_Sys_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_set_changed(arg1: *mut Fl_Sys_Menu_Bar);
@@ -1504,32 +1443,32 @@ extern "C" {
     pub fn Fl_Sys_Menu_Bar_clear_changed(arg1: *mut Fl_Sys_Menu_Bar);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_align(arg1: *mut Fl_Sys_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_align(arg1: *mut Fl_Sys_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_align(arg1: *mut Fl_Sys_Menu_Bar, typ: core::ffi::c_int);
+    pub fn Fl_Sys_Menu_Bar_set_align(arg1: *mut Fl_Sys_Menu_Bar, typ: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_delete(arg1: *mut Fl_Sys_Menu_Bar);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_image(arg1: *mut Fl_Sys_Menu_Bar, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Sys_Menu_Bar_set_image(arg1: *mut Fl_Sys_Menu_Bar, arg2: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_handle(
         self_: *mut Fl_Sys_Menu_Bar,
         cb: custom_handler_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_handle_event(self_: *mut Fl_Sys_Menu_Bar, event: core::ffi::c_int);
+    pub fn Fl_Sys_Menu_Bar_handle_event(self_: *mut Fl_Sys_Menu_Bar, event: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_draw(
         self_: *mut Fl_Sys_Menu_Bar,
         cb: custom_draw_callback,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
@@ -1538,36 +1477,33 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: core::ffi::c_int,
-                y: core::ffi::c_int,
-                w: core::ffi::c_int,
-                h: core::ffi::c_int,
-                arg2: *mut core::ffi::c_void,
+                x: cty::c_int,
+                y: cty::c_int,
+                w: cty::c_int,
+                h: cty::c_int,
+                arg2: *mut cty::c_void,
             ),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_when(arg1: *mut Fl_Sys_Menu_Bar, arg2: core::ffi::c_int);
+    pub fn Fl_Sys_Menu_Bar_set_when(arg1: *mut Fl_Sys_Menu_Bar, arg2: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_when(arg1: *const Fl_Sys_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_when(arg1: *const Fl_Sys_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_image(arg1: *const Fl_Sys_Menu_Bar) -> *const core::ffi::c_void;
+    pub fn Fl_Sys_Menu_Bar_image(arg1: *const Fl_Sys_Menu_Bar) -> *const cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_parent(self_: *const Fl_Sys_Menu_Bar) -> *mut core::ffi::c_void;
+    pub fn Fl_Sys_Menu_Bar_parent(self_: *const Fl_Sys_Menu_Bar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_selection_color(arg1: *mut Fl_Sys_Menu_Bar) -> core::ffi::c_uint;
+    pub fn Fl_Sys_Menu_Bar_selection_color(arg1: *mut Fl_Sys_Menu_Bar) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_selection_color(
-        arg1: *mut Fl_Sys_Menu_Bar,
-        color: core::ffi::c_uint,
-    );
+    pub fn Fl_Sys_Menu_Bar_set_selection_color(arg1: *mut Fl_Sys_Menu_Bar, color: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_do_callback(arg1: *mut Fl_Sys_Menu_Bar);
@@ -1575,23 +1511,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_inside(
         self_: *const Fl_Sys_Menu_Bar,
-        arg1: *mut core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        arg1: *mut cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_window(arg1: *const Fl_Sys_Menu_Bar) -> *mut core::ffi::c_void;
+    pub fn Fl_Sys_Menu_Bar_window(arg1: *const Fl_Sys_Menu_Bar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_top_window(arg1: *const Fl_Sys_Menu_Bar) -> *mut core::ffi::c_void;
+    pub fn Fl_Sys_Menu_Bar_top_window(arg1: *const Fl_Sys_Menu_Bar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_takes_events(arg1: *const Fl_Sys_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_takes_events(arg1: *const Fl_Sys_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_user_data(arg1: *const Fl_Sys_Menu_Bar) -> *mut core::ffi::c_void;
+    pub fn Fl_Sys_Menu_Bar_user_data(arg1: *const Fl_Sys_Menu_Bar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_take_focus(self_: *mut Fl_Sys_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_take_focus(self_: *mut Fl_Sys_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_set_visible_focus(self_: *mut Fl_Sys_Menu_Bar);
@@ -1600,84 +1536,81 @@ extern "C" {
     pub fn Fl_Sys_Menu_Bar_clear_visible_focus(self_: *mut Fl_Sys_Menu_Bar);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_visible_focus(self_: *mut Fl_Sys_Menu_Bar, v: core::ffi::c_int);
+    pub fn Fl_Sys_Menu_Bar_visible_focus(self_: *mut Fl_Sys_Menu_Bar, v: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_has_visible_focus(self_: *mut Fl_Sys_Menu_Bar) -> core::ffi::c_uint;
+    pub fn Fl_Sys_Menu_Bar_has_visible_focus(self_: *mut Fl_Sys_Menu_Bar) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_user_data(arg1: *mut Fl_Sys_Menu_Bar, data: *mut core::ffi::c_void);
+    pub fn Fl_Sys_Menu_Bar_set_user_data(arg1: *mut Fl_Sys_Menu_Bar, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_draw_data(self_: *const Fl_Sys_Menu_Bar) -> *mut core::ffi::c_void;
+    pub fn Fl_Sys_Menu_Bar_draw_data(self_: *const Fl_Sys_Menu_Bar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_handle_data(self_: *const Fl_Sys_Menu_Bar) -> *mut core::ffi::c_void;
+    pub fn Fl_Sys_Menu_Bar_handle_data(self_: *const Fl_Sys_Menu_Bar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_draw_data(self_: *mut Fl_Sys_Menu_Bar, data: *mut core::ffi::c_void);
+    pub fn Fl_Sys_Menu_Bar_set_draw_data(self_: *mut Fl_Sys_Menu_Bar, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_handle_data(
-        self_: *mut Fl_Sys_Menu_Bar,
-        data: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Sys_Menu_Bar_set_handle_data(self_: *mut Fl_Sys_Menu_Bar, data: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_damage(self_: *const Fl_Sys_Menu_Bar) -> core::ffi::c_uchar;
+    pub fn Fl_Sys_Menu_Bar_damage(self_: *const Fl_Sys_Menu_Bar) -> cty::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_damage(self_: *mut Fl_Sys_Menu_Bar, flag: core::ffi::c_uchar);
+    pub fn Fl_Sys_Menu_Bar_set_damage(self_: *mut Fl_Sys_Menu_Bar, flag: cty::c_uchar);
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_set_damage_area(
         self_: *mut Fl_Sys_Menu_Bar,
-        flag: core::ffi::c_uchar,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
+        flag: cty::c_uchar,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_clear_damage(self_: *mut Fl_Sys_Menu_Bar);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_as_window(self_: *mut Fl_Sys_Menu_Bar) -> *mut core::ffi::c_void;
+    pub fn Fl_Sys_Menu_Bar_as_window(self_: *mut Fl_Sys_Menu_Bar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_as_group(self_: *mut Fl_Sys_Menu_Bar) -> *mut core::ffi::c_void;
+    pub fn Fl_Sys_Menu_Bar_as_group(self_: *mut Fl_Sys_Menu_Bar) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_deimage(arg1: *mut Fl_Sys_Menu_Bar, arg2: *mut core::ffi::c_void);
+    pub fn Fl_Sys_Menu_Bar_set_deimage(arg1: *mut Fl_Sys_Menu_Bar, arg2: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_deimage(arg1: *const Fl_Sys_Menu_Bar) -> *const core::ffi::c_void;
+    pub fn Fl_Sys_Menu_Bar_deimage(arg1: *const Fl_Sys_Menu_Bar) -> *const cty::c_void;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_set_callback(
         arg1: *mut Fl_Sys_Menu_Bar,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
+        arg3: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_set_deleter(
         arg1: *mut Fl_Sys_Menu_Bar,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut core::ffi::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_visible(self_: *const Fl_Sys_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_visible(self_: *const Fl_Sys_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_visible_r(self_: *const Fl_Sys_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_visible_r(self_: *const Fl_Sys_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_active(self_: *const Fl_Sys_Menu_Bar) -> core::ffi::c_uint;
+    pub fn Fl_Sys_Menu_Bar_active(self_: *const Fl_Sys_Menu_Bar) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_active_r(self_: *const Fl_Sys_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_active_r(self_: *const Fl_Sys_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_callback(self_: *const Fl_Sys_Menu_Bar) -> Fl_Callback;
@@ -1686,85 +1619,82 @@ extern "C" {
     pub fn Fl_Sys_Menu_Bar_set_deletion_callback(
         self_: *mut Fl_Sys_Menu_Bar,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut core::ffi::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
         >,
-        data: *mut core::ffi::c_void,
+        data: *mut cty::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Sys_Menu_Bar;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_super_draw(ptr: *mut Fl_Widget, flag: core::ffi::c_int);
+    pub fn Fl_Sys_Menu_Bar_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_add(
         arg1: *mut Fl_Sys_Menu_Bar,
-        name: *const core::ffi::c_char,
-        shortcut: core::ffi::c_int,
+        name: *const cty::c_char,
+        shortcut: cty::c_int,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
-        arg4: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        arg3: *mut cty::c_void,
+        arg4: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_insert(
         arg1: *mut Fl_Sys_Menu_Bar,
-        index: core::ffi::c_int,
-        name: *const core::ffi::c_char,
-        shortcut: core::ffi::c_int,
+        index: cty::c_int,
+        name: *const cty::c_char,
+        shortcut: cty::c_int,
         arg2: Fl_Callback,
-        arg3: *mut core::ffi::c_void,
-        arg4: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        arg3: *mut cty::c_void,
+        arg4: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_get_item(
         arg1: *mut Fl_Sys_Menu_Bar,
-        name: *const core::ffi::c_char,
+        name: *const cty::c_char,
     ) -> *mut Fl_Menu_Item;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_set_item(
         arg1: *mut Fl_Sys_Menu_Bar,
         item: *mut Fl_Menu_Item,
-    ) -> core::ffi::c_int;
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_text_font(arg1: *mut Fl_Sys_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_text_font(arg1: *mut Fl_Sys_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_text_font(arg1: *mut Fl_Sys_Menu_Bar, c: core::ffi::c_int);
+    pub fn Fl_Sys_Menu_Bar_set_text_font(arg1: *mut Fl_Sys_Menu_Bar, c: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_text_size(arg1: *mut Fl_Sys_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_text_size(arg1: *mut Fl_Sys_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_text_size(arg1: *mut Fl_Sys_Menu_Bar, c: core::ffi::c_int);
+    pub fn Fl_Sys_Menu_Bar_set_text_size(arg1: *mut Fl_Sys_Menu_Bar, c: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_text_color(arg1: *mut Fl_Sys_Menu_Bar) -> core::ffi::c_uint;
+    pub fn Fl_Sys_Menu_Bar_text_color(arg1: *mut Fl_Sys_Menu_Bar) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_text_color(arg1: *mut Fl_Sys_Menu_Bar, c: core::ffi::c_uint);
+    pub fn Fl_Sys_Menu_Bar_set_text_color(arg1: *mut Fl_Sys_Menu_Bar, c: cty::c_uint);
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_add_choice(
         arg1: *mut Fl_Sys_Menu_Bar,
-        arg2: *const core::ffi::c_char,
-    ) -> core::ffi::c_int;
+        arg2: *const cty::c_char,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_get_choice(arg1: *mut Fl_Sys_Menu_Bar) -> *const core::ffi::c_char;
+    pub fn Fl_Sys_Menu_Bar_get_choice(arg1: *mut Fl_Sys_Menu_Bar) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_value(arg1: *mut Fl_Sys_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_value(arg1: *mut Fl_Sys_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_value(
-        arg1: *mut Fl_Sys_Menu_Bar,
-        v: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_set_value(arg1: *mut Fl_Sys_Menu_Bar, v: cty::c_int) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_clear(arg1: *mut Fl_Sys_Menu_Bar);
@@ -1772,42 +1702,33 @@ extern "C" {
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_clear_submenu(
         arg1: *mut Fl_Sys_Menu_Bar,
-        index: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        index: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_size(arg1: *const Fl_Sys_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_size(arg1: *const Fl_Sys_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_text(
         arg1: *const Fl_Sys_Menu_Bar,
-        idx: core::ffi::c_int,
-    ) -> *const core::ffi::c_char;
+        idx: cty::c_int,
+    ) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_at(
-        arg1: *const Fl_Sys_Menu_Bar,
-        idx: core::ffi::c_int,
-    ) -> *const Fl_Menu_Item;
+    pub fn Fl_Sys_Menu_Bar_at(arg1: *const Fl_Sys_Menu_Bar, idx: cty::c_int)
+        -> *const Fl_Menu_Item;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_mode(
-        self_: *mut Fl_Sys_Menu_Bar,
-        i: core::ffi::c_int,
-        fl: core::ffi::c_int,
-    );
+    pub fn Fl_Sys_Menu_Bar_set_mode(self_: *mut Fl_Sys_Menu_Bar, i: cty::c_int, fl: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_mode(
-        self_: *const Fl_Sys_Menu_Bar,
-        i: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_mode(self_: *const Fl_Sys_Menu_Bar, i: cty::c_int) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_find_index(
         self_: *const Fl_Sys_Menu_Bar,
-        label: *const core::ffi::c_char,
-    ) -> core::ffi::c_int;
+        label: *const cty::c_char,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_menu(self_: *const Fl_Sys_Menu_Bar) -> *const Fl_Menu_Item;
@@ -1816,13 +1737,13 @@ extern "C" {
     pub fn Fl_Sys_Menu_Bar_set_menu(self_: *mut Fl_Sys_Menu_Bar, item: *const Fl_Menu_Item);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_remove(self_: *mut Fl_Sys_Menu_Bar, idx: core::ffi::c_int);
+    pub fn Fl_Sys_Menu_Bar_remove(self_: *mut Fl_Sys_Menu_Bar, idx: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_down_box(self_: *mut Fl_Sys_Menu_Bar, box_: core::ffi::c_int);
+    pub fn Fl_Sys_Menu_Bar_set_down_box(self_: *mut Fl_Sys_Menu_Bar, box_: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_down_box(self_: *const Fl_Sys_Menu_Bar) -> core::ffi::c_int;
+    pub fn Fl_Sys_Menu_Bar_down_box(self_: *const Fl_Sys_Menu_Bar) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_global(self_: *mut Fl_Sys_Menu_Bar);
@@ -1830,16 +1751,13 @@ extern "C" {
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_item_pathname(
         self_: *const Fl_Sys_Menu_Bar,
-        pathname: *mut core::ffi::c_char,
-        pathnamelen: core::ffi::c_int,
+        pathname: *mut cty::c_char,
+        pathnamelen: cty::c_int,
         item: *const Fl_Menu_Item,
-    ) -> core::ffi::c_int;
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Item_new(
-        args: *mut *mut core::ffi::c_char,
-        sz: core::ffi::c_int,
-    ) -> *mut Fl_Menu_Item;
+    pub fn Fl_Menu_Item_new(args: *mut *mut cty::c_char, sz: cty::c_int) -> *mut Fl_Menu_Item;
 }
 extern "C" {
     pub fn Fl_Menu_Item_delete(self_: *mut Fl_Menu_Item);
@@ -1847,42 +1765,42 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Item_popup(
         self_: *mut Fl_Menu_Item,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
     ) -> *const Fl_Menu_Item;
 }
 extern "C" {
-    pub fn Fl_Menu_Item_label(arg1: *mut Fl_Menu_Item) -> *const core::ffi::c_char;
+    pub fn Fl_Menu_Item_label(arg1: *mut Fl_Menu_Item) -> *const cty::c_char;
 }
 extern "C" {
-    pub fn Fl_Menu_Item_set_label(arg1: *mut Fl_Menu_Item, a: *const core::ffi::c_char);
+    pub fn Fl_Menu_Item_set_label(arg1: *mut Fl_Menu_Item, a: *const cty::c_char);
 }
 extern "C" {
-    pub fn Fl_Menu_Item_label_type(arg1: *mut Fl_Menu_Item) -> core::ffi::c_int;
+    pub fn Fl_Menu_Item_label_type(arg1: *mut Fl_Menu_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Item_set_label_type(arg1: *mut Fl_Menu_Item, a: core::ffi::c_int);
+    pub fn Fl_Menu_Item_set_label_type(arg1: *mut Fl_Menu_Item, a: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Item_label_color(arg1: *mut Fl_Menu_Item) -> core::ffi::c_uint;
+    pub fn Fl_Menu_Item_label_color(arg1: *mut Fl_Menu_Item) -> cty::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Item_set_label_color(arg1: *mut Fl_Menu_Item, a: core::ffi::c_uint);
+    pub fn Fl_Menu_Item_set_label_color(arg1: *mut Fl_Menu_Item, a: cty::c_uint);
 }
 extern "C" {
-    pub fn Fl_Menu_Item_label_font(arg1: *mut Fl_Menu_Item) -> core::ffi::c_int;
+    pub fn Fl_Menu_Item_label_font(arg1: *mut Fl_Menu_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Item_set_label_font(arg1: *mut Fl_Menu_Item, a: core::ffi::c_int);
+    pub fn Fl_Menu_Item_set_label_font(arg1: *mut Fl_Menu_Item, a: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Item_label_size(arg1: *mut Fl_Menu_Item) -> core::ffi::c_int;
+    pub fn Fl_Menu_Item_label_size(arg1: *mut Fl_Menu_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Item_set_label_size(arg1: *mut Fl_Menu_Item, a: core::ffi::c_int);
+    pub fn Fl_Menu_Item_set_label_size(arg1: *mut Fl_Menu_Item, a: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Item_value(arg1: *mut Fl_Menu_Item) -> core::ffi::c_int;
+    pub fn Fl_Menu_Item_value(arg1: *mut Fl_Menu_Item) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Item_set(arg1: *mut Fl_Menu_Item);
@@ -1891,7 +1809,7 @@ extern "C" {
     pub fn Fl_Menu_Item_clear(arg1: *mut Fl_Menu_Item);
 }
 extern "C" {
-    pub fn Fl_Menu_Item_visible(arg1: *mut Fl_Menu_Item) -> core::ffi::c_int;
+    pub fn Fl_Menu_Item_visible(arg1: *mut Fl_Menu_Item) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Item_show(arg1: *mut Fl_Menu_Item);
@@ -1900,7 +1818,7 @@ extern "C" {
     pub fn Fl_Menu_Item_hide(arg1: *mut Fl_Menu_Item);
 }
 extern "C" {
-    pub fn Fl_Menu_Item_active(arg1: *mut Fl_Menu_Item) -> core::ffi::c_int;
+    pub fn Fl_Menu_Item_active(arg1: *mut Fl_Menu_Item) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Item_activate(arg1: *mut Fl_Menu_Item);
@@ -1909,98 +1827,87 @@ extern "C" {
     pub fn Fl_Menu_Item_deactivate(arg1: *mut Fl_Menu_Item);
 }
 extern "C" {
-    pub fn Fl_Menu_Item_submenu(self_: *const Fl_Menu_Item) -> core::ffi::c_int;
+    pub fn Fl_Menu_Item_submenu(self_: *const Fl_Menu_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Item_checkbox(self_: *const Fl_Menu_Item) -> core::ffi::c_int;
+    pub fn Fl_Menu_Item_checkbox(self_: *const Fl_Menu_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Item_radio(self_: *const Fl_Menu_Item) -> core::ffi::c_int;
+    pub fn Fl_Menu_Item_radio(self_: *const Fl_Menu_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Item_next(self_: *mut Fl_Menu_Item, idx: core::ffi::c_int) -> *mut Fl_Menu_Item;
+    pub fn Fl_Menu_Item_next(self_: *mut Fl_Menu_Item, idx: cty::c_int) -> *mut Fl_Menu_Item;
 }
 extern "C" {
-    pub fn Fl_Menu_Item_set_callback(
-        self_: *mut Fl_Menu_Item,
-        c: Fl_Callback,
-        p: *mut core::ffi::c_void,
-    );
+    pub fn Fl_Menu_Item_set_callback(self_: *mut Fl_Menu_Item, c: Fl_Callback, p: *mut cty::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Item_user_data(arg1: *const Fl_Menu_Item) -> *mut core::ffi::c_void;
+    pub fn Fl_Menu_Item_user_data(arg1: *const Fl_Menu_Item) -> *mut cty::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Item_set_user_data(arg1: *mut Fl_Menu_Item, data: *mut core::ffi::c_void);
+    pub fn Fl_Menu_Item_set_user_data(arg1: *mut Fl_Menu_Item, data: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Menu_Item_draw(
         self_: *const Fl_Menu_Item,
-        x: core::ffi::c_int,
-        y: core::ffi::c_int,
-        w: core::ffi::c_int,
-        h: core::ffi::c_int,
-        m: *const core::ffi::c_void,
-        selected: core::ffi::c_int,
+        x: cty::c_int,
+        y: cty::c_int,
+        w: cty::c_int,
+        h: cty::c_int,
+        m: *const cty::c_void,
+        selected: cty::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Menu_Item_measure(
         self_: *const Fl_Menu_Item,
-        hp: *mut core::ffi::c_int,
-        m: *const core::ffi::c_void,
-    ) -> core::ffi::c_int;
+        hp: *mut cty::c_int,
+        m: *const cty::c_void,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Item_image(self_: *mut Fl_Menu_Item, image: *mut core::ffi::c_void);
+    pub fn Fl_Menu_Item_image(self_: *mut Fl_Menu_Item, image: *mut cty::c_void);
 }
 extern "C" {
     pub fn Fl_Menu_Item_add_image(
         self_: *mut Fl_Menu_Item,
-        image: *mut core::ffi::c_void,
-        on_left: core::ffi::c_int,
+        image: *mut cty::c_void,
+        on_left: cty::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Item_children(self_: *const Fl_Menu_Item) -> core::ffi::c_int;
+    pub fn Fl_Menu_Item_children(self_: *const Fl_Menu_Item) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Item_at(
-        self_: *const Fl_Menu_Item,
-        idx: core::ffi::c_int,
-    ) -> *const Fl_Menu_Item;
+    pub fn Fl_Menu_Item_at(self_: *const Fl_Menu_Item, idx: cty::c_int) -> *const Fl_Menu_Item;
 }
 extern "C" {
     pub fn Fl_Menu_Item_add(
         self_: *mut Fl_Menu_Item,
-        name: *const core::ffi::c_char,
-        shortcut: core::ffi::c_int,
+        name: *const cty::c_char,
+        shortcut: cty::c_int,
         cb: Fl_Callback,
-        data: *mut core::ffi::c_void,
-        flag: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        data: *mut cty::c_void,
+        flag: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Item_insert(
         self_: *mut Fl_Menu_Item,
-        index: core::ffi::c_int,
-        name: *const core::ffi::c_char,
-        shortcut: core::ffi::c_int,
+        index: cty::c_int,
+        name: *const cty::c_char,
+        shortcut: cty::c_int,
         cb: Fl_Callback,
-        data: *mut core::ffi::c_void,
-        flag: core::ffi::c_int,
-    ) -> core::ffi::c_int;
+        data: *mut cty::c_void,
+        flag: cty::c_int,
+    ) -> cty::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Item_set_shortcut(self_: *mut Fl_Menu_Item, shortcut: core::ffi::c_int);
+    pub fn Fl_Menu_Item_set_shortcut(self_: *mut Fl_Menu_Item, shortcut: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Item_set_flag(self_: *mut Fl_Menu_Item, flag: core::ffi::c_int);
+    pub fn Fl_Menu_Item_set_flag(self_: *mut Fl_Menu_Item, flag: cty::c_int);
 }
 extern "C" {
-    pub fn Fl_mac_set_about(
-        cb: Fl_Callback,
-        user_data: *mut core::ffi::c_void,
-        shortcut: core::ffi::c_int,
-    );
+    pub fn Fl_mac_set_about(cb: Fl_Callback, user_data: *mut cty::c_void, shortcut: cty::c_int);
 }
