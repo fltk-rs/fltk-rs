@@ -1,20 +1,20 @@
-bindgen fltk-sys/cfltk/include/cfl_box.h -o fltk-sys/src/frame.rs
-bindgen fltk-sys/cfltk/include/cfl_button.h -o fltk-sys/src/button.rs
-bindgen fltk-sys/cfltk/include/cfl_group.h -o fltk-sys/src/group.rs 
-bindgen fltk-sys/cfltk/include/cfl_text.h -o fltk-sys/src/text.rs 
-bindgen fltk-sys/cfltk/include/cfl_input.h -o fltk-sys/src/input.rs
-bindgen fltk-sys/cfltk/include/cfl_widget.h -o fltk-sys/src/widget.rs
-bindgen --no-layout-tests fltk-sys/cfltk/include/cfl_window.h -o fltk-sys/src/window.rs
-bindgen fltk-sys/cfltk/include/cfl_menu.h -o fltk-sys/src/menu.rs
-bindgen fltk-sys/cfltk/include/cfl_dialog.h -o fltk-sys/src/dialog.rs
-bindgen fltk-sys/cfltk/include/cfl_valuator.h -o fltk-sys/src/valuator.rs
-bindgen fltk-sys/cfltk/include/cfl_browser.h -o fltk-sys/src/browser.rs
-bindgen fltk-sys/cfltk/include/cfl_image.h -o fltk-sys/src/image.rs
-bindgen fltk-sys/cfltk/include/cfl_misc.h -o fltk-sys/src/misc.rs
-bindgen fltk-sys/cfltk/include/cfl_draw.h -o fltk-sys/src/draw.rs
-bindgen fltk-sys/cfltk/include/cfl_table.h -o fltk-sys/src/table.rs
-bindgen fltk-sys/cfltk/include/cfl_tree.h -o fltk-sys/src/tree.rs
-bindgen fltk-sys/cfltk/include/cfl.h -o fltk-sys/src/fl.rs
-bindgen fltk-sys/cfltk/include/cfl_surface.h -o fltk-sys/src/surface.rs
-bindgen fltk-sys/cfltk/include/cfl_printer.h -o fltk-sys/src/printer.rs
-bindgen fltk-sys/cfltk/include/cfl_utils.h -o fltk-sys/src/utils.rs
+bindgen --use-core --ctypes-prefix=core::ffi fltk-sys/cfltk/include/cfl_box.h -o fltk-sys/src/frame.rs
+bindgen --use-core --ctypes-prefix=core::ffi fltk-sys/cfltk/include/cfl_button.h -o fltk-sys/src/button.rs
+bindgen --use-core --ctypes-prefix=core::ffi fltk-sys/cfltk/include/cfl_group.h -o fltk-sys/src/group.rs 
+bindgen --use-core --ctypes-prefix=core::ffi fltk-sys/cfltk/include/cfl_text.h -o fltk-sys/src/text.rs 
+bindgen --use-core --ctypes-prefix=core::ffi fltk-sys/cfltk/include/cfl_input.h -o fltk-sys/src/input.rs
+bindgen --use-core --ctypes-prefix=core::ffi fltk-sys/cfltk/include/cfl_widget.h -o fltk-sys/src/widget.rs
+bindgen --use-core --ctypes-prefix=core::ffi --no-layout-tests fltk-sys/cfltk/include/cfl_window.h -o fltk-sys/src/window.rs
+bindgen --use-core --ctypes-prefix=core::ffi fltk-sys/cfltk/include/cfl_menu.h -o fltk-sys/src/menu.rs
+bindgen --use-core --ctypes-prefix=core::ffi fltk-sys/cfltk/include/cfl_dialog.h -o fltk-sys/src/dialog.rs
+bindgen --use-core --ctypes-prefix=core::ffi fltk-sys/cfltk/include/cfl_valuator.h -o fltk-sys/src/valuator.rs
+bindgen --use-core --ctypes-prefix=core::ffi fltk-sys/cfltk/include/cfl_browser.h -o fltk-sys/src/browser.rs
+bindgen --use-core --ctypes-prefix=core::ffi fltk-sys/cfltk/include/cfl_image.h -o fltk-sys/src/image.rs
+bindgen --use-core --ctypes-prefix=core::ffi fltk-sys/cfltk/include/cfl_misc.h -o fltk-sys/src/misc.rs
+bindgen --use-core --ctypes-prefix=core::ffi fltk-sys/cfltk/include/cfl_draw.h -o fltk-sys/src/draw.rs
+bindgen --use-core --ctypes-prefix=core::ffi fltk-sys/cfltk/include/cfl_table.h -o fltk-sys/src/table.rs
+bindgen --use-core --ctypes-prefix=core::ffi fltk-sys/cfltk/include/cfl_tree.h -o fltk-sys/src/tree.rs
+bindgen --use-core --ctypes-prefix=core::ffi fltk-sys/cfltk/include/cfl.h -o fltk-sys/src/fl.rs
+bindgen --use-core --ctypes-prefix=core::ffi fltk-sys/cfltk/include/cfl_surface.h -o fltk-sys/src/surface.rs
+bindgen --use-core --ctypes-prefix=core::ffi fltk-sys/cfltk/include/cfl_printer.h -o fltk-sys/src/printer.rs
+bindgen --use-core --ctypes-prefix=core::ffi fltk-sys/cfltk/include/cfl_utils.h -o fltk-sys/src/utils.rs
