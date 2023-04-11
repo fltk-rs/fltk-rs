@@ -54,23 +54,23 @@ fn main() {
         let mut x = 0;
         let mut y = 0;
         let mut dock_win = dock_win.clone();
-        move |self, event| match (event) {
-            Event::Push => {
+        move |wself, event| match (event) {
+            enums::Event::Push => {
                 let coords = app::event_coords();
                 x = coords.0;
                 y = coords.1;
 
                 true
             },
-            Event::Drag => {
-                self.set_pos(app::event_x_root() - x, app::event_y_root() - y);
+            enums::Event::Drag => {
+                wself.set_pos(app::event_x_root() - x, app::event_y_root() - y);
 
                 // Changing dock window position so it's close enough to the center of the application (not "visible" to user)
-                dock_win.set_pos(self.x() + (self.w() / 2), self.y() + (self.w() / 2));
+                dock_win.set_pos(wself.x() + (wself.w() / 2), wself.y() + (wself.w() / 2));
 
                 true
             },
-            Event::Close => {
+            enums::Event::Close => {
                 app.quit();
 
                 true
@@ -82,8 +82,8 @@ fn main() {
     // Make main window appear when "opened" via Alt+Tab or Taskbar
     dock_win.handle({
         let mut win = win.clone();
-        move |self, event| match (event) {
-            Event::Focus => {
+        move |wself, event| match (event) {
+            enums::Event::Focus => {
                 let win_shape = prep_shape(win.w(), win.h());
 
                 win.hide();
@@ -97,7 +97,7 @@ fn main() {
 
                 true
             },
-            Event::Close => {
+            enums::Event::Close => {
                 app.quit();
 
                 true
