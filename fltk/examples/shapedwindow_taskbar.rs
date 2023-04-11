@@ -28,7 +28,7 @@ fn main() {
     dock_win.show();
     dock_win.end();
 
-    let mut win = window:Window::default()
+    let mut win = window::Window::default()
         .with_size(900, 500)
         .with_label("TestApplication")
         .center_screen();
