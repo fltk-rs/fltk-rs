@@ -41,7 +41,7 @@ pub mod popup_browser;
 pub mod rgb;
 pub mod rounded_images;
 pub mod screens_info;
-pub mod shapedwindow;
+pub mod shapedwindow_taskbar;
 pub mod spreadsheet;
 pub mod system_fonts;
 pub mod table;
