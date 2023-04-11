@@ -1,10 +1,6 @@
 use fltk::{prelude::*, *};
 
 /*
-   Code above is from the previous variant, probably more reasonable to use the one below (in fn main())
-   as initialization of the main window is part of the main function
-   rather than requiring your widgets to be initialized in an implementation
-
    Event handling for win and dock_win can be changed.
 
    In fn prep_shape(), if you want a different shape as your background e.g a pie (circle),
