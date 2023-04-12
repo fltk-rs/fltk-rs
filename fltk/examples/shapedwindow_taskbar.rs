@@ -88,6 +88,11 @@ fn main() {
 
                 true
             },
+            enums::Event::Hide => {
+               win.hide();
+               
+               true
+            },
             enums::Event::Close => {
                 app.quit();
 
