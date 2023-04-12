@@ -84,7 +84,10 @@ fn main() {
         let mut win = win.clone();
         move |wself, event| match (event) {
             enums::Event::Focus => {
+                let win_shape = prep_shape(win.w(), win.h());
+            
                 win.show();
+                win.set_shape(Some(win_shape));
 
                 true
             },
