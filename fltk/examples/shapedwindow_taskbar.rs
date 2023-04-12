@@ -84,16 +84,7 @@ fn main() {
         let mut win = win.clone();
         move |wself, event| match (event) {
             enums::Event::Focus => {
-                let win_shape = prep_shape(win.w(), win.h());
-
-                win.hide();
                 win.show();
-
-                /* 
-                   After hiding and showing, the main window will not retain it's previous shape
-                   Retain it's original shape by setting it's shape again
-                */
-                win.set_shape(Some(win_shape)); 
 
                 true
             },
