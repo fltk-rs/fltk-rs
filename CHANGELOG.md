@@ -1,6 +1,11 @@
 # Changelog
 
 
+# [1.4.1] - 2023-04-13
+- Add capture of offscreens and image surfaces by @Postrediori.
+- Added taskbar visibility for the shapedwindow example by @SigmaEG.
+- Update FLTK submodule.
+
 # [1.4.0] - 2023-04-01
 - Use Rust version 2021 and require rustc 1.56.
 - Add explicit static-msvcrt feature for when cargo doesn't auto-propagate crt-static, by @vstojkovic.
