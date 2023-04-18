@@ -22,7 +22,7 @@ fltk-sys = { path = "../fltk-sys", version = "=1.4.1" }
 bitflags = "^2"
 paste = "1"
 crossbeam-channel = "0.5"
-ttf-parser = "0.18"
+ttf-parser = "0.19"
 # Enables getting a raw window handle on supported platforms, fixed at version 0.4 for fltk 1.* compat
 raw-window-handle = { version = "^0.4", optional = true }
 # Enables getting a raw window handle on supported platforms, tracks the current raw-window-handle version. 
