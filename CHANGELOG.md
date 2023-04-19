@@ -1,6 +1,12 @@
 # Changelog
 
 
+# [1.4.2] - Unreleased
+- Adds several SysMenuBar methods.
+- Adds MacAppMenu and related methods.
+- Update ttf-parser dependency.
+- Update FLTK submodule.
+
 # [1.4.1] - 2023-04-13
 - Add capture of offscreens and image surfaces by @Postrediori.
 - Added taskbar visibility for the shapedwindow example by @SigmaEG.

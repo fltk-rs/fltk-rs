@@ -1631,6 +1631,16 @@ extern "C" {
     pub fn Fl_Sys_Menu_Bar_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
 }
 extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_window_menu_style(style: cty::c_int);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_about(
+        self_: *mut Fl_Sys_Menu_Bar,
+        cb: Fl_Callback,
+        data: *mut cty::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Sys_Menu_Bar_add(
         arg1: *mut Fl_Sys_Menu_Bar,
         name: *const cty::c_char,
@@ -1910,4 +1920,34 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_mac_set_about(cb: Fl_Callback, user_data: *mut cty::c_void, shortcut: cty::c_int);
+}
+extern "C" {
+    pub fn Fl_Mac_App_Menu_custom_application_menu_items(m: *const Fl_Menu_Item);
+}
+extern "C" {
+    pub fn Fl_Mac_App_Menu_set_about(about: *const cty::c_char);
+}
+extern "C" {
+    pub fn Fl_Mac_App_Menu_set_print(print: *const cty::c_char);
+}
+extern "C" {
+    pub fn Fl_Mac_App_Menu_set_print_no_titlebar(print_no_titlebar: *const cty::c_char);
+}
+extern "C" {
+    pub fn Fl_Mac_App_Menu_set_toggle_print_titlebar(toggle_print_titlebar: *const cty::c_char);
+}
+extern "C" {
+    pub fn Fl_Mac_App_Menu_set_services(services: *const cty::c_char);
+}
+extern "C" {
+    pub fn Fl_Mac_App_Menu_set_hide(hide: *const cty::c_char);
+}
+extern "C" {
+    pub fn Fl_Mac_App_Menu_set_hide_others(hide_others: *const cty::c_char);
+}
+extern "C" {
+    pub fn Fl_Mac_App_Menu_set_show(show: *const cty::c_char);
+}
+extern "C" {
+    pub fn Fl_Mac_App_Menu_set_quit(quit: *const cty::c_char);
 }
