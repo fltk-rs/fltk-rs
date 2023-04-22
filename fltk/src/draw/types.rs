@@ -193,6 +193,16 @@ impl<T: Copy + Add<Output = T> + Sub<Output = T>> Rectangle<T> {
         }
     }
 
+    /// Sets the Rectangle to be padded
+    pub fn with_padding(self, pad : T) -> Self {
+        Self {
+            x: self.x + pad,
+            y: self.y + pad,
+            w: self.w - (pad + pad),
+            h: self.h - (pad + pad),
+        }
+    }
+
     /// Returns a new `Rectangle` from the position of its `top_left`
     /// and `bottom_right` corners.
     pub fn from_coords(top_left: Coordinates<T>, bottom_right: Coordinates<T>) -> Self {
