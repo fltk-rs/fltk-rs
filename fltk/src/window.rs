@@ -63,7 +63,7 @@ pub type RawHandle = *mut raw::c_void;
 pub type RawHandle = u32;
 
 /// Opaque raw window handle (`*mut c_void` to `HWND` on Windows and `NSWindow` on macOS),
-/// `XID` (`u64`) raw window handle for X11
+/// `XID` (`u64`) raw window handle for X11, and `wl_suface *` for wayland
 #[cfg(all(
     not(any(
         target_os = "windows",
