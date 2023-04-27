@@ -1,9 +1,10 @@
 # Changelog
 
 
-# [1.4.2] - Unreleased
+# [1.4.2] - 2023-04-27
 - Adds several SysMenuBar methods.
 - Adds MacAppMenu and related methods.
+- Fixes WindowExt::raw_handle() on wayland.
 - Update ttf-parser dependency.
 - Update FLTK submodule.
 
