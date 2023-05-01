@@ -1133,7 +1133,7 @@ impl SimpleTerminal {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         let s = CString::safe_new(s);
-        unsafe { Fl_Simple_Terminal_append(self.inner, s.into_raw()) }
+        unsafe { Fl_Simple_Terminal_append(self.inner, s.into_raw() as _) }
     }
 
     /// Appends data to the terminal buffer
@@ -1149,7 +1149,7 @@ impl SimpleTerminal {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         let s = CString::safe_new(s);
-        unsafe { Fl_Simple_Terminal_set_text(self.inner, s.into_raw()) }
+        unsafe { Fl_Simple_Terminal_set_text(self.inner, s.into_raw() as _) }
     }
 
     /// Gets the text of the terminal buffer

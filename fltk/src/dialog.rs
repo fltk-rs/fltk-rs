@@ -650,7 +650,7 @@ impl FileChooser {
         let title = CString::safe_new(title);
         unsafe {
             let ptr =
-                Fl_File_Chooser_new(dir.as_ptr(), pattern.as_ptr(), typ.bits(), title.into_raw());
+                Fl_File_Chooser_new(dir.as_ptr(), pattern.as_ptr(), typ.bits(), title.into_raw() as _);
             assert!(!ptr.is_null());
             FileChooser { inner: ptr }
         }
@@ -837,7 +837,7 @@ impl FileChooser {
         assert!(!self.inner.is_null());
         let l = CString::safe_new(l);
         let _old = unsafe { CString::from_raw(Fl_File_Chooser_label(self.inner) as _) };
-        unsafe { Fl_File_Chooser_set_label(self.inner, l.into_raw()) }
+        unsafe { Fl_File_Chooser_set_label(self.inner, l.into_raw() as _) }
     }
 
     /// Gets the label of the `FileChooser`
@@ -859,7 +859,7 @@ impl FileChooser {
     pub fn set_ok_label(&mut self, l: &'static str) {
         assert!(!self.inner.is_null());
         let l = CString::safe_new(l);
-        unsafe { Fl_File_Chooser_set_ok_label(self.inner, l.into_raw()) }
+        unsafe { Fl_File_Chooser_set_ok_label(self.inner, l.into_raw() as _) }
     }
 
     /// Gets the label of the Ok button
@@ -1026,85 +1026,85 @@ impl FileChooser {
     /// Set "Add favorites" label
     pub fn set_add_favorites_label(msg: &'static str) {
         let msg = CString::safe_new(msg);
-        unsafe { Fl_File_Chooser_set_add_favorites_label(msg.into_raw()) }
+        unsafe { Fl_File_Chooser_set_add_favorites_label(msg.into_raw() as _) }
     }
 
     /// Set "All Files" label
     pub fn set_all_files_label(msg: &'static str) {
         let msg = CString::safe_new(msg);
-        unsafe { Fl_File_Chooser_set_all_files_label(msg.into_raw()) }
+        unsafe { Fl_File_Chooser_set_all_files_label(msg.into_raw() as _) }
     }
 
     /// Set "Custom Filter" label
     pub fn set_custom_filter_label(msg: &'static str) {
         let msg = CString::safe_new(msg);
-        unsafe { Fl_File_Chooser_set_custom_filter_label(msg.into_raw()) }
+        unsafe { Fl_File_Chooser_set_custom_filter_label(msg.into_raw() as _) }
     }
 
     /// Set "Existing file" label
     pub fn set_existing_file_label(msg: &'static str) {
         let msg = CString::safe_new(msg);
-        unsafe { Fl_File_Chooser_set_existing_file_label(msg.into_raw()) }
+        unsafe { Fl_File_Chooser_set_existing_file_label(msg.into_raw() as _) }
     }
 
     /// Set "Favorites" label
     pub fn set_favorites_label(msg: &'static str) {
         let msg = CString::safe_new(msg);
-        unsafe { Fl_File_Chooser_set_favorites_label(msg.into_raw()) }
+        unsafe { Fl_File_Chooser_set_favorites_label(msg.into_raw() as _) }
     }
 
     /// Set "Filename" label
     pub fn set_filename_label(msg: &'static str) {
         let msg = CString::safe_new(msg);
-        unsafe { Fl_File_Chooser_set_filename_label(msg.into_raw()) }
+        unsafe { Fl_File_Chooser_set_filename_label(msg.into_raw() as _) }
     }
 
     /// Set "Filesystems" label
     pub fn set_filesystems_label(msg: &'static str) {
         let msg = CString::safe_new(msg);
-        unsafe { Fl_File_Chooser_set_filesystems_label(msg.into_raw()) }
+        unsafe { Fl_File_Chooser_set_filesystems_label(msg.into_raw() as _) }
     }
 
     /// Set "Manage favorites" label
     pub fn set_manage_favorites_label(msg: &'static str) {
         let msg = CString::safe_new(msg);
-        unsafe { Fl_File_Chooser_set_manage_favorites_label(msg.into_raw()) }
+        unsafe { Fl_File_Chooser_set_manage_favorites_label(msg.into_raw() as _) }
     }
 
     /// Set "New directory" label
     pub fn set_new_directory_label(msg: &'static str) {
         let msg = CString::safe_new(msg);
-        unsafe { Fl_File_Chooser_set_new_directory_label(msg.into_raw()) }
+        unsafe { Fl_File_Chooser_set_new_directory_label(msg.into_raw() as _) }
     }
 
     /// Set "New directory" tooltip
     pub fn set_new_directory_tooltip(msg: &'static str) {
         let msg = CString::safe_new(msg);
-        unsafe { Fl_File_Chooser_set_new_directory_tooltip(msg.into_raw()) }
+        unsafe { Fl_File_Chooser_set_new_directory_tooltip(msg.into_raw() as _) }
     }
 
     /// Set "Preview" label
     pub fn set_preview_label(msg: &'static str) {
         let msg = CString::safe_new(msg);
-        unsafe { Fl_File_Chooser_set_preview_label(msg.into_raw()) }
+        unsafe { Fl_File_Chooser_set_preview_label(msg.into_raw() as _) }
     }
 
     /// Set "Save" label
     pub fn set_save_label(msg: &'static str) {
         let msg = CString::safe_new(msg);
-        unsafe { Fl_File_Chooser_set_save_label(msg.into_raw()) }
+        unsafe { Fl_File_Chooser_set_save_label(msg.into_raw() as _) }
     }
 
     /// Set "Show" label
     pub fn set_show_label(msg: &'static str) {
         let msg = CString::safe_new(msg);
-        unsafe { Fl_File_Chooser_set_show_label(msg.into_raw()) }
+        unsafe { Fl_File_Chooser_set_show_label(msg.into_raw() as _) }
     }
 
     /// Set "hidden" label
     pub fn set_hidden_label(msg: &'static str) {
         let msg = CString::safe_new(msg);
-        unsafe { Fl_File_Chooser_set_hidden_label(msg.into_raw()) }
+        unsafe { Fl_File_Chooser_set_hidden_label(msg.into_raw() as _) }
     }
 
     /// Set the position of the file chooser

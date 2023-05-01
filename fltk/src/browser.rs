@@ -174,7 +174,7 @@ impl FileBrowser {
         let pattern = CString::safe_new(pattern);
         unsafe {
             // This is deleted on the C++ side
-            Fl_File_Browser_set_filter(self.inner, pattern.into_raw())
+            Fl_File_Browser_set_filter(self.inner, pattern.into_raw() as _)
         }
     }
 

@@ -217,7 +217,7 @@ impl MenuItem {
             let mut temp: Vec<*mut raw::c_char> = vec![];
             for &choice in choices {
                 let c = CString::safe_new(choice);
-                temp.push(c.into_raw());
+                temp.push(c.into_raw() as _);
             }
             let item_ptr = Fl_Menu_Item_new(temp.as_ptr() as *mut *mut raw::c_char, sz as i32);
             assert!(!item_ptr.is_null());
@@ -269,7 +269,7 @@ impl MenuItem {
         assert!(!self.was_deleted());
         unsafe {
             let txt = CString::safe_new(txt);
-            Fl_Menu_Item_set_label(self.inner, txt.into_raw());
+            Fl_Menu_Item_set_label(self.inner, txt.into_raw() as _);
         }
     }
 
