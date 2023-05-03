@@ -11,30 +11,30 @@ pub struct Fl_Widget_Tracker {
     _unused: [u8; 0],
 }
 pub type Fl_Awake_Handler =
-    ::core::option::Option<unsafe extern "C" fn(data: *mut ::core::ffi::c_void)>;
+    ::core::option::Option<unsafe extern "C" fn(data: *mut ::std::os::raw::c_void)>;
 extern "C" {
-    pub fn Fl_run() -> ::core::ffi::c_int;
+    pub fn Fl_run() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_check() -> ::core::ffi::c_int;
+    pub fn Fl_check() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_ready() -> ::core::ffi::c_int;
+    pub fn Fl_ready() -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_release();
 }
 extern "C" {
-    pub fn Fl_reload_scheme() -> ::core::ffi::c_int;
+    pub fn Fl_reload_scheme() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_menu_linespacing() -> ::core::ffi::c_int;
+    pub fn Fl_menu_linespacing() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_set_menu_linespacing(H: ::core::ffi::c_int);
+    pub fn Fl_set_menu_linespacing(H: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_lock() -> ::core::ffi::c_int;
+    pub fn Fl_lock() -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_unlock();
@@ -42,205 +42,205 @@ extern "C" {
 extern "C" {
     pub fn Fl_awake_callback(
         handler: Fl_Awake_Handler,
-        data: *mut ::core::ffi::c_void,
-    ) -> ::core::ffi::c_int;
+        data: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_awake();
 }
 extern "C" {
-    pub fn Fl_set_scrollbar_size(arg1: ::core::ffi::c_int);
+    pub fn Fl_set_scrollbar_size(arg1: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_scrollbar_size() -> ::core::ffi::c_int;
+    pub fn Fl_scrollbar_size() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_event() -> ::core::ffi::c_int;
+    pub fn Fl_event() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_event_key() -> ::core::ffi::c_int;
+    pub fn Fl_event_key() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_event_original_key() -> ::core::ffi::c_int;
+    pub fn Fl_event_original_key() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_event_key_down(arg1: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub fn Fl_event_key_down(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_event_text() -> *const ::core::ffi::c_char;
+    pub fn Fl_event_text() -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn Fl_event_button() -> ::core::ffi::c_int;
+    pub fn Fl_event_button() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_event_clicks() -> ::core::ffi::c_int;
+    pub fn Fl_event_clicks() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_event_x() -> ::core::ffi::c_int;
+    pub fn Fl_event_x() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_event_y() -> ::core::ffi::c_int;
+    pub fn Fl_event_y() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_event_x_root() -> ::core::ffi::c_int;
+    pub fn Fl_event_x_root() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_event_y_root() -> ::core::ffi::c_int;
+    pub fn Fl_event_y_root() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_event_dx() -> ::core::ffi::c_int;
+    pub fn Fl_event_dx() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_event_dy() -> ::core::ffi::c_int;
+    pub fn Fl_event_dy() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_get_mouse(arg1: *mut ::core::ffi::c_int, arg2: *mut ::core::ffi::c_int);
+    pub fn Fl_get_mouse(arg1: *mut ::std::os::raw::c_int, arg2: *mut ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_event_is_click() -> ::core::ffi::c_int;
+    pub fn Fl_event_is_click() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_event_length() -> ::core::ffi::c_int;
+    pub fn Fl_event_length() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_event_state() -> ::core::ffi::c_int;
+    pub fn Fl_event_state() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_screen_x() -> ::core::ffi::c_int;
+    pub fn Fl_screen_x() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_screen_y() -> ::core::ffi::c_int;
+    pub fn Fl_screen_y() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_screen_h() -> ::core::ffi::c_int;
+    pub fn Fl_screen_h() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_screen_w() -> ::core::ffi::c_int;
+    pub fn Fl_screen_w() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_compose(del: *mut ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub fn Fl_compose(del: *mut ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_compose_reset();
 }
 extern "C" {
-    pub fn Fl_compose_state() -> ::core::ffi::c_int;
+    pub fn Fl_compose_state() -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_copy(
-        stuff: *const ::core::ffi::c_char,
-        len: ::core::ffi::c_int,
-        destination: ::core::ffi::c_int,
+        stuff: *const ::std::os::raw::c_char,
+        len: ::std::os::raw::c_int,
+        destination: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_paste_text(arg1: *mut Fl_Widget, src: ::core::ffi::c_int);
+    pub fn Fl_paste_text(arg1: *mut Fl_Widget, src: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_paste_image(widget: *mut Fl_Widget, src: ::core::ffi::c_int);
+    pub fn Fl_paste_image(widget: *mut Fl_Widget, src: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_set_scheme(scheme: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
+    pub fn Fl_set_scheme(scheme: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_scheme() -> ::core::ffi::c_int;
+    pub fn Fl_scheme() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_scheme_string() -> *const ::core::ffi::c_char;
+    pub fn Fl_scheme_string() -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn Fl_visible_focus() -> ::core::ffi::c_int;
+    pub fn Fl_visible_focus() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_set_visible_focus(arg1: ::core::ffi::c_int);
+    pub fn Fl_set_visible_focus(arg1: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_set_box_type(arg1: ::core::ffi::c_int, arg2: ::core::ffi::c_int);
+    pub fn Fl_set_box_type(arg1: ::std::os::raw::c_int, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_box_shadow_width() -> ::core::ffi::c_int;
+    pub fn Fl_box_shadow_width() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_set_box_shadow_width(W: ::core::ffi::c_int);
+    pub fn Fl_set_box_shadow_width(W: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_box_border_radius_max() -> ::core::ffi::c_int;
+    pub fn Fl_box_border_radius_max() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_set_box_border_radius_max(R: ::core::ffi::c_int);
+    pub fn Fl_set_box_border_radius_max(R: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_get_rgb_color(
-        r: ::core::ffi::c_uchar,
-        g: ::core::ffi::c_uchar,
-        b: ::core::ffi::c_uchar,
-    ) -> ::core::ffi::c_uint;
+        r: ::std::os::raw::c_uchar,
+        g: ::std::os::raw::c_uchar,
+        b: ::std::os::raw::c_uchar,
+    ) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_set_color(
-        c: ::core::ffi::c_uint,
-        r: ::core::ffi::c_uchar,
-        g: ::core::ffi::c_uchar,
-        b: ::core::ffi::c_uchar,
+        c: ::std::os::raw::c_uint,
+        r: ::std::os::raw::c_uchar,
+        g: ::std::os::raw::c_uchar,
+        b: ::std::os::raw::c_uchar,
     );
 }
 extern "C" {
     pub fn Fl_set_color_with_alpha(
-        c: ::core::ffi::c_uint,
-        r: ::core::ffi::c_uchar,
-        g: ::core::ffi::c_uchar,
-        b: ::core::ffi::c_uchar,
-        a: ::core::ffi::c_uchar,
+        c: ::std::os::raw::c_uint,
+        r: ::std::os::raw::c_uchar,
+        g: ::std::os::raw::c_uchar,
+        b: ::std::os::raw::c_uchar,
+        a: ::std::os::raw::c_uchar,
     );
 }
 extern "C" {
-    pub fn Fl_get_font(idx: ::core::ffi::c_int) -> *const ::core::ffi::c_char;
+    pub fn Fl_get_font(idx: ::std::os::raw::c_int) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn Fl_get_font_name(idx: ::core::ffi::c_int) -> *const ::core::ffi::c_char;
+    pub fn Fl_get_font_name(idx: ::std::os::raw::c_int) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_get_font_name2(
-        idx: ::core::ffi::c_int,
-        attributes: *mut ::core::ffi::c_int,
-    ) -> *const ::core::ffi::c_char;
+        idx: ::std::os::raw::c_int,
+        attributes: *mut ::std::os::raw::c_int,
+    ) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_get_font_sizes(
-        font: ::core::ffi::c_int,
-        sizep: *mut *mut ::core::ffi::c_int,
-    ) -> ::core::ffi::c_int;
+        font: ::std::os::raw::c_int,
+        sizep: *mut *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_set_fonts(c: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
+    pub fn Fl_set_fonts(c: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_set_font(arg1: ::core::ffi::c_int, arg2: ::core::ffi::c_int);
+    pub fn Fl_set_font(arg1: ::std::os::raw::c_int, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_set_font2(arg1: ::core::ffi::c_int, arg2: *const ::core::ffi::c_char);
+    pub fn Fl_set_font2(arg1: ::std::os::raw::c_int, arg2: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_set_font_size(arg1: ::core::ffi::c_int);
+    pub fn Fl_set_font_size(arg1: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_font_size() -> ::core::ffi::c_int;
+    pub fn Fl_font_size() -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_add_handler(
         ev_handler: ::core::option::Option<
-            unsafe extern "C" fn(ev: ::core::ffi::c_int) -> ::core::ffi::c_int,
+            unsafe extern "C" fn(ev: ::std::os::raw::c_int) -> ::std::os::raw::c_int,
         >,
     );
 }
 extern "C" {
-    pub fn Fl_awake_msg(msg: *mut ::core::ffi::c_void);
+    pub fn Fl_awake_msg(msg: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_thread_msg() -> *mut ::core::ffi::c_void;
+    pub fn Fl_thread_msg() -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_wait() -> ::core::ffi::c_int;
+    pub fn Fl_wait() -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_wait_for(arg1: f64) -> f64;
@@ -248,60 +248,60 @@ extern "C" {
 extern "C" {
     pub fn Fl_add_timeout(
         t: f64,
-        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-        arg2: *mut ::core::ffi::c_void,
+        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_repeat_timeout(
         t: f64,
-        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-        arg2: *mut ::core::ffi::c_void,
+        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_remove_timeout(
-        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-        arg2: *mut ::core::ffi::c_void,
+        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_has_timeout(
-        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-        arg2: *mut ::core::ffi::c_void,
-    ) -> ::core::ffi::c_int;
+        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_dnd() -> ::core::ffi::c_int;
+    pub fn Fl_dnd() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_grab() -> *mut ::core::ffi::c_void;
+    pub fn Fl_grab() -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_set_grab(arg1: *mut ::core::ffi::c_void);
+    pub fn Fl_set_grab(arg1: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_first_window() -> *mut ::core::ffi::c_void;
+    pub fn Fl_first_window() -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_next_window(arg1: *const ::core::ffi::c_void) -> *mut ::core::ffi::c_void;
+    pub fn Fl_next_window(arg1: *const ::std::os::raw::c_void) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_modal() -> *mut ::core::ffi::c_void;
+    pub fn Fl_modal() -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_should_program_quit() -> ::core::ffi::c_int;
+    pub fn Fl_should_program_quit() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_program_should_quit(flag: ::core::ffi::c_int);
+    pub fn Fl_program_should_quit(flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_event_inside(
-        arg1: ::core::ffi::c_int,
-        arg2: ::core::ffi::c_int,
-        arg3: ::core::ffi::c_int,
-        arg4: ::core::ffi::c_int,
-    ) -> ::core::ffi::c_int;
+        arg1: ::std::os::raw::c_int,
+        arg2: ::std::os::raw::c_int,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_belowmouse() -> *mut Fl_Widget;
@@ -313,7 +313,7 @@ extern "C" {
     pub fn Fl_Widget_Tracker_new(w: *mut Fl_Widget) -> *mut Fl_Widget_Tracker;
 }
 extern "C" {
-    pub fn Fl_Widget_Tracker_deleted(self_: *mut Fl_Widget_Tracker) -> ::core::ffi::c_int;
+    pub fn Fl_Widget_Tracker_deleted(self_: *mut Fl_Widget_Tracker) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Widget_Tracker_delete(self_: *mut Fl_Widget_Tracker);
@@ -325,25 +325,25 @@ extern "C" {
     pub fn Fl_redraw();
 }
 extern "C" {
-    pub fn Fl_event_shift() -> ::core::ffi::c_int;
+    pub fn Fl_event_shift() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_event_ctrl() -> ::core::ffi::c_int;
+    pub fn Fl_event_ctrl() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_event_command() -> ::core::ffi::c_int;
+    pub fn Fl_event_command() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_event_alt() -> ::core::ffi::c_int;
+    pub fn Fl_event_alt() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_set_damage(flag: ::core::ffi::c_int);
+    pub fn Fl_set_damage(flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_damage() -> ::core::ffi::c_int;
+    pub fn Fl_damage() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_visual(arg1: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub fn Fl_visual(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_own_colormap();
@@ -355,48 +355,56 @@ extern "C" {
     pub fn Fl_focus() -> *mut Fl_Widget;
 }
 extern "C" {
-    pub fn Fl_set_focus(arg1: *mut ::core::ffi::c_void);
+    pub fn Fl_set_focus(arg1: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_version() -> f64;
 }
 extern "C" {
-    pub fn Fl_api_version() -> ::core::ffi::c_int;
+    pub fn Fl_api_version() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_abi_version() -> ::core::ffi::c_int;
+    pub fn Fl_abi_version() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_load_font(path: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
+    pub fn Fl_load_font(path: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_unload_font(path: *const ::core::ffi::c_char);
+    pub fn Fl_unload_font(path: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_foreground(r: ::core::ffi::c_uchar, g: ::core::ffi::c_uchar, b: ::core::ffi::c_uchar);
+    pub fn Fl_foreground(
+        r: ::std::os::raw::c_uchar,
+        g: ::std::os::raw::c_uchar,
+        b: ::std::os::raw::c_uchar,
+    );
 }
 extern "C" {
-    pub fn Fl_background(r: ::core::ffi::c_uchar, g: ::core::ffi::c_uchar, b: ::core::ffi::c_uchar);
+    pub fn Fl_background(
+        r: ::std::os::raw::c_uchar,
+        g: ::std::os::raw::c_uchar,
+        b: ::std::os::raw::c_uchar,
+    );
 }
 extern "C" {
     pub fn Fl_background2(
-        r: ::core::ffi::c_uchar,
-        g: ::core::ffi::c_uchar,
-        b: ::core::ffi::c_uchar,
+        r: ::std::os::raw::c_uchar,
+        g: ::std::os::raw::c_uchar,
+        b: ::std::os::raw::c_uchar,
     );
 }
 extern "C" {
     pub fn Fl_selection_color(
-        r: ::core::ffi::c_uchar,
-        g: ::core::ffi::c_uchar,
-        b: ::core::ffi::c_uchar,
+        r: ::std::os::raw::c_uchar,
+        g: ::std::os::raw::c_uchar,
+        b: ::std::os::raw::c_uchar,
     );
 }
 extern "C" {
     pub fn Fl_inactive_color(
-        r: ::core::ffi::c_uchar,
-        g: ::core::ffi::c_uchar,
-        b: ::core::ffi::c_uchar,
+        r: ::std::os::raw::c_uchar,
+        g: ::std::os::raw::c_uchar,
+        b: ::std::os::raw::c_uchar,
     );
 }
 extern "C" {
@@ -404,131 +412,134 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_handle(
-        arg1: ::core::ffi::c_int,
-        arg2: *mut ::core::ffi::c_void,
-    ) -> ::core::ffi::c_int;
+        arg1: ::std::os::raw::c_int,
+        arg2: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_handle_(
-        arg1: ::core::ffi::c_int,
-        arg2: *mut ::core::ffi::c_void,
-    ) -> ::core::ffi::c_int;
+        arg1: ::std::os::raw::c_int,
+        arg2: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_add_idle(
-        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-        arg2: *mut ::core::ffi::c_void,
+        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_has_idle(
-        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-        arg2: *mut ::core::ffi::c_void,
-    ) -> ::core::ffi::c_int;
+        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_remove_idle(
-        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-        arg2: *mut ::core::ffi::c_void,
+        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_flush();
 }
 extern "C" {
-    pub fn Fl_set_screen_scale(n: ::core::ffi::c_int, val: f32);
+    pub fn Fl_set_screen_scale(n: ::std::os::raw::c_int, val: f32);
 }
 extern "C" {
-    pub fn Fl_screen_scale(n: ::core::ffi::c_int) -> f32;
+    pub fn Fl_screen_scale(n: ::std::os::raw::c_int) -> f32;
 }
 extern "C" {
-    pub fn Fl_screen_scaling_supported() -> ::core::ffi::c_int;
+    pub fn Fl_screen_scaling_supported() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_screen_count() -> ::core::ffi::c_int;
+    pub fn Fl_screen_count() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_screen_num(x: ::core::ffi::c_int, y: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub fn Fl_screen_num(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_screen_num_inside(
-        x: ::core::ffi::c_int,
-        y: ::core::ffi::c_int,
-        w: ::core::ffi::c_int,
-        h: ::core::ffi::c_int,
-    ) -> ::core::ffi::c_int;
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        w: ::std::os::raw::c_int,
+        h: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_screen_xywh(
-        X: *mut ::core::ffi::c_int,
-        Y: *mut ::core::ffi::c_int,
-        W: *mut ::core::ffi::c_int,
-        H: *mut ::core::ffi::c_int,
-        n: ::core::ffi::c_int,
+        X: *mut ::std::os::raw::c_int,
+        Y: *mut ::std::os::raw::c_int,
+        W: *mut ::std::os::raw::c_int,
+        H: *mut ::std::os::raw::c_int,
+        n: ::std::os::raw::c_int,
     );
 }
 extern "C" {
     pub fn Fl_screen_xywh_at(
-        X: *mut ::core::ffi::c_int,
-        Y: *mut ::core::ffi::c_int,
-        W: *mut ::core::ffi::c_int,
-        H: *mut ::core::ffi::c_int,
-        mx: ::core::ffi::c_int,
-        my: ::core::ffi::c_int,
+        X: *mut ::std::os::raw::c_int,
+        Y: *mut ::std::os::raw::c_int,
+        W: *mut ::std::os::raw::c_int,
+        H: *mut ::std::os::raw::c_int,
+        mx: ::std::os::raw::c_int,
+        my: ::std::os::raw::c_int,
     );
 }
 extern "C" {
     pub fn Fl_screen_xywh_inside(
-        X: *mut ::core::ffi::c_int,
-        Y: *mut ::core::ffi::c_int,
-        W: *mut ::core::ffi::c_int,
-        H: *mut ::core::ffi::c_int,
-        mx: ::core::ffi::c_int,
-        my: ::core::ffi::c_int,
-        mw: ::core::ffi::c_int,
-        mh: ::core::ffi::c_int,
+        X: *mut ::std::os::raw::c_int,
+        Y: *mut ::std::os::raw::c_int,
+        W: *mut ::std::os::raw::c_int,
+        H: *mut ::std::os::raw::c_int,
+        mx: ::std::os::raw::c_int,
+        my: ::std::os::raw::c_int,
+        mw: ::std::os::raw::c_int,
+        mh: ::std::os::raw::c_int,
     );
 }
 extern "C" {
     pub fn Fl_screen_xywh_mouse(
-        X: *mut ::core::ffi::c_int,
-        Y: *mut ::core::ffi::c_int,
-        W: *mut ::core::ffi::c_int,
-        H: *mut ::core::ffi::c_int,
+        X: *mut ::std::os::raw::c_int,
+        Y: *mut ::std::os::raw::c_int,
+        W: *mut ::std::os::raw::c_int,
+        H: *mut ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_screen_dpi(h: *mut f32, v: *mut f32, n: ::core::ffi::c_int);
+    pub fn Fl_screen_dpi(h: *mut f32, v: *mut f32, n: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_screen_work_area(
-        X: *mut ::core::ffi::c_int,
-        Y: *mut ::core::ffi::c_int,
-        W: *mut ::core::ffi::c_int,
-        H: *mut ::core::ffi::c_int,
-        n: ::core::ffi::c_int,
+        X: *mut ::std::os::raw::c_int,
+        Y: *mut ::std::os::raw::c_int,
+        W: *mut ::std::os::raw::c_int,
+        H: *mut ::std::os::raw::c_int,
+        n: ::std::os::raw::c_int,
     );
 }
 extern "C" {
     pub fn Fl_screen_work_area_at(
-        X: *mut ::core::ffi::c_int,
-        Y: *mut ::core::ffi::c_int,
-        W: *mut ::core::ffi::c_int,
-        H: *mut ::core::ffi::c_int,
-        mx: ::core::ffi::c_int,
-        my: ::core::ffi::c_int,
+        X: *mut ::std::os::raw::c_int,
+        Y: *mut ::std::os::raw::c_int,
+        W: *mut ::std::os::raw::c_int,
+        H: *mut ::std::os::raw::c_int,
+        mx: ::std::os::raw::c_int,
+        my: ::std::os::raw::c_int,
     );
 }
 extern "C" {
     pub fn Fl_screen_work_area_mouse(
-        X: *mut ::core::ffi::c_int,
-        Y: *mut ::core::ffi::c_int,
-        W: *mut ::core::ffi::c_int,
-        H: *mut ::core::ffi::c_int,
+        X: *mut ::std::os::raw::c_int,
+        Y: *mut ::std::os::raw::c_int,
+        W: *mut ::std::os::raw::c_int,
+        H: *mut ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_keyboard_screen_scaling(value: ::core::ffi::c_int);
+    pub fn Fl_keyboard_screen_scaling(value: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_open_display();
@@ -537,143 +548,146 @@ extern "C" {
     pub fn Fl_close_display();
 }
 extern "C" {
-    pub fn Fl_box_dx(boxtype: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub fn Fl_box_dx(boxtype: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_box_dy(boxtype: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub fn Fl_box_dy(boxtype: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_box_dw(boxtype: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub fn Fl_box_dw(boxtype: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_box_dh(boxtype: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub fn Fl_box_dh(boxtype: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_mac_os_version() -> ::core::ffi::c_int;
+    pub fn Fl_mac_os_version() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_event_clipboard() -> *mut ::core::ffi::c_void;
+    pub fn Fl_event_clipboard() -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_event_clipboard_type() -> *const ::core::ffi::c_char;
+    pub fn Fl_event_clipboard_type() -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn Fl_clipboard_contains(type_: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
+    pub fn Fl_clipboard_contains(type_: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_event_dispatch(
         cb: ::core::option::Option<
             unsafe extern "C" fn(
-                event: ::core::ffi::c_int,
-                arg1: *mut ::core::ffi::c_void,
-            ) -> ::core::ffi::c_int,
+                event: ::std::os::raw::c_int,
+                arg1: *mut ::std::os::raw::c_void,
+            ) -> ::std::os::raw::c_int,
         >,
     );
 }
 extern "C" {
-    pub fn Fl_inactive(c: ::core::ffi::c_uint) -> ::core::ffi::c_uint;
+    pub fn Fl_inactive(c: ::std::os::raw::c_uint) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_lighter(c: ::core::ffi::c_uint) -> ::core::ffi::c_uint;
+    pub fn Fl_lighter(c: ::std::os::raw::c_uint) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_darker(c: ::core::ffi::c_uint) -> ::core::ffi::c_uint;
+    pub fn Fl_darker(c: ::std::os::raw::c_uint) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_set_box_type_cb(
-        arg1: ::core::ffi::c_int,
+        arg1: ::std::os::raw::c_int,
         cb: ::core::option::Option<
             unsafe extern "C" fn(
-                arg1: ::core::ffi::c_int,
-                arg2: ::core::ffi::c_int,
-                arg3: ::core::ffi::c_int,
-                arg4: ::core::ffi::c_int,
-                arg5: ::core::ffi::c_uint,
+                arg1: ::std::os::raw::c_int,
+                arg2: ::std::os::raw::c_int,
+                arg3: ::std::os::raw::c_int,
+                arg4: ::std::os::raw::c_int,
+                arg5: ::std::os::raw::c_uint,
             ),
         >,
-        arg2: ::core::ffi::c_int,
-        arg3: ::core::ffi::c_int,
-        arg4: ::core::ffi::c_int,
-        arg5: ::core::ffi::c_int,
+        arg2: ::std::os::raw::c_int,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+        arg5: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_draw_box_active() -> ::core::ffi::c_int;
+    pub fn Fl_draw_box_active() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_gray_ramp(i: ::core::ffi::c_int) -> ::core::ffi::c_uint;
+    pub fn Fl_gray_ramp(i: ::std::os::raw::c_int) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_color_average(
-        arg1: ::core::ffi::c_uint,
-        arg2: ::core::ffi::c_uint,
+        arg1: ::std::os::raw::c_uint,
+        arg2: ::std::os::raw::c_uint,
         f: f32,
-    ) -> ::core::ffi::c_uint;
+    ) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_contrast(c1: ::core::ffi::c_uint, c2: ::core::ffi::c_uint) -> ::core::ffi::c_uint;
+    pub fn Fl_contrast(
+        c1: ::std::os::raw::c_uint,
+        c2: ::std::os::raw::c_uint,
+    ) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_rgb_color(
-        r: ::core::ffi::c_uchar,
-        g: ::core::ffi::c_uchar,
-        b: ::core::ffi::c_uchar,
-    ) -> ::core::ffi::c_uint;
+        r: ::std::os::raw::c_uchar,
+        g: ::std::os::raw::c_uchar,
+        b: ::std::os::raw::c_uchar,
+    ) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_rgb_color2(g: ::core::ffi::c_uchar) -> ::core::ffi::c_uint;
+    pub fn Fl_rgb_color2(g: ::std::os::raw::c_uchar) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_cmap(c: ::core::ffi::c_uint) -> ::core::ffi::c_uint;
+    pub fn Fl_cmap(c: ::std::os::raw::c_uint) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_box_color(c: ::core::ffi::c_uint) -> ::core::ffi::c_uint;
+    pub fn Fl_box_color(c: ::std::os::raw::c_uint) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_set_box_color(c: ::core::ffi::c_uint);
+    pub fn Fl_set_box_color(c: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_add_system_handler(
         arg1: ::core::option::Option<
             unsafe extern "C" fn(
-                arg1: *mut ::core::ffi::c_void,
-                arg2: *mut ::core::ffi::c_void,
-            ) -> ::core::ffi::c_int,
+                arg1: *mut ::std::os::raw::c_void,
+                arg2: *mut ::std::os::raw::c_void,
+            ) -> ::std::os::raw::c_int,
         >,
-        arg2: *mut ::core::ffi::c_void,
+        arg2: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_remove_system_handler(
         arg1: ::core::option::Option<
             unsafe extern "C" fn(
-                arg1: *mut ::core::ffi::c_void,
-                arg2: *mut ::core::ffi::c_void,
-            ) -> ::core::ffi::c_int,
+                arg1: *mut ::std::os::raw::c_void,
+                arg2: *mut ::std::os::raw::c_void,
+            ) -> ::std::os::raw::c_int,
         >,
     );
 }
 extern "C" {
-    pub fn Fl_gl_visual(mode: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub fn Fl_gl_visual(mode: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_add_clipboard_notify(
         cb: ::core::option::Option<
-            unsafe extern "C" fn(source: ::core::ffi::c_int, data: *mut ::core::ffi::c_void),
+            unsafe extern "C" fn(source: ::std::os::raw::c_int, data: *mut ::std::os::raw::c_void),
         >,
-        data: *mut ::core::ffi::c_void,
+        data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_remove_clipboard_notify(
         cb: ::core::option::Option<
-            unsafe extern "C" fn(source: ::core::ffi::c_int, data: *mut ::core::ffi::c_void),
+            unsafe extern "C" fn(source: ::std::os::raw::c_int, data: *mut ::std::os::raw::c_void),
         >,
     );
 }
 extern "C" {
     pub fn Fl_open_callback(
-        cb: ::core::option::Option<unsafe extern "C" fn(arg1: *const ::core::ffi::c_char)>,
+        cb: ::core::option::Option<unsafe extern "C" fn(arg1: *const ::std::os::raw::c_char)>,
     );
 }
 extern "C" {
@@ -683,16 +697,16 @@ extern "C" {
     pub fn Fl_Widget_Tracker_widget(t: *mut Fl_Widget_Tracker) -> *mut Fl_Widget;
 }
 extern "C" {
-    pub fn Fl_Widget_Tracker_exists(t: *mut Fl_Widget_Tracker) -> ::core::ffi::c_int;
+    pub fn Fl_Widget_Tracker_exists(t: *mut Fl_Widget_Tracker) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_get_color_rgb(
-        col: ::core::ffi::c_uint,
-        r: *mut ::core::ffi::c_uchar,
-        g: *mut ::core::ffi::c_uchar,
-        b: *mut ::core::ffi::c_uchar,
+        col: ::std::os::raw::c_uint,
+        r: *mut ::std::os::raw::c_uchar,
+        g: *mut ::std::os::raw::c_uchar,
+        b: *mut ::std::os::raw::c_uchar,
     );
 }
 extern "C" {
-    pub fn Fl_callback_reason() -> ::core::ffi::c_int;
+    pub fn Fl_callback_reason() -> ::std::os::raw::c_int;
 }
