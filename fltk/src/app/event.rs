@@ -250,7 +250,7 @@ pub enum ClipboardEvent {
 pub fn event_clipboard() -> Option<ClipboardEvent> {
     unsafe {
         let txt = fl::Fl_event_clipboard_type();
-        let txt = CStr::from_ptr(txt).to_string_lossy().to_string();
+        let txt = CStr::from_ptr(txt as _).to_string_lossy().to_string();
         if txt == "text/plain" {
             Some(ClipboardEvent::Text(event_text()))
         } else if txt == "image" {
@@ -391,7 +391,7 @@ pub fn clipboard_contains(content: ClipboardContent) -> bool {
         Image => "image",
     };
     let txt = CString::new(txt).unwrap();
-    unsafe { fl::Fl_clipboard_contains(txt.as_ptr()) != 0 }
+    unsafe { fl::Fl_clipboard_contains(txt.as_ptr() as _) != 0 }
 }
 
 /// Pastes content from the clipboard
