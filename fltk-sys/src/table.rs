@@ -5,17 +5,19 @@
 pub struct Fl_Widget {
     _unused: [u8; 0],
 }
-pub type Fl_Callback =
-    ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void)>;
+pub type Fl_Callback = ::core::option::Option<
+    unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::core::ffi::c_void),
+>;
 pub type custom_handler_callback = ::core::option::Option<
     unsafe extern "C" fn(
         arg1: *mut Fl_Widget,
-        arg2: cty::c_int,
-        arg3: *mut cty::c_void,
-    ) -> cty::c_int,
+        arg2: ::core::ffi::c_int,
+        arg3: *mut ::core::ffi::c_void,
+    ) -> ::core::ffi::c_int,
 >;
-pub type custom_draw_callback =
-    ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void)>;
+pub type custom_draw_callback = ::core::option::Option<
+    unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::core::ffi::c_void),
+>;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Table {
@@ -23,30 +25,30 @@ pub struct Fl_Table {
 }
 extern "C" {
     pub fn Fl_Table_new(
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
-        title: *const cty::c_char,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        title: *const ::core::ffi::c_char,
     ) -> *mut Fl_Table;
 }
 extern "C" {
-    pub fn Fl_Table_x(arg1: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_x(arg1: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_y(arg1: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_y(arg1: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_width(arg1: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_width(arg1: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_height(arg1: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_height(arg1: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_label(arg1: *mut Fl_Table) -> *const cty::c_char;
+    pub fn Fl_Table_label(arg1: *mut Fl_Table) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Table_set_label(arg1: *mut Fl_Table, title: *const cty::c_char);
+    pub fn Fl_Table_set_label(arg1: *mut Fl_Table, title: *const ::core::ffi::c_char);
 }
 extern "C" {
     pub fn Fl_Table_redraw(arg1: *mut Fl_Table);
@@ -69,78 +71,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Table_resize(
         arg1: *mut Fl_Table,
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Table_widget_resize(
         arg1: *mut Fl_Table,
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Table_tooltip(arg1: *mut Fl_Table) -> *const cty::c_char;
+    pub fn Fl_Table_tooltip(arg1: *mut Fl_Table) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Table_set_tooltip(arg1: *mut Fl_Table, txt: *const cty::c_char);
+    pub fn Fl_Table_set_tooltip(arg1: *mut Fl_Table, txt: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_Table_get_type(arg1: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_get_type(arg1: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_set_type(arg1: *mut Fl_Table, typ: cty::c_int);
+    pub fn Fl_Table_set_type(arg1: *mut Fl_Table, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_color(arg1: *mut Fl_Table) -> cty::c_uint;
+    pub fn Fl_Table_color(arg1: *mut Fl_Table) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Table_set_color(arg1: *mut Fl_Table, color: cty::c_uint);
+    pub fn Fl_Table_set_color(arg1: *mut Fl_Table, color: ::core::ffi::c_uint);
 }
 extern "C" {
     pub fn Fl_Table_measure_label(
         arg1: *const Fl_Table,
-        arg2: *mut cty::c_int,
-        arg3: *mut cty::c_int,
+        arg2: *mut ::core::ffi::c_int,
+        arg3: *mut ::core::ffi::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Table_label_color(arg1: *mut Fl_Table) -> cty::c_uint;
+    pub fn Fl_Table_label_color(arg1: *mut Fl_Table) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Table_set_label_color(arg1: *mut Fl_Table, color: cty::c_uint);
+    pub fn Fl_Table_set_label_color(arg1: *mut Fl_Table, color: ::core::ffi::c_uint);
 }
 extern "C" {
-    pub fn Fl_Table_label_font(arg1: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_label_font(arg1: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_set_label_font(arg1: *mut Fl_Table, font: cty::c_int);
+    pub fn Fl_Table_set_label_font(arg1: *mut Fl_Table, font: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_label_size(arg1: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_label_size(arg1: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_set_label_size(arg1: *mut Fl_Table, sz: cty::c_int);
+    pub fn Fl_Table_set_label_size(arg1: *mut Fl_Table, sz: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_label_type(arg1: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_label_type(arg1: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_set_label_type(arg1: *mut Fl_Table, typ: cty::c_int);
+    pub fn Fl_Table_set_label_type(arg1: *mut Fl_Table, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_box(arg1: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_box(arg1: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_set_box(arg1: *mut Fl_Table, typ: cty::c_int);
+    pub fn Fl_Table_set_box(arg1: *mut Fl_Table, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_changed(arg1: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_changed(arg1: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Table_set_changed(arg1: *mut Fl_Table);
@@ -149,29 +151,33 @@ extern "C" {
     pub fn Fl_Table_clear_changed(arg1: *mut Fl_Table);
 }
 extern "C" {
-    pub fn Fl_Table_align(arg1: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_align(arg1: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_set_align(arg1: *mut Fl_Table, typ: cty::c_int);
+    pub fn Fl_Table_set_align(arg1: *mut Fl_Table, typ: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Table_delete(arg1: *mut Fl_Table);
 }
 extern "C" {
-    pub fn Fl_Table_set_image(arg1: *mut Fl_Table, arg2: *mut cty::c_void);
+    pub fn Fl_Table_set_image(arg1: *mut Fl_Table, arg2: *mut ::core::ffi::c_void);
 }
 extern "C" {
     pub fn Fl_Table_handle(
         self_: *mut Fl_Table,
         cb: custom_handler_callback,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Table_handle_event(self_: *mut Fl_Table, event: cty::c_int);
+    pub fn Fl_Table_handle_event(self_: *mut Fl_Table, event: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_draw(self_: *mut Fl_Table, cb: custom_draw_callback, data: *mut cty::c_void);
+    pub fn Fl_Table_draw(
+        self_: *mut Fl_Table,
+        cb: custom_draw_callback,
+        data: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Table_resize_callback(
@@ -179,54 +185,57 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: cty::c_int,
-                y: cty::c_int,
-                w: cty::c_int,
-                h: cty::c_int,
-                arg2: *mut cty::c_void,
+                x: ::core::ffi::c_int,
+                y: ::core::ffi::c_int,
+                w: ::core::ffi::c_int,
+                h: ::core::ffi::c_int,
+                arg2: *mut ::core::ffi::c_void,
             ),
         >,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Table_set_when(arg1: *mut Fl_Table, arg2: cty::c_int);
+    pub fn Fl_Table_set_when(arg1: *mut Fl_Table, arg2: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_when(arg1: *const Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_when(arg1: *const Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_image(arg1: *const Fl_Table) -> *const cty::c_void;
+    pub fn Fl_Table_image(arg1: *const Fl_Table) -> *const ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_parent(self_: *const Fl_Table) -> *mut cty::c_void;
+    pub fn Fl_Table_parent(self_: *const Fl_Table) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_selection_color(arg1: *mut Fl_Table) -> cty::c_uint;
+    pub fn Fl_Table_selection_color(arg1: *mut Fl_Table) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Table_set_selection_color(arg1: *mut Fl_Table, color: cty::c_uint);
+    pub fn Fl_Table_set_selection_color(arg1: *mut Fl_Table, color: ::core::ffi::c_uint);
 }
 extern "C" {
     pub fn Fl_Table_do_callback(arg1: *mut Fl_Table);
 }
 extern "C" {
-    pub fn Fl_Table_inside(self_: *const Fl_Table, arg1: *mut cty::c_void) -> cty::c_int;
+    pub fn Fl_Table_inside(
+        self_: *const Fl_Table,
+        arg1: *mut ::core::ffi::c_void,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_window(arg1: *const Fl_Table) -> *mut cty::c_void;
+    pub fn Fl_Table_window(arg1: *const Fl_Table) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_top_window(arg1: *const Fl_Table) -> *mut cty::c_void;
+    pub fn Fl_Table_top_window(arg1: *const Fl_Table) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_takes_events(arg1: *const Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_takes_events(arg1: *const Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_user_data(arg1: *const Fl_Table) -> *mut cty::c_void;
+    pub fn Fl_Table_user_data(arg1: *const Fl_Table) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_take_focus(self_: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_take_focus(self_: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Table_set_visible_focus(self_: *mut Fl_Table);
@@ -235,77 +244,81 @@ extern "C" {
     pub fn Fl_Table_clear_visible_focus(self_: *mut Fl_Table);
 }
 extern "C" {
-    pub fn Fl_Table_visible_focus(self_: *mut Fl_Table, v: cty::c_int);
+    pub fn Fl_Table_visible_focus(self_: *mut Fl_Table, v: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_has_visible_focus(self_: *mut Fl_Table) -> cty::c_uint;
+    pub fn Fl_Table_has_visible_focus(self_: *mut Fl_Table) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Table_set_user_data(arg1: *mut Fl_Table, data: *mut cty::c_void);
+    pub fn Fl_Table_set_user_data(arg1: *mut Fl_Table, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
-    pub fn Fl_Table_draw_data(self_: *const Fl_Table) -> *mut cty::c_void;
+    pub fn Fl_Table_draw_data(self_: *const Fl_Table) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_handle_data(self_: *const Fl_Table) -> *mut cty::c_void;
+    pub fn Fl_Table_handle_data(self_: *const Fl_Table) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_set_draw_data(self_: *mut Fl_Table, data: *mut cty::c_void);
+    pub fn Fl_Table_set_draw_data(self_: *mut Fl_Table, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
-    pub fn Fl_Table_set_handle_data(self_: *mut Fl_Table, data: *mut cty::c_void);
+    pub fn Fl_Table_set_handle_data(self_: *mut Fl_Table, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
-    pub fn Fl_Table_damage(self_: *const Fl_Table) -> cty::c_uchar;
+    pub fn Fl_Table_damage(self_: *const Fl_Table) -> ::core::ffi::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Table_set_damage(self_: *mut Fl_Table, flag: cty::c_uchar);
+    pub fn Fl_Table_set_damage(self_: *mut Fl_Table, flag: ::core::ffi::c_uchar);
 }
 extern "C" {
     pub fn Fl_Table_set_damage_area(
         self_: *mut Fl_Table,
-        flag: cty::c_uchar,
-        x: cty::c_int,
-        y: cty::c_int,
-        w: cty::c_int,
-        h: cty::c_int,
+        flag: ::core::ffi::c_uchar,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        w: ::core::ffi::c_int,
+        h: ::core::ffi::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Table_clear_damage(self_: *mut Fl_Table);
 }
 extern "C" {
-    pub fn Fl_Table_as_window(self_: *mut Fl_Table) -> *mut cty::c_void;
+    pub fn Fl_Table_as_window(self_: *mut Fl_Table) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_as_group(self_: *mut Fl_Table) -> *mut cty::c_void;
+    pub fn Fl_Table_as_group(self_: *mut Fl_Table) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_set_deimage(arg1: *mut Fl_Table, arg2: *mut cty::c_void);
+    pub fn Fl_Table_set_deimage(arg1: *mut Fl_Table, arg2: *mut ::core::ffi::c_void);
 }
 extern "C" {
-    pub fn Fl_Table_deimage(arg1: *const Fl_Table) -> *const cty::c_void;
+    pub fn Fl_Table_deimage(arg1: *const Fl_Table) -> *const ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_set_callback(arg1: *mut Fl_Table, arg2: Fl_Callback, arg3: *mut cty::c_void);
+    pub fn Fl_Table_set_callback(
+        arg1: *mut Fl_Table,
+        arg2: Fl_Callback,
+        arg3: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Table_set_deleter(
         arg1: *mut Fl_Table,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Table_visible(self_: *const Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_visible(self_: *const Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_visible_r(self_: *const Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_visible_r(self_: *const Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_active(self_: *const Fl_Table) -> cty::c_uint;
+    pub fn Fl_Table_active(self_: *const Fl_Table) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Table_active_r(self_: *const Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_active_r(self_: *const Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Table_callback(self_: *const Fl_Table) -> Fl_Callback;
@@ -314,16 +327,16 @@ extern "C" {
     pub fn Fl_Table_set_deletion_callback(
         self_: *mut Fl_Table,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::core::ffi::c_void),
         >,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Table_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Table;
 }
 extern "C" {
-    pub fn Fl_Table_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
+    pub fn Fl_Table_super_draw(ptr: *mut Fl_Widget, flag: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Table_begin(self_: *mut Fl_Table);
@@ -332,37 +345,44 @@ extern "C" {
     pub fn Fl_Table_end(self_: *mut Fl_Table);
 }
 extern "C" {
-    pub fn Fl_Table_find(self_: *mut Fl_Table, arg1: *const cty::c_void) -> cty::c_int;
+    pub fn Fl_Table_find(
+        self_: *mut Fl_Table,
+        arg1: *const ::core::ffi::c_void,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_add(self_: *mut Fl_Table, arg1: *mut cty::c_void);
+    pub fn Fl_Table_add(self_: *mut Fl_Table, arg1: *mut ::core::ffi::c_void);
 }
 extern "C" {
-    pub fn Fl_Table_insert(self_: *mut Fl_Table, arg1: *mut cty::c_void, pos: cty::c_int);
+    pub fn Fl_Table_insert(
+        self_: *mut Fl_Table,
+        arg1: *mut ::core::ffi::c_void,
+        pos: ::core::ffi::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Table_remove(self_: *mut Fl_Table, wid: *mut cty::c_void);
+    pub fn Fl_Table_remove(self_: *mut Fl_Table, wid: *mut ::core::ffi::c_void);
 }
 extern "C" {
-    pub fn Fl_Table_remove_by_index(self_: *mut Fl_Table, idx: cty::c_int);
+    pub fn Fl_Table_remove_by_index(self_: *mut Fl_Table, idx: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Table_clear(self_: *mut Fl_Table);
 }
 extern "C" {
-    pub fn Fl_Table_children(self_: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_children(self_: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_child(arg1: *mut Fl_Table, index: cty::c_int) -> *mut Fl_Widget;
+    pub fn Fl_Table_child(arg1: *mut Fl_Table, index: ::core::ffi::c_int) -> *mut Fl_Widget;
 }
 extern "C" {
-    pub fn Fl_Table_resizable(self_: *mut Fl_Table, arg1: *mut cty::c_void);
+    pub fn Fl_Table_resizable(self_: *mut Fl_Table, arg1: *mut ::core::ffi::c_void);
 }
 extern "C" {
-    pub fn Fl_Table_set_clip_children(self_: *mut Fl_Table, c: cty::c_int);
+    pub fn Fl_Table_set_clip_children(self_: *mut Fl_Table, c: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_clip_children(self_: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_clip_children(self_: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Table_init_sizes(self_: *mut Fl_Table);
@@ -380,174 +400,191 @@ extern "C" {
     pub fn Fl_Table_draw_children(self_: *mut Fl_Table);
 }
 extern "C" {
-    pub fn Fl_Table_set_table_box(self_: *mut Fl_Table, val: cty::c_int);
+    pub fn Fl_Table_set_table_box(self_: *mut Fl_Table, val: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_table_box(self_: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_table_box(self_: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_set_rows(self_: *mut Fl_Table, val: cty::c_int);
+    pub fn Fl_Table_set_rows(self_: *mut Fl_Table, val: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_rows(self_: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_rows(self_: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_set_cols(self_: *mut Fl_Table, val: cty::c_int);
+    pub fn Fl_Table_set_cols(self_: *mut Fl_Table, val: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_cols(self_: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_cols(self_: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Table_visible_cells(
         self_: *mut Fl_Table,
-        r1: *mut cty::c_int,
-        r2: *mut cty::c_int,
-        c1: *mut cty::c_int,
-        c2: *mut cty::c_int,
+        r1: *mut ::core::ffi::c_int,
+        r2: *mut ::core::ffi::c_int,
+        c1: *mut ::core::ffi::c_int,
+        c2: *mut ::core::ffi::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Table_is_interactive_resize(self_: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_is_interactive_resize(self_: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_row_resize(self_: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_row_resize(self_: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_set_row_resize(self_: *mut Fl_Table, flag: cty::c_int);
+    pub fn Fl_Table_set_row_resize(self_: *mut Fl_Table, flag: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_col_resize(self_: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_col_resize(self_: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_set_col_resize(self_: *mut Fl_Table, flag: cty::c_int);
+    pub fn Fl_Table_set_col_resize(self_: *mut Fl_Table, flag: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_col_resize_min(self_: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_col_resize_min(self_: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_set_col_resize_min(self_: *mut Fl_Table, val: cty::c_int);
+    pub fn Fl_Table_set_col_resize_min(self_: *mut Fl_Table, val: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_row_resize_min(self_: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_row_resize_min(self_: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_set_row_resize_min(self_: *mut Fl_Table, val: cty::c_int);
+    pub fn Fl_Table_set_row_resize_min(self_: *mut Fl_Table, val: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_row_header(self_: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_row_header(self_: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_set_row_header(self_: *mut Fl_Table, flag: cty::c_int);
+    pub fn Fl_Table_set_row_header(self_: *mut Fl_Table, flag: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_col_header(self_: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_col_header(self_: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_set_col_header(self_: *mut Fl_Table, flag: cty::c_int);
+    pub fn Fl_Table_set_col_header(self_: *mut Fl_Table, flag: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_set_col_header_height(self_: *mut Fl_Table, height: cty::c_int);
+    pub fn Fl_Table_set_col_header_height(self_: *mut Fl_Table, height: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_col_header_height(self_: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_col_header_height(self_: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_set_row_header_width(self_: *mut Fl_Table, width: cty::c_int);
+    pub fn Fl_Table_set_row_header_width(self_: *mut Fl_Table, width: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_row_header_width(self_: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_row_header_width(self_: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_set_row_header_color(self_: *mut Fl_Table, val: cty::c_uint);
+    pub fn Fl_Table_set_row_header_color(self_: *mut Fl_Table, val: ::core::ffi::c_uint);
 }
 extern "C" {
-    pub fn Fl_Table_row_header_color(self_: *mut Fl_Table) -> cty::c_uint;
+    pub fn Fl_Table_row_header_color(self_: *mut Fl_Table) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Table_set_col_header_color(self_: *mut Fl_Table, val: cty::c_uint);
+    pub fn Fl_Table_set_col_header_color(self_: *mut Fl_Table, val: ::core::ffi::c_uint);
 }
 extern "C" {
-    pub fn Fl_Table_col_header_color(self_: *mut Fl_Table) -> cty::c_uint;
+    pub fn Fl_Table_col_header_color(self_: *mut Fl_Table) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Table_set_row_height(self_: *mut Fl_Table, row: cty::c_int, height: cty::c_int);
+    pub fn Fl_Table_set_row_height(
+        self_: *mut Fl_Table,
+        row: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Table_row_height(self_: *mut Fl_Table, row: cty::c_int) -> cty::c_int;
+    pub fn Fl_Table_row_height(self_: *mut Fl_Table, row: ::core::ffi::c_int)
+        -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_set_col_width(self_: *mut Fl_Table, col: cty::c_int, width: cty::c_int);
+    pub fn Fl_Table_set_col_width(
+        self_: *mut Fl_Table,
+        col: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Table_col_width(self_: *mut Fl_Table, col: cty::c_int) -> cty::c_int;
+    pub fn Fl_Table_col_width(self_: *mut Fl_Table, col: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_set_row_height_all(self_: *mut Fl_Table, height: cty::c_int);
+    pub fn Fl_Table_set_row_height_all(self_: *mut Fl_Table, height: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_set_col_width_all(self_: *mut Fl_Table, width: cty::c_int);
+    pub fn Fl_Table_set_col_width_all(self_: *mut Fl_Table, width: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_set_row_position(self_: *mut Fl_Table, row: cty::c_int);
+    pub fn Fl_Table_set_row_position(self_: *mut Fl_Table, row: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_set_col_position(self_: *mut Fl_Table, col: cty::c_int);
+    pub fn Fl_Table_set_col_position(self_: *mut Fl_Table, col: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_row_position(self_: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_row_position(self_: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_col_position(self_: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_col_position(self_: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_set_top_row(self_: *mut Fl_Table, row: cty::c_int);
+    pub fn Fl_Table_set_top_row(self_: *mut Fl_Table, row: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_top_row(self_: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_top_row(self_: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_is_selected(self_: *mut Fl_Table, r: cty::c_int, c: cty::c_int) -> cty::c_int;
+    pub fn Fl_Table_is_selected(
+        self_: *mut Fl_Table,
+        r: ::core::ffi::c_int,
+        c: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Table_get_selection(
         self_: *mut Fl_Table,
-        row_top: *mut cty::c_int,
-        col_left: *mut cty::c_int,
-        row_bot: *mut cty::c_int,
-        col_right: *mut cty::c_int,
+        row_top: *mut ::core::ffi::c_int,
+        col_left: *mut ::core::ffi::c_int,
+        row_bot: *mut ::core::ffi::c_int,
+        col_right: *mut ::core::ffi::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Table_set_selection(
         self_: *mut Fl_Table,
-        row_top: cty::c_int,
-        col_left: cty::c_int,
-        row_bot: cty::c_int,
-        col_right: cty::c_int,
+        row_top: ::core::ffi::c_int,
+        col_left: ::core::ffi::c_int,
+        row_bot: ::core::ffi::c_int,
+        col_right: ::core::ffi::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Table_move_cursor_with_shiftselect(
         self_: *mut Fl_Table,
-        R: cty::c_int,
-        C: cty::c_int,
-        shiftselect: cty::c_int,
-    ) -> cty::c_int;
+        R: ::core::ffi::c_int,
+        C: ::core::ffi::c_int,
+        shiftselect: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_move_cursor(self_: *mut Fl_Table, R: cty::c_int, C: cty::c_int) -> cty::c_int;
+    pub fn Fl_Table_move_cursor(
+        self_: *mut Fl_Table,
+        R: ::core::ffi::c_int,
+        C: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_scrollbar_size(self_: *const Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_scrollbar_size(self_: *const Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_set_scrollbar_size(self_: *mut Fl_Table, newSize: cty::c_int);
+    pub fn Fl_Table_set_scrollbar_size(self_: *mut Fl_Table, newSize: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_set_tab_cell_nav(self_: *mut Fl_Table, val: cty::c_int);
+    pub fn Fl_Table_set_tab_cell_nav(self_: *mut Fl_Table, val: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_tab_cell_nav(self_: *const Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_tab_cell_nav(self_: *const Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Table_draw_cell(
@@ -555,59 +592,59 @@ extern "C" {
         arg1: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                arg2: cty::c_int,
-                arg3: cty::c_int,
-                arg4: cty::c_int,
-                arg5: cty::c_int,
-                arg6: cty::c_int,
-                arg7: cty::c_int,
-                arg8: cty::c_int,
-                arg9: *mut cty::c_void,
+                arg2: ::core::ffi::c_int,
+                arg3: ::core::ffi::c_int,
+                arg4: ::core::ffi::c_int,
+                arg5: ::core::ffi::c_int,
+                arg6: ::core::ffi::c_int,
+                arg7: ::core::ffi::c_int,
+                arg8: ::core::ffi::c_int,
+                arg9: *mut ::core::ffi::c_void,
             ),
         >,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Table_draw_cell_data(self_: *const Fl_Table) -> *mut cty::c_void;
+    pub fn Fl_Table_draw_cell_data(self_: *const Fl_Table) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_set_draw_cell_data(self_: *mut Fl_Table, data: *mut cty::c_void);
+    pub fn Fl_Table_set_draw_cell_data(self_: *mut Fl_Table, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
-    pub fn Fl_Table_callback_col(arg1: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_callback_col(arg1: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_callback_row(arg1: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_callback_row(arg1: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_callback_context(arg1: *mut Fl_Table) -> cty::c_int;
+    pub fn Fl_Table_callback_context(arg1: *mut Fl_Table) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_scrollbar(arg1: *const Fl_Table) -> *mut cty::c_void;
+    pub fn Fl_Table_scrollbar(arg1: *const Fl_Table) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_hscrollbar(arg1: *const Fl_Table) -> *mut cty::c_void;
+    pub fn Fl_Table_hscrollbar(arg1: *const Fl_Table) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Table_find_cell(
         self_: *const Fl_Table,
-        ctx: cty::c_int,
-        r: cty::c_int,
-        c: cty::c_int,
-        x: *mut cty::c_int,
-        y: *mut cty::c_int,
-        w: *mut cty::c_int,
-        h: *mut cty::c_int,
-    ) -> cty::c_int;
+        ctx: ::core::ffi::c_int,
+        r: ::core::ffi::c_int,
+        c: ::core::ffi::c_int,
+        x: *mut ::core::ffi::c_int,
+        y: *mut ::core::ffi::c_int,
+        w: *mut ::core::ffi::c_int,
+        h: *mut ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Table_cursor2rowcol(
         self_: *const Fl_Table,
-        r: *mut cty::c_int,
-        c: *mut cty::c_int,
-        flag: *mut cty::c_int,
-    ) -> cty::c_int;
+        r: *mut ::core::ffi::c_int,
+        c: *mut ::core::ffi::c_int,
+        flag: *mut ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -616,30 +653,30 @@ pub struct Fl_Table_Row {
 }
 extern "C" {
     pub fn Fl_Table_Row_new(
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
-        title: *const cty::c_char,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        title: *const ::core::ffi::c_char,
     ) -> *mut Fl_Table_Row;
 }
 extern "C" {
-    pub fn Fl_Table_Row_x(arg1: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_x(arg1: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_y(arg1: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_y(arg1: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_width(arg1: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_width(arg1: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_height(arg1: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_height(arg1: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_label(arg1: *mut Fl_Table_Row) -> *const cty::c_char;
+    pub fn Fl_Table_Row_label(arg1: *mut Fl_Table_Row) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_label(arg1: *mut Fl_Table_Row, title: *const cty::c_char);
+    pub fn Fl_Table_Row_set_label(arg1: *mut Fl_Table_Row, title: *const ::core::ffi::c_char);
 }
 extern "C" {
     pub fn Fl_Table_Row_redraw(arg1: *mut Fl_Table_Row);
@@ -662,78 +699,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Table_Row_resize(
         arg1: *mut Fl_Table_Row,
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Table_Row_widget_resize(
         arg1: *mut Fl_Table_Row,
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Table_Row_tooltip(arg1: *mut Fl_Table_Row) -> *const cty::c_char;
+    pub fn Fl_Table_Row_tooltip(arg1: *mut Fl_Table_Row) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_tooltip(arg1: *mut Fl_Table_Row, txt: *const cty::c_char);
+    pub fn Fl_Table_Row_set_tooltip(arg1: *mut Fl_Table_Row, txt: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_Table_Row_get_type(arg1: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_get_type(arg1: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_type(arg1: *mut Fl_Table_Row, typ: cty::c_int);
+    pub fn Fl_Table_Row_set_type(arg1: *mut Fl_Table_Row, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_color(arg1: *mut Fl_Table_Row) -> cty::c_uint;
+    pub fn Fl_Table_Row_color(arg1: *mut Fl_Table_Row) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_color(arg1: *mut Fl_Table_Row, color: cty::c_uint);
+    pub fn Fl_Table_Row_set_color(arg1: *mut Fl_Table_Row, color: ::core::ffi::c_uint);
 }
 extern "C" {
     pub fn Fl_Table_Row_measure_label(
         arg1: *const Fl_Table_Row,
-        arg2: *mut cty::c_int,
-        arg3: *mut cty::c_int,
+        arg2: *mut ::core::ffi::c_int,
+        arg3: *mut ::core::ffi::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Table_Row_label_color(arg1: *mut Fl_Table_Row) -> cty::c_uint;
+    pub fn Fl_Table_Row_label_color(arg1: *mut Fl_Table_Row) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_label_color(arg1: *mut Fl_Table_Row, color: cty::c_uint);
+    pub fn Fl_Table_Row_set_label_color(arg1: *mut Fl_Table_Row, color: ::core::ffi::c_uint);
 }
 extern "C" {
-    pub fn Fl_Table_Row_label_font(arg1: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_label_font(arg1: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_label_font(arg1: *mut Fl_Table_Row, font: cty::c_int);
+    pub fn Fl_Table_Row_set_label_font(arg1: *mut Fl_Table_Row, font: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_label_size(arg1: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_label_size(arg1: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_label_size(arg1: *mut Fl_Table_Row, sz: cty::c_int);
+    pub fn Fl_Table_Row_set_label_size(arg1: *mut Fl_Table_Row, sz: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_label_type(arg1: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_label_type(arg1: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_label_type(arg1: *mut Fl_Table_Row, typ: cty::c_int);
+    pub fn Fl_Table_Row_set_label_type(arg1: *mut Fl_Table_Row, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_box(arg1: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_box(arg1: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_box(arg1: *mut Fl_Table_Row, typ: cty::c_int);
+    pub fn Fl_Table_Row_set_box(arg1: *mut Fl_Table_Row, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_changed(arg1: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_changed(arg1: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Table_Row_set_changed(arg1: *mut Fl_Table_Row);
@@ -742,32 +779,32 @@ extern "C" {
     pub fn Fl_Table_Row_clear_changed(arg1: *mut Fl_Table_Row);
 }
 extern "C" {
-    pub fn Fl_Table_Row_align(arg1: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_align(arg1: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_align(arg1: *mut Fl_Table_Row, typ: cty::c_int);
+    pub fn Fl_Table_Row_set_align(arg1: *mut Fl_Table_Row, typ: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Table_Row_delete(arg1: *mut Fl_Table_Row);
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_image(arg1: *mut Fl_Table_Row, arg2: *mut cty::c_void);
+    pub fn Fl_Table_Row_set_image(arg1: *mut Fl_Table_Row, arg2: *mut ::core::ffi::c_void);
 }
 extern "C" {
     pub fn Fl_Table_Row_handle(
         self_: *mut Fl_Table_Row,
         cb: custom_handler_callback,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Table_Row_handle_event(self_: *mut Fl_Table_Row, event: cty::c_int);
+    pub fn Fl_Table_Row_handle_event(self_: *mut Fl_Table_Row, event: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Table_Row_draw(
         self_: *mut Fl_Table_Row,
         cb: custom_draw_callback,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
@@ -776,54 +813,57 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: cty::c_int,
-                y: cty::c_int,
-                w: cty::c_int,
-                h: cty::c_int,
-                arg2: *mut cty::c_void,
+                x: ::core::ffi::c_int,
+                y: ::core::ffi::c_int,
+                w: ::core::ffi::c_int,
+                h: ::core::ffi::c_int,
+                arg2: *mut ::core::ffi::c_void,
             ),
         >,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_when(arg1: *mut Fl_Table_Row, arg2: cty::c_int);
+    pub fn Fl_Table_Row_set_when(arg1: *mut Fl_Table_Row, arg2: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_when(arg1: *const Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_when(arg1: *const Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_image(arg1: *const Fl_Table_Row) -> *const cty::c_void;
+    pub fn Fl_Table_Row_image(arg1: *const Fl_Table_Row) -> *const ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_Row_parent(self_: *const Fl_Table_Row) -> *mut cty::c_void;
+    pub fn Fl_Table_Row_parent(self_: *const Fl_Table_Row) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_Row_selection_color(arg1: *mut Fl_Table_Row) -> cty::c_uint;
+    pub fn Fl_Table_Row_selection_color(arg1: *mut Fl_Table_Row) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_selection_color(arg1: *mut Fl_Table_Row, color: cty::c_uint);
+    pub fn Fl_Table_Row_set_selection_color(arg1: *mut Fl_Table_Row, color: ::core::ffi::c_uint);
 }
 extern "C" {
     pub fn Fl_Table_Row_do_callback(arg1: *mut Fl_Table_Row);
 }
 extern "C" {
-    pub fn Fl_Table_Row_inside(self_: *const Fl_Table_Row, arg1: *mut cty::c_void) -> cty::c_int;
+    pub fn Fl_Table_Row_inside(
+        self_: *const Fl_Table_Row,
+        arg1: *mut ::core::ffi::c_void,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_window(arg1: *const Fl_Table_Row) -> *mut cty::c_void;
+    pub fn Fl_Table_Row_window(arg1: *const Fl_Table_Row) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_Row_top_window(arg1: *const Fl_Table_Row) -> *mut cty::c_void;
+    pub fn Fl_Table_Row_top_window(arg1: *const Fl_Table_Row) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_Row_takes_events(arg1: *const Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_takes_events(arg1: *const Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_user_data(arg1: *const Fl_Table_Row) -> *mut cty::c_void;
+    pub fn Fl_Table_Row_user_data(arg1: *const Fl_Table_Row) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_Row_take_focus(self_: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_take_focus(self_: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Table_Row_set_visible_focus(self_: *mut Fl_Table_Row);
@@ -832,81 +872,81 @@ extern "C" {
     pub fn Fl_Table_Row_clear_visible_focus(self_: *mut Fl_Table_Row);
 }
 extern "C" {
-    pub fn Fl_Table_Row_visible_focus(self_: *mut Fl_Table_Row, v: cty::c_int);
+    pub fn Fl_Table_Row_visible_focus(self_: *mut Fl_Table_Row, v: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_has_visible_focus(self_: *mut Fl_Table_Row) -> cty::c_uint;
+    pub fn Fl_Table_Row_has_visible_focus(self_: *mut Fl_Table_Row) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_user_data(arg1: *mut Fl_Table_Row, data: *mut cty::c_void);
+    pub fn Fl_Table_Row_set_user_data(arg1: *mut Fl_Table_Row, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
-    pub fn Fl_Table_Row_draw_data(self_: *const Fl_Table_Row) -> *mut cty::c_void;
+    pub fn Fl_Table_Row_draw_data(self_: *const Fl_Table_Row) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_Row_handle_data(self_: *const Fl_Table_Row) -> *mut cty::c_void;
+    pub fn Fl_Table_Row_handle_data(self_: *const Fl_Table_Row) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_draw_data(self_: *mut Fl_Table_Row, data: *mut cty::c_void);
+    pub fn Fl_Table_Row_set_draw_data(self_: *mut Fl_Table_Row, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_handle_data(self_: *mut Fl_Table_Row, data: *mut cty::c_void);
+    pub fn Fl_Table_Row_set_handle_data(self_: *mut Fl_Table_Row, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
-    pub fn Fl_Table_Row_damage(self_: *const Fl_Table_Row) -> cty::c_uchar;
+    pub fn Fl_Table_Row_damage(self_: *const Fl_Table_Row) -> ::core::ffi::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_damage(self_: *mut Fl_Table_Row, flag: cty::c_uchar);
+    pub fn Fl_Table_Row_set_damage(self_: *mut Fl_Table_Row, flag: ::core::ffi::c_uchar);
 }
 extern "C" {
     pub fn Fl_Table_Row_set_damage_area(
         self_: *mut Fl_Table_Row,
-        flag: cty::c_uchar,
-        x: cty::c_int,
-        y: cty::c_int,
-        w: cty::c_int,
-        h: cty::c_int,
+        flag: ::core::ffi::c_uchar,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        w: ::core::ffi::c_int,
+        h: ::core::ffi::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Table_Row_clear_damage(self_: *mut Fl_Table_Row);
 }
 extern "C" {
-    pub fn Fl_Table_Row_as_window(self_: *mut Fl_Table_Row) -> *mut cty::c_void;
+    pub fn Fl_Table_Row_as_window(self_: *mut Fl_Table_Row) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_Row_as_group(self_: *mut Fl_Table_Row) -> *mut cty::c_void;
+    pub fn Fl_Table_Row_as_group(self_: *mut Fl_Table_Row) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_deimage(arg1: *mut Fl_Table_Row, arg2: *mut cty::c_void);
+    pub fn Fl_Table_Row_set_deimage(arg1: *mut Fl_Table_Row, arg2: *mut ::core::ffi::c_void);
 }
 extern "C" {
-    pub fn Fl_Table_Row_deimage(arg1: *const Fl_Table_Row) -> *const cty::c_void;
+    pub fn Fl_Table_Row_deimage(arg1: *const Fl_Table_Row) -> *const ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Table_Row_set_callback(
         arg1: *mut Fl_Table_Row,
         arg2: Fl_Callback,
-        arg3: *mut cty::c_void,
+        arg3: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Table_Row_set_deleter(
         arg1: *mut Fl_Table_Row,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Table_Row_visible(self_: *const Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_visible(self_: *const Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_visible_r(self_: *const Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_visible_r(self_: *const Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_active(self_: *const Fl_Table_Row) -> cty::c_uint;
+    pub fn Fl_Table_Row_active(self_: *const Fl_Table_Row) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Table_Row_active_r(self_: *const Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_active_r(self_: *const Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Table_Row_callback(self_: *const Fl_Table_Row) -> Fl_Callback;
@@ -915,16 +955,16 @@ extern "C" {
     pub fn Fl_Table_Row_set_deletion_callback(
         self_: *mut Fl_Table_Row,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::core::ffi::c_void),
         >,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Table_Row_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Table_Row;
 }
 extern "C" {
-    pub fn Fl_Table_Row_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
+    pub fn Fl_Table_Row_super_draw(ptr: *mut Fl_Widget, flag: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Table_Row_begin(self_: *mut Fl_Table_Row);
@@ -933,37 +973,45 @@ extern "C" {
     pub fn Fl_Table_Row_end(self_: *mut Fl_Table_Row);
 }
 extern "C" {
-    pub fn Fl_Table_Row_find(self_: *mut Fl_Table_Row, arg1: *const cty::c_void) -> cty::c_int;
+    pub fn Fl_Table_Row_find(
+        self_: *mut Fl_Table_Row,
+        arg1: *const ::core::ffi::c_void,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_add(self_: *mut Fl_Table_Row, arg1: *mut cty::c_void);
+    pub fn Fl_Table_Row_add(self_: *mut Fl_Table_Row, arg1: *mut ::core::ffi::c_void);
 }
 extern "C" {
-    pub fn Fl_Table_Row_insert(self_: *mut Fl_Table_Row, arg1: *mut cty::c_void, pos: cty::c_int);
+    pub fn Fl_Table_Row_insert(
+        self_: *mut Fl_Table_Row,
+        arg1: *mut ::core::ffi::c_void,
+        pos: ::core::ffi::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Table_Row_remove(self_: *mut Fl_Table_Row, wid: *mut cty::c_void);
+    pub fn Fl_Table_Row_remove(self_: *mut Fl_Table_Row, wid: *mut ::core::ffi::c_void);
 }
 extern "C" {
-    pub fn Fl_Table_Row_remove_by_index(self_: *mut Fl_Table_Row, idx: cty::c_int);
+    pub fn Fl_Table_Row_remove_by_index(self_: *mut Fl_Table_Row, idx: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Table_Row_clear(self_: *mut Fl_Table_Row);
 }
 extern "C" {
-    pub fn Fl_Table_Row_children(self_: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_children(self_: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_child(arg1: *mut Fl_Table_Row, index: cty::c_int) -> *mut Fl_Widget;
+    pub fn Fl_Table_Row_child(arg1: *mut Fl_Table_Row, index: ::core::ffi::c_int)
+        -> *mut Fl_Widget;
 }
 extern "C" {
-    pub fn Fl_Table_Row_resizable(self_: *mut Fl_Table_Row, arg1: *mut cty::c_void);
+    pub fn Fl_Table_Row_resizable(self_: *mut Fl_Table_Row, arg1: *mut ::core::ffi::c_void);
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_clip_children(self_: *mut Fl_Table_Row, c: cty::c_int);
+    pub fn Fl_Table_Row_set_clip_children(self_: *mut Fl_Table_Row, c: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_clip_children(self_: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_clip_children(self_: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Table_Row_init_sizes(self_: *mut Fl_Table_Row);
@@ -981,186 +1029,196 @@ extern "C" {
     pub fn Fl_Table_Row_draw_children(self_: *mut Fl_Table_Row);
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_table_box(self_: *mut Fl_Table_Row, val: cty::c_int);
+    pub fn Fl_Table_Row_set_table_box(self_: *mut Fl_Table_Row, val: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_table_box(self_: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_table_box(self_: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_rows(self_: *mut Fl_Table_Row, val: cty::c_int);
+    pub fn Fl_Table_Row_set_rows(self_: *mut Fl_Table_Row, val: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_rows(self_: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_rows(self_: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_cols(self_: *mut Fl_Table_Row, val: cty::c_int);
+    pub fn Fl_Table_Row_set_cols(self_: *mut Fl_Table_Row, val: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_cols(self_: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_cols(self_: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Table_Row_visible_cells(
         self_: *mut Fl_Table_Row,
-        r1: *mut cty::c_int,
-        r2: *mut cty::c_int,
-        c1: *mut cty::c_int,
-        c2: *mut cty::c_int,
+        r1: *mut ::core::ffi::c_int,
+        r2: *mut ::core::ffi::c_int,
+        c1: *mut ::core::ffi::c_int,
+        c2: *mut ::core::ffi::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Table_Row_is_interactive_resize(self_: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_is_interactive_resize(self_: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_row_resize(self_: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_row_resize(self_: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_row_resize(self_: *mut Fl_Table_Row, flag: cty::c_int);
+    pub fn Fl_Table_Row_set_row_resize(self_: *mut Fl_Table_Row, flag: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_col_resize(self_: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_col_resize(self_: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_col_resize(self_: *mut Fl_Table_Row, flag: cty::c_int);
+    pub fn Fl_Table_Row_set_col_resize(self_: *mut Fl_Table_Row, flag: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_col_resize_min(self_: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_col_resize_min(self_: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_col_resize_min(self_: *mut Fl_Table_Row, val: cty::c_int);
+    pub fn Fl_Table_Row_set_col_resize_min(self_: *mut Fl_Table_Row, val: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_row_resize_min(self_: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_row_resize_min(self_: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_row_resize_min(self_: *mut Fl_Table_Row, val: cty::c_int);
+    pub fn Fl_Table_Row_set_row_resize_min(self_: *mut Fl_Table_Row, val: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_row_header(self_: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_row_header(self_: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_row_header(self_: *mut Fl_Table_Row, flag: cty::c_int);
+    pub fn Fl_Table_Row_set_row_header(self_: *mut Fl_Table_Row, flag: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_col_header(self_: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_col_header(self_: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_col_header(self_: *mut Fl_Table_Row, flag: cty::c_int);
+    pub fn Fl_Table_Row_set_col_header(self_: *mut Fl_Table_Row, flag: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_col_header_height(self_: *mut Fl_Table_Row, height: cty::c_int);
+    pub fn Fl_Table_Row_set_col_header_height(self_: *mut Fl_Table_Row, height: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_col_header_height(self_: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_col_header_height(self_: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_row_header_width(self_: *mut Fl_Table_Row, width: cty::c_int);
+    pub fn Fl_Table_Row_set_row_header_width(self_: *mut Fl_Table_Row, width: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_row_header_width(self_: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_row_header_width(self_: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_row_header_color(self_: *mut Fl_Table_Row, val: cty::c_uint);
+    pub fn Fl_Table_Row_set_row_header_color(self_: *mut Fl_Table_Row, val: ::core::ffi::c_uint);
 }
 extern "C" {
-    pub fn Fl_Table_Row_row_header_color(self_: *mut Fl_Table_Row) -> cty::c_uint;
+    pub fn Fl_Table_Row_row_header_color(self_: *mut Fl_Table_Row) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_col_header_color(self_: *mut Fl_Table_Row, val: cty::c_uint);
+    pub fn Fl_Table_Row_set_col_header_color(self_: *mut Fl_Table_Row, val: ::core::ffi::c_uint);
 }
 extern "C" {
-    pub fn Fl_Table_Row_col_header_color(self_: *mut Fl_Table_Row) -> cty::c_uint;
+    pub fn Fl_Table_Row_col_header_color(self_: *mut Fl_Table_Row) -> ::core::ffi::c_uint;
 }
 extern "C" {
     pub fn Fl_Table_Row_set_row_height(
         self_: *mut Fl_Table_Row,
-        row: cty::c_int,
-        height: cty::c_int,
+        row: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Table_Row_row_height(self_: *mut Fl_Table_Row, row: cty::c_int) -> cty::c_int;
+    pub fn Fl_Table_Row_row_height(
+        self_: *mut Fl_Table_Row,
+        row: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_col_width(self_: *mut Fl_Table_Row, col: cty::c_int, width: cty::c_int);
+    pub fn Fl_Table_Row_set_col_width(
+        self_: *mut Fl_Table_Row,
+        col: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Table_Row_col_width(self_: *mut Fl_Table_Row, col: cty::c_int) -> cty::c_int;
+    pub fn Fl_Table_Row_col_width(
+        self_: *mut Fl_Table_Row,
+        col: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_row_height_all(self_: *mut Fl_Table_Row, height: cty::c_int);
+    pub fn Fl_Table_Row_set_row_height_all(self_: *mut Fl_Table_Row, height: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_col_width_all(self_: *mut Fl_Table_Row, width: cty::c_int);
+    pub fn Fl_Table_Row_set_col_width_all(self_: *mut Fl_Table_Row, width: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_row_position(self_: *mut Fl_Table_Row, row: cty::c_int);
+    pub fn Fl_Table_Row_set_row_position(self_: *mut Fl_Table_Row, row: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_col_position(self_: *mut Fl_Table_Row, col: cty::c_int);
+    pub fn Fl_Table_Row_set_col_position(self_: *mut Fl_Table_Row, col: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_row_position(self_: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_row_position(self_: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_col_position(self_: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_col_position(self_: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_top_row(self_: *mut Fl_Table_Row, row: cty::c_int);
+    pub fn Fl_Table_Row_set_top_row(self_: *mut Fl_Table_Row, row: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_top_row(self_: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_top_row(self_: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Table_Row_is_selected(
         self_: *mut Fl_Table_Row,
-        r: cty::c_int,
-        c: cty::c_int,
-    ) -> cty::c_int;
+        r: ::core::ffi::c_int,
+        c: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Table_Row_get_selection(
         self_: *mut Fl_Table_Row,
-        row_top: *mut cty::c_int,
-        col_left: *mut cty::c_int,
-        row_bot: *mut cty::c_int,
-        col_right: *mut cty::c_int,
+        row_top: *mut ::core::ffi::c_int,
+        col_left: *mut ::core::ffi::c_int,
+        row_bot: *mut ::core::ffi::c_int,
+        col_right: *mut ::core::ffi::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Table_Row_set_selection(
         self_: *mut Fl_Table_Row,
-        row_top: cty::c_int,
-        col_left: cty::c_int,
-        row_bot: cty::c_int,
-        col_right: cty::c_int,
+        row_top: ::core::ffi::c_int,
+        col_left: ::core::ffi::c_int,
+        row_bot: ::core::ffi::c_int,
+        col_right: ::core::ffi::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Table_Row_move_cursor_with_shiftselect(
         self_: *mut Fl_Table_Row,
-        R: cty::c_int,
-        C: cty::c_int,
-        shiftselect: cty::c_int,
-    ) -> cty::c_int;
+        R: ::core::ffi::c_int,
+        C: ::core::ffi::c_int,
+        shiftselect: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Table_Row_move_cursor(
         self_: *mut Fl_Table_Row,
-        R: cty::c_int,
-        C: cty::c_int,
-    ) -> cty::c_int;
+        R: ::core::ffi::c_int,
+        C: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_scrollbar_size(self_: *const Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_scrollbar_size(self_: *const Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_scrollbar_size(self_: *mut Fl_Table_Row, newSize: cty::c_int);
+    pub fn Fl_Table_Row_set_scrollbar_size(self_: *mut Fl_Table_Row, newSize: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_tab_cell_nav(self_: *mut Fl_Table_Row, val: cty::c_int);
+    pub fn Fl_Table_Row_set_tab_cell_nav(self_: *mut Fl_Table_Row, val: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Table_Row_tab_cell_nav(self_: *const Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_tab_cell_nav(self_: *const Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Table_Row_draw_cell(
@@ -1168,70 +1226,76 @@ extern "C" {
         arg1: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                arg2: cty::c_int,
-                arg3: cty::c_int,
-                arg4: cty::c_int,
-                arg5: cty::c_int,
-                arg6: cty::c_int,
-                arg7: cty::c_int,
-                arg8: cty::c_int,
-                arg9: *mut cty::c_void,
+                arg2: ::core::ffi::c_int,
+                arg3: ::core::ffi::c_int,
+                arg4: ::core::ffi::c_int,
+                arg5: ::core::ffi::c_int,
+                arg6: ::core::ffi::c_int,
+                arg7: ::core::ffi::c_int,
+                arg8: ::core::ffi::c_int,
+                arg9: *mut ::core::ffi::c_void,
             ),
         >,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Table_Row_draw_cell_data(self_: *const Fl_Table_Row) -> *mut cty::c_void;
+    pub fn Fl_Table_Row_draw_cell_data(self_: *const Fl_Table_Row) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_Row_set_draw_cell_data(self_: *mut Fl_Table_Row, data: *mut cty::c_void);
+    pub fn Fl_Table_Row_set_draw_cell_data(
+        self_: *mut Fl_Table_Row,
+        data: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Table_Row_callback_col(arg1: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_callback_col(arg1: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_callback_row(arg1: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_callback_row(arg1: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_callback_context(arg1: *mut Fl_Table_Row) -> cty::c_int;
+    pub fn Fl_Table_Row_callback_context(arg1: *mut Fl_Table_Row) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_scrollbar(arg1: *const Fl_Table_Row) -> *mut cty::c_void;
+    pub fn Fl_Table_Row_scrollbar(arg1: *const Fl_Table_Row) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Table_Row_hscrollbar(arg1: *const Fl_Table_Row) -> *mut cty::c_void;
+    pub fn Fl_Table_Row_hscrollbar(arg1: *const Fl_Table_Row) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Table_Row_find_cell(
         self_: *const Fl_Table_Row,
-        ctx: cty::c_int,
-        r: cty::c_int,
-        c: cty::c_int,
-        x: *mut cty::c_int,
-        y: *mut cty::c_int,
-        w: *mut cty::c_int,
-        h: *mut cty::c_int,
-    ) -> cty::c_int;
+        ctx: ::core::ffi::c_int,
+        r: ::core::ffi::c_int,
+        c: ::core::ffi::c_int,
+        x: *mut ::core::ffi::c_int,
+        y: *mut ::core::ffi::c_int,
+        w: *mut ::core::ffi::c_int,
+        h: *mut ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Table_Row_cursor2rowcol(
         self_: *const Fl_Table_Row,
-        r: *mut cty::c_int,
-        c: *mut cty::c_int,
-        flag: *mut cty::c_int,
-    ) -> cty::c_int;
+        r: *mut ::core::ffi::c_int,
+        c: *mut ::core::ffi::c_int,
+        flag: *mut ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_row_selected(self_: *mut Fl_Table_Row, row: cty::c_int) -> cty::c_int;
+    pub fn Fl_Table_Row_row_selected(
+        self_: *mut Fl_Table_Row,
+        row: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Table_Row_select_row(
         self_: *mut Fl_Table_Row,
-        row: cty::c_int,
-        flag: cty::c_int,
-    ) -> cty::c_int;
+        row: ::core::ffi::c_int,
+        flag: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_select_all_rows(self_: *mut Fl_Table_Row, flag: cty::c_int);
+    pub fn Fl_Table_Row_select_all_rows(self_: *mut Fl_Table_Row, flag: ::core::ffi::c_int);
 }

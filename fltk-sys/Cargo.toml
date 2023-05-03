@@ -1,6 +1,6 @@
 [package]
 name = "fltk-sys"
-version = "1.4.2"
+version = "1.4.3"
 authors = ["The fltk-rs Authors"]
 build = "build/main.rs"
 edition = "2021"
@@ -16,10 +16,6 @@ links = "fltk"
 [lib]
 name = "fltk_sys"
 path = "src/lib.rs"
-
-[dependencies]
-# TODO: remove when msrv > 1.63
-cty = "0.2"
 
 [build-dependencies]
 cmake = "0.1"

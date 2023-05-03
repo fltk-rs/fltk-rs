@@ -6,134 +6,153 @@ pub struct Fl_Native_File_Chooser {
     _unused: [u8; 0],
 }
 extern "C" {
-    pub fn Fl_Native_File_Chooser_new(arg1: cty::c_int) -> *mut Fl_Native_File_Chooser;
+    pub fn Fl_Native_File_Chooser_new(arg1: ::core::ffi::c_int) -> *mut Fl_Native_File_Chooser;
 }
 extern "C" {
     pub fn Fl_Native_File_Chooser_delete(self_: *mut Fl_Native_File_Chooser);
 }
 extern "C" {
-    pub fn Fl_Native_File_Chooser_filename(arg1: *mut Fl_Native_File_Chooser)
-        -> *const cty::c_char;
+    pub fn Fl_Native_File_Chooser_filename(
+        arg1: *mut Fl_Native_File_Chooser,
+    ) -> *const ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Native_File_Chooser_filenames(
         arg1: *mut Fl_Native_File_Chooser,
-        arg2: cty::c_int,
-    ) -> *const cty::c_char;
+        arg2: ::core::ffi::c_int,
+    ) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Native_File_Chooser_count(arg1: *mut Fl_Native_File_Chooser) -> cty::c_int;
+    pub fn Fl_Native_File_Chooser_count(arg1: *mut Fl_Native_File_Chooser) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Native_File_Chooser_set_directory(
         arg1: *mut Fl_Native_File_Chooser,
-        val: *const cty::c_char,
+        val: *const ::core::ffi::c_char,
     );
 }
 extern "C" {
     pub fn Fl_Native_File_Chooser_directory(
         arg1: *mut Fl_Native_File_Chooser,
-    ) -> *const cty::c_char;
+    ) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Native_File_Chooser_show(arg1: *mut Fl_Native_File_Chooser) -> cty::c_int;
+    pub fn Fl_Native_File_Chooser_show(arg1: *mut Fl_Native_File_Chooser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Native_File_Chooser_set_option(arg1: *mut Fl_Native_File_Chooser, opt: cty::c_int);
+    pub fn Fl_Native_File_Chooser_set_option(
+        arg1: *mut Fl_Native_File_Chooser,
+        opt: ::core::ffi::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Native_File_Chooser_set_type(arg1: *mut Fl_Native_File_Chooser, typ: cty::c_int);
+    pub fn Fl_Native_File_Chooser_set_type(
+        arg1: *mut Fl_Native_File_Chooser,
+        typ: ::core::ffi::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Native_File_Chooser_set_title(
         arg1: *mut Fl_Native_File_Chooser,
-        title: *const cty::c_char,
+        title: *const ::core::ffi::c_char,
     );
 }
 extern "C" {
     pub fn Fl_Native_File_Chooser_set_filter(
         arg1: *mut Fl_Native_File_Chooser,
-        f: *const cty::c_char,
+        f: *const ::core::ffi::c_char,
     );
 }
 extern "C" {
     pub fn Fl_Native_File_Chooser_set_preset_file(
         arg1: *mut Fl_Native_File_Chooser,
-        f: *const cty::c_char,
+        f: *const ::core::ffi::c_char,
     );
 }
 extern "C" {
-    pub fn Fl_Native_File_Chooser_errmsg(arg1: *mut Fl_Native_File_Chooser) -> *const cty::c_char;
+    pub fn Fl_Native_File_Chooser_errmsg(
+        arg1: *mut Fl_Native_File_Chooser,
+    ) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_message(x: cty::c_int, y: cty::c_int, txt: *const cty::c_char);
+    pub fn Fl_message(
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        txt: *const ::core::ffi::c_char,
+    );
 }
 extern "C" {
-    pub fn Fl_alert(x: cty::c_int, y: cty::c_int, txt: *const cty::c_char);
+    pub fn Fl_alert(x: ::core::ffi::c_int, y: ::core::ffi::c_int, txt: *const ::core::ffi::c_char);
 }
 extern "C" {
     pub fn Fl_choice(
-        x: cty::c_int,
-        y: cty::c_int,
-        txt: *const cty::c_char,
-        b0: *const cty::c_char,
-        b1: *const cty::c_char,
-        b2: *const cty::c_char,
-    ) -> cty::c_int;
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        txt: *const ::core::ffi::c_char,
+        b0: *const ::core::ffi::c_char,
+        b1: *const ::core::ffi::c_char,
+        b2: *const ::core::ffi::c_char,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_choice_n(
-        x: cty::c_int,
-        y: cty::c_int,
-        txt: *const cty::c_char,
-        b0: *const cty::c_char,
-        b1: *const cty::c_char,
-        b2: *const cty::c_char,
-    ) -> cty::c_int;
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        txt: *const ::core::ffi::c_char,
+        b0: *const ::core::ffi::c_char,
+        b1: *const ::core::ffi::c_char,
+        b2: *const ::core::ffi::c_char,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_input(
-        x: cty::c_int,
-        y: cty::c_int,
-        txt: *const cty::c_char,
-        deflt: *const cty::c_char,
-    ) -> *const cty::c_char;
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        txt: *const ::core::ffi::c_char,
+        deflt: *const ::core::ffi::c_char,
+    ) -> *const ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_password(
-        x: cty::c_int,
-        y: cty::c_int,
-        txt: *const cty::c_char,
-        deflt: *const cty::c_char,
-    ) -> *const cty::c_char;
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        txt: *const ::core::ffi::c_char,
+        deflt: *const ::core::ffi::c_char,
+    ) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_message2(txt: *const cty::c_char);
+    pub fn Fl_message2(txt: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_alert2(txt: *const cty::c_char);
+    pub fn Fl_alert2(txt: *const ::core::ffi::c_char);
 }
 extern "C" {
     pub fn Fl_choice2(
-        txt: *const cty::c_char,
-        b0: *const cty::c_char,
-        b1: *const cty::c_char,
-        b2: *const cty::c_char,
-    ) -> cty::c_int;
+        txt: *const ::core::ffi::c_char,
+        b0: *const ::core::ffi::c_char,
+        b1: *const ::core::ffi::c_char,
+        b2: *const ::core::ffi::c_char,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_choice2_n(
-        txt: *const cty::c_char,
-        b0: *const cty::c_char,
-        b1: *const cty::c_char,
-        b2: *const cty::c_char,
-    ) -> cty::c_int;
+        txt: *const ::core::ffi::c_char,
+        b0: *const ::core::ffi::c_char,
+        b1: *const ::core::ffi::c_char,
+        b2: *const ::core::ffi::c_char,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_input2(txt: *const cty::c_char, deflt: *const cty::c_char) -> *const cty::c_char;
+    pub fn Fl_input2(
+        txt: *const ::core::ffi::c_char,
+        deflt: *const ::core::ffi::c_char,
+    ) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_password2(txt: *const cty::c_char, deflt: *const cty::c_char) -> *const cty::c_char;
+    pub fn Fl_password2(
+        txt: *const ::core::ffi::c_char,
+        deflt: *const ::core::ffi::c_char,
+    ) -> *const ::core::ffi::c_char;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -147,55 +166,62 @@ extern "C" {
     pub fn Fl_Help_Dialog_delete(self_: *mut Fl_Help_Dialog);
 }
 extern "C" {
-    pub fn Fl_Help_Dialog_h(arg1: *mut Fl_Help_Dialog) -> cty::c_int;
+    pub fn Fl_Help_Dialog_h(arg1: *mut Fl_Help_Dialog) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Help_Dialog_hide(arg1: *mut Fl_Help_Dialog);
 }
 extern "C" {
-    pub fn Fl_Help_Dialog_load(arg1: *mut Fl_Help_Dialog, f: *const cty::c_char) -> cty::c_int;
+    pub fn Fl_Help_Dialog_load(
+        arg1: *mut Fl_Help_Dialog,
+        f: *const ::core::ffi::c_char,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Help_Dialog_position(arg1: *mut Fl_Help_Dialog, xx: cty::c_int, yy: cty::c_int);
+    pub fn Fl_Help_Dialog_position(
+        arg1: *mut Fl_Help_Dialog,
+        xx: ::core::ffi::c_int,
+        yy: ::core::ffi::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Help_Dialog_resize(
         arg1: *mut Fl_Help_Dialog,
-        xx: cty::c_int,
-        yy: cty::c_int,
-        ww: cty::c_int,
-        hh: cty::c_int,
+        xx: ::core::ffi::c_int,
+        yy: ::core::ffi::c_int,
+        ww: ::core::ffi::c_int,
+        hh: ::core::ffi::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Help_Dialog_show(arg1: *mut Fl_Help_Dialog);
 }
 extern "C" {
-    pub fn Fl_Help_Dialog_set_text_size(arg1: *mut Fl_Help_Dialog, s: cty::c_int);
+    pub fn Fl_Help_Dialog_set_text_size(arg1: *mut Fl_Help_Dialog, s: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Help_Dialog_text_size(arg1: *mut Fl_Help_Dialog) -> cty::c_int;
+    pub fn Fl_Help_Dialog_text_size(arg1: *mut Fl_Help_Dialog) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Help_Dialog_set_value(arg1: *mut Fl_Help_Dialog, f: *const cty::c_char);
+    pub fn Fl_Help_Dialog_set_value(arg1: *mut Fl_Help_Dialog, f: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_Help_Dialog_value(arg1: *const Fl_Help_Dialog) -> *const cty::c_char;
+    pub fn Fl_Help_Dialog_value(arg1: *const Fl_Help_Dialog) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Help_Dialog_visible(arg1: *mut Fl_Help_Dialog) -> cty::c_int;
+    pub fn Fl_Help_Dialog_visible(arg1: *mut Fl_Help_Dialog) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Help_Dialog_w(arg1: *mut Fl_Help_Dialog) -> cty::c_int;
+    pub fn Fl_Help_Dialog_w(arg1: *mut Fl_Help_Dialog) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Help_Dialog_x(arg1: *mut Fl_Help_Dialog) -> cty::c_int;
+    pub fn Fl_Help_Dialog_x(arg1: *mut Fl_Help_Dialog) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Help_Dialog_y(arg1: *mut Fl_Help_Dialog) -> cty::c_int;
+    pub fn Fl_Help_Dialog_y(arg1: *mut Fl_Help_Dialog) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_beep(type_: cty::c_int);
+    pub fn Fl_beep(type_: ::core::ffi::c_int);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -204,86 +230,91 @@ pub struct Fl_File_Chooser {
 }
 extern "C" {
     pub fn Fl_File_Chooser_new(
-        d: *const cty::c_char,
-        p: *const cty::c_char,
-        t: cty::c_int,
-        title: *const cty::c_char,
+        d: *const ::core::ffi::c_char,
+        p: *const ::core::ffi::c_char,
+        t: ::core::ffi::c_int,
+        title: *const ::core::ffi::c_char,
     ) -> *mut Fl_File_Chooser;
 }
 extern "C" {
     pub fn Fl_File_Chooser_delete(self_: *mut Fl_File_Chooser);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_newButton(self_: *mut Fl_File_Chooser) -> *mut cty::c_void;
+    pub fn Fl_File_Chooser_newButton(self_: *mut Fl_File_Chooser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Chooser_previewButton(self_: *mut Fl_File_Chooser) -> *mut cty::c_void;
+    pub fn Fl_File_Chooser_previewButton(self_: *mut Fl_File_Chooser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Chooser_showHiddenButton(self_: *mut Fl_File_Chooser) -> *mut cty::c_void;
+    pub fn Fl_File_Chooser_showHiddenButton(
+        self_: *mut Fl_File_Chooser,
+    ) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_File_Chooser_set_callback(
         self_: *mut Fl_File_Chooser,
         cb: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_File_Chooser, arg2: *mut cty::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_File_Chooser, arg2: *mut ::core::ffi::c_void),
         >,
-        d: *mut cty::c_void,
+        d: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_color(self_: *mut Fl_File_Chooser, c: cty::c_uint);
+    pub fn Fl_File_Chooser_set_color(self_: *mut Fl_File_Chooser, c: ::core::ffi::c_uint);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_color(self_: *mut Fl_File_Chooser) -> cty::c_uint;
+    pub fn Fl_File_Chooser_color(self_: *mut Fl_File_Chooser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_File_Chooser_count(self_: *mut Fl_File_Chooser) -> cty::c_int;
+    pub fn Fl_File_Chooser_count(self_: *mut Fl_File_Chooser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_directory(self_: *mut Fl_File_Chooser, d: *const cty::c_char);
+    pub fn Fl_File_Chooser_set_directory(
+        self_: *mut Fl_File_Chooser,
+        d: *const ::core::ffi::c_char,
+    );
 }
 extern "C" {
-    pub fn Fl_File_Chooser_directory(self_: *mut Fl_File_Chooser) -> *mut cty::c_char;
+    pub fn Fl_File_Chooser_directory(self_: *mut Fl_File_Chooser) -> *mut ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_filter(self_: *mut Fl_File_Chooser, p: *const cty::c_char);
+    pub fn Fl_File_Chooser_set_filter(self_: *mut Fl_File_Chooser, p: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_filter(self_: *mut Fl_File_Chooser) -> *const cty::c_char;
+    pub fn Fl_File_Chooser_filter(self_: *mut Fl_File_Chooser) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_File_Chooser_filter_value(self_: *mut Fl_File_Chooser) -> cty::c_int;
+    pub fn Fl_File_Chooser_filter_value(self_: *mut Fl_File_Chooser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_filter_value(self_: *mut Fl_File_Chooser, f: cty::c_int);
+    pub fn Fl_File_Chooser_set_filter_value(self_: *mut Fl_File_Chooser, f: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_File_Chooser_hide(self_: *mut Fl_File_Chooser);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_iconsize(self_: *mut Fl_File_Chooser, s: cty::c_uchar);
+    pub fn Fl_File_Chooser_set_iconsize(self_: *mut Fl_File_Chooser, s: ::core::ffi::c_uchar);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_iconsize(self_: *mut Fl_File_Chooser) -> cty::c_uchar;
+    pub fn Fl_File_Chooser_iconsize(self_: *mut Fl_File_Chooser) -> ::core::ffi::c_uchar;
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_label(self_: *mut Fl_File_Chooser, l: *const cty::c_char);
+    pub fn Fl_File_Chooser_set_label(self_: *mut Fl_File_Chooser, l: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_label(self_: *mut Fl_File_Chooser) -> *const cty::c_char;
+    pub fn Fl_File_Chooser_label(self_: *mut Fl_File_Chooser) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_ok_label(self_: *mut Fl_File_Chooser, l: *const cty::c_char);
+    pub fn Fl_File_Chooser_set_ok_label(self_: *mut Fl_File_Chooser, l: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_ok_label(self_: *mut Fl_File_Chooser) -> *const cty::c_char;
+    pub fn Fl_File_Chooser_ok_label(self_: *mut Fl_File_Chooser) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_preview(self_: *mut Fl_File_Chooser, e: cty::c_int);
+    pub fn Fl_File_Chooser_set_preview(self_: *mut Fl_File_Chooser, e: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_preview(self_: *const Fl_File_Chooser) -> cty::c_int;
+    pub fn Fl_File_Chooser_preview(self_: *const Fl_File_Chooser) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_File_Chooser_rescan(self_: *mut Fl_File_Chooser);
@@ -295,149 +326,163 @@ extern "C" {
     pub fn Fl_File_Chooser_show(self_: *mut Fl_File_Chooser);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_shown(self_: *mut Fl_File_Chooser) -> cty::c_int;
+    pub fn Fl_File_Chooser_shown(self_: *mut Fl_File_Chooser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_text_color(self_: *mut Fl_File_Chooser, c: cty::c_uint);
+    pub fn Fl_File_Chooser_set_text_color(self_: *mut Fl_File_Chooser, c: ::core::ffi::c_uint);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_text_color(self_: *mut Fl_File_Chooser) -> cty::c_uint;
+    pub fn Fl_File_Chooser_text_color(self_: *mut Fl_File_Chooser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_text_font(self_: *mut Fl_File_Chooser, f: cty::c_int);
+    pub fn Fl_File_Chooser_set_text_font(self_: *mut Fl_File_Chooser, f: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_text_font(self_: *mut Fl_File_Chooser) -> cty::c_int;
+    pub fn Fl_File_Chooser_text_font(self_: *mut Fl_File_Chooser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_text_size(self_: *mut Fl_File_Chooser, s: cty::c_int);
+    pub fn Fl_File_Chooser_set_text_size(self_: *mut Fl_File_Chooser, s: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_text_size(self_: *mut Fl_File_Chooser) -> cty::c_int;
+    pub fn Fl_File_Chooser_text_size(self_: *mut Fl_File_Chooser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_type(self_: *mut Fl_File_Chooser, t: cty::c_int);
+    pub fn Fl_File_Chooser_set_type(self_: *mut Fl_File_Chooser, t: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_type(self_: *mut Fl_File_Chooser) -> cty::c_int;
+    pub fn Fl_File_Chooser_type(self_: *mut Fl_File_Chooser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Chooser_user_data(self_: *const Fl_File_Chooser) -> *mut cty::c_void;
+    pub fn Fl_File_Chooser_user_data(self_: *const Fl_File_Chooser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_user_data(self_: *mut Fl_File_Chooser, d: *mut cty::c_void);
+    pub fn Fl_File_Chooser_set_user_data(self_: *mut Fl_File_Chooser, d: *mut ::core::ffi::c_void);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_value(self_: *mut Fl_File_Chooser, f: cty::c_int) -> *const cty::c_char;
+    pub fn Fl_File_Chooser_value(
+        self_: *mut Fl_File_Chooser,
+        f: ::core::ffi::c_int,
+    ) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_value(self_: *mut Fl_File_Chooser, filename: *const cty::c_char);
+    pub fn Fl_File_Chooser_set_value(
+        self_: *mut Fl_File_Chooser,
+        filename: *const ::core::ffi::c_char,
+    );
 }
 extern "C" {
-    pub fn Fl_File_Chooser_visible(self_: *mut Fl_File_Chooser) -> cty::c_int;
+    pub fn Fl_File_Chooser_visible(self_: *mut Fl_File_Chooser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_add_favorites_label(msg: *const cty::c_char);
+    pub fn Fl_File_Chooser_set_add_favorites_label(msg: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_all_files_label(msg: *const cty::c_char);
+    pub fn Fl_File_Chooser_set_all_files_label(msg: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_custom_filter_label(msg: *const cty::c_char);
+    pub fn Fl_File_Chooser_set_custom_filter_label(msg: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_existing_file_label(msg: *const cty::c_char);
+    pub fn Fl_File_Chooser_set_existing_file_label(msg: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_favorites_label(msg: *const cty::c_char);
+    pub fn Fl_File_Chooser_set_favorites_label(msg: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_filename_label(msg: *const cty::c_char);
+    pub fn Fl_File_Chooser_set_filename_label(msg: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_filesystems_label(msg: *const cty::c_char);
+    pub fn Fl_File_Chooser_set_filesystems_label(msg: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_manage_favorites_label(msg: *const cty::c_char);
+    pub fn Fl_File_Chooser_set_manage_favorites_label(msg: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_new_directory_label(msg: *const cty::c_char);
+    pub fn Fl_File_Chooser_set_new_directory_label(msg: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_new_directory_tooltip(msg: *const cty::c_char);
+    pub fn Fl_File_Chooser_set_new_directory_tooltip(msg: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_preview_label(msg: *const cty::c_char);
+    pub fn Fl_File_Chooser_set_preview_label(msg: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_save_label(msg: *const cty::c_char);
+    pub fn Fl_File_Chooser_set_save_label(msg: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_show_label(msg: *const cty::c_char);
+    pub fn Fl_File_Chooser_set_show_label(msg: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_hidden_label(msg: *const cty::c_char);
+    pub fn Fl_File_Chooser_set_hidden_label(msg: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_position(self_: *mut Fl_File_Chooser, x: cty::c_int, y: cty::c_int);
+    pub fn Fl_File_Chooser_set_position(
+        self_: *mut Fl_File_Chooser,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_File_Chooser_set_size(self_: *mut Fl_File_Chooser, w: cty::c_int, h: cty::c_int);
+    pub fn Fl_File_Chooser_set_size(
+        self_: *mut Fl_File_Chooser,
+        w: ::core::ffi::c_int,
+        h: ::core::ffi::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_File_Chooser_x(self_: *const Fl_File_Chooser) -> cty::c_int;
+    pub fn Fl_File_Chooser_x(self_: *const Fl_File_Chooser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Chooser_y(self_: *const Fl_File_Chooser) -> cty::c_int;
+    pub fn Fl_File_Chooser_y(self_: *const Fl_File_Chooser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Chooser_w(self_: *const Fl_File_Chooser) -> cty::c_int;
+    pub fn Fl_File_Chooser_w(self_: *const Fl_File_Chooser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Chooser_h(self_: *const Fl_File_Chooser) -> cty::c_int;
+    pub fn Fl_File_Chooser_h(self_: *const Fl_File_Chooser) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_dir_chooser(
-        message: *const cty::c_char,
-        fname: *const cty::c_char,
-        relative: cty::c_int,
-    ) -> *mut cty::c_char;
+        message: *const ::core::ffi::c_char,
+        fname: *const ::core::ffi::c_char,
+        relative: ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_file_chooser(
-        message: *const cty::c_char,
-        pat: *const cty::c_char,
-        fname: *const cty::c_char,
-        relative: cty::c_int,
-    ) -> *mut cty::c_char;
+        message: *const ::core::ffi::c_char,
+        pat: *const ::core::ffi::c_char,
+        fname: *const ::core::ffi::c_char,
+        relative: ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_color_chooser(
-        name: *const cty::c_char,
-        r: *mut cty::c_uchar,
-        g: *mut cty::c_uchar,
-        b: *mut cty::c_uchar,
-        cmode: cty::c_int,
-    ) -> cty::c_int;
+        name: *const ::core::ffi::c_char,
+        r: *mut ::core::ffi::c_uchar,
+        g: *mut ::core::ffi::c_uchar,
+        b: *mut ::core::ffi::c_uchar,
+        cmode: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_message_title(title: *const cty::c_char);
+    pub fn Fl_message_title(title: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_message_title_default(title: *const cty::c_char);
+    pub fn Fl_message_title_default(title: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_message_icon() -> *mut cty::c_void;
+    pub fn Fl_message_icon() -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_message_set_hotspot(enable: cty::c_int);
+    pub fn Fl_message_set_hotspot(enable: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_message_hotspot() -> cty::c_int;
+    pub fn Fl_message_hotspot() -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_message_set_font(f: cty::c_int, s: cty::c_int);
+    pub fn Fl_message_set_font(f: ::core::ffi::c_int, s: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_message_icon_label(label: *const cty::c_char);
+    pub fn Fl_message_icon_label(label: *const ::core::ffi::c_char);
 }

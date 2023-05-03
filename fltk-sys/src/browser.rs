@@ -5,17 +5,19 @@
 pub struct Fl_Widget {
     _unused: [u8; 0],
 }
-pub type Fl_Callback =
-    ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void)>;
+pub type Fl_Callback = ::core::option::Option<
+    unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::core::ffi::c_void),
+>;
 pub type custom_handler_callback = ::core::option::Option<
     unsafe extern "C" fn(
         arg1: *mut Fl_Widget,
-        arg2: cty::c_int,
-        arg3: *mut cty::c_void,
-    ) -> cty::c_int,
+        arg2: ::core::ffi::c_int,
+        arg3: *mut ::core::ffi::c_void,
+    ) -> ::core::ffi::c_int,
 >;
-pub type custom_draw_callback =
-    ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void)>;
+pub type custom_draw_callback = ::core::option::Option<
+    unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::core::ffi::c_void),
+>;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Browser {
@@ -23,30 +25,30 @@ pub struct Fl_Browser {
 }
 extern "C" {
     pub fn Fl_Browser_new(
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
-        title: *const cty::c_char,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        title: *const ::core::ffi::c_char,
     ) -> *mut Fl_Browser;
 }
 extern "C" {
-    pub fn Fl_Browser_x(arg1: *mut Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_x(arg1: *mut Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_y(arg1: *mut Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_y(arg1: *mut Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_width(arg1: *mut Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_width(arg1: *mut Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_height(arg1: *mut Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_height(arg1: *mut Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_label(arg1: *mut Fl_Browser) -> *const cty::c_char;
+    pub fn Fl_Browser_label(arg1: *mut Fl_Browser) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Browser_set_label(arg1: *mut Fl_Browser, title: *const cty::c_char);
+    pub fn Fl_Browser_set_label(arg1: *mut Fl_Browser, title: *const ::core::ffi::c_char);
 }
 extern "C" {
     pub fn Fl_Browser_redraw(arg1: *mut Fl_Browser);
@@ -69,78 +71,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Browser_resize(
         arg1: *mut Fl_Browser,
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Browser_widget_resize(
         arg1: *mut Fl_Browser,
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Browser_tooltip(arg1: *mut Fl_Browser) -> *const cty::c_char;
+    pub fn Fl_Browser_tooltip(arg1: *mut Fl_Browser) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Browser_set_tooltip(arg1: *mut Fl_Browser, txt: *const cty::c_char);
+    pub fn Fl_Browser_set_tooltip(arg1: *mut Fl_Browser, txt: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_Browser_get_type(arg1: *mut Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_get_type(arg1: *mut Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_set_type(arg1: *mut Fl_Browser, typ: cty::c_int);
+    pub fn Fl_Browser_set_type(arg1: *mut Fl_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Browser_color(arg1: *mut Fl_Browser) -> cty::c_uint;
+    pub fn Fl_Browser_color(arg1: *mut Fl_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Browser_set_color(arg1: *mut Fl_Browser, color: cty::c_uint);
+    pub fn Fl_Browser_set_color(arg1: *mut Fl_Browser, color: ::core::ffi::c_uint);
 }
 extern "C" {
     pub fn Fl_Browser_measure_label(
         arg1: *const Fl_Browser,
-        arg2: *mut cty::c_int,
-        arg3: *mut cty::c_int,
+        arg2: *mut ::core::ffi::c_int,
+        arg3: *mut ::core::ffi::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Browser_label_color(arg1: *mut Fl_Browser) -> cty::c_uint;
+    pub fn Fl_Browser_label_color(arg1: *mut Fl_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Browser_set_label_color(arg1: *mut Fl_Browser, color: cty::c_uint);
+    pub fn Fl_Browser_set_label_color(arg1: *mut Fl_Browser, color: ::core::ffi::c_uint);
 }
 extern "C" {
-    pub fn Fl_Browser_label_font(arg1: *mut Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_label_font(arg1: *mut Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_set_label_font(arg1: *mut Fl_Browser, font: cty::c_int);
+    pub fn Fl_Browser_set_label_font(arg1: *mut Fl_Browser, font: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Browser_label_size(arg1: *mut Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_label_size(arg1: *mut Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_set_label_size(arg1: *mut Fl_Browser, sz: cty::c_int);
+    pub fn Fl_Browser_set_label_size(arg1: *mut Fl_Browser, sz: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Browser_label_type(arg1: *mut Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_label_type(arg1: *mut Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_set_label_type(arg1: *mut Fl_Browser, typ: cty::c_int);
+    pub fn Fl_Browser_set_label_type(arg1: *mut Fl_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Browser_box(arg1: *mut Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_box(arg1: *mut Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_set_box(arg1: *mut Fl_Browser, typ: cty::c_int);
+    pub fn Fl_Browser_set_box(arg1: *mut Fl_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Browser_changed(arg1: *mut Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_changed(arg1: *mut Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Browser_set_changed(arg1: *mut Fl_Browser);
@@ -149,32 +151,32 @@ extern "C" {
     pub fn Fl_Browser_clear_changed(arg1: *mut Fl_Browser);
 }
 extern "C" {
-    pub fn Fl_Browser_align(arg1: *mut Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_align(arg1: *mut Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_set_align(arg1: *mut Fl_Browser, typ: cty::c_int);
+    pub fn Fl_Browser_set_align(arg1: *mut Fl_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Browser_delete(arg1: *mut Fl_Browser);
 }
 extern "C" {
-    pub fn Fl_Browser_set_image(arg1: *mut Fl_Browser, arg2: *mut cty::c_void);
+    pub fn Fl_Browser_set_image(arg1: *mut Fl_Browser, arg2: *mut ::core::ffi::c_void);
 }
 extern "C" {
     pub fn Fl_Browser_handle(
         self_: *mut Fl_Browser,
         cb: custom_handler_callback,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Browser_handle_event(self_: *mut Fl_Browser, event: cty::c_int);
+    pub fn Fl_Browser_handle_event(self_: *mut Fl_Browser, event: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Browser_draw(
         self_: *mut Fl_Browser,
         cb: custom_draw_callback,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
@@ -183,54 +185,57 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: cty::c_int,
-                y: cty::c_int,
-                w: cty::c_int,
-                h: cty::c_int,
-                arg2: *mut cty::c_void,
+                x: ::core::ffi::c_int,
+                y: ::core::ffi::c_int,
+                w: ::core::ffi::c_int,
+                h: ::core::ffi::c_int,
+                arg2: *mut ::core::ffi::c_void,
             ),
         >,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Browser_set_when(arg1: *mut Fl_Browser, arg2: cty::c_int);
+    pub fn Fl_Browser_set_when(arg1: *mut Fl_Browser, arg2: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Browser_when(arg1: *const Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_when(arg1: *const Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_image(arg1: *const Fl_Browser) -> *const cty::c_void;
+    pub fn Fl_Browser_image(arg1: *const Fl_Browser) -> *const ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Browser_parent(self_: *const Fl_Browser) -> *mut cty::c_void;
+    pub fn Fl_Browser_parent(self_: *const Fl_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Browser_selection_color(arg1: *mut Fl_Browser) -> cty::c_uint;
+    pub fn Fl_Browser_selection_color(arg1: *mut Fl_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Browser_set_selection_color(arg1: *mut Fl_Browser, color: cty::c_uint);
+    pub fn Fl_Browser_set_selection_color(arg1: *mut Fl_Browser, color: ::core::ffi::c_uint);
 }
 extern "C" {
     pub fn Fl_Browser_do_callback(arg1: *mut Fl_Browser);
 }
 extern "C" {
-    pub fn Fl_Browser_inside(self_: *const Fl_Browser, arg1: *mut cty::c_void) -> cty::c_int;
+    pub fn Fl_Browser_inside(
+        self_: *const Fl_Browser,
+        arg1: *mut ::core::ffi::c_void,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_window(arg1: *const Fl_Browser) -> *mut cty::c_void;
+    pub fn Fl_Browser_window(arg1: *const Fl_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Browser_top_window(arg1: *const Fl_Browser) -> *mut cty::c_void;
+    pub fn Fl_Browser_top_window(arg1: *const Fl_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Browser_takes_events(arg1: *const Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_takes_events(arg1: *const Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_user_data(arg1: *const Fl_Browser) -> *mut cty::c_void;
+    pub fn Fl_Browser_user_data(arg1: *const Fl_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Browser_take_focus(self_: *mut Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_take_focus(self_: *mut Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Browser_set_visible_focus(self_: *mut Fl_Browser);
@@ -239,81 +244,81 @@ extern "C" {
     pub fn Fl_Browser_clear_visible_focus(self_: *mut Fl_Browser);
 }
 extern "C" {
-    pub fn Fl_Browser_visible_focus(self_: *mut Fl_Browser, v: cty::c_int);
+    pub fn Fl_Browser_visible_focus(self_: *mut Fl_Browser, v: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Browser_has_visible_focus(self_: *mut Fl_Browser) -> cty::c_uint;
+    pub fn Fl_Browser_has_visible_focus(self_: *mut Fl_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Browser_set_user_data(arg1: *mut Fl_Browser, data: *mut cty::c_void);
+    pub fn Fl_Browser_set_user_data(arg1: *mut Fl_Browser, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
-    pub fn Fl_Browser_draw_data(self_: *const Fl_Browser) -> *mut cty::c_void;
+    pub fn Fl_Browser_draw_data(self_: *const Fl_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Browser_handle_data(self_: *const Fl_Browser) -> *mut cty::c_void;
+    pub fn Fl_Browser_handle_data(self_: *const Fl_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Browser_set_draw_data(self_: *mut Fl_Browser, data: *mut cty::c_void);
+    pub fn Fl_Browser_set_draw_data(self_: *mut Fl_Browser, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
-    pub fn Fl_Browser_set_handle_data(self_: *mut Fl_Browser, data: *mut cty::c_void);
+    pub fn Fl_Browser_set_handle_data(self_: *mut Fl_Browser, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
-    pub fn Fl_Browser_damage(self_: *const Fl_Browser) -> cty::c_uchar;
+    pub fn Fl_Browser_damage(self_: *const Fl_Browser) -> ::core::ffi::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Browser_set_damage(self_: *mut Fl_Browser, flag: cty::c_uchar);
+    pub fn Fl_Browser_set_damage(self_: *mut Fl_Browser, flag: ::core::ffi::c_uchar);
 }
 extern "C" {
     pub fn Fl_Browser_set_damage_area(
         self_: *mut Fl_Browser,
-        flag: cty::c_uchar,
-        x: cty::c_int,
-        y: cty::c_int,
-        w: cty::c_int,
-        h: cty::c_int,
+        flag: ::core::ffi::c_uchar,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        w: ::core::ffi::c_int,
+        h: ::core::ffi::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Browser_clear_damage(self_: *mut Fl_Browser);
 }
 extern "C" {
-    pub fn Fl_Browser_as_window(self_: *mut Fl_Browser) -> *mut cty::c_void;
+    pub fn Fl_Browser_as_window(self_: *mut Fl_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Browser_as_group(self_: *mut Fl_Browser) -> *mut cty::c_void;
+    pub fn Fl_Browser_as_group(self_: *mut Fl_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Browser_set_deimage(arg1: *mut Fl_Browser, arg2: *mut cty::c_void);
+    pub fn Fl_Browser_set_deimage(arg1: *mut Fl_Browser, arg2: *mut ::core::ffi::c_void);
 }
 extern "C" {
-    pub fn Fl_Browser_deimage(arg1: *const Fl_Browser) -> *const cty::c_void;
+    pub fn Fl_Browser_deimage(arg1: *const Fl_Browser) -> *const ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Browser_set_callback(
         arg1: *mut Fl_Browser,
         arg2: Fl_Callback,
-        arg3: *mut cty::c_void,
+        arg3: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Browser_set_deleter(
         arg1: *mut Fl_Browser,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Browser_visible(self_: *const Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_visible(self_: *const Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_visible_r(self_: *const Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_visible_r(self_: *const Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_active(self_: *const Fl_Browser) -> cty::c_uint;
+    pub fn Fl_Browser_active(self_: *const Fl_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Browser_active_r(self_: *const Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_active_r(self_: *const Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Browser_callback(self_: *const Fl_Browser) -> Fl_Callback;
@@ -322,152 +327,180 @@ extern "C" {
     pub fn Fl_Browser_set_deletion_callback(
         self_: *mut Fl_Browser,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::core::ffi::c_void),
         >,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Browser_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Browser;
 }
 extern "C" {
-    pub fn Fl_Browser_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
+    pub fn Fl_Browser_super_draw(ptr: *mut Fl_Widget, flag: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Browser_value(arg1: *mut Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_value(arg1: *mut Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_remove(arg1: *mut Fl_Browser, line: cty::c_int);
+    pub fn Fl_Browser_remove(arg1: *mut Fl_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Browser_add(arg1: *mut Fl_Browser, newtext: *const cty::c_char);
+    pub fn Fl_Browser_add(arg1: *mut Fl_Browser, newtext: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_Browser_insert(arg1: *mut Fl_Browser, line: cty::c_int, newtext: *const cty::c_char);
+    pub fn Fl_Browser_insert(
+        arg1: *mut Fl_Browser,
+        line: ::core::ffi::c_int,
+        newtext: *const ::core::ffi::c_char,
+    );
 }
 extern "C" {
-    pub fn Fl_Browser_move(arg1: *mut Fl_Browser, to: cty::c_int, from: cty::c_int);
+    pub fn Fl_Browser_move(arg1: *mut Fl_Browser, to: ::core::ffi::c_int, from: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Browser_swap(arg1: *mut Fl_Browser, a: cty::c_int, b: cty::c_int);
+    pub fn Fl_Browser_swap(arg1: *mut Fl_Browser, a: ::core::ffi::c_int, b: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Browser_clear(arg1: *mut Fl_Browser);
 }
 extern "C" {
-    pub fn Fl_Browser_size(arg1: *const Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_size(arg1: *const Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_select(arg1: *mut Fl_Browser, line: cty::c_int) -> cty::c_int;
+    pub fn Fl_Browser_select(arg1: *mut Fl_Browser, line: ::core::ffi::c_int)
+        -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_selected(arg1: *const Fl_Browser, line: cty::c_int) -> cty::c_int;
+    pub fn Fl_Browser_selected(
+        arg1: *const Fl_Browser,
+        line: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_text(arg1: *const Fl_Browser, line: cty::c_int) -> *const cty::c_char;
+    pub fn Fl_Browser_text(
+        arg1: *const Fl_Browser,
+        line: ::core::ffi::c_int,
+    ) -> *const ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Browser_set_text(
         arg1: *mut Fl_Browser,
-        line: cty::c_int,
-        newtext: *const cty::c_char,
+        line: ::core::ffi::c_int,
+        newtext: *const ::core::ffi::c_char,
     );
 }
 extern "C" {
-    pub fn Fl_Browser_load_file(arg1: *mut Fl_Browser, file: *const cty::c_char);
+    pub fn Fl_Browser_load_file(arg1: *mut Fl_Browser, file: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_Browser_text_size(arg1: *mut Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_text_size(arg1: *mut Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_set_text_size(arg1: *mut Fl_Browser, s: cty::c_int);
+    pub fn Fl_Browser_set_text_size(arg1: *mut Fl_Browser, s: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Browser_set_icon(arg1: *mut Fl_Browser, line: cty::c_int, icon: *mut cty::c_void);
+    pub fn Fl_Browser_set_icon(
+        arg1: *mut Fl_Browser,
+        line: ::core::ffi::c_int,
+        icon: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Browser_icon(arg1: *const Fl_Browser, line: cty::c_int) -> *mut cty::c_void;
+    pub fn Fl_Browser_icon(
+        arg1: *const Fl_Browser,
+        line: ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Browser_remove_icon(arg1: *mut Fl_Browser, line: cty::c_int);
+    pub fn Fl_Browser_remove_icon(arg1: *mut Fl_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Browser_topline(self_: *mut Fl_Browser, line: cty::c_int);
+    pub fn Fl_Browser_topline(self_: *mut Fl_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Browser_is_topline(self_: *mut Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_is_topline(self_: *mut Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_bottomline(self_: *mut Fl_Browser, line: cty::c_int);
+    pub fn Fl_Browser_bottomline(self_: *mut Fl_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Browser_middleline(self_: *mut Fl_Browser, line: cty::c_int);
+    pub fn Fl_Browser_middleline(self_: *mut Fl_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Browser_format_char(self_: *const Fl_Browser) -> cty::c_char;
+    pub fn Fl_Browser_format_char(self_: *const Fl_Browser) -> ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Browser_set_format_char(self_: *mut Fl_Browser, c: cty::c_char);
+    pub fn Fl_Browser_set_format_char(self_: *mut Fl_Browser, c: ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_Browser_column_char(self_: *const Fl_Browser) -> cty::c_char;
+    pub fn Fl_Browser_column_char(self_: *const Fl_Browser) -> ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Browser_set_column_char(self_: *mut Fl_Browser, c: cty::c_char);
+    pub fn Fl_Browser_set_column_char(self_: *mut Fl_Browser, c: ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_Browser_column_widths(self_: *const Fl_Browser) -> *const cty::c_int;
+    pub fn Fl_Browser_column_widths(self_: *const Fl_Browser) -> *const ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_set_column_widths(self_: *mut Fl_Browser, arr: *const cty::c_int);
+    pub fn Fl_Browser_set_column_widths(self_: *mut Fl_Browser, arr: *const ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Browser_displayed(self_: *const Fl_Browser, line: cty::c_int) -> cty::c_int;
+    pub fn Fl_Browser_displayed(
+        self_: *const Fl_Browser,
+        line: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_make_visible(self_: *mut Fl_Browser, line: cty::c_int);
+    pub fn Fl_Browser_make_visible(self_: *mut Fl_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Browser_position(self_: *const Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_position(self_: *const Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_set_position(self_: *mut Fl_Browser, pos: cty::c_int);
+    pub fn Fl_Browser_set_position(self_: *mut Fl_Browser, pos: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Browser_hposition(self_: *const Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_hposition(self_: *const Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_set_hposition(self_: *mut Fl_Browser, arg1: cty::c_int);
+    pub fn Fl_Browser_set_hposition(self_: *mut Fl_Browser, arg1: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Browser_has_scrollbar(self_: *const Fl_Browser) -> cty::c_uchar;
+    pub fn Fl_Browser_has_scrollbar(self_: *const Fl_Browser) -> ::core::ffi::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Browser_set_has_scrollbar(self_: *mut Fl_Browser, mode: cty::c_uchar);
+    pub fn Fl_Browser_set_has_scrollbar(self_: *mut Fl_Browser, mode: ::core::ffi::c_uchar);
 }
 extern "C" {
-    pub fn Fl_Browser_scrollbar_size(self_: *const Fl_Browser) -> cty::c_int;
+    pub fn Fl_Browser_scrollbar_size(self_: *const Fl_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_set_scrollbar_size(self_: *mut Fl_Browser, newSize: cty::c_int);
+    pub fn Fl_Browser_set_scrollbar_size(self_: *mut Fl_Browser, newSize: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Browser_sort(self_: *mut Fl_Browser);
 }
 extern "C" {
-    pub fn Fl_Browser_scrollbar(self_: *mut Fl_Browser) -> *mut cty::c_void;
+    pub fn Fl_Browser_scrollbar(self_: *mut Fl_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Browser_hscrollbar(self_: *mut Fl_Browser) -> *mut cty::c_void;
+    pub fn Fl_Browser_hscrollbar(self_: *mut Fl_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Browser_data(self_: *const Fl_Browser, line: cty::c_int) -> *mut cty::c_void;
+    pub fn Fl_Browser_data(
+        self_: *const Fl_Browser,
+        line: ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Browser_set_data(self_: *mut Fl_Browser, line: cty::c_int, data: *mut cty::c_void);
+    pub fn Fl_Browser_set_data(
+        self_: *mut Fl_Browser,
+        line: ::core::ffi::c_int,
+        data: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Browser_hide_line(self_: *mut Fl_Browser, line: cty::c_int);
+    pub fn Fl_Browser_hide_line(self_: *mut Fl_Browser, line: ::core::ffi::c_int);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -476,30 +509,30 @@ pub struct Fl_Hold_Browser {
 }
 extern "C" {
     pub fn Fl_Hold_Browser_new(
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
-        title: *const cty::c_char,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        title: *const ::core::ffi::c_char,
     ) -> *mut Fl_Hold_Browser;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_x(arg1: *mut Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_x(arg1: *mut Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_y(arg1: *mut Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_y(arg1: *mut Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_width(arg1: *mut Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_width(arg1: *mut Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_height(arg1: *mut Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_height(arg1: *mut Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_label(arg1: *mut Fl_Hold_Browser) -> *const cty::c_char;
+    pub fn Fl_Hold_Browser_label(arg1: *mut Fl_Hold_Browser) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_label(arg1: *mut Fl_Hold_Browser, title: *const cty::c_char);
+    pub fn Fl_Hold_Browser_set_label(arg1: *mut Fl_Hold_Browser, title: *const ::core::ffi::c_char);
 }
 extern "C" {
     pub fn Fl_Hold_Browser_redraw(arg1: *mut Fl_Hold_Browser);
@@ -522,78 +555,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hold_Browser_resize(
         arg1: *mut Fl_Hold_Browser,
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Hold_Browser_widget_resize(
         arg1: *mut Fl_Hold_Browser,
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_tooltip(arg1: *mut Fl_Hold_Browser) -> *const cty::c_char;
+    pub fn Fl_Hold_Browser_tooltip(arg1: *mut Fl_Hold_Browser) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_tooltip(arg1: *mut Fl_Hold_Browser, txt: *const cty::c_char);
+    pub fn Fl_Hold_Browser_set_tooltip(arg1: *mut Fl_Hold_Browser, txt: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_get_type(arg1: *mut Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_get_type(arg1: *mut Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_type(arg1: *mut Fl_Hold_Browser, typ: cty::c_int);
+    pub fn Fl_Hold_Browser_set_type(arg1: *mut Fl_Hold_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_color(arg1: *mut Fl_Hold_Browser) -> cty::c_uint;
+    pub fn Fl_Hold_Browser_color(arg1: *mut Fl_Hold_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_color(arg1: *mut Fl_Hold_Browser, color: cty::c_uint);
+    pub fn Fl_Hold_Browser_set_color(arg1: *mut Fl_Hold_Browser, color: ::core::ffi::c_uint);
 }
 extern "C" {
     pub fn Fl_Hold_Browser_measure_label(
         arg1: *const Fl_Hold_Browser,
-        arg2: *mut cty::c_int,
-        arg3: *mut cty::c_int,
+        arg2: *mut ::core::ffi::c_int,
+        arg3: *mut ::core::ffi::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_label_color(arg1: *mut Fl_Hold_Browser) -> cty::c_uint;
+    pub fn Fl_Hold_Browser_label_color(arg1: *mut Fl_Hold_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_label_color(arg1: *mut Fl_Hold_Browser, color: cty::c_uint);
+    pub fn Fl_Hold_Browser_set_label_color(arg1: *mut Fl_Hold_Browser, color: ::core::ffi::c_uint);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_label_font(arg1: *mut Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_label_font(arg1: *mut Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_label_font(arg1: *mut Fl_Hold_Browser, font: cty::c_int);
+    pub fn Fl_Hold_Browser_set_label_font(arg1: *mut Fl_Hold_Browser, font: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_label_size(arg1: *mut Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_label_size(arg1: *mut Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_label_size(arg1: *mut Fl_Hold_Browser, sz: cty::c_int);
+    pub fn Fl_Hold_Browser_set_label_size(arg1: *mut Fl_Hold_Browser, sz: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_label_type(arg1: *mut Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_label_type(arg1: *mut Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_label_type(arg1: *mut Fl_Hold_Browser, typ: cty::c_int);
+    pub fn Fl_Hold_Browser_set_label_type(arg1: *mut Fl_Hold_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_box(arg1: *mut Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_box(arg1: *mut Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_box(arg1: *mut Fl_Hold_Browser, typ: cty::c_int);
+    pub fn Fl_Hold_Browser_set_box(arg1: *mut Fl_Hold_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_changed(arg1: *mut Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_changed(arg1: *mut Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Hold_Browser_set_changed(arg1: *mut Fl_Hold_Browser);
@@ -602,32 +635,32 @@ extern "C" {
     pub fn Fl_Hold_Browser_clear_changed(arg1: *mut Fl_Hold_Browser);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_align(arg1: *mut Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_align(arg1: *mut Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_align(arg1: *mut Fl_Hold_Browser, typ: cty::c_int);
+    pub fn Fl_Hold_Browser_set_align(arg1: *mut Fl_Hold_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Hold_Browser_delete(arg1: *mut Fl_Hold_Browser);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_image(arg1: *mut Fl_Hold_Browser, arg2: *mut cty::c_void);
+    pub fn Fl_Hold_Browser_set_image(arg1: *mut Fl_Hold_Browser, arg2: *mut ::core::ffi::c_void);
 }
 extern "C" {
     pub fn Fl_Hold_Browser_handle(
         self_: *mut Fl_Hold_Browser,
         cb: custom_handler_callback,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_handle_event(self_: *mut Fl_Hold_Browser, event: cty::c_int);
+    pub fn Fl_Hold_Browser_handle_event(self_: *mut Fl_Hold_Browser, event: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Hold_Browser_draw(
         self_: *mut Fl_Hold_Browser,
         cb: custom_draw_callback,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
@@ -636,33 +669,36 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: cty::c_int,
-                y: cty::c_int,
-                w: cty::c_int,
-                h: cty::c_int,
-                arg2: *mut cty::c_void,
+                x: ::core::ffi::c_int,
+                y: ::core::ffi::c_int,
+                w: ::core::ffi::c_int,
+                h: ::core::ffi::c_int,
+                arg2: *mut ::core::ffi::c_void,
             ),
         >,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_when(arg1: *mut Fl_Hold_Browser, arg2: cty::c_int);
+    pub fn Fl_Hold_Browser_set_when(arg1: *mut Fl_Hold_Browser, arg2: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_when(arg1: *const Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_when(arg1: *const Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_image(arg1: *const Fl_Hold_Browser) -> *const cty::c_void;
+    pub fn Fl_Hold_Browser_image(arg1: *const Fl_Hold_Browser) -> *const ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_parent(self_: *const Fl_Hold_Browser) -> *mut cty::c_void;
+    pub fn Fl_Hold_Browser_parent(self_: *const Fl_Hold_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_selection_color(arg1: *mut Fl_Hold_Browser) -> cty::c_uint;
+    pub fn Fl_Hold_Browser_selection_color(arg1: *mut Fl_Hold_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_selection_color(arg1: *mut Fl_Hold_Browser, color: cty::c_uint);
+    pub fn Fl_Hold_Browser_set_selection_color(
+        arg1: *mut Fl_Hold_Browser,
+        color: ::core::ffi::c_uint,
+    );
 }
 extern "C" {
     pub fn Fl_Hold_Browser_do_callback(arg1: *mut Fl_Hold_Browser);
@@ -670,23 +706,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hold_Browser_inside(
         self_: *const Fl_Hold_Browser,
-        arg1: *mut cty::c_void,
-    ) -> cty::c_int;
+        arg1: *mut ::core::ffi::c_void,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_window(arg1: *const Fl_Hold_Browser) -> *mut cty::c_void;
+    pub fn Fl_Hold_Browser_window(arg1: *const Fl_Hold_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_top_window(arg1: *const Fl_Hold_Browser) -> *mut cty::c_void;
+    pub fn Fl_Hold_Browser_top_window(arg1: *const Fl_Hold_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_takes_events(arg1: *const Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_takes_events(arg1: *const Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_user_data(arg1: *const Fl_Hold_Browser) -> *mut cty::c_void;
+    pub fn Fl_Hold_Browser_user_data(arg1: *const Fl_Hold_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_take_focus(self_: *mut Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_take_focus(self_: *mut Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Hold_Browser_set_visible_focus(self_: *mut Fl_Hold_Browser);
@@ -695,81 +731,90 @@ extern "C" {
     pub fn Fl_Hold_Browser_clear_visible_focus(self_: *mut Fl_Hold_Browser);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_visible_focus(self_: *mut Fl_Hold_Browser, v: cty::c_int);
+    pub fn Fl_Hold_Browser_visible_focus(self_: *mut Fl_Hold_Browser, v: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_has_visible_focus(self_: *mut Fl_Hold_Browser) -> cty::c_uint;
+    pub fn Fl_Hold_Browser_has_visible_focus(self_: *mut Fl_Hold_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_user_data(arg1: *mut Fl_Hold_Browser, data: *mut cty::c_void);
+    pub fn Fl_Hold_Browser_set_user_data(
+        arg1: *mut Fl_Hold_Browser,
+        data: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_draw_data(self_: *const Fl_Hold_Browser) -> *mut cty::c_void;
+    pub fn Fl_Hold_Browser_draw_data(self_: *const Fl_Hold_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_handle_data(self_: *const Fl_Hold_Browser) -> *mut cty::c_void;
+    pub fn Fl_Hold_Browser_handle_data(self_: *const Fl_Hold_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_draw_data(self_: *mut Fl_Hold_Browser, data: *mut cty::c_void);
+    pub fn Fl_Hold_Browser_set_draw_data(
+        self_: *mut Fl_Hold_Browser,
+        data: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_handle_data(self_: *mut Fl_Hold_Browser, data: *mut cty::c_void);
+    pub fn Fl_Hold_Browser_set_handle_data(
+        self_: *mut Fl_Hold_Browser,
+        data: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_damage(self_: *const Fl_Hold_Browser) -> cty::c_uchar;
+    pub fn Fl_Hold_Browser_damage(self_: *const Fl_Hold_Browser) -> ::core::ffi::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_damage(self_: *mut Fl_Hold_Browser, flag: cty::c_uchar);
+    pub fn Fl_Hold_Browser_set_damage(self_: *mut Fl_Hold_Browser, flag: ::core::ffi::c_uchar);
 }
 extern "C" {
     pub fn Fl_Hold_Browser_set_damage_area(
         self_: *mut Fl_Hold_Browser,
-        flag: cty::c_uchar,
-        x: cty::c_int,
-        y: cty::c_int,
-        w: cty::c_int,
-        h: cty::c_int,
+        flag: ::core::ffi::c_uchar,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        w: ::core::ffi::c_int,
+        h: ::core::ffi::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Hold_Browser_clear_damage(self_: *mut Fl_Hold_Browser);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_as_window(self_: *mut Fl_Hold_Browser) -> *mut cty::c_void;
+    pub fn Fl_Hold_Browser_as_window(self_: *mut Fl_Hold_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_as_group(self_: *mut Fl_Hold_Browser) -> *mut cty::c_void;
+    pub fn Fl_Hold_Browser_as_group(self_: *mut Fl_Hold_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_deimage(arg1: *mut Fl_Hold_Browser, arg2: *mut cty::c_void);
+    pub fn Fl_Hold_Browser_set_deimage(arg1: *mut Fl_Hold_Browser, arg2: *mut ::core::ffi::c_void);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_deimage(arg1: *const Fl_Hold_Browser) -> *const cty::c_void;
+    pub fn Fl_Hold_Browser_deimage(arg1: *const Fl_Hold_Browser) -> *const ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Hold_Browser_set_callback(
         arg1: *mut Fl_Hold_Browser,
         arg2: Fl_Callback,
-        arg3: *mut cty::c_void,
+        arg3: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Hold_Browser_set_deleter(
         arg1: *mut Fl_Hold_Browser,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_visible(self_: *const Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_visible(self_: *const Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_visible_r(self_: *const Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_visible_r(self_: *const Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_active(self_: *const Fl_Hold_Browser) -> cty::c_uint;
+    pub fn Fl_Hold_Browser_active(self_: *const Fl_Hold_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_active_r(self_: *const Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_active_r(self_: *const Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Hold_Browser_callback(self_: *const Fl_Hold_Browser) -> Fl_Callback;
@@ -778,172 +823,201 @@ extern "C" {
     pub fn Fl_Hold_Browser_set_deletion_callback(
         self_: *mut Fl_Hold_Browser,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::core::ffi::c_void),
         >,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Hold_Browser_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Hold_Browser;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
+    pub fn Fl_Hold_Browser_super_draw(ptr: *mut Fl_Widget, flag: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_value(arg1: *mut Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_value(arg1: *mut Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_remove(arg1: *mut Fl_Hold_Browser, line: cty::c_int);
+    pub fn Fl_Hold_Browser_remove(arg1: *mut Fl_Hold_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_add(arg1: *mut Fl_Hold_Browser, newtext: *const cty::c_char);
+    pub fn Fl_Hold_Browser_add(arg1: *mut Fl_Hold_Browser, newtext: *const ::core::ffi::c_char);
 }
 extern "C" {
     pub fn Fl_Hold_Browser_insert(
         arg1: *mut Fl_Hold_Browser,
-        line: cty::c_int,
-        newtext: *const cty::c_char,
+        line: ::core::ffi::c_int,
+        newtext: *const ::core::ffi::c_char,
     );
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_move(arg1: *mut Fl_Hold_Browser, to: cty::c_int, from: cty::c_int);
+    pub fn Fl_Hold_Browser_move(
+        arg1: *mut Fl_Hold_Browser,
+        to: ::core::ffi::c_int,
+        from: ::core::ffi::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_swap(arg1: *mut Fl_Hold_Browser, a: cty::c_int, b: cty::c_int);
+    pub fn Fl_Hold_Browser_swap(
+        arg1: *mut Fl_Hold_Browser,
+        a: ::core::ffi::c_int,
+        b: ::core::ffi::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Hold_Browser_clear(arg1: *mut Fl_Hold_Browser);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_size(arg1: *const Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_size(arg1: *const Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_select(arg1: *mut Fl_Hold_Browser, line: cty::c_int) -> cty::c_int;
+    pub fn Fl_Hold_Browser_select(
+        arg1: *mut Fl_Hold_Browser,
+        line: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_selected(arg1: *const Fl_Hold_Browser, line: cty::c_int) -> cty::c_int;
+    pub fn Fl_Hold_Browser_selected(
+        arg1: *const Fl_Hold_Browser,
+        line: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Hold_Browser_text(
         arg1: *const Fl_Hold_Browser,
-        line: cty::c_int,
-    ) -> *const cty::c_char;
+        line: ::core::ffi::c_int,
+    ) -> *const ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Hold_Browser_set_text(
         arg1: *mut Fl_Hold_Browser,
-        line: cty::c_int,
-        newtext: *const cty::c_char,
+        line: ::core::ffi::c_int,
+        newtext: *const ::core::ffi::c_char,
     );
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_load_file(arg1: *mut Fl_Hold_Browser, file: *const cty::c_char);
+    pub fn Fl_Hold_Browser_load_file(arg1: *mut Fl_Hold_Browser, file: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_text_size(arg1: *mut Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_text_size(arg1: *mut Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_text_size(arg1: *mut Fl_Hold_Browser, s: cty::c_int);
+    pub fn Fl_Hold_Browser_set_text_size(arg1: *mut Fl_Hold_Browser, s: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Hold_Browser_set_icon(
         arg1: *mut Fl_Hold_Browser,
-        line: cty::c_int,
-        icon: *mut cty::c_void,
+        line: ::core::ffi::c_int,
+        icon: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_icon(arg1: *const Fl_Hold_Browser, line: cty::c_int)
-        -> *mut cty::c_void;
+    pub fn Fl_Hold_Browser_icon(
+        arg1: *const Fl_Hold_Browser,
+        line: ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_remove_icon(arg1: *mut Fl_Hold_Browser, line: cty::c_int);
+    pub fn Fl_Hold_Browser_remove_icon(arg1: *mut Fl_Hold_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_topline(self_: *mut Fl_Hold_Browser, line: cty::c_int);
+    pub fn Fl_Hold_Browser_topline(self_: *mut Fl_Hold_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_is_topline(self_: *mut Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_is_topline(self_: *mut Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_bottomline(self_: *mut Fl_Hold_Browser, line: cty::c_int);
+    pub fn Fl_Hold_Browser_bottomline(self_: *mut Fl_Hold_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_middleline(self_: *mut Fl_Hold_Browser, line: cty::c_int);
+    pub fn Fl_Hold_Browser_middleline(self_: *mut Fl_Hold_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_format_char(self_: *const Fl_Hold_Browser) -> cty::c_char;
+    pub fn Fl_Hold_Browser_format_char(self_: *const Fl_Hold_Browser) -> ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_format_char(self_: *mut Fl_Hold_Browser, c: cty::c_char);
+    pub fn Fl_Hold_Browser_set_format_char(self_: *mut Fl_Hold_Browser, c: ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_column_char(self_: *const Fl_Hold_Browser) -> cty::c_char;
+    pub fn Fl_Hold_Browser_column_char(self_: *const Fl_Hold_Browser) -> ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_column_char(self_: *mut Fl_Hold_Browser, c: cty::c_char);
+    pub fn Fl_Hold_Browser_set_column_char(self_: *mut Fl_Hold_Browser, c: ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_column_widths(self_: *const Fl_Hold_Browser) -> *const cty::c_int;
+    pub fn Fl_Hold_Browser_column_widths(
+        self_: *const Fl_Hold_Browser,
+    ) -> *const ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_column_widths(self_: *mut Fl_Hold_Browser, arr: *const cty::c_int);
+    pub fn Fl_Hold_Browser_set_column_widths(
+        self_: *mut Fl_Hold_Browser,
+        arr: *const ::core::ffi::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_displayed(self_: *const Fl_Hold_Browser, line: cty::c_int)
-        -> cty::c_int;
+    pub fn Fl_Hold_Browser_displayed(
+        self_: *const Fl_Hold_Browser,
+        line: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_make_visible(self_: *mut Fl_Hold_Browser, line: cty::c_int);
+    pub fn Fl_Hold_Browser_make_visible(self_: *mut Fl_Hold_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_position(self_: *const Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_position(self_: *const Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_position(self_: *mut Fl_Hold_Browser, pos: cty::c_int);
+    pub fn Fl_Hold_Browser_set_position(self_: *mut Fl_Hold_Browser, pos: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_hposition(self_: *const Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_hposition(self_: *const Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_hposition(self_: *mut Fl_Hold_Browser, arg1: cty::c_int);
+    pub fn Fl_Hold_Browser_set_hposition(self_: *mut Fl_Hold_Browser, arg1: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_has_scrollbar(self_: *const Fl_Hold_Browser) -> cty::c_uchar;
+    pub fn Fl_Hold_Browser_has_scrollbar(self_: *const Fl_Hold_Browser) -> ::core::ffi::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_has_scrollbar(self_: *mut Fl_Hold_Browser, mode: cty::c_uchar);
+    pub fn Fl_Hold_Browser_set_has_scrollbar(
+        self_: *mut Fl_Hold_Browser,
+        mode: ::core::ffi::c_uchar,
+    );
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_scrollbar_size(self_: *const Fl_Hold_Browser) -> cty::c_int;
+    pub fn Fl_Hold_Browser_scrollbar_size(self_: *const Fl_Hold_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_scrollbar_size(self_: *mut Fl_Hold_Browser, newSize: cty::c_int);
+    pub fn Fl_Hold_Browser_set_scrollbar_size(
+        self_: *mut Fl_Hold_Browser,
+        newSize: ::core::ffi::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Hold_Browser_sort(self_: *mut Fl_Hold_Browser);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_scrollbar(self_: *mut Fl_Hold_Browser) -> *mut cty::c_void;
+    pub fn Fl_Hold_Browser_scrollbar(self_: *mut Fl_Hold_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_hscrollbar(self_: *mut Fl_Hold_Browser) -> *mut cty::c_void;
+    pub fn Fl_Hold_Browser_hscrollbar(self_: *mut Fl_Hold_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Hold_Browser_data(
         self_: *const Fl_Hold_Browser,
-        line: cty::c_int,
-    ) -> *mut cty::c_void;
+        line: ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Hold_Browser_set_data(
         self_: *mut Fl_Hold_Browser,
-        line: cty::c_int,
-        data: *mut cty::c_void,
+        line: ::core::ffi::c_int,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_hide_line(self_: *mut Fl_Hold_Browser, line: cty::c_int);
+    pub fn Fl_Hold_Browser_hide_line(self_: *mut Fl_Hold_Browser, line: ::core::ffi::c_int);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -952,30 +1026,33 @@ pub struct Fl_Select_Browser {
 }
 extern "C" {
     pub fn Fl_Select_Browser_new(
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
-        title: *const cty::c_char,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        title: *const ::core::ffi::c_char,
     ) -> *mut Fl_Select_Browser;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_x(arg1: *mut Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_x(arg1: *mut Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_y(arg1: *mut Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_y(arg1: *mut Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_width(arg1: *mut Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_width(arg1: *mut Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_height(arg1: *mut Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_height(arg1: *mut Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_label(arg1: *mut Fl_Select_Browser) -> *const cty::c_char;
+    pub fn Fl_Select_Browser_label(arg1: *mut Fl_Select_Browser) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_label(arg1: *mut Fl_Select_Browser, title: *const cty::c_char);
+    pub fn Fl_Select_Browser_set_label(
+        arg1: *mut Fl_Select_Browser,
+        title: *const ::core::ffi::c_char,
+    );
 }
 extern "C" {
     pub fn Fl_Select_Browser_redraw(arg1: *mut Fl_Select_Browser);
@@ -998,78 +1075,84 @@ extern "C" {
 extern "C" {
     pub fn Fl_Select_Browser_resize(
         arg1: *mut Fl_Select_Browser,
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Select_Browser_widget_resize(
         arg1: *mut Fl_Select_Browser,
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Select_Browser_tooltip(arg1: *mut Fl_Select_Browser) -> *const cty::c_char;
+    pub fn Fl_Select_Browser_tooltip(arg1: *mut Fl_Select_Browser) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_tooltip(arg1: *mut Fl_Select_Browser, txt: *const cty::c_char);
+    pub fn Fl_Select_Browser_set_tooltip(
+        arg1: *mut Fl_Select_Browser,
+        txt: *const ::core::ffi::c_char,
+    );
 }
 extern "C" {
-    pub fn Fl_Select_Browser_get_type(arg1: *mut Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_get_type(arg1: *mut Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_type(arg1: *mut Fl_Select_Browser, typ: cty::c_int);
+    pub fn Fl_Select_Browser_set_type(arg1: *mut Fl_Select_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_color(arg1: *mut Fl_Select_Browser) -> cty::c_uint;
+    pub fn Fl_Select_Browser_color(arg1: *mut Fl_Select_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_color(arg1: *mut Fl_Select_Browser, color: cty::c_uint);
+    pub fn Fl_Select_Browser_set_color(arg1: *mut Fl_Select_Browser, color: ::core::ffi::c_uint);
 }
 extern "C" {
     pub fn Fl_Select_Browser_measure_label(
         arg1: *const Fl_Select_Browser,
-        arg2: *mut cty::c_int,
-        arg3: *mut cty::c_int,
+        arg2: *mut ::core::ffi::c_int,
+        arg3: *mut ::core::ffi::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Select_Browser_label_color(arg1: *mut Fl_Select_Browser) -> cty::c_uint;
+    pub fn Fl_Select_Browser_label_color(arg1: *mut Fl_Select_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_label_color(arg1: *mut Fl_Select_Browser, color: cty::c_uint);
+    pub fn Fl_Select_Browser_set_label_color(
+        arg1: *mut Fl_Select_Browser,
+        color: ::core::ffi::c_uint,
+    );
 }
 extern "C" {
-    pub fn Fl_Select_Browser_label_font(arg1: *mut Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_label_font(arg1: *mut Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_label_font(arg1: *mut Fl_Select_Browser, font: cty::c_int);
+    pub fn Fl_Select_Browser_set_label_font(arg1: *mut Fl_Select_Browser, font: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_label_size(arg1: *mut Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_label_size(arg1: *mut Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_label_size(arg1: *mut Fl_Select_Browser, sz: cty::c_int);
+    pub fn Fl_Select_Browser_set_label_size(arg1: *mut Fl_Select_Browser, sz: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_label_type(arg1: *mut Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_label_type(arg1: *mut Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_label_type(arg1: *mut Fl_Select_Browser, typ: cty::c_int);
+    pub fn Fl_Select_Browser_set_label_type(arg1: *mut Fl_Select_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_box(arg1: *mut Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_box(arg1: *mut Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_box(arg1: *mut Fl_Select_Browser, typ: cty::c_int);
+    pub fn Fl_Select_Browser_set_box(arg1: *mut Fl_Select_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_changed(arg1: *mut Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_changed(arg1: *mut Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Select_Browser_set_changed(arg1: *mut Fl_Select_Browser);
@@ -1078,32 +1161,35 @@ extern "C" {
     pub fn Fl_Select_Browser_clear_changed(arg1: *mut Fl_Select_Browser);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_align(arg1: *mut Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_align(arg1: *mut Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_align(arg1: *mut Fl_Select_Browser, typ: cty::c_int);
+    pub fn Fl_Select_Browser_set_align(arg1: *mut Fl_Select_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Select_Browser_delete(arg1: *mut Fl_Select_Browser);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_image(arg1: *mut Fl_Select_Browser, arg2: *mut cty::c_void);
+    pub fn Fl_Select_Browser_set_image(
+        arg1: *mut Fl_Select_Browser,
+        arg2: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Select_Browser_handle(
         self_: *mut Fl_Select_Browser,
         cb: custom_handler_callback,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Select_Browser_handle_event(self_: *mut Fl_Select_Browser, event: cty::c_int);
+    pub fn Fl_Select_Browser_handle_event(self_: *mut Fl_Select_Browser, event: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Select_Browser_draw(
         self_: *mut Fl_Select_Browser,
         cb: custom_draw_callback,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
@@ -1112,33 +1198,36 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: cty::c_int,
-                y: cty::c_int,
-                w: cty::c_int,
-                h: cty::c_int,
-                arg2: *mut cty::c_void,
+                x: ::core::ffi::c_int,
+                y: ::core::ffi::c_int,
+                w: ::core::ffi::c_int,
+                h: ::core::ffi::c_int,
+                arg2: *mut ::core::ffi::c_void,
             ),
         >,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_when(arg1: *mut Fl_Select_Browser, arg2: cty::c_int);
+    pub fn Fl_Select_Browser_set_when(arg1: *mut Fl_Select_Browser, arg2: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_when(arg1: *const Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_when(arg1: *const Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_image(arg1: *const Fl_Select_Browser) -> *const cty::c_void;
+    pub fn Fl_Select_Browser_image(arg1: *const Fl_Select_Browser) -> *const ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_parent(self_: *const Fl_Select_Browser) -> *mut cty::c_void;
+    pub fn Fl_Select_Browser_parent(self_: *const Fl_Select_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_selection_color(arg1: *mut Fl_Select_Browser) -> cty::c_uint;
+    pub fn Fl_Select_Browser_selection_color(arg1: *mut Fl_Select_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_selection_color(arg1: *mut Fl_Select_Browser, color: cty::c_uint);
+    pub fn Fl_Select_Browser_set_selection_color(
+        arg1: *mut Fl_Select_Browser,
+        color: ::core::ffi::c_uint,
+    );
 }
 extern "C" {
     pub fn Fl_Select_Browser_do_callback(arg1: *mut Fl_Select_Browser);
@@ -1146,23 +1235,24 @@ extern "C" {
 extern "C" {
     pub fn Fl_Select_Browser_inside(
         self_: *const Fl_Select_Browser,
-        arg1: *mut cty::c_void,
-    ) -> cty::c_int;
+        arg1: *mut ::core::ffi::c_void,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_window(arg1: *const Fl_Select_Browser) -> *mut cty::c_void;
+    pub fn Fl_Select_Browser_window(arg1: *const Fl_Select_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_top_window(arg1: *const Fl_Select_Browser) -> *mut cty::c_void;
+    pub fn Fl_Select_Browser_top_window(arg1: *const Fl_Select_Browser)
+        -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_takes_events(arg1: *const Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_takes_events(arg1: *const Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_user_data(arg1: *const Fl_Select_Browser) -> *mut cty::c_void;
+    pub fn Fl_Select_Browser_user_data(arg1: *const Fl_Select_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_take_focus(self_: *mut Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_take_focus(self_: *mut Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Select_Browser_set_visible_focus(self_: *mut Fl_Select_Browser);
@@ -1171,81 +1261,98 @@ extern "C" {
     pub fn Fl_Select_Browser_clear_visible_focus(self_: *mut Fl_Select_Browser);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_visible_focus(self_: *mut Fl_Select_Browser, v: cty::c_int);
+    pub fn Fl_Select_Browser_visible_focus(self_: *mut Fl_Select_Browser, v: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_has_visible_focus(self_: *mut Fl_Select_Browser) -> cty::c_uint;
+    pub fn Fl_Select_Browser_has_visible_focus(
+        self_: *mut Fl_Select_Browser,
+    ) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_user_data(arg1: *mut Fl_Select_Browser, data: *mut cty::c_void);
+    pub fn Fl_Select_Browser_set_user_data(
+        arg1: *mut Fl_Select_Browser,
+        data: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Select_Browser_draw_data(self_: *const Fl_Select_Browser) -> *mut cty::c_void;
+    pub fn Fl_Select_Browser_draw_data(self_: *const Fl_Select_Browser)
+        -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_handle_data(self_: *const Fl_Select_Browser) -> *mut cty::c_void;
+    pub fn Fl_Select_Browser_handle_data(
+        self_: *const Fl_Select_Browser,
+    ) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_draw_data(self_: *mut Fl_Select_Browser, data: *mut cty::c_void);
+    pub fn Fl_Select_Browser_set_draw_data(
+        self_: *mut Fl_Select_Browser,
+        data: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_handle_data(self_: *mut Fl_Select_Browser, data: *mut cty::c_void);
+    pub fn Fl_Select_Browser_set_handle_data(
+        self_: *mut Fl_Select_Browser,
+        data: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Select_Browser_damage(self_: *const Fl_Select_Browser) -> cty::c_uchar;
+    pub fn Fl_Select_Browser_damage(self_: *const Fl_Select_Browser) -> ::core::ffi::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_damage(self_: *mut Fl_Select_Browser, flag: cty::c_uchar);
+    pub fn Fl_Select_Browser_set_damage(self_: *mut Fl_Select_Browser, flag: ::core::ffi::c_uchar);
 }
 extern "C" {
     pub fn Fl_Select_Browser_set_damage_area(
         self_: *mut Fl_Select_Browser,
-        flag: cty::c_uchar,
-        x: cty::c_int,
-        y: cty::c_int,
-        w: cty::c_int,
-        h: cty::c_int,
+        flag: ::core::ffi::c_uchar,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        w: ::core::ffi::c_int,
+        h: ::core::ffi::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Select_Browser_clear_damage(self_: *mut Fl_Select_Browser);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_as_window(self_: *mut Fl_Select_Browser) -> *mut cty::c_void;
+    pub fn Fl_Select_Browser_as_window(self_: *mut Fl_Select_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_as_group(self_: *mut Fl_Select_Browser) -> *mut cty::c_void;
+    pub fn Fl_Select_Browser_as_group(self_: *mut Fl_Select_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_deimage(arg1: *mut Fl_Select_Browser, arg2: *mut cty::c_void);
+    pub fn Fl_Select_Browser_set_deimage(
+        arg1: *mut Fl_Select_Browser,
+        arg2: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Select_Browser_deimage(arg1: *const Fl_Select_Browser) -> *const cty::c_void;
+    pub fn Fl_Select_Browser_deimage(arg1: *const Fl_Select_Browser) -> *const ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Select_Browser_set_callback(
         arg1: *mut Fl_Select_Browser,
         arg2: Fl_Callback,
-        arg3: *mut cty::c_void,
+        arg3: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Select_Browser_set_deleter(
         arg1: *mut Fl_Select_Browser,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Select_Browser_visible(self_: *const Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_visible(self_: *const Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_visible_r(self_: *const Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_visible_r(self_: *const Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_active(self_: *const Fl_Select_Browser) -> cty::c_uint;
+    pub fn Fl_Select_Browser_active(self_: *const Fl_Select_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_active_r(self_: *const Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_active_r(self_: *const Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Select_Browser_callback(self_: *const Fl_Select_Browser) -> Fl_Callback;
@@ -1254,182 +1361,205 @@ extern "C" {
     pub fn Fl_Select_Browser_set_deletion_callback(
         self_: *mut Fl_Select_Browser,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::core::ffi::c_void),
         >,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Select_Browser_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Select_Browser;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
+    pub fn Fl_Select_Browser_super_draw(ptr: *mut Fl_Widget, flag: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_value(arg1: *mut Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_value(arg1: *mut Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_remove(arg1: *mut Fl_Select_Browser, line: cty::c_int);
+    pub fn Fl_Select_Browser_remove(arg1: *mut Fl_Select_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_add(arg1: *mut Fl_Select_Browser, newtext: *const cty::c_char);
+    pub fn Fl_Select_Browser_add(arg1: *mut Fl_Select_Browser, newtext: *const ::core::ffi::c_char);
 }
 extern "C" {
     pub fn Fl_Select_Browser_insert(
         arg1: *mut Fl_Select_Browser,
-        line: cty::c_int,
-        newtext: *const cty::c_char,
+        line: ::core::ffi::c_int,
+        newtext: *const ::core::ffi::c_char,
     );
 }
 extern "C" {
-    pub fn Fl_Select_Browser_move(arg1: *mut Fl_Select_Browser, to: cty::c_int, from: cty::c_int);
+    pub fn Fl_Select_Browser_move(
+        arg1: *mut Fl_Select_Browser,
+        to: ::core::ffi::c_int,
+        from: ::core::ffi::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Select_Browser_swap(arg1: *mut Fl_Select_Browser, a: cty::c_int, b: cty::c_int);
+    pub fn Fl_Select_Browser_swap(
+        arg1: *mut Fl_Select_Browser,
+        a: ::core::ffi::c_int,
+        b: ::core::ffi::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Select_Browser_clear(arg1: *mut Fl_Select_Browser);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_size(arg1: *const Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_size(arg1: *const Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_select(arg1: *mut Fl_Select_Browser, line: cty::c_int) -> cty::c_int;
+    pub fn Fl_Select_Browser_select(
+        arg1: *mut Fl_Select_Browser,
+        line: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Select_Browser_selected(
         arg1: *const Fl_Select_Browser,
-        line: cty::c_int,
-    ) -> cty::c_int;
+        line: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Select_Browser_text(
         arg1: *const Fl_Select_Browser,
-        line: cty::c_int,
-    ) -> *const cty::c_char;
+        line: ::core::ffi::c_int,
+    ) -> *const ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Select_Browser_set_text(
         arg1: *mut Fl_Select_Browser,
-        line: cty::c_int,
-        newtext: *const cty::c_char,
+        line: ::core::ffi::c_int,
+        newtext: *const ::core::ffi::c_char,
     );
 }
 extern "C" {
-    pub fn Fl_Select_Browser_load_file(arg1: *mut Fl_Select_Browser, file: *const cty::c_char);
+    pub fn Fl_Select_Browser_load_file(
+        arg1: *mut Fl_Select_Browser,
+        file: *const ::core::ffi::c_char,
+    );
 }
 extern "C" {
-    pub fn Fl_Select_Browser_text_size(arg1: *mut Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_text_size(arg1: *mut Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_text_size(arg1: *mut Fl_Select_Browser, s: cty::c_int);
+    pub fn Fl_Select_Browser_set_text_size(arg1: *mut Fl_Select_Browser, s: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Select_Browser_set_icon(
         arg1: *mut Fl_Select_Browser,
-        line: cty::c_int,
-        icon: *mut cty::c_void,
+        line: ::core::ffi::c_int,
+        icon: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Select_Browser_icon(
         arg1: *const Fl_Select_Browser,
-        line: cty::c_int,
-    ) -> *mut cty::c_void;
+        line: ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_remove_icon(arg1: *mut Fl_Select_Browser, line: cty::c_int);
+    pub fn Fl_Select_Browser_remove_icon(arg1: *mut Fl_Select_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_topline(self_: *mut Fl_Select_Browser, line: cty::c_int);
+    pub fn Fl_Select_Browser_topline(self_: *mut Fl_Select_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_is_topline(self_: *mut Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_is_topline(self_: *mut Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_bottomline(self_: *mut Fl_Select_Browser, line: cty::c_int);
+    pub fn Fl_Select_Browser_bottomline(self_: *mut Fl_Select_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_middleline(self_: *mut Fl_Select_Browser, line: cty::c_int);
+    pub fn Fl_Select_Browser_middleline(self_: *mut Fl_Select_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_format_char(self_: *const Fl_Select_Browser) -> cty::c_char;
+    pub fn Fl_Select_Browser_format_char(self_: *const Fl_Select_Browser) -> ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_format_char(self_: *mut Fl_Select_Browser, c: cty::c_char);
+    pub fn Fl_Select_Browser_set_format_char(self_: *mut Fl_Select_Browser, c: ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_column_char(self_: *const Fl_Select_Browser) -> cty::c_char;
+    pub fn Fl_Select_Browser_column_char(self_: *const Fl_Select_Browser) -> ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_column_char(self_: *mut Fl_Select_Browser, c: cty::c_char);
+    pub fn Fl_Select_Browser_set_column_char(self_: *mut Fl_Select_Browser, c: ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_column_widths(self_: *const Fl_Select_Browser) -> *const cty::c_int;
+    pub fn Fl_Select_Browser_column_widths(
+        self_: *const Fl_Select_Browser,
+    ) -> *const ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Select_Browser_set_column_widths(
         self_: *mut Fl_Select_Browser,
-        arr: *const cty::c_int,
+        arr: *const ::core::ffi::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Select_Browser_displayed(
         self_: *const Fl_Select_Browser,
-        line: cty::c_int,
-    ) -> cty::c_int;
+        line: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_make_visible(self_: *mut Fl_Select_Browser, line: cty::c_int);
+    pub fn Fl_Select_Browser_make_visible(self_: *mut Fl_Select_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_position(self_: *const Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_position(self_: *const Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_position(self_: *mut Fl_Select_Browser, pos: cty::c_int);
+    pub fn Fl_Select_Browser_set_position(self_: *mut Fl_Select_Browser, pos: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_hposition(self_: *const Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_hposition(self_: *const Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_hposition(self_: *mut Fl_Select_Browser, arg1: cty::c_int);
+    pub fn Fl_Select_Browser_set_hposition(self_: *mut Fl_Select_Browser, arg1: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_has_scrollbar(self_: *const Fl_Select_Browser) -> cty::c_uchar;
+    pub fn Fl_Select_Browser_has_scrollbar(self_: *const Fl_Select_Browser)
+        -> ::core::ffi::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_has_scrollbar(self_: *mut Fl_Select_Browser, mode: cty::c_uchar);
+    pub fn Fl_Select_Browser_set_has_scrollbar(
+        self_: *mut Fl_Select_Browser,
+        mode: ::core::ffi::c_uchar,
+    );
 }
 extern "C" {
-    pub fn Fl_Select_Browser_scrollbar_size(self_: *const Fl_Select_Browser) -> cty::c_int;
+    pub fn Fl_Select_Browser_scrollbar_size(self_: *const Fl_Select_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_scrollbar_size(self_: *mut Fl_Select_Browser, newSize: cty::c_int);
+    pub fn Fl_Select_Browser_set_scrollbar_size(
+        self_: *mut Fl_Select_Browser,
+        newSize: ::core::ffi::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Select_Browser_sort(self_: *mut Fl_Select_Browser);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_scrollbar(self_: *mut Fl_Select_Browser) -> *mut cty::c_void;
+    pub fn Fl_Select_Browser_scrollbar(self_: *mut Fl_Select_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_hscrollbar(self_: *mut Fl_Select_Browser) -> *mut cty::c_void;
+    pub fn Fl_Select_Browser_hscrollbar(self_: *mut Fl_Select_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Select_Browser_data(
         self_: *const Fl_Select_Browser,
-        line: cty::c_int,
-    ) -> *mut cty::c_void;
+        line: ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Select_Browser_set_data(
         self_: *mut Fl_Select_Browser,
-        line: cty::c_int,
-        data: *mut cty::c_void,
+        line: ::core::ffi::c_int,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Select_Browser_hide_line(self_: *mut Fl_Select_Browser, line: cty::c_int);
+    pub fn Fl_Select_Browser_hide_line(self_: *mut Fl_Select_Browser, line: ::core::ffi::c_int);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1438,30 +1568,33 @@ pub struct Fl_Multi_Browser {
 }
 extern "C" {
     pub fn Fl_Multi_Browser_new(
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
-        title: *const cty::c_char,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        title: *const ::core::ffi::c_char,
     ) -> *mut Fl_Multi_Browser;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_x(arg1: *mut Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_x(arg1: *mut Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_y(arg1: *mut Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_y(arg1: *mut Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_width(arg1: *mut Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_width(arg1: *mut Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_height(arg1: *mut Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_height(arg1: *mut Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_label(arg1: *mut Fl_Multi_Browser) -> *const cty::c_char;
+    pub fn Fl_Multi_Browser_label(arg1: *mut Fl_Multi_Browser) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_label(arg1: *mut Fl_Multi_Browser, title: *const cty::c_char);
+    pub fn Fl_Multi_Browser_set_label(
+        arg1: *mut Fl_Multi_Browser,
+        title: *const ::core::ffi::c_char,
+    );
 }
 extern "C" {
     pub fn Fl_Multi_Browser_redraw(arg1: *mut Fl_Multi_Browser);
@@ -1484,78 +1617,84 @@ extern "C" {
 extern "C" {
     pub fn Fl_Multi_Browser_resize(
         arg1: *mut Fl_Multi_Browser,
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Multi_Browser_widget_resize(
         arg1: *mut Fl_Multi_Browser,
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_tooltip(arg1: *mut Fl_Multi_Browser) -> *const cty::c_char;
+    pub fn Fl_Multi_Browser_tooltip(arg1: *mut Fl_Multi_Browser) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_tooltip(arg1: *mut Fl_Multi_Browser, txt: *const cty::c_char);
+    pub fn Fl_Multi_Browser_set_tooltip(
+        arg1: *mut Fl_Multi_Browser,
+        txt: *const ::core::ffi::c_char,
+    );
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_get_type(arg1: *mut Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_get_type(arg1: *mut Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_type(arg1: *mut Fl_Multi_Browser, typ: cty::c_int);
+    pub fn Fl_Multi_Browser_set_type(arg1: *mut Fl_Multi_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_color(arg1: *mut Fl_Multi_Browser) -> cty::c_uint;
+    pub fn Fl_Multi_Browser_color(arg1: *mut Fl_Multi_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_color(arg1: *mut Fl_Multi_Browser, color: cty::c_uint);
+    pub fn Fl_Multi_Browser_set_color(arg1: *mut Fl_Multi_Browser, color: ::core::ffi::c_uint);
 }
 extern "C" {
     pub fn Fl_Multi_Browser_measure_label(
         arg1: *const Fl_Multi_Browser,
-        arg2: *mut cty::c_int,
-        arg3: *mut cty::c_int,
+        arg2: *mut ::core::ffi::c_int,
+        arg3: *mut ::core::ffi::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_label_color(arg1: *mut Fl_Multi_Browser) -> cty::c_uint;
+    pub fn Fl_Multi_Browser_label_color(arg1: *mut Fl_Multi_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_label_color(arg1: *mut Fl_Multi_Browser, color: cty::c_uint);
+    pub fn Fl_Multi_Browser_set_label_color(
+        arg1: *mut Fl_Multi_Browser,
+        color: ::core::ffi::c_uint,
+    );
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_label_font(arg1: *mut Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_label_font(arg1: *mut Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_label_font(arg1: *mut Fl_Multi_Browser, font: cty::c_int);
+    pub fn Fl_Multi_Browser_set_label_font(arg1: *mut Fl_Multi_Browser, font: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_label_size(arg1: *mut Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_label_size(arg1: *mut Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_label_size(arg1: *mut Fl_Multi_Browser, sz: cty::c_int);
+    pub fn Fl_Multi_Browser_set_label_size(arg1: *mut Fl_Multi_Browser, sz: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_label_type(arg1: *mut Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_label_type(arg1: *mut Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_label_type(arg1: *mut Fl_Multi_Browser, typ: cty::c_int);
+    pub fn Fl_Multi_Browser_set_label_type(arg1: *mut Fl_Multi_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_box(arg1: *mut Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_box(arg1: *mut Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_box(arg1: *mut Fl_Multi_Browser, typ: cty::c_int);
+    pub fn Fl_Multi_Browser_set_box(arg1: *mut Fl_Multi_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_changed(arg1: *mut Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_changed(arg1: *mut Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Multi_Browser_set_changed(arg1: *mut Fl_Multi_Browser);
@@ -1564,32 +1703,32 @@ extern "C" {
     pub fn Fl_Multi_Browser_clear_changed(arg1: *mut Fl_Multi_Browser);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_align(arg1: *mut Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_align(arg1: *mut Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_align(arg1: *mut Fl_Multi_Browser, typ: cty::c_int);
+    pub fn Fl_Multi_Browser_set_align(arg1: *mut Fl_Multi_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Multi_Browser_delete(arg1: *mut Fl_Multi_Browser);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_image(arg1: *mut Fl_Multi_Browser, arg2: *mut cty::c_void);
+    pub fn Fl_Multi_Browser_set_image(arg1: *mut Fl_Multi_Browser, arg2: *mut ::core::ffi::c_void);
 }
 extern "C" {
     pub fn Fl_Multi_Browser_handle(
         self_: *mut Fl_Multi_Browser,
         cb: custom_handler_callback,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_handle_event(self_: *mut Fl_Multi_Browser, event: cty::c_int);
+    pub fn Fl_Multi_Browser_handle_event(self_: *mut Fl_Multi_Browser, event: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Multi_Browser_draw(
         self_: *mut Fl_Multi_Browser,
         cb: custom_draw_callback,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
@@ -1598,33 +1737,36 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: cty::c_int,
-                y: cty::c_int,
-                w: cty::c_int,
-                h: cty::c_int,
-                arg2: *mut cty::c_void,
+                x: ::core::ffi::c_int,
+                y: ::core::ffi::c_int,
+                w: ::core::ffi::c_int,
+                h: ::core::ffi::c_int,
+                arg2: *mut ::core::ffi::c_void,
             ),
         >,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_when(arg1: *mut Fl_Multi_Browser, arg2: cty::c_int);
+    pub fn Fl_Multi_Browser_set_when(arg1: *mut Fl_Multi_Browser, arg2: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_when(arg1: *const Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_when(arg1: *const Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_image(arg1: *const Fl_Multi_Browser) -> *const cty::c_void;
+    pub fn Fl_Multi_Browser_image(arg1: *const Fl_Multi_Browser) -> *const ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_parent(self_: *const Fl_Multi_Browser) -> *mut cty::c_void;
+    pub fn Fl_Multi_Browser_parent(self_: *const Fl_Multi_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_selection_color(arg1: *mut Fl_Multi_Browser) -> cty::c_uint;
+    pub fn Fl_Multi_Browser_selection_color(arg1: *mut Fl_Multi_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_selection_color(arg1: *mut Fl_Multi_Browser, color: cty::c_uint);
+    pub fn Fl_Multi_Browser_set_selection_color(
+        arg1: *mut Fl_Multi_Browser,
+        color: ::core::ffi::c_uint,
+    );
 }
 extern "C" {
     pub fn Fl_Multi_Browser_do_callback(arg1: *mut Fl_Multi_Browser);
@@ -1632,23 +1774,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Multi_Browser_inside(
         self_: *const Fl_Multi_Browser,
-        arg1: *mut cty::c_void,
-    ) -> cty::c_int;
+        arg1: *mut ::core::ffi::c_void,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_window(arg1: *const Fl_Multi_Browser) -> *mut cty::c_void;
+    pub fn Fl_Multi_Browser_window(arg1: *const Fl_Multi_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_top_window(arg1: *const Fl_Multi_Browser) -> *mut cty::c_void;
+    pub fn Fl_Multi_Browser_top_window(arg1: *const Fl_Multi_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_takes_events(arg1: *const Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_takes_events(arg1: *const Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_user_data(arg1: *const Fl_Multi_Browser) -> *mut cty::c_void;
+    pub fn Fl_Multi_Browser_user_data(arg1: *const Fl_Multi_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_take_focus(self_: *mut Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_take_focus(self_: *mut Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Multi_Browser_set_visible_focus(self_: *mut Fl_Multi_Browser);
@@ -1657,81 +1799,94 @@ extern "C" {
     pub fn Fl_Multi_Browser_clear_visible_focus(self_: *mut Fl_Multi_Browser);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_visible_focus(self_: *mut Fl_Multi_Browser, v: cty::c_int);
+    pub fn Fl_Multi_Browser_visible_focus(self_: *mut Fl_Multi_Browser, v: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_has_visible_focus(self_: *mut Fl_Multi_Browser) -> cty::c_uint;
+    pub fn Fl_Multi_Browser_has_visible_focus(self_: *mut Fl_Multi_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_user_data(arg1: *mut Fl_Multi_Browser, data: *mut cty::c_void);
+    pub fn Fl_Multi_Browser_set_user_data(
+        arg1: *mut Fl_Multi_Browser,
+        data: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_draw_data(self_: *const Fl_Multi_Browser) -> *mut cty::c_void;
+    pub fn Fl_Multi_Browser_draw_data(self_: *const Fl_Multi_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_handle_data(self_: *const Fl_Multi_Browser) -> *mut cty::c_void;
+    pub fn Fl_Multi_Browser_handle_data(self_: *const Fl_Multi_Browser)
+        -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_draw_data(self_: *mut Fl_Multi_Browser, data: *mut cty::c_void);
+    pub fn Fl_Multi_Browser_set_draw_data(
+        self_: *mut Fl_Multi_Browser,
+        data: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_handle_data(self_: *mut Fl_Multi_Browser, data: *mut cty::c_void);
+    pub fn Fl_Multi_Browser_set_handle_data(
+        self_: *mut Fl_Multi_Browser,
+        data: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_damage(self_: *const Fl_Multi_Browser) -> cty::c_uchar;
+    pub fn Fl_Multi_Browser_damage(self_: *const Fl_Multi_Browser) -> ::core::ffi::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_damage(self_: *mut Fl_Multi_Browser, flag: cty::c_uchar);
+    pub fn Fl_Multi_Browser_set_damage(self_: *mut Fl_Multi_Browser, flag: ::core::ffi::c_uchar);
 }
 extern "C" {
     pub fn Fl_Multi_Browser_set_damage_area(
         self_: *mut Fl_Multi_Browser,
-        flag: cty::c_uchar,
-        x: cty::c_int,
-        y: cty::c_int,
-        w: cty::c_int,
-        h: cty::c_int,
+        flag: ::core::ffi::c_uchar,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        w: ::core::ffi::c_int,
+        h: ::core::ffi::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Multi_Browser_clear_damage(self_: *mut Fl_Multi_Browser);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_as_window(self_: *mut Fl_Multi_Browser) -> *mut cty::c_void;
+    pub fn Fl_Multi_Browser_as_window(self_: *mut Fl_Multi_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_as_group(self_: *mut Fl_Multi_Browser) -> *mut cty::c_void;
+    pub fn Fl_Multi_Browser_as_group(self_: *mut Fl_Multi_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_deimage(arg1: *mut Fl_Multi_Browser, arg2: *mut cty::c_void);
+    pub fn Fl_Multi_Browser_set_deimage(
+        arg1: *mut Fl_Multi_Browser,
+        arg2: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_deimage(arg1: *const Fl_Multi_Browser) -> *const cty::c_void;
+    pub fn Fl_Multi_Browser_deimage(arg1: *const Fl_Multi_Browser) -> *const ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Multi_Browser_set_callback(
         arg1: *mut Fl_Multi_Browser,
         arg2: Fl_Callback,
-        arg3: *mut cty::c_void,
+        arg3: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Multi_Browser_set_deleter(
         arg1: *mut Fl_Multi_Browser,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_visible(self_: *const Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_visible(self_: *const Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_visible_r(self_: *const Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_visible_r(self_: *const Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_active(self_: *const Fl_Multi_Browser) -> cty::c_uint;
+    pub fn Fl_Multi_Browser_active(self_: *const Fl_Multi_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_active_r(self_: *const Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_active_r(self_: *const Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Multi_Browser_callback(self_: *const Fl_Multi_Browser) -> Fl_Callback;
@@ -1740,177 +1895,204 @@ extern "C" {
     pub fn Fl_Multi_Browser_set_deletion_callback(
         self_: *mut Fl_Multi_Browser,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::core::ffi::c_void),
         >,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Multi_Browser_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Multi_Browser;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
+    pub fn Fl_Multi_Browser_super_draw(ptr: *mut Fl_Widget, flag: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_value(arg1: *mut Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_value(arg1: *mut Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_remove(arg1: *mut Fl_Multi_Browser, line: cty::c_int);
+    pub fn Fl_Multi_Browser_remove(arg1: *mut Fl_Multi_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_add(arg1: *mut Fl_Multi_Browser, newtext: *const cty::c_char);
+    pub fn Fl_Multi_Browser_add(arg1: *mut Fl_Multi_Browser, newtext: *const ::core::ffi::c_char);
 }
 extern "C" {
     pub fn Fl_Multi_Browser_insert(
         arg1: *mut Fl_Multi_Browser,
-        line: cty::c_int,
-        newtext: *const cty::c_char,
+        line: ::core::ffi::c_int,
+        newtext: *const ::core::ffi::c_char,
     );
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_move(arg1: *mut Fl_Multi_Browser, to: cty::c_int, from: cty::c_int);
+    pub fn Fl_Multi_Browser_move(
+        arg1: *mut Fl_Multi_Browser,
+        to: ::core::ffi::c_int,
+        from: ::core::ffi::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_swap(arg1: *mut Fl_Multi_Browser, a: cty::c_int, b: cty::c_int);
+    pub fn Fl_Multi_Browser_swap(
+        arg1: *mut Fl_Multi_Browser,
+        a: ::core::ffi::c_int,
+        b: ::core::ffi::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Multi_Browser_clear(arg1: *mut Fl_Multi_Browser);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_size(arg1: *const Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_size(arg1: *const Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_select(arg1: *mut Fl_Multi_Browser, line: cty::c_int) -> cty::c_int;
+    pub fn Fl_Multi_Browser_select(
+        arg1: *mut Fl_Multi_Browser,
+        line: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_selected(arg1: *const Fl_Multi_Browser, line: cty::c_int)
-        -> cty::c_int;
+    pub fn Fl_Multi_Browser_selected(
+        arg1: *const Fl_Multi_Browser,
+        line: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Multi_Browser_text(
         arg1: *const Fl_Multi_Browser,
-        line: cty::c_int,
-    ) -> *const cty::c_char;
+        line: ::core::ffi::c_int,
+    ) -> *const ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Multi_Browser_set_text(
         arg1: *mut Fl_Multi_Browser,
-        line: cty::c_int,
-        newtext: *const cty::c_char,
+        line: ::core::ffi::c_int,
+        newtext: *const ::core::ffi::c_char,
     );
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_load_file(arg1: *mut Fl_Multi_Browser, file: *const cty::c_char);
+    pub fn Fl_Multi_Browser_load_file(
+        arg1: *mut Fl_Multi_Browser,
+        file: *const ::core::ffi::c_char,
+    );
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_text_size(arg1: *mut Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_text_size(arg1: *mut Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_text_size(arg1: *mut Fl_Multi_Browser, s: cty::c_int);
+    pub fn Fl_Multi_Browser_set_text_size(arg1: *mut Fl_Multi_Browser, s: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Multi_Browser_set_icon(
         arg1: *mut Fl_Multi_Browser,
-        line: cty::c_int,
-        icon: *mut cty::c_void,
+        line: ::core::ffi::c_int,
+        icon: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Multi_Browser_icon(
         arg1: *const Fl_Multi_Browser,
-        line: cty::c_int,
-    ) -> *mut cty::c_void;
+        line: ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_remove_icon(arg1: *mut Fl_Multi_Browser, line: cty::c_int);
+    pub fn Fl_Multi_Browser_remove_icon(arg1: *mut Fl_Multi_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_topline(self_: *mut Fl_Multi_Browser, line: cty::c_int);
+    pub fn Fl_Multi_Browser_topline(self_: *mut Fl_Multi_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_is_topline(self_: *mut Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_is_topline(self_: *mut Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_bottomline(self_: *mut Fl_Multi_Browser, line: cty::c_int);
+    pub fn Fl_Multi_Browser_bottomline(self_: *mut Fl_Multi_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_middleline(self_: *mut Fl_Multi_Browser, line: cty::c_int);
+    pub fn Fl_Multi_Browser_middleline(self_: *mut Fl_Multi_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_format_char(self_: *const Fl_Multi_Browser) -> cty::c_char;
+    pub fn Fl_Multi_Browser_format_char(self_: *const Fl_Multi_Browser) -> ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_format_char(self_: *mut Fl_Multi_Browser, c: cty::c_char);
+    pub fn Fl_Multi_Browser_set_format_char(self_: *mut Fl_Multi_Browser, c: ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_column_char(self_: *const Fl_Multi_Browser) -> cty::c_char;
+    pub fn Fl_Multi_Browser_column_char(self_: *const Fl_Multi_Browser) -> ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_column_char(self_: *mut Fl_Multi_Browser, c: cty::c_char);
+    pub fn Fl_Multi_Browser_set_column_char(self_: *mut Fl_Multi_Browser, c: ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_column_widths(self_: *const Fl_Multi_Browser) -> *const cty::c_int;
+    pub fn Fl_Multi_Browser_column_widths(
+        self_: *const Fl_Multi_Browser,
+    ) -> *const ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_column_widths(self_: *mut Fl_Multi_Browser, arr: *const cty::c_int);
+    pub fn Fl_Multi_Browser_set_column_widths(
+        self_: *mut Fl_Multi_Browser,
+        arr: *const ::core::ffi::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Multi_Browser_displayed(
         self_: *const Fl_Multi_Browser,
-        line: cty::c_int,
-    ) -> cty::c_int;
+        line: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_make_visible(self_: *mut Fl_Multi_Browser, line: cty::c_int);
+    pub fn Fl_Multi_Browser_make_visible(self_: *mut Fl_Multi_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_position(self_: *const Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_position(self_: *const Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_position(self_: *mut Fl_Multi_Browser, pos: cty::c_int);
+    pub fn Fl_Multi_Browser_set_position(self_: *mut Fl_Multi_Browser, pos: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_hposition(self_: *const Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_hposition(self_: *const Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_hposition(self_: *mut Fl_Multi_Browser, arg1: cty::c_int);
+    pub fn Fl_Multi_Browser_set_hposition(self_: *mut Fl_Multi_Browser, arg1: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_has_scrollbar(self_: *const Fl_Multi_Browser) -> cty::c_uchar;
+    pub fn Fl_Multi_Browser_has_scrollbar(self_: *const Fl_Multi_Browser) -> ::core::ffi::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_has_scrollbar(self_: *mut Fl_Multi_Browser, mode: cty::c_uchar);
+    pub fn Fl_Multi_Browser_set_has_scrollbar(
+        self_: *mut Fl_Multi_Browser,
+        mode: ::core::ffi::c_uchar,
+    );
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_scrollbar_size(self_: *const Fl_Multi_Browser) -> cty::c_int;
+    pub fn Fl_Multi_Browser_scrollbar_size(self_: *const Fl_Multi_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_scrollbar_size(self_: *mut Fl_Multi_Browser, newSize: cty::c_int);
+    pub fn Fl_Multi_Browser_set_scrollbar_size(
+        self_: *mut Fl_Multi_Browser,
+        newSize: ::core::ffi::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Multi_Browser_sort(self_: *mut Fl_Multi_Browser);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_scrollbar(self_: *mut Fl_Multi_Browser) -> *mut cty::c_void;
+    pub fn Fl_Multi_Browser_scrollbar(self_: *mut Fl_Multi_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_hscrollbar(self_: *mut Fl_Multi_Browser) -> *mut cty::c_void;
+    pub fn Fl_Multi_Browser_hscrollbar(self_: *mut Fl_Multi_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Multi_Browser_data(
         self_: *const Fl_Multi_Browser,
-        line: cty::c_int,
-    ) -> *mut cty::c_void;
+        line: ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Multi_Browser_set_data(
         self_: *mut Fl_Multi_Browser,
-        line: cty::c_int,
-        data: *mut cty::c_void,
+        line: ::core::ffi::c_int,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_hide_line(self_: *mut Fl_Multi_Browser, line: cty::c_int);
+    pub fn Fl_Multi_Browser_hide_line(self_: *mut Fl_Multi_Browser, line: ::core::ffi::c_int);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1919,30 +2101,30 @@ pub struct Fl_File_Browser {
 }
 extern "C" {
     pub fn Fl_File_Browser_new(
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
-        title: *const cty::c_char,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        title: *const ::core::ffi::c_char,
     ) -> *mut Fl_File_Browser;
 }
 extern "C" {
-    pub fn Fl_File_Browser_x(arg1: *mut Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_x(arg1: *mut Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_y(arg1: *mut Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_y(arg1: *mut Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_width(arg1: *mut Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_width(arg1: *mut Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_height(arg1: *mut Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_height(arg1: *mut Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_label(arg1: *mut Fl_File_Browser) -> *const cty::c_char;
+    pub fn Fl_File_Browser_label(arg1: *mut Fl_File_Browser) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_label(arg1: *mut Fl_File_Browser, title: *const cty::c_char);
+    pub fn Fl_File_Browser_set_label(arg1: *mut Fl_File_Browser, title: *const ::core::ffi::c_char);
 }
 extern "C" {
     pub fn Fl_File_Browser_redraw(arg1: *mut Fl_File_Browser);
@@ -1965,78 +2147,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_File_Browser_resize(
         arg1: *mut Fl_File_Browser,
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
     );
 }
 extern "C" {
     pub fn Fl_File_Browser_widget_resize(
         arg1: *mut Fl_File_Browser,
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_File_Browser_tooltip(arg1: *mut Fl_File_Browser) -> *const cty::c_char;
+    pub fn Fl_File_Browser_tooltip(arg1: *mut Fl_File_Browser) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_tooltip(arg1: *mut Fl_File_Browser, txt: *const cty::c_char);
+    pub fn Fl_File_Browser_set_tooltip(arg1: *mut Fl_File_Browser, txt: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_File_Browser_get_type(arg1: *mut Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_get_type(arg1: *mut Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_type(arg1: *mut Fl_File_Browser, typ: cty::c_int);
+    pub fn Fl_File_Browser_set_type(arg1: *mut Fl_File_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Browser_color(arg1: *mut Fl_File_Browser) -> cty::c_uint;
+    pub fn Fl_File_Browser_color(arg1: *mut Fl_File_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_color(arg1: *mut Fl_File_Browser, color: cty::c_uint);
+    pub fn Fl_File_Browser_set_color(arg1: *mut Fl_File_Browser, color: ::core::ffi::c_uint);
 }
 extern "C" {
     pub fn Fl_File_Browser_measure_label(
         arg1: *const Fl_File_Browser,
-        arg2: *mut cty::c_int,
-        arg3: *mut cty::c_int,
+        arg2: *mut ::core::ffi::c_int,
+        arg3: *mut ::core::ffi::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_File_Browser_label_color(arg1: *mut Fl_File_Browser) -> cty::c_uint;
+    pub fn Fl_File_Browser_label_color(arg1: *mut Fl_File_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_label_color(arg1: *mut Fl_File_Browser, color: cty::c_uint);
+    pub fn Fl_File_Browser_set_label_color(arg1: *mut Fl_File_Browser, color: ::core::ffi::c_uint);
 }
 extern "C" {
-    pub fn Fl_File_Browser_label_font(arg1: *mut Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_label_font(arg1: *mut Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_label_font(arg1: *mut Fl_File_Browser, font: cty::c_int);
+    pub fn Fl_File_Browser_set_label_font(arg1: *mut Fl_File_Browser, font: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Browser_label_size(arg1: *mut Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_label_size(arg1: *mut Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_label_size(arg1: *mut Fl_File_Browser, sz: cty::c_int);
+    pub fn Fl_File_Browser_set_label_size(arg1: *mut Fl_File_Browser, sz: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Browser_label_type(arg1: *mut Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_label_type(arg1: *mut Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_label_type(arg1: *mut Fl_File_Browser, typ: cty::c_int);
+    pub fn Fl_File_Browser_set_label_type(arg1: *mut Fl_File_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Browser_box(arg1: *mut Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_box(arg1: *mut Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_box(arg1: *mut Fl_File_Browser, typ: cty::c_int);
+    pub fn Fl_File_Browser_set_box(arg1: *mut Fl_File_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Browser_changed(arg1: *mut Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_changed(arg1: *mut Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_File_Browser_set_changed(arg1: *mut Fl_File_Browser);
@@ -2045,32 +2227,32 @@ extern "C" {
     pub fn Fl_File_Browser_clear_changed(arg1: *mut Fl_File_Browser);
 }
 extern "C" {
-    pub fn Fl_File_Browser_align(arg1: *mut Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_align(arg1: *mut Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_align(arg1: *mut Fl_File_Browser, typ: cty::c_int);
+    pub fn Fl_File_Browser_set_align(arg1: *mut Fl_File_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_File_Browser_delete(arg1: *mut Fl_File_Browser);
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_image(arg1: *mut Fl_File_Browser, arg2: *mut cty::c_void);
+    pub fn Fl_File_Browser_set_image(arg1: *mut Fl_File_Browser, arg2: *mut ::core::ffi::c_void);
 }
 extern "C" {
     pub fn Fl_File_Browser_handle(
         self_: *mut Fl_File_Browser,
         cb: custom_handler_callback,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_File_Browser_handle_event(self_: *mut Fl_File_Browser, event: cty::c_int);
+    pub fn Fl_File_Browser_handle_event(self_: *mut Fl_File_Browser, event: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_File_Browser_draw(
         self_: *mut Fl_File_Browser,
         cb: custom_draw_callback,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
@@ -2079,33 +2261,36 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: cty::c_int,
-                y: cty::c_int,
-                w: cty::c_int,
-                h: cty::c_int,
-                arg2: *mut cty::c_void,
+                x: ::core::ffi::c_int,
+                y: ::core::ffi::c_int,
+                w: ::core::ffi::c_int,
+                h: ::core::ffi::c_int,
+                arg2: *mut ::core::ffi::c_void,
             ),
         >,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_when(arg1: *mut Fl_File_Browser, arg2: cty::c_int);
+    pub fn Fl_File_Browser_set_when(arg1: *mut Fl_File_Browser, arg2: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Browser_when(arg1: *const Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_when(arg1: *const Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_image(arg1: *const Fl_File_Browser) -> *const cty::c_void;
+    pub fn Fl_File_Browser_image(arg1: *const Fl_File_Browser) -> *const ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Browser_parent(self_: *const Fl_File_Browser) -> *mut cty::c_void;
+    pub fn Fl_File_Browser_parent(self_: *const Fl_File_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Browser_selection_color(arg1: *mut Fl_File_Browser) -> cty::c_uint;
+    pub fn Fl_File_Browser_selection_color(arg1: *mut Fl_File_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_selection_color(arg1: *mut Fl_File_Browser, color: cty::c_uint);
+    pub fn Fl_File_Browser_set_selection_color(
+        arg1: *mut Fl_File_Browser,
+        color: ::core::ffi::c_uint,
+    );
 }
 extern "C" {
     pub fn Fl_File_Browser_do_callback(arg1: *mut Fl_File_Browser);
@@ -2113,23 +2298,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_File_Browser_inside(
         self_: *const Fl_File_Browser,
-        arg1: *mut cty::c_void,
-    ) -> cty::c_int;
+        arg1: *mut ::core::ffi::c_void,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_window(arg1: *const Fl_File_Browser) -> *mut cty::c_void;
+    pub fn Fl_File_Browser_window(arg1: *const Fl_File_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Browser_top_window(arg1: *const Fl_File_Browser) -> *mut cty::c_void;
+    pub fn Fl_File_Browser_top_window(arg1: *const Fl_File_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Browser_takes_events(arg1: *const Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_takes_events(arg1: *const Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_user_data(arg1: *const Fl_File_Browser) -> *mut cty::c_void;
+    pub fn Fl_File_Browser_user_data(arg1: *const Fl_File_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Browser_take_focus(self_: *mut Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_take_focus(self_: *mut Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_File_Browser_set_visible_focus(self_: *mut Fl_File_Browser);
@@ -2138,81 +2323,90 @@ extern "C" {
     pub fn Fl_File_Browser_clear_visible_focus(self_: *mut Fl_File_Browser);
 }
 extern "C" {
-    pub fn Fl_File_Browser_visible_focus(self_: *mut Fl_File_Browser, v: cty::c_int);
+    pub fn Fl_File_Browser_visible_focus(self_: *mut Fl_File_Browser, v: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Browser_has_visible_focus(self_: *mut Fl_File_Browser) -> cty::c_uint;
+    pub fn Fl_File_Browser_has_visible_focus(self_: *mut Fl_File_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_user_data(arg1: *mut Fl_File_Browser, data: *mut cty::c_void);
+    pub fn Fl_File_Browser_set_user_data(
+        arg1: *mut Fl_File_Browser,
+        data: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_File_Browser_draw_data(self_: *const Fl_File_Browser) -> *mut cty::c_void;
+    pub fn Fl_File_Browser_draw_data(self_: *const Fl_File_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Browser_handle_data(self_: *const Fl_File_Browser) -> *mut cty::c_void;
+    pub fn Fl_File_Browser_handle_data(self_: *const Fl_File_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_draw_data(self_: *mut Fl_File_Browser, data: *mut cty::c_void);
+    pub fn Fl_File_Browser_set_draw_data(
+        self_: *mut Fl_File_Browser,
+        data: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_handle_data(self_: *mut Fl_File_Browser, data: *mut cty::c_void);
+    pub fn Fl_File_Browser_set_handle_data(
+        self_: *mut Fl_File_Browser,
+        data: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_File_Browser_damage(self_: *const Fl_File_Browser) -> cty::c_uchar;
+    pub fn Fl_File_Browser_damage(self_: *const Fl_File_Browser) -> ::core::ffi::c_uchar;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_damage(self_: *mut Fl_File_Browser, flag: cty::c_uchar);
+    pub fn Fl_File_Browser_set_damage(self_: *mut Fl_File_Browser, flag: ::core::ffi::c_uchar);
 }
 extern "C" {
     pub fn Fl_File_Browser_set_damage_area(
         self_: *mut Fl_File_Browser,
-        flag: cty::c_uchar,
-        x: cty::c_int,
-        y: cty::c_int,
-        w: cty::c_int,
-        h: cty::c_int,
+        flag: ::core::ffi::c_uchar,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        w: ::core::ffi::c_int,
+        h: ::core::ffi::c_int,
     );
 }
 extern "C" {
     pub fn Fl_File_Browser_clear_damage(self_: *mut Fl_File_Browser);
 }
 extern "C" {
-    pub fn Fl_File_Browser_as_window(self_: *mut Fl_File_Browser) -> *mut cty::c_void;
+    pub fn Fl_File_Browser_as_window(self_: *mut Fl_File_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Browser_as_group(self_: *mut Fl_File_Browser) -> *mut cty::c_void;
+    pub fn Fl_File_Browser_as_group(self_: *mut Fl_File_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_deimage(arg1: *mut Fl_File_Browser, arg2: *mut cty::c_void);
+    pub fn Fl_File_Browser_set_deimage(arg1: *mut Fl_File_Browser, arg2: *mut ::core::ffi::c_void);
 }
 extern "C" {
-    pub fn Fl_File_Browser_deimage(arg1: *const Fl_File_Browser) -> *const cty::c_void;
+    pub fn Fl_File_Browser_deimage(arg1: *const Fl_File_Browser) -> *const ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_File_Browser_set_callback(
         arg1: *mut Fl_File_Browser,
         arg2: Fl_Callback,
-        arg3: *mut cty::c_void,
+        arg3: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
     pub fn Fl_File_Browser_set_deleter(
         arg1: *mut Fl_File_Browser,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_File_Browser_visible(self_: *const Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_visible(self_: *const Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_visible_r(self_: *const Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_visible_r(self_: *const Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_active(self_: *const Fl_File_Browser) -> cty::c_uint;
+    pub fn Fl_File_Browser_active(self_: *const Fl_File_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_File_Browser_active_r(self_: *const Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_active_r(self_: *const Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_File_Browser_callback(self_: *const Fl_File_Browser) -> Fl_Callback;
@@ -2221,190 +2415,222 @@ extern "C" {
     pub fn Fl_File_Browser_set_deletion_callback(
         self_: *mut Fl_File_Browser,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::core::ffi::c_void),
         >,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
     pub fn Fl_File_Browser_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_File_Browser;
 }
 extern "C" {
-    pub fn Fl_File_Browser_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
+    pub fn Fl_File_Browser_super_draw(ptr: *mut Fl_Widget, flag: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Browser_iconsize(self_: *const Fl_File_Browser) -> cty::c_uint;
+    pub fn Fl_File_Browser_iconsize(self_: *const Fl_File_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_iconsize(self_: *mut Fl_File_Browser, s: cty::c_uint);
+    pub fn Fl_File_Browser_set_iconsize(self_: *mut Fl_File_Browser, s: ::core::ffi::c_uint);
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_filter(self_: *mut Fl_File_Browser, pattern: *const cty::c_char);
+    pub fn Fl_File_Browser_set_filter(
+        self_: *mut Fl_File_Browser,
+        pattern: *const ::core::ffi::c_char,
+    );
 }
 extern "C" {
-    pub fn Fl_File_Browser_filter(self_: *const Fl_File_Browser) -> *const cty::c_char;
+    pub fn Fl_File_Browser_filter(self_: *const Fl_File_Browser) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_File_Browser_filetype(self_: *const Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_filetype(self_: *const Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_filetype(self_: *mut Fl_File_Browser, t: cty::c_int);
+    pub fn Fl_File_Browser_set_filetype(self_: *mut Fl_File_Browser, t: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Browser_value(arg1: *mut Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_value(arg1: *mut Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_remove(arg1: *mut Fl_File_Browser, line: cty::c_int);
+    pub fn Fl_File_Browser_remove(arg1: *mut Fl_File_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Browser_add(arg1: *mut Fl_File_Browser, newtext: *const cty::c_char);
+    pub fn Fl_File_Browser_add(arg1: *mut Fl_File_Browser, newtext: *const ::core::ffi::c_char);
 }
 extern "C" {
     pub fn Fl_File_Browser_insert(
         arg1: *mut Fl_File_Browser,
-        line: cty::c_int,
-        newtext: *const cty::c_char,
+        line: ::core::ffi::c_int,
+        newtext: *const ::core::ffi::c_char,
     );
 }
 extern "C" {
-    pub fn Fl_File_Browser_move(arg1: *mut Fl_File_Browser, to: cty::c_int, from: cty::c_int);
+    pub fn Fl_File_Browser_move(
+        arg1: *mut Fl_File_Browser,
+        to: ::core::ffi::c_int,
+        from: ::core::ffi::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_File_Browser_swap(arg1: *mut Fl_File_Browser, a: cty::c_int, b: cty::c_int);
+    pub fn Fl_File_Browser_swap(
+        arg1: *mut Fl_File_Browser,
+        a: ::core::ffi::c_int,
+        b: ::core::ffi::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_File_Browser_clear(arg1: *mut Fl_File_Browser);
 }
 extern "C" {
-    pub fn Fl_File_Browser_size(arg1: *const Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_size(arg1: *const Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_select(arg1: *mut Fl_File_Browser, line: cty::c_int) -> cty::c_int;
+    pub fn Fl_File_Browser_select(
+        arg1: *mut Fl_File_Browser,
+        line: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_selected(arg1: *const Fl_File_Browser, line: cty::c_int) -> cty::c_int;
+    pub fn Fl_File_Browser_selected(
+        arg1: *const Fl_File_Browser,
+        line: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_File_Browser_text(
         arg1: *const Fl_File_Browser,
-        line: cty::c_int,
-    ) -> *const cty::c_char;
+        line: ::core::ffi::c_int,
+    ) -> *const ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_File_Browser_set_text(
         arg1: *mut Fl_File_Browser,
-        line: cty::c_int,
-        newtext: *const cty::c_char,
+        line: ::core::ffi::c_int,
+        newtext: *const ::core::ffi::c_char,
     );
 }
 extern "C" {
-    pub fn Fl_File_Browser_load_file(arg1: *mut Fl_File_Browser, file: *const cty::c_char);
+    pub fn Fl_File_Browser_load_file(arg1: *mut Fl_File_Browser, file: *const ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_File_Browser_text_size(arg1: *mut Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_text_size(arg1: *mut Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_text_size(arg1: *mut Fl_File_Browser, s: cty::c_int);
+    pub fn Fl_File_Browser_set_text_size(arg1: *mut Fl_File_Browser, s: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_File_Browser_set_icon(
         arg1: *mut Fl_File_Browser,
-        line: cty::c_int,
-        icon: *mut cty::c_void,
+        line: ::core::ffi::c_int,
+        icon: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_File_Browser_icon(arg1: *const Fl_File_Browser, line: cty::c_int)
-        -> *mut cty::c_void;
+    pub fn Fl_File_Browser_icon(
+        arg1: *const Fl_File_Browser,
+        line: ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Browser_remove_icon(arg1: *mut Fl_File_Browser, line: cty::c_int);
+    pub fn Fl_File_Browser_remove_icon(arg1: *mut Fl_File_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Browser_topline(self_: *mut Fl_File_Browser, line: cty::c_int);
+    pub fn Fl_File_Browser_topline(self_: *mut Fl_File_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Browser_is_topline(self_: *mut Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_is_topline(self_: *mut Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_bottomline(self_: *mut Fl_File_Browser, line: cty::c_int);
+    pub fn Fl_File_Browser_bottomline(self_: *mut Fl_File_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Browser_middleline(self_: *mut Fl_File_Browser, line: cty::c_int);
+    pub fn Fl_File_Browser_middleline(self_: *mut Fl_File_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Browser_format_char(self_: *const Fl_File_Browser) -> cty::c_char;
+    pub fn Fl_File_Browser_format_char(self_: *const Fl_File_Browser) -> ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_format_char(self_: *mut Fl_File_Browser, c: cty::c_char);
+    pub fn Fl_File_Browser_set_format_char(self_: *mut Fl_File_Browser, c: ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_File_Browser_column_char(self_: *const Fl_File_Browser) -> cty::c_char;
+    pub fn Fl_File_Browser_column_char(self_: *const Fl_File_Browser) -> ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_column_char(self_: *mut Fl_File_Browser, c: cty::c_char);
+    pub fn Fl_File_Browser_set_column_char(self_: *mut Fl_File_Browser, c: ::core::ffi::c_char);
 }
 extern "C" {
-    pub fn Fl_File_Browser_column_widths(self_: *const Fl_File_Browser) -> *const cty::c_int;
+    pub fn Fl_File_Browser_column_widths(
+        self_: *const Fl_File_Browser,
+    ) -> *const ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_column_widths(self_: *mut Fl_File_Browser, arr: *const cty::c_int);
+    pub fn Fl_File_Browser_set_column_widths(
+        self_: *mut Fl_File_Browser,
+        arr: *const ::core::ffi::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_File_Browser_displayed(self_: *const Fl_File_Browser, line: cty::c_int)
-        -> cty::c_int;
+    pub fn Fl_File_Browser_displayed(
+        self_: *const Fl_File_Browser,
+        line: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_make_visible(self_: *mut Fl_File_Browser, line: cty::c_int);
+    pub fn Fl_File_Browser_make_visible(self_: *mut Fl_File_Browser, line: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Browser_position(self_: *const Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_position(self_: *const Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_position(self_: *mut Fl_File_Browser, pos: cty::c_int);
+    pub fn Fl_File_Browser_set_position(self_: *mut Fl_File_Browser, pos: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Browser_hposition(self_: *const Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_hposition(self_: *const Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_hposition(self_: *mut Fl_File_Browser, arg1: cty::c_int);
+    pub fn Fl_File_Browser_set_hposition(self_: *mut Fl_File_Browser, arg1: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Browser_has_scrollbar(self_: *const Fl_File_Browser) -> cty::c_uchar;
+    pub fn Fl_File_Browser_has_scrollbar(self_: *const Fl_File_Browser) -> ::core::ffi::c_uchar;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_has_scrollbar(self_: *mut Fl_File_Browser, mode: cty::c_uchar);
+    pub fn Fl_File_Browser_set_has_scrollbar(
+        self_: *mut Fl_File_Browser,
+        mode: ::core::ffi::c_uchar,
+    );
 }
 extern "C" {
-    pub fn Fl_File_Browser_scrollbar_size(self_: *const Fl_File_Browser) -> cty::c_int;
+    pub fn Fl_File_Browser_scrollbar_size(self_: *const Fl_File_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_scrollbar_size(self_: *mut Fl_File_Browser, newSize: cty::c_int);
+    pub fn Fl_File_Browser_set_scrollbar_size(
+        self_: *mut Fl_File_Browser,
+        newSize: ::core::ffi::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_File_Browser_sort(self_: *mut Fl_File_Browser);
 }
 extern "C" {
-    pub fn Fl_File_Browser_scrollbar(self_: *mut Fl_File_Browser) -> *mut cty::c_void;
+    pub fn Fl_File_Browser_scrollbar(self_: *mut Fl_File_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Browser_hscrollbar(self_: *mut Fl_File_Browser) -> *mut cty::c_void;
+    pub fn Fl_File_Browser_hscrollbar(self_: *mut Fl_File_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_File_Browser_data(
         self_: *const Fl_File_Browser,
-        line: cty::c_int,
-    ) -> *mut cty::c_void;
+        line: ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_File_Browser_set_data(
         self_: *mut Fl_File_Browser,
-        line: cty::c_int,
-        data: *mut cty::c_void,
+        line: ::core::ffi::c_int,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_File_Browser_hide_line(self_: *mut Fl_File_Browser, line: cty::c_int);
+    pub fn Fl_File_Browser_hide_line(self_: *mut Fl_File_Browser, line: ::core::ffi::c_int);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2413,30 +2639,33 @@ pub struct Fl_Check_Browser {
 }
 extern "C" {
     pub fn Fl_Check_Browser_new(
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
-        title: *const cty::c_char,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        title: *const ::core::ffi::c_char,
     ) -> *mut Fl_Check_Browser;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_x(arg1: *mut Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_x(arg1: *mut Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_y(arg1: *mut Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_y(arg1: *mut Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_width(arg1: *mut Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_width(arg1: *mut Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_height(arg1: *mut Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_height(arg1: *mut Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_label(arg1: *mut Fl_Check_Browser) -> *const cty::c_char;
+    pub fn Fl_Check_Browser_label(arg1: *mut Fl_Check_Browser) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_label(arg1: *mut Fl_Check_Browser, title: *const cty::c_char);
+    pub fn Fl_Check_Browser_set_label(
+        arg1: *mut Fl_Check_Browser,
+        title: *const ::core::ffi::c_char,
+    );
 }
 extern "C" {
     pub fn Fl_Check_Browser_redraw(arg1: *mut Fl_Check_Browser);
@@ -2459,78 +2688,84 @@ extern "C" {
 extern "C" {
     pub fn Fl_Check_Browser_resize(
         arg1: *mut Fl_Check_Browser,
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Check_Browser_widget_resize(
         arg1: *mut Fl_Check_Browser,
-        x: cty::c_int,
-        y: cty::c_int,
-        width: cty::c_int,
-        height: cty::c_int,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Check_Browser_tooltip(arg1: *mut Fl_Check_Browser) -> *const cty::c_char;
+    pub fn Fl_Check_Browser_tooltip(arg1: *mut Fl_Check_Browser) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_tooltip(arg1: *mut Fl_Check_Browser, txt: *const cty::c_char);
+    pub fn Fl_Check_Browser_set_tooltip(
+        arg1: *mut Fl_Check_Browser,
+        txt: *const ::core::ffi::c_char,
+    );
 }
 extern "C" {
-    pub fn Fl_Check_Browser_get_type(arg1: *mut Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_get_type(arg1: *mut Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_type(arg1: *mut Fl_Check_Browser, typ: cty::c_int);
+    pub fn Fl_Check_Browser_set_type(arg1: *mut Fl_Check_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_color(arg1: *mut Fl_Check_Browser) -> cty::c_uint;
+    pub fn Fl_Check_Browser_color(arg1: *mut Fl_Check_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_color(arg1: *mut Fl_Check_Browser, color: cty::c_uint);
+    pub fn Fl_Check_Browser_set_color(arg1: *mut Fl_Check_Browser, color: ::core::ffi::c_uint);
 }
 extern "C" {
     pub fn Fl_Check_Browser_measure_label(
         arg1: *const Fl_Check_Browser,
-        arg2: *mut cty::c_int,
-        arg3: *mut cty::c_int,
+        arg2: *mut ::core::ffi::c_int,
+        arg3: *mut ::core::ffi::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Check_Browser_label_color(arg1: *mut Fl_Check_Browser) -> cty::c_uint;
+    pub fn Fl_Check_Browser_label_color(arg1: *mut Fl_Check_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_label_color(arg1: *mut Fl_Check_Browser, color: cty::c_uint);
+    pub fn Fl_Check_Browser_set_label_color(
+        arg1: *mut Fl_Check_Browser,
+        color: ::core::ffi::c_uint,
+    );
 }
 extern "C" {
-    pub fn Fl_Check_Browser_label_font(arg1: *mut Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_label_font(arg1: *mut Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_label_font(arg1: *mut Fl_Check_Browser, font: cty::c_int);
+    pub fn Fl_Check_Browser_set_label_font(arg1: *mut Fl_Check_Browser, font: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_label_size(arg1: *mut Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_label_size(arg1: *mut Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_label_size(arg1: *mut Fl_Check_Browser, sz: cty::c_int);
+    pub fn Fl_Check_Browser_set_label_size(arg1: *mut Fl_Check_Browser, sz: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_label_type(arg1: *mut Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_label_type(arg1: *mut Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_label_type(arg1: *mut Fl_Check_Browser, typ: cty::c_int);
+    pub fn Fl_Check_Browser_set_label_type(arg1: *mut Fl_Check_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_box(arg1: *mut Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_box(arg1: *mut Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_box(arg1: *mut Fl_Check_Browser, typ: cty::c_int);
+    pub fn Fl_Check_Browser_set_box(arg1: *mut Fl_Check_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_changed(arg1: *mut Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_changed(arg1: *mut Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Check_Browser_set_changed(arg1: *mut Fl_Check_Browser);
@@ -2539,32 +2774,32 @@ extern "C" {
     pub fn Fl_Check_Browser_clear_changed(arg1: *mut Fl_Check_Browser);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_align(arg1: *mut Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_align(arg1: *mut Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_align(arg1: *mut Fl_Check_Browser, typ: cty::c_int);
+    pub fn Fl_Check_Browser_set_align(arg1: *mut Fl_Check_Browser, typ: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Check_Browser_delete(arg1: *mut Fl_Check_Browser);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_image(arg1: *mut Fl_Check_Browser, arg2: *mut cty::c_void);
+    pub fn Fl_Check_Browser_set_image(arg1: *mut Fl_Check_Browser, arg2: *mut ::core::ffi::c_void);
 }
 extern "C" {
     pub fn Fl_Check_Browser_handle(
         self_: *mut Fl_Check_Browser,
         cb: custom_handler_callback,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Check_Browser_handle_event(self_: *mut Fl_Check_Browser, event: cty::c_int);
+    pub fn Fl_Check_Browser_handle_event(self_: *mut Fl_Check_Browser, event: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Check_Browser_draw(
         self_: *mut Fl_Check_Browser,
         cb: custom_draw_callback,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
@@ -2573,33 +2808,36 @@ extern "C" {
         cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
-                x: cty::c_int,
-                y: cty::c_int,
-                w: cty::c_int,
-                h: cty::c_int,
-                arg2: *mut cty::c_void,
+                x: ::core::ffi::c_int,
+                y: ::core::ffi::c_int,
+                w: ::core::ffi::c_int,
+                h: ::core::ffi::c_int,
+                arg2: *mut ::core::ffi::c_void,
             ),
         >,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_when(arg1: *mut Fl_Check_Browser, arg2: cty::c_int);
+    pub fn Fl_Check_Browser_set_when(arg1: *mut Fl_Check_Browser, arg2: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_when(arg1: *const Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_when(arg1: *const Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_image(arg1: *const Fl_Check_Browser) -> *const cty::c_void;
+    pub fn Fl_Check_Browser_image(arg1: *const Fl_Check_Browser) -> *const ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_parent(self_: *const Fl_Check_Browser) -> *mut cty::c_void;
+    pub fn Fl_Check_Browser_parent(self_: *const Fl_Check_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_selection_color(arg1: *mut Fl_Check_Browser) -> cty::c_uint;
+    pub fn Fl_Check_Browser_selection_color(arg1: *mut Fl_Check_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_selection_color(arg1: *mut Fl_Check_Browser, color: cty::c_uint);
+    pub fn Fl_Check_Browser_set_selection_color(
+        arg1: *mut Fl_Check_Browser,
+        color: ::core::ffi::c_uint,
+    );
 }
 extern "C" {
     pub fn Fl_Check_Browser_do_callback(arg1: *mut Fl_Check_Browser);
@@ -2607,23 +2845,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Check_Browser_inside(
         self_: *const Fl_Check_Browser,
-        arg1: *mut cty::c_void,
-    ) -> cty::c_int;
+        arg1: *mut ::core::ffi::c_void,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_window(arg1: *const Fl_Check_Browser) -> *mut cty::c_void;
+    pub fn Fl_Check_Browser_window(arg1: *const Fl_Check_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_top_window(arg1: *const Fl_Check_Browser) -> *mut cty::c_void;
+    pub fn Fl_Check_Browser_top_window(arg1: *const Fl_Check_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_takes_events(arg1: *const Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_takes_events(arg1: *const Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_user_data(arg1: *const Fl_Check_Browser) -> *mut cty::c_void;
+    pub fn Fl_Check_Browser_user_data(arg1: *const Fl_Check_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_take_focus(self_: *mut Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_take_focus(self_: *mut Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Check_Browser_set_visible_focus(self_: *mut Fl_Check_Browser);
@@ -2632,81 +2870,94 @@ extern "C" {
     pub fn Fl_Check_Browser_clear_visible_focus(self_: *mut Fl_Check_Browser);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_visible_focus(self_: *mut Fl_Check_Browser, v: cty::c_int);
+    pub fn Fl_Check_Browser_visible_focus(self_: *mut Fl_Check_Browser, v: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_has_visible_focus(self_: *mut Fl_Check_Browser) -> cty::c_uint;
+    pub fn Fl_Check_Browser_has_visible_focus(self_: *mut Fl_Check_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_user_data(arg1: *mut Fl_Check_Browser, data: *mut cty::c_void);
+    pub fn Fl_Check_Browser_set_user_data(
+        arg1: *mut Fl_Check_Browser,
+        data: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Check_Browser_draw_data(self_: *const Fl_Check_Browser) -> *mut cty::c_void;
+    pub fn Fl_Check_Browser_draw_data(self_: *const Fl_Check_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_handle_data(self_: *const Fl_Check_Browser) -> *mut cty::c_void;
+    pub fn Fl_Check_Browser_handle_data(self_: *const Fl_Check_Browser)
+        -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_draw_data(self_: *mut Fl_Check_Browser, data: *mut cty::c_void);
+    pub fn Fl_Check_Browser_set_draw_data(
+        self_: *mut Fl_Check_Browser,
+        data: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_handle_data(self_: *mut Fl_Check_Browser, data: *mut cty::c_void);
+    pub fn Fl_Check_Browser_set_handle_data(
+        self_: *mut Fl_Check_Browser,
+        data: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Check_Browser_damage(self_: *const Fl_Check_Browser) -> cty::c_uchar;
+    pub fn Fl_Check_Browser_damage(self_: *const Fl_Check_Browser) -> ::core::ffi::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_damage(self_: *mut Fl_Check_Browser, flag: cty::c_uchar);
+    pub fn Fl_Check_Browser_set_damage(self_: *mut Fl_Check_Browser, flag: ::core::ffi::c_uchar);
 }
 extern "C" {
     pub fn Fl_Check_Browser_set_damage_area(
         self_: *mut Fl_Check_Browser,
-        flag: cty::c_uchar,
-        x: cty::c_int,
-        y: cty::c_int,
-        w: cty::c_int,
-        h: cty::c_int,
+        flag: ::core::ffi::c_uchar,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        w: ::core::ffi::c_int,
+        h: ::core::ffi::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Check_Browser_clear_damage(self_: *mut Fl_Check_Browser);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_as_window(self_: *mut Fl_Check_Browser) -> *mut cty::c_void;
+    pub fn Fl_Check_Browser_as_window(self_: *mut Fl_Check_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_as_group(self_: *mut Fl_Check_Browser) -> *mut cty::c_void;
+    pub fn Fl_Check_Browser_as_group(self_: *mut Fl_Check_Browser) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_deimage(arg1: *mut Fl_Check_Browser, arg2: *mut cty::c_void);
+    pub fn Fl_Check_Browser_set_deimage(
+        arg1: *mut Fl_Check_Browser,
+        arg2: *mut ::core::ffi::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Check_Browser_deimage(arg1: *const Fl_Check_Browser) -> *const cty::c_void;
+    pub fn Fl_Check_Browser_deimage(arg1: *const Fl_Check_Browser) -> *const ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Check_Browser_set_callback(
         arg1: *mut Fl_Check_Browser,
         arg2: Fl_Callback,
-        arg3: *mut cty::c_void,
+        arg3: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Check_Browser_set_deleter(
         arg1: *mut Fl_Check_Browser,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut cty::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Check_Browser_visible(self_: *const Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_visible(self_: *const Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_visible_r(self_: *const Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_visible_r(self_: *const Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_active(self_: *const Fl_Check_Browser) -> cty::c_uint;
+    pub fn Fl_Check_Browser_active(self_: *const Fl_Check_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_active_r(self_: *const Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_active_r(self_: *const Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Check_Browser_callback(self_: *const Fl_Check_Browser) -> Fl_Callback;
@@ -2715,42 +2966,47 @@ extern "C" {
     pub fn Fl_Check_Browser_set_deletion_callback(
         self_: *mut Fl_Check_Browser,
         arg1: ::core::option::Option<
-            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut cty::c_void),
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::core::ffi::c_void),
         >,
-        data: *mut cty::c_void,
+        data: *mut ::core::ffi::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Check_Browser_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Check_Browser;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_super_draw(ptr: *mut Fl_Widget, flag: cty::c_int);
+    pub fn Fl_Check_Browser_super_draw(ptr: *mut Fl_Widget, flag: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Check_Browser_add(
         self_: *mut Fl_Check_Browser,
-        s: *const cty::c_char,
-        b: cty::c_int,
-    ) -> cty::c_int;
+        s: *const ::core::ffi::c_char,
+        b: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_remove(self_: *mut Fl_Check_Browser, item: cty::c_int) -> cty::c_int;
+    pub fn Fl_Check_Browser_remove(
+        self_: *mut Fl_Check_Browser,
+        item: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Check_Browser_clear(self_: *mut Fl_Check_Browser);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_nitems(self_: *const Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_nitems(self_: *const Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_nchecked(self_: *const Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_nchecked(self_: *const Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_checked(self_: *const Fl_Check_Browser, item: cty::c_int)
-        -> cty::c_int;
+    pub fn Fl_Check_Browser_checked(
+        self_: *const Fl_Check_Browser,
+        item: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_checked(self_: *mut Fl_Check_Browser, item: cty::c_int);
+    pub fn Fl_Check_Browser_set_checked(self_: *mut Fl_Check_Browser, item: ::core::ffi::c_int);
 }
 extern "C" {
     pub fn Fl_Check_Browser_check_all(self_: *mut Fl_Check_Browser);
@@ -2759,62 +3015,71 @@ extern "C" {
     pub fn Fl_Check_Browser_check_none(self_: *mut Fl_Check_Browser);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_value(self_: *const Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_value(self_: *const Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Check_Browser_text(
         self_: *const Fl_Check_Browser,
-        item: cty::c_int,
-    ) -> *const cty::c_char;
+        item: ::core::ffi::c_int,
+    ) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_position(self_: *const Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_position(self_: *const Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_position(self_: *mut Fl_Check_Browser, pos: cty::c_int);
+    pub fn Fl_Check_Browser_set_position(self_: *mut Fl_Check_Browser, pos: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_hposition(self_: *const Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_hposition(self_: *const Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_hposition(self_: *mut Fl_Check_Browser, arg1: cty::c_int);
+    pub fn Fl_Check_Browser_set_hposition(self_: *mut Fl_Check_Browser, arg1: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_has_scrollbar(self_: *const Fl_Check_Browser) -> cty::c_uchar;
+    pub fn Fl_Check_Browser_has_scrollbar(self_: *const Fl_Check_Browser) -> ::core::ffi::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_scrollbar(self_: *const Fl_Check_Browser) -> *const cty::c_void;
+    pub fn Fl_Check_Browser_scrollbar(self_: *const Fl_Check_Browser)
+        -> *const ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_hscrollbar(self_: *const Fl_Check_Browser) -> *const cty::c_void;
+    pub fn Fl_Check_Browser_hscrollbar(
+        self_: *const Fl_Check_Browser,
+    ) -> *const ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_has_scrollbar(self_: *mut Fl_Check_Browser, mode: cty::c_uchar);
+    pub fn Fl_Check_Browser_set_has_scrollbar(
+        self_: *mut Fl_Check_Browser,
+        mode: ::core::ffi::c_uchar,
+    );
 }
 extern "C" {
-    pub fn Fl_Check_Browser_scrollbar_size(self_: *const Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_scrollbar_size(self_: *const Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_scrollbar_size(self_: *mut Fl_Check_Browser, newSize: cty::c_int);
+    pub fn Fl_Check_Browser_set_scrollbar_size(
+        self_: *mut Fl_Check_Browser,
+        newSize: ::core::ffi::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Check_Browser_sort(self_: *mut Fl_Check_Browser);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_text_color(self_: *mut Fl_Check_Browser, c: cty::c_uint);
+    pub fn Fl_Check_Browser_set_text_color(self_: *mut Fl_Check_Browser, c: ::core::ffi::c_uint);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_text_color(self_: *mut Fl_Check_Browser) -> cty::c_uint;
+    pub fn Fl_Check_Browser_text_color(self_: *mut Fl_Check_Browser) -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_text_font(self_: *mut Fl_Check_Browser, f: cty::c_int);
+    pub fn Fl_Check_Browser_set_text_font(self_: *mut Fl_Check_Browser, f: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_text_font(self_: *mut Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_text_font(self_: *mut Fl_Check_Browser) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_text_size(self_: *mut Fl_Check_Browser, s: cty::c_int);
+    pub fn Fl_Check_Browser_set_text_size(self_: *mut Fl_Check_Browser, s: ::core::ffi::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_text_size(self_: *mut Fl_Check_Browser) -> cty::c_int;
+    pub fn Fl_Check_Browser_text_size(self_: *mut Fl_Check_Browser) -> ::core::ffi::c_int;
 }
