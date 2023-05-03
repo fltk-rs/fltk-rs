@@ -74,6 +74,7 @@ pub type RawHandle = u32;
     )),
     any(
         target_arch = "aarch64",
+        target_arch = "loongarch64",
         target_arch = "mips64",
         target_arch = "powerpc64",
         target_arch = "s390x",
