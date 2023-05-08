@@ -1,7 +1,7 @@
 # Changelog
 
 
-# [1.4.3] - 2023-05-11
+# [1.4.3] - 2023-05-08
 - SimpleTerminal::append2 should not allocate a CString by @bigfarts.
 - Support loongarch64-unknown-linux-gnu by @cstkingkey.
 - use ::std::os::raw ctypes prefix with newer bindgen.
