@@ -816,7 +816,7 @@ pub fn capture_offscreen(offs: &mut Offscreen, w: i32, h: i32) -> Result<RgbImag
 pub fn capture_surface(surface: &ImageSurface, w: i32, h: i32) -> Result<RgbImage, FltkError> {
     let cp = w * h * 3;
     unsafe {
-        ImageSurface::push_current(&surface);
+        ImageSurface::push_current(surface);
         let x = Fl_read_image(std::ptr::null_mut(), 0, 0, w, h, 0);
         ImageSurface::pop_current();
         if x.is_null() {
