@@ -126,11 +126,11 @@ crate::macros::menu::impl_menu_ext!(Choice, Fl_Choice);
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum WindowMenuStyle {
     /// No Window menu in the system menu bar
-    NoWindowMenu = 0,     
+    NoWindowMenu = 0,
     /// No tabbed windows, but the system menu bar contains a Window menu
-    TabbingModeNone,      
+    TabbingModeNone,
     /// Windows are created by themselves but can be tabbed later
-    TabbingModeAutomatic, 
+    TabbingModeAutomatic,
     /// Windows are tabbed when created
     TabbingModePreferred,
 }
@@ -164,8 +164,7 @@ impl SysMenuBar {
                 let mut wid = SysMenuBar::from_widget_ptr(wid as *mut _);
                 let a = data as *mut Box<dyn FnMut(&mut SysMenuBar)>;
                 let f: &mut (dyn FnMut(&mut SysMenuBar)) = &mut **a;
-                let _ =
-                    std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
             }
             let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;

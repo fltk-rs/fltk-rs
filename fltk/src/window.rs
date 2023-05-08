@@ -468,11 +468,7 @@ impl DoubleWindow {
                 }
                 cfltk_winHide(self.raw_handle());
             }
-            #[cfg(not(any(
-                target_os = "macos",
-                target_os = "android",
-                target_os = "windows",
-            )))]
+            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows",)))]
             {
                 #[cfg(not(feature = "use-wayland"))]
                 {

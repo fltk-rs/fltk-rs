@@ -797,12 +797,7 @@ pub fn capture_offscreen(offs: &mut Offscreen, w: i32, h: i32) -> Result<RgbImag
             Err(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {
             let x = std::slice::from_raw_parts(x, cp as usize);
-            Ok(RgbImage::new(
-                x,
-                w,
-                h,
-                ColorDepth::Rgb8,
-            )?)
+            Ok(RgbImage::new(x, w, h, ColorDepth::Rgb8)?)
         }
     }
 }
@@ -828,12 +823,7 @@ pub fn capture_surface(surface: &ImageSurface, w: i32, h: i32) -> Result<RgbImag
             Err(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {
             let x = std::slice::from_raw_parts(x, cp as usize);
-            Ok(RgbImage::new(
-                x,
-                w,
-                h,
-                ColorDepth::Rgb8,
-            )?)
+            Ok(RgbImage::new(x, w, h, ColorDepth::Rgb8)?)
         }
     }
 }

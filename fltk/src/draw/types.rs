@@ -194,7 +194,7 @@ impl<T: Copy + Add<Output = T> + Sub<Output = T>> Rectangle<T> {
     }
 
     /// Sets the Rectangle to be padded
-    pub fn with_padding(self, pad : T) -> Self {
+    pub fn with_padding(self, pad: T) -> Self {
         Self {
             x: self.x + pad,
             y: self.y + pad,

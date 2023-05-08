@@ -1,6 +1,14 @@
 # Changelog
 
 
+# [1.4.3] - 2023-05-11
+- SimpleTerminal::append2 should not allocate a CString by @bigfarts.
+- Support loongarch64-unknown-linux-gnu by @cstkingkey.
+- use ::std::os::raw ctypes prefix with newer bindgen.
+- Remove cty dependency because of c_char issue on aarch64 windows.
+- Fix call to fl_wl_screen in cfltk.
+- Update fltk submodule.
+
 # [1.4.2] - 2023-04-27
 - Adds several SysMenuBar methods.
 - Adds MacAppMenu and related methods.

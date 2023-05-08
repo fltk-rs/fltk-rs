@@ -16,7 +16,7 @@ use fltk::{prelude::*, *};
 
 fn main() {
     let app = app::App::default();
-    
+
     // Act as the application in the taskbar (scroll to event handling)
     let mut dock_win = window::Window::default()
         .with_size(1, 1) // So we can place it at the center of the screen (needs a size >0 to be centered)
@@ -61,7 +61,7 @@ fn main() {
                 y = coords.1;
 
                 true
-            },
+            }
             enums::Event::Drag => {
                 wself.set_pos(app::event_x_root() - x, app::event_y_root() - y);
 
@@ -69,13 +69,13 @@ fn main() {
                 dock_win.set_pos(wself.x() + (wself.w() / 2), wself.y() + (wself.w() / 2));
 
                 true
-            },
+            }
             enums::Event::Close => {
                 app.quit();
 
                 true
-            },
-            _ => false
+            }
+            _ => false,
         }
     });
 
@@ -85,23 +85,23 @@ fn main() {
         move |wself, event| match (event) {
             enums::Event::Focus => {
                 let win_shape = prep_shape(win.w(), win.h());
-            
+
                 win.show();
                 win.set_shape(Some(win_shape));
 
                 true
-            },
+            }
             enums::Event::Hide => {
-               win.hide();
-               
-               true
-            },
+                win.hide();
+
+                true
+            }
             enums::Event::Close => {
                 app.quit();
 
                 true
-            },
-            _ => false
+            }
+            _ => false,
         }
     });
 

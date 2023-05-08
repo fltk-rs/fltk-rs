@@ -1,5 +1,4 @@
 #![doc = include_str!("../README.md")]
-
 #![allow(non_upper_case_globals)]
 #![allow(clippy::needless_doctest_main)]
 #![warn(missing_docs)]

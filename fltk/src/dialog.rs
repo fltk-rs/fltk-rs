@@ -649,8 +649,12 @@ impl FileChooser {
         let pattern = CString::safe_new(pattern);
         let title = CString::safe_new(title);
         unsafe {
-            let ptr =
-                Fl_File_Chooser_new(dir.as_ptr(), pattern.as_ptr(), typ.bits(), title.into_raw() as _);
+            let ptr = Fl_File_Chooser_new(
+                dir.as_ptr(),
+                pattern.as_ptr(),
+                typ.bits(),
+                title.into_raw() as _,
+            );
             assert!(!ptr.is_null());
             FileChooser { inner: ptr }
         }
