@@ -1140,8 +1140,6 @@ impl SimpleTerminal {
     pub fn append2(&mut self, s: &[u8]) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
-        // TODO: remove when fltk issue https://github.com/fltk/fltk/issues/728 is resolved
-        assert!(self.ansi());
         unsafe { Fl_Simple_Terminal_append2(self.inner, s.as_ptr() as _, s.len() as _) }
     }
 

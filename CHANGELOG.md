@@ -2,6 +2,9 @@
 
 
 # [1.4.4] - Unreleased
+- Add app::set_belowmouse().
+- Relax SimpleTerminal::append2() requiring ansi mode.
+- Tooltip::enter_area() requires a static CStr as previous code didn't work correctly https://github.com/fltk-rs/fltk-rs/issues/1402.
 - Update fltk submodule.
 
 # [1.4.3] - 2023-05-08

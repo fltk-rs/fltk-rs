@@ -781,7 +781,7 @@ pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkErr
     Example usage:
     ```rust,no_run
     use fltk::{prelude::*, *};
-    let mut offs = draw::Offscreen::new(100, 100);
+    let mut offs = draw::Offscreen::new(100, 100).unwrap();
     let image = draw::capture_offscreen(&mut offs, 100, 100).unwrap();
     ```
     # Errors

@@ -405,10 +405,18 @@ impl Tooltip {
         unsafe { Fl_Tooltip_disable() }
     }
 
-    /// Used to customize a tooltip's size and position for a specific widget type
-    pub fn enter_area<W: WidgetExt>(widget: &W, x: i32, y: i32, w: i32, h: i32, tip: &'static str) {
+    /// Used to provide tooltips for internal pieces of your widget.
+    /// Check FLTK's [documentation](https://www.fltk.org/doc-1.3/classFl__Tooltip.html#a55b4d5a9a98e69eef5716ca02a16d59e).
+    /// The text of the tooltip must be a static CStr since the data is not copied by FLTK. This also avoid memory leaks in user code.
+    pub fn enter_area<W: WidgetExt>(
+        widget: &W,
+        x: i32,
+        y: i32,
+        w: i32,
+        h: i32,
+        tip: &'static CStr,
+    ) {
         assert!(!widget.was_deleted());
-        let tip = CString::safe_new(tip);
         unsafe {
             Fl_Tooltip_enter_area(
                 widget.as_widget_ptr() as *mut Fl_Widget,
@@ -416,7 +424,7 @@ impl Tooltip {
                 y,
                 w,
                 h,
-                tip.into_raw() as _,
+                tip.as_ptr(),
             )
         }
     }

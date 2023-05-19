@@ -196,6 +196,13 @@ pub fn belowmouse<Wid: WidgetExt>() -> Option<impl WidgetExt> {
     }
 }
 
+/// Sets the widget that's below the mouse
+pub fn set_belowmouse<Wid: WidgetExt>(w: &Wid) {
+    unsafe {
+        fl::Fl_set_belowmouse(w.as_widget_ptr() as _);
+    }
+}
+
 /// Returns whether the event is a shift press
 pub fn is_event_shift() -> bool {
     unsafe { fl::Fl_event_shift() != 0 }

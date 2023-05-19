@@ -307,6 +307,9 @@ extern "C" {
     pub fn Fl_belowmouse() -> *mut Fl_Widget;
 }
 extern "C" {
+    pub fn Fl_set_belowmouse(w: *mut Fl_Widget);
+}
+extern "C" {
     pub fn Fl_delete_widget(w: *mut Fl_Widget);
 }
 extern "C" {
