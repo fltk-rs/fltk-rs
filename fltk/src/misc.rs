@@ -406,7 +406,7 @@ impl Tooltip {
     }
 
     /// Used to customize a tooltip's size and position for a specific widget type
-    pub fn enter_area<W: WidgetExt>(widget: &W, x: i32, y: i32, w: i32, h: i32, tip: &str) {
+    pub fn enter_area<W: WidgetExt>(widget: &W, x: i32, y: i32, w: i32, h: i32, tip: &'static str) {
         assert!(!widget.was_deleted());
         let tip = CString::safe_new(tip);
         unsafe {
