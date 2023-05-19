@@ -416,7 +416,7 @@ impl Tooltip {
                 y,
                 w,
                 h,
-                tip.as_ptr(),
+                tip.into_raw() as _,
             )
         }
     }
