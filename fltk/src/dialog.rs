@@ -820,17 +820,12 @@ impl FileChooser {
     /// Sets the label of the Ok button
     pub fn set_ok_label(&mut self, l: Option<&'static str>) {
         assert!(!self.inner.is_null());
-<<<<<<< HEAD
         if let Some(l) = l {
             let l = CString::safe_new(l);
             unsafe { Fl_File_Chooser_set_ok_label(self.inner, l.into_raw()) }
         } else {
             unsafe { Fl_File_Chooser_set_ok_label(self.inner, std::ptr::null_mut()) }
         }
-=======
-        let l = CString::safe_new(l);
-        unsafe { Fl_File_Chooser_set_ok_label(self.inner, l.into_raw() as _) }
->>>>>>> master
     }
 
     /// Gets the label of the Ok button
