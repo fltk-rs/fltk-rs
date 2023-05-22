@@ -5,17 +5,17 @@
 pub struct Fl_Widget {
     _unused: [u8; 0],
 }
-pub type Fl_Callback = ::std::option::Option<
+pub type Fl_Callback = ::core::option::Option<
     unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
 >;
-pub type custom_handler_callback = ::std::option::Option<
+pub type custom_handler_callback = ::core::option::Option<
     unsafe extern "C" fn(
         arg1: *mut Fl_Widget,
         arg2: ::std::os::raw::c_int,
         arg3: *mut ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int,
 >;
-pub type custom_draw_callback = ::std::option::Option<
+pub type custom_draw_callback = ::core::option::Option<
     unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
 >;
 #[repr(C)]
@@ -187,7 +187,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Bar_resize_callback(
         self_: *mut Fl_Menu_Bar,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -310,7 +310,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Bar_set_deleter(
         arg1: *mut Fl_Menu_Bar,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -331,7 +331,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Bar_set_deletion_callback(
         self_: *mut Fl_Menu_Bar,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -651,7 +651,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Button_resize_callback(
         self_: *mut Fl_Menu_Button,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -786,7 +786,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Button_set_deleter(
         arg1: *mut Fl_Menu_Button,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -807,7 +807,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Button_set_deletion_callback(
         self_: *mut Fl_Menu_Button,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -1124,7 +1124,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Choice_resize_callback(
         self_: *mut Fl_Choice,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -1247,7 +1247,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Choice_set_deleter(
         arg1: *mut Fl_Choice,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -1268,7 +1268,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Choice_set_deletion_callback(
         self_: *mut Fl_Choice,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -1588,7 +1588,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_resize_callback(
         self_: *mut Fl_Sys_Menu_Bar,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -1729,7 +1729,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_set_deleter(
         arg1: *mut Fl_Sys_Menu_Bar,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -1750,7 +1750,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_set_deletion_callback(
         self_: *mut Fl_Sys_Menu_Bar,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -1761,6 +1761,16 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_window_menu_style(style: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_about(
+        self_: *mut Fl_Sys_Menu_Bar,
+        cb: Fl_Callback,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_add(
@@ -2071,4 +2081,36 @@ extern "C" {
         user_data: *mut ::std::os::raw::c_void,
         shortcut: ::std::os::raw::c_int,
     );
+}
+extern "C" {
+    pub fn Fl_Mac_App_Menu_custom_application_menu_items(m: *const Fl_Menu_Item);
+}
+extern "C" {
+    pub fn Fl_Mac_App_Menu_set_about(about: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Mac_App_Menu_set_print(print: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Mac_App_Menu_set_print_no_titlebar(print_no_titlebar: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Mac_App_Menu_set_toggle_print_titlebar(
+        toggle_print_titlebar: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Mac_App_Menu_set_services(services: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Mac_App_Menu_set_hide(hide: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Mac_App_Menu_set_hide_others(hide_others: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Mac_App_Menu_set_show(show: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Mac_App_Menu_set_quit(quit: *const ::std::os::raw::c_char);
 }

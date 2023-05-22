@@ -193,6 +193,13 @@ pub fn belowmouse<Wid: WidgetExt>() -> Option<impl WidgetExt> {
     }
 }
 
+/// Sets the widget that's below the mouse
+pub fn set_belowmouse<Wid: WidgetExt>(w: &Wid) {
+    unsafe {
+        fl::Fl_set_belowmouse(w.as_widget_ptr() as _);
+    }
+}
+
 /// Returns whether the event is a shift press
 pub fn is_event_shift() -> bool {
     unsafe { fl::Fl_event_shift() != 0 }
@@ -247,7 +254,7 @@ pub enum ClipboardEvent {
 pub fn event_clipboard() -> Option<ClipboardEvent> {
     unsafe {
         let txt = fl::Fl_event_clipboard_type();
-        let txt = CStr::from_ptr(txt).to_string_lossy().to_string();
+        let txt = CStr::from_ptr(txt as _).to_string_lossy().to_string();
         if txt == "text/plain" {
             event_text().map(ClipboardEvent::Text)
         } else if txt == "image" {
@@ -388,7 +395,7 @@ pub fn clipboard_contains(content: ClipboardContent) -> bool {
         Image => "image",
     };
     let txt = CString::new(txt).unwrap();
-    unsafe { fl::Fl_clipboard_contains(txt.as_ptr()) != 0 }
+    unsafe { fl::Fl_clipboard_contains(txt.as_ptr() as _) != 0 }
 }
 
 /// Pastes content from the clipboard

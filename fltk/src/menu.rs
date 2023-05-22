@@ -121,6 +121,20 @@ crate::macros::widget::impl_widget_base!(Choice, Fl_Choice);
 crate::macros::widget::impl_widget_default!(Choice);
 crate::macros::menu::impl_menu_ext!(Choice, Fl_Choice);
 
+/// Defines the window menu style for SysMenuBar
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub enum WindowMenuStyle {
+    /// No Window menu in the system menu bar
+    NoWindowMenu = 0,
+    /// No tabbed windows, but the system menu bar contains a Window menu
+    TabbingModeNone,
+    /// Windows are created by themselves but can be tabbed later
+    TabbingModeAutomatic,
+    /// Windows are tabbed when created
+    TabbingModePreferred,
+}
+
 /// Creates a macOS system menu bar on macOS and a normal menu bar on other systems
 #[derive(Debug)]
 pub struct SysMenuBar {
@@ -133,6 +147,32 @@ crate::macros::widget::impl_widget_ext!(SysMenuBar, Fl_Sys_Menu_Bar);
 crate::macros::widget::impl_widget_base!(SysMenuBar, Fl_Sys_Menu_Bar);
 crate::macros::widget::impl_widget_default!(SysMenuBar);
 crate::macros::menu::impl_menu_ext!(SysMenuBar, Fl_Sys_Menu_Bar);
+
+impl SysMenuBar {
+    /// Sets the macos window menu style
+    pub fn set_window_menu_style(style: WindowMenuStyle) {
+        unsafe {
+            Fl_Sys_Menu_Bar_set_window_menu_style(style as i32);
+        }
+    }
+
+    /// Sets the about menu item callback
+    pub fn set_about_callback<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
+        assert!(!self.was_deleted());
+        unsafe {
+            unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
+                let mut wid = SysMenuBar::from_widget_ptr(wid as *mut _);
+                let a = data as *mut Box<dyn FnMut(&mut SysMenuBar)>;
+                let f: &mut (dyn FnMut(&mut SysMenuBar)) = &mut **a;
+                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+            }
+            let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
+            let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
+            let callback: Fl_Callback = Some(shim);
+            Fl_Sys_Menu_Bar_about(self.inner, callback, data);
+        }
+    }
+}
 
 /// Creates a menu item
 #[derive(Debug, Clone)]
@@ -176,7 +216,7 @@ impl MenuItem {
             let mut temp: Vec<*mut raw::c_char> = vec![];
             for &choice in choices {
                 let c = CString::safe_new(choice);
-                temp.push(c.into_raw());
+                temp.push(c.into_raw() as _);
             }
             let item_ptr = Fl_Menu_Item_new(temp.as_ptr() as *mut *mut raw::c_char, sz as i32);
             assert!(!item_ptr.is_null());
@@ -228,7 +268,7 @@ impl MenuItem {
         assert!(!self.was_deleted());
         unsafe {
             let txt = CString::safe_new(txt);
-            Fl_Menu_Item_set_label(self.inner, txt.into_raw());
+            Fl_Menu_Item_set_label(self.inner, txt.into_raw() as _);
         }
     }
 
@@ -678,5 +718,93 @@ pub fn mac_set_about<F: FnMut() + 'static>(cb: F) {
         let data: *mut raw::c_void = a as *mut std::ffi::c_void;
         let callback: fltk_sys::menu::Fl_Callback = Some(shim);
         Fl_mac_set_about(callback, data, 0);
+    }
+}
+
+/// Wrapper around Fl_Mac_App_Menu which exposes several static methods
+/// allowing the customization of the default system menu bar for the fltk application
+#[derive(Debug, Clone, Copy)]
+pub struct MacAppMenu;
+
+impl MacAppMenu {
+    /// Sets the about text
+    pub fn set_about(about: &'static str) {
+        unsafe {
+            let about = CString::safe_new(about).as_ptr();
+            Fl_Mac_App_Menu_set_about(about);
+        }
+    }
+
+    /// Sets the print text
+    pub fn set_print(print: &'static str) {
+        unsafe {
+            let print = CString::safe_new(print).as_ptr();
+            Fl_Mac_App_Menu_set_print(print);
+        }
+    }
+
+    /// Sets the print no titlebar text
+    pub fn set_print_no_titlebar(print_no_titlebar: &'static str) {
+        unsafe {
+            let print_no_titlebar = CString::safe_new(print_no_titlebar).as_ptr();
+            Fl_Mac_App_Menu_set_print_no_titlebar(print_no_titlebar);
+        }
+    }
+
+    /// Sets the toggle print titlebar text
+    pub fn set_toggle_print_titlebar(toggle_print_titlebar: &'static str) {
+        unsafe {
+            let toggle_print_titlebar = CString::safe_new(toggle_print_titlebar).as_ptr();
+            Fl_Mac_App_Menu_set_toggle_print_titlebar(toggle_print_titlebar);
+        }
+    }
+
+    /// Sets the services text
+    pub fn set_services(services: &'static str) {
+        unsafe {
+            let services = CString::safe_new(services).as_ptr();
+            Fl_Mac_App_Menu_set_services(services);
+        }
+    }
+
+    /// Sets the hide text
+    pub fn set_hide(hide: &'static str) {
+        unsafe {
+            let hide = CString::safe_new(hide).as_ptr();
+            Fl_Mac_App_Menu_set_hide(hide);
+        }
+    }
+
+    /// Sets the hide others text
+    pub fn set_hide_others(hide_others: &'static str) {
+        unsafe {
+            let hide_others = CString::safe_new(hide_others).as_ptr();
+            Fl_Mac_App_Menu_set_hide_others(hide_others);
+        }
+    }
+
+    /// Sets the show text
+    pub fn set_show(show: &'static str) {
+        unsafe {
+            let show = CString::safe_new(show).as_ptr();
+            Fl_Mac_App_Menu_set_show(show);
+        }
+    }
+
+    /// Sets the quit text
+    pub fn set_quit(quit: &'static str) {
+        unsafe {
+            let quit = CString::safe_new(quit).as_ptr();
+            Fl_Mac_App_Menu_set_quit(quit);
+        }
+    }
+
+    /// Adds custom menu items to the application menu of the system menu bar.
+    /// They are positioned after the "Print Front Window / Toggle printing of titlebar" items,
+    /// or at their place if an item is removed by providing empty text
+    pub fn custom_application_menu_items(m: MenuItem) {
+        unsafe {
+            Fl_Mac_App_Menu_custom_application_menu_items(m.inner);
+        }
     }
 }

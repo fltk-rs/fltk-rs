@@ -63,7 +63,7 @@ pub type RawHandle = *mut raw::c_void;
 pub type RawHandle = u32;
 
 /// Opaque raw window handle (`*mut c_void` to `HWND` on Windows and `NSWindow` on macOS),
-/// `XID` (`u64`) raw window handle for X11
+/// `XID` (`u64`) raw window handle for X11, and `wl_suface *` for wayland
 #[cfg(all(
     not(any(
         target_os = "windows",
@@ -74,6 +74,7 @@ pub type RawHandle = u32;
     )),
     any(
         target_arch = "aarch64",
+        target_arch = "loongarch64",
         target_arch = "mips64",
         target_arch = "powerpc64",
         target_arch = "s390x",
@@ -467,11 +468,7 @@ impl DoubleWindow {
                 }
                 cfltk_winHide(self.raw_handle());
             }
-            #[cfg(not(any(
-                target_os = "macos",
-                target_os = "android",
-                target_os = "windows",
-            )))]
+            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows",)))]
             {
                 #[cfg(not(feature = "use-wayland"))]
                 {

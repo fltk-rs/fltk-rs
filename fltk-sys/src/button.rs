@@ -5,17 +5,17 @@
 pub struct Fl_Widget {
     _unused: [u8; 0],
 }
-pub type Fl_Callback = ::std::option::Option<
+pub type Fl_Callback = ::core::option::Option<
     unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
 >;
-pub type custom_handler_callback = ::std::option::Option<
+pub type custom_handler_callback = ::core::option::Option<
     unsafe extern "C" fn(
         arg1: *mut Fl_Widget,
         arg2: ::std::os::raw::c_int,
         arg3: *mut ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int,
 >;
-pub type custom_draw_callback = ::std::option::Option<
+pub type custom_draw_callback = ::core::option::Option<
     unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
 >;
 #[repr(C)]
@@ -182,7 +182,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Button_resize_callback(
         self_: *mut Fl_Button,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -305,7 +305,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Button_set_deleter(
         arg1: *mut Fl_Button,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -326,7 +326,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Button_set_deletion_callback(
         self_: *mut Fl_Button,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -532,7 +532,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Check_Button_resize_callback(
         self_: *mut Fl_Check_Button,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -673,7 +673,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Check_Button_set_deleter(
         arg1: *mut Fl_Check_Button,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -694,7 +694,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Check_Button_set_deletion_callback(
         self_: *mut Fl_Check_Button,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -909,7 +909,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Radio_Button_resize_callback(
         self_: *mut Fl_Radio_Button,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -1050,7 +1050,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Radio_Button_set_deleter(
         arg1: *mut Fl_Radio_Button,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -1071,7 +1071,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Radio_Button_set_deletion_callback(
         self_: *mut Fl_Radio_Button,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -1295,7 +1295,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Toggle_Button_resize_callback(
         self_: *mut Fl_Toggle_Button,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -1443,7 +1443,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Toggle_Button_set_deleter(
         arg1: *mut Fl_Toggle_Button,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -1464,7 +1464,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Toggle_Button_set_deletion_callback(
         self_: *mut Fl_Toggle_Button,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -1679,7 +1679,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Round_Button_resize_callback(
         self_: *mut Fl_Round_Button,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -1820,7 +1820,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Round_Button_set_deleter(
         arg1: *mut Fl_Round_Button,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -1841,7 +1841,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Round_Button_set_deletion_callback(
         self_: *mut Fl_Round_Button,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -2098,7 +2098,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Radio_Round_Button_resize_callback(
         self_: *mut Fl_Radio_Round_Button,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -2275,7 +2275,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Radio_Round_Button_set_deleter(
         arg1: *mut Fl_Radio_Round_Button,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -2304,7 +2304,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Radio_Round_Button_set_deletion_callback(
         self_: *mut Fl_Radio_Round_Button,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -2576,7 +2576,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Radio_Light_Button_resize_callback(
         self_: *mut Fl_Radio_Light_Button,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -2753,7 +2753,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Radio_Light_Button_set_deleter(
         arg1: *mut Fl_Radio_Light_Button,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -2782,7 +2782,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Radio_Light_Button_set_deletion_callback(
         self_: *mut Fl_Radio_Light_Button,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -3012,7 +3012,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Light_Button_resize_callback(
         self_: *mut Fl_Light_Button,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -3153,7 +3153,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Light_Button_set_deleter(
         arg1: *mut Fl_Light_Button,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -3174,7 +3174,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Light_Button_set_deletion_callback(
         self_: *mut Fl_Light_Button,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -3398,7 +3398,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Repeat_Button_resize_callback(
         self_: *mut Fl_Repeat_Button,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -3546,7 +3546,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Repeat_Button_set_deleter(
         arg1: *mut Fl_Repeat_Button,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -3567,7 +3567,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Repeat_Button_set_deletion_callback(
         self_: *mut Fl_Repeat_Button,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -3785,7 +3785,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Return_Button_resize_callback(
         self_: *mut Fl_Return_Button,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -3933,7 +3933,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Return_Button_set_deleter(
         arg1: *mut Fl_Return_Button,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -3954,7 +3954,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Return_Button_set_deletion_callback(
         self_: *mut Fl_Return_Button,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -4184,7 +4184,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Shortcut_Button_resize_callback(
         self_: *mut Fl_Shortcut_Button,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -4354,7 +4354,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Shortcut_Button_set_deleter(
         arg1: *mut Fl_Shortcut_Button,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -4375,7 +4375,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Shortcut_Button_set_deletion_callback(
         self_: *mut Fl_Shortcut_Button,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,

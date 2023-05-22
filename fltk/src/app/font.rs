@@ -132,7 +132,7 @@ pub(crate) fn load_font(path: &str) -> Result<String, FltkError> {
                 } else {
                     f[16] = family_name.clone();
                 }
-                fl::Fl_set_font2(16, CString::safe_new(&family_name).into_raw());
+                fl::Fl_set_font2(16, CString::safe_new(&family_name).into_raw() as _);
                 Ok(family_name)
             } else {
                 Err(FltkError::Internal(FltkErrorKind::FailedOperation))

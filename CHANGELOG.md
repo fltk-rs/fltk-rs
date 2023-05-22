@@ -1,6 +1,32 @@
 # Changelog
 
 
+# [1.4.4] - 2023-05-23
+- Add app::set_belowmouse().
+- Relax SimpleTerminal::append2() requiring ansi mode.
+- Tooltip::enter_area() requires a static CStr as previous code didn't work correctly https://github.com/fltk-rs/fltk-rs/issues/1402.
+- Update fltk submodule.
+
+# [1.4.3] - 2023-05-08
+- SimpleTerminal::append2 should not allocate a CString by @bigfarts.
+- Support loongarch64-unknown-linux-gnu by @cstkingkey.
+- use ::std::os::raw ctypes prefix with newer bindgen.
+- Remove cty dependency because of c_char issue on aarch64 windows.
+- Fix call to fl_wl_screen in cfltk.
+- Update fltk submodule.
+
+# [1.4.2] - 2023-04-27
+- Adds several SysMenuBar methods.
+- Adds MacAppMenu and related methods.
+- Fixes WindowExt::raw_handle() on wayland.
+- Update ttf-parser dependency.
+- Update FLTK submodule.
+
+# [1.4.1] - 2023-04-13
+- Add capture of offscreens and image surfaces by @Postrediori.
+- Added taskbar visibility for the shapedwindow example by @SigmaEG.
+- Update FLTK submodule.
+
 # [1.4.0] - 2023-04-01
 - Use Rust version 2021 and require rustc 1.56.
 - Add explicit static-msvcrt feature for when cargo doesn't auto-propagate crt-static, by @vstojkovic.

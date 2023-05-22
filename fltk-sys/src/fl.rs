@@ -11,7 +11,7 @@ pub struct Fl_Widget_Tracker {
     _unused: [u8; 0],
 }
 pub type Fl_Awake_Handler =
-    ::std::option::Option<unsafe extern "C" fn(data: *mut ::std::os::raw::c_void)>;
+    ::core::option::Option<unsafe extern "C" fn(data: *mut ::std::os::raw::c_void)>;
 extern "C" {
     pub fn Fl_run() -> ::std::os::raw::c_int;
 }
@@ -228,7 +228,7 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_add_handler(
-        ev_handler: ::std::option::Option<
+        ev_handler: ::core::option::Option<
             unsafe extern "C" fn(ev: ::std::os::raw::c_int) -> ::std::os::raw::c_int,
         >,
     );
@@ -248,26 +248,26 @@ extern "C" {
 extern "C" {
     pub fn Fl_add_timeout(
         t: f64,
-        arg1: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
         arg2: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_repeat_timeout(
         t: f64,
-        arg1: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
         arg2: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_remove_timeout(
-        arg1: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
         arg2: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_has_timeout(
-        arg1: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
         arg2: *mut ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int;
 }
@@ -305,6 +305,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_belowmouse() -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_set_belowmouse(w: *mut Fl_Widget);
 }
 extern "C" {
     pub fn Fl_delete_widget(w: *mut Fl_Widget);
@@ -424,19 +427,19 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_add_idle(
-        arg1: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
         arg2: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_has_idle(
-        arg1: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
         arg2: *mut ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_remove_idle(
-        arg1: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
         arg2: *mut ::std::os::raw::c_void,
     );
 }
@@ -573,7 +576,7 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_event_dispatch(
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 event: ::std::os::raw::c_int,
                 arg1: *mut ::std::os::raw::c_void,
@@ -593,7 +596,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_set_box_type_cb(
         arg1: ::std::os::raw::c_int,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: ::std::os::raw::c_int,
                 arg2: ::std::os::raw::c_int,
@@ -648,7 +651,7 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_add_system_handler(
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut ::std::os::raw::c_void,
                 arg2: *mut ::std::os::raw::c_void,
@@ -659,7 +662,7 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_remove_system_handler(
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut ::std::os::raw::c_void,
                 arg2: *mut ::std::os::raw::c_void,
@@ -672,7 +675,7 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_add_clipboard_notify(
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(source: ::std::os::raw::c_int, data: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -680,14 +683,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_remove_clipboard_notify(
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(source: ::std::os::raw::c_int, data: *mut ::std::os::raw::c_void),
         >,
     );
 }
 extern "C" {
     pub fn Fl_open_callback(
-        cb: ::std::option::Option<unsafe extern "C" fn(arg1: *const ::std::os::raw::c_char)>,
+        cb: ::core::option::Option<unsafe extern "C" fn(arg1: *const ::std::os::raw::c_char)>,
     );
 }
 extern "C" {

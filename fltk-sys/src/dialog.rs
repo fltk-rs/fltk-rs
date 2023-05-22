@@ -260,7 +260,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_File_Chooser_set_callback(
         self_: *mut Fl_File_Chooser,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_File_Chooser, arg2: *mut ::std::os::raw::c_void),
         >,
         d: *mut ::std::os::raw::c_void,

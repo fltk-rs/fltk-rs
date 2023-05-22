@@ -5,17 +5,17 @@
 pub struct Fl_Widget {
     _unused: [u8; 0],
 }
-pub type Fl_Callback = ::std::option::Option<
+pub type Fl_Callback = ::core::option::Option<
     unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
 >;
-pub type custom_handler_callback = ::std::option::Option<
+pub type custom_handler_callback = ::core::option::Option<
     unsafe extern "C" fn(
         arg1: *mut Fl_Widget,
         arg2: ::std::os::raw::c_int,
         arg3: *mut ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int,
 >;
-pub type custom_draw_callback = ::std::option::Option<
+pub type custom_draw_callback = ::core::option::Option<
     unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
 >;
 #[repr(C)]
@@ -182,7 +182,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Slider_resize_callback(
         self_: *mut Fl_Slider,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -305,7 +305,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Slider_set_deleter(
         arg1: *mut Fl_Slider,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -326,7 +326,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Slider_set_deletion_callback(
         self_: *mut Fl_Slider,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -569,7 +569,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Nice_Slider_resize_callback(
         self_: *mut Fl_Nice_Slider,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -704,7 +704,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Nice_Slider_set_deleter(
         arg1: *mut Fl_Nice_Slider,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -725,7 +725,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Nice_Slider_set_deletion_callback(
         self_: *mut Fl_Nice_Slider,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -953,7 +953,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Counter_resize_callback(
         self_: *mut Fl_Counter,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -1076,7 +1076,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Counter_set_deleter(
         arg1: *mut Fl_Counter,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -1097,7 +1097,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Counter_set_deletion_callback(
         self_: *mut Fl_Counter,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -1325,7 +1325,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Dial_resize_callback(
         self_: *mut Fl_Dial,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -1448,7 +1448,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Dial_set_deleter(
         arg1: *mut Fl_Dial,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -1469,7 +1469,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Dial_set_deletion_callback(
         self_: *mut Fl_Dial,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -1705,7 +1705,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Line_Dial_resize_callback(
         self_: *mut Fl_Line_Dial,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -1831,7 +1831,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Line_Dial_set_deleter(
         arg1: *mut Fl_Line_Dial,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -1852,7 +1852,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Line_Dial_set_deletion_callback(
         self_: *mut Fl_Line_Dial,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -2080,7 +2080,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Roller_resize_callback(
         self_: *mut Fl_Roller,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -2203,7 +2203,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Roller_set_deleter(
         arg1: *mut Fl_Roller,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -2224,7 +2224,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Roller_set_deletion_callback(
         self_: *mut Fl_Roller,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -2449,7 +2449,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Scrollbar_resize_callback(
         self_: *mut Fl_Scrollbar,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -2575,7 +2575,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Scrollbar_set_deleter(
         arg1: *mut Fl_Scrollbar,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -2596,7 +2596,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Scrollbar_set_deletion_callback(
         self_: *mut Fl_Scrollbar,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -2833,7 +2833,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Value_Slider_resize_callback(
         self_: *mut Fl_Value_Slider,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -2974,7 +2974,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Value_Slider_set_deleter(
         arg1: *mut Fl_Value_Slider,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -2995,7 +2995,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Value_Slider_set_deletion_callback(
         self_: *mut Fl_Value_Slider,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -3244,7 +3244,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Adjuster_resize_callback(
         self_: *mut Fl_Adjuster,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -3367,7 +3367,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Adjuster_set_deleter(
         arg1: *mut Fl_Adjuster,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -3388,7 +3388,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Adjuster_set_deletion_callback(
         self_: *mut Fl_Adjuster,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -3622,7 +3622,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Value_Input_resize_callback(
         self_: *mut Fl_Value_Input,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -3757,7 +3757,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Value_Input_set_deleter(
         arg1: *mut Fl_Value_Input,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -3778,7 +3778,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Value_Input_set_deletion_callback(
         self_: *mut Fl_Value_Input,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -4039,7 +4039,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Value_Output_resize_callback(
         self_: *mut Fl_Value_Output,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -4180,7 +4180,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Value_Output_set_deleter(
         arg1: *mut Fl_Value_Output,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -4201,7 +4201,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Value_Output_set_deletion_callback(
         self_: *mut Fl_Value_Output,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -4456,7 +4456,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Fill_Slider_resize_callback(
         self_: *mut Fl_Fill_Slider,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -4591,7 +4591,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Fill_Slider_set_deleter(
         arg1: *mut Fl_Fill_Slider,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -4612,7 +4612,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Fill_Slider_set_deletion_callback(
         self_: *mut Fl_Fill_Slider,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -4840,7 +4840,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Fill_Dial_resize_callback(
         self_: *mut Fl_Fill_Dial,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -4966,7 +4966,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Fill_Dial_set_deleter(
         arg1: *mut Fl_Fill_Dial,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -4987,7 +4987,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Fill_Dial_set_deletion_callback(
         self_: *mut Fl_Fill_Dial,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -5215,7 +5215,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hor_Slider_resize_callback(
         self_: *mut Fl_Hor_Slider,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -5347,7 +5347,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hor_Slider_set_deleter(
         arg1: *mut Fl_Hor_Slider,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -5368,7 +5368,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hor_Slider_set_deletion_callback(
         self_: *mut Fl_Hor_Slider,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -5626,7 +5626,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_resize_callback(
         self_: *mut Fl_Hor_Fill_Slider,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -5796,7 +5796,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_set_deleter(
         arg1: *mut Fl_Hor_Fill_Slider,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -5817,7 +5817,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_set_deletion_callback(
         self_: *mut Fl_Hor_Fill_Slider,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -6085,7 +6085,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_resize_callback(
         self_: *mut Fl_Hor_Nice_Slider,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -6255,7 +6255,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_set_deleter(
         arg1: *mut Fl_Hor_Nice_Slider,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -6276,7 +6276,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_set_deletion_callback(
         self_: *mut Fl_Hor_Nice_Slider,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -6550,7 +6550,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hor_Value_Slider_resize_callback(
         self_: *mut Fl_Hor_Value_Slider,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -6725,7 +6725,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hor_Value_Slider_set_deleter(
         arg1: *mut Fl_Hor_Value_Slider,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -6749,7 +6749,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hor_Value_Slider_set_deletion_callback(
         self_: *mut Fl_Hor_Value_Slider,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,

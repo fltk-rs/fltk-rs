@@ -686,7 +686,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_add_symbol(
         name: *const ::std::os::raw::c_char,
-        drawit: ::std::option::Option<unsafe extern "C" fn(arg1: ::std::os::raw::c_uint)>,
+        drawit: ::core::option::Option<unsafe extern "C" fn(arg1: ::std::os::raw::c_uint)>,
         scalable: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }

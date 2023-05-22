@@ -5,20 +5,20 @@
 pub struct Fl_Widget {
     _unused: [u8; 0],
 }
-pub type Fl_Callback = ::std::option::Option<
+pub type Fl_Callback = ::core::option::Option<
     unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
 >;
-pub type custom_handler_callback = ::std::option::Option<
+pub type custom_handler_callback = ::core::option::Option<
     unsafe extern "C" fn(
         arg1: *mut Fl_Widget,
         arg2: ::std::os::raw::c_int,
         arg3: *mut ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int,
 >;
-pub type custom_draw_callback = ::std::option::Option<
+pub type custom_draw_callback = ::core::option::Option<
     unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
 >;
-pub type Fl_Text_Modify_Cb = ::std::option::Option<
+pub type Fl_Text_Modify_Cb = ::core::option::Option<
     unsafe extern "C" fn(
         pos: ::std::os::raw::c_int,
         nInserted: ::std::os::raw::c_int,
@@ -465,7 +465,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Display_resize_callback(
         self_: *mut Fl_Text_Display,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -606,7 +606,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Display_set_deleter(
         arg1: *mut Fl_Text_Display,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -627,7 +627,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Display_set_deletion_callback(
         self_: *mut Fl_Text_Display,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -1118,7 +1118,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Editor_resize_callback(
         self_: *mut Fl_Text_Editor,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -1253,7 +1253,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Editor_set_deleter(
         arg1: *mut Fl_Text_Editor,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -1274,7 +1274,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Editor_set_deletion_callback(
         self_: *mut Fl_Text_Editor,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
@@ -1706,7 +1706,7 @@ extern "C" {
         self_: *mut Fl_Text_Editor,
         key: ::std::os::raw::c_int,
         state: ::std::os::raw::c_int,
-        kf: ::std::option::Option<
+        kf: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: ::std::os::raw::c_int,
                 arg2: *mut Fl_Text_Editor,
@@ -1915,7 +1915,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Simple_Terminal_resize_callback(
         self_: *mut Fl_Simple_Terminal,
-        cb: ::std::option::Option<
+        cb: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Fl_Widget,
                 x: ::std::os::raw::c_int,
@@ -2085,7 +2085,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Simple_Terminal_set_deleter(
         arg1: *mut Fl_Simple_Terminal,
-        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
@@ -2106,7 +2106,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Simple_Terminal_set_deletion_callback(
         self_: *mut Fl_Simple_Terminal,
-        arg1: ::std::option::Option<
+        arg1: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
         >,
         data: *mut ::std::os::raw::c_void,
