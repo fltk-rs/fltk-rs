@@ -1,7 +1,7 @@
 # Changelog
 
 
-# [1.4.5] - Unreleased
+# [1.4.5] - 2023-06-08
 - Return bool from handle_event.
 - Update fltk submodule.
 
