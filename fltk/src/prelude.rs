@@ -434,7 +434,7 @@ pub unsafe trait WidgetExt {
     /// Does a simple resize ignoring class-specific resize functionality
     fn widget_resize(&mut self, x: i32, y: i32, w: i32, h: i32);
     /// Handle a specific event
-    fn handle_event(&mut self, event: Event);
+    fn handle_event(&mut self, event: Event) -> bool;
     /// Check whether a widget is derived
     fn is_derived(&self) -> bool {
         unimplemented!();

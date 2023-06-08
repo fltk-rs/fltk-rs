@@ -1,6 +1,10 @@
 # Changelog
 
 
+# [1.4.5] - Unreleased
+- Return bool from handle_event.
+- Update fltk submodule.
+
 # [1.4.4] - 2023-05-23
 - Add app::set_belowmouse().
 - Relax SimpleTerminal::append2() requiring ansi mode.

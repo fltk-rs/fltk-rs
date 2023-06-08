@@ -897,9 +897,9 @@ macro_rules! impl_widget_ext {
                     }
                 }
 
-                fn handle_event(&mut self, event: $crate::enums::Event) {
+                fn handle_event(&mut self, event: $crate::enums::Event) -> bool {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _handle_event>](self.inner, event.bits()) }
+                    unsafe { [<$flname _handle_event>](self.inner, event.bits()) != 0 }
                 }
 
                 fn is_derived(&self) -> bool {
@@ -1618,7 +1618,7 @@ macro_rules! impl_widget_ext_via {
                 self.$member.widget_resize(x, y, w, h)
             }
 
-            fn handle_event(&mut self, event: $crate::enums::Event) {
+            fn handle_event(&mut self, event: $crate::enums::Event) -> bool {
                 self.$member.handle_event(event)
             }
 
