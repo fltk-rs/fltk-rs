@@ -280,9 +280,8 @@ To run the [examples](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/exampl
 cargo run --example editor
 cargo run --example calculator
 cargo run --example calculator2
-cargo run --example terminal
 cargo run --example counter
-cargo run --example hello
+cargo run --example hello_svg
 cargo run --example hello_button
 cargo run --example fb
 cargo run --example pong
@@ -293,7 +292,7 @@ cargo run --example custom_dial
 
 Using custom theming and also FLTK provided default schemes like Gtk:
 
-- [hello](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/hello.rs)
+- [hello_svg](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/hello_svg.rs)
 
 - ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/hello.jpg)
 
