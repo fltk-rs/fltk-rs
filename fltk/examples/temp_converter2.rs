@@ -49,8 +49,8 @@ impl MyApp {
             let mut inp1 = input::FloatInput::default().with_size(0, 40);
             make_label("Fahrenheit");
             let mut inp2 = input::FloatInput::default().with_size(0, 40);
-            flex.set_size(&inp1, 30);
-            flex.set_size(&inp2, 30);
+            flex.fixed(&inp1, 30);
+            flex.fixed(&inp2, 30);
             flex.end();
             win.end();
             win.make_resizable(true);
