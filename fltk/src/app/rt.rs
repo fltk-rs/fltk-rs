@@ -700,3 +700,11 @@ pub unsafe fn remove_system_handler(
     assert!(crate::app::is_ui_thread());
     fl::Fl_remove_system_handler(cb);
 }
+
+#[cfg(windows)]
+/// Get the MSG struct
+pub fn fl_msg() -> *mut raw::c_void {
+    unsafe {
+        fl::Fl_get_fl_msg()
+    }
+}

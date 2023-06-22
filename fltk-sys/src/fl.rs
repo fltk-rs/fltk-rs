@@ -713,3 +713,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_callback_reason() -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_get_fl_msg() -> *mut ::std::os::raw::c_void;
+}
