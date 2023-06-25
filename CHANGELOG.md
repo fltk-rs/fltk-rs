@@ -1,6 +1,13 @@
 # Changelog
 
 
+# [1.4.6] - Unreleased
+- Add Flex::fixed (as is the current api in FLTK's Fl_Flex)
+
+# [1.4.5] - 2023-06-08
+- Return bool from handle_event.
+- Update fltk submodule.
+
 # [1.4.4] - 2023-05-23
 - Add app::set_belowmouse().
 - Relax SimpleTerminal::append2() requiring ansi mode.

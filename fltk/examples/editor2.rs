@@ -247,7 +247,7 @@ fn main() {
         ed.set_callback(editor_cb);
         handle_drag_drop(&mut ed);
         w.resizable(&col);
-        col.set_size(&m, 30);
+        col.fixed(&m, 30);
         col.end();
     }
     w.end();

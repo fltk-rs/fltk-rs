@@ -25,7 +25,7 @@ fn buttons_panel(parent: &mut group::Flex) {
             .with_align(enums::Align::Inside | enums::Align::Right);
         let username = input::Input::default();
 
-        urow.set_size(&username, 180);
+        urow.fixed(&username, 180);
         urow.end();
     }
 
@@ -36,7 +36,7 @@ fn buttons_panel(parent: &mut group::Flex) {
             .with_align(enums::Align::Inside | enums::Align::Right);
         let password = input::Input::default();
 
-        prow.set_size(&password, 180);
+        prow.fixed(&password, 180);
         prow.end();
     }
 
@@ -48,8 +48,8 @@ fn buttons_panel(parent: &mut group::Flex) {
         let reg = create_button("Register");
         let login = create_button("Login");
 
-        brow.set_size(&reg, 80);
-        brow.set_size(&login, 80);
+        brow.fixed(&reg, 80);
+        brow.fixed(&login, 80);
         brow.end();
     }
 
@@ -57,12 +57,12 @@ fn buttons_panel(parent: &mut group::Flex) {
 
     frame::Frame::default();
 
-    parent.set_size(&w, 60);
-    parent.set_size(&urow, 30);
-    parent.set_size(&prow, 30);
-    parent.set_size(&pad, 1);
-    parent.set_size(&brow, 30);
-    parent.set_size(&b, 30);
+    parent.fixed(&w, 60);
+    parent.fixed(&urow, 30);
+    parent.fixed(&prow, 30);
+    parent.fixed(&pad, 1);
+    parent.fixed(&brow, 30);
+    parent.fixed(&b, 30);
 }
 
 fn middle_panel(parent: &mut group::Flex) {
@@ -79,9 +79,9 @@ fn middle_panel(parent: &mut group::Flex) {
 
     frame::Frame::default();
 
-    parent.set_size(&frame, 200);
-    parent.set_size(&spacer, 10);
-    parent.set_size(&bp, 300);
+    parent.fixed(&frame, 200);
+    parent.fixed(&spacer, 10);
+    parent.fixed(&bp, 300);
 }
 
 fn main_panel(parent: &mut group::Flex) {
@@ -93,7 +93,7 @@ fn main_panel(parent: &mut group::Flex) {
 
     frame::Frame::default();
 
-    parent.set_size(&mp, 200);
+    parent.fixed(&mp, 200);
 }
 
 fn create_button(caption: &str) -> button::Button {
