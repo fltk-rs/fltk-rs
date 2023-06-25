@@ -48,6 +48,7 @@ pub mod table;
 pub mod tabs;
 pub mod temp_converter;
 pub mod threads_windows;
+pub mod tile;
 pub mod tree;
 pub mod widget_table;
 pub mod wizard;
