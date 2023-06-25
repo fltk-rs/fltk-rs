@@ -572,3 +572,11 @@ pub fn raw_open_callback(cb: Option<fn(*const raw::c_char)>) {
 pub fn callback_reason() -> CallbackReason {
     unsafe { mem::transmute(fl::Fl_callback_reason()) }
 }
+
+#[cfg(target_os = "windows")]
+/// Get the fl_msg win32 MSG object, see this [discussion](https://github.com/fltk-rs/fltk-rs/discussions/1417)
+pub fn fl_msg() -> *mut raw::c_void {
+    unsafe {
+        fl::Fl_get_fl_msg()
+    }
+}
