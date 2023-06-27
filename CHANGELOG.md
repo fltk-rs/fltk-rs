@@ -1,9 +1,10 @@
 # Changelog
 
 
-# [1.4.6] - Unreleased
+# [1.4.6] - 2023-06-27
 - Add Flex::fixed (as is the current api in FLTK's Fl_Flex).
 - Add app::fl_msg() (a way to get the fl_msg (the win32 MSG object)).
+- Update FLTK submodule.
 
 # [1.4.5] - 2023-06-08
 - Return bool from handle_event.
