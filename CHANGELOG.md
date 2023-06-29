@@ -1,6 +1,10 @@
 # Changelog
 
 
+# [1.4.7] - Unreleased
+- Support Flex::set_margins() and margins().
+- Update FLTK submodule.
+
 # [1.4.6] - 2023-06-27
 - Add Flex::fixed (as is the current api in FLTK's Fl_Flex).
 - Add app::fl_msg() (a way to get the fl_msg (the win32 MSG object)).

@@ -633,6 +633,21 @@ impl Flex {
     pub fn pad(&self) -> i32 {
         unsafe { Fl_Flex_pad(self.inner) }
     }
+
+    /// Set the margins
+    pub fn set_margins(&mut self, left: i32, top: i32, right: i32, bottom: i32) {
+        unsafe { Fl_Flex_set_margins(self.inner, left, top, right, bottom) }
+    }
+
+    /// Get the margin
+    pub fn margins(&self) -> (i32, i32, i32, i32) {
+        let mut left = 0;
+        let mut top = 0;
+        let mut right = 0;
+        let mut bottom = 0;
+        unsafe { Fl_Flex_margins(self.inner, &mut left, &mut top, &mut right, &mut bottom); }
+        (left, top, right, bottom)
+    }
 }
 
 /**
