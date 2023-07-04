@@ -4,7 +4,7 @@ use crate::utils::FlString;
 use fltk_sys::image::*;
 use std::{ffi::CString, mem, sync::Arc};
 
-/// The scaling algorithm to use for RGB images
+/// The scaling algorithm to use for raster images
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum RgbScaling {

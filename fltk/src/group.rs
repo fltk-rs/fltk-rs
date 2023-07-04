@@ -639,7 +639,7 @@ impl Flex {
         unsafe { Fl_Flex_set_margins(self.inner, left, top, right, bottom) }
     }
 
-    /// Get the margin
+    /// Get the margins -> returns (left, top, right, bottom)
     pub fn margins(&self) -> (i32, i32, i32, i32) {
         let mut left = 0;
         let mut top = 0;

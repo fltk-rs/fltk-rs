@@ -1551,7 +1551,7 @@ pub unsafe trait ImageExt {
     fn copy(&self) -> Self
     where
         Self: Sized;
-    /// Performs a deep copy of the image
+    /// Performs a deep copy of the image but to a new size. This will make use of the scaling algorithm when resizing.
     fn copy_sized(&self, w: i32, h: i32) -> Self
     where
         Self: Sized;
