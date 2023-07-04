@@ -3,6 +3,7 @@
 
 # [1.4.7] - Unreleased
 - Support Flex::set_margins() and margins().
+- Add Image::set_scaling_algorithm and scaling_algorithm.
 - Update FLTK submodule.
 
 # [1.4.6] - 2023-06-27
