@@ -52,6 +52,17 @@ macro_rules! impl_image_ext {
                     }
                 }
 
+                fn copy_sized(&self, w: i32, h: i32) -> Self {
+                    assert!(!self.was_deleted());
+                    unsafe {
+                        let img = [<$flname _copy_sized>](*self.inner, w, h);
+                        assert!(!img.is_null());
+                        $name {
+                            inner: Arc::from(img),
+                        }
+                    }
+                }
+
                 fn draw(&mut self, arg2: i32, arg3: i32, arg4: i32, arg5: i32) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _draw>](*self.inner, arg2, arg3, arg4, arg5) }

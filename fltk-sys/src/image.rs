@@ -44,6 +44,9 @@ extern "C" {
     pub fn Fl_Image_copy(self_: *mut Fl_Image) -> *mut Fl_Image;
 }
 extern "C" {
+    pub fn Fl_Image_copy_sized(self_: *mut Fl_Image, w: i32, h: i32) -> *mut Fl_Image;
+}
+extern "C" {
     pub fn Fl_Image_scale(
         self_: *mut Fl_Image,
         width: ::std::os::raw::c_int,
@@ -123,6 +126,9 @@ extern "C" {
     pub fn Fl_JPEG_Image_copy(self_: *mut Fl_JPEG_Image) -> *mut Fl_JPEG_Image;
 }
 extern "C" {
+    pub fn Fl_JPEG_Image_copy_sized(self_: *mut Fl_JPEG_Image, w: i32, h: i32) -> *mut Fl_JPEG_Image;
+}
+extern "C" {
     pub fn Fl_JPEG_Image_scale(
         self_: *mut Fl_JPEG_Image,
         width: ::std::os::raw::c_int,
@@ -200,6 +206,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_PNG_Image_copy(self_: *mut Fl_PNG_Image) -> *mut Fl_PNG_Image;
+}
+extern "C" {
+    pub fn Fl_PNG_Image_copy_sized(self_: *mut Fl_PNG_Image, w: i32, h: i32) -> *mut Fl_PNG_Image;
 }
 extern "C" {
     pub fn Fl_PNG_Image_scale(
@@ -284,6 +293,9 @@ extern "C" {
     pub fn Fl_SVG_Image_copy(self_: *mut Fl_SVG_Image) -> *mut Fl_SVG_Image;
 }
 extern "C" {
+    pub fn Fl_SVG_Image_copy_sized(self_: *mut Fl_SVG_Image, w: i32, h: i32) -> *mut Fl_SVG_Image;
+}
+extern "C" {
     pub fn Fl_SVG_Image_scale(
         self_: *mut Fl_SVG_Image,
         width: ::std::os::raw::c_int,
@@ -364,6 +376,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_BMP_Image_copy(self_: *mut Fl_BMP_Image) -> *mut Fl_BMP_Image;
+}
+extern "C" {
+    pub fn Fl_BMP_Image_copy_sized(self_: *mut Fl_BMP_Image, w: i32, h: i32) -> *mut Fl_BMP_Image;
 }
 extern "C" {
     pub fn Fl_BMP_Image_scale(
@@ -448,6 +463,9 @@ extern "C" {
     pub fn Fl_GIF_Image_copy(self_: *mut Fl_GIF_Image) -> *mut Fl_GIF_Image;
 }
 extern "C" {
+    pub fn Fl_GIF_Image_copy_sized(self_: *mut Fl_GIF_Image, w: i32, h: i32) -> *mut Fl_GIF_Image;
+}
+extern "C" {
     pub fn Fl_GIF_Image_scale(
         self_: *mut Fl_GIF_Image,
         width: ::std::os::raw::c_int,
@@ -530,6 +548,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Anim_GIF_Image_copy(self_: *mut Fl_Anim_GIF_Image) -> *mut Fl_Anim_GIF_Image;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_copy_sized(self_: *mut Fl_Anim_GIF_Image, w: i32, h: i32) -> *mut Fl_Anim_GIF_Image;
 }
 extern "C" {
     pub fn Fl_Anim_GIF_Image_scale(
@@ -655,6 +676,9 @@ extern "C" {
     pub fn Fl_Pixmap_copy(self_: *mut Fl_Pixmap) -> *mut Fl_Pixmap;
 }
 extern "C" {
+    pub fn Fl_Pixmap_copy_sized(self_: *mut Fl_Pixmap, w: i32, h: i32) -> *mut Fl_Pixmap;
+}
+extern "C" {
     pub fn Fl_Pixmap_scale(
         self_: *mut Fl_Pixmap,
         width: ::std::os::raw::c_int,
@@ -729,6 +753,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_XPM_Image_copy(self_: *mut Fl_XPM_Image) -> *mut Fl_XPM_Image;
+}
+extern "C" {
+    pub fn Fl_XPM_Image_copy_sized(self_: *mut Fl_XPM_Image, w: i32, h: i32) -> *mut Fl_XPM_Image;
 }
 extern "C" {
     pub fn Fl_XPM_Image_scale(
@@ -807,6 +834,9 @@ extern "C" {
     pub fn Fl_XBM_Image_copy(self_: *mut Fl_XBM_Image) -> *mut Fl_XBM_Image;
 }
 extern "C" {
+    pub fn Fl_XBM_Image_copy_sized(self_: *mut Fl_XBM_Image, w: i32, h: i32) -> *mut Fl_XBM_Image;
+}
+extern "C" {
     pub fn Fl_XBM_Image_scale(
         self_: *mut Fl_XBM_Image,
         width: ::std::os::raw::c_int,
@@ -883,6 +913,9 @@ extern "C" {
     pub fn Fl_PNM_Image_copy(self_: *mut Fl_PNM_Image) -> *mut Fl_PNM_Image;
 }
 extern "C" {
+    pub fn Fl_PNM_Image_copy_sized(self_: *mut Fl_PNM_Image, w: i32, h: i32) -> *mut Fl_PNM_Image;
+}
+extern "C" {
     pub fn Fl_PNM_Image_scale(
         self_: *mut Fl_PNM_Image,
         width: ::std::os::raw::c_int,
@@ -957,6 +990,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tiled_Image_copy(self_: *mut Fl_Tiled_Image) -> *mut Fl_Tiled_Image;
+}
+extern "C" {
+    pub fn Fl_Tiled_Image_copy_sized(self_: *mut Fl_Tiled_Image, w: i32, h: i32) -> *mut Fl_Tiled_Image;
 }
 extern "C" {
     pub fn Fl_Tiled_Image_scale(
@@ -1037,6 +1073,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_RGB_Image_copy(self_: *mut Fl_RGB_Image) -> *mut Fl_RGB_Image;
+}
+extern "C" {
+    pub fn Fl_RGB_Image_copy_sized(self_: *mut Fl_RGB_Image, w: i32, h: i32) -> *mut Fl_RGB_Image;
 }
 extern "C" {
     pub fn Fl_RGB_Image_scale(
@@ -1135,6 +1174,9 @@ extern "C" {
     pub fn Fl_Shared_Image_copy(self_: *mut Fl_Shared_Image) -> *mut Fl_Shared_Image;
 }
 extern "C" {
+    pub fn Fl_Shared_Image_copy_sized(self_: *mut Fl_Shared_Image, w: i32, h: i32) -> *mut Fl_Shared_Image;
+}
+extern "C" {
     pub fn Fl_Shared_Image_scale(
         self_: *mut Fl_Shared_Image,
         width: ::std::os::raw::c_int,
@@ -1219,6 +1261,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_ICO_Image_copy(self_: *mut Fl_ICO_Image) -> *mut Fl_ICO_Image;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_copy_sized(self_: *mut Fl_ICO_Image, w: i32, h: i32) -> *mut Fl_ICO_Image;
 }
 extern "C" {
     pub fn Fl_ICO_Image_scale(

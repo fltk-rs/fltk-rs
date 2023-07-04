@@ -1551,6 +1551,10 @@ pub unsafe trait ImageExt {
     fn copy(&self) -> Self
     where
         Self: Sized;
+    /// Performs a deep copy of the image
+    fn copy_sized(&self, w: i32, h: i32) -> Self
+    where
+        Self: Sized;
     /// Draws the image at the presupplied coordinates and size
     fn draw(&mut self, x: i32, y: i32, width: i32, height: i32);
     /// Draws the image at the presupplied coordinates and size and offset cx, cy
