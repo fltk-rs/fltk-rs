@@ -82,6 +82,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Image_scaling_algorithm() -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_RGB_Image_set_scaling_algorithm(algorithm: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_RGB_Image_scaling_algorithm() -> ::std::os::raw::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_JPEG_Image {

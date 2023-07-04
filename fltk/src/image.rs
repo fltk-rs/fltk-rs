@@ -4,6 +4,16 @@ use crate::utils::FlString;
 use fltk_sys::image::*;
 use std::{ffi::CString, mem, sync::Arc};
 
+/// The scaling algorithm to use for RGB images
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub enum RgbScaling {
+    /// Default RGB image scaling algorithm
+    Nearest = 0,
+    /// More accurate, but slower RGB image scaling algorithm
+    Bilinear,
+}
+
 /// Wrapper around `Fl_Image`, used to wrap other image types
 #[derive(Debug)]
 pub struct Image {
@@ -11,6 +21,18 @@ pub struct Image {
 }
 
 crate::macros::image::impl_image_ext!(Image, Fl_Image);
+
+impl Image {
+    /// Sets the scaling algorithm
+    pub fn set_scaling_algorithm(algorithm: RgbScaling) {
+        unsafe { Fl_Image_set_scaling_algorithm(algorithm as i32) }
+    }
+
+    /// Gets the scaling algorithm
+    pub fn scaling_algorithm() -> RgbScaling {
+        unsafe { mem::transmute(Fl_Image_scaling_algorithm()) }
+    }
+}
 
 /// Creates a struct holding a shared image
 #[derive(Debug)]
@@ -748,16 +770,6 @@ impl Pixmap {
     }
 }
 
-/// The scaling algorithm to use for RGB images
-#[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub enum RgbScaling {
-    /// Default RGB image scaling algorithm
-    Nearest = 0,
-    /// More accurate, but slower RGB image scaling algorithm
-    Bilinear,
-}
-
 /// Creates a struct holding a raw RGB image
 #[derive(Debug)]
 pub struct RgbImage {
@@ -1036,12 +1048,12 @@ impl RgbImage {
 
     /// Sets the scaling algorithm
     pub fn set_scaling_algorithm(algorithm: RgbScaling) {
-        unsafe { Fl_Image_set_scaling_algorithm(algorithm as i32) }
+        unsafe { Fl_RGB_Image_set_scaling_algorithm(algorithm as i32) }
     }
 
     /// Gets the scaling algorithm
     pub fn scaling_algorithm() -> RgbScaling {
-        unsafe { mem::transmute(Fl_Image_scaling_algorithm()) }
+        unsafe { mem::transmute(Fl_RGB_Image_scaling_algorithm()) }
     }
 }
 
