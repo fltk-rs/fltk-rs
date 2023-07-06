@@ -45,6 +45,7 @@ legacy-opengl = ["fltk-sys/legacy-opengl"] # (Experimental) Support of Lagacy Op
 single-threaded = ["fltk-sys/single-threaded"] # (Experimental) Disable multithreading support when linking X11 libs non-mt x11 libs.
 use-wayland = ["fltk-sys/use-wayland"] # Use FLTK's wayland backend on linux systems.
 static-msvcrt = ["fltk-sys/static-msvcrt"] # Ensure MSVCRT is linked statically even if cargo does not pass the flag to the build script.
+cairoext = ["fltk-sys/cairoext"] # Sets FLTK's OPTION_CAIROEXT which enables user code to get the cairo context for drawing
 
 [package.metadata.docs.rs]
 features = ["enable-glwindow"]

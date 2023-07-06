@@ -22,6 +22,8 @@ mod visual;
 pub use visual::*;
 mod widget;
 pub use widget::*;
+/// Enables the use of the cairo context with Cairo-rs. Requires the cairoext build flag.
+pub mod cairo;
 
 /// Basic Application struct, used to instantiate, set the scheme and run the event loop
 #[derive(Debug, Copy, Clone)]

@@ -76,6 +76,12 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             dst.define("CFLTK_BUILD_SHARED", "ON");
         }
 
+        if cfg!(feature = "cairoext") {
+            dst.define("OPTION_CAIROEXT", "ON");
+            dst.define("CFLTK_USE_CAIROEXT", "ON");
+        }
+
+
         if (cfg!(feature = "use-ninja") && crate::utils::has_program("ninja"))
             || (target_triple.contains("windows-msvc") && crate::utils::has_program("ninja"))
         {
