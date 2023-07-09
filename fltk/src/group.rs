@@ -612,6 +612,12 @@ impl Flex {
     pub fn recalc(&self) {
         let mut s = self.clone();
         s.resize(self.x(), self.y(), self.w(), self.h());
+        s.redraw();
+    }
+
+    /// Recalculate children's coords and sizes
+    pub fn layout(&self) {
+        self.recalc();
     }
 
     /// Set the margin

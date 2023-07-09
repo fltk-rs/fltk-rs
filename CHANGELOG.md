@@ -1,6 +1,11 @@
 # Changelog
 
 
+# [1.4.8] - Unreleased
+- Add cairoext feature which allow using cairo for drawing via functions in app::cairo::*.
+- Add app::option, set_option functions and Option enum.
+- Update FLTK submodule.
+
 # [1.4.7] - 2023-07-04
 - Support Flex::set_margins() and margins().
 - Add Image::set_scaling_algorithm and scaling_algorithm.
