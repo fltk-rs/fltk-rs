@@ -734,3 +734,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_cairo_flush(c: *mut ::std::os::raw::c_void);
 }
+extern "C" {
+    pub fn Fl_option(opt: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_set_option(opt: ::std::os::raw::c_int, val: ::std::os::raw::c_int);
+}

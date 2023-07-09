@@ -22,6 +22,8 @@ mod visual;
 pub use visual::*;
 mod widget;
 pub use widget::*;
+mod opts;
+pub use opts::*;
 /// Enables the use of the cairo context with Cairo-rs. Requires the cairoext build flag.
 pub mod cairo;
 
