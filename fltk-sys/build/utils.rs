@@ -8,6 +8,14 @@ pub fn has_program(prog: &str) -> bool {
     }
 }
 
+pub fn fltk_config_version() -> String {
+    let out = match std::process::Command::new("fltk-config").arg("--api-version").output() {
+        Ok(out) => out.stdout,
+        _ => vec![],
+    };
+    String::from_utf8_lossy(&out).to_string()
+}
+
 pub fn use_static_msvcrt() -> bool {
     cfg!(target_feature = "crt-static") || cfg!(feature = "static-msvcrt")
 }
