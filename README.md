@@ -217,7 +217,7 @@ Themes of individual widgets can be optionally modified using the provided metho
 ```
 For default application colors, fltk-rs provides `app::background()`, `app::background2()` and `app::foreground()`. You can also specify the default application selection/inactive colors, font, label size, frame type, scrollbar size, menu line-spacing. Additionally the [fltk-theme](https://crates.io/crates/fltk-theme) crate offers some other predefined color maps (dark theme, tan etc) and widget themes which can be loaded into your application.
 
-## Dependencies
+## Build Dependencies
 
 Rust (version > 1.55), CMake (version > 3.11), Git and a C++11 compiler need to be installed and in your PATH for a cross-platform build from source. [Ninja](https://github.com/ninja-build/ninja) is recommended, but not required. This crate also offers a bundled form of fltk on selected x86_64 and aarch64 platforms (Windows (msvc and gnu), MacOS, Linux), this can be enabled using the fltk-bundled feature flag as mentioned in the usage section (this requires curl and tar to download and unpack the bundled libraries).
 
@@ -247,6 +247,15 @@ For NixOS (Linux distribution) this `nix-shell` environment can be used:
 ```bash
 nix-shell --packages rustc cmake git gcc xorg.libXext xorg.libXft xorg.libXinerama xorg.libXcursor xorg.libXrender xorg.libXfixes libcerf pango cairo libGL mesa pkg-config
 ```
+
+## Runtime Dependencies
+- Windows: None
+- MacOS: None
+- Linux: You need X11 libraries, as well as pango and cairo for drawing:
+```
+apt-get install -qq --no-install-recommends libx11-6 libxinerama1 libxft2 libxext6 libxcursor1 libxrender1 libxfixes3 libcairo2 libpango-1.0-0 libpangocairo-1.0-0 libpangoxft-1.0-0 libglib2.0-0 libfontconfig1 libglu1-mesa libgl1
+```
+Note that most graphical desktop environments already have these libs already installed. This list can be useful if you want to build your app in CI/docker using the fltk-bundled feature or are testing your already built package in CI/docker (where there is not graphical user interface).
 
 ## Features
 
