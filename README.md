@@ -251,11 +251,13 @@ nix-shell --packages rustc cmake git gcc xorg.libXext xorg.libXft xorg.libXinera
 ## Runtime Dependencies
 - Windows: None
 - MacOS: None
-- Linux: You need X11 libraries, as well as pango and cairo for drawing:
+- Linux: You need X11 libraries, as well as pango and cairo for drawing (and OpenGL if you want to enable the enable-glwindow feature):
 ```
 apt-get install -qq --no-install-recommends libx11-6 libxinerama1 libxft2 libxext6 libxcursor1 libxrender1 libxfixes3 libcairo2 libpango-1.0-0 libpangocairo-1.0-0 libpangoxft-1.0-0 libglib2.0-0 libfontconfig1 libglu1-mesa libgl1
 ```
-Note that most graphical desktop environments already have these libs already installed. This list can be useful if you want to build your app in CI/docker using the fltk-bundled feature or are testing your already built package in CI/docker (where there is not graphical user interface).
+Note that if you installed the build dependencies, it will also install the runtime dependencies automatically as well.
+
+Also note that most graphical desktop environments already have these libs already installed. This list can be useful if you want to build your app in CI/docker using the fltk-bundled feature or are testing your already built package in CI/docker (where there is not graphical user interface).
 
 ## Features
 
@@ -268,6 +270,7 @@ The following are the features offered by the crate:
 - system-libjpeg: Uses the system libjpeg
 - system-zlib: Uses the system zlib
 - use-wayland: Uses FLTK's wayland hybrid backend (runs on wayland when present, and on X11 when not present). Requires libwayland-dev, wayland-protocols, libdbus-1-dev, libxkbcommon-dev, libgtk-3-dev (optional, for the GTK-style titlebar), in addition to the X11 development packages. Sample [CI](https://github.com/MoAlyousef/test_wayland/blob/main/.github/workflows/rust.yml).
+- fltk-config: Uses an already installed FLTK's fltk-config to build this crate against. This still requires FLTK 1.4. Useful for reducing build times, testing against a locally built FLTK and doesn't need to invoke neither git nor cmake. 
 
 ## FAQ
 
