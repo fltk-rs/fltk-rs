@@ -3,6 +3,7 @@
 
 # [1.4.8] - Unreleased
 - Add cairoext feature which allow using cairo for drawing via functions in app::cairo::*.
+- Add fltk-config feature which allows the use of installed FLTK via invoking fltk-config. This still requires FLTK 1.4.
 - Add app::option, set_option functions and Option enum.
 - Update FLTK submodule.
 
