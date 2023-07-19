@@ -5,6 +5,7 @@
 - Add cairoext feature which allow using cairo for drawing via functions in app::cairo::*.
 - Add fltk-config feature which allows the use of installed FLTK via invoking fltk-config. This still requires FLTK 1.4.
 - Add app::option, set_option functions and Option enum.
+- Deprecate Flex::set_size() in favor of Flex::fixed().
 - Update FLTK submodule.
 
 # [1.4.7] - 2023-07-04

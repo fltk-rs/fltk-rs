@@ -569,6 +569,7 @@ impl Flex {
     }
 
     /// Set the size of the widget, same as `fixed` (before it was changed in FLTK 1.4)
+    #[deprecated(since = "1.4.6", note = "please use `fixed` instead")]
     pub fn set_size<W: WidgetExt>(&mut self, w: &W, size: i32) {
         unsafe { Fl_Flex_set_size(self.inner, w.as_widget_ptr() as _, size) }
     }
