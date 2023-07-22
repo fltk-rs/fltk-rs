@@ -37,7 +37,7 @@ fn main() {
 ```
 
 ## Dependencies
-CMake > 3.14, git and a C++11 compiler. The dev dependencies are basically the same as for [fltk-rs](https://github.com/fltk-rs/fltk-rs#dependencies).
+CMake > 3.14, git and a C++17 compiler. The dev dependencies are basically the same as for [fltk-rs](https://github.com/fltk-rs/fltk-rs#dependencies).
 
 ## Why you might want to use fltk-sys directly
 - If you need an abi stable cdylib that you can call into (as a plugin system for example).

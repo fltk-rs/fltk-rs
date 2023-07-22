@@ -342,6 +342,9 @@ extern "C" {
     pub fn Fl_Group_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
+    pub fn Fl_Group_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Group_current() -> *mut Fl_Group;
 }
 extern "C" {
@@ -732,6 +735,9 @@ extern "C" {
     pub fn Fl_Pack_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
+    pub fn Fl_Pack_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Pack_spacing(self_: *mut Fl_Pack) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -1120,6 +1126,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scroll_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Scroll_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Scroll_scrollbar(self_: *mut Fl_Scroll) -> *mut ::std::os::raw::c_void;
@@ -1529,6 +1538,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tabs_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Tabs_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Tabs_value(self_: *mut Fl_Tabs) -> *mut Fl_Widget;
@@ -1945,6 +1957,9 @@ extern "C" {
     pub fn Fl_Tile_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
+    pub fn Fl_Tile_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Tile_begin(self_: *mut Fl_Tile);
 }
 extern "C" {
@@ -2327,6 +2342,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Wizard_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Wizard_next(arg1: *mut Fl_Wizard);
@@ -2765,6 +2783,9 @@ extern "C" {
     pub fn Fl_Color_Chooser_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
+    pub fn Fl_Color_Chooser_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Color_Chooser_r(self_: *mut Fl_Color_Chooser) -> f64;
 }
 extern "C" {
@@ -3176,6 +3197,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Flex_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Flex_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Flex_set_size(self_: *mut Fl_Flex, w: *mut Fl_Widget, size: ::std::os::raw::c_int);

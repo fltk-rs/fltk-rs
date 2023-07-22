@@ -535,8 +535,13 @@ pub unsafe trait WidgetBase: WidgetExt {
         None
     }
     #[doc(hidden)]
-    /// Determine whether the base class's draw method is called
+    /// Determine whether the base class's draw method is called, default is true
     fn super_draw(&mut self, flag: bool) {
+        let _ = flag;
+    }
+    #[doc(hidden)]
+    /// Determine whether the base class's draw method is called last, default is true
+    fn super_draw_first(&mut self, flag: bool) {
         let _ = flag;
     }
 }
