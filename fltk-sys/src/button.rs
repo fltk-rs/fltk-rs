@@ -4436,6 +4436,20 @@ extern "C" {
     pub fn Fl_Shortcut_Button_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
+    pub fn Fl_Shortcut_Button_default_value(
+        self_: *mut Fl_Shortcut_Button,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_default_value(
+        self_: *mut Fl_Shortcut_Button,
+        flag: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_default_clear(self_: *mut Fl_Shortcut_Button);
+}
+extern "C" {
     pub fn Fl_Shortcut_Button_shortcut(self_: *const Fl_Shortcut_Button) -> ::std::os::raw::c_int;
 }
 extern "C" {

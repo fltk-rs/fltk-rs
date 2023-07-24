@@ -73,6 +73,7 @@ pub fn build() -> bool {
     for def in defs {
         b.define(&def, None);
     }
+    b.flag_if_supported("-std=c++17");
     b.warnings(false);
     b.flag_if_supported("-w");
     b.compile("cfltk");

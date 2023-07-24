@@ -293,4 +293,24 @@ impl ShortcutButton {
         assert!(!self.was_deleted());
         unsafe { Fl_Shortcut_Button_set_value(self.inner, val.bits()) }
     }
+
+    /// Gets the Shortcut button default value
+    pub fn default_value(&self) -> crate::enums::Shortcut {
+        unsafe {
+            assert!(!self.was_deleted());
+            std::mem::transmute(Fl_Shortcut_Button_default_value(self.inner))
+        }
+    }
+
+    /// Sets the Shortcut button default value
+    pub fn set_default_value(&mut self, val: crate::enums::Shortcut) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Shortcut_Button_set_default_value(self.inner, val.bits()) }
+    }
+
+    /// Clears the default shortcut
+    pub fn default_clear(&mut self) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Shortcut_Button_default_clear(self.inner) }
+    }
 }
