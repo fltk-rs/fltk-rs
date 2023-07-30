@@ -86,7 +86,7 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                 println!("cargo:rustc-link-lib=framework=Carbon");
                 println!("cargo:rustc-link-lib=framework=Cocoa");
                 println!("cargo:rustc-link-lib=framework=ApplicationServices");
-                println!("cargo:rustc-link-lib=c++abi");
+                println!("cargo:rustc-link-lib=c++");
             }
             "windows" => {
                 let linkage = if crate::utils::use_static_msvcrt() {
@@ -111,8 +111,7 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                     println!("cargo:rustc-link-lib{}gdiplus", linkage);
                 }
                 if target_triple.contains("gnu") {
-                    println!("cargo:rustc-link-lib=supc++");
-                    println!("cargo:rustc-link-lib=gcc");
+                    println!("cargo:rustc-link-lib=static:-bundle=stdc++");
                 }
             }
             "android" => {
@@ -126,44 +125,19 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
             }
             _ => {
                 println!("cargo:rustc-link-lib=dylib=pthread");
+                let mut link_x11 = true;
                 if cfg!(feature = "use-wayland") {
-                    // if let Ok(lflags) = std::process::Command::new("pkg-config")
-                    //     .args(["--libs", "gtk+-3.0"])
-                    //     .output()
-                    // {
-                    //     let lflags = String::from_utf8_lossy(&lflags.stdout).to_string();
-                    //     let lflags: Vec<&str> = lflags.split_ascii_whitespace().collect();
-                    //     for flag in lflags {
-                    //         println!(
-                    //             "cargo:rustc-link-lib=dylib={}",
-                    //             flag.strip_prefix("-l").unwrap()
-                    //         );
-                    //     }
-                    // }
                     println!("cargo:rustc-link-lib=dylib=wayland-client");
                     println!("cargo:rustc-link-lib=dylib=wayland-cursor");
                     println!("cargo:rustc-link-lib=dylib=xkbcommon");
                     println!("cargo:rustc-link-lib=dylib=dbus-1");
                     if let Ok(wayland_only) = std::env::var("CFLTK_WAYLAND_ONLY") {
-                        if wayland_only != "1" {
-                            println!("cargo:rustc-link-lib=dylib=X11");
-                            println!("cargo:rustc-link-lib=dylib=Xext");
-                            println!("cargo:rustc-link-lib=dylib=Xinerama");
-                            println!("cargo:rustc-link-lib=dylib=Xcursor");
-                            println!("cargo:rustc-link-lib=dylib=Xrender");
-                            println!("cargo:rustc-link-lib=dylib=Xfixes");
-                            println!("cargo:rustc-link-lib=dylib=Xft");
+                        if wayland_only == "1" {
+                            link_x11 = false;
                         }
-                    } else {
-                        println!("cargo:rustc-link-lib=dylib=X11");
-                        println!("cargo:rustc-link-lib=dylib=Xext");
-                        println!("cargo:rustc-link-lib=dylib=Xinerama");
-                        println!("cargo:rustc-link-lib=dylib=Xcursor");
-                        println!("cargo:rustc-link-lib=dylib=Xrender");
-                        println!("cargo:rustc-link-lib=dylib=Xfixes");
-                        println!("cargo:rustc-link-lib=dylib=Xft");
                     }
-                } else {
+                }
+                if link_x11 {
                     println!("cargo:rustc-link-lib=dylib=X11");
                     println!("cargo:rustc-link-lib=dylib=Xext");
                     println!("cargo:rustc-link-lib=dylib=Xinerama");
@@ -181,12 +155,27 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                     println!("cargo:rustc-link-lib=dylib=pangocairo-1.0");
                 }
                 if target_triple.contains("gnu") || target_triple.contains("musl") {
-                    println!("cargo:rustc-link-lib=supc++");
+                    println!("cargo:rustc-link-lib=stdc++");
                 } else {
-                    // assume libcxxrt is present!
-                    println!("cargo:rustc-link-lib=cxxrt");
+                    println!("cargo:rustc-link-lib=c++");
                 }
             }
+        }
+    }
+}
+
+pub fn allow_gtk_plugin() {
+    if let Ok(lflags) = std::process::Command::new("pkg-config")
+        .args(["--libs", "gtk+-3.0"])
+        .output()
+    {
+        let lflags = String::from_utf8_lossy(&lflags.stdout).to_string();
+        let lflags: Vec<&str> = lflags.split_ascii_whitespace().collect();
+        for flag in lflags {
+            println!(
+                "cargo:rustc-link-lib=dylib={}",
+                flag.strip_prefix("-l").unwrap()
+            );
         }
     }
 }

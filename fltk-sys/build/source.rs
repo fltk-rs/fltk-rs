@@ -138,11 +138,9 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             if cfg!(feature = "no-pango") {
                 dst.define("OPTION_USE_PANGO", "OFF");
                 dst.define("OPTION_USE_CAIRO", "OFF");
-                // dst.define("FLTK_USE_CAIROXLIB", "OFF");
             } else {
                 dst.define("OPTION_USE_PANGO", "ON");
                 dst.define("OPTION_USE_CAIRO", "ON");
-                // dst.define("FLTK_USE_CAIROXLIB", "ON");
             }
             if cfg!(feature = "use-wayland") {
                 dst.define("OPTION_USE_WAYLAND", "ON");
