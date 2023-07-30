@@ -1,4 +1,6 @@
 use std::path::Path;
+use std::process::Command;
+use std::env;
 
 pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
     println!(
@@ -111,7 +113,11 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                     println!("cargo:rustc-link-lib{}gdiplus", linkage);
                 }
                 if target_triple.contains("gnu") {
-                    println!("cargo:rustc-link-lib=static:-bundle=stdc++");
+                    if rustc_version() > 62 {
+                        println!("cargo:rustc-link-lib=static:-bundle=stdc++");
+                    } else {
+                        println!("cargo:rustc-link-lib=stdc++");
+                    }
                 }
             }
             "android" => {
@@ -164,8 +170,18 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
     }
 }
 
+pub fn rustc_version() -> i32 {
+    let rustc = env::var("RUSTC").unwrap();
+    let ver = Command::new(rustc).arg("--version").output().unwrap();
+    let ver = String::from_utf8_lossy(&ver.stdout).to_string();
+    let ver = ver.strip_prefix("rustc 1.").unwrap();
+    let point = ver.find('.').unwrap();
+    ver[0..point].parse().unwrap()
+}
+
+#[allow(dead_code)]
 pub fn allow_gtk_plugin() {
-    if let Ok(lflags) = std::process::Command::new("pkg-config")
+    if let Ok(lflags) = Command::new("pkg-config")
         .args(["--libs", "gtk+-3.0"])
         .output()
     {
