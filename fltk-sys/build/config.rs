@@ -40,10 +40,10 @@ pub fn build() -> bool {
     let mut include_paths = vec![];
     let mut defs = vec![];
     for cflag in cflags.into_iter() {
-        if cflag.starts_with("-I") {
-            include_paths.push(cflag[2..].to_string());
-        } else if cflag.starts_with("-D") {
-            defs.push(cflag[2..].to_string());
+        if let Some(stripped) = cflag.strip_prefix("-I") {
+            include_paths.push(stripped.to_string());
+        } else if let Some(stripped) = cflag.strip_prefix("-I") {
+            defs.push(stripped.to_string());
         } else {
         }
     }
@@ -51,10 +51,10 @@ pub fn build() -> bool {
     let mut search_dirs = vec![];
     let mut libs = vec![];
     for lflag in lflags {
-        if lflag.starts_with("-l") {
-            libs.push(lflag[2..].to_string());
-        } else if lflag.starts_with("-L") {
-            search_dirs.push(lflag[2..].to_string());
+        if let Some(stripped) = lflag.strip_prefix("-l") {
+            libs.push(stripped.to_string());
+        } else if let Some(stripped) = lflag.strip_prefix("-L") {
+            search_dirs.push(stripped.to_string());
         } else {
         }
     }
