@@ -5,6 +5,7 @@
 - Add ShortcutButton::set_default_value, default_value, and default_clear.
 - Add WidgetExt::super_draw_first.
 - Require C++17 for building cfltk.
+- Update FLTK submodule
 
 # [1.4.8] - 2023-07-20
 - Add cairoext feature which allow using cairo for drawing via functions in app::cairo::*.
