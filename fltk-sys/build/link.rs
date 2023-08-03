@@ -1,9 +1,7 @@
 use std::path::Path;
 use std::process::Command;
-use std::env;
 
 pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
-    let host_triple = env::var("HOST").unwrap();
     println!(
         "cargo:rustc-link-search=native={}",
         out_dir.join("build").display()
@@ -89,7 +87,7 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                 println!("cargo:rustc-link-lib=framework=Carbon");
                 println!("cargo:rustc-link-lib=framework=Cocoa");
                 println!("cargo:rustc-link-lib=framework=ApplicationServices");
-                println!("cargo:rustc-link-lib=c++");
+                println!("cargo:rustc-link-lib=c++abi");
             }
             "windows" => {
                 let linkage = if crate::utils::use_static_msvcrt() {
@@ -114,11 +112,8 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                     println!("cargo:rustc-link-lib{}gdiplus", linkage);
                 }
                 if target_triple.contains("gnu") {
-                    if rustc_version() > 62 && host_triple.contains("windows-gnu") {
-                        println!("cargo:rustc-link-lib=static:-bundle=stdc++");
-                    } else {
-                        println!("cargo:rustc-link-lib=stdc++");
-                    }
+                    println!("cargo:rustc-link-lib=supc++");
+                    println!("cargo:rustc-link-lib=gcc");
                 }
             }
             "android" => {
@@ -162,22 +157,13 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                     println!("cargo:rustc-link-lib=dylib=pangocairo-1.0");
                 }
                 if target_triple.contains("gnu") || target_triple.contains("musl") {
-                    println!("cargo:rustc-link-lib=stdc++");
+                    println!("cargo:rustc-link-lib=supc++");
                 } else {
-                    println!("cargo:rustc-link-lib=c++");
+                    println!("cargo:rustc-link-lib=cxxrt");
                 }
             }
         }
     }
-}
-
-pub fn rustc_version() -> i32 {
-    let rustc = env::var("RUSTC").unwrap();
-    let ver = Command::new(rustc).arg("--version").output().unwrap();
-    let ver = String::from_utf8_lossy(&ver.stdout).to_string();
-    let ver = ver.strip_prefix("rustc 1.").unwrap();
-    let point = ver.find('.').unwrap();
-    ver[0..point].parse().unwrap()
 }
 
 #[allow(dead_code)]
