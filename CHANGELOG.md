@@ -1,6 +1,11 @@
 # Changelog
 
 
+# [1.4.10] - Unreleased
+- Fixed build issue on windows-gnu when cross-compiling.
+- The bundled flag now searches cfltk releases for the latest build by default. This can be overriden by overriding the CFLTK_BUNDLE_DIR or CFLTK_BUNDLE_URL, or if providing libs for multiple targets with the same naming schema as cfltk (`lib_<arch>-<platform>.tar.gz`), via the CFLTK_BUNDLE_URL_PREFIX env var. This allows decoupling cfltk releases from fltk-sys releases.
+- Update FLTK submodule.
+
 # [1.4.9] - 2023-07-30
 - Add ShortcutButton::set_default_value, default_value, and default_clear.
 - Add WidgetExt::super_draw_first.
