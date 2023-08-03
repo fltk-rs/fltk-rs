@@ -33,7 +33,7 @@ pub fn get(target_os: &str, target_triple: &str, out_dir: &Path) {
             PathBuf::from(format!(
                 "{}/{}/lib_{}-{}.tar.gz",
                 env::var("CFLTK_BUNDLE_URL_PREFIX").unwrap_or_else(|_| String::from(
-                    "https://github.com/fltk-rs/fltk-rs/releases/download"
+                    "https://github.com/MoAlyousef/cfltk/releases/download"
                 )),
                 pkg_version,
                 arch,
