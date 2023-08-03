@@ -3,6 +3,7 @@ use std::process::Command;
 use std::env;
 
 pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
+    let host_triple = env::var("HOST").unwrap();
     println!(
         "cargo:rustc-link-search=native={}",
         out_dir.join("build").display()
@@ -113,7 +114,7 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                     println!("cargo:rustc-link-lib{}gdiplus", linkage);
                 }
                 if target_triple.contains("gnu") {
-                    if rustc_version() > 62 {
+                    if rustc_version() > 62 && host_triple.contains("windows-gnu") {
                         println!("cargo:rustc-link-lib=static:-bundle=stdc++");
                     } else {
                         println!("cargo:rustc-link-lib=stdc++");
