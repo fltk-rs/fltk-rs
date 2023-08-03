@@ -5,7 +5,6 @@ use std::{
 };
 
 pub fn get(target_os: &str, target_triple: &str, out_dir: &Path) {
-    let pkg_version = env::var("CARGO_PKG_VERSION").unwrap();
     if let Ok(cfltk_path) = env::var("CFLTK_BUNDLE_DIR") {
         println!("cargo:rustc-link-search=native={}", cfltk_path);
     } else {
@@ -31,11 +30,10 @@ pub fn get(target_os: &str, target_triple: &str, out_dir: &Path) {
             };
 
             PathBuf::from(format!(
-                "{}/{}/lib_{}-{}.tar.gz",
+                "{}/lib_{}-{}.tar.gz",
                 env::var("CFLTK_BUNDLE_URL_PREFIX").unwrap_or_else(|_| String::from(
-                    "https://github.com/MoAlyousef/cfltk/releases/download"
+                    "https://github.com/MoAlyousef/cfltk/releases/latest/download"
                 )),
-                pkg_version,
                 arch,
                 platform
             ))
