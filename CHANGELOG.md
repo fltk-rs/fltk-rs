@@ -4,6 +4,8 @@
 # [1.4.10] - Unreleased
 - Fixed build issue on windows-gnu when cross-compiling.
 - The bundled flag now searches cfltk releases for the latest build by default. This can be overriden by overriding the CFLTK_BUNDLE_DIR or CFLTK_BUNDLE_URL, or if providing libs for multiple targets with the same naming schema as cfltk (`lib_<arch>-<platform>.tar.gz`), via the CFLTK_BUNDLE_URL_PREFIX env var. This allows decoupling cfltk releases from fltk-sys releases.
+- Add RgbImage::blur and convert_transparent.
+- Enable app::set_color_with_alpha for cairoext feature.
 - Update FLTK submodule.
 
 # [1.4.9] - 2023-07-30

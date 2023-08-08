@@ -1046,6 +1046,154 @@ impl RgbImage {
         }
     }
 
+    /// Convert black pixels to transparent
+    pub fn convert_transparent(&self) -> Result<RgbImage, FltkError> {
+        let depth = self.depth() as i32;
+        if depth == 2 || depth == 4 {
+            Ok(self.copy())
+        } else {
+            let w = self.w();
+            let h = self.h();
+            let mut data = self.to_rgb_data();
+            let mut temp = Vec::new();
+            match depth {
+                1 => {
+                    for i in data {
+                        temp.push(i);
+                        if i == 0 {
+                            temp.push(0);
+                        } else {
+                            temp.push(255);
+                        }
+                    }
+                    assert!(temp.len() as i32 == w * h * 2);
+                    RgbImage::new(&temp, w, h, ColorDepth::La8)
+                },
+                3 => {
+                    for (_, pixel) in data.chunks_exact_mut(3).enumerate() {
+                        let r = pixel[0];
+                        let g = pixel[1];
+                        let b = pixel[2];
+                        temp.push(pixel[0]);
+                        temp.push(pixel[1]);
+                        temp.push(pixel[2]);
+                        if r == 0 && g == 0 && b == 0 { temp.push(0); } else {temp.push(255);}
+                    }
+                    assert!(temp.len() as i32 == w * h * 4);
+                    RgbImage::new(&temp, w, h, ColorDepth::Rgba8)
+                },
+                _ => unreachable!(),
+            }
+        }
+    }
+
+    /// Blur the image
+    pub fn blur(&self, radius: i32) -> Result<RgbImage, FltkError> {
+        assert!(self.depth() == ColorDepth::Rgba8);
+        let src = self.to_rgb_data();
+        let width = self.w();
+        let height = self.h();
+        let depth = self.depth();
+        let dst = vec![0u8; (width * height * depth as i32) as usize];
+        let mut kernel = [0u8; 17];
+        let size = kernel.len() as i32;
+        let half = size / 2;
+
+        let src_stride = width * depth as i32;
+        let dst_stride = src_stride;
+
+        let src =
+            unsafe { std::slice::from_raw_parts_mut(src.as_ptr() as *mut u8, src.len()) };
+        let dst =
+            unsafe { std::slice::from_raw_parts_mut(dst.as_ptr() as *mut u8, dst.len()) };
+        let mut x: u32;
+        let mut y: u32;
+        let mut z: u32;
+        let mut w: u32;
+        let mut p: u32;
+
+        let mut a: u32 = 0;
+        for i in 0..size {
+            let f = i - half;
+            let f = f as f64;
+            kernel[i as usize] = ((-f * f / 30.0).exp() * 80.0) as u8;
+            a += kernel[i as usize] as u32;
+        }
+
+        // Horizontally blur from surface -> temp
+        for i in 0..height {
+            let s: &[u32] =
+                unsafe { std::mem::transmute(&src[(i * src_stride) as usize..]) };
+            let d: &mut [u32] =
+                unsafe { std::mem::transmute(&mut dst[(i * dst_stride) as usize..]) };
+            for j in 0..width {
+                if radius < j && j < width - radius {
+                    let j = j as usize;
+                    d[j] = s[j];
+                    continue;
+                }
+
+                x = 0;
+                y = 0;
+                z = 0;
+                w = 0;
+                for k in 0..size {
+                    if j - half + k < 0 || j - half + k >= width {
+                        continue;
+                    }
+
+                    p = s[(j - half + k) as usize];
+                    let k = k as usize;
+
+                    x += ((p >> 24) & 0xff) * kernel[k] as u32;
+                    y += ((p >> 16) & 0xff) * kernel[k] as u32;
+                    z += ((p >> 8) & 0xff) * kernel[k] as u32;
+                    w += (p & 0xff) * kernel[k] as u32;
+                }
+                d[j as usize] = (x / a) << 24 | (y / a) << 16 | (z / a) << 8 | (w / a);
+            }
+        }
+
+        // Then vertically blur from tmp -> surface
+        for i in 0..height {
+            let mut s: &mut [u32] =
+                unsafe { std::mem::transmute(&mut dst[(i * dst_stride) as usize..]) };
+            let d: &mut [u32] =
+                unsafe { std::mem::transmute(&mut src[(i * src_stride) as usize..]) };
+            for j in 0..width {
+                if radius < i && i < height - radius {
+                    let j = j as usize;
+                    d[j] = s[j];
+                    continue;
+                }
+
+                x = 0;
+                y = 0;
+                z = 0;
+                w = 0;
+                for k in 0..size {
+                    if i - half + k < 0 || i - half + k >= height {
+                        continue;
+                    }
+
+                    s = unsafe {
+                        std::mem::transmute(
+                            &mut dst[((i - half + k) * dst_stride) as usize..],
+                        )
+                    };
+                    p = s[j as usize];
+                    let k = k as usize;
+                    x += ((p >> 24) & 0xff) * kernel[k] as u32;
+                    y += ((p >> 16) & 0xff) * kernel[k] as u32;
+                    z += ((p >> 8) & 0xff) * kernel[k] as u32;
+                    w += (p & 0xff) * kernel[k] as u32;
+                }
+                d[j as usize] = (x / a) << 24 | (y / a) << 16 | (z / a) << 8 | (w / a);
+            }
+        }
+        RgbImage::new(&dst, width, height, depth)
+    }
+
     /// Sets the scaling algorithm
     pub fn set_scaling_algorithm(algorithm: RgbScaling) {
         unsafe { Fl_RGB_Image_set_scaling_algorithm(algorithm as i32) }
