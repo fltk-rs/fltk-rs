@@ -1068,7 +1068,7 @@ impl RgbImage {
                     }
                     assert!(temp.len() as i32 == w * h * 2);
                     RgbImage::new(&temp, w, h, ColorDepth::La8)
-                },
+                }
                 3 => {
                     for (_, pixel) in data.chunks_exact(3).enumerate() {
                         let r = pixel[0];
@@ -1077,17 +1077,22 @@ impl RgbImage {
                         temp.push(r);
                         temp.push(g);
                         temp.push(b);
-                        if r == 0 && g == 0 && b == 0 { temp.push(0); } else {temp.push(255);}
+                        if r == 0 && g == 0 && b == 0 {
+                            temp.push(0);
+                        } else {
+                            temp.push(255);
+                        }
                     }
                     assert!(temp.len() as i32 == w * h * 4);
                     RgbImage::new(&temp, w, h, ColorDepth::Rgba8)
-                },
+                }
                 _ => unreachable!(),
             }
         }
     }
 
     /// Blur the image
+    /// Adapted from https://www.cairographics.org/cookbook/blur.c/
     pub fn blur(&self, radius: u32) -> Result<RgbImage, FltkError> {
         assert!(self.depth() == ColorDepth::Rgba8);
         let radius = radius as i32;
@@ -1118,10 +1123,8 @@ impl RgbImage {
 
         // Horizontally blur from surface -> temp
         for i in 0..height {
-            let s: &[u32] =
-                unsafe { std::mem::transmute(&src[(i * src_stride) as usize..]) };
-            let d: &mut [u32] =
-                unsafe { std::mem::transmute(&mut dst[(i * dst_stride) as usize..]) };
+            let s: &[u32] = unsafe { src[(i * src_stride) as usize..].align_to::<u32>().1 };
+            let d: &mut [u32] = unsafe { dst[(i * dst_stride) as usize..].align_to_mut::<u32>().1 };
             for j in 0..width {
                 if radius < j && j < width - radius {
                     let j = j as usize;
@@ -1153,9 +1156,8 @@ impl RgbImage {
         // Then vertically blur from tmp -> surface
         for i in 0..height {
             let mut s: &mut [u32] =
-                unsafe { std::mem::transmute(&mut dst[(i * dst_stride) as usize..]) };
-            let d: &mut [u32] =
-                unsafe { std::mem::transmute(&mut src[(i * src_stride) as usize..]) };
+                unsafe { dst[(i * dst_stride) as usize..].align_to_mut::<u32>().1 };
+            let d: &mut [u32] = unsafe { src[(i * src_stride) as usize..].align_to_mut::<u32>().1 };
             for j in 0..width {
                 if radius < i && i < height - radius {
                     let j = j as usize;
@@ -1173,9 +1175,9 @@ impl RgbImage {
                     }
 
                     s = unsafe {
-                        std::mem::transmute(
-                            &mut dst[((i - half + k) * dst_stride) as usize..],
-                        )
+                        dst[((i - half + k) * dst_stride) as usize..]
+                            .align_to_mut::<u32>()
+                            .1
                     };
                     p = s[j as usize];
                     let k = k as usize;
@@ -1217,7 +1219,7 @@ impl RgbImage {
                 }
                 assert!(temp.len() as i32 == w * h * 3);
                 RgbImage::new(&temp, w, h, ColorDepth::Rgb8)
-            },
+            }
             4 => {
                 for (_, pixel) in data.chunks_exact(4).enumerate() {
                     let r = (correct_gamma(pixel[0] as f32 / 255.0) * 255.0) as u8;

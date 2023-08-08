@@ -4,10 +4,10 @@ use std::{env, path::PathBuf};
 
 mod android;
 mod bundled;
+mod config;
 mod link;
 mod source;
 mod utils;
-mod config;
 
 fn main() {
     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());

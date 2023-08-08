@@ -576,7 +576,5 @@ pub fn callback_reason() -> CallbackReason {
 #[cfg(target_os = "windows")]
 /// Get the fl_msg win32 MSG object, see this [discussion](https://github.com/fltk-rs/fltk-rs/discussions/1417)
 pub fn fl_msg() -> *mut raw::c_void {
-    unsafe {
-        fl::Fl_get_fl_msg()
-    }
+    unsafe { fl::Fl_get_fl_msg() }
 }

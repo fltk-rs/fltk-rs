@@ -652,7 +652,9 @@ impl Flex {
         let mut top = 0;
         let mut right = 0;
         let mut bottom = 0;
-        unsafe { Fl_Flex_margins(self.inner, &mut left, &mut top, &mut right, &mut bottom); }
+        unsafe {
+            Fl_Flex_margins(self.inner, &mut left, &mut top, &mut right, &mut bottom);
+        }
         (left, top, right, bottom)
     }
 }

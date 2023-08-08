@@ -252,7 +252,7 @@ nix-shell --packages rustc cmake git gcc xorg.libXext xorg.libXft xorg.libXinera
 - Windows: None
 - MacOS: None
 - Linux: You need X11 libraries, as well as pango and cairo for drawing (and OpenGL if you want to enable the enable-glwindow feature):
-```
+```bash
 apt-get install -qq --no-install-recommends libx11-6 libxinerama1 libxft2 libxext6 libxcursor1 libxrender1 libxfixes3 libcairo2 libpango-1.0-0 libpangocairo-1.0-0 libpangoxft-1.0-0 libglib2.0-0 libfontconfig1 libglu1-mesa libgl1
 ```
 Note that if you installed the build dependencies, it will also install the runtime dependencies automatically as well.
