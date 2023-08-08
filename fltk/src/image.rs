@@ -1091,22 +1091,17 @@ impl RgbImage {
     pub fn blur(&self, radius: u32) -> Result<RgbImage, FltkError> {
         assert!(self.depth() == ColorDepth::Rgba8);
         let radius = radius as i32;
-        let src = self.to_rgb_data();
+        let mut src = self.to_rgb_data();
         let width = self.w();
         let height = self.h();
         let depth = self.depth();
-        let dst = vec![0u8; (width * height * depth as i32) as usize];
+        let mut dst = vec![0u8; (width * height * depth as i32) as usize];
         let mut kernel = [0u8; 17];
         let size = kernel.len() as i32;
         let half = size / 2;
-
         let src_stride = width * depth as i32;
         let dst_stride = src_stride;
 
-        let src =
-            unsafe { std::slice::from_raw_parts_mut(src.as_ptr() as *mut u8, src.len()) };
-        let dst =
-            unsafe { std::slice::from_raw_parts_mut(dst.as_ptr() as *mut u8, dst.len()) };
         let mut x: u32;
         let mut y: u32;
         let mut z: u32;

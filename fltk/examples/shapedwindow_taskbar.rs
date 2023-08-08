@@ -41,6 +41,7 @@ fn main() {
     but.set_frame(enums::FrameType::OFlatFrame);
     but.set_color(enums::Color::Cyan);
     but.clear_visible_focus();
+    but.set_callback(|_| println!("Clicked"));
 
     win.show();
     win.end();
@@ -54,7 +55,7 @@ fn main() {
         let mut x = 0;
         let mut y = 0;
         let mut dock_win = dock_win.clone();
-        move |wself, event| match (event) {
+        move |wself, event| match event {
             enums::Event::Push => {
                 let coords = app::event_coords();
                 x = coords.0;
@@ -75,6 +76,11 @@ fn main() {
 
                 true
             }
+            enums::Event::Hide => {
+                app.quit();
+
+                true
+            }
             _ => false,
         }
     });
@@ -82,7 +88,7 @@ fn main() {
     // Make main window appear when "opened" via Alt+Tab or Taskbar
     dock_win.handle({
         let mut win = win.clone();
-        move |wself, event| match (event) {
+        move |_wself, event| match event {
             enums::Event::Focus => {
                 let win_shape = prep_shape(win.w(), win.h());
 
@@ -123,5 +129,5 @@ fn prep_shape(w: i32, h: i32) -> image::RgbImage {
 
     surface::ImageSurface::pop_current();
 
-    return img;
+    img
 }
