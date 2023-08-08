@@ -1088,8 +1088,9 @@ impl RgbImage {
     }
 
     /// Blur the image
-    pub fn blur(&self, radius: i32) -> Result<RgbImage, FltkError> {
+    pub fn blur(&self, radius: u32) -> Result<RgbImage, FltkError> {
         assert!(self.depth() == ColorDepth::Rgba8);
+        let radius = radius as i32;
         let src = self.to_rgb_data();
         let width = self.w();
         let height = self.h();
