@@ -915,7 +915,8 @@ pub unsafe fn draw_rgb_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
 }
 
 /// Draw an image into a widget.
-/// Requires a call to [`app::set_visual(Mode::Rgb8).unwrap()`](`crate::app::set_visual`)
+/// Requires a call to [`app::set_visual(Mode::Rgb8).unwrap()`](`crate::app::set_visual`).
+/// Doesn't support transparency, for that you would have to use RgbImage.
 /// # Errors
 /// Errors on invalid or unsupported image formats
 pub fn draw_image(
