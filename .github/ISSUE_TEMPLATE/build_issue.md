@@ -27,3 +27,17 @@ Please only open a bug report if the repo/crate used to build and currently fail
  - Any CMake error and log files
 
 Also remember if you're git cloning the fltk-rs repo, to run `git submodule update --init --recursive` if you hadn't cloned with `--recurse-submodules` since this repo uses git submodules. 
+
+## To Reproduce
+Please provide the steps to reproduce the build failure. That means if you enable any features please list them, if you also use other dependencies, it would be helpful to list a minimal Cargo.toml file which exhibits the build failure. If you use some environment or containerization please also specify that you do. 
+
+## Desktop info
+ - OS: [e.g. Windows 10 x64, macOS 10.15, Ubuntu 18.04 x64]
+ - Version [e.g. 1.4.2]
+ - Display server on linux (wayland or x11)
+
+## Additional info
+Add any other context about the problem here.
+
+## Missing info
+Please verify that with the provided info here that the build failure can be easily reproduced. Providing incomplete info just leads to the wasting of dev time, is not appreciated, and will just lead to closing or even deleting the issue, since it adds no relevant indexable info. 
