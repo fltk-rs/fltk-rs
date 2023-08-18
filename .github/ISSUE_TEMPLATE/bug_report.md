@@ -23,7 +23,8 @@ If applicable, add screenshots to help explain your problem.
 
 ## Desktop info
  - OS: [e.g. Windows 10 x64, macOS 10.15, Ubuntu 18.04 x64]
- - Version [e.g. 0.4.2]
+ - Version [e.g. 1.4.2]
+ - Display server on linux (wayland or x11)
 
 ## Additional info
 Add any other context about the problem here.
