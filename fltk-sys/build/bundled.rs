@@ -4,38 +4,19 @@ use std::{
     process::Command,
 };
 
-pub fn get(target_os: &str, target_triple: &str, out_dir: &Path) {
+pub fn get(target_triple: &str, out_dir: &Path) {
     if let Ok(cfltk_path) = env::var("CFLTK_BUNDLE_DIR") {
         println!("cargo:rustc-link-search=native={}", cfltk_path);
     } else {
         let url = if let Ok(cfltk_url) = env::var("CFLTK_BUNDLE_URL") {
             PathBuf::from(cfltk_url)
         } else {
-            let mut platform = target_os.to_string();
-
-            if target_os == "windows" {
-                if cfg!(target_env = "gnu") {
-                    platform.push_str("-gnu");
-                } else {
-                    platform.push_str("-msvc");
-                }
-            }
-
-            // should cover major desktop arches supported by fltk
-            let arch = match target_triple.split('-').next().unwrap() {
-                "aarch64" => "arm64",
-                "x86_64" => "x64",
-                "i686" | "i586" => "x86",
-                _ => "x64",
-            };
-
             PathBuf::from(format!(
-                "{}/lib_{}-{}.tar.gz",
+                "{}/lib_{}.tar.gz",
                 env::var("CFLTK_BUNDLE_URL_PREFIX").unwrap_or_else(|_| String::from(
                     "https://github.com/MoAlyousef/cfltk/releases/latest/download"
                 )),
-                arch,
-                platform
+                target_triple,
             ))
         };
 

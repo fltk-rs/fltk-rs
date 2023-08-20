@@ -16,7 +16,7 @@ pub fn fltk_config_version() -> String {
         Ok(out) => out.stdout,
         _ => vec![],
     };
-    String::from_utf8_lossy(&out).to_string()
+    String::from_utf8_lossy(&out).to_string().trim().to_string()
 }
 
 pub fn use_static_msvcrt() -> bool {

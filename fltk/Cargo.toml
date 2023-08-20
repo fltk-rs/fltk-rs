@@ -1,6 +1,6 @@
 [package]
 name = "fltk"
-version = "1.4.10"
+version = "1.4.11"
 authors = ["The fltk-rs Authors"]
 edition = "2021"
 rust-version = "1.56"
@@ -18,7 +18,7 @@ name = "fltk"
 path = "src/lib.rs"
 
 [dependencies]
-fltk-sys = { path = "../fltk-sys", version = "=1.4.10" }
+fltk-sys = { path = "../fltk-sys", version = "=1.4.11" }
 bitflags = "^2"
 paste = "1"
 crossbeam-channel = "0.5"
@@ -63,7 +63,9 @@ static-msvcrt = ["fltk-sys/static-msvcrt"]
 # Sets FLTK's OPTION_CAIROEXT which enables user code to get the cairo context for drawing
 cairoext = ["fltk-sys/cairoext"] 
 # Allows the use of an installed instance of FLTK via fltk-config. This requires FLTK 1.4
-fltk-config = ["fltk-sys/fltk-config"] 
+fltk-config = ["fltk-sys/fltk-config"]
+# Doesn't build cfltk, used for faster cargo check and debugging.
+no-cfltk = ["fltk-sys/no-cfltk"]
 
 [package.metadata.docs.rs]
 features = ["enable-glwindow"]

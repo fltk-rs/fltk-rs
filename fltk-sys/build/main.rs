@@ -4,6 +4,7 @@ use std::{env, path::PathBuf};
 
 mod android;
 mod bundled;
+#[cfg(feature = "fltk-config")]
 mod config;
 mod link;
 mod source;
@@ -28,24 +29,40 @@ fn main() {
     println!("cargo:rerun-if-changed=build/utils.rs");
     println!("cargo:rerun-if-changed=build/config.rs");
 
-    let mut used_fltk_config = false;
     if cfg!(feature = "fltk-bundled") {
-        bundled::get(&target_os, &target_triple, &out_dir);
+        bundled::get(&target_triple, &out_dir);
     } else if cfg!(feature = "fltk-config") {
-        used_fltk_config = config::build();
-    } else if !crate::utils::has_program("git") || !crate::utils::has_program("cmake") {
-        if utils::fltk_config_version() == "1.4" {
-            used_fltk_config = config::build();
-        } else {
-            println!("cargo:warning=Could not find invokable CMake or Git, building using the fltk-bundled feature flag!");
-            println!("cargo:warning=If this is not desirable, please ensure CMake and Git are installed and in your PATH!");
-            bundled::get(&target_os, &target_triple, &out_dir);
+        let version = utils::fltk_config_version();
+        if version != "1.4" {
+            panic!(
+                "The fltk-config feature requires FLTK 1.4. The current version is {}",
+                version
+            );
         }
+        #[cfg(feature = "fltk-config")]
+        config::build();
+        return;
+    } else if cfg!(feature = "no-cfltk") {
+        return;
     } else {
+        const MSG: &str = r#"Perhaps you would prefer to use a bundled version of fltk. 
+        You would need to enable the fltk-bundled feature.
+        Or if you have an installation of FLTK 1.4 and a working fltk-config executable, you can use the fltk-config feature.
+        Features can be enabled in your Cargo.toml or from the command line using the --features=fltk/fltk-bundled argument to cargo."#;
+        if !utils::has_program("git") {
+            panic!(
+                "git was not found. It's needed to get the fltk and cfltk source files. \n{}",
+                MSG
+            );
+        }
+        if !utils::has_program("cmake") {
+            panic!(
+                "cmake was not found. It's needed to build fltk and cfltk. \n{}",
+                MSG
+            );
+        }
         source::build(&manifest_dir, &target_triple, &out_dir);
     }
 
-    if !used_fltk_config {
-        link::link(&target_os, &target_triple, &out_dir);
-    }
+    link::link(&target_os, &target_triple, &out_dir);
 }

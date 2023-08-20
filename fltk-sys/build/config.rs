@@ -26,7 +26,7 @@ const CPP_SRC: &[&str] = &[
     "cfltk/src/cfl_printer.cpp",
 ];
 
-pub fn build() -> bool {
+pub fn build() {
     let mut args = vec![];
     let mut use_gl = false;
     if cfg!(feature = "enable-glwindow") {
@@ -83,7 +83,6 @@ pub fn build() -> bool {
     for lib in libs {
         println!("cargo:rustc-link-lib={}", lib);
     }
-    true
 }
 
 fn get_cflags(args: &[&str]) -> Vec<String> {
