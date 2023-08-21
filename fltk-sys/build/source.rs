@@ -58,11 +58,14 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     println!("cargo:rerun-if-changed=cfltk/fltk.patch");
 
     if target_triple.contains("windows") {
+        if !crate::utils::has_program("git") {
+            println!("cargo:warning=Could not find invokable git. It's needed to apply a security patch on windows!");
+        }
         Command::new("git")
             .args(["apply", "../fltk.patch"])
             .current_dir(manifest_dir.join("cfltk").join("fltk"))
             .status()
-            .expect("Git is needed to retrieve the fltk source files!");
+            .ok();
     }
 
     if !target_triple.contains("android") {
@@ -209,6 +212,6 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             .args(["reset", "--hard"])
             .current_dir(manifest_dir.join("cfltk").join("fltk"))
             .status()
-            .expect("Git is needed to retrieve the fltk source files!");
+            .ok();
     }
 }

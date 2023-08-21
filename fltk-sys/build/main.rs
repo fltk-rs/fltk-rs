@@ -4,9 +4,9 @@ use std::{env, path::PathBuf};
 
 mod android;
 mod bundled;
-#[cfg(feature = "fltk-config")]
 mod config;
 mod link;
+mod minimal;
 mod source;
 mod utils;
 
@@ -39,25 +39,20 @@ fn main() {
                 version
             );
         }
-        #[cfg(feature = "fltk-config")]
         config::build();
         return;
     } else if cfg!(feature = "no-cfltk") {
+        minimal::compile();
         return;
     } else {
         const MSG: &str = r#"Perhaps you would prefer to use a bundled version of fltk. 
-        You would need to enable the fltk-bundled feature.
-        Or if you have an installation of FLTK 1.4 and a working fltk-config executable, you can use the fltk-config feature.
-        Features can be enabled in your Cargo.toml or from the command line using the --features=fltk/fltk-bundled argument to cargo."#;
-        if !utils::has_program("git") {
-            panic!(
-                "git was not found. It's needed to get the fltk and cfltk source files. \n{}",
-                MSG
-            );
-        }
+            You would need to enable the fltk-bundled feature.
+            Or if you have an installation of FLTK 1.4 and a working fltk-config executable, you can use the fltk-config feature.
+            Features can be enabled in your Cargo.toml or from the command line using the --features=fltk/fltk-bundled argument to cargo."#;
+
         if !utils::has_program("cmake") {
             panic!(
-                "cmake was not found. It's needed to build fltk and cfltk. \n{}",
+                "CMake was not found. It's needed to build fltk and cfltk. \n{}",
                 MSG
             );
         }
