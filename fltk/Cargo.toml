@@ -64,8 +64,6 @@ static-msvcrt = ["fltk-sys/static-msvcrt"]
 cairoext = ["fltk-sys/cairoext"] 
 # Allows the use of an installed instance of FLTK via fltk-config. This requires FLTK 1.4
 fltk-config = ["fltk-sys/fltk-config"]
-# INTERNAL: Don't use
-minimal = ["fltk-sys/minimal"]
 
 [package.metadata.docs.rs]
 features = ["enable-glwindow"]

@@ -18,7 +18,7 @@ name = "fltk_sys"
 path = "src/lib.rs"
 
 [build-dependencies]
-cc = "1"
+cc = { version = "1", features = ["parallel"], optional = true }
 cmake = "0.1"
 
 [features]
@@ -39,5 +39,4 @@ single-threaded = []
 use-wayland = []
 static-msvcrt = []
 cairoext = []
-fltk-config = []
-minimal = []
+fltk-config = ["cc"]

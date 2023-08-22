@@ -6,7 +6,6 @@ mod android;
 mod bundled;
 mod config;
 mod link;
-mod minimal;
 mod source;
 mod utils;
 
@@ -40,9 +39,6 @@ fn main() {
             );
         }
         config::build();
-        return;
-    } else if cfg!(feature = "no-cfltk") {
-        minimal::compile();
         return;
     } else {
         const MSG: &str = r#"Perhaps you would prefer to use a bundled version of fltk. 
