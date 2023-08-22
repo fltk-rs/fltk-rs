@@ -4,6 +4,7 @@ use std::{env, path::PathBuf};
 
 mod android;
 mod bundled;
+#[cfg(feature = "fltk-config")]
 mod config;
 mod link;
 mod source;
@@ -38,6 +39,7 @@ fn main() {
                 version
             );
         }
+        #[cfg(feature = "fltk-config")]
         config::build();
         return;
     } else {
