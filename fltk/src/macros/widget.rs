@@ -19,8 +19,17 @@ macro_rules! impl_widget_ext {
                 assert!(!self.was_deleted());
                 $name {
                     inner: self.inner,
-                    tracker: self.tracker,
+                    tracker: self.tracker.clone(),
                     is_derived: self.is_derived,
+                }
+            }
+        }
+        impl Drop for $name {
+            fn drop(&mut self) {
+                if $crate::widget::WidgetTracker::strong_count(&self.tracker) == 1 {
+                    unsafe {
+                        fltk_sys::fl::Fl_Widget_Tracker_delete(*self.tracker);
+                    }
                 }
             }
         }
@@ -601,7 +610,7 @@ macro_rules! impl_widget_ext {
                     unsafe {
                         self.inner.is_null()
                             || self.tracker.is_null()
-                            || fltk_sys::fl::Fl_Widget_Tracker_deleted(self.tracker) != 0
+                            || fltk_sys::fl::Fl_Widget_Tracker_deleted(*self.tracker) != 0
                     }
                 }
 
@@ -936,9 +945,9 @@ macro_rules! impl_widget_base {
                         if !win.is_null() {
                             assert!($crate::app::is_ui_thread());
                         }
-                        let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(
+                        let tracker = crate::widget::WidgetTracker::new(fltk_sys::fl::Fl_Widget_Tracker_new(
                             widget_ptr as *mut fltk_sys::fl::Fl_Widget,
-                        );
+                        ));
                         assert!(!tracker.is_null());
                         unsafe extern "C" fn shim(data: *mut std::os::raw::c_void) {
                             if !data.is_null() {
@@ -969,7 +978,7 @@ macro_rules! impl_widget_base {
                             wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget
                         );
                         wid.inner = std::ptr::null_mut() as *mut _;
-                        wid.tracker = std::ptr::null_mut() as *mut fltk_sys::fl::Fl_Widget_Tracker;
+                        // wid.tracker = std::ptr::null_mut() as *mut fltk_sys::fl::Fl_Widget_Tracker;
                     }
                 }
 
@@ -977,7 +986,7 @@ macro_rules! impl_widget_base {
                     assert!(!ptr.is_null());
                     fltk_sys::fl::Fl_lock();
                     let tracker =
-                        fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget);
+                        std::sync::Arc::new(fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget));
                     assert!(!tracker.is_null());
                     let temp = $name {
                         inner: ptr as *mut $flname,
@@ -1121,9 +1130,9 @@ macro_rules! impl_widget_base {
                     if ptr.is_null() {
                         None
                     } else {
-                        let tracker = unsafe {
+                        let tracker = crate::widget::WidgetTracker::new(unsafe {
                             fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget)
-                        };
+                        });
                         assert!(!tracker.is_null());
                         Some(Self {
                             inner: ptr as *mut $flname,

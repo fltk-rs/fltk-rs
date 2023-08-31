@@ -7,7 +7,7 @@ use std::ffi::{CStr, CString};
 #[derive(Debug)]
 pub struct Button {
     inner: *mut Fl_Button,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -37,7 +37,7 @@ crate::macros::widget::impl_widget_type!(ButtonType);
 #[derive(Debug)]
 pub struct RadioButton {
     inner: *mut Fl_Radio_Button,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -67,7 +67,7 @@ impl RadioButton {
 #[derive(Debug)]
 pub struct RadioRoundButton {
     inner: *mut Fl_Radio_Round_Button,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -97,7 +97,7 @@ impl RadioRoundButton {
 #[derive(Debug)]
 pub struct RadioLightButton {
     inner: *mut Fl_Radio_Light_Button,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -126,7 +126,7 @@ impl RadioLightButton {
 #[derive(Debug)]
 pub struct RoundButton {
     inner: *mut Fl_Round_Button,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -155,7 +155,7 @@ impl RoundButton {
 #[derive(Debug)]
 pub struct CheckButton {
     inner: *mut Fl_Check_Button,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -186,7 +186,7 @@ impl CheckButton {
 #[derive(Debug)]
 pub struct ToggleButton {
     inner: *mut Fl_Toggle_Button,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -215,7 +215,7 @@ impl ToggleButton {
 #[derive(Debug)]
 pub struct LightButton {
     inner: *mut Fl_Light_Button,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -244,7 +244,7 @@ impl LightButton {
 #[derive(Debug)]
 pub struct RepeatButton {
     inner: *mut Fl_Repeat_Button,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -257,7 +257,7 @@ crate::macros::button::impl_button_ext!(RepeatButton, Fl_Repeat_Button);
 #[derive(Debug)]
 pub struct ReturnButton {
     inner: *mut Fl_Return_Button,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -270,7 +270,7 @@ crate::macros::button::impl_button_ext!(ReturnButton, Fl_Return_Button);
 #[derive(Debug)]
 pub struct ShortcutButton {
     inner: *mut Fl_Shortcut_Button,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 

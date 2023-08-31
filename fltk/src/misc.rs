@@ -48,7 +48,7 @@ crate::macros::widget::impl_widget_type!(ClockType);
 #[derive(Debug)]
 pub struct Spinner {
     inner: *mut Fl_Spinner,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -180,7 +180,7 @@ impl Spinner {
 #[derive(Debug)]
 pub struct Clock {
     inner: *mut Fl_Clock,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -192,7 +192,7 @@ crate::macros::widget::impl_widget_default!(Clock);
 #[derive(Debug)]
 pub struct Chart {
     inner: *mut Fl_Chart,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -307,7 +307,7 @@ impl Chart {
 #[derive(Debug)]
 pub struct Progress {
     inner: *mut Fl_Progress,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -528,7 +528,7 @@ impl Tooltip {
 #[derive(Debug)]
 pub struct InputChoice {
     inner: *mut Fl_Input_Choice,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -657,7 +657,7 @@ impl InputChoice {
 #[derive(Debug)]
 pub struct HelpView {
     inner: *mut Fl_Help_View,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 

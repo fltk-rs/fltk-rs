@@ -7,7 +7,7 @@ use std::ffi::{CStr, CString};
 #[derive(Debug)]
 pub struct Frame {
     inner: *mut Fl_Box,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 

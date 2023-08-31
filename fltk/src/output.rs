@@ -19,7 +19,7 @@ crate::macros::widget::impl_widget_type!(OutputType);
 #[derive(Debug)]
 pub struct Output {
     inner: *mut Fl_Output,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -32,7 +32,7 @@ crate::macros::input::impl_input_ext!(Output, Fl_Output);
 #[derive(Debug)]
 pub struct MultilineOutput {
     inner: *mut Fl_Multiline_Output,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 

@@ -30,7 +30,7 @@ use std::ffi::{CStr, CString};
 #[derive(Debug)]
 pub struct Widget {
     inner: *mut Fl_Widget,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -40,3 +40,11 @@ crate::macros::widget::impl_widget_default!(Widget);
 
 /// An alias exposing the Widget tracker
 pub type WidgetTrackerPtr = *mut fltk_sys::fl::Fl_Widget_Tracker;
+
+/// Widget Tracker
+#[cfg(feature = "single-threaded")]
+pub type WidgetTracker = std::rc::Rc<WidgetTrackerPtr>;
+
+/// Widget Tracker
+#[cfg(not(feature = "single-threaded"))]
+pub type WidgetTracker = std::sync::Arc<WidgetTrackerPtr>;

@@ -688,7 +688,7 @@ pub enum DragType {
 #[derive(Debug)]
 pub struct TextDisplay {
     inner: *mut Fl_Text_Display,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -701,7 +701,7 @@ crate::macros::display::impl_display_ext!(TextDisplay, Fl_Text_Display);
 #[derive(Debug)]
 pub struct TextEditor {
     inner: *mut Fl_Text_Editor,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -723,7 +723,7 @@ pub type TextEditorPtr = *mut Fl_Text_Editor;
 #[derive(Debug)]
 pub struct SimpleTerminal {
     inner: *mut Fl_Simple_Terminal,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 

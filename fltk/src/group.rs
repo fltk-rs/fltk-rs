@@ -16,7 +16,7 @@ static DEBUG: AtomicBool = AtomicBool::new(false);
 #[derive(Debug)]
 pub struct Group {
     inner: *mut Fl_Group,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -64,7 +64,7 @@ impl Group {
 #[derive(Debug)]
 pub struct Pack {
     inner: *mut Fl_Pack,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -129,7 +129,7 @@ impl Pack {
 #[derive(Debug)]
 pub struct Scroll {
     inner: *mut Fl_Scroll,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -232,7 +232,7 @@ pub enum TabsOverflow {
 #[derive(Debug)]
 pub struct Tabs {
     inner: *mut Fl_Tabs,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -356,7 +356,7 @@ impl Tabs {
 #[derive(Debug)]
 pub struct Tile {
     inner: *mut Fl_Tile,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -369,7 +369,7 @@ crate::macros::group::impl_group_ext!(Tile, Fl_Tile);
 #[derive(Debug)]
 pub struct Wizard {
     inner: *mut Fl_Wizard,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -431,7 +431,7 @@ impl Wizard {
 #[derive(Debug)]
 pub struct ColorChooser {
     inner: *mut Fl_Color_Chooser,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -531,7 +531,7 @@ pub enum FlexType {
 #[derive(Debug)]
 pub struct Flex {
     inner: *mut Fl_Flex,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 

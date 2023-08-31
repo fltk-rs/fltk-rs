@@ -11,7 +11,7 @@ use std::{
 #[derive(Debug)]
 pub struct Input {
     inner: *mut Fl_Input,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -48,7 +48,7 @@ crate::macros::widget::impl_widget_type!(InputType);
 #[derive(Debug)]
 pub struct IntInput {
     inner: *mut Fl_Int_Input,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -61,7 +61,7 @@ crate::macros::input::impl_input_ext!(IntInput, Fl_Int_Input);
 #[derive(Debug)]
 pub struct FloatInput {
     inner: *mut Fl_Float_Input,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -74,7 +74,7 @@ crate::macros::input::impl_input_ext!(FloatInput, Fl_Float_Input);
 #[derive(Debug)]
 pub struct MultilineInput {
     inner: *mut Fl_Multiline_Input,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -87,7 +87,7 @@ crate::macros::input::impl_input_ext!(MultilineInput, Fl_Multiline_Input);
 #[derive(Debug)]
 pub struct FileInput {
     inner: *mut Fl_File_Input,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -114,7 +114,7 @@ impl FileInput {
 #[derive(Debug)]
 pub struct SecretInput {
     inner: *mut Fl_Secret_Input,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 

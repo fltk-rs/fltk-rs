@@ -12,7 +12,7 @@ use std::{
 #[derive(Debug)]
 pub struct Slider {
     inner: *mut Fl_Slider,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -48,7 +48,7 @@ impl Slider {
 #[derive(Debug)]
 pub struct NiceSlider {
     inner: *mut Fl_Nice_Slider,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -104,7 +104,7 @@ crate::macros::widget::impl_widget_type!(SliderType);
 #[derive(Debug)]
 pub struct Dial {
     inner: *mut Fl_Dial,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -140,7 +140,7 @@ impl Dial {
 #[derive(Debug)]
 pub struct LineDial {
     inner: *mut Fl_Line_Dial,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -190,7 +190,7 @@ crate::macros::widget::impl_widget_type!(DialType);
 #[derive(Debug)]
 pub struct Counter {
     inner: *mut Fl_Counter,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -215,7 +215,7 @@ crate::macros::widget::impl_widget_type!(CounterType);
 #[derive(Debug)]
 pub struct Scrollbar {
     inner: *mut Fl_Scrollbar,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -270,7 +270,7 @@ crate::macros::widget::impl_widget_type!(ScrollbarType);
 #[derive(Debug)]
 pub struct Roller {
     inner: *mut Fl_Roller,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -283,7 +283,7 @@ crate::macros::valuator::impl_valuator_ext!(Roller, Fl_Roller);
 #[derive(Debug)]
 pub struct ValueSlider {
     inner: *mut Fl_Value_Slider,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -354,7 +354,7 @@ impl ValueSlider {
 #[derive(Debug)]
 pub struct Adjuster {
     inner: *mut Fl_Adjuster,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -368,7 +368,7 @@ crate::macros::valuator::impl_valuator_ext!(Adjuster, Fl_Adjuster);
 #[derive(Debug)]
 pub struct ValueInput {
     inner: *mut Fl_Value_Input,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -432,7 +432,7 @@ impl ValueInput {
 #[derive(Debug)]
 pub struct ValueOutput {
     inner: *mut Fl_Value_Output,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -483,7 +483,7 @@ impl ValueOutput {
 #[derive(Debug)]
 pub struct FillSlider {
     inner: *mut Fl_Fill_Slider,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -496,7 +496,7 @@ crate::macros::valuator::impl_valuator_ext!(FillSlider, Fl_Fill_Slider);
 #[derive(Debug)]
 pub struct FillDial {
     inner: *mut Fl_Fill_Dial,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -532,7 +532,7 @@ impl FillDial {
 #[derive(Debug)]
 pub struct HorSlider {
     inner: *mut Fl_Hor_Slider,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -568,7 +568,7 @@ impl HorSlider {
 #[derive(Debug)]
 pub struct HorFillSlider {
     inner: *mut Fl_Hor_Fill_Slider,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -604,7 +604,7 @@ impl HorFillSlider {
 #[derive(Debug)]
 pub struct HorNiceSlider {
     inner: *mut Fl_Hor_Nice_Slider,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -640,7 +640,7 @@ impl HorNiceSlider {
 #[derive(Debug)]
 pub struct HorValueSlider {
     inner: *mut Fl_Hor_Value_Slider,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 

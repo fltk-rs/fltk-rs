@@ -37,7 +37,7 @@ use std::{
 #[derive(Debug)]
 pub struct Browser {
     inner: *mut Fl_Browser,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -88,7 +88,7 @@ pub enum BrowserScrollbar {
 #[derive(Debug)]
 pub struct SelectBrowser {
     inner: *mut Fl_Select_Browser,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -101,7 +101,7 @@ crate::macros::browser::impl_browser_ext!(SelectBrowser, Fl_Select_Browser);
 #[derive(Debug)]
 pub struct MultiBrowser {
     inner: *mut Fl_Multi_Browser,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -114,7 +114,7 @@ crate::macros::browser::impl_browser_ext!(MultiBrowser, Fl_Multi_Browser);
 #[derive(Debug)]
 pub struct HoldBrowser {
     inner: *mut Fl_Hold_Browser,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -127,7 +127,7 @@ crate::macros::browser::impl_browser_ext!(HoldBrowser, Fl_Hold_Browser);
 #[derive(Debug)]
 pub struct FileBrowser {
     inner: *mut Fl_File_Browser,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -212,7 +212,7 @@ impl FileBrowser {
 #[derive(Debug)]
 pub struct CheckBrowser {
     inner: *mut Fl_Check_Browser,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 

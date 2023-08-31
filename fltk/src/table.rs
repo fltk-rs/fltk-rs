@@ -8,7 +8,7 @@ use std::ffi::{CStr, CString};
 #[derive(Debug)]
 pub struct Table {
     inner: *mut Fl_Table,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -60,7 +60,7 @@ pub enum TableResizeFlag {
 #[derive(Debug)]
 pub struct TableRow {
     inner: *mut Fl_Table_Row,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 

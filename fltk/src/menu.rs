@@ -12,7 +12,7 @@ use std::{
 #[derive(Debug)]
 pub struct MenuBar {
     inner: *mut Fl_Menu_Bar,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -25,7 +25,7 @@ crate::macros::menu::impl_menu_ext!(MenuBar, Fl_Menu_Bar);
 #[derive(Debug)]
 pub struct MenuButton {
     inner: *mut Fl_Menu_Button,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -112,7 +112,7 @@ impl MenuButton {
 #[derive(Debug)]
 pub struct Choice {
     inner: *mut Fl_Choice,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -139,7 +139,7 @@ pub enum WindowMenuStyle {
 #[derive(Debug)]
 pub struct SysMenuBar {
     inner: *mut Fl_Sys_Menu_Bar,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 

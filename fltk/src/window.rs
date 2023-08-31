@@ -108,7 +108,7 @@ crate::macros::widget::impl_widget_type!(WindowType);
 #[derive(Debug)]
 pub struct SingleWindow {
     inner: *mut Fl_Single_Window,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -275,7 +275,7 @@ impl SingleWindow {
 #[derive(Debug)]
 pub struct DoubleWindow {
     inner: *mut Fl_Double_Window,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -532,7 +532,7 @@ impl DoubleWindow {
 #[derive(Debug)]
 pub struct MenuWindow {
     inner: *mut Fl_Menu_Window,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -554,7 +554,7 @@ impl Default for MenuWindow {
 #[derive(Debug)]
 pub struct OverlayWindow {
     inner: *mut Fl_Overlay_Window,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -705,7 +705,7 @@ pub type GlContext = *mut raw::c_void;
 #[derive(Debug)]
 pub struct GlutWindow {
     inner: *mut Fl_Glut_Window,
-    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    tracker: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -878,7 +878,7 @@ pub mod experimental {
     #[derive(Debug)]
     pub struct GlWidgetWindow {
         inner: *mut Fl_Gl_Window,
-        tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+        tracker: crate::widget::WidgetTracker,
         is_derived: bool,
     }
 
