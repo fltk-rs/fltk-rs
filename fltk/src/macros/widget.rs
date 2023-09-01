@@ -945,7 +945,7 @@ macro_rules! impl_widget_base {
                         if !win.is_null() {
                             assert!($crate::app::is_ui_thread());
                         }
-                        let tracker = crate::widget::WidgetTracker::new(fltk_sys::fl::Fl_Widget_Tracker_new(
+                        let tracker = $crate::widget::WidgetTracker::new(fltk_sys::fl::Fl_Widget_Tracker_new(
                             widget_ptr as *mut fltk_sys::fl::Fl_Widget,
                         ));
                         assert!(!tracker.is_null());
@@ -1130,7 +1130,7 @@ macro_rules! impl_widget_base {
                     if ptr.is_null() {
                         None
                     } else {
-                        let tracker = crate::widget::WidgetTracker::new(unsafe {
+                        let tracker = $crate::widget::WidgetTracker::new(unsafe {
                             fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget)
                         });
                         assert!(!tracker.is_null());
