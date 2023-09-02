@@ -1,6 +1,12 @@
 # Changelog
 
 
+# [1.4.11] - Unreleased
+- Add app::add_check, has_check and remove_check.
+- Fix leak in WidgetTracker.
+- Make Image code aware of single-threaded feature.
+- Update FLTK submodule.
+
 # [1.4.10] - 2023-08-23
 - Fixed build issue on windows-gnu when cross-compiling.
 - The bundled flag now searches cfltk releases for the latest build by default. This can be overriden by overriding the CFLTK_BUNDLE_DIR or CFLTK_BUNDLE_URL, or if providing libs for multiple targets with the same naming schema as cfltk (`lib_<arch>-<platform>.tar.gz`), via the CFLTK_BUNDLE_URL_PREFIX env var. This allows decoupling cfltk releases from fltk-sys releases.

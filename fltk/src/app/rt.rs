@@ -278,6 +278,40 @@ pub fn has_idle3(handle: IdleHandle) -> bool {
     }
 }
 
+/// Handle object for interacting with check callbacks
+pub type CheckHandle = *mut ();
+
+/// Add a check callback to run within the event loop.
+/// This function returns a handle that can be used for future interaction with the callback.
+pub fn add_check<F: FnMut(CheckHandle) + 'static>(cb: F) -> CheckHandle {
+    unsafe {
+        let a: *mut Box<dyn FnMut(CheckHandle)> = Box::into_raw(Box::new(Box::new(cb)));
+        let data: *mut raw::c_void = a as *mut raw::c_void;
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(idle_shim);
+        fl::Fl_add_check(callback, data);
+
+        data as _
+    }
+}
+
+/// Remove the check function associated with the handle
+pub fn remove_check(handle: CheckHandle) {
+    unsafe {
+        let data: *mut raw::c_void = handle as *mut raw::c_void;
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(idle_shim);
+        fl::Fl_remove_check(callback, data);
+    }
+}
+
+/// Checks whether the check function, associated with the handle, is installed
+pub fn has_check(handle: CheckHandle) -> bool {
+    unsafe {
+        let data: *mut raw::c_void = handle as *mut raw::c_void;
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(idle_shim);
+        fl::Fl_has_check(callback, data) != 0
+    }
+}
+
 /// Register a callback whenever there is a change to the selection buffer or the clipboard.
 /// The clipboard is source 1 and the selection buffer is source 0
 pub fn add_clipboard_notify(cb: fn(source: i32)) {

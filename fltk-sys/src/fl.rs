@@ -444,6 +444,24 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_add_check(
+        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_has_check(
+        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_remove_check(
+        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_flush();
 }
 extern "C" {
