@@ -3,8 +3,9 @@
 
 # [1.4.11] - Unreleased
 - Add app::add_check, has_check and remove_check.
-- Fix leak in WidgetTracker.
+- Saner management of WidgetTracker.
 - Make Image code aware of single-threaded feature.
+- Refactoring usage of bitflags.
 - Update FLTK submodule.
 
 # [1.4.10] - 2023-08-23
