@@ -10,7 +10,6 @@ type RC<T> = std::rc::Rc<T>;
 #[cfg(not(feature = "single-threaded"))]
 type RC<T> = std::sync::Arc<T>;
 
-
 /// The scaling algorithm to use for raster images
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
@@ -73,9 +72,7 @@ impl SharedImage {
                 if Fl_Shared_Image_fail(x) < 0 {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
-                Ok(SharedImage {
-                    inner: RC::from(x),
-                })
+                Ok(SharedImage { inner: RC::from(x) })
             }
         }
     }
@@ -93,9 +90,7 @@ impl SharedImage {
                 if Fl_Shared_Image_fail(x) < 0 {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
-                Ok(SharedImage {
-                    inner: RC::from(x),
-                })
+                Ok(SharedImage { inner: RC::from(x) })
             }
         }
     }
@@ -155,9 +150,7 @@ impl JpegImage {
                     if Fl_JPEG_Image_fail(x) < 0 {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
-                    Ok(JpegImage {
-                        inner: RC::from(x),
-                    })
+                    Ok(JpegImage { inner: RC::from(x) })
                 }
             }
         }
@@ -218,9 +211,7 @@ impl PngImage {
                     if Fl_PNG_Image_fail(x) < 0 {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
-                    Ok(PngImage {
-                        inner: RC::from(x),
-                    })
+                    Ok(PngImage { inner: RC::from(x) })
                 }
             }
         }
@@ -282,9 +273,7 @@ impl SvgImage {
                     if Fl_SVG_Image_fail(x) < 0 {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
-                    Ok(SvgImage {
-                        inner: RC::from(x),
-                    })
+                    Ok(SvgImage { inner: RC::from(x) })
                 }
             }
         }
@@ -351,9 +340,7 @@ impl BmpImage {
                     if Fl_BMP_Image_fail(x) < 0 {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
-                    Ok(BmpImage {
-                        inner: RC::from(x),
-                    })
+                    Ok(BmpImage { inner: RC::from(x) })
                 }
             }
         }
@@ -414,9 +401,7 @@ impl GifImage {
                     if Fl_GIF_Image_fail(x) < 0 {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
-                    Ok(GifImage {
-                        inner: RC::from(x),
-                    })
+                    Ok(GifImage { inner: RC::from(x) })
                 }
             }
         }
@@ -531,9 +516,7 @@ impl AnimGifImage {
                     if Fl_Anim_GIF_Image_fail(x) < 0 {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
-                    Ok(AnimGifImage {
-                        inner: RC::from(x),
-                    })
+                    Ok(AnimGifImage { inner: RC::from(x) })
                 }
             }
         }
@@ -1103,7 +1086,7 @@ impl RgbImage {
     pub fn blur(&self, radius: u32) -> Result<RgbImage, FltkError> {
         assert!(self.depth() == ColorDepth::Rgba8);
         let radius = radius as i32;
-        let mut src = self.to_rgb_data().clone();
+        let mut src = self.to_rgb_data();
         let width = self.w();
         let height = self.h();
         let depth = self.depth();
@@ -1309,9 +1292,7 @@ impl IcoImage {
                     if Fl_ICO_Image_fail(x) < 0 {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
-                    Ok(IcoImage {
-                        inner: RC::from(x),
-                    })
+                    Ok(IcoImage { inner: RC::from(x) })
                 }
             }
         }

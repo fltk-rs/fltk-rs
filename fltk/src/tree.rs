@@ -138,7 +138,9 @@ impl Tree {
         if ptr.is_null() {
             None
         } else {
-            let tracker = crate::widget::WidgetTracker::new(fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget));
+            let tracker = crate::widget::WidgetTracker::new(fltk_sys::fl::Fl_Widget_Tracker_new(
+                ptr as *mut fltk_sys::fl::Fl_Widget,
+            ));
             if tracker.is_null() {
                 return None;
             }
@@ -1191,8 +1193,9 @@ impl TreeItem {
             None
         } else {
             let inner = Fl_Tree_Item_tree(ptr) as *mut _;
-            let tracker =
-                std::sync::Arc::new(fltk_sys::fl::Fl_Widget_Tracker_new(inner as *mut fltk_sys::fl::Fl_Widget));
+            let tracker = std::sync::Arc::new(fltk_sys::fl::Fl_Widget_Tracker_new(
+                inner as *mut fltk_sys::fl::Fl_Widget,
+            ));
             assert!(!tracker.is_null());
             let tree = Tree {
                 inner,

@@ -42,9 +42,11 @@ crate::macros::widget::impl_widget_default!(Widget);
 pub type WidgetTrackerPtr = *mut fltk_sys::fl::Fl_Widget_Tracker;
 
 /// Widget Tracker
+#[doc(hidden)]
 #[cfg(feature = "single-threaded")]
 pub type WidgetTracker = std::rc::Rc<WidgetTrackerPtr>;
 
 /// Widget Tracker
+#[doc(hidden)]
 #[cfg(not(feature = "single-threaded"))]
 pub type WidgetTracker = std::sync::Arc<WidgetTrackerPtr>;

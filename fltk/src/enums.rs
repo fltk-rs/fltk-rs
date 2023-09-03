@@ -261,46 +261,49 @@ bitflags::bitflags! {
     }
 }
 
-bitflags::bitflags! {
-    /// Defines fonts used by FLTK
-    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct Font: i32 {
-        /// Helvetica
-        const Helvetica = 0;
-        /// Helvetica Bold
-        const HelveticaBold = 1;
-        /// Helvetica Italic
-        const HelveticaItalic = 2;
-        /// Helvetica Bold Italic
-        const HelveticaBoldItalic = 3;
-        /// Courier
-        const Courier = 4;
-        /// Courier Bold
-        const CourierBold = 5;
-        /// Courier Italic
-        const CourierItalic = 6;
-        /// Courier Bold Italic
-        const CourierBoldItalic = 7;
-        /// Times
-        const Times = 8;
-        /// Times Bold
-        const TimesBold = 9;
-        /// Times Italic
-        const TimesItalic = 10;
-        /// Times Bold Italic
-        const TimesBoldItalic = 11;
-        /// Symbol
-        const Symbol = 12;
-        /// Screen
-        const Screen = 13;
-        /// Screen Bold
-        const ScreenBold = 14;
-        /// Zapfdingbats
-        const Zapfdingbats = 15;
-    }
+/// Defines fonts used by FLTK
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct Font {
+    bits: i32,
 }
 
 impl Font {
+    /// Helvetica
+    pub const Helvetica: Font = Font { bits: 0 };
+    /// Helvetica Bold
+    pub const HelveticaBold: Font = Font { bits: 1 };
+    /// Helvetica Italic
+    pub const HelveticaItalic: Font = Font { bits: 2 };
+    /// Helvetica Bold Italic
+    pub const HelveticaBoldItalic: Font = Font { bits: 3 };
+    /// Courier
+    pub const Courier: Font = Font { bits: 4 };
+    /// Courier Bold
+    pub const CourierBold: Font = Font { bits: 5 };
+    /// Courier Italic
+    pub const CourierItalic: Font = Font { bits: 6 };
+    /// Courier Bold Italic
+    pub const CourierBoldItalic: Font = Font { bits: 7 };
+    /// Times
+    pub const Times: Font = Font { bits: 8 };
+    /// Times Bold
+    pub const TimesBold: Font = Font { bits: 9 };
+    /// Times Italic
+    pub const TimesItalic: Font = Font { bits: 10 };
+    /// Times Bold Italic
+    pub const TimesBoldItalic: Font = Font { bits: 11 };
+    /// Symbol
+    pub const Symbol: Font = Font { bits: 12 };
+    /// Screen
+    pub const Screen: Font = Font { bits: 13 };
+    /// Screen Bold
+    pub const ScreenBold: Font = Font { bits: 14 };
+    /// Zapfdingbats
+    pub const Zapfdingbats: Font = Font { bits: 15 };
+    /// Gets the inner value of the Font
+    pub const fn bits(&self) -> i32 {
+        self.bits
+    }
     /// Returns a font by index. This is the enum representation of the Font. If you change the default font for your app,
     /// which by default is Helvetica, `Font::by_index(0)` will still show Helvetica!
     pub fn by_index(idx: usize) -> Font {
@@ -395,87 +398,91 @@ impl Font {
     }
 }
 
-bitflags::bitflags! {
-    /// Defines colors used by FLTK.
-    /// Colors are stored as RGBI values, the last being the index for FLTK colors in this enum.
-    /// Colors in this enum don't have an RGB stored. However, custom colors have an RGB, and don't have an index.
-    /// The RGBI can be acquired by casting the color to u32 and formatting it to ```0x{08x}```.
-    /// The last 2 digits are the hexadecimal representation of the color in this enum.
-    /// For example, Color::White, has a hex of 0x000000ff, ff being the 255 value of this enum.
-    /// A custom color like Color::from_u32(0x646464), will have an representation as 0x64646400,
-    /// of which the final 00 indicates that it is not stored in this enum.
-    /// For convenience, the fmt::Display trait is implemented so that the name of the Color is shown
-    /// when there is one, otherwise the RGB value is given.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct Color: u32 {
-        /// ForeGround, label colors
-        const ForeGround = 0;
-        /// Foreground, label colors
-        const Foreground = 0;
-        /// BackGround2, Is the color inside input, output and text display widgets
-        const BackGround2 = 7;
-        /// Background2, Is the color inside input, output and text display widgets
-        const Background2 = 7;
-        /// Inactive
-        const Inactive = 8;
-        /// Selection
-        const Selection = 15;
-        /// Free
-        const Free = 16;
-        /// Gray0
-        const Gray0 = 32;
-        /// GrayRamp
-        const GrayRamp = 32;
-        /// Dark3
-        const Dark3 = 39;
-        /// Dark2
-        const Dark2 = 45;
-        /// Dark1
-        const Dark1 = 47;
-        /// FrameDefault
-        const FrameDefault = 49;
-        /// BackGround
-        const BackGround = 49;
-        /// Background
-        const Background = 49;
-        /// Light1
-        const Light1 = 50;
-        /// Light2
-        const Light2 = 52;
-        /// Light3
-        const Light3 = 54;
-        /// Black
-        const Black = 56;
-        /// Red
-        const Red = 88;
-        /// Green
-        const Green = 63;
-        /// Yellow
-        const Yellow = 95;
-        /// Blue
-        const Blue = 216;
-        /// Magenta
-        const Magenta = 248;
-        /// Cyan
-        const Cyan = 223;
-        /// DarkRed
-        const DarkRed = 72;
-        /// DarkGreen
-        const DarkGreen = 60;
-        /// DarkYellow
-        const DarkYellow = 76;
-        /// DarkBlue
-        const DarkBlue = 136;
-        /// DarkMagenta
-        const DarkMagenta = 152;
-        /// DarkCyan
-        const DarkCyan = 140;
-        /// White
-        const White = 255;
-    }
+/// Defines colors used by FLTK.
+/// Colors are stored as RGBI values, the last being the index for FLTK colors in this enum.
+/// Colors in this enum don't have an RGB stored. However, custom colors have an RGB, and don't have an index.
+/// The RGBI can be acquired by casting the color to u32 and formatting it to ```0x{08x}```.
+/// The last 2 digits are the hexadecimal representation of the color in this enum.
+/// For example, Color::White, has a hex of 0x000000ff, ff being the 255 value of this enum.
+/// A custom color like Color::from_u32(0x646464), will have an representation as 0x64646400,
+/// of which the final 00 indicates that it is not stored in this enum.
+/// For convenience, the fmt::Display trait is implemented so that the name of the Color is shown
+/// when there is one, otherwise the RGB value is given.
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct Color {
+    bits: u32,
 }
 
 impl Color {
+    /// ForeGround, label colors
+    pub const ForeGround: Color = Color { bits: 0 };
+    /// Foreground, label colors
+    pub const Foreground: Color = Color { bits: 0 };
+    /// BackGround2, Is the color inside input, output and text display widgets
+    pub const BackGround2: Color = Color { bits: 7 };
+    /// Background2, Is the color inside input, output and text display widgets
+    pub const Background2: Color = Color { bits: 7 };
+    /// Inactive
+    pub const Inactive: Color = Color { bits: 8 };
+    /// Selection
+    pub const Selection: Color = Color { bits: 15 };
+    /// Free
+    pub const Free: Color = Color { bits: 16 };
+    /// Gray0
+    pub const Gray0: Color = Color { bits: 32 };
+    /// GrayRamp
+    pub const GrayRamp: Color = Color { bits: 32 };
+    /// Dark3
+    pub const Dark3: Color = Color { bits: 39 };
+    /// Dark2
+    pub const Dark2: Color = Color { bits: 45 };
+    /// Dark1
+    pub const Dark1: Color = Color { bits: 47 };
+    /// FrameDefault
+    pub const FrameDefault: Color = Color { bits: 49 };
+    /// BackGround
+    pub const BackGround: Color = Color { bits: 49 };
+    /// Background
+    pub const Background: Color = Color { bits: 49 };
+    /// Light1
+    pub const Light1: Color = Color { bits: 50 };
+    /// Light2
+    pub const Light2: Color = Color { bits: 52 };
+    /// Light3
+    pub const Light3: Color = Color { bits: 54 };
+    /// Black
+    pub const Black: Color = Color { bits: 56 };
+    /// Red
+    pub const Red: Color = Color { bits: 88 };
+    /// Green
+    pub const Green: Color = Color { bits: 63 };
+    /// Yellow
+    pub const Yellow: Color = Color { bits: 95 };
+    /// Blue
+    pub const Blue: Color = Color { bits: 216 };
+    /// Magenta
+    pub const Magenta: Color = Color { bits: 248 };
+    /// Cyan
+    pub const Cyan: Color = Color { bits: 223 };
+    /// DarkRed
+    pub const DarkRed: Color = Color { bits: 72 };
+    /// DarkGreen
+    pub const DarkGreen: Color = Color { bits: 60 };
+    /// DarkYellow
+    pub const DarkYellow: Color = Color { bits: 76 };
+    /// DarkBlue
+    pub const DarkBlue: Color = Color { bits: 136 };
+    /// DarkMagenta
+    pub const DarkMagenta: Color = Color { bits: 152 };
+    /// DarkCyan
+    pub const DarkCyan: Color = Color { bits: 140 };
+    /// White
+    pub const White: Color = Color { bits: 255 };
+    /// Gets the inner color representation
+    pub const fn bits(&self) -> u32 {
+        self.bits
+    }
     /// Returns a color from RGB
     pub const fn from_rgb(r: u8, g: u8, b: u8) -> Color {
         let r = r as u32;
@@ -498,7 +505,7 @@ impl Color {
 
     /// Get a color from an RGBI value, the I stands for the Fltk colormap index.
     pub const fn from_rgbi(val: u32) -> Color {
-        Color::from_bits_retain(val)
+        Color { bits: val }
     }
 
     /// Create color from RGBA using alpha compositing. Works for non-group types.
@@ -694,77 +701,80 @@ impl std::fmt::Display for Color {
     }
 }
 
-bitflags::bitflags! {
-    /// Defines event types captured by FLTK
-    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct Event: i32 {
-        /// No Event
-        const NoEvent = 0;
-        /// Push
-        const Push = 1;
-        /// Released
-        const Released = 2;
-        /// Enter
-        const Enter = 3;
-        /// Leave
-        const Leave = 4;
-        /// Drag
-        const Drag = 5;
-        /// Focus
-        const Focus = 6;
-        /// Unfocus
-        const Unfocus = 7;
-        /// KeyDown
-        const KeyDown = 8;
-        /// KeyUp
-        const KeyUp = 9;
-        /// Close
-        const Close = 10;
-        /// Move
-        const Move = 11;
-        /// Shortcut
-        const Shortcut = 12;
-        /// Deactivate
-        const Deactivate = 13;
-        /// Activate
-        const Activate = 14;
-        /// Hide
-        const Hide = 15;
-        /// Show
-        const Show = 16;
-        /// Paste
-        const Paste = 17;
-        /// Selection Clear
-        const SelectionClear = 18;
-        /// MouseWheel
-        const MouseWheel = 19;
-        /// DndEnter
-        const DndEnter = 20;
-        /// Drag n Drop: Drag
-        const DndDrag = 21;
-        /// Drag n Drop: Leave
-        const DndLeave = 22;
-        /// Drag n Drop: Release
-        const DndRelease = 23;
-        /// Screen Config Changed
-        const ScreenConfigChanged = 24;
-        /// Fullscreen
-        const Fullscreen = 25;
-        /// Zoom Gesture
-        const ZoomGesture = 26;
-        /// Zoom Event
-        const ZoomEvent = 27;
-        /// Window Resize Event.
-        /// Avoid resizing the parent during a resize event
-        /// to avoid infinite recursion
-        const Resize = 28;
-    }
+/// Defines event types captured by FLTK
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct Event {
+    bits: i32,
 }
 
 impl Event {
+    /// No Event
+    pub const NoEvent: Event = Event { bits: 0 };
+    /// Push
+    pub const Push: Event = Event { bits: 1 };
+    /// Released
+    pub const Released: Event = Event { bits: 2 };
+    /// Enter
+    pub const Enter: Event = Event { bits: 3 };
+    /// Leave
+    pub const Leave: Event = Event { bits: 4 };
+    /// Drag
+    pub const Drag: Event = Event { bits: 5 };
+    /// Focus
+    pub const Focus: Event = Event { bits: 6 };
+    /// Unfocus
+    pub const Unfocus: Event = Event { bits: 7 };
+    /// KeyDown
+    pub const KeyDown: Event = Event { bits: 8 };
+    /// KeyUp
+    pub const KeyUp: Event = Event { bits: 9 };
+    /// Close
+    pub const Close: Event = Event { bits: 10 };
+    /// Move
+    pub const Move: Event = Event { bits: 11 };
+    /// Shortcut
+    pub const Shortcut: Event = Event { bits: 12 };
+    /// Deactivate
+    pub const Deactivate: Event = Event { bits: 13 };
+    /// Activate
+    pub const Activate: Event = Event { bits: 14 };
+    /// Hide
+    pub const Hide: Event = Event { bits: 15 };
+    /// Show
+    pub const Show: Event = Event { bits: 16 };
+    /// Paste
+    pub const Paste: Event = Event { bits: 17 };
+    /// Selection Clear
+    pub const SelectionClear: Event = Event { bits: 18 };
+    /// MouseWheel
+    pub const MouseWheel: Event = Event { bits: 19 };
+    /// DndEnter
+    pub const DndEnter: Event = Event { bits: 20 };
+    /// Drag n Drop: Drag
+    pub const DndDrag: Event = Event { bits: 21 };
+    /// Drag n Drop: Leave
+    pub const DndLeave: Event = Event { bits: 22 };
+    /// Drag n Drop: Release
+    pub const DndRelease: Event = Event { bits: 23 };
+    /// Screen Config Changed
+    pub const ScreenConfigChanged: Event = Event { bits: 24 };
+    /// Fullscreen
+    pub const Fullscreen: Event = Event { bits: 25 };
+    /// Zoom Gesture
+    pub const ZoomGesture: Event = Event { bits: 26 };
+    /// Zoom Event
+    pub const ZoomEvent: Event = Event { bits: 27 };
+    /// Window Resize Event.
+    /// Avoid resizing the parent during a resize event
+    /// to avoid infinite recursion
+    pub const Resize: Event = Event { bits: 28 };
+    /// Gets the inner value
+    pub const fn bits(&self) -> i32 {
+        self.bits
+    }
     /// Creates an event from an i32 value
     pub const fn from_i32(val: i32) -> Event {
-        Event::from_bits_retain(val)
+        Event { bits: val }
     }
 }
 
