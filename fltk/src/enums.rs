@@ -702,7 +702,7 @@ impl std::fmt::Display for Color {
 }
 
 /// Defines event types captured by FLTK
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Event {
     bits: i32,
 }
@@ -824,126 +824,129 @@ impl std::fmt::Display for Event {
     }
 }
 
-bitflags::bitflags! {
-    /// Defines the inputted virtual keycode
-    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct Key: i32 {
-        /// None
-        const None = 0;
-        /// Button
-        const Button = 0xfee8;
-        /// BackSpace
-        const BackSpace = 0xff08;
-        /// Tab
-        const Tab = 0xff09;
-        /// IsoKey
-        const IsoKey = 0xff0c;
-        /// Enter
-        const Enter = 0xff0d;
-        /// Pause
-        const Pause = 0xff13;
-        /// ScrollLock
-        const ScrollLock = 0xff14;
-        /// Escape
-        const Escape = 0xff1b;
-        /// Kana
-        const Kana = 0xff2e;
-        /// Eisu
-        const Eisu = 0xff2f;
-        /// Yen
-        const Yen = 0xff30;
-        /// JISUnderscore
-        const JISUnderscore = 0xff31;
-        /// Home
-        const Home = 0xff50;
-        /// Left
-        const Left = 0xff51;
-        /// Up
-        const Up = 0xff52;
-        /// Right
-        const Right = 0xff53;
-        /// Down
-        const Down = 0xff54;
-        /// PageUp
-        const PageUp = 0xff55;
-        /// PageDown
-        const PageDown = 0xff56;
-        /// End
-        const End = 0xff57;
-        /// Print
-        const Print = 0xff61;
-        /// Insert
-        const Insert = 0xff63;
-        /// Menu
-        const Menu = 0xff67;
-        /// Help
-        const Help = 0xff68;
-        /// NumLock
-        const NumLock = 0xff7f;
-        /// Keypad
-        const KP = 0xff80;
-        /// Keypad Enter
-        const KPEnter = 0xff8d;
-        /// Keypad Last
-        const KPLast = 0xffbd;
-        /// F1
-        const F1 = 0xffbd + 1;
-        /// F2
-        const F2 = 0xffbd + 2;
-        /// F3
-        const F3 = 0xffbd + 3;
-        /// F4
-        const F4 = 0xffbd + 4;
-        /// F5
-        const F5 = 0xffbd + 5;
-        /// F6
-        const F6 = 0xffbd + 6;
-        /// F7
-        const F7 = 0xffbd + 7;
-        /// F8
-        const F8 = 0xffbd + 8;
-        /// F9
-        const F9 = 0xffbd + 9;
-        /// F10
-        const F10 = 0xffbd + 10;
-        /// F11
-        const F11 = 0xffbd + 11;
-        /// F12
-        const F12 = 0xffbd + 12;
-        /// Function key last
-        const FLast = 0xffe0;
-        /// Shift Left
-        const ShiftL = 0xffe1;
-        /// Shift Right
-        const ShiftR = 0xffe2;
-        /// Control Left
-        const ControlL = 0xffe3;
-        /// Control Right
-        const ControlR = 0xffe4;
-        /// Caps Lock
-        const CapsLock = 0xffe5;
-        /// Meta Left
-        const MetaL = 0xffe7;
-        /// Meta Right
-        const MetaR = 0xffe8;
-        /// Alt Left
-        const AltL = 0xffe9;
-        /// Alt Right
-        const AltR = 0xffea;
-        /// Delete
-        const Delete = 0xffff;
-    }
+/// Defines the inputted virtual keycode
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct Key { 
+    bits: i32,
 }
 
 impl Key {
+    /// None
+    pub const None: Key = Key { bits: 0 };
+    /// Button
+    pub const Button: Key = Key { bits: 0xfee8 };
+    /// BackSpace
+    pub const BackSpace: Key = Key { bits: 0xff08 };
+    /// Tab
+    pub const Tab: Key = Key { bits: 0xff09 };
+    /// IsoKey
+    pub const IsoKey: Key = Key { bits: 0xff0c };
+    /// Enter
+    pub const Enter: Key = Key { bits: 0xff0d };
+    /// Pause
+    pub const Pause: Key = Key { bits: 0xff13 };
+    /// ScrollLock
+    pub const ScrollLock: Key = Key { bits: 0xff14 };
+    /// Escape
+    pub const Escape: Key = Key { bits: 0xff1b };
+    /// Kana
+    pub const Kana: Key = Key { bits: 0xff2e };
+    /// Eisu
+    pub const Eisu: Key = Key { bits: 0xff2f };
+    /// Yen
+    pub const Yen: Key = Key { bits: 0xff30 };
+    /// JISUnderscore
+    pub const JISUnderscore: Key = Key { bits: 0xff31 };
+    /// Home
+    pub const Home: Key = Key { bits: 0xff50 };
+    /// Left
+    pub const Left: Key = Key { bits: 0xff51 };
+    /// Up
+    pub const Up: Key = Key { bits: 0xff52 };
+    /// Right
+    pub const Right: Key = Key { bits: 0xff53 };
+    /// Down
+    pub const Down: Key = Key { bits: 0xff54 };
+    /// PageUp
+    pub const PageUp: Key = Key { bits: 0xff55 };
+    /// PageDown
+    pub const PageDown: Key = Key { bits: 0xff56 };
+    /// End
+    pub const End: Key = Key { bits: 0xff57 };
+    /// Print
+    pub const Print: Key = Key { bits: 0xff61 };
+    /// Insert
+    pub const Insert: Key = Key { bits: 0xff63 };
+    /// Menu
+    pub const Menu: Key = Key { bits: 0xff67 };
+    /// Help
+    pub const Help: Key = Key { bits: 0xff68 };
+    /// NumLock
+    pub const NumLock: Key = Key { bits: 0xff7f };
+    /// Keypad
+    pub const KP: Key = Key { bits: 0xff80 };
+    /// Keypad Enter
+    pub const KPEnter: Key = Key { bits: 0xff8d };
+    /// Keypad Last
+    pub const KPLast: Key = Key { bits: 0xffbd };
+    /// F1
+    pub const F1: Key = Key { bits: 0xffbd + 1 };
+    /// F2
+    pub const F2: Key = Key { bits: 0xffbd + 2 };
+    /// F3
+    pub const F3: Key = Key { bits: 0xffbd + 3 };
+    /// F4
+    pub const F4: Key = Key { bits: 0xffbd + 4 };
+    /// F5
+    pub const F5: Key = Key { bits: 0xffbd + 5 };
+    /// F6
+    pub const F6: Key = Key { bits: 0xffbd + 6 };
+    /// F7
+    pub const F7: Key = Key { bits: 0xffbd + 7 };
+    /// F8
+    pub const F8: Key = Key { bits: 0xffbd + 8 };
+    /// F9
+    pub const F9: Key = Key { bits: 0xffbd + 9 };
+    /// F10
+    pub const F10: Key = Key { bits: 0xffbd + 10 };
+    /// F11
+    pub const F11: Key = Key { bits: 0xffbd + 11 };
+    /// F12
+    pub const F12: Key = Key { bits: 0xffbd + 12 };
+    /// Function key last
+    pub const FLast: Key = Key { bits: 0xffe0 };
+    /// Shift Left
+    pub const ShiftL: Key = Key { bits: 0xffe1 };
+    /// Shift Right
+    pub const ShiftR: Key = Key { bits: 0xffe2 };
+    /// Control Left
+    pub const ControlL: Key = Key { bits: 0xffe3 };
+    /// Control Right
+    pub const ControlR: Key = Key { bits: 0xffe4 };
+    /// Caps Lock
+    pub const CapsLock: Key = Key { bits: 0xffe5 };
+    /// Meta Left
+    pub const MetaL: Key = Key { bits: 0xffe7 };
+    /// Meta Right
+    pub const MetaR: Key = Key { bits: 0xffe8 };
+    /// Alt Left
+    pub const AltL: Key = Key { bits: 0xffe9 };
+    /// Alt Right
+    pub const AltR: Key = Key { bits: 0xffea };
+    /// Delete
+    pub const Delete: Key = Key { bits: 0xffff };
+    /// Gets the i32 value of a Key
+    pub const fn bits(&self) -> i32 {
+        self.bits
+    }
     /// Gets a Key from an i32
     pub const fn from_i32(val: i32) -> Key {
-        Key::from_bits_retain(val)
+        Key { bits: val }
     }
 
     /// Gets a Key from a char
     pub const fn from_char(val: char) -> Key {
-        Key::from_bits_retain(val as i32)
+        Key { bits: val as i32 }
     }
 
     /// Get the char representation of a Key.
