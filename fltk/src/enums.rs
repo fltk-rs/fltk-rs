@@ -262,7 +262,7 @@ bitflags::bitflags! {
 }
 
 /// Defines fonts used by FLTK
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Font {
     bits: i32,
 }
@@ -398,6 +398,34 @@ impl Font {
     }
 }
 
+#[allow(unreachable_patterns)]
+impl std::fmt::Debug for Font {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match *self {
+            Font::Helvetica => write!(f, "Font::Helvetica"),
+            Font::HelveticaBold => write!(f, "Font::HelveticaBold"),
+            Font::HelveticaItalic => write!(f, "Font::HelveticaItalic"),
+            Font::HelveticaBoldItalic => write!(f, "Font::HelveticaBoldItalic"),
+            Font::Courier => write!(f, "Font::Courier"),
+            Font::CourierBold => write!(f, "Font::CourierBold"),
+            Font::CourierItalic => write!(f, "Font::CourierItalic"),
+            Font::CourierBoldItalic => write!(f, "Font::CourierBoldItalic"),
+            Font::Times => write!(f, "Font::Times"),
+            Font::TimesBold => write!(f, "Font::TimesBold"),
+            Font::TimesItalic => write!(f, "Font::TimesItalic"),
+            Font::TimesBoldItalic => write!(f, "Font::TimesBoldItalic"),
+            Font::Symbol => write!(f, "Font::Symbol"),
+            Font::Screen => write!(f, "Font::Screen"),
+            Font::ScreenBold => write!(f, "Font::ScreenBold"),
+            Font::Zapfdingbats => write!(f, "Font::Zapfdingbats"),
+            _ => {
+                write!(f, "Font::from_i32({})", self.bits())
+            }
+        }
+    }
+}
+
+
 /// Defines colors used by FLTK.
 /// Colors are stored as RGBI values, the last being the index for FLTK colors in this enum.
 /// Colors in this enum don't have an RGB stored. However, custom colors have an RGB, and don't have an index.
@@ -409,7 +437,7 @@ impl Font {
 /// For convenience, the fmt::Display trait is implemented so that the name of the Color is shown
 /// when there is one, otherwise the RGB value is given.
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Color {
     bits: u32,
 }
@@ -701,8 +729,15 @@ impl std::fmt::Display for Color {
     }
 }
 
+#[allow(unreachable_patterns)]
+impl std::fmt::Debug for Color {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{}", *self)
+    }
+}
+
 /// Defines event types captured by FLTK
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Event {
     bits: i32,
 }
@@ -785,6 +820,13 @@ impl From<i32> for Event {
 }
 
 #[allow(unreachable_patterns)]
+impl std::fmt::Debug for Event {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{}", *self)
+    }
+}
+
+#[allow(unreachable_patterns)]
 impl std::fmt::Display for Event {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match *self {
@@ -825,7 +867,7 @@ impl std::fmt::Display for Event {
 }
 
 /// Defines the inputted virtual keycode
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Key { 
     bits: i32,
 }
@@ -967,6 +1009,69 @@ impl Key {
     /// Return the corresponding function key
     pub const fn fn_key(val: i32) -> Key {
         Key::from_i32(Key::F1.bits() - 1 + val)
+    }
+}
+
+#[allow(unreachable_patterns)]
+impl std::fmt::Debug for Key {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match *self {
+            Key::None => write!(f, "Key::None"),
+            Key::Button => write!(f, "Key::Button"),
+            Key::BackSpace => write!(f, "Key::BackSpace"),
+            Key::Tab => write!(f, "Key::Tab"),
+            Key::IsoKey => write!(f, "Key::IsoKey"),
+            Key::Enter => write!(f, "Key::Enter"),
+            Key::Pause => write!(f, "Key::Pause"),
+            Key::ScrollLock => write!(f, "Key::ScrollLock"),
+            Key::Escape => write!(f, "Key::Escape"),
+            Key::Kana => write!(f, "Key::Kana"),
+            Key::Eisu => write!(f, "Key::Eisu"),
+            Key::Yen => write!(f, "Key::Yen"),
+            Key::JISUnderscore => write!(f, "Key::JISUnderscore"),
+            Key::Home => write!(f, "Key::Home"),
+            Key::Left => write!(f, "Key::Left"),
+            Key::Up => write!(f, "Key::Up"),
+            Key::Right => write!(f, "Key::Right"),
+            Key::Down => write!(f, "Key::Down"),
+            Key::PageUp => write!(f, "Key::PageUp"),
+            Key::PageDown => write!(f, "Key::PageDown"),
+            Key::End => write!(f, "Key::End"),
+            Key::Print => write!(f, "Key::Print"),
+            Key::Insert => write!(f, "Key::Insert"),
+            Key::Menu => write!(f, "Key::Menu"),
+            Key::Help => write!(f, "Key::Help"),
+            Key::NumLock => write!(f, "Key::NumLock"),
+            Key::KP => write!(f, "Key::KP"),
+            Key::KPEnter => write!(f, "Key::KPEnter"),
+            Key::KPLast => write!(f, "Key::KPLast"),
+            Key::F1 => write!(f, "Key::F1"),
+            Key::F2 => write!(f, "Key::F2"),
+            Key::F3 => write!(f, "Key::F3"),
+            Key::F4 => write!(f, "Key::F4"),
+            Key::F5 => write!(f, "Key::F5"),
+            Key::F6 => write!(f, "Key::F6"),
+            Key::F7 => write!(f, "Key::F7"),
+            Key::F8 => write!(f, "Key::F8"),
+            Key::F9 => write!(f, "Key::F9"),
+            Key::F10 => write!(f, "Key::F10"),
+            Key::F11 => write!(f, "Key::F11"),
+            Key::F12 => write!(f, "Key::F12"),
+            Key::FLast => write!(f, "Key::FLast"),
+            Key::ShiftL => write!(f, "Key::ShiftL"),
+            Key::ShiftR => write!(f, "Key::ShiftR"),
+            Key::ControlL => write!(f, "Key::ControlL"),
+            Key::ControlR => write!(f, "Key::ControlR"),
+            Key::CapsLock => write!(f, "Key::CapsLock"),
+            Key::MetaL => write!(f, "Key::MetaL"),
+            Key::MetaR => write!(f, "Key::MetaR"),
+            Key::AltL => write!(f, "Key::AltL"),
+            Key::AltR => write!(f, "Key::AltR"),
+            Key::Delete => write!(f, "Key::Delete"),
+            _ => {
+                write!(f, "Key::from_i32({})", self.bits())
+            }
+        }
     }
 }
 

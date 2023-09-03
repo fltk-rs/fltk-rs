@@ -495,7 +495,8 @@ pub unsafe trait WidgetBase: WidgetExt {
     unsafe fn from_widget<W: WidgetExt>(w: W) -> Self;
     /// Set a custom handler, where events are managed manually, akin to `Fl_Widget::handle(int)`.
     /// Handled or ignored events should return true, unhandled events should return false.
-    /// takes the widget as a closure argument
+    /// takes the widget as a closure argument.
+    /// The ability to handle an event might depend on handling other events, as explained [here](https://www.fltk.org/doc-1.4/events.html)
     fn handle<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F);
     /// Set a custom draw method.
     /// takes the widget as a closure argument.
