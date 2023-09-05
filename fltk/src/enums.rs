@@ -203,7 +203,7 @@ impl FrameType {
     #[doc(hidden)]
     pub const unsafe fn from_i32(v: i32) -> FrameType {
         if v <= 56 && v >= 0 {
-            unsafe { *(v as *const i32 as *const FrameType) }
+            unsafe { *(&v as *const i32 as *const FrameType) }
         } else {
             FrameType::UserFrameType(unsafe { UnmappedFrameType::from_i32(v) })
         }
