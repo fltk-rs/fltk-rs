@@ -680,7 +680,7 @@ pub fn draw_frame2(string: &str, x: i32, y: i32, width: i32, height: i32) {
 
 /// Draws a box given the box type, size, position and color
 pub fn draw_box(box_type: FrameType, x: i32, y: i32, w: i32, h: i32, color: Color) {
-    unsafe { Fl_draw_box(box_type as i32, x, y, w, h, color.bits()) }
+    unsafe { Fl_draw_box(box_type.as_i32(), x, y, w, h, color.bits()) }
 }
 
 /// Checks whether platform supports true alpha blending for RGBA images

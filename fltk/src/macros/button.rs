@@ -56,12 +56,12 @@ macro_rules! impl_button_ext {
 
                 fn set_down_frame(&mut self, f: $crate::enums::FrameType) {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _set_down_box>](self.inner, f as i32) }
+                    unsafe { [<$flname _set_down_box>](self.inner, f.as_i32()) }
                 }
 
                 fn down_frame(&self) -> $crate::enums::FrameType {
                     assert!(!self.was_deleted());
-                    unsafe { std::mem::transmute([<$flname _down_box>](self.inner)) }
+                    unsafe { $crate::enums::FrameType::from_i32([<$flname _down_box>](self.inner)) }
                 }
             }
         }

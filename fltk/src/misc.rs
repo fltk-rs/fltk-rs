@@ -540,13 +540,13 @@ impl InputChoice {
     /// Set the `down_box` of the widget
     pub fn set_down_frame(&mut self, f: FrameType) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_set_down_box(self.inner, f as i32) }
+        unsafe { Fl_Input_Choice_set_down_box(self.inner, f.as_i32()) }
     }
 
     /// Get the down frame type of the widget
     pub fn down_frame(&self) -> FrameType {
         assert!(!self.was_deleted());
-        unsafe { mem::transmute(Fl_Input_Choice_down_box(self.inner)) }
+        unsafe { FrameType::from_i32(Fl_Input_Choice_down_box(self.inner)) }
     }
 
     /// Add an element to the input choice

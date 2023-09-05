@@ -77,7 +77,7 @@ pub fn set_visible_focus(flag: bool) {
 /// Set the app's default frame type
 pub fn set_frame_type(new_frame: FrameType) {
     unsafe {
-        let new_frame = new_frame as i32;
+        let new_frame = new_frame.as_i32();
         let curr = CURRENT_FRAME.load(Ordering::Relaxed);
         fl::Fl_set_box_type(curr, new_frame);
         CURRENT_FRAME.store(new_frame, Ordering::Relaxed);
@@ -87,7 +87,7 @@ pub fn set_frame_type(new_frame: FrameType) {
 /// Set the app's default frame type without storing the old type
 pub fn set_frame_type2(old_frame: FrameType, new_frame: FrameType) {
     unsafe {
-        fl::Fl_set_box_type(old_frame as i32, new_frame as i32);
+        fl::Fl_set_box_type(old_frame.as_i32(), new_frame.as_i32());
     }
 }
 
@@ -101,7 +101,7 @@ pub fn set_frame_type_cb(
     h: i32,
 ) {
     unsafe {
-        fl::Fl_set_box_type_cb(old_frame as i32, Some(mem::transmute(cb)), x, y, w, h);
+        fl::Fl_set_box_type_cb(old_frame.as_i32(), Some(mem::transmute(cb)), x, y, w, h);
     }
 }
 
@@ -114,7 +114,7 @@ pub fn frame_type() -> FrameType {
 /// Swap the default frame type with a new frame type
 pub fn swap_frame_type(new_frame: FrameType) {
     unsafe {
-        let new_frame = new_frame as i32;
+        let new_frame = new_frame.as_i32();
         let curr = CURRENT_FRAME.load(Ordering::Relaxed);
         fl::Fl_set_box_type(56, curr);
         fl::Fl_set_box_type(curr, new_frame);

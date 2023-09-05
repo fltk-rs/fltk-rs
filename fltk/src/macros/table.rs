@@ -15,15 +15,13 @@ macro_rules! impl_table_ext {
                 fn set_table_frame(&mut self, frame: $crate::enums::FrameType) {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _set_table_box>](self.inner, frame as i32)
+                        [<$flname _set_table_box>](self.inner, frame.as_i32())
                     }
                 }
 
                 fn table_frame(&self) -> $crate::enums::FrameType {
-                    unsafe {
-                        assert!(!self.was_deleted());
-                        std::mem::transmute([<$flname _table_box>](self.inner))
-                    }
+                    assert!(!self.was_deleted());
+                    unsafe { $crate::enums::FrameType::from_i32([<$flname _table_box>](self.inner)) }
                 }
 
                 fn set_rows(&mut self, val: i32) {

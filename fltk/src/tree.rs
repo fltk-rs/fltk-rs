@@ -969,13 +969,13 @@ impl Tree {
     /// Gets the select frame
     pub fn select_frame(&self) -> FrameType {
         assert!(!self.was_deleted());
-        unsafe { mem::transmute(Fl_Tree_selectbox(self.inner)) }
+        unsafe { FrameType::from_i32(Fl_Tree_selectbox(self.inner)) }
     }
 
     /// Sets the select frame
     pub fn set_select_frame(&mut self, val: FrameType) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_set_selectbox(self.inner, val as i32) }
+        unsafe { Fl_Tree_set_selectbox(self.inner, val.as_i32()) }
     }
 
     /// Gets the Tree select mode

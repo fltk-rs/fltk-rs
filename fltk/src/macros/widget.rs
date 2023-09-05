@@ -450,13 +450,13 @@ macro_rules! impl_widget_ext {
 
                 fn frame(&self) -> $crate::enums::FrameType {
                     assert!(!self.was_deleted());
-                    unsafe { std::mem::transmute([<$flname _box>](self.inner)) }
+                    unsafe { $crate::enums::FrameType::from_i32([<$flname _box>](self.inner)) }
                 }
 
                 fn set_frame(&mut self, typ: $crate::enums::FrameType) {
                     assert!(!self.was_deleted());
                     unsafe {
-                        [<$flname _set_box>](self.inner, typ as i32);
+                        [<$flname _set_box>](self.inner, typ.as_i32());
                     }
                 }
 

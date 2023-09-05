@@ -4,7 +4,6 @@ use crate::utils::FlString;
 use fltk_sys::valuator::*;
 use std::{
     ffi::{CStr, CString},
-    mem,
     os::raw,
 };
 
@@ -35,12 +34,12 @@ impl Slider {
 
     /// Get the frame type of the slider box
     pub fn slider_frame(&self) -> FrameType {
-        unsafe { mem::transmute(Fl_Slider_slider_box(self.inner)) }
+        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner)) }
     }
 
     /// Set the frame type of the slider box
     pub fn set_slider_frame(&mut self, c: FrameType) {
-        unsafe { Fl_Slider_set_slider_box(self.inner, c as i32) }
+        unsafe { Fl_Slider_set_slider_box(self.inner, c.as_i32()) }
     }
 }
 
@@ -71,12 +70,12 @@ impl NiceSlider {
 
     /// Get the frame type of the slider box
     pub fn slider_frame(&self) -> FrameType {
-        unsafe { mem::transmute(Fl_Slider_slider_box(self.inner as _)) }
+        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner as _)) }
     }
 
     /// Set the frame type of the slider box
     pub fn set_slider_frame(&mut self, c: FrameType) {
-        unsafe { Fl_Slider_set_slider_box(self.inner as _, c as i32) }
+        unsafe { Fl_Slider_set_slider_box(self.inner as _, c.as_i32()) }
     }
 }
 
@@ -237,12 +236,12 @@ impl Scrollbar {
 
     /// Get the frame type of the slider box
     pub fn slider_frame(&self) -> FrameType {
-        unsafe { mem::transmute(Fl_Slider_slider_box(self.inner as _)) }
+        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner as _)) }
     }
 
     /// Set the frame type of the slider box
     pub fn set_slider_frame(&mut self, c: FrameType) {
-        unsafe { Fl_Slider_set_slider_box(self.inner as _, c as i32) }
+        unsafe { Fl_Slider_set_slider_box(self.inner as _, c.as_i32()) }
     }
 }
 
@@ -341,12 +340,12 @@ impl ValueSlider {
 
     /// Get the frame type of the slider box
     pub fn slider_frame(&self) -> FrameType {
-        unsafe { mem::transmute(Fl_Slider_slider_box(self.inner as _)) }
+        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner as _)) }
     }
 
     /// Set the frame type of the slider box
     pub fn set_slider_frame(&mut self, c: FrameType) {
-        unsafe { Fl_Slider_set_slider_box(self.inner as _, c as i32) }
+        unsafe { Fl_Slider_set_slider_box(self.inner as _, c.as_i32()) }
     }
 }
 
@@ -555,12 +554,12 @@ impl HorSlider {
 
     /// Get the frame type of the slider box
     pub fn slider_frame(&self) -> FrameType {
-        unsafe { mem::transmute(Fl_Slider_slider_box(self.inner as _)) }
+        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner as _)) }
     }
 
     /// Set the frame type of the slider box
     pub fn set_slider_frame(&mut self, c: FrameType) {
-        unsafe { Fl_Slider_set_slider_box(self.inner as _, c as i32) }
+        unsafe { Fl_Slider_set_slider_box(self.inner as _, c.as_i32()) }
     }
 }
 
@@ -591,12 +590,12 @@ impl HorFillSlider {
 
     /// Get the frame type of the slider box
     pub fn slider_frame(&self) -> FrameType {
-        unsafe { mem::transmute(Fl_Slider_slider_box(self.inner as _)) }
+        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner as _)) }
     }
 
     /// Set the frame type of the slider box
     pub fn set_slider_frame(&mut self, c: FrameType) {
-        unsafe { Fl_Slider_set_slider_box(self.inner as _, c as i32) }
+        unsafe { Fl_Slider_set_slider_box(self.inner as _, c.as_i32()) }
     }
 }
 
@@ -627,12 +626,12 @@ impl HorNiceSlider {
 
     /// Get the frame type of the slider box
     pub fn slider_frame(&self) -> FrameType {
-        unsafe { mem::transmute(Fl_Slider_slider_box(self.inner as _)) }
+        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner as _)) }
     }
 
     /// Set the frame type of the slider box
     pub fn set_slider_frame(&mut self, c: FrameType) {
-        unsafe { Fl_Slider_set_slider_box(self.inner as _, c as i32) }
+        unsafe { Fl_Slider_set_slider_box(self.inner as _, c.as_i32()) }
     }
 }
 
@@ -698,11 +697,11 @@ impl HorValueSlider {
 
     /// Get the frame type of the slider box
     pub fn slider_frame(&self) -> FrameType {
-        unsafe { mem::transmute(Fl_Slider_slider_box(self.inner as _)) }
+        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner as _)) }
     }
 
     /// Set the frame type of the slider box
     pub fn set_slider_frame(&mut self, c: FrameType) {
-        unsafe { Fl_Slider_set_slider_box(self.inner as _, c as i32) }
+        unsafe { Fl_Slider_set_slider_box(self.inner as _, c.as_i32()) }
     }
 }

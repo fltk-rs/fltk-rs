@@ -2,10 +2,7 @@ use crate::enums::FrameType;
 use crate::prelude::*;
 use crate::utils::FlString;
 use fltk_sys::input::*;
-use std::{
-    ffi::{CStr, CString},
-    mem,
-};
+use std::ffi::{CStr, CString};
 
 /// Creates an input widget
 #[derive(Debug)]
@@ -100,13 +97,13 @@ impl FileInput {
     /// Set the `down_box` of the widget
     pub fn set_down_frame(&mut self, f: FrameType) {
         assert!(!self.was_deleted());
-        unsafe { Fl_File_Input_set_down_box(self.inner, f as i32) }
+        unsafe { Fl_File_Input_set_down_box(self.inner, f.as_i32()) }
     }
 
     /// Get the `down_box` of the widget
     pub fn down_frame(&self) -> FrameType {
         assert!(!self.was_deleted());
-        unsafe { mem::transmute(Fl_File_Input_down_box(self.inner)) }
+        unsafe { FrameType::from_i32(Fl_File_Input_down_box(self.inner)) }
     }
 }
 

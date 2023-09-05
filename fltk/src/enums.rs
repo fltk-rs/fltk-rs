@@ -49,8 +49,22 @@ impl ColorDepth {
     }
 }
 
+#[doc(hidden)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub struct UnmappedFrameType {
+    bits: i32,
+}
+
+impl UnmappedFrameType {
+    #[doc(hidden)]
+    pub const unsafe fn from_i32(val: i32) -> Self {
+        Self { bits: val }
+    }
+}
+
 /// Defines the frame types which can be set using the `set_frame()` and `set_down_frame()` methods
 #[repr(i32)]
+#[non_exhaustive]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum FrameType {
     /// No Box
@@ -167,6 +181,8 @@ pub enum FrameType {
     GleamRoundDownBox,
     /// Free BoxType
     FreeBoxType,
+    /// User-defined frame types
+    UserFrameType(UnmappedFrameType),
 }
 
 impl FrameType {
@@ -174,37 +190,59 @@ impl FrameType {
     pub const OFlatBox: FrameType = FrameType::OFlatFrame;
     /// Alias GtkRoundDownFrame as GtkRoundDownBox
     pub const GtkRoundDownBox: FrameType = FrameType::GtkRoundDownFrame;
+    /// Get the discriminant value or the user defined frame type
+    pub const fn as_i32(&self) -> i32 {
+        match *self {
+            FrameType::UserFrameType(v) => v.bits,
+            _ => self.discriminant(),
+        }
+    }
+    /// Construct a FrameType from an i32 value
+    /// # Safety
+    /// The frametype should be defined using the `app::set_frame_type_cb` function
+    #[doc(hidden)]
+    pub const unsafe fn from_i32(v: i32) -> FrameType {
+        if v <= 56 && v >= 0 {
+            unsafe { *(v as *const i32 as *const FrameType) }
+        } else {
+            FrameType::UserFrameType(unsafe { UnmappedFrameType::from_i32(v) })
+        }
+    }
+    #[doc(hidden)]
+    const fn discriminant(&self) -> i32 {
+        unsafe { *(self as *const Self as *const i32) }
+    }
     /// Gets the Frame type by index
     pub fn by_index(idx: usize) -> FrameType {
         let idx = if idx > 56 { 56 } else { idx };
-        unsafe { mem::transmute(idx as i32) }
+        unsafe { FrameType::from_i32(idx as i32) }
     }
 
     /// Get the frame's x offset
     pub fn dx(self) -> i32 {
-        unsafe { fl::Fl_box_dx(self as i32) }
+        unsafe { fl::Fl_box_dx(self.as_i32()) }
     }
 
     /// Get the frame's y offset
     pub fn dy(self) -> i32 {
-        unsafe { fl::Fl_box_dy(self as i32) }
+        unsafe { fl::Fl_box_dy(self.as_i32()) }
     }
 
     /// Get the frame's width offset
     pub fn dw(self) -> i32 {
-        unsafe { fl::Fl_box_dw(self as i32) }
+        unsafe { fl::Fl_box_dw(self.as_i32()) }
     }
 
     /// Get the frame's height offset
     pub fn dh(self) -> i32 {
-        unsafe { fl::Fl_box_dh(self as i32) }
+        unsafe { fl::Fl_box_dh(self.as_i32()) }
     }
 
     /// Swap frames
     pub fn swap_frames(old_frame: FrameType, new_frame: FrameType) {
         unsafe {
-            let new_frame = new_frame as i32;
-            let old_frame = old_frame as i32;
+            let new_frame = new_frame.as_i32();
+            let old_frame = old_frame.as_i32();
             fl::Fl_set_box_type(old_frame, new_frame);
         }
     }
