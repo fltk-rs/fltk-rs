@@ -68,7 +68,7 @@ impl UnmappedFrameType {
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum FrameType {
     /// No Box
-    NoBox = 0,
+    NoBox,
     /// Flat Box
     FlatBox,
     /// Up Box
