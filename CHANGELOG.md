@@ -1,7 +1,7 @@
 # Changelog
 
 
-# [1.4.11] - Unreleased
+# [1.4.11] - 2023-09-05
 - Add app::add_check, has_check and remove_check.
 - Saner management of WidgetTracker.
 - Make Image code aware of single-threaded feature.
