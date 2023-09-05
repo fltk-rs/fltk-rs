@@ -425,7 +425,6 @@ impl std::fmt::Debug for Font {
     }
 }
 
-
 /// Defines colors used by FLTK.
 /// Colors are stored as RGBI values, the last being the index for FLTK colors in this enum.
 /// Colors in this enum don't have an RGB stored. However, custom colors have an RGB, and don't have an index.
@@ -868,7 +867,7 @@ impl std::fmt::Display for Event {
 
 /// Defines the inputted virtual keycode
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct Key { 
+pub struct Key {
     bits: i32,
 }
 

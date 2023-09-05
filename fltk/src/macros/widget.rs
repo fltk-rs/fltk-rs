@@ -24,17 +24,25 @@ macro_rules! impl_widget_ext {
                 }
             }
         }
-        impl Drop for $name {
-            fn drop(&mut self) {
-                if $crate::widget::WidgetTracker::strong_count(&self.tracker) == 1 {
-                    unsafe {
-                        fltk_sys::fl::Fl_Widget_Tracker_delete(*self.tracker);
+
+        paste::paste! {
+            impl Drop for $name {
+                fn drop(&mut self) {
+                    // if !self.inner.is_null() {
+                    //     unsafe {
+                    //         if [<$flname _as_window>](self.inner).is_null() && [<$flname _parent>](self.inner).is_null() {
+                    //             [<$flname _delete>](self.inner);
+                    //             self.inner = std::ptr::null_mut();
+                    //         }
+                    //     }
+                    // }
+                    if $crate::widget::WidgetTracker::strong_count(&self.tracker) == 1 {
+                        unsafe {
+                            fltk_sys::fl::Fl_Widget_Tracker_delete(*self.tracker);
+                        }
                     }
                 }
             }
-        }
-
-        paste::paste! {
             unsafe impl WidgetExt for $name {
                 fn with_pos(mut self, x: i32, y: i32) -> Self {
                     let w = self.w();
@@ -974,10 +982,12 @@ macro_rules! impl_widget_base {
                         parent.remove(&wid);
                     }
                     unsafe {
-                        fltk_sys::fl::Fl_delete_widget(
-                            wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget
-                        );
-                        wid.inner = std::ptr::null_mut() as *mut _;
+                        if !wid.inner.is_null() {
+                            fltk_sys::fl::Fl_delete_widget(
+                                wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget
+                            );
+                            wid.inner = std::ptr::null_mut() as *mut _;
+                        }
                         // wid.tracker = std::ptr::null_mut() as *mut fltk_sys::fl::Fl_Widget_Tracker;
                     }
                 }
