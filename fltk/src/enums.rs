@@ -191,7 +191,7 @@ impl FrameType {
     /// Alias GtkRoundDownFrame as GtkRoundDownBox
     pub const GtkRoundDownBox: FrameType = FrameType::GtkRoundDownFrame;
     /// Get the discriminant value or the user defined frame type
-    pub const fn as_i32(&self) -> i32 {
+    pub fn as_i32(&self) -> i32 {
         match *self {
             FrameType::UserFrameType(v) => v.bits,
             _ => self.discriminant(),
@@ -201,15 +201,15 @@ impl FrameType {
     /// # Safety
     /// The frametype should be defined using the `app::set_frame_type_cb` function
     #[doc(hidden)]
-    pub const unsafe fn from_i32(v: i32) -> FrameType {
-        if v <= 56 && v >= 0 {
-            unsafe { *(&v as *const i32 as *const FrameType) }
+    pub unsafe fn from_i32(v: i32) -> FrameType {
+        if (0..=56).contains(&v) {
+            *(&v as *const i32 as *const FrameType)
         } else {
-            FrameType::UserFrameType(unsafe { UnmappedFrameType::from_i32(v) })
+            FrameType::UserFrameType(UnmappedFrameType::from_i32(v))
         }
     }
     #[doc(hidden)]
-    const fn discriminant(&self) -> i32 {
+    fn discriminant(&self) -> i32 {
         unsafe { *(self as *const Self as *const i32) }
     }
     /// Gets the Frame type by index
