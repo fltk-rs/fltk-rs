@@ -440,29 +440,6 @@ Checkout the [fl2rust crate](https://github.com/fltk-rs/fl2rust) and [fl2rust te
 
 - [FLTK Rust: Latest FLUID, fl2rust and fltk-rs](https://www.youtube.com/watch?v=33NdaW08fP8)
 
-### Themes
-
-Additional themes can be found in the [fltk-theme crate](https://github.com/fltk-rs/fltk-theme).
-
-- ![alt_test](screenshots/aero.jpg)
-
-- ![alt_test](screenshots/black.jpg)
-
-And more...
-
-### Extra widgets
-
-This crate exposes FLTK's set of widgets, which are all customizable. Additional custom widgets can be found in the [fltk-extras crate](https://github.com/fltk-rs/fltk-theme).
-
-![image](https://user-images.githubusercontent.com/37966791/212541355-91062d78-5c5d-4b7a-aa6d-e1be49cff340.png)
-
-![image](https://user-images.githubusercontent.com/37966791/212541425-f594a7bc-d7bc-49e5-90f3-03f52d437cce.png)
-
-![ss](https://github.com/fltk-rs/fltk-extras/assets/37966791/a03e1912-7658-48be-a354-2b588b417fd8)
-
-![image](https://user-images.githubusercontent.com/37966791/212541392-2cd4fb08-4152-484a-86da-64b2bc476a0e.png)
-
-
 ## Examples
 
 To run the [examples](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples): 
@@ -535,6 +512,29 @@ Different frame types which can be used with many different widgets such as Fram
 More interesting examples can be found in the fltk-rs-demos [repo](https://github.com/fltk-rs/demos).
 Also a nice implementation of the 7guis tasks can be found [here](https://github.com/tdryer/7guis-fltk-rs).
 Various advanced examples can also be found [here](https://github.com/wyhinton/FLTK-RS-Examples).
+
+
+### Themes
+
+Additional themes can be found in the [fltk-theme crate](https://github.com/fltk-rs/fltk-theme).
+
+- ![screenshots/aero.jpg](https://github.com/fltk-rs/fltk-theme/blob/dfd1e97b62c94d7af9d615cab0ab809226957a3f/screenshots/aero.jpg)
+
+- ![screenshots/black.jpg](https://github.com/fltk-rs/fltk-theme/blob/dfd1e97b62c94d7af9d615cab0ab809226957a3f/screenshots/black.jpg)
+
+And more...
+
+### Extra widgets
+
+This crate exposes FLTK's set of widgets, which are all customizable. Additional custom widgets can be found in the [fltk-extras crate](https://github.com/fltk-rs/fltk-theme).
+
+![image](https://user-images.githubusercontent.com/37966791/212541355-91062d78-5c5d-4b7a-aa6d-e1be49cff340.png)
+
+![image](https://user-images.githubusercontent.com/37966791/212541425-f594a7bc-d7bc-49e5-90f3-03f52d437cce.png)
+
+![ss](https://github.com/fltk-rs/fltk-extras/assets/37966791/a03e1912-7658-48be-a354-2b588b417fd8)
+
+![image](https://user-images.githubusercontent.com/37966791/212541392-2cd4fb08-4152-484a-86da-64b2bc476a0e.png)
 
 ## Tutorials
 
