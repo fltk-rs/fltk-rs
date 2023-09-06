@@ -16,7 +16,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut win = Window::default()
         .with_size(WIDTH, HEIGHT)
         .with_label("Framebuffer");
-    let mut frame = frame::Frame::default().size_of(&win);
+    let mut frame = frame::Frame::default_fill();
     win.end();
     win.make_resizable(true);
     win.show();

@@ -11,7 +11,7 @@ impl MyButton {
         grp.set_frame(enums::FrameType::RFlatBox);
         grp.set_color(enums::Color::from_u32(0x01579b));
         grp.set_align(enums::Align::Center);
-        let mut btn = button::Button::new(grp.x() + 420, grp.y() + 35, 15, 15, "X");
+        let mut btn = button::Button::new(grp.x() + 420, grp.y() + 35, 30, 25, "@1+");
         btn.set_frame(enums::FrameType::OFlatFrame);
         btn.set_color(enums::Color::from_u32(0xf49da9));
         btn.set_callback(move |b| b.parent().unwrap().hide());
@@ -45,8 +45,9 @@ fn main() {
     let mut win = window::Window::default().with_size(500, 400);
     win.make_resizable(true);
     win.set_color(enums::Color::Black);
-    let mut pack = group::Pack::default().size_of(&win);
-    pack.set_spacing(10);
+    let mut col = group::Flex::default_fill().column();
+    col.set_margin(20);
+    col.set_pad(10);
 
     for i in 0..3 {
         let label = format!("Button {}", i + 1);
@@ -55,7 +56,7 @@ fn main() {
         but.set_callback(move |_| println!("{label}"));
     }
 
-    pack.end();
+    col.end();
     win.end();
     win.show();
     app.run().unwrap();

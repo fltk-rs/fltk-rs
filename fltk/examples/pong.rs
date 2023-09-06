@@ -10,9 +10,22 @@ enum Direction {
 }
 
 struct Ball {
-    wid: valuator::FillDial,
+    wid: frame::Frame,
     pos: (i32, i32),             // x and y positions
     dir: (Direction, Direction), // x and y directions
+}
+
+impl Ball {
+    pub fn new(w: i32, h: i32) -> Self {
+        let mut wid = frame::Frame::new(0, 0, w, h, None);
+        wid.set_frame(enums::FrameType::OFlatBox);
+        wid.set_color(enums::Color::White);
+        Self{
+            wid,
+            pos: (0, 0),
+            dir: (Direction::Positive, Direction::Positive),
+        }
+    }
 }
 
 fn main() {
@@ -21,27 +34,25 @@ fn main() {
         .with_size(800, 600)
         .center_screen()
         .with_label("Pong!");
-    let mut ball = Ball {
-        wid: valuator::FillDial::new(0, 0, 40, 40, ""),
-        pos: (0, 0),
-        dir: (Direction::Positive, Direction::Positive),
-    };
+    let mut ball = Ball::new(40, 40);
     ball.wid.set_color(enums::Color::White);
     wind.set_color(enums::Color::Black);
     wind.end();
     wind.show();
 
     let paddle_pos = Rc::from(RefCell::from(320)); // paddle's starting x position
-    let paddle_c = paddle_pos.clone();
 
     // This is called whenever the window is drawn and redrawn (in the event loop)
-    wind.draw(move |_| {
+    wind.draw({
+        let paddle_pos = paddle_pos.clone();
+        move |_| {
         draw::set_draw_color(enums::Color::White);
-        draw::draw_rectf(*paddle_c.borrow(), 540, 160, 20);
-    });
+        draw::draw_rectf(*paddle_pos.borrow(), 540, 160, 20);
+    }});
 
-    let paddle_c = paddle_pos.clone();
-    wind.handle(move |_, ev| {
+    wind.handle({
+        let paddle_pos = paddle_pos.clone();
+        move |_, ev| {
         match ev {
             enums::Event::Move => {
                 // Mouse's x position relative to the paddle's center
@@ -50,13 +61,13 @@ fn main() {
             }
             _ => false,
         }
-    });
+    }});
 
     app::add_idle3(move |_| {
         ball.pos.0 += 10 * ball.dir.0 as i32; // The increment in x position
         ball.pos.1 += 10 * ball.dir.1 as i32; // The increment in y position
         if ball.pos.1 == 540 - 40
-            && (ball.pos.0 > *paddle_c.borrow() - 40 && ball.pos.0 < *paddle_c.borrow() + 160)
+            && (ball.pos.0 > *paddle_pos.borrow() - 40 && ball.pos.0 < *paddle_pos.borrow() + 160)
         {
             ball.dir.1 = Direction::Negative; // Reversal of motion when hitting the paddle
         }

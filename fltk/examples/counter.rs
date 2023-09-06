@@ -3,44 +3,43 @@ use fltk::{
     button::Button,
     enums::{Color, FrameType},
     frame::Frame,
+    group::Flex,
     prelude::*,
     window::Window,
 };
+use std::{cell::RefCell, rc::Rc};
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
     app::background(0x62, 0x00, 0xee);
     app::set_visible_focus(false);
 
+    let count = Rc::new(RefCell::new(0));
+
     let mut wind = Window::default().with_size(160, 200).with_label("Counter");
-    let mut frame = Frame::default()
-        .with_size(100, 40)
-        .center_of(&wind)
-        .with_label("0");
-    frame.set_label_size(20);
-    let mut but_inc = Button::default()
-        .size_of(&frame)
-        .above_of(&frame, 0)
-        .with_label("+");
-    let mut but_dec = Button::default()
-        .size_of(&frame)
-        .below_of(&frame, 0)
-        .with_label("-");
+    let mut flex = Flex::default_fill().column();
+    flex.set_margins(30, 40, 30, 40);
+    flex.set_pad(10);
+    let mut but_inc = Button::default().with_label("+");
+    let mut frame = Frame::default().with_label(&count.borrow().to_string());
+    let mut but_dec = Button::default().with_label("-");
+    flex.end();
     // wind.make_resizable(true);
     wind.end();
     wind.show();
 
     but_inc.set_callback({
+        let count = count.clone();
         let mut frame = frame.clone();
         move |_| {
-            let label = (frame.label().parse::<i32>().unwrap() + 1).to_string();
-            frame.set_label(&label);
+            *count.borrow_mut() += 1;
+            frame.set_label(&count.borrow().to_string());
         }
     });
 
     but_dec.set_callback(move |_| {
-        let label = (frame.label().parse::<i32>().unwrap() - 1).to_string();
-        frame.set_label(&label);
+        *count.borrow_mut() -= 1;
+        frame.set_label(&count.borrow().to_string());
     });
 
     // Theming

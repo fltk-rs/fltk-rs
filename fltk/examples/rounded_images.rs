@@ -52,16 +52,16 @@ fn main() {
         .unwrap();
 
     let mut wind = window::Window::new(100, 100, 800, 400, "Hello from rust");
-    let mut pack = group::Pack::default()
+    let row = group::Flex::default()
+        .row()
         .with_size(800, 200)
         .center_of_parent();
-    pack.set_type(group::PackType::Horizontal);
     for i in 1..=4 {
         let color_depth = enums::ColorDepth::from_u8(i).unwrap();
         let image = image.convert(color_depth).unwrap();
         RoundImageBox::new(100, image);
     }
-    pack.end();
+    row.end();
     wind.end();
     wind.show();
 

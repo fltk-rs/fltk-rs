@@ -1,4 +1,4 @@
-use fltk::{app, button::Button, frame::Frame, group::Pack, prelude::*, window::Window};
+use fltk::{app, button::Button, frame::Frame, group::Flex, prelude::*, window::Window};
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -41,14 +41,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let app = app::App::default();
     let counter = Counter::new(0);
     let mut wind = Window::default().with_size(160, 200).with_label("Counter");
-    let mut pack = Pack::default().with_size(120, 140).center_of(&wind);
-    pack.set_spacing(10);
-    let mut but_inc = Button::default().with_size(0, 40).with_label("+");
-    let mut frame = Frame::default()
-        .with_size(0, 40)
-        .with_label(&counter.value().to_string());
-    let mut but_dec = Button::default().with_size(0, 40).with_label("-");
-    pack.end();
+    let mut flex = Flex::default_fill().column();
+    flex.set_margins(30, 40, 30, 40);
+    flex.set_pad(10);
+    let mut but_inc = Button::default().with_label("+");
+    let mut frame = Frame::default().with_label(&counter.value().to_string());
+    let mut but_dec = Button::default().with_label("-");
+    flex.end();
     wind.end();
     wind.show();
 

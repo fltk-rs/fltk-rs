@@ -15,17 +15,28 @@ fn main() {
     let mut win = window::Window::default()
         .with_size(WIDTH, HEIGHT)
         .with_label("Flutter-like!");
-    let mut bar =
-        frame::Frame::new(0, 0, WIDTH, 60, "  FLTK App!").with_align(Align::Left | Align::Inside);
+    let mut col = group::Flex::default_fill().column();
+    let mut bar = frame::Frame::default()
+        .with_label("  FLTK App!")
+        .with_align(Align::Left | Align::Inside);
+    col.fixed(&bar, 60);
     let mut text = frame::Frame::default()
-        .with_size(100, 40)
-        .center_of(&win)
-        .with_label("You have pushed the button this many times:");
+        .with_label("You have pushed the button this many times:")
+        .with_align(Align::Bottom | Align::Inside);
     let mut count = frame::Frame::default()
-        .size_of(&text)
-        .below_of(&text, 0)
-        .with_label("0");
-    let mut but = button::Button::new(WIDTH - 100, HEIGHT - 100, 60, 60, "@+6plus");
+        .with_label("0")
+        .with_align(Align::Top | Align::Inside);
+    let mut row = group::Flex::default();
+    col.fixed(&row, 60);
+    frame::Frame::default();
+    let mut but = button::Button::default().with_label("@+6plus");
+    row.fixed(&but, 60);
+    let spacing = frame::Frame::default();
+    row.fixed(&spacing, 20);
+    row.end();
+    let spacing = frame::Frame::default();
+    col.fixed(&spacing, 20);
+    col.end();
     win.end();
     win.make_resizable(true);
     win.show();

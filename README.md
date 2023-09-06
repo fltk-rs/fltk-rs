@@ -130,7 +130,7 @@ fn main() {
 }
 ```
 
-Alternatively, you can use Pack, Flex (for flexbox layouts) or [Grid](https://github.com/fltk-rs/fltk-grid):
+Alternatively, you can use Flex (for flexbox layouts), Pack or [Grid](https://github.com/fltk-rs/fltk-grid):
 ```rust,no_run
 use fltk::{app, button::Button, frame::Frame, group::Flex, prelude::*, window::Window};
 fn main() {
@@ -143,6 +143,28 @@ fn main() {
     flex.end();
     wind.end();
     wind.show();
+    app.run().unwrap();
+}
+```
+
+Another example:
+```rust,no_run
+use fltk::{app, button::Button, frame::Frame, group::Flex, prelude::*, window::Window};
+
+fn main() {
+    let app = app::App::default();
+    let mut wind = Window::default().with_size(400, 300);
+    let mut col = Flex::default_fill().column();
+    col.set_margins(120, 80, 120, 80);
+    let mut frame = Frame::default();
+    let mut but = Button::default().with_label("Click me!");
+    col.fixed(&but, 40);
+    col.end();
+    wind.end();
+    wind.show();
+
+    but.set_callback(move |_| frame.set_label("Hello world"));
+
     app.run().unwrap();
 }
 ```
@@ -285,83 +307,6 @@ cd fltk-rs
 cargo build
 ```
 
-## Examples
-
-To run the [examples](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples): 
-```bash
-cargo run --example editor
-cargo run --example calculator
-cargo run --example calculator2
-cargo run --example counter
-cargo run --example hello_svg
-cargo run --example hello_button
-cargo run --example fb
-cargo run --example pong
-cargo run --example custom_widgets
-cargo run --example custom_dial
-...
-```
-
-Using custom theming and also FLTK provided default schemes like Gtk:
-
-- [hello_svg](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/hello_svg.rs)
-
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/hello.jpg)
-
-- [calculator2](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/calculator2.rs)
-
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/calc2.jpg)
-
-- [custom_widgets](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/custom_widgets.rs)
-
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/custom.jpg)
-
-- [counter3](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/counter3.rs)
-
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/flutter_like.jpg)
-
-- [custom_dial](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/custom_dial.rs)
-
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/dial.jpg)
-
-- [calculator](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/calculator.rs)
-
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/calc.jpg)
-
-- [tabs](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/tabs.rs)
-
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/tabs.jpg)
-
-- [counter](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/counter.rs)
-
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/counter.jpg)
-
-- [editor](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/editor.rs)
-
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/editor.jpg)
-
-- [table](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/table.rs)
-
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/table.jpg)
-
-- [charts](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/charts.rs)
-
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/charts.jpg)
-
-- [pong](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/pong.rs)
-
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/pong.gif)
-
-- [frames](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/frames.rs)
-
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/frames.jpg)
-
-Different frame types which can be used with many different widgets such as Frame, Button widgets, In/Output widgets...etc.
-
-More interesting examples can be found in the fltk-rs-demos [repo](https://github.com/fltk-rs/demos).
-Also a nice implementation of the 7guis tasks can be found [here](https://github.com/tdryer/7guis-fltk-rs).
-Various advanced examples can also be found [here](https://github.com/wyhinton/FLTK-RS-Examples).
-
 ## Currently implemented types:
 
 ### Image types:
@@ -487,6 +432,102 @@ Various advanced examples can also be found [here](https://github.com/wyhinton/F
 - Printer.
 - ImageSurface.
 - SvgFileSurface.
+
+### Themes
+
+Additional themes can be found in the [fltk-theme crate](https://github.com/fltk-rs/fltk-theme).
+
+- ![alt_test](screenshots/aero.jpg)
+
+- ![alt_test](screenshots/black.jpg)
+
+And more...
+
+### Extra widgets
+
+This crate exposes FLTK's set of widgets, which are all customizable. Additional custom widgets can be found in the [fltk-extras crate](https://github.com/fltk-rs/fltk-theme).
+
+![image](https://user-images.githubusercontent.com/37966791/212541355-91062d78-5c5d-4b7a-aa6d-e1be49cff340.png)
+
+![image](https://user-images.githubusercontent.com/37966791/212541425-f594a7bc-d7bc-49e5-90f3-03f52d437cce.png)
+
+![ss](https://github.com/fltk-rs/fltk-extras/assets/37966791/a03e1912-7658-48be-a354-2b588b417fd8)
+
+![image](https://user-images.githubusercontent.com/37966791/212541392-2cd4fb08-4152-484a-86da-64b2bc476a0e.png)
+
+
+## Examples
+
+To run the [examples](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples): 
+```bash
+cargo run --example editor
+cargo run --example calculator
+cargo run --example calculator2
+cargo run --example counter
+cargo run --example hello_svg
+cargo run --example hello_button
+cargo run --example fb
+cargo run --example pong
+cargo run --example custom_widgets
+cargo run --example custom_dial
+...
+```
+
+Using custom theming and also FLTK provided default schemes like Gtk:
+
+- [hello_svg](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/hello_svg.rs)
+
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/hello.jpg)
+
+- [calculator2](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/calculator2.rs)
+
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/calc2.jpg)
+
+- [counter3](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/counter3.rs)
+
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/flutter_like.jpg)
+
+- [custom_dial](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/custom_dial.rs)
+
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/dial.jpg)
+
+- [calculator](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/calculator.rs)
+
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/calc.jpg)
+
+- [tabs](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/tabs.rs)
+
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/tabs.jpg)
+
+- [counter](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/counter.rs)
+
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/counter.jpg)
+
+- [editor](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/editor.rs)
+
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/editor.jpg)
+
+- [table](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/table.rs)
+
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/table.jpg)
+
+- [charts](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/charts.rs)
+
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/charts.jpg)
+
+- [pong](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/pong.rs)
+
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/pong.gif)
+
+- [frames](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/frames.rs)
+
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/frames.jpg)
+
+Different frame types which can be used with many different widgets such as Frame, Button widgets, In/Output widgets...etc.
+
+More interesting examples can be found in the fltk-rs-demos [repo](https://github.com/fltk-rs/demos).
+Also a nice implementation of the 7guis tasks can be found [here](https://github.com/tdryer/7guis-fltk-rs).
+Various advanced examples can also be found [here](https://github.com/wyhinton/FLTK-RS-Examples).
 
 ## Tutorials
 

@@ -3,7 +3,7 @@ use fltk::{enums::ColorDepth, prelude::*, *};
 fn main() {
     let app = app::App::default();
     let mut wind = window::Window::default().with_size(400, 400);
-    let mut frame = frame::Frame::default().size_of(&wind);
+    let mut frame = frame::Frame::default_fill();
     wind.make_resizable(true);
     wind.end();
     wind.show();
