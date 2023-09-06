@@ -433,6 +433,13 @@ cargo build
 - ImageSurface.
 - SvgFileSurface.
 
+### GUI designer
+
+fltk-rs supports FLUID, the RAD wysiwyg designer for FLTK. 
+Checkout the [fl2rust crate](https://github.com/fltk-rs/fl2rust) and [fl2rust template](https://github.com/fltk-rs/fl2rust-template).
+
+- [FLTK Rust: Latest FLUID, fl2rust and fltk-rs](https://www.youtube.com/watch?v=33NdaW08fP8)
+
 ### Themes
 
 Additional themes can be found in the [fltk-theme crate](https://github.com/fltk-rs/fltk-theme).
