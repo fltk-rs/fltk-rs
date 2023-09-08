@@ -1,6 +1,13 @@
 # Changelog
 
 
+# [1.4.12] - Unreleased
+- Add app::prefs::Preferences.
+- Fix drop impl for non-parented widgets.
+- Allow FrameType to represent values above 56.
+- Enable feature doc_auto_cfg for docs.rs by @viruscamp.
+- Update FLTK submodule.
+
 # [1.4.11] - 2023-09-05
 - Add app::add_check, has_check and remove_check.
 - Saner management of WidgetTracker.
