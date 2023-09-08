@@ -28,14 +28,6 @@ macro_rules! impl_widget_ext {
         paste::paste! {
             impl Drop for $name {
                 fn drop(&mut self) {
-                    if !self.inner.is_null() {
-                        unsafe {
-                            if [<$flname _as_window>](self.inner).is_null() && [<$flname _parent>](self.inner).is_null() {
-                                [<$flname _delete>](self.inner);
-                                self.inner = std::ptr::null_mut();
-                            }
-                        }
-                    }
                     if $crate::widget::WidgetTracker::strong_count(&self.tracker) == 1 {
                         unsafe {
                             fltk_sys::fl::Fl_Widget_Tracker_delete(*self.tracker);
