@@ -18,3 +18,4 @@ bindgen --use-core --ctypes-prefix=::std::os::raw fltk-sys/cfltk/include/cfl.h -
 bindgen --use-core --ctypes-prefix=::std::os::raw fltk-sys/cfltk/include/cfl_surface.h -o fltk-sys/src/surface.rs
 bindgen --use-core --ctypes-prefix=::std::os::raw fltk-sys/cfltk/include/cfl_printer.h -o fltk-sys/src/printer.rs
 bindgen --use-core --ctypes-prefix=::std::os::raw fltk-sys/cfltk/include/cfl_utils.h -o fltk-sys/src/utils.rs
+bindgen --use-core --ctypes-prefix=::std::os::raw fltk-sys/cfltk/include/cfl_prefs.h -o fltk-sys/src/prefs.rs

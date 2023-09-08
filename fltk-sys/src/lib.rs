@@ -16,6 +16,7 @@ pub mod image;
 pub mod input;
 pub mod menu;
 pub mod misc;
+pub mod prefs;
 pub mod printer;
 pub mod surface;
 pub mod table;
