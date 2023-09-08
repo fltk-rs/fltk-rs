@@ -20,7 +20,7 @@ impl Ball {
         let mut wid = frame::Frame::new(0, 0, w, h, None);
         wid.set_frame(enums::FrameType::OFlatBox);
         wid.set_color(enums::Color::White);
-        Self{
+        Self {
             wid,
             pos: (0, 0),
             dir: (Direction::Positive, Direction::Positive),
@@ -46,22 +46,24 @@ fn main() {
     wind.draw({
         let paddle_pos = paddle_pos.clone();
         move |_| {
-        draw::set_draw_color(enums::Color::White);
-        draw::draw_rectf(*paddle_pos.borrow(), 540, 160, 20);
-    }});
+            draw::set_draw_color(enums::Color::White);
+            draw::draw_rectf(*paddle_pos.borrow(), 540, 160, 20);
+        }
+    });
 
     wind.handle({
         let paddle_pos = paddle_pos.clone();
         move |_, ev| {
-        match ev {
-            enums::Event::Move => {
-                // Mouse's x position relative to the paddle's center
-                *paddle_pos.borrow_mut() = app::event_coords().0 - 80;
-                true
+            match ev {
+                enums::Event::Move => {
+                    // Mouse's x position relative to the paddle's center
+                    *paddle_pos.borrow_mut() = app::event_coords().0 - 80;
+                    true
+                }
+                _ => false,
             }
-            _ => false,
         }
-    }});
+    });
 
     app::add_idle3(move |_| {
         ball.pos.0 += 10 * ball.dir.0 as i32; // The increment in x position

@@ -44,6 +44,9 @@ extern "C" {
     pub fn Fl_Preferences_copy(arg1: *const Fl_Preferences) -> *mut Fl_Preferences;
 }
 extern "C" {
+    pub fn Fl_Preferences_delete(arg1: *mut Fl_Preferences);
+}
+extern "C" {
     pub fn Fl_Preferences_from_id(id: *mut ::std::os::raw::c_void) -> *mut Fl_Preferences;
 }
 extern "C" {
@@ -52,6 +55,13 @@ extern "C" {
         buffer: *mut ::std::os::raw::c_char,
         buffer_size: ::std::os::raw::c_ulong,
     ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Preferences_get_userdata_path(
+        prefs: *mut Fl_Preferences,
+        path: *mut ::std::os::raw::c_char,
+        pathlen: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Preferences_id(prefs: *mut Fl_Preferences) -> *mut ::std::os::raw::c_void;

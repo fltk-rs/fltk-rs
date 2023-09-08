@@ -3,7 +3,10 @@ use fltk::{prelude::*, *};
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gleam);
     let mut win = window::Window::default().with_size(150, 200);
-    let mut col = group::Flex::default().column().with_size(130, 180).center_of(&win);
+    let mut col = group::Flex::default()
+        .column()
+        .with_size(130, 180)
+        .center_of(&win);
     col.set_pad(5);
     frame::Frame::default()
         .with_size(0, 40)

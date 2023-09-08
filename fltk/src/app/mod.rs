@@ -27,6 +27,9 @@ pub use opts::*;
 /// Enables the use of the cairo context with Cairo-rs. Requires the cairoext build flag.
 pub mod cairo;
 
+/// Provids bindings to Preferences which provides methods to store user settings between application starts
+pub mod prefs;
+
 /// Basic Application struct, used to instantiate, set the scheme and run the event loop
 #[derive(Debug, Copy, Clone)]
 pub struct App {}
