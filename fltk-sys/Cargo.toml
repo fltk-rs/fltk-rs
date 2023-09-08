@@ -40,3 +40,7 @@ use-wayland = []
 static-msvcrt = []
 cairoext = []
 fltk-config = ["cc"]
+
+[package.metadata.docs.rs]
+features = ["enable-glwindow"]
+rustdoc-args = ["--cfg", "docsrs"]
