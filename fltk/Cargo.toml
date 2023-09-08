@@ -67,6 +67,7 @@ fltk-config = ["fltk-sys/fltk-config"]
 
 [package.metadata.docs.rs]
 features = ["enable-glwindow"]
+rustdoc-args = ["--cfg", "docsrs"]
 
 [[test]]
 name = "app_handle"
