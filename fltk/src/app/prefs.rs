@@ -191,13 +191,13 @@ impl Preferences {
     }
 
     /// Get the value of an entry
-    pub fn get_int(&mut self, entry: &str, default_val: i32) -> Result<i32, i32> {
+    pub fn get_int(&mut self, entry: &str) -> Result<i32, FltkError> {
         unsafe {
             let entry = CString::safe_new(entry);
             let mut i = 0;
-            let ret = Fl_Preferences_geti(self.inner, entry.as_ptr(), &mut i, default_val);
+            let ret = Fl_Preferences_geti(self.inner, entry.as_ptr(), &mut i, 0);
             if ret == 0 {
-                Err(default_val)
+                Err(FltkError::Unknown(String::from("Failed to get entry")))
             } else {
                 Ok(i)
             }
@@ -236,13 +236,13 @@ impl Preferences {
     }
 
     /// Get the value of an entry
-    pub fn get_float(&mut self, entry: &str, default_val: f32) -> Result<f32, f32> {
+    pub fn get_float(&mut self, entry: &str) -> Result<f32, FltkError> {
         unsafe {
             let entry = CString::safe_new(entry);
             let mut i = 0.0;
-            let ret = Fl_Preferences_getf(self.inner, entry.as_ptr(), &mut i, default_val);
+            let ret = Fl_Preferences_getf(self.inner, entry.as_ptr(), &mut i, 0.0);
             if ret == 0 {
-                Err(default_val)
+                Err(FltkError::Unknown(String::from("Failed to get entry")))
             } else {
                 Ok(i)
             }
@@ -281,13 +281,13 @@ impl Preferences {
     }
 
     /// Get the value of an entry
-    pub fn get_double(&mut self, entry: &str, default_val: f64) -> Result<f64, f64> {
+    pub fn get_double(&mut self, entry: &str) -> Result<f64, FltkError> {
         unsafe {
             let entry = CString::safe_new(entry);
             let mut i = 0.0;
-            let ret = Fl_Preferences_getd(self.inner, entry.as_ptr(), &mut i, default_val);
+            let ret = Fl_Preferences_getd(self.inner, entry.as_ptr(), &mut i, 0.0);
             if ret == 0 {
-                Err(default_val)
+                Err(FltkError::Unknown(String::from("Failed to get entry")))
             } else {
                 Ok(i)
             }
@@ -309,21 +309,20 @@ impl Preferences {
     }
 
     /// Get the value of an entry
-    pub fn get_str(&mut self, entry: &str, default_val: &str) -> Result<String, String> {
+    pub fn get_str(&mut self, entry: &str) -> Result<String, FltkError> {
         unsafe {
             let entry = CString::safe_new(entry);
-            let default_val_cstr = CString::safe_new(default_val);
             let sz = Fl_Preferences_size(self.inner, entry.as_ptr());
             let mut val: Vec<c_char> = vec![0; (sz + 1) as usize];
             let ret = Fl_Preferences_gets(
                 self.inner,
                 entry.as_ptr(),
                 val.as_mut_ptr(),
-                default_val_cstr.as_ptr(),
+                "\0".as_ptr() as _,
                 sz + 1,
             );
             if ret == 0 {
-                Err(default_val.to_string())
+                Err(FltkError::Unknown(String::from("Failed to get entry")))
             } else {
                 Ok(CStr::from_ptr(val.as_ptr()).to_string_lossy().to_string())
             }

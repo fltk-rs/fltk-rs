@@ -38,6 +38,7 @@ pub mod messages;
 pub mod paint;
 pub mod pong;
 pub mod popup_browser;
+pub mod prefs;
 pub mod rgb;
 pub mod rounded_images;
 pub mod screens_info;
