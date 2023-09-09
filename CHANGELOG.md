@@ -1,7 +1,7 @@
 # Changelog
 
 
-# [1.4.12] - Unreleased
+# [1.4.12] - 2023-09-09
 - Add app::prefs::Preferences.
 - Fix drop impl for non-parented widgets.
 - Allow FrameType to represent values above 56.
