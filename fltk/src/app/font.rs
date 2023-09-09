@@ -101,7 +101,7 @@ pub fn font_count() -> usize {
     f.len()
 }
 
-/// Gets a Vector<String> of loaded fonts, unless get_font_names() or load_system_fonts() is called,
+/// Gets a `Vector<String>` of loaded fonts, unless get_font_names() or load_system_fonts() is called,
 /// this will return a Vec with a String representation of the default Fonts shipped by FLTK, which is the same as the `enums::Font`.
 pub fn fonts() -> Vec<String> {
     (FONTS.lock().unwrap()).clone()

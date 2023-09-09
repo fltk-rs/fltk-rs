@@ -1082,7 +1082,7 @@ impl RgbImage {
     }
 
     /// Blur the image
-    /// Adapted from https://www.cairographics.org/cookbook/blur.c/
+    /// Adapted from <https://www.cairographics.org/cookbook/blur.c/>
     pub fn blur(&self, radius: u32) -> Result<RgbImage, FltkError> {
         assert!(self.depth() == ColorDepth::Rgba8);
         let radius = radius as i32;

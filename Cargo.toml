@@ -3,3 +3,4 @@ members = [
 	"fltk",
 	"fltk-sys",
 ]
+resolver = "2"
