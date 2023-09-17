@@ -988,7 +988,7 @@ macro_rules! impl_widget_base {
                     assert!(!ptr.is_null());
                     fltk_sys::fl::Fl_lock();
                     let tracker =
-                        std::sync::Arc::new(fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget));
+                        $crate::widget::WidgetTracker::new(fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget));
                     assert!(!tracker.is_null());
                     let temp = $name {
                         inner: ptr as *mut $flname,

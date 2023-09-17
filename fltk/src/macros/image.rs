@@ -20,7 +20,7 @@ macro_rules! impl_image_ext {
             fn clone(&self) -> Self {
                 assert!(!self.was_deleted());
                 $name {
-                    inner: RC::clone(&self.inner),
+                    inner: ImageRC::clone(&self.inner),
                 }
             }
         }
@@ -30,7 +30,7 @@ macro_rules! impl_image_ext {
                 fn drop(&mut self) {
                     if std::any::type_name::<$name>() != std::any::type_name::<$crate::image::Image>() {
                         if !self.was_deleted() {
-                            if RC::strong_count(&self.inner) == 1 {
+                            if ImageRC::strong_count(&self.inner) == 1 {
                                 unsafe {
                                     [<$flname _delete>](*self.inner);
                                 }
@@ -47,7 +47,7 @@ macro_rules! impl_image_ext {
                         let img = [<$flname _copy>](*self.inner);
                         assert!(!img.is_null());
                         $name {
-                            inner: RC::from(img),
+                            inner: ImageRC::from(img),
                         }
                     }
                 }
@@ -58,7 +58,7 @@ macro_rules! impl_image_ext {
                         let img = [<$flname _copy_sized>](*self.inner, w, h);
                         assert!(!img.is_null());
                         $name {
-                            inner: RC::from(img),
+                            inner: ImageRC::from(img),
                         }
                     }
                 }
@@ -103,7 +103,7 @@ macro_rules! impl_image_ext {
                 unsafe fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
                     assert!(!ptr.is_null());
                     $name {
-                        inner: RC::from(ptr as *mut $flname),
+                        inner: ImageRC::from(ptr as *mut $flname),
                     }
                 }
 
@@ -203,9 +203,9 @@ macro_rules! impl_image_ext {
                 }
 
                 unsafe fn into_image<I: ImageExt>(self) -> I {
-                    let ptr = RC::into_raw(RC::clone(&self.inner));
-                    RC::increment_strong_count(ptr);
-                    let image = RC::from_raw(ptr);
+                    let ptr = ImageRC::into_raw(ImageRC::clone(&self.inner));
+                    ImageRC::increment_strong_count(ptr);
+                    let image = ImageRC::from_raw(ptr);
                     I::from_image_ptr(*image as *mut _)
                 }
 
@@ -216,7 +216,7 @@ macro_rules! impl_image_ext {
                             None
                         } else {
                             Some($name {
-                                inner: RC::from(ptr as *mut $flname),
+                                inner: ImageRC::from(ptr as *mut $flname),
                             })
                         }
                     }

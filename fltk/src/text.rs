@@ -5,8 +5,13 @@ use fltk_sys::text::*;
 use std::{
     ffi::{CStr, CString},
     os::raw,
-    sync::Arc,
 };
+
+#[cfg(feature = "single-threaded")]
+type BufWrapper = std::rc::Rc<*mut Fl_Text_Buffer>;
+
+#[cfg(not(feature = "single-threaded"))]
+type BufWrapper = std::sync::Arc<*mut Fl_Text_Buffer>;
 
 /// Defines the text cursor styles supported by fltk
 #[repr(i32)]
@@ -29,7 +34,7 @@ pub enum Cursor {
 /// Wraps a text buffer, Cloning a text buffer invalidates the underlying pointer, thus the no derive(Clone)
 #[derive(Debug)]
 pub struct TextBuffer {
-    inner: Arc<*mut Fl_Text_Buffer>,
+    inner: BufWrapper,
 }
 
 impl std::default::Default for TextBuffer {
@@ -39,7 +44,7 @@ impl std::default::Default for TextBuffer {
             let text_buffer = Fl_Text_Buffer_new();
             assert!(!text_buffer.is_null());
             TextBuffer {
-                inner: Arc::new(text_buffer),
+                inner: BufWrapper::new(text_buffer),
             }
         }
     }
@@ -50,14 +55,17 @@ impl TextBuffer {
     /// # Safety
     /// The buffer shouldn't be deleted while the Display widget still needs it
     pub unsafe fn delete(buf: Self) {
-        drop(buf);
+        assert!(!buf.inner.is_null());
+        unsafe {
+            Fl_Text_Buffer_delete(*buf.inner);
+        }
     }
 
     /// Deletes the `TextBuffer`
     /// # Safety
     /// The buffer shouldn't be deleted while the Display widget still needs it
-    pub unsafe fn delete_buffer(buf: TextBuffer) {
-        drop(buf);
+    pub unsafe fn delete_buffer(buf: Self) {
+        Self::delete(buf)
     }
 
     /// Initialized a text buffer from a pointer
@@ -65,10 +73,10 @@ impl TextBuffer {
     /// The pointer must be valid
     pub unsafe fn from_ptr(ptr: *mut Fl_Text_Buffer) -> Self {
         assert!(!ptr.is_null());
-        let inner = Arc::from(ptr);
-        let ptr = Arc::into_raw(inner);
-        Arc::increment_strong_count(ptr);
-        let inner = Arc::from_raw(ptr);
+        let inner = BufWrapper::from(ptr);
+        let ptr = BufWrapper::into_raw(inner);
+        BufWrapper::increment_strong_count(ptr);
+        let inner = BufWrapper::from_raw(ptr);
         TextBuffer { inner }
     }
 
@@ -76,9 +84,9 @@ impl TextBuffer {
     /// # Safety
     /// Can return multiple mutable pointers to the same buffer
     pub unsafe fn as_ptr(&self) -> *mut Fl_Text_Buffer {
-        let ptr = Arc::into_raw(Arc::clone(&self.inner));
-        Arc::increment_strong_count(ptr);
-        let inner = Arc::from_raw(ptr);
+        let ptr = BufWrapper::into_raw(BufWrapper::clone(&self.inner));
+        BufWrapper::increment_strong_count(ptr);
+        let inner = BufWrapper::from_raw(ptr);
         *inner
     }
 
@@ -638,7 +646,7 @@ impl Clone for TextBuffer {
     fn clone(&self) -> TextBuffer {
         assert!(!self.inner.is_null());
         TextBuffer {
-            inner: Arc::clone(&self.inner),
+            inner: BufWrapper::clone(&self.inner),
         }
     }
 }
@@ -646,7 +654,7 @@ impl Clone for TextBuffer {
 impl Drop for TextBuffer {
     fn drop(&mut self) {
         assert!(!self.inner.is_null());
-        if Arc::strong_count(&self.inner) == 1 {
+        if BufWrapper::strong_count(&self.inner) == 1 {
             unsafe {
                 Fl_Text_Buffer_delete(*self.inner);
             }
@@ -808,35 +816,35 @@ impl TextEditor {
     /// Set to insert mode
     pub fn set_insert_mode(&mut self, b: bool) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe { Fl_Text_Editor_set_insert_mode(self.inner, b as i32) }
     }
 
     /// Returns whether insert mode is set
     pub fn insert_mode(&self) -> bool {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe { Fl_Text_Editor_insert_mode(self.inner) != 0 }
     }
 
     /// Set tab navigation
     pub fn set_tab_nav(&mut self, val: bool) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe { Fl_Text_Editor_set_tab_nav(self.inner, val as i32) }
     }
 
     /// Returns whether tab navigation is set
     pub fn tab_nav(&self) -> bool {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe { Fl_Text_Editor_tab_nav(self.inner) != 0 }
     }
 
     /// Copies the text within the `TextEditor` widget
     pub fn copy(&self) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_copy(self.inner);
         }
@@ -845,7 +853,7 @@ impl TextEditor {
     /// Cuts the text within the `TextEditor` widget
     pub fn cut(&self) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_cut(self.inner);
         }
@@ -854,7 +862,7 @@ impl TextEditor {
     /// Pastes text from the clipboard into the `TextEditor` widget
     pub fn paste(&self) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_paste(self.inner);
         }
@@ -863,7 +871,7 @@ impl TextEditor {
     /// Undo changes in the `TextEditor` widget
     pub fn undo(&self) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_undo(self.inner);
         }
@@ -872,7 +880,7 @@ impl TextEditor {
     /// Inserts the text associated with key 'c'
     pub fn kf_default(&mut self, c: Key) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_default(c.bits(), self.inner);
         }
@@ -881,7 +889,7 @@ impl TextEditor {
     /// Ignores the key 'c' in editor
     pub fn kf_ignore(&mut self, c: Key) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_ignore(c.bits(), self.inner);
         }
@@ -890,7 +898,7 @@ impl TextEditor {
     /// Does a backspace
     pub fn kf_backspace(&mut self) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_backspace(self.inner);
         }
@@ -899,7 +907,7 @@ impl TextEditor {
     /// Inserts a new line
     pub fn kf_enter(&mut self) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_enter(self.inner);
         }
@@ -908,7 +916,7 @@ impl TextEditor {
     /// Moves the cursor in the direction indicated by the key
     pub fn kf_move(&mut self, c: Key) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_move(c.bits(), self.inner);
         }
@@ -917,7 +925,7 @@ impl TextEditor {
     /// Extends the current selection in the direction of key 'c'
     pub fn kf_shift_move(&mut self, c: Key) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_shift_move(c.bits(), self.inner);
         }
@@ -926,7 +934,7 @@ impl TextEditor {
     /// Moves the current text cursor in the direction indicated by control key 'c'
     pub fn kf_ctrl_move(&mut self, c: Key) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_ctrl_move(c.bits(), self.inner);
         }
@@ -935,7 +943,7 @@ impl TextEditor {
     /// Extends the current selection in the direction indicated by control key 'c'
     pub fn kf_c_s_move(&mut self, c: Key) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_c_s_move(c.bits(), self.inner);
         }
@@ -944,7 +952,7 @@ impl TextEditor {
     /// Moves the current text cursor in the direction indicated by meta key 'c'
     pub fn kf_meta_move(&mut self, c: Key) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_meta_move(c.bits(), self.inner);
         }
@@ -953,7 +961,7 @@ impl TextEditor {
     /// Extends the current selection in the direction indicated by meta key 'c'
     pub fn kf_m_s_move(&mut self, c: Key) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_m_s_move(c.bits(), self.inner);
         }
@@ -962,7 +970,7 @@ impl TextEditor {
     /// Moves the text cursor to the beginning of the current line
     pub fn kf_home(&mut self) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_home(self.inner);
         }
@@ -971,7 +979,7 @@ impl TextEditor {
     /// Moves the text cursor to the end of the current line
     pub fn kf_end(&mut self) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_end(self.inner);
         }
@@ -980,7 +988,7 @@ impl TextEditor {
     /// Moves the text cursor one character to the left
     pub fn kf_left(&mut self) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_left(self.inner);
         }
@@ -989,7 +997,7 @@ impl TextEditor {
     /// Moves the text cursor one line up
     pub fn kf_up(&mut self) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_up(self.inner);
         }
@@ -998,7 +1006,7 @@ impl TextEditor {
     /// Moves the text cursor one character to the right
     pub fn kf_right(&mut self) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_right(self.inner);
         }
@@ -1007,7 +1015,7 @@ impl TextEditor {
     /// Moves the text cursor one line down
     pub fn kf_down(&mut self) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_down(self.inner);
         }
@@ -1016,7 +1024,7 @@ impl TextEditor {
     /// Moves the text cursor up one page
     pub fn kf_page_up(&mut self) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_page_up(self.inner);
         }
@@ -1025,7 +1033,7 @@ impl TextEditor {
     /// Moves the text cursor down one page
     pub fn kf_page_down(&mut self) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_page_down(self.inner);
         }
@@ -1034,7 +1042,7 @@ impl TextEditor {
     /// Toggles the insert mode for the editor
     pub fn kf_insert(&mut self) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_insert(self.inner);
         }
@@ -1043,7 +1051,7 @@ impl TextEditor {
     /// Does a delete of selected text or the current character in the current buffer
     pub fn kf_delete(&mut self) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_delete(self.inner);
         }
@@ -1052,7 +1060,7 @@ impl TextEditor {
     /// Selects all text in the associated buffer
     pub fn kf_select_all(&mut self) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_select_all(self.inner);
         }
@@ -1089,49 +1097,49 @@ impl SimpleTerminal {
     /// Sets whether the terminal automatically stays at the bottom
     pub fn set_stay_at_bottom(&mut self, arg1: bool) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe { Fl_Simple_Terminal_set_stay_at_bottom(self.inner, arg1 as i32) }
     }
 
     /// Returns whether the terminal automatically stays at the bottom
     pub fn stay_at_bottom(&self) -> bool {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe { Fl_Simple_Terminal_stay_at_bottom(self.inner) != 0 }
     }
 
     /// Sets the max lines allowed in history
     pub fn set_history_lines(&mut self, arg1: i32) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe { Fl_Simple_Terminal_set_history_lines(self.inner, arg1) }
     }
 
     /// Gets the max lines allowed in history
     pub fn history_lines(&self) -> i32 {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe { Fl_Simple_Terminal_history_lines(self.inner) }
     }
 
     /// Enables ANSI sequences within the text to control text colors
     pub fn set_ansi(&mut self, val: bool) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe { Fl_Simple_Terminal_set_ansi(self.inner, val as i32) }
     }
 
     /// Returns whether ANSI sequences are enabled
     pub fn ansi(&self) -> bool {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe { Fl_Simple_Terminal_ansi(self.inner) != 0 }
     }
 
     /// Appends text to the terminal buffer
     pub fn append(&mut self, s: &str) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         let s = CString::safe_new(s);
         unsafe { Fl_Simple_Terminal_append(self.inner, s.into_raw() as _) }
     }
@@ -1139,14 +1147,14 @@ impl SimpleTerminal {
     /// Appends data to the terminal buffer
     pub fn append2(&mut self, s: &[u8]) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe { Fl_Simple_Terminal_append2(self.inner, s.as_ptr() as _, s.len() as _) }
     }
 
     /// Sets the text of the terminal buffer
     pub fn set_text(&mut self, s: &str) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         let s = CString::safe_new(s);
         unsafe { Fl_Simple_Terminal_set_text(self.inner, s.into_raw() as _) }
     }
@@ -1154,7 +1162,7 @@ impl SimpleTerminal {
     /// Gets the text of the terminal buffer
     pub fn text(&self) -> String {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe {
             let ptr = Fl_Simple_Terminal_text(self.inner);
             assert!(!ptr.is_null());
@@ -1167,14 +1175,14 @@ impl SimpleTerminal {
     /// Clears the terminal
     pub fn clear(&mut self) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe { Fl_Simple_Terminal_clear(self.inner) }
     }
 
     /// Removes `count` lines from `start`
     pub fn remove_lines(&mut self, start: i32, count: i32) {
         assert!(!self.was_deleted());
-        assert!(self.buffer().is_some());
+        assert!(self.has_buffer());
         unsafe { Fl_Simple_Terminal_remove_lines(self.inner, start, count) }
     }
 }

@@ -51,7 +51,8 @@ impl<T: Sync + Send + 'static> GlobalState<T> {
 static WIDGET_MAP: Lazy<Mutex<HashMap<String, Box<dyn Any + Send + Sync + 'static>>>> =
     Lazy::new(|| Mutex::new(HashMap::default()));
 
-/// Allows setting a an id to a widget
+/// Allows setting a an id to a widget.
+/// Will not work with the single-threaded feature.
 pub trait WidgetId<W>
 where
     W: WidgetExt,

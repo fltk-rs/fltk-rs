@@ -1088,9 +1088,13 @@ pub unsafe trait ValuatorExt: WidgetExt {
 /// to avoid future breakage if you try to implement them manually,
 /// use the Deref and DerefMut pattern or the `widget_extends!` macro
 pub unsafe trait DisplayExt: WidgetExt {
+    /// Check if the Display widget has an associated buffer
+    #[doc(hidden)]
+    fn has_buffer(&self) -> bool;
     /// Get the associated `TextBuffer`
     fn buffer(&self) -> Option<crate::text::TextBuffer>;
-    /// Sets the associated `TextBuffer`
+    /// Sets the associated `TextBuffer`.
+    /// Since the widget is long-lived, the lifetime of the buffer is prolonged to the lifetime of the program
     fn set_buffer<B: Into<Option<crate::text::TextBuffer>>>(&mut self, buffer: B);
     /// Get the associated style `TextBuffer`
     fn style_buffer(&self) -> Option<crate::text::TextBuffer>;
