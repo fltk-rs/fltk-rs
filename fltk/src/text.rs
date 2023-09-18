@@ -630,8 +630,10 @@ impl TextBuffer {
     }
 }
 
+#[cfg(not(feature = "single-threaded"))]
 unsafe impl Sync for TextBuffer {}
 
+#[cfg(not(feature = "single-threaded"))]
 unsafe impl Send for TextBuffer {}
 
 impl PartialEq for TextBuffer {

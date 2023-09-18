@@ -70,7 +70,6 @@ impl MenuButton {
             } else {
                 let item = MenuItem {
                     inner: ptr as *mut Fl_Menu_Item,
-                    size: Fl_Menu_Item_children(ptr),
                 };
                 Some(item)
             }
@@ -178,7 +177,6 @@ impl SysMenuBar {
 #[derive(Debug, Clone)]
 pub struct MenuItem {
     inner: *mut Fl_Menu_Item,
-    size: i32,
 }
 
 bitflags::bitflags! {
@@ -222,7 +220,6 @@ impl MenuItem {
             assert!(!item_ptr.is_null());
             MenuItem {
                 inner: item_ptr,
-                size: choices.len() as i32,
             }
         }
     }
@@ -240,7 +237,6 @@ impl MenuItem {
             } else {
                 let item = MenuItem {
                     inner: item as *mut Fl_Menu_Item,
-                    size: Fl_Menu_Item_children(item),
                 };
                 Some(item)
             }
@@ -408,8 +404,7 @@ impl MenuItem {
                 return None;
             }
             Some(MenuItem {
-                inner: ptr,
-                size: Fl_Menu_Item_children(ptr),
+                inner: ptr
             })
         }
     }
@@ -430,20 +425,19 @@ impl MenuItem {
 
     /// Get the size of the MenuItem
     pub fn size(&self) -> i32 {
-        self.size
+        unsafe { Fl_Menu_Item_children(self.inner) }
     }
 
     /// Get the menu item at `idx`
     pub fn at(&self, idx: i32) -> Option<MenuItem> {
-        assert!(idx < self.size);
+        assert!(idx < self.size());
         unsafe {
             let ptr = Fl_Menu_Item_at(self.inner, idx);
             if ptr.is_null() {
                 None
             } else {
                 Some(MenuItem {
-                    inner: ptr as _,
-                    size: Fl_Menu_Item_children(ptr),
+                    inner: ptr as _
                 })
             }
         }
@@ -693,8 +687,10 @@ pub unsafe fn delete_menu_item(item: MenuItem) {
     Fl_Menu_Item_delete(item.inner)
 }
 
+#[cfg(not(feature = "single-threaded"))]
 unsafe impl Send for MenuItem {}
 
+#[cfg(not(feature = "single-threaded"))]
 unsafe impl Sync for MenuItem {}
 
 impl PartialEq for MenuItem {

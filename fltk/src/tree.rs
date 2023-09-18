@@ -1996,8 +1996,10 @@ impl IntoIterator for TreeItemArray {
     }
 }
 
+#[cfg(not(feature = "single-threaded"))]
 unsafe impl Send for TreeItem {}
 
+#[cfg(not(feature = "single-threaded"))]
 unsafe impl Sync for TreeItem {}
 
 impl PartialEq for TreeItem {

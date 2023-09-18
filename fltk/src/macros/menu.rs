@@ -134,7 +134,6 @@ macro_rules! impl_menu_ext {
                         } else {
                             Some(MenuItem {
                                 inner: menu_item,
-                                size: Fl_Menu_Item_children(menu_item),
                             })
                         }
                     }
@@ -329,7 +328,6 @@ macro_rules! impl_menu_ext {
                         } else {
                             Some(MenuItem {
                                 inner: ptr,
-                                size: Fl_Menu_Item_children(ptr),
                             })
                         }
                     }
@@ -375,7 +373,6 @@ macro_rules! impl_menu_ext {
                         } else {
                             Some(MenuItem {
                                 inner: ptr as _,
-                                size: Fl_Menu_Item_children(ptr),
                             })
                         }
                     }
