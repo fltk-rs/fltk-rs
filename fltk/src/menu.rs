@@ -251,14 +251,14 @@ impl IntoIterator for MenuItem {
 }
 
 #[doc(hidden)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, Default)]
 pub struct CMenuItem {
     /// menu item text, returned by label()
     pub text: Option<&'static str>,
     /// menu item shortcut
     pub shortcut: Option<crate::enums::Shortcut>,
     /// menu item callback          
-    pub cb: Option<fn(*mut dyn MenuExt)>,
+    pub cb: Option<fn(*mut Choice)>,
     /// menu item flags like FL_MENU_TOGGLE, FL_MENU_RADIO
     pub flags: Option<MenuFlag>,
     /// how the menu item text looks like  
@@ -332,12 +332,40 @@ impl MenuItem {
         unsafe {
             let choices = choices.leak();
             let sz = choices.len();
-            let mut temp: Vec<*mut raw::c_char> = vec![];
+            let mut texts: Vec<*mut raw::c_char> = vec![];
+            let mut shortcuts = vec![];
+            let mut cbs = vec![];
+            let mut flags = vec![];
+            let mut lts = vec![];
+            let mut fs = vec![];
+            let mut sizes = vec![];
+            let mut colors = vec![];
             for choice in choices {
-                let c = CString::safe_new(choice.text.unwrap());
-                temp.push(c.into_raw() as _);
+                let c = if let Some(text) = choice.text {
+                    CString::safe_new(text).into_raw() as _
+                } else {
+                    std::ptr::null_mut()
+                };
+                texts.push(c);
+                shortcuts.push(choice.shortcut.unwrap_or(crate::enums::Shortcut::None).bits());
+                cbs.push(std::mem::transmute(choice.cb));
+                flags.push(choice.flags.unwrap_or(MenuFlag::Normal).bits());
+                lts.push(choice.labeltype.unwrap_or(LabelType::Normal) as i32);
+                fs.push(choice.labelfont.unwrap_or(Font::Helvetica).bits());
+                sizes.push(choice.labelsize.unwrap_or(crate::app::font_size()));
+                colors.push(choice.labelcolor.unwrap_or(Color::Black).bits());
             }
-            let item_ptr = Fl_Menu_Item_new(temp.as_ptr() as *mut *mut raw::c_char, sz as i32);
+            let item_ptr = Fl_Menu_Item_new2(
+                texts.as_mut_ptr() as *mut *mut raw::c_char,
+                shortcuts.as_mut_ptr(),
+                cbs.as_mut_ptr(),
+                flags.as_mut_ptr(),
+                lts.as_mut_ptr(),
+                fs.as_mut_ptr(),
+                sizes.as_mut_ptr(),
+                colors.as_mut_ptr(),
+                sz as i32,
+            );
             assert!(!item_ptr.is_null());
             MenuItem {
                 inner: MenuItemWrapper::new(item_ptr),
