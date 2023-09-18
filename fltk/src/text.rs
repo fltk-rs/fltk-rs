@@ -68,7 +68,7 @@ impl TextBuffer {
         Self::delete(buf)
     }
 
-    /// Initialized a text buffer from a pointer
+    /// Initializes a text buffer from a pointer
     /// # Safety
     /// The pointer must be valid
     pub unsafe fn from_ptr(ptr: *mut Fl_Text_Buffer) -> Self {

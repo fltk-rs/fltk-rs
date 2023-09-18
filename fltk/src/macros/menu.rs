@@ -132,9 +132,9 @@ macro_rules! impl_menu_ext {
                         if menu_item.is_null() {
                             None
                         } else {
-                            Some(MenuItem {
-                                inner: menu_item,
-                            })
+                            Some(MenuItem::from_ptr(
+                                menu_item
+                            ))
                         }
                     }
                 }
@@ -142,7 +142,7 @@ macro_rules! impl_menu_ext {
                 fn set_item(&mut self, item: &MenuItem) -> bool {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _set_item>](self.inner, item.inner) != 0
+                        [<$flname _set_item>](self.inner, item.as_ptr()) != 0
                     }
                 }
 
@@ -326,9 +326,7 @@ macro_rules! impl_menu_ext {
                         if ptr.is_null() {
                             None
                         } else {
-                            Some(MenuItem {
-                                inner: ptr,
-                            })
+                            Some(MenuItem::from_ptr(ptr))
                         }
                     }
                 }
@@ -371,22 +369,20 @@ macro_rules! impl_menu_ext {
                         if ptr.is_null() {
                             None
                         } else {
-                            Some(MenuItem {
-                                inner: ptr as _,
-                            })
+                            Some(MenuItem::from_ptr(ptr as _))
                         }
                     }
                 }
 
                 unsafe fn set_menu(&mut self, item: $crate::menu::MenuItem) {
                     assert!(!self.was_deleted());
-                    [<$flname _set_menu>](self.inner, item.inner)
+                    [<$flname _set_menu>](self.inner, item.as_ptr())
                 }
 
                 fn item_pathname(&self, item: Option<&$crate::menu::MenuItem>) -> Result<String, FltkError> {
                     assert!(!self.was_deleted());
                     let item = if let Some(item) = item {
-                        item.inner
+                        unsafe { item.as_ptr() }
                     } else {
                         std::ptr::null_mut()
                     };

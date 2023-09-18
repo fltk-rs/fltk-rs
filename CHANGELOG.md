@@ -1,6 +1,12 @@
 # Changelog
 
 
+# [1.4.12] - Unreleased
+- Fix building with single-threaded feature.
+- Add DisplayExt::has_buffer().
+- Handle submenu in MenuItem::size().
+- Update FLTK submodule.
+
 # [1.4.12] - 2023-09-09
 - Add app::prefs::Preferences.
 - Fix drop impl for non-parented widgets.
