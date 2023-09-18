@@ -272,7 +272,7 @@ pub struct CMenuItem {
 }
 
 impl CMenuItem {
-    pub const fn empty() -> Self {
+    pub fn empty() -> Self {
         Self {
             text: None,
             shortcut: None,
