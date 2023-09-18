@@ -167,7 +167,7 @@ fn menu_cb(m: &mut impl MenuExt) {
     if let Ok(mpath) = m.item_pathname(None) {
         let ed: text::TextEditor = app::widget_from_id("ed").unwrap();
         match mpath.as_str() {
-            "&File/New\t" => {
+            "&File/New...\t" => {
                 STATE.with(|s| {
                     if !s.buf.text().is_empty() {
                         let c = dialog::choice2_default(

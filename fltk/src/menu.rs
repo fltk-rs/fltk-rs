@@ -95,9 +95,7 @@ impl MenuButton {
             if ptr.is_null() {
                 None
             } else {
-                let item = MenuItem::from_ptr(
-                    ptr as *mut Fl_Menu_Item
-                );
+                let item = MenuItem::from_ptr(ptr as *mut Fl_Menu_Item);
                 Some(item)
             }
         }
@@ -223,7 +221,6 @@ impl Drop for MenuItem {
     }
 }
 
-
 #[cfg(not(feature = "single-threaded"))]
 unsafe impl Send for MenuItem {}
 
@@ -250,6 +247,42 @@ impl IntoIterator for MenuItem {
             i += 1;
         }
         v.into_iter()
+    }
+}
+
+#[doc(hidden)]
+#[derive(Copy, Clone, Debug)]
+pub struct CMenuItem {
+    /// menu item text, returned by label()
+    pub text: Option<&'static str>,
+    /// menu item shortcut
+    pub shortcut: Option<crate::enums::Shortcut>,
+    /// menu item callback          
+    pub cb: Option<fn(*mut dyn MenuExt)>,
+    /// menu item flags like FL_MENU_TOGGLE, FL_MENU_RADIO
+    pub flags: Option<MenuFlag>,
+    /// how the menu item text looks like  
+    pub labeltype: Option<LabelType>,
+    /// which font for this menu item text       
+    pub labelfont: Option<Font>,
+    /// size of menu item text     
+    pub labelsize: Option<i32>,
+    /// menu item text color
+    pub labelcolor: Option<Color>,
+}
+
+impl CMenuItem {
+    pub const fn empty() -> Self {
+        Self {
+            text: None,
+            shortcut: None,
+            cb: None,
+            flags: None,
+            labeltype: None,
+            labelfont: None,
+            labelsize: None,
+            labelcolor: None,
+        }
     }
 }
 
@@ -283,6 +316,25 @@ impl MenuItem {
             let mut temp: Vec<*mut raw::c_char> = vec![];
             for &choice in choices {
                 let c = CString::safe_new(choice);
+                temp.push(c.into_raw() as _);
+            }
+            let item_ptr = Fl_Menu_Item_new(temp.as_ptr() as *mut *mut raw::c_char, sz as i32);
+            assert!(!item_ptr.is_null());
+            MenuItem {
+                inner: MenuItemWrapper::new(item_ptr),
+            }
+        }
+    }
+
+    /// Initializes a MenuItem from a slice of CMenuItem
+    #[doc(hidden)]
+    pub fn new2(choices: Vec<CMenuItem>) -> MenuItem {
+        unsafe {
+            let choices = choices.leak();
+            let sz = choices.len();
+            let mut temp: Vec<*mut raw::c_char> = vec![];
+            for choice in choices {
+                let c = CString::safe_new(choice.text.unwrap());
                 temp.push(c.into_raw() as _);
             }
             let item_ptr = Fl_Menu_Item_new(temp.as_ptr() as *mut *mut raw::c_char, sz as i32);

@@ -72,7 +72,9 @@ impl SharedImage {
                 if Fl_Shared_Image_fail(x) < 0 {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
-                Ok(SharedImage { inner: ImageRC::from(x) })
+                Ok(SharedImage {
+                    inner: ImageRC::from(x),
+                })
             }
         }
     }
@@ -90,7 +92,9 @@ impl SharedImage {
                 if Fl_Shared_Image_fail(x) < 0 {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
-                Ok(SharedImage { inner: ImageRC::from(x) })
+                Ok(SharedImage {
+                    inner: ImageRC::from(x),
+                })
             }
         }
     }
@@ -150,7 +154,9 @@ impl JpegImage {
                     if Fl_JPEG_Image_fail(x) < 0 {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
-                    Ok(JpegImage { inner: ImageRC::from(x) })
+                    Ok(JpegImage {
+                        inner: ImageRC::from(x),
+                    })
                 }
             }
         }
@@ -211,7 +217,9 @@ impl PngImage {
                     if Fl_PNG_Image_fail(x) < 0 {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
-                    Ok(PngImage { inner: ImageRC::from(x) })
+                    Ok(PngImage {
+                        inner: ImageRC::from(x),
+                    })
                 }
             }
         }
@@ -273,7 +281,9 @@ impl SvgImage {
                     if Fl_SVG_Image_fail(x) < 0 {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
-                    Ok(SvgImage { inner: ImageRC::from(x) })
+                    Ok(SvgImage {
+                        inner: ImageRC::from(x),
+                    })
                 }
             }
         }
@@ -340,7 +350,9 @@ impl BmpImage {
                     if Fl_BMP_Image_fail(x) < 0 {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
-                    Ok(BmpImage { inner: ImageRC::from(x) })
+                    Ok(BmpImage {
+                        inner: ImageRC::from(x),
+                    })
                 }
             }
         }
@@ -401,7 +413,9 @@ impl GifImage {
                     if Fl_GIF_Image_fail(x) < 0 {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
-                    Ok(GifImage { inner: ImageRC::from(x) })
+                    Ok(GifImage {
+                        inner: ImageRC::from(x),
+                    })
                 }
             }
         }
@@ -516,7 +530,9 @@ impl AnimGifImage {
                     if Fl_Anim_GIF_Image_fail(x) < 0 {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
-                    Ok(AnimGifImage { inner: ImageRC::from(x) })
+                    Ok(AnimGifImage {
+                        inner: ImageRC::from(x),
+                    })
                 }
             }
         }
@@ -1292,7 +1308,9 @@ impl IcoImage {
                     if Fl_ICO_Image_fail(x) < 0 {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
-                    Ok(IcoImage { inner: ImageRC::from(x) })
+                    Ok(IcoImage {
+                        inner: ImageRC::from(x),
+                    })
                 }
             }
         }
