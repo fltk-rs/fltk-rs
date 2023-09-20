@@ -5,7 +5,8 @@ use std::{env, path::PathBuf};
 mod android;
 mod bundled;
 #[cfg(feature = "fltk-config")]
-mod config;
+mod fltk_config;
+mod pkg_config;
 mod link;
 mod source;
 mod utils;
@@ -27,7 +28,8 @@ fn main() {
     println!("cargo:rerun-if-changed=build/main.rs");
     println!("cargo:rerun-if-changed=build/source.rs");
     println!("cargo:rerun-if-changed=build/utils.rs");
-    println!("cargo:rerun-if-changed=build/config.rs");
+    println!("cargo:rerun-if-changed=build/fltk_config.rs");
+    println!("cargo:rerun-if-changed=build/pkg_config.rs");
 
     if cfg!(feature = "fltk-bundled") {
         bundled::get(&target_triple, &out_dir);
@@ -40,7 +42,10 @@ fn main() {
             );
         }
         #[cfg(feature = "fltk-config")]
-        config::build();
+        fltk_config::build();
+        return;
+    } else if cfg!(feature = "pkg-config") {
+        pkg_config::build();
         return;
     } else {
         const MSG: &str = r#"Perhaps you would prefer to use a bundled version of fltk. 

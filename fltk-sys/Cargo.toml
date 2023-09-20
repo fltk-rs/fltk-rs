@@ -40,6 +40,7 @@ use-wayland = []
 static-msvcrt = []
 cairoext = []
 fltk-config = ["cc"]
+pkg-config = []
 
 [package.metadata.docs.rs]
 features = ["enable-glwindow"]
