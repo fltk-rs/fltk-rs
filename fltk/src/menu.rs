@@ -1,4 +1,4 @@
-use crate::enums::{Color, Font, LabelType};
+use crate::enums::{Color, Font, LabelType, Shortcut};
 use crate::prelude::*;
 use crate::utils::FlString;
 use fltk_sys::menu::*;
@@ -251,37 +251,52 @@ impl IntoIterator for MenuItem {
 }
 
 #[doc(hidden)]
-#[derive(Copy, Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct CMenuItem {
     /// menu item text, returned by label()
     pub text: Option<&'static str>,
     /// menu item shortcut
-    pub shortcut: Option<crate::enums::Shortcut>,
+    pub shortcut: Shortcut,
     /// menu item callback          
     pub cb: Option<fn(*mut Choice)>,
     /// menu item flags like FL_MENU_TOGGLE, FL_MENU_RADIO
-    pub flags: Option<MenuFlag>,
+    pub flags: MenuFlag,
     /// how the menu item text looks like  
-    pub labeltype: Option<LabelType>,
+    pub labeltype: LabelType,
     /// which font for this menu item text       
-    pub labelfont: Option<Font>,
+    pub labelfont: Font,
     /// size of menu item text     
-    pub labelsize: Option<i32>,
+    pub labelsize: i32,
     /// menu item text color
-    pub labelcolor: Option<Color>,
+    pub labelcolor: Color,
+}
+
+impl Default for CMenuItem {
+    fn default() -> Self {
+        Self {
+            text: Some(""),
+            shortcut: Shortcut::None,
+            cb: None,
+            flags: MenuFlag::Normal,
+            labeltype: LabelType::Normal,
+            labelfont: Font::Helvetica,
+            labelsize: crate::app::font_size(),
+            labelcolor: Color::Foreground,
+        }
+    }
 }
 
 impl CMenuItem {
     pub fn empty() -> Self {
         Self {
             text: None,
-            shortcut: None,
+            shortcut: Shortcut::None,
             cb: None,
-            flags: None,
-            labeltype: None,
-            labelfont: None,
-            labelsize: None,
-            labelcolor: None,
+            flags: MenuFlag::Normal,
+            labeltype: LabelType::Normal,
+            labelfont: Font::Helvetica,
+            labelsize: crate::app::font_size(),
+            labelcolor: Color::Foreground,
         }
     }
 }
@@ -310,7 +325,7 @@ impl MenuItem {
     }
 
     /// Initializes a new menu item.
-    /// This will allocate a static MenuItem, that is expected to live for the entirety of the program
+    /// This will allocate a static MenuItem, that is expected to live for the entirety of the program.
     pub fn new(choices: &[&'static str]) -> MenuItem {
         unsafe {
             let sz = choices.len();
@@ -330,9 +345,8 @@ impl MenuItem {
     /// Initializes a MenuItem from a slice of CMenuItem.
     /// This will allocate a static MenuItem, that is expected to live for the entirety of the program
     #[doc(hidden)]
-    pub fn new_from_cmenu(choices: Vec<CMenuItem>) -> MenuItem {
+    pub fn new_from_cmenu(choices: &[CMenuItem]) -> MenuItem {
         unsafe {
-            let choices = choices.leak();
             let sz = choices.len();
             let mut texts: Vec<*mut raw::c_char> = vec![];
             let mut shortcuts = vec![];
@@ -349,13 +363,13 @@ impl MenuItem {
                     std::ptr::null_mut()
                 };
                 texts.push(c);
-                shortcuts.push(choice.shortcut.unwrap_or(crate::enums::Shortcut::None).bits());
+                shortcuts.push(choice.shortcut.bits());
                 cbs.push(std::mem::transmute(choice.cb));
-                flags.push(choice.flags.unwrap_or(MenuFlag::Normal).bits());
-                lts.push(choice.labeltype.unwrap_or(LabelType::Normal) as i32);
-                fs.push(choice.labelfont.unwrap_or(Font::Helvetica).bits());
-                sizes.push(choice.labelsize.unwrap_or(crate::app::font_size()));
-                colors.push(choice.labelcolor.unwrap_or(Color::Black).bits());
+                flags.push(choice.flags.bits());
+                lts.push(choice.labeltype as i32);
+                fs.push(choice.labelfont.bits());
+                sizes.push(choice.labelsize);
+                colors.push(choice.labelcolor.bits());
             }
             let item_ptr = Fl_Menu_Item_new2(
                 texts.as_mut_ptr() as *mut *mut raw::c_char,
@@ -721,7 +735,7 @@ impl MenuItem {
     pub fn add<F: FnMut(&mut Choice) + 'static>(
         &mut self,
         name: &str,
-        shortcut: crate::enums::Shortcut,
+        shortcut: Shortcut,
         flag: MenuFlag,
         cb: F,
     ) -> i32 {
@@ -754,7 +768,7 @@ impl MenuItem {
         &mut self,
         idx: i32,
         name: &str,
-        shortcut: crate::enums::Shortcut,
+        shortcut: Shortcut,
         flag: MenuFlag,
         cb: F,
     ) -> i32 {
@@ -787,7 +801,7 @@ impl MenuItem {
     pub fn add_emit<T: 'static + Clone + Send + Sync>(
         &mut self,
         label: &str,
-        shortcut: crate::enums::Shortcut,
+        shortcut: Shortcut,
         flag: MenuFlag,
         sender: crate::app::Sender<T>,
         msg: T,
@@ -800,7 +814,7 @@ impl MenuItem {
         &mut self,
         idx: i32,
         label: &str,
-        shortcut: crate::enums::Shortcut,
+        shortcut: Shortcut,
         flag: MenuFlag,
         sender: crate::app::Sender<T>,
         msg: T,
@@ -811,7 +825,7 @@ impl MenuItem {
     }
 
     /// Set the menu item's shortcut
-    pub fn set_shortcut(&mut self, shortcut: crate::enums::Shortcut) {
+    pub fn set_shortcut(&mut self, shortcut: Shortcut) {
         unsafe {
             Fl_Menu_Item_set_shortcut(*self.inner, shortcut.bits());
         }

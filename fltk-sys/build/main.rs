@@ -6,8 +6,8 @@ mod android;
 mod bundled;
 #[cfg(feature = "fltk-config")]
 mod fltk_config;
-mod pkg_config;
 mod link;
+mod pkg_config;
 mod source;
 mod utils;
 

@@ -22,7 +22,15 @@ pub fn build() {
 
 fn get_lflags() -> Vec<String> {
     if let Ok(lflags) = Command::new("pkg-config")
-        .args(["--libs", "--static", "cfltk"])
+        .args([
+            "--libs",
+            if !cfg!(feature = "fltk-shared") {
+                "--static"
+            } else {
+                ""
+            },
+            "cfltk",
+        ])
         .output()
     {
         let lflags = String::from_utf8_lossy(&lflags.stdout).to_string();
