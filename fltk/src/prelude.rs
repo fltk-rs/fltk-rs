@@ -1029,7 +1029,7 @@ pub unsafe trait MenuExt: WidgetExt {
     fn menu(&self) -> Option<crate::menu::MenuItem>;
     /// Set the menu element
     /// # Safety
-    /// The MenuItem must be in a format recognized by FLTK (Null termination after submenus)
+    /// The MenuItem must be in a format recognized by FLTK (Empty CMenuItem after submenus and at the end of the menu)
     unsafe fn set_menu(&mut self, item: crate::menu::MenuItem);
     /// Get an item's pathname
     fn item_pathname(&self, item: Option<&crate::menu::MenuItem>) -> Result<String, FltkError>;

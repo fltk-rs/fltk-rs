@@ -309,7 +309,8 @@ impl MenuItem {
         *inner
     }
 
-    /// Initializes a new menu item
+    /// Initializes a new menu item.
+    /// This will allocate a static MenuItem, that is expected to live for the entirety of the program
     pub fn new(choices: &[&'static str]) -> MenuItem {
         unsafe {
             let sz = choices.len();
@@ -326,9 +327,10 @@ impl MenuItem {
         }
     }
 
-    /// Initializes a MenuItem from a slice of CMenuItem
+    /// Initializes a MenuItem from a slice of CMenuItem.
+    /// This will allocate a static MenuItem, that is expected to live for the entirety of the program
     #[doc(hidden)]
-    pub fn new2(choices: Vec<CMenuItem>) -> MenuItem {
+    pub fn new_from_cmenu(choices: Vec<CMenuItem>) -> MenuItem {
         unsafe {
             let choices = choices.leak();
             let sz = choices.len();
