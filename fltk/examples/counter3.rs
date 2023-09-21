@@ -5,7 +5,7 @@ use fltk::{
 };
 
 const BLUE: Color = Color::from_hex(0x42A5F5);
-const SEL_BLUE: Color = Color::from_hex(0x2196F3);
+const SEL_BLUE: Color = Color::from_hex(0x3f51b5);
 const GRAY: Color = Color::from_hex(0x757575);
 const WIDTH: i32 = 600;
 const HEIGHT: i32 = 400;
