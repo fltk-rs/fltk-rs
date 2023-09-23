@@ -1,7 +1,7 @@
 # Changelog
 
 
-# [1.4.13] - Unreleased
+# [1.4.13] - 2023-09-23
 - Fix building with single-threaded feature.
 - Add DisplayExt::has_buffer().
 - Handle submenu in MenuItem::size().
