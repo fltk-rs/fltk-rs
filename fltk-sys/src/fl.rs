@@ -758,3 +758,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_set_option(opt: ::std::os::raw::c_int, val: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_load_system_icons();
+}

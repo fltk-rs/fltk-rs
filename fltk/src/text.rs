@@ -206,10 +206,37 @@ impl TextBuffer {
         }
     }
 
+    /// Performs a redo operation on the buffer.
+    /// Returns the cursor position.
+    /// # Errors
+    /// Errors on failure to undo
+    pub fn redo(&mut self) -> Result<i32, FltkError> {
+        assert!(!self.inner.is_null());
+        unsafe {
+            let mut i = 0;
+            match Fl_Text_Buffer_redo(*self.inner, &mut i) {
+                0 => Err(FltkError::Unknown(String::from("Failed to redo"))),
+                _ => Ok(i),
+            }
+        }
+    }
+
     /// Sets whether the buffer can undo
     pub fn can_undo(&mut self, flag: bool) {
         assert!(!self.inner.is_null());
         unsafe { Fl_Text_Buffer_canUndo(*self.inner, flag as raw::c_char) }
+    }
+
+    /// Gets whether the buffer can undo
+    pub fn can_undo2(&mut self) -> bool {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_Text_Buffer_can_undo(*self.inner) != 0 }
+    }
+
+    /// Gets whether the buffer can redo
+    pub fn can_redo(&mut self) -> bool {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_Text_Buffer_can_redo(*self.inner) != 0 }
     }
 
     /// Loads a file into the buffer
@@ -876,6 +903,15 @@ impl TextEditor {
         assert!(self.has_buffer());
         unsafe {
             Fl_Text_Editor_kf_undo(self.inner);
+        }
+    }
+
+    /// Undo changes in the `TextEditor` widget
+    pub fn redo(&self) {
+        assert!(!self.was_deleted());
+        assert!(self.has_buffer());
+        unsafe {
+            Fl_Text_Editor_kf_redo(self.inner);
         }
     }
 

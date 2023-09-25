@@ -99,6 +99,9 @@ extern "C" {
     pub fn Fl_Text_Buffer_canUndo(self_: *mut Fl_Text_Buffer, flag: ::std::os::raw::c_char);
 }
 extern "C" {
+    pub fn Fl_Text_Buffer_can_undo(self_: *const Fl_Text_Buffer) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Text_Buffer_load_file(
         self_: *mut Fl_Text_Buffer,
         file: *const ::std::os::raw::c_char,
@@ -291,6 +294,15 @@ extern "C" {
         search_char: ::std::os::raw::c_uint,
         found_pos: *mut ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_redo(
+        self_: *mut Fl_Text_Buffer,
+        cp: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_can_redo(self_: *const Fl_Text_Buffer) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1613,6 +1625,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Editor_kf_undo(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_kf_redo(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_kf_default(

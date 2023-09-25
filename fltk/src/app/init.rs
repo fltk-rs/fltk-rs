@@ -44,7 +44,8 @@ static UI_THREAD: Lazy<std::thread::ThreadId> = Lazy::new(|| std::thread::curren
 pub(crate) fn register_images() {
     #[cfg(not(feature = "no-images"))]
     unsafe {
-        fltk_sys::image::Fl_register_images()
+        fltk_sys::image::Fl_register_images();
+        fltk_sys::fl::Fl_load_system_icons();
     }
 }
 

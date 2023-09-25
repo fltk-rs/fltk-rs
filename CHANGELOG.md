@@ -1,6 +1,11 @@
 # Changelog
 
 
+# [1.4.14] - Unreleased
+- Add TextBuffer::redo and TextEditor::redo.
+- Load system icons on linux.
+- Update FLTK submodule.
+
 # [1.4.13] - 2023-09-23
 - Fix building with single-threaded feature.
 - Add DisplayExt::has_buffer().
