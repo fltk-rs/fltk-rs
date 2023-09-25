@@ -1197,6 +1197,13 @@ impl SimpleTerminal {
         unsafe { Fl_Simple_Terminal_set_text(self.inner, s.into_raw() as _) }
     }
 
+    /// Sets the byte content of the terminal buffer
+    pub fn set_bytes(&mut self, s: &[u8]) {
+        assert!(!self.was_deleted());
+        assert!(self.has_buffer());
+        unsafe { Fl_Simple_Terminal_set_text2(self.inner, s.as_ptr() as _, s.len() as _) }
+    }
+
     /// Gets the text of the terminal buffer
     pub fn text(&self) -> String {
         assert!(!self.was_deleted());

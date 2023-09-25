@@ -2210,6 +2210,13 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Simple_Terminal_set_text2(
+        self_: *mut Fl_Simple_Terminal,
+        s: *const ::std::os::raw::c_char,
+        len: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Simple_Terminal_text(
         self_: *const Fl_Simple_Terminal,
     ) -> *const ::std::os::raw::c_char;

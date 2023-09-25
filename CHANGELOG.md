@@ -2,7 +2,8 @@
 
 
 # [1.4.14] - Unreleased
-- Add TextBuffer::redo and TextEditor::redo.
+- Add TextBuffer::redo() and TextEditor::redo().
+- Add TextBuffer::set_bytes().
 - Load system icons on linux.
 - Update FLTK submodule.
 
@@ -10,6 +11,7 @@
 - Fix building with single-threaded feature.
 - Add DisplayExt::has_buffer().
 - Handle submenu in MenuItem::size().
+- Add pkg-config feature which builds this crate against a system installed cfltk instance.
 - Update FLTK submodule.
 
 # [1.4.12] - 2023-09-09
