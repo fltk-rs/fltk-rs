@@ -33,10 +33,18 @@ impl<T: Sync + Send + 'static> GlobalState<T> {
     /// # Panics
     /// Panics on state downcast errors
     pub fn with<V: Clone, F: 'static + FnMut(&mut T) -> V>(&self, mut cb: F) -> V {
-        if let Some(val) = STATE.get().unwrap().lock().unwrap().downcast_mut::<T>() {
-            cb(val)
+        if let Some(state) = STATE.get() {
+            if let Ok(mut state) = state.try_lock() {
+                if let Some(state) = state.downcast_mut::<T>() {
+                    cb(state)
+                } else {
+                    panic!("failed to downcast state"); 
+                }
+            } else {
+                panic!("failed to lock state");    
+            }
         } else {
-            panic!("Wrong state type");
+            panic!("failed to get state");
         }
     }
 
