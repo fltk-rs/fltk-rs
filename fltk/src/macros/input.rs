@@ -163,6 +163,20 @@ macro_rules! impl_input_ext {
                     }
                 }
 
+                fn cursor_color(&self) -> $crate::enums::Color {
+                    unsafe {
+                        assert!(!self.was_deleted());
+                        std::mem::transmute([<$flname _cursor_color>](self.inner))
+                    }
+                }
+
+                fn set_cursor_color(&mut self, color: $crate::enums::Color) {
+                    unsafe {
+                        assert!(!self.was_deleted());
+                        [<$flname _set_cursor_color>](self.inner, color.bits() as u32)
+                    }
+                }
+
                 fn text_color(&self) -> $crate::enums::Color {
                     unsafe {
                         assert!(!self.was_deleted());
