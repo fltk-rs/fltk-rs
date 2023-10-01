@@ -870,6 +870,10 @@ pub unsafe trait InputExt: WidgetExt {
     /// # Errors
     /// Errors on failure to cut selection
     fn cut(&mut self) -> Result<(), FltkError>;
+    /// Return the cursor color
+    fn cursor_color(&self) -> Color;
+    /// Sets the cursor color
+    fn set_cursor_color(&mut self, color: Color);
     /// Return the text font
     fn text_font(&self) -> Font;
     /// Sets the text font
