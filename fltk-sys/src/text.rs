@@ -49,6 +49,13 @@ extern "C" {
     pub fn Fl_Text_Buffer_append(self_: *mut Fl_Text_Buffer, txt: *const ::std::os::raw::c_char);
 }
 extern "C" {
+    pub fn Fl_Text_Buffer_append2(
+        self_: *mut Fl_Text_Buffer,
+        txt: *const ::std::os::raw::c_char,
+        len: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Text_Buffer_remove(
         self_: *mut Fl_Text_Buffer,
         start: ::std::os::raw::c_int,
