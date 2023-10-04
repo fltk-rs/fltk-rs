@@ -215,7 +215,7 @@ macro_rules! impl_display_ext {
                 ) {
                     let entries = entries.into();
                     assert!(!self.was_deleted());
-                    assert!(entries.len() < 61);
+                    assert!(entries.len() < 127);
                     let entries = if entries.len() == 0 {
                         vec![$crate::text::StyleTableEntry {
                             color: $crate::enums::Color::Black,
@@ -277,7 +277,7 @@ macro_rules! impl_display_ext {
                 ) {
                     let entries = entries.into();
                     assert!(!self.was_deleted());
-                    assert!(entries.len() < 61);
+                    assert!(entries.len() < 127);
                     let entries = if entries.len() == 0 {
                         vec![$crate::text::StyleTableEntryExt {
                             color: $crate::enums::Color::Black,
