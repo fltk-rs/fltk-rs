@@ -1,12 +1,13 @@
 # Changelog
 
 
-# [1.4.14] - Unreleased
+# [1.4.14] - 2023-10-08
 - Add InputExt::cursor_color() and set_cursor_color() by @thorio.
 - Add TextBuffer::redo() and TextEditor::redo().
 - Add TextBuffer::append2().
 - Add TextBuffer::set_bytes().
 - Load system icons on linux.
+- Increate StyleTableEntry enties accepted length.
 - Update FLTK submodule.
 
 # [1.4.13] - 2023-09-23
