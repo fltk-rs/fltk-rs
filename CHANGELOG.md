@@ -2,6 +2,7 @@
 
 
 # [1.4.15] - Unreleased
+- Add Grid widget.
 - Update FLTK submodule.
 
 

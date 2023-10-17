@@ -978,3 +978,143 @@ impl Row {
 }
 
 crate::widget_extends!(Row, Flex, p);
+
+bitflags::bitflags! {
+    /// Defines alignment rules used by FLTK's Grid
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct GridAlign: u16 {
+        /** Align the widget at the center of the cell. */
+        const  FL_GRID_CENTER          = 0x0000;
+
+        /** Align the widget at the top of the cell. */
+        const  FL_GRID_TOP             = 0x0001;
+
+        /** Align the widget at the bottom of the cell. */
+        const  FL_GRID_BOTTOM          = 0x0002;
+
+        /** Align the widget at the left side of the cell. */
+        const  FL_GRID_LEFT            = 0x0004;
+
+        /** Align the widget at the right side of the cell. */
+        const  FL_GRID_RIGHT           = 0x0008;
+
+        /** Stretch the widget horizontally to fill the cell. */
+        const  FL_GRID_HORIZONTAL      = 0x0010;
+
+        /** Stretch the widget vertically to fill the cell. */
+        const  FL_GRID_VERTICAL        = 0x0020;
+
+        /** Stretch the widget in both directions to fill the cell. */
+        const  FL_GRID_FILL            = 0x0030;
+
+        /** Stretch the widget proportionally. */
+        const  FL_GRID_PROPORTIONAL    = 0x0040;
+
+        /** Align the widget at the top left of the cell. */
+        const  FL_GRID_TOP_LEFT        =  GridAlign::FL_GRID_TOP.bits() |  GridAlign::FL_GRID_LEFT.bits();
+        /** Align the widget at the top right of the cell. */
+        const  FL_GRID_TOP_RIGHT       =  GridAlign::FL_GRID_TOP.bits() |  GridAlign::FL_GRID_RIGHT.bits();
+        /** Align the widget at the bottom left of the cell. */
+        const  FL_GRID_BOTTOM_LEFT     =  GridAlign::FL_GRID_BOTTOM.bits() |  GridAlign::FL_GRID_LEFT.bits();
+        /** Align the widget at the bottom right of the cell. */
+        const  FL_GRID_BOTTOM_RIGHT    =  GridAlign::FL_GRID_BOTTOM.bits() |  GridAlign::FL_GRID_RIGHT.bits();
+    }
+}
+
+/// Fltk's grid widget
+#[derive(Debug)]
+pub struct Grid {
+    inner: *mut Fl_Grid,
+    tracker: crate::widget::WidgetTracker,
+    is_derived: bool,
+}
+
+crate::macros::widget::impl_widget_ext!(Grid, Fl_Grid);
+crate::macros::widget::impl_widget_base!(Grid, Fl_Grid);
+crate::macros::widget::impl_widget_default!(Grid);
+crate::macros::group::impl_group_ext!(Grid, Fl_Grid);
+
+#[allow(missing_docs)]
+#[doc(hidden)]
+impl Grid {
+    pub fn set_layout(&mut self, rows: i32, cols: i32, margin: i32, gap: i32) {
+        unsafe { Fl_Grid_set_layout(self.inner, rows, cols, margin, gap) }
+    }
+    pub fn layout(&mut self) {
+        unsafe { Fl_Grid_layout(self.inner) }
+    }
+    pub fn clear_layout(&mut self) {
+        unsafe { Fl_Grid_clear_layout(self.inner) }
+    }
+    pub fn set_need_layout(&mut self, set: bool) {
+        unsafe { Fl_Grid_set_need_layout(self.inner, set as _) }
+    }
+    pub fn need_layout(&self) -> bool {
+        unsafe { Fl_Grid_need_layout(self.inner) != 0 }
+    }
+    pub fn set_margin(&mut self, left: i32, top: i32, right: i32, bottom: i32) {
+        unsafe { Fl_Grid_set_margin(self.inner, left, top, right, bottom) }
+    }
+    pub fn set_gap(&mut self, row_gap: i32, col_gap: i32) {
+        unsafe { Fl_Grid_set_gap(self.inner, row_gap, col_gap) }
+    }
+    pub fn set_widget<W: WidgetExt>(
+        &mut self,
+        wi: &mut W,
+        row: i32,
+        col: i32,
+        align: GridAlign,
+    ) -> *mut () {
+        unsafe {
+            Fl_Grid_set_widget(self.inner, wi.as_widget_ptr() as _, row, col, align.bits()) as _
+        }
+    }
+    pub fn set_widget_ext<W: WidgetExt>(
+        &mut self,
+        wi: &mut W,
+        row: i32,
+        col: i32,
+        rowspan: i32,
+        colspan: i32,
+        align: GridAlign,
+    ) -> *mut () {
+        unsafe {
+            Fl_Grid_set_widget_ext(
+                self.inner,
+                wi.as_widget_ptr() as _,
+                row,
+                col,
+                rowspan,
+                colspan,
+                align.bits(),
+            ) as _
+        }
+    }
+    pub fn set_col_width(&mut self, col: i32, value: i32) {
+        unsafe { Fl_Grid_set_col_width(self.inner, col, value) }
+    }
+    pub fn set_col_weight(&mut self, col: i32, value: i32) {
+        unsafe { Fl_Grid_set_col_weight(self.inner, col, value) }
+    }
+    pub fn set_col_gap(&mut self, col: i32, value: i32) {
+        unsafe { Fl_Grid_set_col_gap(self.inner, col, value) }
+    }
+    pub fn set_row_height(&mut self, row: i32, value: i32) {
+        unsafe { Fl_Grid_set_row_height(self.inner, row, value) }
+    }
+    pub fn set_row_weight(&mut self, row: i32, value: i32) {
+        unsafe { Fl_Grid_set_row_weight(self.inner, row, value) }
+    }
+    pub fn set_row_gap(&mut self, row: i32, value: i32) {
+        unsafe { Fl_Grid_set_row_gap(self.inner, row, value) }
+    }
+    pub fn show_grid(&mut self, set: bool) {
+        unsafe { Fl_Grid_show_grid(self.inner, set as _) }
+    }
+    pub fn show_grid_with_color(&mut self, set: bool, col: Color) {
+        unsafe { Fl_Grid_show_grid_with_color(self.inner, set as _, col.bits()) }
+    }
+    pub fn debug(&mut self, level: i32) {
+        unsafe { Fl_Grid_debug(self.inner, level) }
+    }
+}

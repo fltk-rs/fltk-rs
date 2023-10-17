@@ -3295,3 +3295,502 @@ extern "C" {
 extern "C" {
     pub fn Fl_Flex_draw_children(self_: *mut Fl_Flex);
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Grid {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Grid_new(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Grid;
+}
+extern "C" {
+    pub fn Fl_Grid_x(arg1: *mut Fl_Grid) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_y(arg1: *mut Fl_Grid) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_width(arg1: *mut Fl_Grid) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_height(arg1: *mut Fl_Grid) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_label(arg1: *mut Fl_Grid) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Grid_set_label(arg1: *mut Fl_Grid, title: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Grid_redraw(arg1: *mut Fl_Grid);
+}
+extern "C" {
+    pub fn Fl_Grid_show(arg1: *mut Fl_Grid);
+}
+extern "C" {
+    pub fn Fl_Grid_hide(arg1: *mut Fl_Grid);
+}
+extern "C" {
+    pub fn Fl_Grid_activate(arg1: *mut Fl_Grid);
+}
+extern "C" {
+    pub fn Fl_Grid_deactivate(arg1: *mut Fl_Grid);
+}
+extern "C" {
+    pub fn Fl_Grid_redraw_label(arg1: *mut Fl_Grid);
+}
+extern "C" {
+    pub fn Fl_Grid_resize(
+        arg1: *mut Fl_Grid,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Grid_widget_resize(
+        arg1: *mut Fl_Grid,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Grid_tooltip(arg1: *mut Fl_Grid) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Grid_set_tooltip(arg1: *mut Fl_Grid, txt: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Grid_get_type(arg1: *mut Fl_Grid) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_set_type(arg1: *mut Fl_Grid, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Grid_color(arg1: *mut Fl_Grid) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Grid_set_color(arg1: *mut Fl_Grid, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Grid_measure_label(
+        arg1: *const Fl_Grid,
+        arg2: *mut ::std::os::raw::c_int,
+        arg3: *mut ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Grid_label_color(arg1: *mut Fl_Grid) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Grid_set_label_color(arg1: *mut Fl_Grid, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Grid_label_font(arg1: *mut Fl_Grid) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_set_label_font(arg1: *mut Fl_Grid, font: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Grid_label_size(arg1: *mut Fl_Grid) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_set_label_size(arg1: *mut Fl_Grid, sz: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Grid_label_type(arg1: *mut Fl_Grid) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_set_label_type(arg1: *mut Fl_Grid, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Grid_box(arg1: *mut Fl_Grid) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_set_box(arg1: *mut Fl_Grid, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Grid_changed(arg1: *mut Fl_Grid) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_set_changed(arg1: *mut Fl_Grid);
+}
+extern "C" {
+    pub fn Fl_Grid_clear_changed(arg1: *mut Fl_Grid);
+}
+extern "C" {
+    pub fn Fl_Grid_align(arg1: *mut Fl_Grid) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_set_align(arg1: *mut Fl_Grid, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Grid_delete(arg1: *mut Fl_Grid);
+}
+extern "C" {
+    pub fn Fl_Grid_set_image(arg1: *mut Fl_Grid, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Grid_handle(
+        self_: *mut Fl_Grid,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Grid_handle_event(
+        self_: *mut Fl_Grid,
+        event: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_draw(
+        self_: *mut Fl_Grid,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Grid_resize_callback(
+        self_: *mut Fl_Grid,
+        cb: ::core::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Grid_set_when(arg1: *mut Fl_Grid, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Grid_when(arg1: *const Fl_Grid) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_image(arg1: *const Fl_Grid) -> *const ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Grid_parent(self_: *const Fl_Grid) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Grid_selection_color(arg1: *mut Fl_Grid) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Grid_set_selection_color(arg1: *mut Fl_Grid, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Grid_do_callback(arg1: *mut Fl_Grid);
+}
+extern "C" {
+    pub fn Fl_Grid_inside(
+        self_: *const Fl_Grid,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_window(arg1: *const Fl_Grid) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Grid_top_window(arg1: *const Fl_Grid) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Grid_takes_events(arg1: *const Fl_Grid) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_user_data(arg1: *const Fl_Grid) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Grid_take_focus(self_: *mut Fl_Grid) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_set_visible_focus(self_: *mut Fl_Grid);
+}
+extern "C" {
+    pub fn Fl_Grid_clear_visible_focus(self_: *mut Fl_Grid);
+}
+extern "C" {
+    pub fn Fl_Grid_visible_focus(self_: *mut Fl_Grid, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Grid_has_visible_focus(self_: *mut Fl_Grid) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Grid_set_user_data(arg1: *mut Fl_Grid, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Grid_draw_data(self_: *const Fl_Grid) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Grid_handle_data(self_: *const Fl_Grid) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Grid_set_draw_data(self_: *mut Fl_Grid, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Grid_set_handle_data(self_: *mut Fl_Grid, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Grid_damage(self_: *const Fl_Grid) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Grid_set_damage(self_: *mut Fl_Grid, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Grid_set_damage_area(
+        self_: *mut Fl_Grid,
+        flag: ::std::os::raw::c_uchar,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        w: ::std::os::raw::c_int,
+        h: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Grid_clear_damage(self_: *mut Fl_Grid);
+}
+extern "C" {
+    pub fn Fl_Grid_as_window(self_: *mut Fl_Grid) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Grid_as_group(self_: *mut Fl_Grid) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Grid_set_deimage(arg1: *mut Fl_Grid, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Grid_deimage(arg1: *const Fl_Grid) -> *const ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Grid_set_callback(
+        arg1: *mut Fl_Grid,
+        arg2: Fl_Callback,
+        arg3: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Grid_set_deleter(
+        arg1: *mut Fl_Grid,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+    );
+}
+extern "C" {
+    pub fn Fl_Grid_visible(self_: *const Fl_Grid) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_visible_r(self_: *const Fl_Grid) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_active(self_: *const Fl_Grid) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Grid_active_r(self_: *const Fl_Grid) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_callback(self_: *const Fl_Grid) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Grid_set_deletion_callback(
+        self_: *mut Fl_Grid,
+        arg1: ::core::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Grid_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Grid;
+}
+extern "C" {
+    pub fn Fl_Grid_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Grid_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Grid_set_layout(
+        self_: *mut Fl_Grid,
+        rows: ::std::os::raw::c_int,
+        cols: ::std::os::raw::c_int,
+        margin: ::std::os::raw::c_int,
+        gap: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Grid_layout(self_: *mut Fl_Grid);
+}
+extern "C" {
+    pub fn Fl_Grid_clear_layout(self_: *mut Fl_Grid);
+}
+extern "C" {
+    pub fn Fl_Grid_set_need_layout(self_: *mut Fl_Grid, set: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Grid_need_layout(self_: *const Fl_Grid) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_set_margin(
+        self_: *mut Fl_Grid,
+        left: ::std::os::raw::c_int,
+        top: ::std::os::raw::c_int,
+        right: ::std::os::raw::c_int,
+        bottom: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Grid_set_gap(
+        self_: *mut Fl_Grid,
+        row_gap: ::std::os::raw::c_int,
+        col_gap: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Grid_set_widget(
+        self_: *mut Fl_Grid,
+        wi: *mut Fl_Widget,
+        row: ::std::os::raw::c_int,
+        col: ::std::os::raw::c_int,
+        align: ::std::os::raw::c_ushort,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Grid_set_widget_ext(
+        self_: *mut Fl_Grid,
+        wi: *mut Fl_Widget,
+        row: ::std::os::raw::c_int,
+        col: ::std::os::raw::c_int,
+        rowspan: ::std::os::raw::c_int,
+        colspan: ::std::os::raw::c_int,
+        align: ::std::os::raw::c_ushort,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Grid_set_col_width(
+        self_: *mut Fl_Grid,
+        col: ::std::os::raw::c_int,
+        value: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Grid_set_col_weight(
+        self_: *mut Fl_Grid,
+        col: ::std::os::raw::c_int,
+        value: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Grid_set_col_gap(
+        self_: *mut Fl_Grid,
+        col: ::std::os::raw::c_int,
+        value: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Grid_set_row_height(
+        self_: *mut Fl_Grid,
+        row: ::std::os::raw::c_int,
+        value: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Grid_set_row_weight(
+        self_: *mut Fl_Grid,
+        row: ::std::os::raw::c_int,
+        value: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Grid_set_row_gap(
+        self_: *mut Fl_Grid,
+        row: ::std::os::raw::c_int,
+        value: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Grid_show_grid(self_: *mut Fl_Grid, set: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Grid_show_grid_with_color(
+        self_: *mut Fl_Grid,
+        set: ::std::os::raw::c_int,
+        col: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Grid_debug(self_: *mut Fl_Grid, level: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Grid_begin(self_: *mut Fl_Grid);
+}
+extern "C" {
+    pub fn Fl_Grid_end(self_: *mut Fl_Grid);
+}
+extern "C" {
+    pub fn Fl_Grid_find(
+        self_: *mut Fl_Grid,
+        arg1: *const ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_add(self_: *mut Fl_Grid, arg1: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Grid_insert(
+        self_: *mut Fl_Grid,
+        arg1: *mut ::std::os::raw::c_void,
+        pos: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Grid_remove(self_: *mut Fl_Grid, wid: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Grid_remove_by_index(self_: *mut Fl_Grid, idx: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Grid_clear(self_: *mut Fl_Grid);
+}
+extern "C" {
+    pub fn Fl_Grid_children(self_: *mut Fl_Grid) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_child(arg1: *mut Fl_Grid, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_Grid_resizable(self_: *mut Fl_Grid, arg1: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Grid_set_clip_children(self_: *mut Fl_Grid, c: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Grid_clip_children(self_: *mut Fl_Grid) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Grid_init_sizes(self_: *mut Fl_Grid);
+}
+extern "C" {
+    pub fn Fl_Grid_draw_child(self_: *const Fl_Grid, w: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Grid_update_child(self_: *const Fl_Grid, w: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Grid_draw_outside_label(self_: *const Fl_Grid, w: *const Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Grid_draw_children(self_: *mut Fl_Grid);
+}

@@ -365,7 +365,7 @@ cargo build
     - Wizard
     - ColorChooser
     - Flex (Column and Row)
-    - [Grid](https://github.com/fltk-rs/fltk-grid)
+    - Grid (experimental)
 - Text display widgets
     - TextDisplay
     - TextEditor
