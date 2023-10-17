@@ -38,10 +38,10 @@ impl<T: Sync + Send + 'static> GlobalState<T> {
                 if let Some(state) = state.downcast_mut::<T>() {
                     cb(state)
                 } else {
-                    panic!("failed to downcast state"); 
+                    panic!("failed to downcast state");
                 }
             } else {
-                panic!("failed to lock state");    
+                panic!("failed to lock state");
             }
         } else {
             panic!("failed to get state");
