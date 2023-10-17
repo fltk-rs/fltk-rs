@@ -980,7 +980,8 @@ impl Row {
 crate::widget_extends!(Row, Flex, p);
 
 /// Experimental Group widgets, the api might change.
-#[doc(hidden)]
+/// # Warning
+/// The api might change if changes happen upstream
 pub mod experimental {
     use super::*;
     use std::ops::Range;
