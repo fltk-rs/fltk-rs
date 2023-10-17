@@ -1024,31 +1024,22 @@ pub mod experimental {
         pub struct GridAlign: u16 {
             /** Align the widget at the center of the cell. */
             const  CENTER          = 0x0000;
-
             /** Align the widget at the top of the cell. */
             const  TOP             = 0x0001;
-
             /** Align the widget at the bottom of the cell. */
             const  BOTTOM          = 0x0002;
-
             /** Align the widget at the left side of the cell. */
             const  LEFT            = 0x0004;
-
             /** Align the widget at the right side of the cell. */
             const  RIGHT           = 0x0008;
-
             /** Stretch the widget horizontally to fill the cell. */
             const  HORIZONTAL      = 0x0010;
-
             /** Stretch the widget vertically to fill the cell. */
             const  VERTICAL        = 0x0020;
-
             /** Stretch the widget in both directions to fill the cell. */
             const  FILL            = 0x0030;
-
             /** Stretch the widget proportionally. */
             const  PROPORTIONAL    = 0x0040;
-
             /** Align the widget at the top left of the cell. */
             const  TOP_LEFT        =  GridAlign::TOP.bits() |  GridAlign::LEFT.bits();
             /** Align the widget at the top right of the cell. */
@@ -1073,7 +1064,7 @@ pub mod experimental {
     crate::macros::group::impl_group_ext!(Grid, Fl_Grid);
 
     impl Grid {
-        /// Set the layout of the grid
+        /// Set the layout of the grid, along with the margin and gap
         pub fn set_layout_ext(&mut self, rows: i32, cols: i32, margin: i32, gap: i32) {
             unsafe { Fl_Grid_set_layout(self.inner, rows, cols, margin, gap) }
         }
@@ -1105,7 +1096,7 @@ pub mod experimental {
         pub fn set_gap(&mut self, row_gap: i32, col_gap: i32) {
             unsafe { Fl_Grid_set_gap(self.inner, row_gap, col_gap) }
         }
-        /// Set the widget at row/column
+        /// Set the widget at row/column and alignment
         pub fn set_widget<W: WidgetExt>(
             &mut self,
             wi: &mut W,
@@ -1117,7 +1108,7 @@ pub mod experimental {
                 Fl_Grid_set_widget(self.inner, wi.as_widget_ptr() as _, row, col, align.bits()) as _
             }
         }
-        /// Set the widget at row/column along with row span and column span
+        /// Set the widget at row/column along with row span and column span and alignment
         pub fn set_widget_ext<W: WidgetExt>(
             &mut self,
             wi: &mut W,
@@ -1139,7 +1130,7 @@ pub mod experimental {
                 ) as _
             }
         }
-        /// Set the widget at row/column along with row span and column span
+        /// Set the widget at row/column using ranges along with the alignment
         pub fn insert_ext<W: 'static + Clone + WidgetExt>(
             &mut self,
             widget: &mut W,
@@ -1158,7 +1149,7 @@ pub mod experimental {
                 align,
             );
         }
-        /// Set the widget at row/column along with row span and column span
+        /// Set the widget at row/column using ranges
         pub fn insert<W: 'static + Clone + WidgetExt>(
             &mut self,
             widget: &mut W,
