@@ -1163,7 +1163,7 @@ pub mod experimental {
         ) {
             let row = row.into();
             let col = col.into();
-            self.insert_ext(widget, row, col, GridAlign::CENTER);
+            self.insert_ext(widget, row, col, GridAlign::FILL);
         }
         /// Set the column width
         pub fn set_col_width(&mut self, col: i32, value: i32) {
