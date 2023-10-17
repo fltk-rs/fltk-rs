@@ -1074,8 +1074,12 @@ pub mod experimental {
 
     impl Grid {
         /// Set the layout of the grid
-        pub fn set_layout(&mut self, rows: i32, cols: i32, margin: i32, gap: i32) {
+        pub fn set_layout_ext(&mut self, rows: i32, cols: i32, margin: i32, gap: i32) {
             unsafe { Fl_Grid_set_layout(self.inner, rows, cols, margin, gap) }
+        }
+        /// Set the layout of the grid
+        pub fn set_layout(&mut self, rows: i32, cols: i32) {
+            unsafe { Fl_Grid_set_layout(self.inner, rows, cols, -1, -1) }
         }
         /// Layout the grid
         pub fn layout(&mut self) {
@@ -1149,8 +1153,8 @@ pub mod experimental {
                 widget,
                 row.start as _,
                 col.start as _,
-                col.len() as _,
                 row.len() as _,
+                col.len() as _,
                 align,
             );
         }
