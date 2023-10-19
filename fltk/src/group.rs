@@ -1097,8 +1097,9 @@ pub mod experimental {
         pub fn set_gap(&mut self, row_gap: i32, col_gap: i32) {
             unsafe { Fl_Grid_set_gap(self.inner, row_gap, col_gap) }
         }
+        #[allow(dead_code)]
         /// Set the widget at row/column and alignment
-        pub fn set_widget<W: WidgetExt>(
+        pub fn set_widget_<W: WidgetExt>(
             &mut self,
             wi: &mut W,
             row: i32,
@@ -1109,8 +1110,19 @@ pub mod experimental {
                 Fl_Grid_set_widget(self.inner, wi.as_widget_ptr() as _, row, col, align.bits()) as _
             }
         }
+        /// Set the widget at row/column using ranges
+        pub fn set_widget<W: 'static + Clone + WidgetExt>(
+            &mut self,
+            widget: &mut W,
+            row: impl Into<GridRange>,
+            col: impl Into<GridRange>,
+        ) {
+            let row = row.into();
+            let col = col.into();
+            self.set_widget_ext(widget, row, col, GridAlign::FILL);
+        }
         /// Set the widget at row/column along with row span and column span and alignment
-        pub fn set_widget_ext<W: WidgetExt>(
+        fn set_widget_ext_<W: WidgetExt>(
             &mut self,
             wi: &mut W,
             row: i32,
@@ -1132,7 +1144,7 @@ pub mod experimental {
             }
         }
         /// Set the widget at row/column using ranges along with the alignment
-        pub fn insert_ext<W: 'static + Clone + WidgetExt>(
+        pub fn set_widget_ext<W: 'static + Clone + WidgetExt>(
             &mut self,
             widget: &mut W,
             row: impl Into<GridRange>,
@@ -1141,7 +1153,7 @@ pub mod experimental {
         ) {
             let row = row.into();
             let col = col.into();
-            self.set_widget_ext(
+            self.set_widget_ext_(
                 widget,
                 row.start as _,
                 col.start as _,
@@ -1149,17 +1161,6 @@ pub mod experimental {
                 col.len() as _,
                 align,
             );
-        }
-        /// Set the widget at row/column using ranges
-        pub fn insert<W: 'static + Clone + WidgetExt>(
-            &mut self,
-            widget: &mut W,
-            row: impl Into<GridRange>,
-            col: impl Into<GridRange>,
-        ) {
-            let row = row.into();
-            let col = col.into();
-            self.insert_ext(widget, row, col, GridAlign::FILL);
         }
         /// Set the column width
         pub fn set_col_width(&mut self, col: i32, value: i32) {
