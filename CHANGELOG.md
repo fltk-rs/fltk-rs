@@ -1,8 +1,8 @@
 # Changelog
 
 
-# [1.4.15] - Unreleased
-- Add Grid widget.
+# [1.4.15] - 2023-10-21
+- Wrap newly added Grid widget under the group::experimental module (api might change depending on FLTK).
 - Update FLTK submodule.
 
 
