@@ -916,7 +916,7 @@ impl Default for Column {
 impl Column {
     /// Constructs a widget with the size of its parent
     pub fn default_fill() -> Self {
-        Self::default().size_of_parent()
+        Self::default().size_of_parent().center_of_parent()
     }
 
     /// Create a new column
