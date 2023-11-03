@@ -181,6 +181,7 @@ impl TextBuffer {
     /// Replaces text from position `start` to `end`
     pub fn replace(&mut self, start: i32, end: i32, text: &str) {
         assert!(!self.inner.is_null());
+        assert!(end >= start);
         let text = CString::safe_new(text);
         unsafe { Fl_Text_Buffer_replace(*self.inner, start, end, text.as_ptr()) }
     }
@@ -234,7 +235,7 @@ impl TextBuffer {
     }
 
     /// Gets whether the buffer can undo
-    pub fn can_undo2(&mut self) -> bool {
+    pub fn get_can_undo(&mut self) -> bool {
         assert!(!self.inner.is_null());
         unsafe { Fl_Text_Buffer_can_undo(*self.inner) != 0 }
     }
