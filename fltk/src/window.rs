@@ -281,6 +281,7 @@ impl SingleWindow {
         unsafe { Fl_Window_un_maximize(self.inner.widget() as _) }
     }
 
+    /// Checks whether the window is maximized
     pub fn maximize_active(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe { Fl_Window_maximize_active(self.inner.widget() as _) != 0 }
@@ -557,6 +558,7 @@ impl DoubleWindow {
         unsafe { Fl_Window_un_maximize(self.inner.widget() as _) }
     }
 
+    /// Checks whether the window is maximized
     pub fn maximize_active(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe { Fl_Window_maximize_active(self.inner.widget() as _) != 0 }

@@ -1,6 +1,11 @@
 # Changelog
 
 
+# [1.4.17] - Unreleased
+- Add Window::maximize, unmaximize, and maximize_active.
+- Add TextBuffer::replace check.
+- Update FLTK submodule.
+
 # [1.4.16] - 2023-11-03
 - Fix Column::default_fill() centering.
 - Schedule callback deletion.
