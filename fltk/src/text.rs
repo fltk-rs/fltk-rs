@@ -731,8 +731,7 @@ pub enum DragType {
 /// Creates a non-editable text display widget
 #[derive(Debug)]
 pub struct TextDisplay {
-    inner: *mut Fl_Text_Display,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -744,8 +743,7 @@ crate::macros::display::impl_display_ext!(TextDisplay, Fl_Text_Display);
 /// Creates an editable text display widget
 #[derive(Debug)]
 pub struct TextEditor {
-    inner: *mut Fl_Text_Editor,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -766,8 +764,7 @@ pub type TextEditorPtr = *mut Fl_Text_Editor;
 /// curses compatibility, or VT100/xterm emulation.
 #[derive(Debug)]
 pub struct SimpleTerminal {
-    inner: *mut Fl_Simple_Terminal,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -853,28 +850,28 @@ impl TextEditor {
     pub fn set_insert_mode(&mut self, b: bool) {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
-        unsafe { Fl_Text_Editor_set_insert_mode(self.inner, b as i32) }
+        unsafe { Fl_Text_Editor_set_insert_mode(self.inner.widget() as _, b as i32) }
     }
 
     /// Returns whether insert mode is set
     pub fn insert_mode(&self) -> bool {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
-        unsafe { Fl_Text_Editor_insert_mode(self.inner) != 0 }
+        unsafe { Fl_Text_Editor_insert_mode(self.inner.widget() as _) != 0 }
     }
 
     /// Set tab navigation
     pub fn set_tab_nav(&mut self, val: bool) {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
-        unsafe { Fl_Text_Editor_set_tab_nav(self.inner, val as i32) }
+        unsafe { Fl_Text_Editor_set_tab_nav(self.inner.widget() as _, val as i32) }
     }
 
     /// Returns whether tab navigation is set
     pub fn tab_nav(&self) -> bool {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
-        unsafe { Fl_Text_Editor_tab_nav(self.inner) != 0 }
+        unsafe { Fl_Text_Editor_tab_nav(self.inner.widget() as _) != 0 }
     }
 
     /// Copies the text within the `TextEditor` widget
@@ -882,7 +879,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_copy(self.inner);
+            Fl_Text_Editor_kf_copy(self.inner.widget() as _);
         }
     }
 
@@ -891,7 +888,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_cut(self.inner);
+            Fl_Text_Editor_kf_cut(self.inner.widget() as _);
         }
     }
 
@@ -900,7 +897,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_paste(self.inner);
+            Fl_Text_Editor_kf_paste(self.inner.widget() as _);
         }
     }
 
@@ -909,7 +906,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_undo(self.inner);
+            Fl_Text_Editor_kf_undo(self.inner.widget() as _);
         }
     }
 
@@ -918,7 +915,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_redo(self.inner);
+            Fl_Text_Editor_kf_redo(self.inner.widget() as _);
         }
     }
 
@@ -927,7 +924,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_default(c.bits(), self.inner);
+            Fl_Text_Editor_kf_default(c.bits(), self.inner.widget() as _);
         }
     }
 
@@ -936,7 +933,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_ignore(c.bits(), self.inner);
+            Fl_Text_Editor_kf_ignore(c.bits(), self.inner.widget() as _);
         }
     }
 
@@ -945,7 +942,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_backspace(self.inner);
+            Fl_Text_Editor_kf_backspace(self.inner.widget() as _);
         }
     }
 
@@ -954,7 +951,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_enter(self.inner);
+            Fl_Text_Editor_kf_enter(self.inner.widget() as _);
         }
     }
 
@@ -963,7 +960,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_move(c.bits(), self.inner);
+            Fl_Text_Editor_kf_move(c.bits(), self.inner.widget() as _);
         }
     }
 
@@ -972,7 +969,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_shift_move(c.bits(), self.inner);
+            Fl_Text_Editor_kf_shift_move(c.bits(), self.inner.widget() as _);
         }
     }
 
@@ -981,7 +978,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_ctrl_move(c.bits(), self.inner);
+            Fl_Text_Editor_kf_ctrl_move(c.bits(), self.inner.widget() as _);
         }
     }
 
@@ -990,7 +987,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_c_s_move(c.bits(), self.inner);
+            Fl_Text_Editor_kf_c_s_move(c.bits(), self.inner.widget() as _);
         }
     }
 
@@ -999,7 +996,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_meta_move(c.bits(), self.inner);
+            Fl_Text_Editor_kf_meta_move(c.bits(), self.inner.widget() as _);
         }
     }
 
@@ -1008,7 +1005,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_m_s_move(c.bits(), self.inner);
+            Fl_Text_Editor_kf_m_s_move(c.bits(), self.inner.widget() as _);
         }
     }
 
@@ -1017,7 +1014,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_home(self.inner);
+            Fl_Text_Editor_kf_home(self.inner.widget() as _);
         }
     }
 
@@ -1026,7 +1023,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_end(self.inner);
+            Fl_Text_Editor_kf_end(self.inner.widget() as _);
         }
     }
 
@@ -1035,7 +1032,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_left(self.inner);
+            Fl_Text_Editor_kf_left(self.inner.widget() as _);
         }
     }
 
@@ -1044,7 +1041,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_up(self.inner);
+            Fl_Text_Editor_kf_up(self.inner.widget() as _);
         }
     }
 
@@ -1053,7 +1050,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_right(self.inner);
+            Fl_Text_Editor_kf_right(self.inner.widget() as _);
         }
     }
 
@@ -1062,7 +1059,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_down(self.inner);
+            Fl_Text_Editor_kf_down(self.inner.widget() as _);
         }
     }
 
@@ -1071,7 +1068,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_page_up(self.inner);
+            Fl_Text_Editor_kf_page_up(self.inner.widget() as _);
         }
     }
 
@@ -1080,7 +1077,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_page_down(self.inner);
+            Fl_Text_Editor_kf_page_down(self.inner.widget() as _);
         }
     }
 
@@ -1089,7 +1086,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_insert(self.inner);
+            Fl_Text_Editor_kf_insert(self.inner.widget() as _);
         }
     }
 
@@ -1098,7 +1095,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_delete(self.inner);
+            Fl_Text_Editor_kf_delete(self.inner.widget() as _);
         }
     }
 
@@ -1107,7 +1104,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            Fl_Text_Editor_kf_select_all(self.inner);
+            Fl_Text_Editor_kf_select_all(self.inner.widget() as _);
         }
     }
 
@@ -1121,7 +1118,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         unsafe {
             Fl_Text_Editor_add_key_binding(
-                self.inner,
+                self.inner.widget() as _,
                 key.bits(),
                 shortcut.bits(),
                 std::mem::transmute(Some(cb)),
@@ -1133,7 +1130,11 @@ impl TextEditor {
     pub fn remove_key_binding(&mut self, key: crate::enums::Key, shortcut: crate::enums::Shortcut) {
         assert!(!self.was_deleted());
         unsafe {
-            Fl_Text_Editor_remove_key_binding(self.inner, key.bits(), shortcut.bits());
+            Fl_Text_Editor_remove_key_binding(
+                self.inner.widget() as _,
+                key.bits(),
+                shortcut.bits(),
+            );
         }
     }
 }
@@ -1143,42 +1144,42 @@ impl SimpleTerminal {
     pub fn set_stay_at_bottom(&mut self, arg1: bool) {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
-        unsafe { Fl_Simple_Terminal_set_stay_at_bottom(self.inner, arg1 as i32) }
+        unsafe { Fl_Simple_Terminal_set_stay_at_bottom(self.inner.widget() as _, arg1 as i32) }
     }
 
     /// Returns whether the terminal automatically stays at the bottom
     pub fn stay_at_bottom(&self) -> bool {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
-        unsafe { Fl_Simple_Terminal_stay_at_bottom(self.inner) != 0 }
+        unsafe { Fl_Simple_Terminal_stay_at_bottom(self.inner.widget() as _) != 0 }
     }
 
     /// Sets the max lines allowed in history
     pub fn set_history_lines(&mut self, arg1: i32) {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
-        unsafe { Fl_Simple_Terminal_set_history_lines(self.inner, arg1) }
+        unsafe { Fl_Simple_Terminal_set_history_lines(self.inner.widget() as _, arg1) }
     }
 
     /// Gets the max lines allowed in history
     pub fn history_lines(&self) -> i32 {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
-        unsafe { Fl_Simple_Terminal_history_lines(self.inner) }
+        unsafe { Fl_Simple_Terminal_history_lines(self.inner.widget() as _) }
     }
 
     /// Enables ANSI sequences within the text to control text colors
     pub fn set_ansi(&mut self, val: bool) {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
-        unsafe { Fl_Simple_Terminal_set_ansi(self.inner, val as i32) }
+        unsafe { Fl_Simple_Terminal_set_ansi(self.inner.widget() as _, val as i32) }
     }
 
     /// Returns whether ANSI sequences are enabled
     pub fn ansi(&self) -> bool {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
-        unsafe { Fl_Simple_Terminal_ansi(self.inner) != 0 }
+        unsafe { Fl_Simple_Terminal_ansi(self.inner.widget() as _) != 0 }
     }
 
     /// Appends text to the terminal buffer
@@ -1186,14 +1187,16 @@ impl SimpleTerminal {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         let s = CString::safe_new(s);
-        unsafe { Fl_Simple_Terminal_append(self.inner, s.into_raw() as _) }
+        unsafe { Fl_Simple_Terminal_append(self.inner.widget() as _, s.into_raw() as _) }
     }
 
     /// Appends data to the terminal buffer
     pub fn append2(&mut self, s: &[u8]) {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
-        unsafe { Fl_Simple_Terminal_append2(self.inner, s.as_ptr() as _, s.len() as _) }
+        unsafe {
+            Fl_Simple_Terminal_append2(self.inner.widget() as _, s.as_ptr() as _, s.len() as _)
+        }
     }
 
     /// Sets the text of the terminal buffer
@@ -1201,14 +1204,16 @@ impl SimpleTerminal {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         let s = CString::safe_new(s);
-        unsafe { Fl_Simple_Terminal_set_text(self.inner, s.into_raw() as _) }
+        unsafe { Fl_Simple_Terminal_set_text(self.inner.widget() as _, s.into_raw() as _) }
     }
 
     /// Sets the byte content of the terminal buffer
     pub fn set_bytes(&mut self, s: &[u8]) {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
-        unsafe { Fl_Simple_Terminal_set_text2(self.inner, s.as_ptr() as _, s.len() as _) }
+        unsafe {
+            Fl_Simple_Terminal_set_text2(self.inner.widget() as _, s.as_ptr() as _, s.len() as _)
+        }
     }
 
     /// Gets the text of the terminal buffer
@@ -1216,7 +1221,7 @@ impl SimpleTerminal {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
         unsafe {
-            let ptr = Fl_Simple_Terminal_text(self.inner);
+            let ptr = Fl_Simple_Terminal_text(self.inner.widget() as _);
             assert!(!ptr.is_null());
             CStr::from_ptr(ptr as *mut raw::c_char)
                 .to_string_lossy()
@@ -1228,13 +1233,13 @@ impl SimpleTerminal {
     pub fn clear(&mut self) {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
-        unsafe { Fl_Simple_Terminal_clear(self.inner) }
+        unsafe { Fl_Simple_Terminal_clear(self.inner.widget() as _) }
     }
 
     /// Removes `count` lines from `start`
     pub fn remove_lines(&mut self, start: i32, count: i32) {
         assert!(!self.was_deleted());
         assert!(self.has_buffer());
-        unsafe { Fl_Simple_Terminal_remove_lines(self.inner, start, count) }
+        unsafe { Fl_Simple_Terminal_remove_lines(self.inner.widget() as _, start, count) }
     }
 }

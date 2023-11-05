@@ -36,8 +36,7 @@ use std::{
 */
 #[derive(Debug)]
 pub struct Browser {
-    inner: *mut Fl_Browser,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -87,8 +86,7 @@ pub enum BrowserScrollbar {
 /// Creates a select browser
 #[derive(Debug)]
 pub struct SelectBrowser {
-    inner: *mut Fl_Select_Browser,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -100,8 +98,7 @@ crate::macros::browser::impl_browser_ext!(SelectBrowser, Fl_Select_Browser);
 /// Creates a multi-browser
 #[derive(Debug)]
 pub struct MultiBrowser {
-    inner: *mut Fl_Multi_Browser,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -113,8 +110,7 @@ crate::macros::browser::impl_browser_ext!(MultiBrowser, Fl_Multi_Browser);
 /// Creates a hold browser
 #[derive(Debug)]
 pub struct HoldBrowser {
-    inner: *mut Fl_Hold_Browser,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -126,8 +122,7 @@ crate::macros::browser::impl_browser_ext!(HoldBrowser, Fl_Hold_Browser);
 /// Creates a file browser
 #[derive(Debug)]
 pub struct FileBrowser {
-    inner: *mut Fl_File_Browser,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -150,13 +145,13 @@ impl FileBrowser {
     /// Gets the icon size
     pub fn icon_size(&self) -> u32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_File_Browser_iconsize(self.inner) }
+        unsafe { Fl_File_Browser_iconsize(self.inner.widget() as _) }
     }
 
     /// Sets the icon size
     pub fn set_icon_size(&mut self, s: u32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_File_Browser_set_iconsize(self.inner, s) }
+        unsafe { Fl_File_Browser_set_iconsize(self.inner.widget() as _, s) }
     }
 
     /// Sets the filter for the `FileBrowser`.
@@ -174,7 +169,7 @@ impl FileBrowser {
         let pattern = CString::safe_new(pattern);
         unsafe {
             // This is deleted on the C++ side
-            Fl_File_Browser_set_filter(self.inner, pattern.into_raw() as _)
+            Fl_File_Browser_set_filter(self.inner.widget() as _, pattern.into_raw() as _)
         }
     }
 
@@ -182,7 +177,7 @@ impl FileBrowser {
     pub fn filter(&self) -> Option<String> {
         assert!(!self.was_deleted());
         unsafe {
-            let ptr = Fl_File_Browser_filter(self.inner);
+            let ptr = Fl_File_Browser_filter(self.inner.widget() as _);
             if ptr.is_null() {
                 None
             } else {
@@ -198,21 +193,20 @@ impl FileBrowser {
     /// Gets the `FileType` of the `FileBrowser`
     pub fn filetype(&self) -> FileType {
         assert!(!self.was_deleted());
-        unsafe { mem::transmute(Fl_File_Browser_filetype(self.inner)) }
+        unsafe { mem::transmute(Fl_File_Browser_filetype(self.inner.widget() as _)) }
     }
 
     /// Sets the `FileType` of the `FileBrowser`
     pub fn set_filetype(&mut self, t: FileType) {
         assert!(!self.was_deleted());
-        unsafe { Fl_File_Browser_set_filetype(self.inner, t as i32) }
+        unsafe { Fl_File_Browser_set_filetype(self.inner.widget() as _, t as i32) }
     }
 }
 
 /// Creates a `CheckBrowser` widget
 #[derive(Debug)]
 pub struct CheckBrowser {
-    inner: *mut Fl_Check_Browser,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -225,14 +219,14 @@ impl CheckBrowser {
     pub fn add(&mut self, s: &str, checked: bool) -> i32 {
         assert!(!self.was_deleted());
         let s = CString::safe_new(s);
-        unsafe { Fl_Check_Browser_add(self.inner, s.as_ptr(), checked as i32) }
+        unsafe { Fl_Check_Browser_add(self.inner.widget() as _, s.as_ptr(), checked as i32) }
     }
 
     /// Remove item at index, returns the number of current items
     pub fn remove(&mut self, item: usize) -> i32 {
         assert!(!self.was_deleted());
         if item > 0 && item <= self.size() {
-            unsafe { Fl_Check_Browser_remove(self.inner, item as i32) }
+            unsafe { Fl_Check_Browser_remove(self.inner.widget() as _, item as i32) }
         } else {
             self.nitems() as _
         }
@@ -241,13 +235,13 @@ impl CheckBrowser {
     /// Clear the browser
     pub fn clear(&mut self) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_clear(self.inner) }
+        unsafe { Fl_Check_Browser_clear(self.inner.widget() as _) }
     }
 
     /// Return the number of items
     pub fn nitems(&self) -> usize {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_nitems(self.inner) as usize }
+        unsafe { Fl_Check_Browser_nitems(self.inner.widget() as _) as usize }
     }
 
     /// Return the number of items
@@ -258,14 +252,14 @@ impl CheckBrowser {
     /// Get the number of checked items
     pub fn nchecked(&self) -> usize {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_nchecked(self.inner) as usize }
+        unsafe { Fl_Check_Browser_nchecked(self.inner.widget() as _) as usize }
     }
 
     /// Returns whether an item is checked
     pub fn checked(&self, item: i32) -> bool {
         assert!(!self.was_deleted());
         if item > 0 && item <= self.size() as i32 {
-            unsafe { Fl_Check_Browser_checked(self.inner, item) != 0 }
+            unsafe { Fl_Check_Browser_checked(self.inner.widget() as _, item) != 0 }
         } else {
             false
         }
@@ -275,33 +269,33 @@ impl CheckBrowser {
     pub fn set_checked(&mut self, item: i32) {
         assert!(!self.was_deleted());
         if item > 0 && item <= self.size() as i32 {
-            unsafe { Fl_Check_Browser_set_checked(self.inner, item) }
+            unsafe { Fl_Check_Browser_set_checked(self.inner.widget() as _, item) }
         }
     }
 
     /// Check all of the items
     pub fn check_all(&mut self) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_check_all(self.inner) }
+        unsafe { Fl_Check_Browser_check_all(self.inner.widget() as _) }
     }
 
     /// Check none of the items
     pub fn check_none(&mut self) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_check_none(self.inner) }
+        unsafe { Fl_Check_Browser_check_none(self.inner.widget() as _) }
     }
 
     /// Returns the selected line, returns 0 if no line is selected
     pub fn value(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_value(self.inner) }
+        unsafe { Fl_Check_Browser_value(self.inner.widget() as _) }
     }
 
     /// Get the text of the item
     pub fn text(&self, item: i32) -> Option<String> {
         assert!(!self.was_deleted());
         unsafe {
-            let ptr = Fl_Check_Browser_text(self.inner, item);
+            let ptr = Fl_Check_Browser_text(self.inner.widget() as _, item);
             if ptr.is_null() {
                 None
             } else {
@@ -313,98 +307,100 @@ impl CheckBrowser {
     /// Gets the text font
     pub fn text_font(&self) -> Font {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Check_Browser_text_font(self.inner)) }
+        unsafe { std::mem::transmute(Fl_Check_Browser_text_font(self.inner.widget() as _)) }
     }
 
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_set_text_font(self.inner, f.bits()) }
+        unsafe { Fl_Check_Browser_set_text_font(self.inner.widget() as _, f.bits()) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_text_size(self.inner) }
+        unsafe { Fl_Check_Browser_text_size(self.inner.widget() as _) }
     }
 
     /// Sets the text size
     pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_set_text_size(self.inner, s) }
+        unsafe { Fl_Check_Browser_set_text_size(self.inner.widget() as _, s) }
     }
 
     /// Gets the text's color
     pub fn text_color(&self) -> Color {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Check_Browser_text_color(self.inner)) }
+        unsafe { std::mem::transmute(Fl_Check_Browser_text_color(self.inner.widget() as _)) }
     }
 
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_set_text_color(self.inner, color.bits()) }
+        unsafe { Fl_Check_Browser_set_text_color(self.inner.widget() as _, color.bits()) }
     }
 
     /// Gets the vertical scroll position of the list as a pixel position
     pub fn position(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_position(self.inner) }
+        unsafe { Fl_Check_Browser_position(self.inner.widget() as _) }
     }
 
     /// Sets the vertical scroll position of the list as a pixel position
     pub fn set_position(&mut self, pos: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_set_position(self.inner, pos) }
+        unsafe { Fl_Check_Browser_set_position(self.inner.widget() as _, pos) }
     }
 
     /// Gets the horizontal scroll position of the list as a pixel position
     pub fn hposition(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_hposition(self.inner) }
+        unsafe { Fl_Check_Browser_hposition(self.inner.widget() as _) }
     }
 
     /// Sets the horizontal scroll position of the list as a pixel position
     pub fn set_hposition(&mut self, pos: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_set_hposition(self.inner, pos) }
+        unsafe { Fl_Check_Browser_set_hposition(self.inner.widget() as _, pos) }
     }
 
     /// Returns the type of scrollbar associated with the browser
     pub fn has_scrollbar(&self) -> BrowserScrollbar {
         assert!(!self.was_deleted());
-        unsafe { mem::transmute(Fl_Check_Browser_has_scrollbar(self.inner)) }
+        unsafe { mem::transmute(Fl_Check_Browser_has_scrollbar(self.inner.widget() as _)) }
     }
 
     /// Sets the type of scrollbar associated with the browser
     pub fn set_has_scrollbar(&mut self, mode: BrowserScrollbar) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_set_has_scrollbar(self.inner, mode as raw::c_uchar) }
+        unsafe {
+            Fl_Check_Browser_set_has_scrollbar(self.inner.widget() as _, mode as raw::c_uchar)
+        }
     }
 
     /// Gets the scrollbar size
     pub fn scrollbar_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_scrollbar_size(self.inner) }
+        unsafe { Fl_Check_Browser_scrollbar_size(self.inner.widget() as _) }
     }
 
     /// Sets the scrollbar size
     pub fn set_scrollbar_size(&mut self, new_size: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_set_scrollbar_size(self.inner, new_size) }
+        unsafe { Fl_Check_Browser_set_scrollbar_size(self.inner.widget() as _, new_size) }
     }
 
     /// Sort browser elements
     pub fn sort(&mut self) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_sort(self.inner) }
+        unsafe { Fl_Check_Browser_sort(self.inner.widget() as _) }
     }
 
     /// Returns the vertical scrollbar
     pub fn scrollbar(&self) -> crate::valuator::Scrollbar {
         assert!(!self.was_deleted());
         unsafe {
-            let ptr = Fl_Check_Browser_scrollbar(self.inner);
+            let ptr = Fl_Check_Browser_scrollbar(self.inner.widget() as _);
             assert!(!ptr.is_null());
             crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)
         }
@@ -414,7 +410,7 @@ impl CheckBrowser {
     pub fn hscrollbar(&self) -> crate::valuator::Scrollbar {
         assert!(!self.was_deleted());
         unsafe {
-            let ptr = Fl_Check_Browser_hscrollbar(self.inner);
+            let ptr = Fl_Check_Browser_hscrollbar(self.inner.widget() as _);
             assert!(!ptr.is_null());
             crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)
         }

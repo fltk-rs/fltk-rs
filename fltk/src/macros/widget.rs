@@ -10,7 +10,7 @@ macro_rules! impl_widget_ext {
 
         impl PartialEq for $name {
             fn eq(&self, other: &Self) -> bool {
-                self.inner == other.inner
+                self.inner.widget() == other.inner.widget()
             }
         }
         impl Eq for $name {}
@@ -18,23 +18,13 @@ macro_rules! impl_widget_ext {
             fn clone(&self) -> $name {
                 assert!(!self.was_deleted());
                 $name {
-                    inner: self.inner,
-                    tracker: self.tracker.clone(),
+                    inner: self.inner.clone(),
                     is_derived: self.is_derived,
                 }
             }
         }
 
         paste::paste! {
-            impl Drop for $name {
-                fn drop(&mut self) {
-                    if $crate::widget::WidgetTracker::strong_count(&self.tracker) == 1 {
-                        unsafe {
-                            fltk_sys::fl::Fl_Widget_Tracker_delete(*self.tracker);
-                        }
-                    }
-                }
-            }
             unsafe impl WidgetExt for $name {
                 fn with_pos(mut self, x: i32, y: i32) -> Self {
                     let w = self.w();
@@ -243,14 +233,14 @@ macro_rules! impl_widget_ext {
                     }
                     unsafe {
                         let temp = CString::safe_new(title);
-                        [<$flname _set_label>](self.inner, temp.as_ptr());
+                        [<$flname _set_label>](self.inner.widget() as _, temp.as_ptr());
                     }
                 }
 
                 fn redraw(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe {
-                        [<$flname _redraw>](self.inner);
+                        [<$flname _redraw>](self.inner.widget() as _);
                     }
                 }
 
@@ -259,7 +249,7 @@ macro_rules! impl_widget_ext {
                     if self.as_window().is_some() {
                         assert!($crate::app::is_ui_thread());
                     }
-                    unsafe { [<$flname _show>](self.inner) }
+                    unsafe { [<$flname _show>](self.inner.widget() as _) }
                 }
 
                 fn hide(&mut self) {
@@ -267,44 +257,44 @@ macro_rules! impl_widget_ext {
                     if self.as_window().is_some() {
                         assert!($crate::app::is_ui_thread());
                     }
-                    unsafe { [<$flname _hide>](self.inner) }
+                    unsafe { [<$flname _hide>](self.inner.widget() as _) }
                 }
 
                 fn x(&self) -> i32 {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _x>](self.inner) }
+                    unsafe { [<$flname _x>](self.inner.widget() as _) }
                 }
 
                 fn y(&self) -> i32 {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _y>](self.inner) }
+                    unsafe { [<$flname _y>](self.inner.widget() as _) }
                 }
 
                 fn width(&self) -> i32 {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _width>](self.inner) }
+                    unsafe { [<$flname _width>](self.inner.widget() as _) }
                 }
 
                 fn height(&self) -> i32 {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _height>](self.inner) }
+                    unsafe { [<$flname _height>](self.inner.widget() as _) }
                 }
 
                 fn w(&self) -> i32 {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _width>](self.inner) }
+                    unsafe { [<$flname _width>](self.inner.widget() as _) }
                 }
 
                 fn h(&self) -> i32 {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _height>](self.inner) }
+                    unsafe { [<$flname _height>](self.inner.widget() as _) }
                 }
 
                 fn label(&self) -> String {
                     assert!(!self.was_deleted());
                     unsafe {
                         fltk_sys::fl::Fl_lock();
-                        let ptr = [<$flname _label>](self.inner) as *mut std::os::raw::c_char;
+                        let ptr = [<$flname _label>](self.inner.widget() as _) as *mut std::os::raw::c_char;
                         let s = if ptr.is_null() {
                             String::from("")
                         } else {
@@ -320,45 +310,45 @@ macro_rules! impl_widget_ext {
                     let mut x = 0;
                     let mut y = 0;
                     unsafe {
-                        [<$flname _measure_label>](self.inner, &mut x, &mut y);
+                        [<$flname _measure_label>](self.inner.widget() as _, &mut x, &mut y);
                     }
                     (x, y)
                 }
 
                 fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget {
-                    self.inner as *mut fltk_sys::widget::Fl_Widget
+                    self.inner.widget() as *mut fltk_sys::widget::Fl_Widget
                 }
 
                 fn activate(&mut self) {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _activate>](self.inner) }
+                    unsafe { [<$flname _activate>](self.inner.widget() as _) }
                 }
 
                 fn deactivate(&mut self) {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _deactivate>](self.inner) }
+                    unsafe { [<$flname _deactivate>](self.inner.widget() as _) }
                 }
 
                 fn redraw_label(&mut self) {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _redraw_label>](self.inner) }
+                    unsafe { [<$flname _redraw_label>](self.inner.widget() as _) }
                 }
 
                 fn resize(&mut self, x: i32, y: i32, width: i32, height: i32) {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _resize>](self.inner, x, y, width, height) }
+                    unsafe { [<$flname _resize>](self.inner.widget() as _, x, y, width, height) }
                 }
 
                 fn widget_resize(&mut self, x: i32, y: i32, width: i32, height: i32) {
                     assert!(!self.was_deleted());
                     assert!(self.is_derived);
-                    unsafe { [<$flname _widget_resize>](self.inner, x, y, width, height) }
+                    unsafe { [<$flname _widget_resize>](self.inner.widget() as _, x, y, width, height) }
                 }
 
                 fn tooltip(&self) -> Option<String> {
                     assert!(!self.was_deleted());
                     unsafe {
-                        let tooltip_ptr = [<$flname _tooltip>](self.inner);
+                        let tooltip_ptr = [<$flname _tooltip>](self.inner.widget() as _);
                         fltk_sys::fl::Fl_lock();
                         let s = if tooltip_ptr.is_null() {
                             None
@@ -379,7 +369,7 @@ macro_rules! impl_widget_ext {
                     let txt = CString::safe_new(txt);
                     unsafe {
                         [<$flname _set_tooltip>](
-                            self.inner,
+                            self.inner.widget() as _,
                             txt.as_ptr() as *mut std::os::raw::c_char,
                         )
                     }
@@ -387,110 +377,110 @@ macro_rules! impl_widget_ext {
 
                 fn color(&self) -> $crate::enums::Color {
                     assert!(!self.was_deleted());
-                    unsafe { std::mem::transmute([<$flname _color>](self.inner)) }
+                    unsafe { std::mem::transmute([<$flname _color>](self.inner.widget() as _)) }
                 }
 
                 fn set_color(&mut self, color: $crate::enums::Color) {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _set_color>](self.inner, color.bits() as u32) }
+                    unsafe { [<$flname _set_color>](self.inner.widget() as _, color.bits() as u32) }
                 }
 
                 fn label_color(&self) -> $crate::enums::Color {
                     assert!(!self.was_deleted());
-                    unsafe { std::mem::transmute([<$flname _label_color>](self.inner)) }
+                    unsafe { std::mem::transmute([<$flname _label_color>](self.inner.widget() as _)) }
                 }
 
                 fn set_label_color(&mut self, color: $crate::enums::Color) {
                     assert!(!self.was_deleted());
                     unsafe {
-                        [<$flname _set_label_color>](self.inner, color.bits() as u32)
+                        [<$flname _set_label_color>](self.inner.widget() as _, color.bits() as u32)
                     }
                 }
 
                 fn label_font(&self) -> $crate::enums::Font {
                     assert!(!self.was_deleted());
-                    unsafe { std::mem::transmute([<$flname _label_font>](self.inner)) }
+                    unsafe { std::mem::transmute([<$flname _label_font>](self.inner.widget() as _)) }
                 }
 
                 fn set_label_font(&mut self, font: $crate::enums::Font) {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _set_label_font>](self.inner, font.bits() as i32) }
+                    unsafe { [<$flname _set_label_font>](self.inner.widget() as _, font.bits() as i32) }
                 }
 
                 fn label_size(&self) -> i32 {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _label_size>](self.inner) }
+                    unsafe { [<$flname _label_size>](self.inner.widget() as _) }
                 }
 
                 fn set_label_size(&mut self, sz: i32) {
                     assert!(!self.was_deleted());
                     let sz = if sz < 1 { 1 } else { sz };
-                    unsafe { [<$flname _set_label_size>](self.inner, sz) }
+                    unsafe { [<$flname _set_label_size>](self.inner.widget() as _, sz) }
                 }
 
                 fn label_type(&self) -> $crate::enums::LabelType {
                     assert!(!self.was_deleted());
-                    unsafe { std::mem::transmute([<$flname _label_type>](self.inner)) }
+                    unsafe { std::mem::transmute([<$flname _label_type>](self.inner.widget() as _)) }
                 }
 
                 fn set_label_type(&mut self, typ: $crate::enums::LabelType) {
                     assert!(!self.was_deleted());
                     unsafe {
-                        [<$flname _set_label_type>](self.inner, typ as i32);
+                        [<$flname _set_label_type>](self.inner.widget() as _, typ as i32);
                     }
                 }
 
                 fn frame(&self) -> $crate::enums::FrameType {
                     assert!(!self.was_deleted());
-                    unsafe { $crate::enums::FrameType::from_i32([<$flname _box>](self.inner)) }
+                    unsafe { $crate::enums::FrameType::from_i32([<$flname _box>](self.inner.widget() as _)) }
                 }
 
                 fn set_frame(&mut self, typ: $crate::enums::FrameType) {
                     assert!(!self.was_deleted());
                     unsafe {
-                        [<$flname _set_box>](self.inner, typ.as_i32());
+                        [<$flname _set_box>](self.inner.widget() as _, typ.as_i32());
                     }
                 }
 
                 fn changed(&self) -> bool {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _changed>](self.inner) != 0 }
+                    unsafe { [<$flname _changed>](self.inner.widget() as _) != 0 }
                 }
 
                 fn set_changed(&mut self) {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _set_changed>](self.inner) }
+                    unsafe { [<$flname _set_changed>](self.inner.widget() as _) }
                 }
 
                 fn clear_changed(&mut self) {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _clear_changed>](self.inner) }
+                    unsafe { [<$flname _clear_changed>](self.inner.widget() as _) }
                 }
 
                 fn align(&self) -> $crate::enums::Align {
                     assert!(!self.was_deleted());
-                    unsafe { std::mem::transmute([<$flname _align>](self.inner)) }
+                    unsafe { std::mem::transmute([<$flname _align>](self.inner.widget() as _)) }
                 }
 
                 fn set_align(&mut self, align: $crate::enums::Align) {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _set_align>](self.inner, align.bits() as i32) }
+                    unsafe { [<$flname _set_align>](self.inner.widget() as _, align.bits() as i32) }
                 }
 
                 fn set_trigger(&mut self, trigger: $crate::enums::CallbackTrigger) {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _set_when>](self.inner, trigger.bits() as i32) }
+                    unsafe { [<$flname _set_when>](self.inner.widget() as _, trigger.bits() as i32) }
                 }
 
                 fn trigger(&self) -> $crate::enums::CallbackTrigger {
                     assert!(!self.was_deleted());
-                    unsafe { std::mem::transmute([<$flname _when>](self.inner)) }
+                    unsafe { std::mem::transmute([<$flname _when>](self.inner.widget() as _)) }
                 }
 
                 fn parent(&self) -> Option<$crate::group::Group> {
                     assert!(!self.was_deleted());
                     unsafe {
-                        let x = [<$flname _parent>](self.inner);
+                        let x = [<$flname _parent>](self.inner.widget() as _);
                         if x.is_null() {
                             None
                         } else {
@@ -501,27 +491,27 @@ macro_rules! impl_widget_ext {
 
                 fn selection_color(&self) -> $crate::enums::Color {
                     assert!(!self.was_deleted());
-                    unsafe { std::mem::transmute([<$flname _selection_color>](self.inner)) }
+                    unsafe { std::mem::transmute([<$flname _selection_color>](self.inner.widget() as _)) }
                 }
 
                 fn set_selection_color(&mut self, color: $crate::enums::Color) {
                     assert!(!self.was_deleted());
                     unsafe {
-                        [<$flname _set_selection_color>](self.inner, color.bits() as u32);
+                        [<$flname _set_selection_color>](self.inner.widget() as _, color.bits() as u32);
                     }
                 }
 
                 fn do_callback(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe {
-                        [<$flname _do_callback>](self.inner);
+                        [<$flname _do_callback>](self.inner.widget() as _);
                     }
                 }
 
                 fn window(&self) -> Option<Box<dyn WindowExt>> {
                     assert!(!self.was_deleted());
                     unsafe {
-                        let wind_ptr = [<$flname _window>](self.inner);
+                        let wind_ptr = [<$flname _window>](self.inner.widget() as _);
                         if wind_ptr.is_null() {
                             None
                         } else {
@@ -535,7 +525,7 @@ macro_rules! impl_widget_ext {
                 fn top_window(&self) -> Option<Box<dyn WindowExt>> {
                     assert!(!self.was_deleted());
                     unsafe {
-                        let wind_ptr = [<$flname _top_window>](self.inner);
+                        let wind_ptr = [<$flname _top_window>](self.inner.widget() as _);
                         if wind_ptr.is_null() {
                             None
                         } else {
@@ -548,33 +538,33 @@ macro_rules! impl_widget_ext {
 
                 fn takes_events(&self) -> bool {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _takes_events>](self.inner) != 0 }
+                    unsafe { [<$flname _takes_events>](self.inner.widget() as _) != 0 }
                 }
 
                 unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>> {
-                    let ptr = [<$flname _user_data>](self.inner);
+                    let ptr = [<$flname _user_data>](self.inner.widget() as _);
                     if ptr.is_null() {
                         None
                     } else {
                         let x = ptr as *mut Box<dyn FnMut()>;
                         let x = Box::from_raw(x);
-                        [<$flname _set_callback>](self.inner, None, std::ptr::null_mut());
+                        [<$flname _set_callback>](self.inner.widget() as _, None, std::ptr::null_mut());
                         Some(*x)
                     }
                 }
 
                 unsafe fn raw_user_data(&self) -> *mut std::os::raw::c_void {
-                    [<$flname _user_data>](self.inner)
+                    [<$flname _user_data>](self.inner.widget() as _)
                 }
 
                 unsafe fn set_raw_user_data(&mut self, data: *mut std::os::raw::c_void) {
-                    [<$flname _set_user_data>](self.inner, data)
+                    [<$flname _set_user_data>](self.inner.widget() as _, data)
                 }
 
                 fn take_focus(&mut self) -> Result<(), FltkError> {
                     assert!(!self.was_deleted());
                     unsafe {
-                        match [<$flname _take_focus>](self.inner) {
+                        match [<$flname _take_focus>](self.inner.widget() as _) {
                             0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
                             _ => Ok(()),
                         }
@@ -583,72 +573,68 @@ macro_rules! impl_widget_ext {
 
                 fn set_visible_focus(&mut self) {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _set_visible_focus>](self.inner) }
+                    unsafe { [<$flname _set_visible_focus>](self.inner.widget() as _) }
                 }
 
                 fn clear_visible_focus(&mut self) {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _clear_visible_focus>](self.inner) }
+                    unsafe { [<$flname _clear_visible_focus>](self.inner.widget() as _) }
                 }
 
                 fn visible_focus(&mut self, v: bool) {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _visible_focus>](self.inner, v as i32) }
+                    unsafe { [<$flname _visible_focus>](self.inner.widget() as _, v as i32) }
                 }
 
                 fn has_visible_focus(&self) -> bool {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _has_visible_focus>](self.inner) != 0 }
+                    unsafe { [<$flname _has_visible_focus>](self.inner.widget() as _) != 0 }
                 }
 
                 fn has_focus(&self) -> bool {
                     assert!(!self.was_deleted());
-                    unsafe { fltk_sys::fl::Fl_focus() == self.inner as _ }
+                    unsafe { fltk_sys::fl::Fl_focus() == self.inner.widget() as _ }
                 }
 
                 fn was_deleted(&self) -> bool {
-                    unsafe {
-                        self.inner.is_null()
-                            || self.tracker.is_null()
-                            || fltk_sys::fl::Fl_Widget_Tracker_deleted(*self.tracker) != 0
-                    }
+                    self.inner.deleted()
                 }
 
                 fn damage(&self) -> bool {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _damage>](self.inner) != 0 }
+                    unsafe { [<$flname _damage>](self.inner.widget() as _) != 0 }
                 }
 
                 fn set_damage(&mut self, flag: bool) {
                     assert!(!self.was_deleted());
                     let flag = if flag { 10 } else { 0 };
-                    unsafe { [<$flname _set_damage>](self.inner, flag) }
+                    unsafe { [<$flname _set_damage>](self.inner.widget() as _, flag) }
                 }
 
                 fn damage_type(&self) -> $crate::enums::Damage {
                     assert!(!self.was_deleted());
-                    unsafe { std::mem::transmute([<$flname _damage>](self.inner)) }
+                    unsafe { std::mem::transmute([<$flname _damage>](self.inner.widget() as _)) }
                 }
 
                 fn set_damage_type(&mut self, mask: $crate::enums::Damage) {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _set_damage>](self.inner, mask.bits()) }
+                    unsafe { [<$flname _set_damage>](self.inner.widget() as _, mask.bits()) }
                 }
 
                 fn set_damage_area(&mut self, mask: $crate::enums::Damage, x: i32, y: i32, w: i32, h: i32) {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _set_damage_area>](self.inner, mask.bits(), x, y, w, h) }
+                    unsafe { [<$flname _set_damage_area>](self.inner.widget() as _, mask.bits(), x, y, w, h) }
                 }
 
                 fn clear_damage(&mut self) {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _clear_damage>](self.inner) }
+                    unsafe { [<$flname _clear_damage>](self.inner.widget() as _) }
                 }
 
                 fn as_window(&self) -> Option<Box<dyn WindowExt>> {
                     assert!(!self.was_deleted());
                     unsafe {
-                        let ptr = [<$flname _as_window>](self.inner);
+                        let ptr = [<$flname _as_window>](self.inner.widget() as _);
                         if ptr.is_null() {
                             return None;
                         }
@@ -661,7 +647,7 @@ macro_rules! impl_widget_ext {
                 fn as_group(&self) -> Option<$crate::group::Group> {
                     assert!(!self.was_deleted());
                     unsafe {
-                        let ptr = [<$flname _as_group>](self.inner);
+                        let ptr = [<$flname _as_group>](self.inner.widget() as _);
                         if ptr.is_null() {
                             return None;
                         }
@@ -676,7 +662,7 @@ macro_rules! impl_widget_ext {
                     assert!(!wid.was_deleted());
                     unsafe {
                         [<$flname _inside>](
-                            self.inner,
+                            self.inner.widget() as _,
                             wid.as_widget_ptr() as *mut std::os::raw::c_void,
                         ) != 0
                     }
@@ -684,13 +670,13 @@ macro_rules! impl_widget_ext {
 
                 fn get_type<T: WidgetType>(&self) -> T {
                     assert!(!self.was_deleted());
-                    unsafe { T::from_i32([<$flname _get_type>](self.inner)) }
+                    unsafe { T::from_i32([<$flname _get_type>](self.inner.widget() as _)) }
                 }
 
                 fn set_type<T: WidgetType>(&mut self, typ: T) {
                     assert!(!self.was_deleted());
                     unsafe {
-                        [<$flname _set_type>](self.inner, typ.to_i32());
+                        [<$flname _set_type>](self.inner.widget() as _, typ.to_i32());
                     }
                 }
 
@@ -700,14 +686,14 @@ macro_rules! impl_widget_ext {
                         assert!(!image.was_deleted());
                         unsafe {
                             [<$flname _set_image>](
-                                self.inner,
+                                self.inner.widget() as _,
                                 image.as_image_ptr() as *mut _,
                             )
                         }
                     } else {
                         unsafe {
                             [<$flname _set_image>](
-                                self.inner,
+                                self.inner.widget() as _,
                                 std::ptr::null_mut() as *mut std::os::raw::c_void,
                             )
                         }
@@ -721,14 +707,14 @@ macro_rules! impl_widget_ext {
                         image.scale(self.w(), self.h(), false, true);
                         unsafe {
                             [<$flname _set_image>](
-                                self.inner,
+                                self.inner.widget() as _,
                                 image.as_image_ptr() as *mut _,
                             )
                         }
                     } else {
                         unsafe {
                             [<$flname _set_image>](
-                                self.inner,
+                                self.inner.widget() as _,
                                 std::ptr::null_mut() as *mut std::os::raw::c_void,
                             )
                         }
@@ -738,7 +724,7 @@ macro_rules! impl_widget_ext {
                 fn image(&self) -> Option<Box<dyn ImageExt>> {
                     assert!(!self.was_deleted());
                     unsafe {
-                        let image_ptr = [<$flname _image>](self.inner);
+                        let image_ptr = [<$flname _image>](self.inner.widget() as _);
                         if image_ptr.is_null() {
                             None
                         } else {
@@ -751,7 +737,7 @@ macro_rules! impl_widget_ext {
 
                 unsafe fn image_mut(&self) -> Option<&mut $crate::image::Image> {
                     assert!(!self.was_deleted());
-                    let image_ptr = [<$flname _image>](self.inner);
+                    let image_ptr = [<$flname _image>](self.inner.widget() as _);
                     if image_ptr.is_null() {
                         None
                     } else {
@@ -767,14 +753,14 @@ macro_rules! impl_widget_ext {
                         assert!(!image.was_deleted());
                         unsafe {
                             [<$flname _set_deimage>](
-                                self.inner,
+                                self.inner.widget() as _,
                                 image.as_image_ptr() as *mut _,
                             )
                         }
                     } else {
                         unsafe {
                             [<$flname _set_deimage>](
-                                self.inner,
+                                self.inner.widget() as _,
                                 std::ptr::null_mut() as *mut std::os::raw::c_void,
                             )
                         }
@@ -788,14 +774,14 @@ macro_rules! impl_widget_ext {
                         image.scale(self.w(), self.h(), false, true);
                         unsafe {
                             [<$flname _set_deimage>](
-                                self.inner,
+                                self.inner.widget() as _,
                                 image.as_image_ptr() as *mut _,
                             )
                         }
                     } else {
                         unsafe {
                             [<$flname _set_deimage>](
-                                self.inner,
+                                self.inner.widget() as _,
                                 std::ptr::null_mut() as *mut std::os::raw::c_void,
                             )
                         }
@@ -805,7 +791,7 @@ macro_rules! impl_widget_ext {
                 fn deimage(&self) -> Option<Box<dyn ImageExt>> {
                     assert!(!self.was_deleted());
                     unsafe {
-                        let image_ptr = [<$flname _deimage>](self.inner);
+                        let image_ptr = [<$flname _deimage>](self.inner.widget() as _);
                         if image_ptr.is_null() {
                             None
                         } else {
@@ -818,7 +804,7 @@ macro_rules! impl_widget_ext {
 
                 unsafe fn deimage_mut(&self) -> Option<&mut $crate::image::Image> {
                     assert!(!self.was_deleted());
-                    let image_ptr = [<$flname _deimage>](self.inner);
+                    let image_ptr = [<$flname _deimage>](self.inner.widget() as _);
                     if image_ptr.is_null() {
                         None
                     } else {
@@ -845,7 +831,7 @@ macro_rules! impl_widget_ext {
                         let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: Fl_Callback = Some(shim);
-                        [<$flname _set_callback>](self.inner, callback, data);
+                        [<$flname _set_callback>](self.inner.widget() as _, callback, data);
                     }
                 }
 
@@ -864,12 +850,12 @@ macro_rules! impl_widget_ext {
 
                 fn visible(&self) -> bool {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _visible>](self.inner) != 0 }
+                    unsafe { [<$flname _visible>](self.inner.widget() as _) != 0 }
                 }
 
                 fn visible_r(&self) -> bool {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _visible_r>](self.inner) != 0 }
+                    unsafe { [<$flname _visible_r>](self.inner.widget() as _) != 0 }
                 }
 
                 fn is_same<W: WidgetExt>(&self, other: &W) -> bool {
@@ -878,19 +864,19 @@ macro_rules! impl_widget_ext {
 
                 fn active(&self) -> bool {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _active>](self.inner) != 0 }
+                    unsafe { [<$flname _active>](self.inner.widget() as _) != 0 }
                 }
 
                 fn active_r(&self) -> bool {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _active_r>](self.inner) != 0 }
+                    unsafe { [<$flname _active_r>](self.inner.widget() as _) != 0 }
                 }
 
                 fn callback(&self) -> Option<Box<dyn FnMut()>> {
                     assert!(!self.was_deleted());
                     unsafe {
-                        let cb = [<$flname _callback>](self.inner);
-                        let data = [<$flname _user_data>](self.inner);
+                        let cb = [<$flname _callback>](self.inner.widget() as _);
+                        let data = [<$flname _user_data>](self.inner.widget() as _);
                         if !data.is_null() {
                             return None;
                         }
@@ -908,7 +894,7 @@ macro_rules! impl_widget_ext {
 
                 fn handle_event(&mut self, event: $crate::enums::Event) -> bool {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _handle_event>](self.inner, event.bits()) != 0 }
+                    unsafe { [<$flname _handle_event>](self.inner.widget() as _, event.bits()) != 0 }
                 }
 
                 fn is_derived(&self) -> bool {
@@ -945,10 +931,9 @@ macro_rules! impl_widget_base {
                         if !win.is_null() {
                             assert!($crate::app::is_ui_thread());
                         }
-                        let tracker = $crate::widget::WidgetTracker::new(fltk_sys::fl::Fl_Widget_Tracker_new(
-                            widget_ptr as *mut fltk_sys::fl::Fl_Widget,
-                        ));
-                        assert!(!tracker.is_null());
+                        let tracker = $crate::widget::WidgetTracker::new(
+                            widget_ptr as _
+                        );
                         unsafe extern "C" fn shim(data: *mut std::os::raw::c_void) {
                             if !data.is_null() {
                                 let x = data as *mut Box<dyn FnMut()>;
@@ -957,8 +942,7 @@ macro_rules! impl_widget_base {
                         }
                         [<$flname _set_deleter>](widget_ptr, Some(shim));
                         $name {
-                            inner: widget_ptr,
-                            tracker,
+                            inner: tracker,
                             is_derived: true,
                         }
                     }
@@ -968,19 +952,15 @@ macro_rules! impl_widget_base {
                     Self::default().size_of_parent().center_of_parent()
                 }
 
-                fn delete(mut wid: Self) {
+                fn delete(wid: Self) {
                     assert!(!wid.was_deleted());
                     if let Some(mut parent) = wid.parent() {
                         parent.remove(&wid);
                     }
                     unsafe {
-                        if !wid.inner.is_null() {
-                            fltk_sys::fl::Fl_delete_widget(
-                                wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget
-                            );
-                            wid.inner = std::ptr::null_mut() as *mut _;
-                        }
-                        // wid.tracker = std::ptr::null_mut() as *mut fltk_sys::fl::Fl_Widget_Tracker;
+                        fltk_sys::fl::Fl_delete_widget(
+                            wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget
+                        );
                     }
                 }
 
@@ -988,11 +968,9 @@ macro_rules! impl_widget_base {
                     assert!(!ptr.is_null());
                     fltk_sys::fl::Fl_lock();
                     let tracker =
-                        $crate::widget::WidgetTracker::new(fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget));
-                    assert!(!tracker.is_null());
+                        $crate::widget::WidgetTracker::new(ptr as _);
                     let temp = $name {
-                        inner: ptr as *mut $flname,
-                        tracker,
+                        inner: tracker,
                         is_derived: false,
                     };
                     fltk_sys::fl::Fl_unlock();
@@ -1037,7 +1015,7 @@ macro_rules! impl_widget_base {
                             Box::into_raw(Box::new(Box::new(cb)));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: custom_handler_callback = Some(shim);
-                        [<$flname _handle>](self.inner, callback, data);
+                        [<$flname _handle>](self.inner.widget() as _, callback, data);
                     }
                 }
 
@@ -1060,29 +1038,29 @@ macro_rules! impl_widget_base {
                         let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: custom_draw_callback = Some(shim);
-                        [<$flname _draw>](self.inner, callback, data);
+                        [<$flname _draw>](self.inner.widget() as _, callback, data);
                     }
                 }
 
                 unsafe fn draw_data(&self) -> Option<Box<dyn FnMut()>> {
-                    let ptr = [<$flname _draw_data>](self.inner);
+                    let ptr = [<$flname _draw_data>](self.inner.widget() as _);
                     if ptr.is_null() {
                         return None;
                     }
                     let data = ptr as *mut Box<dyn FnMut()>;
                     let data = Box::from_raw(data);
-                    [<$flname _draw>](self.inner, None, std::ptr::null_mut());
+                    [<$flname _draw>](self.inner.widget() as _, None, std::ptr::null_mut());
                     Some(*data)
                 }
 
                 unsafe fn handle_data(&self) -> Option<Box<dyn FnMut($crate::enums::Event) -> bool>> {
-                    let ptr = [<$flname _handle_data>](self.inner);
+                    let ptr = [<$flname _handle_data>](self.inner.widget() as _);
                     if ptr.is_null() {
                         return None;
                     }
                     let data = ptr as *mut Box<dyn FnMut($crate::enums::Event) -> bool>;
                     let data = Box::from_raw(data);
-                    [<$flname _handle>](self.inner, None, std::ptr::null_mut());
+                    [<$flname _handle>](self.inner.widget() as _, None, std::ptr::null_mut());
                     Some(*data)
                 }
 
@@ -1115,7 +1093,7 @@ macro_rules! impl_widget_base {
                         let callback: Option<
                             unsafe extern "C" fn(*mut Fl_Widget, i32, i32, i32, i32, *mut std::os::raw::c_void),
                         > = Some(shim);
-                        [<$flname _resize_callback>](self.inner, callback, data);
+                        [<$flname _resize_callback>](self.inner.widget() as _, callback, data);
                     }
                 }
 
@@ -1132,13 +1110,9 @@ macro_rules! impl_widget_base {
                     if ptr.is_null() {
                         None
                     } else {
-                        let tracker = $crate::widget::WidgetTracker::new(unsafe {
-                            fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget)
-                        });
-                        assert!(!tracker.is_null());
+                        let tracker = $crate::widget::WidgetTracker::new(ptr as _);
                         Some(Self {
-                            inner: ptr as *mut $flname,
-                            tracker,
+                            inner: tracker,
                             is_derived: false,
                         })
                     }
@@ -1148,7 +1122,7 @@ macro_rules! impl_widget_base {
                     assert!(!self.was_deleted());
                     assert!(self.is_derived);
                     unsafe {
-                        [<$flname _super_draw>](self.inner as _, flag as i32)
+                        [<$flname _super_draw>](self.inner.widget() as _, flag as i32)
                     }
                 }
 
@@ -1156,7 +1130,7 @@ macro_rules! impl_widget_base {
                     assert!(!self.was_deleted());
                     assert!(self.is_derived);
                     unsafe {
-                        [<$flname _super_draw_first>](self.inner as _, flag as i32)
+                        [<$flname _super_draw_first>](self.inner.widget() as _, flag as i32)
                     }
                 }
             }

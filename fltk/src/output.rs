@@ -18,8 +18,7 @@ crate::macros::widget::impl_widget_type!(OutputType);
 /// Creates an output widget
 #[derive(Debug)]
 pub struct Output {
-    inner: *mut Fl_Output,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -31,8 +30,7 @@ crate::macros::input::impl_input_ext!(Output, Fl_Output);
 /// Creates a multiline-output widget
 #[derive(Debug)]
 pub struct MultilineOutput {
-    inner: *mut Fl_Multiline_Output,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 

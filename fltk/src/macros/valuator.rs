@@ -8,42 +8,42 @@ macro_rules! impl_valuator_ext {
                 fn set_bounds(&mut self, a: f64, b: f64) {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _set_bounds>](self.inner, a, b)
+                        [<$flname _set_bounds>](self.inner.widget() as _, a, b)
                     }
                 }
 
                 fn minimum(&self) -> f64 {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _minimum>](self.inner)
+                        [<$flname _minimum>](self.inner.widget() as _)
                     }
                 }
 
                 fn set_minimum(&mut self, a: f64) {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _set_minimum>](self.inner, a)
+                        [<$flname _set_minimum>](self.inner.widget() as _, a)
                     }
                 }
 
                 fn maximum(&self) -> f64 {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _maximum>](self.inner)
+                        [<$flname _maximum>](self.inner.widget() as _)
                     }
                 }
 
                 fn set_maximum(&mut self, a: f64) {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _set_maximum>](self.inner, a)
+                        [<$flname _set_maximum>](self.inner.widget() as _, a)
                     }
                 }
 
                 fn set_range(&mut self, a: f64, b: f64) {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _set_range>](self.inner, a, b)
+                        [<$flname _set_range>](self.inner.widget() as _, a, b)
                     }
                 }
 
@@ -51,35 +51,35 @@ macro_rules! impl_valuator_ext {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(b != 0);
-                        [<$flname _set_step>](self.inner, a, b)
+                        [<$flname _set_step>](self.inner.widget() as _, a, b)
                     }
                 }
 
                 fn step(&self) -> f64 {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _step>](self.inner)
+                        [<$flname _step>](self.inner.widget() as _)
                     }
                 }
 
                 fn set_precision(&mut self, digits: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _set_precision>](self.inner, digits)
+                        [<$flname _set_precision>](self.inner.widget() as _, digits)
                     }
                 }
 
                 fn value(&self) -> f64 {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _value>](self.inner)
+                        [<$flname _value>](self.inner.widget() as _)
                     }
                 }
 
                 fn set_value(&mut self, arg2: f64) {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _set_value>](self.inner, arg2);
+                        [<$flname _set_value>](self.inner.widget() as _, arg2);
                     }
                 }
 
@@ -88,7 +88,7 @@ macro_rules! impl_valuator_ext {
                         assert!(!self.was_deleted());
                         let arg2 = CString::safe_new(arg2);
                         let x = [<$flname _format>](
-                            self.inner,
+                            self.inner.widget() as _,
                             arg2.as_ptr() as *mut std::os::raw::c_char,
                         );
                         if x < 0 {
@@ -101,21 +101,21 @@ macro_rules! impl_valuator_ext {
                 fn round(&self, arg2: f64) -> f64 {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _round>](self.inner, arg2)
+                        [<$flname _round>](self.inner.widget() as _, arg2)
                     }
                 }
 
                 fn clamp(&self, arg2: f64) -> f64 {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _clamp>](self.inner, arg2)
+                        [<$flname _clamp>](self.inner.widget() as _, arg2)
                     }
                 }
 
                 fn increment(&mut self, arg2: f64, arg3: i32) -> f64 {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _increment>](self.inner, arg2, arg3)
+                        [<$flname _increment>](self.inner.widget() as _, arg2, arg3)
                     }
                 }
             }

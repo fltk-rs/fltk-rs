@@ -15,8 +15,7 @@ static DEBUG: AtomicBool = AtomicBool::new(false);
 /// Creates a group widget
 #[derive(Debug)]
 pub struct Group {
-    inner: *mut Fl_Group,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -63,8 +62,7 @@ impl Group {
 /// Creates a widget pack
 #[derive(Debug)]
 pub struct Pack {
-    inner: *mut Fl_Pack,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -89,14 +87,14 @@ impl Pack {
     /// Get the spacing of the pack
     pub fn spacing(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Pack_spacing(self.inner) }
+        unsafe { Fl_Pack_spacing(self.inner.widget() as _) }
     }
 
     /// Set the spacing of the pack
     pub fn set_spacing(&mut self, spacing: i32) {
         unsafe {
             assert!(!self.was_deleted());
-            Fl_Pack_set_spacing(self.inner, spacing);
+            Fl_Pack_set_spacing(self.inner.widget() as _, spacing);
         }
     }
 
@@ -128,8 +126,7 @@ impl Pack {
 /// Creates a scroll group
 #[derive(Debug)]
 pub struct Scroll {
-    inner: *mut Fl_Scroll,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -167,7 +164,7 @@ impl Scroll {
     pub fn scrollbar(&self) -> crate::valuator::Scrollbar {
         assert!(!self.was_deleted());
         unsafe {
-            let ptr = Fl_Scroll_scrollbar(self.inner);
+            let ptr = Fl_Scroll_scrollbar(self.inner.widget() as _);
             assert!(!ptr.is_null());
             crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)
         }
@@ -177,7 +174,7 @@ impl Scroll {
     pub fn hscrollbar(&self) -> crate::valuator::Scrollbar {
         assert!(!self.was_deleted());
         unsafe {
-            let ptr = Fl_Scroll_hscrollbar(self.inner);
+            let ptr = Fl_Scroll_hscrollbar(self.inner.widget() as _);
             assert!(!ptr.is_null());
             crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)
         }
@@ -186,31 +183,31 @@ impl Scroll {
     /// Returns the x position
     pub fn xposition(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_xposition(self.inner) }
+        unsafe { Fl_Scroll_xposition(self.inner.widget() as _) }
     }
 
     /// Returns the y position
     pub fn yposition(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_yposition(self.inner) }
+        unsafe { Fl_Scroll_yposition(self.inner.widget() as _) }
     }
 
     /// Scrolls to `x` and `y`
     pub fn scroll_to(&mut self, x: i32, y: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_scroll_to(self.inner, x, y) }
+        unsafe { Fl_Scroll_scroll_to(self.inner.widget() as _, x, y) }
     }
 
     /// Gets the scrollbar size
     pub fn scrollbar_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_scrollbar_size(self.inner) }
+        unsafe { Fl_Scroll_scrollbar_size(self.inner.widget() as _) }
     }
 
     /// Sets the scrollbar size
     pub fn set_scrollbar_size(&mut self, new_size: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_set_scrollbar_size(self.inner, new_size) }
+        unsafe { Fl_Scroll_set_scrollbar_size(self.inner.widget() as _, new_size) }
     }
 }
 
@@ -231,8 +228,7 @@ pub enum TabsOverflow {
 /// Creates a tab which can contain widgets
 #[derive(Debug)]
 pub struct Tabs {
-    inner: *mut Fl_Tabs,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -246,7 +242,7 @@ impl Tabs {
     pub fn value(&self) -> Option<impl GroupExt> {
         assert!(!self.was_deleted());
         unsafe {
-            let ptr = Fl_Tabs_value(self.inner);
+            let ptr = Fl_Tabs_value(self.inner.widget() as _);
             if ptr.is_null() {
                 None
             } else {
@@ -264,7 +260,7 @@ impl Tabs {
         assert!(!self.was_deleted());
         unsafe {
             match Fl_Tabs_set_value(
-                self.inner,
+                self.inner.widget() as _,
                 w.as_widget_ptr() as *mut fltk_sys::group::Fl_Widget,
             ) {
                 0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
@@ -277,7 +273,7 @@ impl Tabs {
     pub fn push(&self) -> Option<impl GroupExt> {
         assert!(!self.was_deleted());
         unsafe {
-            let ptr = Fl_Tabs_push(self.inner);
+            let ptr = Fl_Tabs_push(self.inner.widget() as _);
             if ptr.is_null() {
                 None
             } else {
@@ -295,7 +291,7 @@ impl Tabs {
         assert!(!self.was_deleted());
         unsafe {
             match Fl_Tabs_set_push(
-                self.inner,
+                self.inner.widget() as _,
                 w.as_widget_ptr() as *mut fltk_sys::group::Fl_Widget,
             ) {
                 0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
@@ -312,7 +308,7 @@ impl Tabs {
             let mut i2 = 0;
             let mut i3 = 0;
             let mut i4 = 0;
-            Fl_Tabs_client_area(self.inner, &mut i1, &mut i2, &mut i3, &mut i4);
+            Fl_Tabs_client_area(self.inner.widget() as _, &mut i1, &mut i2, &mut i3, &mut i4);
             (i1, i2, i3, i4)
         }
     }
@@ -320,13 +316,13 @@ impl Tabs {
     /// Sets the tab label alignment
     pub fn set_tab_align(&mut self, a: Align) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tabs_set_tab_align(self.inner, a.bits()) }
+        unsafe { Fl_Tabs_set_tab_align(self.inner.widget() as _, a.bits()) }
     }
 
     /// Gets the tab label alignment.
     pub fn tab_align(&self) -> Align {
         assert!(!self.was_deleted());
-        unsafe { mem::transmute(Fl_Tabs_tab_align(self.inner)) }
+        unsafe { mem::transmute(Fl_Tabs_tab_align(self.inner.widget() as _)) }
     }
 
     /// Auto layout a tabs widget
@@ -347,7 +343,7 @@ impl Tabs {
 
     /// Sets how the Tabs handles overflow
     pub fn handle_overflow(&mut self, ov: TabsOverflow) {
-        unsafe { Fl_Tabs_handle_overflow(self.inner, ov as i32) }
+        unsafe { Fl_Tabs_handle_overflow(self.inner.widget() as _, ov as i32) }
     }
 }
 
@@ -355,8 +351,7 @@ impl Tabs {
 /// More info can be found [here](https://www.fltk.org/doc-1.4/classFl__Tile.html#details)
 #[derive(Debug)]
 pub struct Tile {
-    inner: *mut Fl_Tile,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -368,8 +363,7 @@ crate::macros::group::impl_group_ext!(Tile, Fl_Tile);
 /// Creates a wizard widget
 #[derive(Debug)]
 pub struct Wizard {
-    inner: *mut Fl_Wizard,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -382,13 +376,13 @@ impl Wizard {
     /// Gets the next view of the wizard
     pub fn next(&mut self) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Wizard_next(self.inner) }
+        unsafe { Fl_Wizard_next(self.inner.widget() as _) }
     }
 
     /// Gets the previous view of the wizard
     pub fn prev(&mut self) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Wizard_prev(self.inner) }
+        unsafe { Fl_Wizard_prev(self.inner.widget() as _) }
     }
 
     #[deprecated(since = "1.2.18", note = "please use `try_current_widget` instead")]
@@ -396,7 +390,7 @@ impl Wizard {
     pub fn current_widget(&self) -> Widget {
         unsafe {
             assert!(!self.was_deleted());
-            let ptr = Fl_Wizard_value(self.inner) as *mut fltk_sys::widget::Fl_Widget;
+            let ptr = Fl_Wizard_value(self.inner.widget() as _) as *mut fltk_sys::widget::Fl_Widget;
             assert!(!ptr.is_null());
             Widget::from_widget_ptr(ptr)
         }
@@ -406,7 +400,7 @@ impl Wizard {
     pub fn try_current_widget(&self) -> Option<impl WidgetExt> {
         unsafe {
             assert!(!self.was_deleted());
-            let ptr = Fl_Wizard_value(self.inner) as *mut fltk_sys::widget::Fl_Widget;
+            let ptr = Fl_Wizard_value(self.inner.widget() as _) as *mut fltk_sys::widget::Fl_Widget;
             if ptr.is_null() {
                 None
             } else {
@@ -420,7 +414,7 @@ impl Wizard {
         unsafe {
             assert!(!self.was_deleted());
             Fl_Wizard_set_value(
-                self.inner,
+                self.inner.widget() as _,
                 w.as_widget_ptr() as *mut fltk_sys::group::Fl_Widget,
             )
         }
@@ -430,8 +424,7 @@ impl Wizard {
 /// Creates a color chooser widget
 #[derive(Debug)]
 pub struct ColorChooser {
-    inner: *mut Fl_Color_Chooser,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -445,9 +438,9 @@ impl ColorChooser {
     pub fn rgb_color(&self) -> (u8, u8, u8) {
         unsafe {
             assert!(!self.was_deleted());
-            let r = (Fl_Color_Chooser_r(self.inner) * 255.0) as u8;
-            let g = (Fl_Color_Chooser_g(self.inner) * 255.0) as u8;
-            let b = (Fl_Color_Chooser_b(self.inner) * 255.0) as u8;
+            let r = (Fl_Color_Chooser_r(self.inner.widget() as _) * 255.0) as u8;
+            let g = (Fl_Color_Chooser_g(self.inner.widget() as _) * 255.0) as u8;
+            let b = (Fl_Color_Chooser_b(self.inner.widget() as _) * 255.0) as u8;
             (r, g, b)
         }
     }
@@ -464,7 +457,7 @@ impl ColorChooser {
         assert!(!self.was_deleted());
         unsafe {
             let ret = Fl_Color_Chooser_set_rgb(
-                self.inner,
+                self.inner.widget() as _,
                 r as f64 / 255.0,
                 g as f64 / 255.0,
                 b as f64 / 255.0,
@@ -482,7 +475,7 @@ impl ColorChooser {
         assert!(!self.was_deleted());
         unsafe {
             let ret = Fl_Color_Chooser_set_rgb(
-                self.inner,
+                self.inner.widget() as _,
                 r as f64 / 255.0,
                 g as f64 / 255.0,
                 b as f64 / 255.0,
@@ -530,8 +523,7 @@ pub enum FlexType {
 */
 #[derive(Debug)]
 pub struct Flex {
-    inner: *mut Fl_Flex,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -571,12 +563,12 @@ impl Flex {
     /// Set the size of the widget, same as `fixed` (before it was changed in FLTK 1.4)
     #[deprecated(since = "1.4.8", note = "please use `fixed` instead")]
     pub fn set_size<W: WidgetExt>(&mut self, w: &W, size: i32) {
-        unsafe { Fl_Flex_set_size(self.inner, w.as_widget_ptr() as _, size) }
+        unsafe { Fl_Flex_set_size(self.inner.widget() as _, w.as_widget_ptr() as _, size) }
     }
 
     /// Set the size of the widget, same as `set_size`, but more inline with the new FLTK Fl_Flex api
     pub fn fixed<W: WidgetExt>(&mut self, w: &W, size: i32) {
-        unsafe { Fl_Flex_set_size(self.inner, w.as_widget_ptr() as _, size) }
+        unsafe { Fl_Flex_set_size(self.inner.widget() as _, w.as_widget_ptr() as _, size) }
     }
 
     /// Debug the flex layout
@@ -623,37 +615,37 @@ impl Flex {
 
     /// Set the margin
     pub fn set_margin(&mut self, m: i32) {
-        unsafe { Fl_Flex_set_margin(self.inner, m) }
+        unsafe { Fl_Flex_set_margin(self.inner.widget() as _, m) }
     }
 
     /// Get the margin
     pub fn margin(&self) -> i32 {
-        unsafe { Fl_Flex_margin(self.inner) }
+        unsafe { Fl_Flex_margin(self.inner.widget() as _) }
     }
 
     /// Set the padding
     pub fn set_pad(&mut self, p: i32) {
-        unsafe { Fl_Flex_set_pad(self.inner, p) }
+        unsafe { Fl_Flex_set_pad(self.inner.widget() as _, p) }
     }
 
     /// Get the padding
     pub fn pad(&self) -> i32 {
-        unsafe { Fl_Flex_pad(self.inner) }
+        unsafe { Fl_Flex_pad(self.inner.widget() as _) }
     }
 
     /// Set the padding
     pub fn set_spacing(&mut self, p: i32) {
-        unsafe { Fl_Flex_set_pad(self.inner, p) }
+        unsafe { Fl_Flex_set_pad(self.inner.widget() as _, p) }
     }
 
     /// Get the padding
     pub fn spacing(&self) -> i32 {
-        unsafe { Fl_Flex_pad(self.inner) }
+        unsafe { Fl_Flex_pad(self.inner.widget() as _) }
     }
 
     /// Set the margins
     pub fn set_margins(&mut self, left: i32, top: i32, right: i32, bottom: i32) {
-        unsafe { Fl_Flex_set_margins(self.inner, left, top, right, bottom) }
+        unsafe { Fl_Flex_set_margins(self.inner.widget() as _, left, top, right, bottom) }
     }
 
     /// Get the margins -> returns (left, top, right, bottom)
@@ -663,7 +655,13 @@ impl Flex {
         let mut right = 0;
         let mut bottom = 0;
         unsafe {
-            Fl_Flex_margins(self.inner, &mut left, &mut top, &mut right, &mut bottom);
+            Fl_Flex_margins(
+                self.inner.widget() as _,
+                &mut left,
+                &mut top,
+                &mut right,
+                &mut bottom,
+            );
         }
         (left, top, right, bottom)
     }
@@ -1054,8 +1052,7 @@ pub mod experimental {
     /// Fltk's grid widget
     #[derive(Debug)]
     pub struct Grid {
-        inner: *mut Fl_Grid,
-        tracker: crate::widget::WidgetTracker,
+        inner: crate::widget::WidgetTracker,
         is_derived: bool,
     }
 
@@ -1067,35 +1064,35 @@ pub mod experimental {
     impl Grid {
         /// Set the layout of the grid, along with the margin and gap
         pub fn set_layout_ext(&mut self, rows: i32, cols: i32, margin: i32, gap: i32) {
-            unsafe { Fl_Grid_set_layout(self.inner, rows, cols, margin, gap) }
+            unsafe { Fl_Grid_set_layout(self.inner.widget() as _, rows, cols, margin, gap) }
         }
         /// Set the layout of the grid
         pub fn set_layout(&mut self, rows: i32, cols: i32) {
-            unsafe { Fl_Grid_set_layout(self.inner, rows, cols, -1, -1) }
+            unsafe { Fl_Grid_set_layout(self.inner.widget() as _, rows, cols, -1, -1) }
         }
         /// Layout the grid
         pub fn layout(&mut self) {
-            unsafe { Fl_Grid_layout(self.inner) }
+            unsafe { Fl_Grid_layout(self.inner.widget() as _) }
         }
         /// Clear the layout
         pub fn clear_layout(&mut self) {
-            unsafe { Fl_Grid_clear_layout(self.inner) }
+            unsafe { Fl_Grid_clear_layout(self.inner.widget() as _) }
         }
         /// Set whether the Grid needs layout
         pub fn set_need_layout(&mut self, set: bool) {
-            unsafe { Fl_Grid_set_need_layout(self.inner, set as _) }
+            unsafe { Fl_Grid_set_need_layout(self.inner.widget() as _, set as _) }
         }
         /// Get whether the Grid needs layout
         pub fn need_layout(&self) -> bool {
-            unsafe { Fl_Grid_need_layout(self.inner) != 0 }
+            unsafe { Fl_Grid_need_layout(self.inner.widget() as _) != 0 }
         }
         /// Set the grid's margin
         pub fn set_margin(&mut self, left: i32, top: i32, right: i32, bottom: i32) {
-            unsafe { Fl_Grid_set_margin(self.inner, left, top, right, bottom) }
+            unsafe { Fl_Grid_set_margin(self.inner.widget() as _, left, top, right, bottom) }
         }
         /// Set the grid's gap
         pub fn set_gap(&mut self, row_gap: i32, col_gap: i32) {
-            unsafe { Fl_Grid_set_gap(self.inner, row_gap, col_gap) }
+            unsafe { Fl_Grid_set_gap(self.inner.widget() as _, row_gap, col_gap) }
         }
         #[allow(dead_code)]
         /// Set the widget at row/column and alignment
@@ -1107,7 +1104,13 @@ pub mod experimental {
             align: GridAlign,
         ) -> *mut () {
             unsafe {
-                Fl_Grid_set_widget(self.inner, wi.as_widget_ptr() as _, row, col, align.bits()) as _
+                Fl_Grid_set_widget(
+                    self.inner.widget() as _,
+                    wi.as_widget_ptr() as _,
+                    row,
+                    col,
+                    align.bits(),
+                ) as _
             }
         }
         /// Set the widget at row/column using ranges
@@ -1133,7 +1136,7 @@ pub mod experimental {
         ) -> *mut () {
             unsafe {
                 Fl_Grid_set_widget_ext(
-                    self.inner,
+                    self.inner.widget() as _,
                     wi.as_widget_ptr() as _,
                     row,
                     col,
@@ -1164,39 +1167,39 @@ pub mod experimental {
         }
         /// Set the column width
         pub fn set_col_width(&mut self, col: i32, value: i32) {
-            unsafe { Fl_Grid_set_col_width(self.inner, col, value) }
+            unsafe { Fl_Grid_set_col_width(self.inner.widget() as _, col, value) }
         }
         /// Set the column weight
         pub fn set_col_weight(&mut self, col: i32, value: i32) {
-            unsafe { Fl_Grid_set_col_weight(self.inner, col, value) }
+            unsafe { Fl_Grid_set_col_weight(self.inner.widget() as _, col, value) }
         }
         /// Set the column gap
         pub fn set_col_gap(&mut self, col: i32, value: i32) {
-            unsafe { Fl_Grid_set_col_gap(self.inner, col, value) }
+            unsafe { Fl_Grid_set_col_gap(self.inner.widget() as _, col, value) }
         }
         /// Set the row height
         pub fn set_row_height(&mut self, row: i32, value: i32) {
-            unsafe { Fl_Grid_set_row_height(self.inner, row, value) }
+            unsafe { Fl_Grid_set_row_height(self.inner.widget() as _, row, value) }
         }
         /// Set the row weight
         pub fn set_row_weight(&mut self, row: i32, value: i32) {
-            unsafe { Fl_Grid_set_row_weight(self.inner, row, value) }
+            unsafe { Fl_Grid_set_row_weight(self.inner.widget() as _, row, value) }
         }
         /// Set the row gap
         pub fn set_row_gap(&mut self, row: i32, value: i32) {
-            unsafe { Fl_Grid_set_row_gap(self.inner, row, value) }
+            unsafe { Fl_Grid_set_row_gap(self.inner.widget() as _, row, value) }
         }
         /// Show the grid
         pub fn show_grid(&mut self, set: bool) {
-            unsafe { Fl_Grid_show_grid(self.inner, set as _) }
+            unsafe { Fl_Grid_show_grid(self.inner.widget() as _, set as _) }
         }
         /// Show the grid with a certain color
         pub fn show_grid_with_color(&mut self, set: bool, col: Color) {
-            unsafe { Fl_Grid_show_grid_with_color(self.inner, set as _, col.bits()) }
+            unsafe { Fl_Grid_show_grid_with_color(self.inner.widget() as _, set as _, col.bits()) }
         }
         /// Debug the grid
         pub fn debug(&mut self, level: i32) {
-            unsafe { Fl_Grid_debug(self.inner, level) }
+            unsafe { Fl_Grid_debug(self.inner.widget() as _, level) }
         }
     }
 }

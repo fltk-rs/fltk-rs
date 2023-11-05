@@ -550,6 +550,22 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Window_maximize(w: *mut Fl_Window);
+}
+extern "C" {
+    pub fn Fl_Window_un_maximize(w: *mut Fl_Window);
+}
+extern "C" {
+    pub fn Fl_Window_maximize_active(w: *const Fl_Window) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Window_new_wh(
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Window;
+}
+extern "C" {
     pub fn Fl_Window_find_by_handle(handle: *mut ::std::os::raw::c_void) -> *mut Fl_Window;
 }
 extern "C" {
@@ -1183,6 +1199,15 @@ extern "C" {
         length: ::std::os::raw::c_int,
     );
 }
+extern "C" {
+    pub fn Fl_Single_Window_maximize(w: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_un_maximize(w: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_maximize_active(w: *const Fl_Single_Window) -> ::std::os::raw::c_uint;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Double_Window {
@@ -1798,6 +1823,15 @@ extern "C" {
         length: ::std::os::raw::c_int,
     );
 }
+extern "C" {
+    pub fn Fl_Double_Window_maximize(w: *mut Fl_Double_Window);
+}
+extern "C" {
+    pub fn Fl_Double_Window_un_maximize(w: *mut Fl_Double_Window);
+}
+extern "C" {
+    pub fn Fl_Double_Window_maximize_active(w: *const Fl_Double_Window) -> ::std::os::raw::c_uint;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Window {
@@ -2353,6 +2387,15 @@ extern "C" {
         images: *mut *const ::std::os::raw::c_void,
         length: ::std::os::raw::c_int,
     );
+}
+extern "C" {
+    pub fn Fl_Menu_Window_maximize(w: *mut Fl_Menu_Window);
+}
+extern "C" {
+    pub fn Fl_Menu_Window_un_maximize(w: *mut Fl_Menu_Window);
+}
+extern "C" {
+    pub fn Fl_Menu_Window_maximize_active(w: *const Fl_Menu_Window) -> ::std::os::raw::c_uint;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -3012,6 +3055,16 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Overlay_Window_maximize(w: *mut Fl_Overlay_Window);
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_un_maximize(w: *mut Fl_Overlay_Window);
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_maximize_active(w: *const Fl_Overlay_Window)
+        -> ::std::os::raw::c_uint;
+}
+extern "C" {
     pub fn Fl_gl_start();
 }
 extern "C" {
@@ -3550,6 +3603,15 @@ extern "C" {
         images: *mut *const ::std::os::raw::c_void,
         length: ::std::os::raw::c_int,
     );
+}
+extern "C" {
+    pub fn Fl_Gl_Window_maximize(w: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_un_maximize(w: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_maximize_active(w: *const Fl_Gl_Window) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Gl_Window_flush(self_: *mut Fl_Gl_Window);
@@ -4173,6 +4235,15 @@ extern "C" {
         images: *mut *const ::std::os::raw::c_void,
         length: ::std::os::raw::c_int,
     );
+}
+extern "C" {
+    pub fn Fl_Glut_Window_maximize(w: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_un_maximize(w: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_maximize_active(w: *const Fl_Glut_Window) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Glut_Window_flush(self_: *mut Fl_Glut_Window);

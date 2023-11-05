@@ -29,8 +29,7 @@ use std::ffi::{CStr, CString};
 /// ```
 #[derive(Debug)]
 pub struct Widget {
-    inner: *mut Fl_Widget,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -41,12 +40,57 @@ crate::macros::widget::impl_widget_default!(Widget);
 /// An alias exposing the Widget tracker
 pub type WidgetTrackerPtr = *mut fltk_sys::fl::Fl_Widget_Tracker;
 
-/// Widget Tracker
+/// Widget Tracker Wrapper
 #[doc(hidden)]
 #[cfg(feature = "single-threaded")]
-pub type WidgetTracker = std::rc::Rc<WidgetTrackerPtr>;
+pub type WidgetTrackerWrapper = std::rc::Rc<WidgetTrackerPtr>;
 
 /// Widget Tracker
 #[doc(hidden)]
 #[cfg(not(feature = "single-threaded"))]
-pub type WidgetTracker = std::sync::Arc<WidgetTrackerPtr>;
+pub type WidgetTrackerWrapper = std::sync::Arc<WidgetTrackerPtr>;
+
+/// Widget Tracker
+#[derive(Debug, Clone)]
+pub struct WidgetTracker {
+    inner: WidgetTrackerWrapper,
+}
+
+#[cfg(not(feature = "single-threaded"))]
+unsafe impl Send for WidgetTracker {}
+
+#[cfg(not(feature = "single-threaded"))]
+unsafe impl Sync for WidgetTracker {}
+
+impl Drop for WidgetTracker {
+    fn drop(&mut self) {
+        if WidgetTrackerWrapper::strong_count(&self.inner) == 1 {
+            unsafe {
+                fltk_sys::fl::Fl_Widget_Tracker_delete(*self.inner);
+            }
+        }
+    }
+}
+
+impl WidgetTracker {
+    /// Creates a new widget tracker
+    pub fn new(w: *mut Fl_Widget) -> Self {
+        let ptr = unsafe { fltk_sys::fl::Fl_Widget_Tracker_new(w as _) };
+        assert!(!ptr.is_null());
+        Self {
+            inner: WidgetTrackerWrapper::new(ptr),
+        }
+    }
+
+    /// Checks if the wrapped widget was deleted
+    pub fn deleted(&self) -> bool {
+        unsafe { fltk_sys::fl::Fl_Widget_Tracker_deleted(*self.inner) != 0 }
+    }
+
+    /// Gets the wrapped widget
+    pub fn widget(&self) -> *mut Fl_Widget {
+        let w = unsafe { fltk_sys::fl::Fl_Widget_Tracker_widget(*self.inner) };
+        assert!(!w.is_null());
+        w as _
+    }
+}

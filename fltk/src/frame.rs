@@ -6,8 +6,7 @@ use std::ffi::{CStr, CString};
 /// Creates a new frame, an equivalent of `Fl_Box`
 #[derive(Debug)]
 pub struct Frame {
-    inner: *mut Fl_Box,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 

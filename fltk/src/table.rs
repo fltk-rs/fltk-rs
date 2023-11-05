@@ -7,8 +7,7 @@ use std::ffi::{CStr, CString};
 /// For a simpler boilerplate-less table, check the [fltk-table crate](https://crates.io/crates/fltk-table)
 #[derive(Debug)]
 pub struct Table {
-    inner: *mut Fl_Table,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -59,8 +58,7 @@ pub enum TableResizeFlag {
 /// Creates a table row
 #[derive(Debug)]
 pub struct TableRow {
-    inner: *mut Fl_Table_Row,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -101,7 +99,7 @@ impl TableRow {
     pub fn row_selected(&mut self, row: i32) -> bool {
         unsafe {
             assert!(!self.was_deleted());
-            Fl_Table_Row_row_selected(self.inner, row) != 0
+            Fl_Table_Row_row_selected(self.inner.widget() as _, row) != 0
         }
     }
 
@@ -115,7 +113,7 @@ impl TableRow {
     ) -> Result<(), FltkError> {
         unsafe {
             assert!(!self.was_deleted());
-            match Fl_Table_Row_select_row(self.inner, row, selection_flag as i32) {
+            match Fl_Table_Row_select_row(self.inner.widget() as _, row, selection_flag as i32) {
                 1 => Ok(()),
                 0 | -1 => Err(FltkError::Internal(FltkErrorKind::TableError)),
                 _ => unreachable!(),
@@ -126,6 +124,6 @@ impl TableRow {
     /// Selects all rows
     pub fn select_all_rows(&mut self, selection_flag: TableRowSelectFlag) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Table_Row_select_all_rows(self.inner, selection_flag as i32) }
+        unsafe { Fl_Table_Row_select_all_rows(self.inner.widget() as _, selection_flag as i32) }
     }
 }

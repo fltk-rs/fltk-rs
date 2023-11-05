@@ -47,8 +47,7 @@ crate::macros::widget::impl_widget_type!(ClockType);
 /// Creates a spinner widget
 #[derive(Debug)]
 pub struct Spinner {
-    inner: *mut Fl_Spinner,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -60,118 +59,118 @@ impl Spinner {
     /// Returns the minimum value of the spinner widget
     pub fn minimum(&self) -> f64 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_minimum(self.inner) }
+        unsafe { Fl_Spinner_minimum(self.inner.widget() as _) }
     }
 
     /// Sets the minimum value of the spinner widget
     pub fn set_minimum(&mut self, a: f64) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_minimum(self.inner, a) }
+        unsafe { Fl_Spinner_set_minimum(self.inner.widget() as _, a) }
     }
 
     /// Returns the maximum value of the spinner widget
     pub fn maximum(&self) -> f64 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_maximum(self.inner) }
+        unsafe { Fl_Spinner_maximum(self.inner.widget() as _) }
     }
 
     /// Sets the minimum value of the spinner widget
     pub fn set_maximum(&mut self, a: f64) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_maximum(self.inner, a) }
+        unsafe { Fl_Spinner_set_maximum(self.inner.widget() as _, a) }
     }
 
     /// Sets the range of the spinner widget
     pub fn set_range(&mut self, a: f64, b: f64) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_range(self.inner, a, b) }
+        unsafe { Fl_Spinner_set_range(self.inner.widget() as _, a, b) }
     }
 
     /// Sets the step of the spinner widget
     pub fn set_step(&mut self, a: f64) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_step(self.inner, a) }
+        unsafe { Fl_Spinner_set_step(self.inner.widget() as _, a) }
     }
 
     /// Gets the range of the spinner widget
     pub fn step(&self) -> f64 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_step(self.inner) }
+        unsafe { Fl_Spinner_step(self.inner.widget() as _) }
     }
 
     /// Returns the maximum size supported by the spinner widget
     pub fn maximum_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_maxsize(self.inner) }
+        unsafe { Fl_Spinner_maxsize(self.inner.widget() as _) }
     }
 
     /// Sets the maximum size supported by the spinner widget
     pub fn set_maximum_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_maxsize(self.inner, s) }
+        unsafe { Fl_Spinner_set_maxsize(self.inner.widget() as _, s) }
     }
 
     /// Gets the text font
     pub fn text_font(&self) -> Font {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Spinner_text_font(self.inner)) }
+        unsafe { std::mem::transmute(Fl_Spinner_text_font(self.inner.widget() as _)) }
     }
 
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_text_font(self.inner, f.bits()) }
+        unsafe { Fl_Spinner_set_text_font(self.inner.widget() as _, f.bits()) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_text_size(self.inner) }
+        unsafe { Fl_Spinner_text_size(self.inner.widget() as _) }
     }
 
     /// Sets the text size
     pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_text_size(self.inner, s) }
+        unsafe { Fl_Spinner_set_text_size(self.inner.widget() as _, s) }
     }
 
     /// Gets the text's color
     pub fn text_color(&self) -> Color {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Spinner_text_color(self.inner)) }
+        unsafe { std::mem::transmute(Fl_Spinner_text_color(self.inner.widget() as _)) }
     }
 
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_text_color(self.inner, color.bits()) }
+        unsafe { Fl_Spinner_set_text_color(self.inner.widget() as _, color.bits()) }
     }
 
     /// Returns the value of the spinner
     pub fn value(&self) -> f64 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_value(self.inner) }
+        unsafe { Fl_Spinner_value(self.inner.widget() as _) }
     }
 
     /// Sets the value of the spinner
     pub fn set_value(&mut self, arg2: f64) {
         unsafe {
             assert!(!self.was_deleted());
-            Fl_Spinner_set_value(self.inner, arg2);
+            Fl_Spinner_set_value(self.inner.widget() as _, arg2);
         }
     }
 
     /// Returns whether wrap is set
     pub fn wrap(&self) -> bool {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_wrap(self.inner) != 0 }
+        unsafe { Fl_Spinner_wrap(self.inner.widget() as _) != 0 }
     }
 
     /// Sets wrap for the spinner
     pub fn set_wrap(&mut self, flag: bool) {
         unsafe {
             assert!(!self.was_deleted());
-            Fl_Spinner_set_wrap(self.inner, flag as _);
+            Fl_Spinner_set_wrap(self.inner.widget() as _, flag as _);
         }
     }
 }
@@ -179,8 +178,7 @@ impl Spinner {
 /// Creates a clock widget
 #[derive(Debug)]
 pub struct Clock {
-    inner: *mut Fl_Clock,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -191,8 +189,7 @@ crate::macros::widget::impl_widget_default!(Clock);
 /// Creates a chart widget
 #[derive(Debug)]
 pub struct Chart {
-    inner: *mut Fl_Chart,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -204,110 +201,109 @@ impl Chart {
     /// Clears the chart
     pub fn clear(&mut self) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_clear(self.inner) }
+        unsafe { Fl_Chart_clear(self.inner.widget() as _) }
     }
 
     /// Adds an entry
     pub fn add(&mut self, val: f64, txt: &str, col: Color) {
         assert!(!self.was_deleted());
         let txt = CString::safe_new(txt);
-        unsafe { Fl_Chart_add(self.inner, val, txt.as_ptr(), col.bits()) }
+        unsafe { Fl_Chart_add(self.inner.widget() as _, val, txt.as_ptr(), col.bits()) }
     }
 
     /// Inserts an entry at an index
     pub fn insert(&mut self, idx: i32, val: f64, txt: &str, col: Color) {
         assert!(!self.was_deleted());
         let txt = CString::safe_new(txt);
-        unsafe { Fl_Chart_insert(self.inner, idx, val, txt.as_ptr(), col.bits()) }
+        unsafe { Fl_Chart_insert(self.inner.widget() as _, idx, val, txt.as_ptr(), col.bits()) }
     }
 
     /// Replaces an entry at an index
     pub fn replace(&mut self, idx: i32, val: f64, txt: &str, col: Color) {
         assert!(!self.was_deleted());
         let txt = CString::safe_new(txt);
-        unsafe { Fl_Chart_replace(self.inner, idx, val, txt.as_ptr(), col.bits()) }
+        unsafe { Fl_Chart_replace(self.inner.widget() as _, idx, val, txt.as_ptr(), col.bits()) }
     }
 
     /// Sets the bounds of the chart
     pub fn set_bounds(&mut self, a: f64, b: f64) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_set_bounds(self.inner, a, b) }
+        unsafe { Fl_Chart_set_bounds(self.inner.widget() as _, a, b) }
     }
 
     /// Returns the size of the chart
     pub fn size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_size(self.inner) }
+        unsafe { Fl_Chart_size(self.inner.widget() as _) }
     }
 
     /// Gets the maximum supported size of the chart
     pub fn maximum_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_maxsize(self.inner) }
+        unsafe { Fl_Chart_maxsize(self.inner.widget() as _) }
     }
 
     /// Sets the maximum supported size of the chart
     pub fn set_maximum_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_set_maxsize(self.inner, s) }
+        unsafe { Fl_Chart_set_maxsize(self.inner.widget() as _, s) }
     }
 
     /// Gets the text font
     pub fn text_font(&self) -> Font {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Chart_text_font(self.inner)) }
+        unsafe { std::mem::transmute(Fl_Chart_text_font(self.inner.widget() as _)) }
     }
 
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_set_text_font(self.inner, f.bits()) }
+        unsafe { Fl_Chart_set_text_font(self.inner.widget() as _, f.bits()) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_text_size(self.inner) }
+        unsafe { Fl_Chart_text_size(self.inner.widget() as _) }
     }
 
     /// Sets the text size
     pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_set_text_size(self.inner, s) }
+        unsafe { Fl_Chart_set_text_size(self.inner.widget() as _, s) }
     }
 
     /// Gets the text's color
     pub fn text_color(&self) -> Color {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Chart_text_color(self.inner)) }
+        unsafe { std::mem::transmute(Fl_Chart_text_color(self.inner.widget() as _)) }
     }
 
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_set_text_color(self.inner, color.bits()) }
+        unsafe { Fl_Chart_set_text_color(self.inner.widget() as _, color.bits()) }
     }
 
     /// Returns whether the chart is autosizable
     pub fn is_autosize(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
-            Fl_Chart_is_autosize(self.inner) != 0
+            Fl_Chart_is_autosize(self.inner.widget() as _) != 0
         }
     }
 
     /// Sets the ability of the chart to be autosizable
     pub fn make_autosize(&mut self, val: bool) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_make_autosize(self.inner, val as i32) }
+        unsafe { Fl_Chart_make_autosize(self.inner.widget() as _, val as i32) }
     }
 }
 
 /// Creates a progress bar
 #[derive(Debug)]
 pub struct Progress {
-    inner: *mut Fl_Progress,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -319,38 +315,38 @@ impl Progress {
     /// Returns the minimum value of the progress bar
     pub fn minimum(&self) -> f64 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Progress_minimum(self.inner) }
+        unsafe { Fl_Progress_minimum(self.inner.widget() as _) }
     }
 
     /// Sets the minimum value of the progress bar
     pub fn set_minimum(&mut self, a: f64) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Progress_set_minimum(self.inner, a) }
+        unsafe { Fl_Progress_set_minimum(self.inner.widget() as _, a) }
     }
 
     /// Returns the maximum value of the progress bar
     pub fn maximum(&self) -> f64 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Progress_maximum(self.inner) }
+        unsafe { Fl_Progress_maximum(self.inner.widget() as _) }
     }
 
     /// Sets the minimum value of the progress bar
     pub fn set_maximum(&mut self, a: f64) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Progress_set_maximum(self.inner, a) }
+        unsafe { Fl_Progress_set_maximum(self.inner.widget() as _, a) }
     }
 
     /// Returns the value of the progress bar
     pub fn value(&self) -> f64 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Progress_value(self.inner) }
+        unsafe { Fl_Progress_value(self.inner.widget() as _) }
     }
 
     /// Sets the value of the progress bar
     pub fn set_value(&mut self, arg2: f64) {
         unsafe {
             assert!(!self.was_deleted());
-            Fl_Progress_set_value(self.inner, arg2);
+            Fl_Progress_set_value(self.inner.widget() as _, arg2);
         }
     }
 }
@@ -527,8 +523,7 @@ impl Tooltip {
 /// Creates an `InputChoice` widget
 #[derive(Debug)]
 pub struct InputChoice {
-    inner: *mut Fl_Input_Choice,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -540,33 +535,33 @@ impl InputChoice {
     /// Set the `down_box` of the widget
     pub fn set_down_frame(&mut self, f: FrameType) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_set_down_box(self.inner, f.as_i32()) }
+        unsafe { Fl_Input_Choice_set_down_box(self.inner.widget() as _, f.as_i32()) }
     }
 
     /// Get the down frame type of the widget
     pub fn down_frame(&self) -> FrameType {
         assert!(!self.was_deleted());
-        unsafe { FrameType::from_i32(Fl_Input_Choice_down_box(self.inner)) }
+        unsafe { FrameType::from_i32(Fl_Input_Choice_down_box(self.inner.widget() as _)) }
     }
 
     /// Add an element to the input choice
     pub fn add(&mut self, s: &str) {
         assert!(!self.was_deleted());
         let s = CString::safe_new(s);
-        unsafe { Fl_Input_Choice_add(self.inner, s.as_ptr()) }
+        unsafe { Fl_Input_Choice_add(self.inner.widget() as _, s.as_ptr()) }
     }
 
     /// Clear the input choice widget
     pub fn clear(&mut self) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_clear(self.inner) }
+        unsafe { Fl_Input_Choice_clear(self.inner.widget() as _) }
     }
 
     /// Get the value of the current choice
     pub fn value(&self) -> Option<String> {
         assert!(!self.was_deleted());
         unsafe {
-            let ptr = Fl_Input_Choice_value(self.inner);
+            let ptr = Fl_Input_Choice_value(self.inner.widget() as _);
             if ptr.is_null() {
                 None
             } else {
@@ -579,20 +574,20 @@ impl InputChoice {
     pub fn set_value(&mut self, val: &str) {
         assert!(!self.was_deleted());
         let val = CString::safe_new(val);
-        unsafe { Fl_Input_Choice_set_value(self.inner, val.as_ptr()) }
+        unsafe { Fl_Input_Choice_set_value(self.inner.widget() as _, val.as_ptr()) }
     }
 
     /// Set the value of the input choice to the element at `idx`
     pub fn set_value_index(&mut self, idx: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_set_value2(self.inner, idx) }
+        unsafe { Fl_Input_Choice_set_value2(self.inner.widget() as _, idx) }
     }
 
     /// Get the associated input widget
     pub fn input(&self) -> crate::input::Input {
         assert!(!self.was_deleted());
         unsafe {
-            let ptr = Fl_Input_Choice_input(self.inner);
+            let ptr = Fl_Input_Choice_input(self.inner.widget() as _);
             assert!(!ptr.is_null());
             crate::input::Input::from_widget_ptr(ptr as _)
         }
@@ -602,7 +597,7 @@ impl InputChoice {
     pub fn menu_button(&self) -> crate::menu::MenuButton {
         assert!(!self.was_deleted());
         unsafe {
-            let ptr = Fl_Input_Choice_menu_button(self.inner);
+            let ptr = Fl_Input_Choice_menu_button(self.inner.widget() as _);
             assert!(!ptr.is_null());
             crate::menu::MenuButton::from_widget_ptr(ptr as _)
         }
@@ -611,37 +606,37 @@ impl InputChoice {
     /// Gets the text font
     pub fn text_font(&self) -> Font {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Input_Choice_text_font(self.inner)) }
+        unsafe { std::mem::transmute(Fl_Input_Choice_text_font(self.inner.widget() as _)) }
     }
 
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_set_text_font(self.inner, f.bits()) }
+        unsafe { Fl_Input_Choice_set_text_font(self.inner.widget() as _, f.bits()) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_text_size(self.inner) }
+        unsafe { Fl_Input_Choice_text_size(self.inner.widget() as _) }
     }
 
     /// Sets the text size
     pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_set_text_size(self.inner, s) }
+        unsafe { Fl_Input_Choice_set_text_size(self.inner.widget() as _, s) }
     }
 
     /// Gets the text's color
     pub fn text_color(&self) -> Color {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Input_Choice_text_color(self.inner)) }
+        unsafe { std::mem::transmute(Fl_Input_Choice_text_color(self.inner.widget() as _)) }
     }
 
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_set_text_color(self.inner, color.bits()) }
+        unsafe { Fl_Input_Choice_set_text_color(self.inner.widget() as _, color.bits()) }
     }
 }
 
@@ -656,8 +651,7 @@ impl InputChoice {
 */
 #[derive(Debug)]
 pub struct HelpView {
-    inner: *mut Fl_Help_View,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -670,7 +664,7 @@ impl HelpView {
     pub fn directory(&self) -> std::path::PathBuf {
         assert!(!self.was_deleted());
         unsafe {
-            let x = Fl_Help_View_directory(self.inner);
+            let x = Fl_Help_View_directory(self.inner.widget() as _);
             if x.is_null() {
                 std::path::PathBuf::from("")
             } else {
@@ -687,7 +681,7 @@ impl HelpView {
     pub fn filename(&self) -> std::path::PathBuf {
         assert!(!self.was_deleted());
         unsafe {
-            let x = Fl_Help_View_directory(self.inner);
+            let x = Fl_Help_View_directory(self.inner.widget() as _);
             if x.is_null() {
                 std::path::PathBuf::from("")
             } else {
@@ -705,7 +699,7 @@ impl HelpView {
         assert!(!self.was_deleted());
         unsafe {
             let s = CString::safe_new(s);
-            let ret = Fl_Help_View_find(self.inner, s.as_ptr(), start_from);
+            let ret = Fl_Help_View_find(self.inner.widget() as _, s.as_ptr(), start_from);
             match ret {
                 -1 => None,
                 _ => Some(ret as usize),
@@ -717,7 +711,7 @@ impl HelpView {
     pub fn value(&self) -> Option<String> {
         assert!(!self.was_deleted());
         unsafe {
-            let val = Fl_Help_View_value(self.inner);
+            let val = Fl_Help_View_value(self.inner.widget() as _);
             if val.is_null() {
                 None
             } else {
@@ -730,98 +724,98 @@ impl HelpView {
     pub fn set_value(&mut self, val: &str) {
         assert!(!self.was_deleted());
         let val = CString::safe_new(val);
-        unsafe { Fl_Help_View_set_value(self.inner, val.as_ptr()) }
+        unsafe { Fl_Help_View_set_value(self.inner.widget() as _, val.as_ptr()) }
     }
 
     /// Clear selection
     pub fn clear_selection(&mut self) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_clear_selection(self.inner) }
+        unsafe { Fl_Help_View_clear_selection(self.inner.widget() as _) }
     }
 
     /// Select all
     pub fn select_all(&mut self) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_select_all(self.inner) }
+        unsafe { Fl_Help_View_select_all(self.inner.widget() as _) }
     }
 
     /// Set the top line string
     pub fn set_top_line_string(&mut self, n: &str) {
         assert!(!self.was_deleted());
         let n = CString::safe_new(n);
-        unsafe { Fl_Help_View_set_topline(self.inner, n.as_ptr()) }
+        unsafe { Fl_Help_View_set_topline(self.inner.widget() as _, n.as_ptr()) }
     }
 
     /// Set the top line position
     pub fn set_top_line(&mut self, line: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_set_topline2(self.inner, line) }
+        unsafe { Fl_Help_View_set_topline2(self.inner.widget() as _, line) }
     }
 
     /// Get the top line position
     pub fn top_line(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_topline(self.inner) }
+        unsafe { Fl_Help_View_topline(self.inner.widget() as _) }
     }
 
     /// Set the left line position
     pub fn set_left_line(&mut self, arg1: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_set_leftline(self.inner, arg1) }
+        unsafe { Fl_Help_View_set_leftline(self.inner.widget() as _, arg1) }
     }
 
     /// Gets the current left line in pixels
     pub fn left_line(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_leftline(self.inner) }
+        unsafe { Fl_Help_View_leftline(self.inner.widget() as _) }
     }
 
     /// Gets the text font
     pub fn text_font(&self) -> Font {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Help_View_text_font(self.inner)) }
+        unsafe { std::mem::transmute(Fl_Help_View_text_font(self.inner.widget() as _)) }
     }
 
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_set_text_font(self.inner, f.bits()) }
+        unsafe { Fl_Help_View_set_text_font(self.inner.widget() as _, f.bits()) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_text_size(self.inner) }
+        unsafe { Fl_Help_View_text_size(self.inner.widget() as _) }
     }
 
     /// Sets the text size
     pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_set_text_size(self.inner, s) }
+        unsafe { Fl_Help_View_set_text_size(self.inner.widget() as _, s) }
     }
 
     /// Gets the text's color
     pub fn text_color(&self) -> Color {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Help_View_text_color(self.inner)) }
+        unsafe { std::mem::transmute(Fl_Help_View_text_color(self.inner.widget() as _)) }
     }
 
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_set_text_color(self.inner, color.bits()) }
+        unsafe { Fl_Help_View_set_text_color(self.inner.widget() as _, color.bits()) }
     }
 
     /// Gets the scrollbar size
     pub fn scrollbar_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_scrollbar_size(self.inner) }
+        unsafe { Fl_Help_View_scrollbar_size(self.inner.widget() as _) }
     }
 
     /// Sets the scrollbar size
     pub fn set_scrollbar_size(&mut self, new_size: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_set_scrollbar_size(self.inner, new_size) }
+        unsafe { Fl_Help_View_set_scrollbar_size(self.inner.widget() as _, new_size) }
     }
 
     /// Load a view from a file or URI
@@ -831,7 +825,7 @@ impl HelpView {
         assert!(!self.was_deleted());
         let f = CString::safe_new(f);
         unsafe {
-            match Fl_Help_View_load(self.inner, f.as_ptr()) {
+            match Fl_Help_View_load(self.inner.widget() as _, f.as_ptr()) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::ResourceNotFound)),
             }

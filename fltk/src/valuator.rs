@@ -10,8 +10,7 @@ use std::{
 /// Creates a slider widget
 #[derive(Debug)]
 pub struct Slider {
-    inner: *mut Fl_Slider,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -24,30 +23,29 @@ crate::macros::valuator::impl_valuator_ext!(Slider, Fl_Slider);
 impl Slider {
     /// Get the slider size as a fraction of the long axis
     pub fn slider_size(&self) -> f32 {
-        unsafe { Fl_Slider_slider_size(self.inner) }
+        unsafe { Fl_Slider_slider_size(self.inner.widget() as _) }
     }
 
     /// Set the slider size as a fraction of the long axis
     pub fn set_slider_size(&mut self, v: f32) {
-        unsafe { Fl_Slider_set_slider_size(self.inner, v) }
+        unsafe { Fl_Slider_set_slider_size(self.inner.widget() as _, v) }
     }
 
     /// Get the frame type of the slider box
     pub fn slider_frame(&self) -> FrameType {
-        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner)) }
+        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner.widget() as _)) }
     }
 
     /// Set the frame type of the slider box
     pub fn set_slider_frame(&mut self, c: FrameType) {
-        unsafe { Fl_Slider_set_slider_box(self.inner, c.as_i32()) }
+        unsafe { Fl_Slider_set_slider_box(self.inner.widget() as _, c.as_i32()) }
     }
 }
 
 /// Creates a nice slider widget
 #[derive(Debug)]
 pub struct NiceSlider {
-    inner: *mut Fl_Nice_Slider,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -60,22 +58,22 @@ crate::macros::valuator::impl_valuator_ext!(NiceSlider, Fl_Nice_Slider);
 impl NiceSlider {
     /// Get the slider size as a fraction of the long axis
     pub fn slider_size(&self) -> f32 {
-        unsafe { Fl_Slider_slider_size(self.inner as _) }
+        unsafe { Fl_Slider_slider_size(self.inner.widget() as _) }
     }
 
     /// Set the slider size as a fraction of the long axis
     pub fn set_slider_size(&mut self, v: f32) {
-        unsafe { Fl_Slider_set_slider_size(self.inner as _, v) }
+        unsafe { Fl_Slider_set_slider_size(self.inner.widget() as _, v) }
     }
 
     /// Get the frame type of the slider box
     pub fn slider_frame(&self) -> FrameType {
-        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner as _)) }
+        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner.widget() as _)) }
     }
 
     /// Set the frame type of the slider box
     pub fn set_slider_frame(&mut self, c: FrameType) {
-        unsafe { Fl_Slider_set_slider_box(self.inner as _, c.as_i32()) }
+        unsafe { Fl_Slider_set_slider_box(self.inner.widget() as _, c.as_i32()) }
     }
 }
 
@@ -102,8 +100,7 @@ crate::macros::widget::impl_widget_type!(SliderType);
 /// Creates a dial widget
 #[derive(Debug)]
 pub struct Dial {
-    inner: *mut Fl_Dial,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -115,8 +112,8 @@ crate::macros::valuator::impl_valuator_ext!(Dial, Fl_Dial);
 impl Dial {
     /// Get the angles of the dial
     pub fn angles(&self) -> (i32, i32) {
-        let angle1 = unsafe { Fl_Dial_angle1(self.inner) };
-        let angle2 = unsafe { Fl_Dial_angle2(self.inner) };
+        let angle1 = unsafe { Fl_Dial_angle1(self.inner.widget() as _) };
+        let angle2 = unsafe { Fl_Dial_angle2(self.inner.widget() as _) };
         (angle1 as i32, angle2 as i32)
     }
 
@@ -124,12 +121,12 @@ impl Dial {
     pub fn set_angles(&mut self, angle1: i32, angle2: i32) {
         if angle1 <= 360 {
             unsafe {
-                Fl_Dial_set_angle1(self.inner, angle1 as _);
+                Fl_Dial_set_angle1(self.inner.widget() as _, angle1 as _);
             }
         }
         if angle2 <= 360 {
             unsafe {
-                Fl_Dial_set_angle2(self.inner, angle2 as _);
+                Fl_Dial_set_angle2(self.inner.widget() as _, angle2 as _);
             }
         }
     }
@@ -138,8 +135,7 @@ impl Dial {
 /// Creates a line dial widget
 #[derive(Debug)]
 pub struct LineDial {
-    inner: *mut Fl_Line_Dial,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -151,8 +147,8 @@ crate::macros::valuator::impl_valuator_ext!(LineDial, Fl_Line_Dial);
 impl LineDial {
     /// Get the angles of the dial
     pub fn angles(&self) -> (i32, i32) {
-        let angle1 = unsafe { Fl_Dial_angle1(self.inner as _) };
-        let angle2 = unsafe { Fl_Dial_angle2(self.inner as _) };
+        let angle1 = unsafe { Fl_Dial_angle1(self.inner.widget() as _) };
+        let angle2 = unsafe { Fl_Dial_angle2(self.inner.widget() as _) };
         (angle1 as i32, angle2 as i32)
     }
 
@@ -160,12 +156,12 @@ impl LineDial {
     pub fn set_angles(&mut self, angle1: i32, angle2: i32) {
         if angle1 <= 360 {
             unsafe {
-                Fl_Dial_set_angle1(self.inner as _, angle1 as _);
+                Fl_Dial_set_angle1(self.inner.widget() as _, angle1 as _);
             }
         }
         if angle2 <= 360 {
             unsafe {
-                Fl_Dial_set_angle2(self.inner as _, angle2 as _);
+                Fl_Dial_set_angle2(self.inner.widget() as _, angle2 as _);
             }
         }
     }
@@ -188,8 +184,7 @@ crate::macros::widget::impl_widget_type!(DialType);
 /// Creates a counter widget
 #[derive(Debug)]
 pub struct Counter {
-    inner: *mut Fl_Counter,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -213,8 +208,7 @@ crate::macros::widget::impl_widget_type!(CounterType);
 /// Creates a scrollbar widget
 #[derive(Debug)]
 pub struct Scrollbar {
-    inner: *mut Fl_Scrollbar,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -226,22 +220,22 @@ crate::macros::valuator::impl_valuator_ext!(Scrollbar, Fl_Scrollbar);
 impl Scrollbar {
     /// Get the slider size as a fraction of the long axis
     pub fn slider_size(&self) -> f32 {
-        unsafe { Fl_Slider_slider_size(self.inner as _) }
+        unsafe { Fl_Slider_slider_size(self.inner.widget() as _) }
     }
 
     /// Set the slider size as a fraction of the long axis
     pub fn set_slider_size(&mut self, v: f32) {
-        unsafe { Fl_Slider_set_slider_size(self.inner as _, v) }
+        unsafe { Fl_Slider_set_slider_size(self.inner.widget() as _, v) }
     }
 
     /// Get the frame type of the slider box
     pub fn slider_frame(&self) -> FrameType {
-        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner as _)) }
+        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner.widget() as _)) }
     }
 
     /// Set the frame type of the slider box
     pub fn set_slider_frame(&mut self, c: FrameType) {
-        unsafe { Fl_Slider_set_slider_box(self.inner as _, c.as_i32()) }
+        unsafe { Fl_Slider_set_slider_box(self.inner.widget() as _, c.as_i32()) }
     }
 }
 
@@ -268,8 +262,7 @@ crate::macros::widget::impl_widget_type!(ScrollbarType);
 /// Creates a roller widget
 #[derive(Debug)]
 pub struct Roller {
-    inner: *mut Fl_Roller,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -281,8 +274,7 @@ crate::macros::valuator::impl_valuator_ext!(Roller, Fl_Roller);
 /// Creates a value slider widget
 #[derive(Debug)]
 pub struct ValueSlider {
-    inner: *mut Fl_Value_Slider,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -295,65 +287,64 @@ impl ValueSlider {
     /// Gets the text font
     pub fn text_font(&self) -> Font {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Value_Slider_text_font(self.inner)) }
+        unsafe { std::mem::transmute(Fl_Value_Slider_text_font(self.inner.widget() as _)) }
     }
 
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Slider_set_text_font(self.inner, f.bits()) }
+        unsafe { Fl_Value_Slider_set_text_font(self.inner.widget() as _, f.bits()) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Slider_text_size(self.inner) }
+        unsafe { Fl_Value_Slider_text_size(self.inner.widget() as _) }
     }
 
     /// Sets the text size
     pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Slider_set_text_size(self.inner, s) }
+        unsafe { Fl_Value_Slider_set_text_size(self.inner.widget() as _, s) }
     }
 
     /// Gets the text's color
     pub fn text_color(&self) -> Color {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Value_Slider_text_color(self.inner)) }
+        unsafe { std::mem::transmute(Fl_Value_Slider_text_color(self.inner.widget() as _)) }
     }
 
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Slider_set_text_color(self.inner, color.bits()) }
+        unsafe { Fl_Value_Slider_set_text_color(self.inner.widget() as _, color.bits()) }
     }
 
     /// Get the slider size as a fraction of the long axis
     pub fn slider_size(&self) -> f32 {
-        unsafe { Fl_Slider_slider_size(self.inner as _) }
+        unsafe { Fl_Slider_slider_size(self.inner.widget() as _) }
     }
 
     /// Set the slider size as a fraction of the long axis
     pub fn set_slider_size(&mut self, v: f32) {
-        unsafe { Fl_Slider_set_slider_size(self.inner as _, v) }
+        unsafe { Fl_Slider_set_slider_size(self.inner.widget() as _, v) }
     }
 
     /// Get the frame type of the slider box
     pub fn slider_frame(&self) -> FrameType {
-        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner as _)) }
+        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner.widget() as _)) }
     }
 
     /// Set the frame type of the slider box
     pub fn set_slider_frame(&mut self, c: FrameType) {
-        unsafe { Fl_Slider_set_slider_box(self.inner as _, c.as_i32()) }
+        unsafe { Fl_Slider_set_slider_box(self.inner.widget() as _, c.as_i32()) }
     }
 }
 
 /// Creates an adjuster widget
 #[derive(Debug)]
 pub struct Adjuster {
-    inner: *mut Fl_Adjuster,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -366,8 +357,7 @@ crate::macros::valuator::impl_valuator_ext!(Adjuster, Fl_Adjuster);
 /// If a step is set, the value can be also dragged
 #[derive(Debug)]
 pub struct ValueInput {
-    inner: *mut Fl_Value_Input,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -380,58 +370,57 @@ impl ValueInput {
     /// Gets the text font
     pub fn text_font(&self) -> Font {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Value_Input_text_font(self.inner)) }
+        unsafe { std::mem::transmute(Fl_Value_Input_text_font(self.inner.widget() as _)) }
     }
 
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Input_set_text_font(self.inner, f.bits()) }
+        unsafe { Fl_Value_Input_set_text_font(self.inner.widget() as _, f.bits()) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Input_text_size(self.inner) }
+        unsafe { Fl_Value_Input_text_size(self.inner.widget() as _) }
     }
 
     /// Sets the text size
     pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Input_set_text_size(self.inner, s) }
+        unsafe { Fl_Value_Input_set_text_size(self.inner.widget() as _, s) }
     }
 
     /// Gets the text's color
     pub fn text_color(&self) -> Color {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Value_Input_text_color(self.inner)) }
+        unsafe { std::mem::transmute(Fl_Value_Input_text_color(self.inner.widget() as _)) }
     }
 
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Input_set_text_color(self.inner, color.bits()) }
+        unsafe { Fl_Value_Input_set_text_color(self.inner.widget() as _, color.bits()) }
     }
 
     /// Returns whether the user is allowed to drag the value outside the range.
     /// Default is true
     pub fn soft(&self) -> bool {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Input_soft(self.inner) != 0 }
+        unsafe { Fl_Value_Input_soft(self.inner.widget() as _) != 0 }
     }
 
     /// Set whether the user is allowed to drag the value outside the range
     pub fn set_soft(&mut self, val: bool) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Input_set_soft(self.inner, val as raw::c_char) }
+        unsafe { Fl_Value_Input_set_soft(self.inner.widget() as _, val as raw::c_char) }
     }
 }
 
 /// Creates an value output widget
 #[derive(Debug)]
 pub struct ValueOutput {
-    inner: *mut Fl_Value_Output,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -444,45 +433,44 @@ impl ValueOutput {
     /// Gets the text font
     pub fn text_font(&self) -> Font {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Value_Output_text_font(self.inner)) }
+        unsafe { std::mem::transmute(Fl_Value_Output_text_font(self.inner.widget() as _)) }
     }
 
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Output_set_text_font(self.inner, f.bits()) }
+        unsafe { Fl_Value_Output_set_text_font(self.inner.widget() as _, f.bits()) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Output_text_size(self.inner) }
+        unsafe { Fl_Value_Output_text_size(self.inner.widget() as _) }
     }
 
     /// Sets the text size
     pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Output_set_text_size(self.inner, s) }
+        unsafe { Fl_Value_Output_set_text_size(self.inner.widget() as _, s) }
     }
 
     /// Gets the text's color
     pub fn text_color(&self) -> Color {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Value_Output_text_color(self.inner)) }
+        unsafe { std::mem::transmute(Fl_Value_Output_text_color(self.inner.widget() as _)) }
     }
 
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Output_set_text_color(self.inner, color.bits()) }
+        unsafe { Fl_Value_Output_set_text_color(self.inner.widget() as _, color.bits()) }
     }
 }
 
 /// Creates a fill slider
 #[derive(Debug)]
 pub struct FillSlider {
-    inner: *mut Fl_Fill_Slider,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -494,8 +482,7 @@ crate::macros::valuator::impl_valuator_ext!(FillSlider, Fl_Fill_Slider);
 /// Creates a fill dial
 #[derive(Debug)]
 pub struct FillDial {
-    inner: *mut Fl_Fill_Dial,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -507,8 +494,8 @@ crate::macros::valuator::impl_valuator_ext!(FillDial, Fl_Fill_Dial);
 impl FillDial {
     /// Get the angles of the dial
     pub fn angles(&self) -> (i32, i32) {
-        let angle1 = unsafe { Fl_Dial_angle1(self.inner as _) };
-        let angle2 = unsafe { Fl_Dial_angle2(self.inner as _) };
+        let angle1 = unsafe { Fl_Dial_angle1(self.inner.widget() as _) };
+        let angle2 = unsafe { Fl_Dial_angle2(self.inner.widget() as _) };
         (angle1 as i32, angle2 as i32)
     }
 
@@ -516,12 +503,12 @@ impl FillDial {
     pub fn set_angles(&mut self, angle1: i32, angle2: i32) {
         if angle1 <= 360 {
             unsafe {
-                Fl_Dial_set_angle1(self.inner as _, angle1 as _);
+                Fl_Dial_set_angle1(self.inner.widget() as _, angle1 as _);
             }
         }
         if angle2 <= 360 {
             unsafe {
-                Fl_Dial_set_angle2(self.inner as _, angle2 as _);
+                Fl_Dial_set_angle2(self.inner.widget() as _, angle2 as _);
             }
         }
     }
@@ -530,8 +517,7 @@ impl FillDial {
 /// Creates a horizontal slider
 #[derive(Debug)]
 pub struct HorSlider {
-    inner: *mut Fl_Hor_Slider,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -544,30 +530,29 @@ crate::macros::valuator::impl_valuator_ext!(HorSlider, Fl_Hor_Slider);
 impl HorSlider {
     /// Get the slider size as a fraction of the long axis
     pub fn slider_size(&self) -> f32 {
-        unsafe { Fl_Slider_slider_size(self.inner as _) }
+        unsafe { Fl_Slider_slider_size(self.inner.widget() as _) }
     }
 
     /// Set the slider size as a fraction of the long axis
     pub fn set_slider_size(&mut self, v: f32) {
-        unsafe { Fl_Slider_set_slider_size(self.inner as _, v) }
+        unsafe { Fl_Slider_set_slider_size(self.inner.widget() as _, v) }
     }
 
     /// Get the frame type of the slider box
     pub fn slider_frame(&self) -> FrameType {
-        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner as _)) }
+        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner.widget() as _)) }
     }
 
     /// Set the frame type of the slider box
     pub fn set_slider_frame(&mut self, c: FrameType) {
-        unsafe { Fl_Slider_set_slider_box(self.inner as _, c.as_i32()) }
+        unsafe { Fl_Slider_set_slider_box(self.inner.widget() as _, c.as_i32()) }
     }
 }
 
 /// Creates a horizontal fill slider
 #[derive(Debug)]
 pub struct HorFillSlider {
-    inner: *mut Fl_Hor_Fill_Slider,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -580,30 +565,29 @@ crate::macros::valuator::impl_valuator_ext!(HorFillSlider, Fl_Hor_Fill_Slider);
 impl HorFillSlider {
     /// Get the slider size as a fraction of the long axis
     pub fn slider_size(&self) -> f32 {
-        unsafe { Fl_Slider_slider_size(self.inner as _) }
+        unsafe { Fl_Slider_slider_size(self.inner.widget() as _) }
     }
 
     /// Set the slider size as a fraction of the long axis
     pub fn set_slider_size(&mut self, v: f32) {
-        unsafe { Fl_Slider_set_slider_size(self.inner as _, v) }
+        unsafe { Fl_Slider_set_slider_size(self.inner.widget() as _, v) }
     }
 
     /// Get the frame type of the slider box
     pub fn slider_frame(&self) -> FrameType {
-        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner as _)) }
+        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner.widget() as _)) }
     }
 
     /// Set the frame type of the slider box
     pub fn set_slider_frame(&mut self, c: FrameType) {
-        unsafe { Fl_Slider_set_slider_box(self.inner as _, c.as_i32()) }
+        unsafe { Fl_Slider_set_slider_box(self.inner.widget() as _, c.as_i32()) }
     }
 }
 
 /// Creates a horizontal nice slider
 #[derive(Debug)]
 pub struct HorNiceSlider {
-    inner: *mut Fl_Hor_Nice_Slider,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -616,30 +600,29 @@ crate::macros::valuator::impl_valuator_ext!(HorNiceSlider, Fl_Hor_Nice_Slider);
 impl HorNiceSlider {
     /// Get the slider size as a fraction of the long axis
     pub fn slider_size(&self) -> f32 {
-        unsafe { Fl_Slider_slider_size(self.inner as _) }
+        unsafe { Fl_Slider_slider_size(self.inner.widget() as _) }
     }
 
     /// Set the slider size as a fraction of the long axis
     pub fn set_slider_size(&mut self, v: f32) {
-        unsafe { Fl_Slider_set_slider_size(self.inner as _, v) }
+        unsafe { Fl_Slider_set_slider_size(self.inner.widget() as _, v) }
     }
 
     /// Get the frame type of the slider box
     pub fn slider_frame(&self) -> FrameType {
-        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner as _)) }
+        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner.widget() as _)) }
     }
 
     /// Set the frame type of the slider box
     pub fn set_slider_frame(&mut self, c: FrameType) {
-        unsafe { Fl_Slider_set_slider_box(self.inner as _, c.as_i32()) }
+        unsafe { Fl_Slider_set_slider_box(self.inner.widget() as _, c.as_i32()) }
     }
 }
 
 /// Creates a horizontal value slider
 #[derive(Debug)]
 pub struct HorValueSlider {
-    inner: *mut Fl_Hor_Value_Slider,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -652,56 +635,56 @@ impl HorValueSlider {
     /// Gets the text font
     pub fn text_font(&self) -> Font {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Hor_Value_Slider_text_font(self.inner)) }
+        unsafe { std::mem::transmute(Fl_Hor_Value_Slider_text_font(self.inner.widget() as _)) }
     }
 
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Hor_Value_Slider_set_text_font(self.inner, f.bits()) }
+        unsafe { Fl_Hor_Value_Slider_set_text_font(self.inner.widget() as _, f.bits()) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Hor_Value_Slider_text_size(self.inner) }
+        unsafe { Fl_Hor_Value_Slider_text_size(self.inner.widget() as _) }
     }
 
     /// Sets the text size
     pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Hor_Value_Slider_set_text_size(self.inner, s) }
+        unsafe { Fl_Hor_Value_Slider_set_text_size(self.inner.widget() as _, s) }
     }
 
     /// Gets the text's color
     pub fn text_color(&self) -> Color {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Hor_Value_Slider_text_color(self.inner)) }
+        unsafe { std::mem::transmute(Fl_Hor_Value_Slider_text_color(self.inner.widget() as _)) }
     }
 
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Hor_Value_Slider_set_text_color(self.inner, color.bits()) }
+        unsafe { Fl_Hor_Value_Slider_set_text_color(self.inner.widget() as _, color.bits()) }
     }
 
     /// Get the slider size as a fraction of the long axis
     pub fn slider_size(&self) -> f32 {
-        unsafe { Fl_Slider_slider_size(self.inner as _) }
+        unsafe { Fl_Slider_slider_size(self.inner.widget() as _) }
     }
 
     /// Set the slider size as a fraction of the long axis
     pub fn set_slider_size(&mut self, v: f32) {
-        unsafe { Fl_Slider_set_slider_size(self.inner as _, v) }
+        unsafe { Fl_Slider_set_slider_size(self.inner.widget() as _, v) }
     }
 
     /// Get the frame type of the slider box
     pub fn slider_frame(&self) -> FrameType {
-        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner as _)) }
+        unsafe { FrameType::from_i32(Fl_Slider_slider_box(self.inner.widget() as _)) }
     }
 
     /// Set the frame type of the slider box
     pub fn set_slider_frame(&mut self, c: FrameType) {
-        unsafe { Fl_Slider_set_slider_box(self.inner as _, c.as_i32()) }
+        unsafe { Fl_Slider_set_slider_box(self.inner.widget() as _, c.as_i32()) }
     }
 }

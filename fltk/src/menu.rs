@@ -38,8 +38,7 @@ bitflags::bitflags! {
 /// Creates a menu bar
 #[derive(Debug)]
 pub struct MenuBar {
-    inner: *mut Fl_Menu_Bar,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -51,8 +50,7 @@ crate::macros::menu::impl_menu_ext!(MenuBar, Fl_Menu_Bar);
 /// Creates a menu button
 #[derive(Debug)]
 pub struct MenuButton {
-    inner: *mut Fl_Menu_Button,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -91,7 +89,7 @@ impl MenuButton {
             return None;
         }
         unsafe {
-            let ptr = Fl_Menu_Button_popup(self.inner);
+            let ptr = Fl_Menu_Button_popup(self.inner.widget() as _);
             if ptr.is_null() {
                 None
             } else {
@@ -135,8 +133,7 @@ impl MenuButton {
 /// For more extensive options see the `custom_choice` example.
 #[derive(Debug)]
 pub struct Choice {
-    inner: *mut Fl_Choice,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -162,8 +159,7 @@ pub enum WindowMenuStyle {
 /// Creates a macOS system menu bar on macOS and a normal menu bar on other systems
 #[derive(Debug)]
 pub struct SysMenuBar {
-    inner: *mut Fl_Sys_Menu_Bar,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -193,7 +189,7 @@ impl SysMenuBar {
             let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
             let callback: Fl_Callback = Some(shim);
-            Fl_Sys_Menu_Bar_about(self.inner, callback, data);
+            Fl_Sys_Menu_Bar_about(self.inner.widget() as _, callback, data);
         }
     }
 }

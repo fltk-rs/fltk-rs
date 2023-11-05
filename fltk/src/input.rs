@@ -7,8 +7,7 @@ use std::ffi::{CStr, CString};
 /// Creates an input widget
 #[derive(Debug)]
 pub struct Input {
-    inner: *mut Fl_Input,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -44,8 +43,7 @@ crate::macros::widget::impl_widget_type!(InputType);
 /// Creates an input widget which takes only integers
 #[derive(Debug)]
 pub struct IntInput {
-    inner: *mut Fl_Int_Input,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -57,8 +55,7 @@ crate::macros::input::impl_input_ext!(IntInput, Fl_Int_Input);
 /// Creates an input widget which takes only floats
 #[derive(Debug)]
 pub struct FloatInput {
-    inner: *mut Fl_Float_Input,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -70,8 +67,7 @@ crate::macros::input::impl_input_ext!(FloatInput, Fl_Float_Input);
 /// Creates a multiline-input widget
 #[derive(Debug)]
 pub struct MultilineInput {
-    inner: *mut Fl_Multiline_Input,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -83,8 +79,7 @@ crate::macros::input::impl_input_ext!(MultilineInput, Fl_Multiline_Input);
 /// Creates a File-input widget
 #[derive(Debug)]
 pub struct FileInput {
-    inner: *mut Fl_File_Input,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 
@@ -97,21 +92,20 @@ impl FileInput {
     /// Set the `down_box` of the widget
     pub fn set_down_frame(&mut self, f: FrameType) {
         assert!(!self.was_deleted());
-        unsafe { Fl_File_Input_set_down_box(self.inner, f.as_i32()) }
+        unsafe { Fl_File_Input_set_down_box(self.inner.widget() as _, f.as_i32()) }
     }
 
     /// Get the `down_box` of the widget
     pub fn down_frame(&self) -> FrameType {
         assert!(!self.was_deleted());
-        unsafe { FrameType::from_i32(Fl_File_Input_down_box(self.inner)) }
+        unsafe { FrameType::from_i32(Fl_File_Input_down_box(self.inner.widget() as _)) }
     }
 }
 
 /// Creates a secret input widget
 #[derive(Debug)]
 pub struct SecretInput {
-    inner: *mut Fl_Secret_Input,
-    tracker: crate::widget::WidgetTracker,
+    inner: crate::widget::WidgetTracker,
     is_derived: bool,
 }
 

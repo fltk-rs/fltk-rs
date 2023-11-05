@@ -8,7 +8,7 @@ macro_rules! impl_input_ext {
                 fn value(&self) -> String {
                     unsafe {
                         assert!(!self.was_deleted());
-                        let value_ptr = [<$flname _value>](self.inner);
+                        let value_ptr = [<$flname _value>](self.inner.widget() as _);
                         assert!(!value_ptr.is_null());
                         CStr::from_ptr(value_ptr as *mut std::os::raw::c_char)
                             .to_string_lossy()
@@ -20,35 +20,35 @@ macro_rules! impl_input_ext {
                     assert!(!self.was_deleted());
                     let temp = CString::safe_new(val);
                     unsafe {
-                        [<$flname _set_value>](self.inner, temp.as_ptr());
+                        [<$flname _set_value>](self.inner.widget() as _, temp.as_ptr());
                     }
                 }
 
                 fn maximum_size(&self) -> i32 {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _maximum_size>](self.inner) as i32
+                        [<$flname _maximum_size>](self.inner.widget() as _) as i32
                     }
                 }
 
                 fn set_maximum_size(&mut self, val: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _set_maximum_size>](self.inner, val as i32)
+                        [<$flname _set_maximum_size>](self.inner.widget() as _, val as i32)
                     }
                 }
 
                 fn position(&self) -> i32 {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _position>](self.inner) as i32
+                        [<$flname _position>](self.inner.widget() as _) as i32
                     }
                 }
 
                 fn set_position(&mut self, val: i32) -> Result<(), FltkError> {
                     unsafe {
                         assert!(!self.was_deleted());
-                        let x = [<$flname _set_position>](self.inner, val as i32);
+                        let x = [<$flname _set_position>](self.inner.widget() as _, val as i32);
                         if x == 0 {
                             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                         }
@@ -59,14 +59,14 @@ macro_rules! impl_input_ext {
                 fn mark(&self) -> i32 {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _mark>](self.inner) as i32
+                        [<$flname _mark>](self.inner.widget() as _) as i32
                     }
                 }
 
                 fn set_mark(&mut self, val: i32) -> Result<(), FltkError> {
                     unsafe {
                         assert!(!self.was_deleted());
-                        let x = [<$flname _set_mark>](self.inner, val as i32);
+                        let x = [<$flname _set_mark>](self.inner.widget() as _, val as i32);
                         if x == 0 {
                             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                         }
@@ -79,7 +79,7 @@ macro_rules! impl_input_ext {
                     let val = CString::safe_new(val);
                     unsafe {
                         let x = [<$flname _replace>](
-                            self.inner,
+                            self.inner.widget() as _,
                             beg as i32,
                             end as i32,
                             val.as_ptr(),
@@ -96,7 +96,7 @@ macro_rules! impl_input_ext {
                     assert!(!self.was_deleted());
                     let txt = CString::safe_new(txt);
                     unsafe {
-                        let x = [<$flname _insert>](self.inner, txt.as_ptr(), 0);
+                        let x = [<$flname _insert>](self.inner.widget() as _, txt.as_ptr(), 0);
                         if x == 0 {
                             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                         }
@@ -108,7 +108,7 @@ macro_rules! impl_input_ext {
                     assert!(!self.was_deleted());
                     let txt = CString::safe_new(txt);
                     unsafe {
-                        let x = [<$flname _append>](self.inner, txt.as_ptr(), 0, 0);
+                        let x = [<$flname _append>](self.inner.widget() as _, txt.as_ptr(), 0, 0);
                         if x == 0 {
                             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                         }
@@ -119,7 +119,7 @@ macro_rules! impl_input_ext {
                 fn copy(&mut self) -> Result<(), FltkError> {
                     unsafe {
                         assert!(!self.was_deleted());
-                        let x = [<$flname _copy>](self.inner, 1);
+                        let x = [<$flname _copy>](self.inner.widget() as _, 1);
                         if x == 0 {
                             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                         }
@@ -130,7 +130,7 @@ macro_rules! impl_input_ext {
                 fn undo(&mut self) -> Result<(), FltkError> {
                     unsafe {
                         assert!(!self.was_deleted());
-                        let x = [<$flname _undo>](self.inner);
+                        let x = [<$flname _undo>](self.inner.widget() as _);
                         if x == 0 {
                             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                         }
@@ -141,7 +141,7 @@ macro_rules! impl_input_ext {
                 fn cut(&mut self) -> Result<(), FltkError> {
                     unsafe {
                         assert!(!self.was_deleted());
-                        let x = [<$flname _copy_cuts>](self.inner);
+                        let x = [<$flname _copy_cuts>](self.inner.widget() as _);
                         if x == 0 {
                             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                         }
@@ -152,98 +152,98 @@ macro_rules! impl_input_ext {
                 fn text_font(&self) -> $crate::enums::Font {
                     unsafe {
                         assert!(!self.was_deleted());
-                        std::mem::transmute([<$flname _text_font>](self.inner))
+                        std::mem::transmute([<$flname _text_font>](self.inner.widget() as _))
                     }
                 }
 
                 fn set_text_font(&mut self, font: $crate::enums::Font) {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _set_text_font>](self.inner, font.bits() as i32)
+                        [<$flname _set_text_font>](self.inner.widget() as _, font.bits() as i32)
                     }
                 }
 
                 fn cursor_color(&self) -> $crate::enums::Color {
                     unsafe {
                         assert!(!self.was_deleted());
-                        std::mem::transmute([<$flname _cursor_color>](self.inner))
+                        std::mem::transmute([<$flname _cursor_color>](self.inner.widget() as _))
                     }
                 }
 
                 fn set_cursor_color(&mut self, color: $crate::enums::Color) {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _set_cursor_color>](self.inner, color.bits() as u32)
+                        [<$flname _set_cursor_color>](self.inner.widget() as _, color.bits() as u32)
                     }
                 }
 
                 fn text_color(&self) -> $crate::enums::Color {
                     unsafe {
                         assert!(!self.was_deleted());
-                        std::mem::transmute([<$flname _text_color>](self.inner))
+                        std::mem::transmute([<$flname _text_color>](self.inner.widget() as _))
                     }
                 }
 
                 fn set_text_color(&mut self, color: $crate::enums::Color) {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _set_text_color>](self.inner, color.bits() as u32)
+                        [<$flname _set_text_color>](self.inner.widget() as _, color.bits() as u32)
                     }
                 }
 
                 fn text_size(&self) -> i32 {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _text_size>](self.inner) as i32
+                        [<$flname _text_size>](self.inner.widget() as _) as i32
                     }
                 }
 
                 fn set_text_size(&mut self, sz: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _set_text_size>](self.inner, sz as i32)
+                        [<$flname _set_text_size>](self.inner.widget() as _, sz as i32)
                     }
                 }
 
                 fn readonly(&self) -> bool {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _readonly>](self.inner) != 0
+                        [<$flname _readonly>](self.inner.widget() as _) != 0
                     }
                 }
 
                 fn set_readonly(&mut self, val: bool) {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _set_readonly>](self.inner, val as i32)
+                        [<$flname _set_readonly>](self.inner.widget() as _, val as i32)
                     }
                 }
 
                 fn wrap(&self) -> bool {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _wrap>](self.inner) != 0
+                        [<$flname _wrap>](self.inner.widget() as _) != 0
                     }
                 }
 
                 fn set_wrap(&mut self, val: bool) {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _set_wrap>](self.inner, val as i32)
+                        [<$flname _set_wrap>](self.inner.widget() as _, val as i32)
                     }
                 }
 
                 fn set_tab_nav(&mut self, val: bool) {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _set_tab_nav>](self.inner, val as i32)
+                        [<$flname _set_tab_nav>](self.inner.widget() as _, val as i32)
                     }
                 }
 
                 fn tab_nav(&self) -> bool {
                     unsafe {
                         assert!(!self.was_deleted());
-                        [<$flname _tab_nav>](self.inner) != 0
+                        [<$flname _tab_nav>](self.inner.widget() as _) != 0
                     }
                 }
             }
