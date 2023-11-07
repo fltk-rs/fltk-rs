@@ -339,6 +339,9 @@ extern "C" {
     pub fn Fl_Table_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Table;
 }
 extern "C" {
+    pub fn Fl_Table_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Table;
+}
+extern "C" {
     pub fn Fl_Table_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -979,6 +982,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Table_Row_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Table_Row;
+}
+extern "C" {
+    pub fn Fl_Table_Row_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Table_Row;
 }
 extern "C" {
     pub fn Fl_Table_Row_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);

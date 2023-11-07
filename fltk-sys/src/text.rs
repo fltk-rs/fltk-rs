@@ -659,6 +659,9 @@ extern "C" {
     pub fn Fl_Text_Display_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Text_Display;
 }
 extern "C" {
+    pub fn Fl_Text_Display_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Text_Display;
+}
+extern "C" {
     pub fn Fl_Text_Display_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -1310,6 +1313,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Editor_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Text_Editor;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Text_Editor;
 }
 extern "C" {
     pub fn Fl_Text_Editor_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -2148,6 +2154,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Simple_Terminal;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Simple_Terminal;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);

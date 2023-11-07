@@ -106,6 +106,12 @@ extern "C" {
     pub fn Fl_event_state() -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_w() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_h() -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_screen_x() -> ::std::os::raw::c_int;
 }
 extern "C" {

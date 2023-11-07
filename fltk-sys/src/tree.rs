@@ -339,6 +339,9 @@ extern "C" {
     pub fn Fl_Tree_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Tree;
 }
 extern "C" {
+    pub fn Fl_Tree_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Tree;
+}
+extern "C" {
     pub fn Fl_Tree_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {

@@ -1110,11 +1110,16 @@ macro_rules! impl_widget_base {
                     if ptr.is_null() {
                         None
                     } else {
-                        let tracker = $crate::widget::WidgetTracker::new(ptr as _);
-                        Some(Self {
-                            inner: tracker,
-                            is_derived: false,
-                        })
+                        unsafe {
+                            fltk_sys::fl::Fl_lock();
+                            let tracker = $crate::widget::WidgetTracker::new(ptr as _);
+                            let temp = Some(Self {
+                                inner: tracker,
+                                is_derived: ![<$flname _from_derived_dyn_ptr>](w as _).is_null(),
+                            });
+                            fltk_sys::fl::Fl_unlock();
+                            temp
+                        }
                     }
                 }
 

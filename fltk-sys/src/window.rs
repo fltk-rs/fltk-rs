@@ -345,6 +345,9 @@ extern "C" {
     pub fn Fl_Window_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Window;
 }
 extern "C" {
+    pub fn Fl_Window_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Window;
+}
+extern "C" {
     pub fn Fl_Window_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -946,6 +949,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Single_Window_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Single_Window;
+}
+extern "C" {
+    pub fn Fl_Single_Window_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Single_Window;
 }
 extern "C" {
     pub fn Fl_Single_Window_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -1569,6 +1575,9 @@ extern "C" {
     pub fn Fl_Double_Window_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Double_Window;
 }
 extern "C" {
+    pub fn Fl_Double_Window_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Double_Window;
+}
+extern "C" {
     pub fn Fl_Double_Window_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -2169,6 +2178,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Window_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Menu_Window;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Menu_Window;
 }
 extern "C" {
     pub fn Fl_Menu_Window_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -2775,6 +2787,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Overlay_Window_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Overlay_Window;
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Overlay_Window;
 }
 extern "C" {
     pub fn Fl_Overlay_Window_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -3392,6 +3407,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Gl_Window_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Gl_Window;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Gl_Window;
 }
 extern "C" {
     pub fn Fl_Gl_Window_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -4017,6 +4035,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Glut_Window_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Glut_Window;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Glut_Window;
 }
 extern "C" {
     pub fn Fl_Glut_Window_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);

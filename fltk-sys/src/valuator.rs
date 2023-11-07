@@ -339,6 +339,9 @@ extern "C" {
     pub fn Fl_Slider_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Slider;
 }
 extern "C" {
+    pub fn Fl_Slider_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Slider;
+}
+extern "C" {
     pub fn Fl_Slider_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -744,6 +747,9 @@ extern "C" {
     pub fn Fl_Nice_Slider_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Nice_Slider;
 }
 extern "C" {
+    pub fn Fl_Nice_Slider_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Nice_Slider;
+}
+extern "C" {
     pub fn Fl_Nice_Slider_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -1122,6 +1128,9 @@ extern "C" {
     pub fn Fl_Counter_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Counter;
 }
 extern "C" {
+    pub fn Fl_Counter_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Counter;
+}
+extern "C" {
     pub fn Fl_Counter_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -1498,6 +1507,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Dial_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Dial;
+}
+extern "C" {
+    pub fn Fl_Dial_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Dial;
 }
 extern "C" {
     pub fn Fl_Dial_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -1889,6 +1901,9 @@ extern "C" {
     pub fn Fl_Line_Dial_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Line_Dial;
 }
 extern "C" {
+    pub fn Fl_Line_Dial_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Line_Dial;
+}
+extern "C" {
     pub fn Fl_Line_Dial_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -2267,6 +2282,9 @@ extern "C" {
     pub fn Fl_Roller_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Roller;
 }
 extern "C" {
+    pub fn Fl_Roller_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Roller;
+}
+extern "C" {
     pub fn Fl_Roller_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -2643,6 +2661,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scrollbar_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Scrollbar;
+}
+extern "C" {
+    pub fn Fl_Scrollbar_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Scrollbar;
 }
 extern "C" {
     pub fn Fl_Scrollbar_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -3050,6 +3071,9 @@ extern "C" {
     pub fn Fl_Value_Slider_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Value_Slider;
 }
 extern "C" {
+    pub fn Fl_Value_Slider_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Value_Slider;
+}
+extern "C" {
     pub fn Fl_Value_Slider_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -3449,6 +3473,9 @@ extern "C" {
     pub fn Fl_Adjuster_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Adjuster;
 }
 extern "C" {
+    pub fn Fl_Adjuster_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Adjuster;
+}
+extern "C" {
     pub fn Fl_Adjuster_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -3843,6 +3870,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Value_Input_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Value_Input;
+}
+extern "C" {
+    pub fn Fl_Value_Input_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Value_Input;
 }
 extern "C" {
     pub fn Fl_Value_Input_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -4274,6 +4304,9 @@ extern "C" {
     pub fn Fl_Value_Output_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Value_Output;
 }
 extern "C" {
+    pub fn Fl_Value_Output_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Value_Output;
+}
+extern "C" {
     pub fn Fl_Value_Output_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -4691,6 +4724,9 @@ extern "C" {
     pub fn Fl_Fill_Slider_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Fill_Slider;
 }
 extern "C" {
+    pub fn Fl_Fill_Slider_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Fill_Slider;
+}
+extern "C" {
     pub fn Fl_Fill_Slider_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -5070,6 +5106,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Fill_Dial_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Fill_Dial;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Fill_Dial;
 }
 extern "C" {
     pub fn Fl_Fill_Dial_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -5457,6 +5496,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hor_Slider_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Hor_Slider;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Hor_Slider;
 }
 extern "C" {
     pub fn Fl_Hor_Slider_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -5909,6 +5951,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Hor_Fill_Slider;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Hor_Fill_Slider;
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -6371,6 +6416,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Hor_Nice_Slider;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Hor_Nice_Slider;
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -6847,6 +6895,11 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Hor_Value_Slider;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_from_derived_dyn_ptr(
+        ptr: *mut Fl_Widget,
+    ) -> *mut Fl_Hor_Value_Slider;
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
