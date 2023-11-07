@@ -136,7 +136,7 @@ macro_rules! impl_window_ext {
         paste::paste! {
             unsafe impl WindowExt for $name {
                 fn center_screen(mut self) -> Self {
-                    assert!(!self.was_deleted());
+
                     debug_assert!(
                         self.width() != 0 && self.height() != 0,
                         "center_screen requires the size of the widget to be known!"
@@ -154,23 +154,22 @@ macro_rules! impl_window_ext {
                 }
 
                 fn make_modal(&mut self, val: bool) {
-                    assert!(!self.was_deleted());
+
                     unsafe { [<$flname _make_modal>](self.inner.widget() as _, val as u32) }
                 }
 
                 fn fullscreen(&mut self, val: bool) {
-                    assert!(!self.was_deleted());
+
                     unsafe { [<$flname _fullscreen>](self.inner.widget() as _, val as u32) }
                 }
 
                 fn make_current(&mut self) {
-                    assert!(!self.was_deleted());
+
                     unsafe { [<$flname _make_current>](self.inner.widget() as _) }
                 }
 
                 fn icon(&self) -> Option<Box<dyn ImageExt>> {
                     unsafe {
-                        assert!(!self.was_deleted());
                         let image_ptr = [<$flname _icon>](self.inner.widget() as _);
                         if image_ptr.is_null() {
                             None
@@ -183,7 +182,7 @@ macro_rules! impl_window_ext {
                 }
 
                 fn set_icon<T: ImageExt>(&mut self, image: Option<T>) {
-                    assert!(!self.was_deleted());
+
                     assert!(
                         std::any::type_name::<T>()
                             != std::any::type_name::<$crate::image::SharedImage>(),
@@ -237,7 +236,7 @@ macro_rules! impl_window_ext {
                             }
                         }
                     } else {
-                        unsafe {
+                    unsafe {
                             [<$flname _set_icon>](
                                 self.inner.widget() as _,
                                 std::ptr::null_mut() as *mut raw::c_void,
@@ -247,33 +246,33 @@ macro_rules! impl_window_ext {
                 }
 
                 fn set_cursor(&mut self, cursor: Cursor) {
-                    assert!(!self.was_deleted());
+
                     unsafe { [<$flname _set_cursor>](self.inner.widget() as _, cursor as i32) }
                 }
 
                 fn shown(&self) -> bool {
-                    assert!(!self.was_deleted());
+
                     unsafe { [<$flname _shown>](self.inner.widget() as _) != 0 }
                 }
 
                 fn set_border(&mut self, flag: bool) {
-                    assert!(!self.was_deleted());
+
                     assert!($crate::app::is_ui_thread());
                     unsafe { [<$flname _set_border>](self.inner.widget() as _, flag as i32) }
                 }
 
                 fn border(&self) -> bool {
-                    assert!(!self.was_deleted());
+
                     unsafe { [<$flname _border>](self.inner.widget() as _) != 0 }
                 }
 
                 fn free_position(&mut self) {
-                    assert!(!self.was_deleted());
+
                     unsafe { [<$flname _free_position>](self.inner.widget() as _) }
                 }
 
                 fn raw_handle(&self) -> RawHandle {
-                    assert!(!self.was_deleted());
+
                     unsafe {
                         let ptr = [<$flname _raw_handle>](self.inner.widget() as _);
                         assert!(!ptr.is_null());
@@ -299,7 +298,7 @@ macro_rules! impl_window_ext {
                 }
 
                 unsafe fn set_raw_handle(&mut self, handle: RawHandle) {
-                    assert!(!self.was_deleted());
+
 
                     #[cfg(any(
                         target_os = "windows",
@@ -329,7 +328,7 @@ macro_rules! impl_window_ext {
                 }
 
                 fn region(&self) -> $crate::draw::Region {
-                    assert!(!self.was_deleted());
+
                     unsafe {
                         let ptr = [<$flname _region>](self.inner.widget() as _);
                         assert!(!ptr.is_null());
@@ -338,33 +337,33 @@ macro_rules! impl_window_ext {
                 }
 
                 unsafe fn set_region(&mut self, region: $crate::draw::Region) {
-                    assert!(!self.was_deleted());
+
                     assert!(!region.0.is_null());
                     [<$flname _set_region>](self.inner.widget() as _, region.0)
                 }
 
                 fn iconize(&mut self) {
-                    assert!(!self.was_deleted());
+
                     unsafe { [<$flname _iconize>](self.inner.widget() as _) }
                 }
 
                 fn fullscreen_active(&self) -> bool {
-                    assert!(!self.was_deleted());
+
                     unsafe { [<$flname _fullscreen_active>](self.inner.widget() as _) != 0 }
                 }
 
                 fn decorated_w(&self) -> i32 {
-                    assert!(!self.was_deleted());
+
                     unsafe { [<$flname _decorated_w>](self.inner.widget() as _) }
                 }
 
                 fn decorated_h(&self) -> i32 {
-                    assert!(!self.was_deleted());
+
                     unsafe { [<$flname _decorated_h>](self.inner.widget() as _) }
                 }
 
                 fn size_range(&mut self, min_w: i32, min_h: i32, max_w: i32, max_h: i32) {
-                    assert!(!self.was_deleted());
+
                     let max_w = if max_w > u16::MAX as i32 {
                         0
                     } else {
@@ -381,13 +380,11 @@ macro_rules! impl_window_ext {
                 }
 
                 fn hotspot<W: WidgetExt>(&mut self, w: &W) {
-                    assert!(!self.was_deleted());
-                    assert!(!w.was_deleted());
                     unsafe { [<$flname _hotspot>](self.inner.widget() as _, w.as_widget_ptr() as _) }
                 }
 
                 fn set_shape<I: ImageExt>(&mut self, image: Option<I>) {
-                    assert!(!self.was_deleted());
+
                     assert!(self.w() != 0);
                     assert!(self.h() != 0);
                     assert!(
@@ -438,7 +435,7 @@ macro_rules! impl_window_ext {
                 }
 
                 fn shape(&self) -> Option<Box<dyn ImageExt>> {
-                    assert!(!self.was_deleted());
+
                     unsafe {
                         let image_ptr = [<$flname _shape>](self.inner.widget() as _);
                         if image_ptr.is_null() {
@@ -452,12 +449,12 @@ macro_rules! impl_window_ext {
                 }
 
                 fn x_root(&self) -> i32 {
-                    assert!(!self.was_deleted());
+
                     unsafe { [<$flname _x_root>](self.inner.widget() as _) }
                 }
 
                 fn y_root(&self) -> i32 {
-                    assert!(!self.was_deleted());
+
                     unsafe { [<$flname _y_root>](self.inner.widget() as _) }
                 }
 
@@ -467,7 +464,7 @@ macro_rules! impl_window_ext {
                     hot_x: i32,
                     hot_y: i32,
                 ) {
-                    assert!(!self.was_deleted());
+
                     if image.data_w() != image.w() || image.data_h() == image.h() {
                         image.scale(image.data_w(), image.data_h(), false, true);
                     }
@@ -483,33 +480,33 @@ macro_rules! impl_window_ext {
                 }
 
                 fn default_cursor(&mut self, cursor: Cursor) {
-                    assert!(!self.was_deleted());
+
                     unsafe { [<$flname _default_cursor>](self.inner.widget() as _, cursor as i32) }
                 }
 
                 fn screen_num(&self) -> i32 {
-                    assert!(!self.was_deleted());
+
                     unsafe { [<$flname _screen_num>](self.inner.widget() as _) }
                 }
 
                 fn set_screen_num(&mut self, n: i32) {
-                    assert!(!self.was_deleted());
+
                     unsafe { [<$flname _set_screen_num>](self.inner.widget() as _, n) }
                 }
 
                 fn wait_for_expose(&self) {
-                    assert!(!self.was_deleted());
+
                     unsafe { [<$flname _wait_for_expose>](self.inner.widget() as _) }
                 }
 
                 fn opacity(&self) -> f64 {
-                    assert!(!self.was_deleted());
+
                     assert!(self.is_derived);
                     unsafe { [<$flname _alpha>](self.inner.widget() as _) as f64 / 255.0 }
                 }
 
                 fn set_opacity(&mut self, val: f64) {
-                    assert!(!self.was_deleted());
+
                     assert!(self.is_derived);
                     if self.shown() {
                         self.wait_for_expose();
@@ -525,7 +522,7 @@ macro_rules! impl_window_ext {
                 }
 
                 fn xclass(&self) -> Option<String> {
-                    assert!(!self.was_deleted());
+
                     unsafe {
                         let ptr = [<$flname _xclass>](self.inner.widget() as _);
                         if ptr.is_null() {
@@ -537,40 +534,40 @@ macro_rules! impl_window_ext {
                 }
 
                 fn set_xclass(&mut self, s: &str) {
-                    assert!(!self.was_deleted());
+
                     let s = CString::safe_new(s);
                     unsafe { [<$flname _set_xclass>](self.inner.widget() as _, s.as_ptr()) }
                 }
 
                 fn clear_modal_states(&mut self) {
-                    assert!(!self.was_deleted());
+
                     unsafe { [<$flname _clear_modal_states>](self.inner.widget() as _) }
                 }
 
                 fn force_position(&mut self, flag: bool) {
-                    assert!(!self.was_deleted());
+
                     assert!(self.is_derived);
                     unsafe { [<$flname _force_position>](self.inner.widget() as _, flag as _) }
                 }
 
                 fn set_override(&mut self) {
-                    assert!(!self.was_deleted());
+
                     unsafe { [<$flname _set_override>](self.inner.widget() as _) }
                 }
 
                 fn is_override(&self) -> bool {
-                    assert!(!self.was_deleted());
+
                     unsafe { [<$flname _override>](self.inner.widget() as _) != 0 }
                 }
 
                 fn set_icon_label(&mut self, label: &str) {
-                    assert!(!self.was_deleted());
+
                     let label = CString::safe_new(label);
                     unsafe { [<$flname _set_icon_label>](self.inner.widget() as _, label.as_ptr()) }
                 }
 
                 fn icon_label(&self) -> Option<String> {
-                    assert!(!self.was_deleted());
+
                     unsafe {
                         let label_ptr = [<$flname _icon_label>](self.inner.widget() as _);
                         if label_ptr.is_null() {

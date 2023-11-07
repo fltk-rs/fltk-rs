@@ -86,14 +86,12 @@ crate::macros::widget::impl_widget_type!(PackType);
 impl Pack {
     /// Get the spacing of the pack
     pub fn spacing(&self) -> i32 {
-        assert!(!self.was_deleted());
         unsafe { Fl_Pack_spacing(self.inner.widget() as _) }
     }
 
     /// Set the spacing of the pack
     pub fn set_spacing(&mut self, spacing: i32) {
         unsafe {
-            assert!(!self.was_deleted());
             Fl_Pack_set_spacing(self.inner.widget() as _, spacing);
         }
     }
@@ -162,7 +160,6 @@ crate::macros::widget::impl_widget_type!(ScrollType);
 impl Scroll {
     /// Returns the vertical scrollbar
     pub fn scrollbar(&self) -> crate::valuator::Scrollbar {
-        assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Scroll_scrollbar(self.inner.widget() as _);
             assert!(!ptr.is_null());
@@ -172,7 +169,6 @@ impl Scroll {
 
     /// Returns the horizontal scrollbar
     pub fn hscrollbar(&self) -> crate::valuator::Scrollbar {
-        assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Scroll_hscrollbar(self.inner.widget() as _);
             assert!(!ptr.is_null());
@@ -182,31 +178,26 @@ impl Scroll {
 
     /// Returns the x position
     pub fn xposition(&self) -> i32 {
-        assert!(!self.was_deleted());
         unsafe { Fl_Scroll_xposition(self.inner.widget() as _) }
     }
 
     /// Returns the y position
     pub fn yposition(&self) -> i32 {
-        assert!(!self.was_deleted());
         unsafe { Fl_Scroll_yposition(self.inner.widget() as _) }
     }
 
     /// Scrolls to `x` and `y`
     pub fn scroll_to(&mut self, x: i32, y: i32) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Scroll_scroll_to(self.inner.widget() as _, x, y) }
     }
 
     /// Gets the scrollbar size
     pub fn scrollbar_size(&self) -> i32 {
-        assert!(!self.was_deleted());
         unsafe { Fl_Scroll_scrollbar_size(self.inner.widget() as _) }
     }
 
     /// Sets the scrollbar size
     pub fn set_scrollbar_size(&mut self, new_size: i32) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Scroll_set_scrollbar_size(self.inner.widget() as _, new_size) }
     }
 }
@@ -240,7 +231,6 @@ crate::macros::group::impl_group_ext!(Tabs, Fl_Tabs);
 impl Tabs {
     /// Gets the currently visible group
     pub fn value(&self) -> Option<impl GroupExt> {
-        assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Tabs_value(self.inner.widget() as _);
             if ptr.is_null() {
@@ -257,7 +247,6 @@ impl Tabs {
     /// # Errors
     /// Errors when the value can't be set for the group widget
     pub fn set_value<Grp: GroupExt>(&mut self, w: &Grp) -> Result<(), FltkError> {
-        assert!(!self.was_deleted());
         unsafe {
             match Fl_Tabs_set_value(
                 self.inner.widget() as _,
@@ -271,7 +260,6 @@ impl Tabs {
 
     /// Returns the tab group for the tab the user has currently down-clicked
     pub fn push(&self) -> Option<impl GroupExt> {
-        assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Tabs_push(self.inner.widget() as _);
             if ptr.is_null() {
@@ -288,7 +276,6 @@ impl Tabs {
     /// # Errors
     /// Errors if `set_push` can't be set for the group widget
     pub fn set_push<Grp: GroupExt>(&mut self, w: &Grp) -> Result<(), FltkError> {
-        assert!(!self.was_deleted());
         unsafe {
             match Fl_Tabs_set_push(
                 self.inner.widget() as _,
@@ -302,7 +289,6 @@ impl Tabs {
 
     /// Returns the position and size available to be used by its children
     pub fn client_area(&self) -> (i32, i32, i32, i32) {
-        assert!(!self.was_deleted());
         unsafe {
             let mut i1 = 0;
             let mut i2 = 0;
@@ -315,13 +301,11 @@ impl Tabs {
 
     /// Sets the tab label alignment
     pub fn set_tab_align(&mut self, a: Align) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Tabs_set_tab_align(self.inner.widget() as _, a.bits()) }
     }
 
     /// Gets the tab label alignment.
     pub fn tab_align(&self) -> Align {
-        assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Tabs_tab_align(self.inner.widget() as _)) }
     }
 
@@ -375,13 +359,11 @@ crate::macros::group::impl_group_ext!(Wizard, Fl_Wizard);
 impl Wizard {
     /// Gets the next view of the wizard
     pub fn next(&mut self) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Wizard_next(self.inner.widget() as _) }
     }
 
     /// Gets the previous view of the wizard
     pub fn prev(&mut self) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Wizard_prev(self.inner.widget() as _) }
     }
 
@@ -389,7 +371,6 @@ impl Wizard {
     /// Gets the underlying widget of the current view
     pub fn current_widget(&self) -> Widget {
         unsafe {
-            assert!(!self.was_deleted());
             let ptr = Fl_Wizard_value(self.inner.widget() as _) as *mut fltk_sys::widget::Fl_Widget;
             assert!(!ptr.is_null());
             Widget::from_widget_ptr(ptr)
@@ -399,7 +380,6 @@ impl Wizard {
     /// Gets the underlying widget of the current view
     pub fn try_current_widget(&self) -> Option<impl WidgetExt> {
         unsafe {
-            assert!(!self.was_deleted());
             let ptr = Fl_Wizard_value(self.inner.widget() as _) as *mut fltk_sys::widget::Fl_Widget;
             if ptr.is_null() {
                 None
@@ -412,7 +392,6 @@ impl Wizard {
     /// Sets the underlying widget of the current view
     pub fn set_current_widget<W: WidgetExt>(&mut self, w: &W) {
         unsafe {
-            assert!(!self.was_deleted());
             Fl_Wizard_set_value(
                 self.inner.widget() as _,
                 w.as_widget_ptr() as *mut fltk_sys::group::Fl_Widget,
@@ -437,7 +416,6 @@ impl ColorChooser {
     /// Return the rgb color
     pub fn rgb_color(&self) -> (u8, u8, u8) {
         unsafe {
-            assert!(!self.was_deleted());
             let r = (Fl_Color_Chooser_r(self.inner.widget() as _) * 255.0) as u8;
             let g = (Fl_Color_Chooser_g(self.inner.widget() as _) * 255.0) as u8;
             let b = (Fl_Color_Chooser_b(self.inner.widget() as _) * 255.0) as u8;
@@ -447,14 +425,12 @@ impl ColorChooser {
 
     /// Return the hex color
     pub fn hex_color(&self) -> u32 {
-        assert!(!self.was_deleted());
         let (r, g, b) = self.rgb_color();
         crate::utils::rgb2hex(r, g, b)
     }
 
     /// Set the base color of the ColorChooser. Returns an error on failure to change the color (wrong input)
     pub fn set_rgb(&mut self, r: u8, g: u8, b: u8) -> Result<(), FltkError> {
-        assert!(!self.was_deleted());
         unsafe {
             let ret = Fl_Color_Chooser_set_rgb(
                 self.inner.widget() as _,
@@ -472,7 +448,6 @@ impl ColorChooser {
 
     /// Set the base color of the ColorChooser. Returns an error on failure to change the color (wrong input)
     pub fn set_tuple_rgb(&mut self, (r, g, b): (u8, u8, u8)) -> Result<(), FltkError> {
-        assert!(!self.was_deleted());
         unsafe {
             let ret = Fl_Color_Chooser_set_rgb(
                 self.inner.widget() as _,

@@ -286,37 +286,31 @@ crate::macros::valuator::impl_valuator_ext!(ValueSlider, Fl_Value_Slider);
 impl ValueSlider {
     /// Gets the text font
     pub fn text_font(&self) -> Font {
-        assert!(!self.was_deleted());
         unsafe { std::mem::transmute(Fl_Value_Slider_text_font(self.inner.widget() as _)) }
     }
 
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Value_Slider_set_text_font(self.inner.widget() as _, f.bits()) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> i32 {
-        assert!(!self.was_deleted());
         unsafe { Fl_Value_Slider_text_size(self.inner.widget() as _) }
     }
 
     /// Sets the text size
     pub fn set_text_size(&mut self, s: i32) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Value_Slider_set_text_size(self.inner.widget() as _, s) }
     }
 
     /// Gets the text's color
     pub fn text_color(&self) -> Color {
-        assert!(!self.was_deleted());
         unsafe { std::mem::transmute(Fl_Value_Slider_text_color(self.inner.widget() as _)) }
     }
 
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Value_Slider_set_text_color(self.inner.widget() as _, color.bits()) }
     }
 
@@ -369,50 +363,42 @@ crate::macros::valuator::impl_valuator_ext!(ValueInput, Fl_Value_Input);
 impl ValueInput {
     /// Gets the text font
     pub fn text_font(&self) -> Font {
-        assert!(!self.was_deleted());
         unsafe { std::mem::transmute(Fl_Value_Input_text_font(self.inner.widget() as _)) }
     }
 
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Value_Input_set_text_font(self.inner.widget() as _, f.bits()) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> i32 {
-        assert!(!self.was_deleted());
         unsafe { Fl_Value_Input_text_size(self.inner.widget() as _) }
     }
 
     /// Sets the text size
     pub fn set_text_size(&mut self, s: i32) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Value_Input_set_text_size(self.inner.widget() as _, s) }
     }
 
     /// Gets the text's color
     pub fn text_color(&self) -> Color {
-        assert!(!self.was_deleted());
         unsafe { std::mem::transmute(Fl_Value_Input_text_color(self.inner.widget() as _)) }
     }
 
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Value_Input_set_text_color(self.inner.widget() as _, color.bits()) }
     }
 
     /// Returns whether the user is allowed to drag the value outside the range.
     /// Default is true
     pub fn soft(&self) -> bool {
-        assert!(!self.was_deleted());
         unsafe { Fl_Value_Input_soft(self.inner.widget() as _) != 0 }
     }
 
     /// Set whether the user is allowed to drag the value outside the range
     pub fn set_soft(&mut self, val: bool) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Value_Input_set_soft(self.inner.widget() as _, val as raw::c_char) }
     }
 }
@@ -432,37 +418,31 @@ crate::macros::valuator::impl_valuator_ext!(ValueOutput, Fl_Value_Output);
 impl ValueOutput {
     /// Gets the text font
     pub fn text_font(&self) -> Font {
-        assert!(!self.was_deleted());
         unsafe { std::mem::transmute(Fl_Value_Output_text_font(self.inner.widget() as _)) }
     }
 
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Value_Output_set_text_font(self.inner.widget() as _, f.bits()) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> i32 {
-        assert!(!self.was_deleted());
         unsafe { Fl_Value_Output_text_size(self.inner.widget() as _) }
     }
 
     /// Sets the text size
     pub fn set_text_size(&mut self, s: i32) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Value_Output_set_text_size(self.inner.widget() as _, s) }
     }
 
     /// Gets the text's color
     pub fn text_color(&self) -> Color {
-        assert!(!self.was_deleted());
         unsafe { std::mem::transmute(Fl_Value_Output_text_color(self.inner.widget() as _)) }
     }
 
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Value_Output_set_text_color(self.inner.widget() as _, color.bits()) }
     }
 }
@@ -634,37 +614,31 @@ crate::macros::valuator::impl_valuator_ext!(HorValueSlider, Fl_Hor_Value_Slider)
 impl HorValueSlider {
     /// Gets the text font
     pub fn text_font(&self) -> Font {
-        assert!(!self.was_deleted());
         unsafe { std::mem::transmute(Fl_Hor_Value_Slider_text_font(self.inner.widget() as _)) }
     }
 
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Hor_Value_Slider_set_text_font(self.inner.widget() as _, f.bits()) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> i32 {
-        assert!(!self.was_deleted());
         unsafe { Fl_Hor_Value_Slider_text_size(self.inner.widget() as _) }
     }
 
     /// Sets the text size
     pub fn set_text_size(&mut self, s: i32) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Hor_Value_Slider_set_text_size(self.inner.widget() as _, s) }
     }
 
     /// Gets the text's color
     pub fn text_color(&self) -> Color {
-        assert!(!self.was_deleted());
         unsafe { std::mem::transmute(Fl_Hor_Value_Slider_text_color(self.inner.widget() as _)) }
     }
 
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Hor_Value_Slider_set_text_color(self.inner.widget() as _, color.bits()) }
     }
 

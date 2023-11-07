@@ -40,7 +40,6 @@ where
     F: FnMut(&mut dyn WidgetExt),
     W: WidgetExt,
 {
-    assert!(!widget.was_deleted());
     unsafe {
         unsafe extern "C" fn shim(wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut(&mut dyn WidgetExt)> =
@@ -94,7 +93,6 @@ pub unsafe fn set_raw_callback<W>(
 ) where
     W: WidgetExt,
 {
-    assert!(!widget.was_deleted());
     let cb: Option<unsafe extern "C" fn(WidgetPtr, *mut raw::c_void)> = mem::transmute(cb);
     fltk_sys::widget::Fl_Widget_set_callback(widget.as_widget_ptr(), cb, data);
 }
@@ -140,7 +138,6 @@ pub fn modal() -> Option<impl WindowExt> {
 
 /// Deletes widgets and their children.
 pub fn delete_widget<Wid: WidgetBase>(wid: Wid) {
-    assert!(!wid.was_deleted());
     WidgetBase::delete(wid)
 }
 

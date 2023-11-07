@@ -727,7 +727,6 @@ pub fn set_status(x: i32, y: i32, w: i32, h: i32) {
 /// Sets spot within the window
 pub fn set_spot<Win: WindowExt>(font: Font, size: i32, x: i32, y: i32, w: i32, h: i32, win: &Win) {
     unsafe {
-        assert!(!win.was_deleted());
         Fl_set_spot(
             font.bits(),
             size,
@@ -757,7 +756,6 @@ pub fn reset_spot() {
     The api can fail to capture the window as an image
 */
 pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkError> {
-    assert!(!win.was_deleted());
     let cp = win.width() * win.height() * 3;
     win.show();
     unsafe {

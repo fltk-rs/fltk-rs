@@ -1704,7 +1704,6 @@ macro_rules! widget_extends {
 
             /// Initialize with type
             pub fn with_type<T: $crate::prelude::WidgetType>(mut self, typ: T) -> Self {
-                assert!(!self.was_deleted());
                 self.set_type(typ);
                 self
             }
@@ -1715,8 +1714,6 @@ macro_rules! widget_extends {
                 wid: &W,
                 padding: i32,
             ) -> Self {
-                assert!(!wid.was_deleted());
-                assert!(!self.was_deleted());
                 let w = self.w();
                 let h = self.h();
                 debug_assert!(
@@ -1733,8 +1730,6 @@ macro_rules! widget_extends {
                 wid: &W,
                 padding: i32,
             ) -> Self {
-                assert!(!wid.was_deleted());
-                assert!(!self.was_deleted());
                 let w = self.w();
                 let h = self.h();
                 debug_assert!(
@@ -1751,8 +1746,6 @@ macro_rules! widget_extends {
                 wid: &W,
                 padding: i32,
             ) -> Self {
-                assert!(!wid.was_deleted());
-                assert!(!self.was_deleted());
                 let w = self.w();
                 let h = self.h();
                 debug_assert!(
@@ -1765,8 +1758,6 @@ macro_rules! widget_extends {
 
             /// Initialize left of another widget
             pub fn left_of<W: $crate::prelude::WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
-                assert!(!wid.was_deleted());
-                assert!(!self.was_deleted());
                 let w = self.w();
                 let h = self.h();
                 debug_assert!(
@@ -1779,8 +1770,6 @@ macro_rules! widget_extends {
 
             /// Initialize center of another widget
             pub fn center_of<W: $crate::prelude::WidgetExt>(mut self, w: &W) -> Self {
-                assert!(!w.was_deleted());
-                assert!(!self.was_deleted());
                 debug_assert!(
                     w.width() != 0 && w.height() != 0,
                     "center_of requires the size of the widget to be known!"
@@ -1800,8 +1789,6 @@ macro_rules! widget_extends {
 
             /// Initialize center of another widget on the x axis
             pub fn center_x<W: $crate::prelude::WidgetExt>(mut self, w: &W) -> Self {
-                assert!(!w.was_deleted());
-                assert!(!self.was_deleted());
                 debug_assert!(
                     w.width() != 0 && w.height() != 0,
                     "center_of requires the size of the widget to be known!"
@@ -1819,8 +1806,6 @@ macro_rules! widget_extends {
 
             /// Initialize center of another widget on the y axis
             pub fn center_y<W: $crate::prelude::WidgetExt>(mut self, w: &W) -> Self {
-                assert!(!w.was_deleted());
-                assert!(!self.was_deleted());
                 debug_assert!(
                     w.width() != 0 && w.height() != 0,
                     "center_of requires the size of the widget to be known!"
@@ -1838,7 +1823,6 @@ macro_rules! widget_extends {
 
             /// Initialize center of parent
             pub fn center_of_parent(mut self) -> Self {
-                assert!(!self.was_deleted());
                 if let Some(w) = self.parent() {
                     debug_assert!(
                         w.width() != 0 && w.height() != 0,
@@ -1860,8 +1844,6 @@ macro_rules! widget_extends {
 
             /// Initialize to the size of another widget
             pub fn size_of<W: $crate::prelude::WidgetExt>(mut self, w: &W) -> Self {
-                assert!(!w.was_deleted());
-                assert!(!self.was_deleted());
                 debug_assert!(
                     w.width() != 0 && w.height() != 0,
                     "size_of requires the size of the widget to be known!"
@@ -1874,7 +1856,6 @@ macro_rules! widget_extends {
 
             /// Initialize to the size of the parent
             pub fn size_of_parent(mut self) -> Self {
-                assert!(!self.was_deleted());
                 if let Some(parent) = self.parent() {
                     let w = parent.width();
                     let h = parent.height();

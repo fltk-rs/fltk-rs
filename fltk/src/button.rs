@@ -47,15 +47,11 @@ crate::macros::button::impl_button_ext!(RadioButton, Fl_Radio_Button);
 impl RadioButton {
     /// Check whether a `RadioButton` is toggled
     pub fn is_toggled(&self) -> bool {
-        unsafe {
-            assert!(!self.was_deleted());
-            Fl_Radio_Button_is_toggled(self.inner.widget() as _) != 0
-        }
+        unsafe { Fl_Radio_Button_is_toggled(self.inner.widget() as _) != 0 }
     }
 
     /// Sets whether the `RadioButton` is toggled or not
     pub fn toggle(&mut self, val: bool) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Radio_Button_toggle(self.inner.widget() as _, val as i32) }
     }
 }
@@ -76,15 +72,11 @@ crate::macros::button::impl_button_ext!(RadioRoundButton, Fl_Radio_Round_Button)
 impl RadioRoundButton {
     /// Check whether a `RadioRoundButton` is toggled
     pub fn is_toggled(&self) -> bool {
-        unsafe {
-            assert!(!self.was_deleted());
-            Fl_Radio_Round_Button_is_toggled(self.inner.widget() as _) != 0
-        }
+        unsafe { Fl_Radio_Round_Button_is_toggled(self.inner.widget() as _) != 0 }
     }
 
     /// Sets whether the `RadioRoundButton` is toggled or not
     pub fn toggle(&mut self, val: bool) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Radio_Round_Button_toggle(self.inner.widget() as _, val as i32) }
     }
 }
@@ -105,15 +97,11 @@ crate::macros::button::impl_button_ext!(RadioLightButton, Fl_Radio_Light_Button)
 impl RadioLightButton {
     /// Check whether a `RadioLightButton` is toggled
     pub fn is_toggled(&self) -> bool {
-        unsafe {
-            assert!(!self.was_deleted());
-            Fl_Radio_Light_Button_is_toggled(self.inner.widget() as _) != 0
-        }
+        unsafe { Fl_Radio_Light_Button_is_toggled(self.inner.widget() as _) != 0 }
     }
 
     /// Sets whether the `RadioLightButton` is toggled or not
     pub fn toggle(&mut self, val: bool) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Radio_Light_Button_toggle(self.inner.widget() as _, val as i32) }
     }
 }
@@ -133,15 +121,11 @@ crate::macros::button::impl_button_ext!(RoundButton, Fl_Round_Button);
 impl RoundButton {
     /// Check whether a `RoundButton` is toggled
     pub fn is_toggled(&self) -> bool {
-        unsafe {
-            assert!(!self.was_deleted());
-            Fl_Round_Button_is_toggled(self.inner.widget() as _) != 0
-        }
+        unsafe { Fl_Round_Button_is_toggled(self.inner.widget() as _) != 0 }
     }
 
     /// Sets whether the `RoundButton` is toggled or not
     pub fn toggle(&mut self, val: bool) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Round_Button_toggle(self.inner.widget() as _, val as i32) }
     }
 }
@@ -161,16 +145,12 @@ crate::macros::button::impl_button_ext!(CheckButton, Fl_Check_Button);
 impl CheckButton {
     /// Check whether a `CheckButton` is checked
     pub fn is_checked(&self) -> bool {
-        unsafe {
-            assert!(!self.was_deleted());
-            Fl_Check_Button_is_checked(self.inner.widget() as _) != 0
-        }
+        unsafe { Fl_Check_Button_is_checked(self.inner.widget() as _) != 0 }
     }
 
     /// Set whether `CheckButton` is checked or not
     pub fn set_checked(&self, checked: bool) {
         unsafe {
-            assert!(!self.was_deleted());
             Fl_Check_Button_set_checked(self.inner.widget() as _, checked as i32);
         }
     }
@@ -191,15 +171,11 @@ crate::macros::button::impl_button_ext!(ToggleButton, Fl_Toggle_Button);
 impl ToggleButton {
     /// Check whether a `ToggleButton` is toggled
     pub fn is_toggled(&self) -> bool {
-        unsafe {
-            assert!(!self.was_deleted());
-            Fl_Toggle_Button_is_toggled(self.inner.widget() as _) != 0
-        }
+        unsafe { Fl_Toggle_Button_is_toggled(self.inner.widget() as _) != 0 }
     }
 
     /// Sets whether the `ToggleButton` is toggled or not
     pub fn toggle(&mut self, val: bool) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Toggle_Button_toggle(self.inner.widget() as _, val as i32) }
     }
 }
@@ -219,15 +195,11 @@ crate::macros::button::impl_button_ext!(LightButton, Fl_Light_Button);
 impl LightButton {
     /// Check whether a `LightButton` is on
     pub fn is_on(&self) -> bool {
-        unsafe {
-            assert!(!self.was_deleted());
-            Fl_Light_Button_is_on(self.inner.widget() as _) != 0
-        }
+        unsafe { Fl_Light_Button_is_on(self.inner.widget() as _) != 0 }
     }
 
     /// Sets whether the `LightButton` is on or not
     pub fn turn_on(&mut self, on: bool) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Light_Button_turn_on(self.inner.widget() as _, on as i32) }
     }
 }
@@ -271,35 +243,26 @@ crate::macros::button::impl_button_ext!(ShortcutButton, Fl_Shortcut_Button);
 impl ShortcutButton {
     /// Gets the Shortcut button value
     pub fn value(&self) -> crate::enums::Shortcut {
-        unsafe {
-            assert!(!self.was_deleted());
-            std::mem::transmute(Fl_Shortcut_Button_value(self.inner.widget() as _))
-        }
+        unsafe { std::mem::transmute(Fl_Shortcut_Button_value(self.inner.widget() as _)) }
     }
 
     /// Sets the Shortcut button value
     pub fn set_value(&mut self, val: crate::enums::Shortcut) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Shortcut_Button_set_value(self.inner.widget() as _, val.bits()) }
     }
 
     /// Gets the Shortcut button default value
     pub fn default_value(&self) -> crate::enums::Shortcut {
-        unsafe {
-            assert!(!self.was_deleted());
-            std::mem::transmute(Fl_Shortcut_Button_default_value(self.inner.widget() as _))
-        }
+        unsafe { std::mem::transmute(Fl_Shortcut_Button_default_value(self.inner.widget() as _)) }
     }
 
     /// Sets the Shortcut button default value
     pub fn set_default_value(&mut self, val: crate::enums::Shortcut) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Shortcut_Button_set_default_value(self.inner.widget() as _, val.bits()) }
     }
 
     /// Clears the default shortcut
     pub fn default_clear(&mut self) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Shortcut_Button_default_clear(self.inner.widget() as _) }
     }
 }

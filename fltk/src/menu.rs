@@ -84,7 +84,6 @@ crate::macros::widget::impl_widget_type!(MenuButtonType);
 impl MenuButton {
     /// Act exactly as though the user clicked the button or typed the shortcut key
     pub fn popup(&self) -> Option<MenuItem> {
-        assert!(!self.was_deleted());
         if self.size() == 0 {
             return None;
         }
@@ -178,7 +177,6 @@ impl SysMenuBar {
 
     /// Sets the about menu item callback
     pub fn set_about_callback<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
-        assert!(!self.was_deleted());
         unsafe {
             unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
                 let mut wid = SysMenuBar::from_widget_ptr(wid as *mut _);
@@ -387,7 +385,6 @@ impl MenuItem {
 
     /// Creates a popup menu at the specified coordinates and returns its choice
     pub fn popup(&self, x: i32, y: i32) -> Option<MenuItem> {
-        assert!(!self.was_deleted());
         if self.size() == 0 {
             return None;
         }
@@ -404,7 +401,6 @@ impl MenuItem {
 
     /// Returns the label of the menu item
     pub fn label(&self) -> Option<String> {
-        assert!(!self.was_deleted());
         unsafe {
             let label_ptr = Fl_Menu_Item_label(*self.inner);
             if label_ptr.is_null() {
@@ -420,7 +416,6 @@ impl MenuItem {
 
     /// Sets the label of the menu item
     pub fn set_label(&mut self, txt: &str) {
-        assert!(!self.was_deleted());
         unsafe {
             let txt = CString::safe_new(txt);
             Fl_Menu_Item_set_label(*self.inner, txt.into_raw() as _);
@@ -429,13 +424,11 @@ impl MenuItem {
 
     /// Returns the label type of the menu item
     pub fn label_type(&self) -> LabelType {
-        assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Menu_Item_label_type(*self.inner)) }
     }
 
     /// Sets the label type of the menu item
     pub fn set_label_type(&mut self, typ: LabelType) {
-        assert!(!self.was_deleted());
         unsafe {
             Fl_Menu_Item_set_label_type(*self.inner, typ as i32);
         }
@@ -443,116 +436,97 @@ impl MenuItem {
 
     /// Returns the label color of the menu item
     pub fn label_color(&self) -> Color {
-        assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Menu_Item_label_color(*self.inner)) }
     }
 
     /// Sets the label color of the menu item
     pub fn set_label_color(&mut self, color: Color) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_set_label_color(*self.inner, color.bits()) }
     }
 
     /// Returns the label font of the menu item
     pub fn label_font(&self) -> Font {
-        assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Menu_Item_label_font(*self.inner)) }
     }
 
     /// Sets the label font of the menu item
     pub fn set_label_font(&mut self, font: Font) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_set_label_font(*self.inner, font.bits()) }
     }
 
     /// Returns the label size of the menu item
     pub fn label_size(&self) -> i32 {
-        assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_label_size(*self.inner) }
     }
 
     /// Sets the label size of the menu item
     pub fn set_label_size(&mut self, sz: i32) {
-        assert!(!self.was_deleted());
         let sz = if sz < 1 { 1 } else { sz };
         unsafe { Fl_Menu_Item_set_label_size(*self.inner, sz) }
     }
 
     /// Returns the value of the menu item
     pub fn value(&self) -> bool {
-        assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_value(*self.inner) != 0 }
     }
 
     /// Sets the menu item
     pub fn set(&mut self) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_set(*self.inner) }
     }
 
     /// Turns the check or radio item "off" for the menu item
     pub fn clear(&mut self) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_clear(*self.inner) }
     }
 
     /// Returns whether the menu item is visible or not
     pub fn visible(&self) -> bool {
-        assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_visible(*self.inner) != 0 }
     }
 
     /// Returns whether the menu item is active
     pub fn active(&self) -> bool {
-        assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_active(*self.inner) != 0 }
     }
 
     /// Activates the menu item
     pub fn activate(&mut self) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_activate(*self.inner) }
     }
 
     /// Deactivates the menu item
     pub fn deactivate(&mut self) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_deactivate(*self.inner) }
     }
 
     /// Returns whether a menu item is a submenu
     pub fn is_submenu(&self) -> bool {
-        assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_submenu(*self.inner) != 0 }
     }
 
     /// Returns whether a menu item is a checkbox
     pub fn is_checkbox(&self) -> bool {
-        assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_checkbox(*self.inner) != 0 }
     }
 
     /// Returns whether a menu item is a radio item
     pub fn is_radio(&self) -> bool {
-        assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_radio(*self.inner) != 0 }
     }
 
     /// Shows the menu item
     pub fn show(&mut self) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_show(*self.inner) }
     }
 
     /// Hides the menu item
     pub fn hide(&mut self) {
-        assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_hide(*self.inner) }
     }
 
     /// Get the next menu item skipping submenus
     pub fn next(&self, idx: i32) -> Option<MenuItem> {
-        assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Menu_Item_next(*self.inner, idx);
             if ptr.is_null() {
@@ -615,7 +589,6 @@ impl MenuItem {
 
     /// Set a callback for the menu item
     pub fn set_callback<F: FnMut(&mut Choice) + 'static>(&mut self, cb: F) {
-        assert!(!self.was_deleted());
         unsafe {
             unsafe extern "C" fn shim(wid: *mut fltk_sys::menu::Fl_Widget, data: *mut raw::c_void) {
                 let mut wid = crate::widget::Widget::from_widget_ptr(wid as *mut _);
@@ -649,7 +622,6 @@ impl MenuItem {
     /// Draw a box around the menu item.
     /// Requires the call to be made inside a MenuExt-implementing widget's own draw method
     pub fn draw<M: MenuExt>(&self, x: i32, y: i32, w: i32, h: i32, menu: &M, selected: bool) {
-        assert!(!self.was_deleted());
         unsafe {
             Fl_Menu_Item_draw(
                 *self.inner,
@@ -665,7 +637,6 @@ impl MenuItem {
 
     /// Measure the width and height of a menu item
     pub fn measure(&self) -> (i32, i32) {
-        assert!(!self.was_deleted());
         let mut h = 0;
         let ret = unsafe { Fl_Menu_Item_measure(*self.inner, &mut h as _, std::ptr::null()) };
         (ret, h)
@@ -676,7 +647,6 @@ impl MenuItem {
     /// Trying to add a label after adding an image might lead to undefined behavior
     #[doc(hidden)]
     pub unsafe fn set_image<I: ImageExt>(&mut self, image: I) {
-        assert!(!self.was_deleted());
         assert!(!image.was_deleted());
         Fl_Menu_Item_image(*self.inner, image.as_image_ptr() as _)
     }
@@ -716,7 +686,6 @@ impl MenuItem {
         ```
     */
     pub fn add_image<I: ImageExt>(&mut self, image: Option<I>, on_left: bool) {
-        assert!(!self.was_deleted());
         unsafe {
             if let Some(image) = image {
                 assert!(!image.was_deleted());
@@ -735,7 +704,6 @@ impl MenuItem {
         flag: MenuFlag,
         cb: F,
     ) -> i32 {
-        assert!(!self.was_deleted());
         let temp = CString::safe_new(name);
         unsafe {
             unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
@@ -768,7 +736,6 @@ impl MenuItem {
         flag: MenuFlag,
         cb: F,
     ) -> i32 {
-        assert!(!self.was_deleted());
         let temp = CString::safe_new(name);
         unsafe {
             unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
