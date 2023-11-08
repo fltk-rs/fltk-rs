@@ -112,6 +112,11 @@ path = "tests/image.rs"
 harness = false
 
 [[test]]
+name = "clear"
+path = "tests/clear.rs"
+harness = false
+
+[[test]]
 name = "gl"
 path = "tests/gl.rs"
 harness = false
