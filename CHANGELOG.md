@@ -3,6 +3,7 @@
 
 # [1.4.17] - Unreleased
 - Add Window::maximize, unmaximize, and maximize_active.
+- Add Button::set_compact
 - Add TextBuffer::replace check.
 - Update FLTK submodule.
 

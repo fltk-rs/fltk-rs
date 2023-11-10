@@ -15,6 +15,22 @@ crate::macros::widget::impl_widget_base!(Button, Fl_Button);
 crate::macros::widget::impl_widget_default!(Button);
 crate::macros::button::impl_button_ext!(Button, Fl_Button);
 
+impl Button {
+    /// Set whether a button is compact
+    pub fn set_compact(&mut self, flag: bool) {
+        unsafe {
+            Fl_Button_set_compact(self.inner.widget() as _, flag as _)
+        }
+    }
+
+    /// Get whether a button is compact
+    pub fn compact(&self) -> bool {
+        unsafe {
+            Fl_Button_compact(self.inner.widget() as _) != 0
+        }
+    }
+}
+
 /// Defines the button type, which can be changed dynamically using the `set_type()`.
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]

@@ -368,6 +368,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Button_down_box(self_: *const Fl_Button) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Button_set_compact(self_: *mut Fl_Button, v: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Button_compact(self_: *const Fl_Button) -> ::std::os::raw::c_uchar;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Check_Button {
@@ -754,6 +760,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Check_Button_down_box(self_: *const Fl_Check_Button) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Check_Button_set_compact(self_: *mut Fl_Check_Button, v: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Check_Button_compact(self_: *const Fl_Check_Button) -> ::std::os::raw::c_uchar;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Radio_Button {
@@ -1139,6 +1151,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Radio_Button_down_box(self_: *const Fl_Radio_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Button_set_compact(self_: *mut Fl_Radio_Button, v: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Radio_Button_compact(self_: *const Fl_Radio_Button) -> ::std::os::raw::c_uchar;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1539,6 +1557,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Toggle_Button_down_box(self_: *const Fl_Toggle_Button) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Toggle_Button_set_compact(self_: *mut Fl_Toggle_Button, v: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Toggle_Button_compact(self_: *const Fl_Toggle_Button) -> ::std::os::raw::c_uchar;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Round_Button {
@@ -1924,6 +1948,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Round_Button_down_box(self_: *const Fl_Round_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Round_Button_set_compact(self_: *mut Fl_Round_Button, v: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Round_Button_compact(self_: *const Fl_Round_Button) -> ::std::os::raw::c_uchar;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2411,6 +2441,17 @@ extern "C" {
         self_: *const Fl_Radio_Round_Button,
     ) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Radio_Round_Button_set_compact(
+        self_: *mut Fl_Radio_Round_Button,
+        v: ::std::os::raw::c_uchar,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_compact(
+        self_: *const Fl_Radio_Round_Button,
+    ) -> ::std::os::raw::c_uchar;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Radio_Light_Button {
@@ -2897,6 +2938,17 @@ extern "C" {
         self_: *const Fl_Radio_Light_Button,
     ) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Radio_Light_Button_set_compact(
+        self_: *mut Fl_Radio_Light_Button,
+        v: ::std::os::raw::c_uchar,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_compact(
+        self_: *const Fl_Radio_Light_Button,
+    ) -> ::std::os::raw::c_uchar;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Light_Button {
@@ -3282,6 +3334,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Light_Button_down_box(self_: *const Fl_Light_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Light_Button_set_compact(self_: *mut Fl_Light_Button, v: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Light_Button_compact(self_: *const Fl_Light_Button) -> ::std::os::raw::c_uchar;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -3676,6 +3734,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Repeat_Button_down_box(self_: *const Fl_Repeat_Button) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Repeat_Button_set_compact(self_: *mut Fl_Repeat_Button, v: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Repeat_Button_compact(self_: *const Fl_Repeat_Button) -> ::std::os::raw::c_uchar;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Return_Button {
@@ -4068,6 +4132,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Return_Button_down_box(self_: *const Fl_Return_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Return_Button_set_compact(self_: *mut Fl_Return_Button, v: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Return_Button_compact(self_: *const Fl_Return_Button) -> ::std::os::raw::c_uchar;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -4515,4 +4585,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Shortcut_Button_down_box(self_: *const Fl_Shortcut_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_compact(
+        self_: *mut Fl_Shortcut_Button,
+        v: ::std::os::raw::c_uchar,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_compact(self_: *const Fl_Shortcut_Button) -> ::std::os::raw::c_uchar;
 }
