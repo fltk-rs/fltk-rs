@@ -30,15 +30,14 @@ enum Message {
 }
 
 struct MyButton {
-    btn: Button,
+    b: Button,
 }
 
 impl MyButton {
     pub fn new(title: &'static str) -> MyButton {
-        let mut b = MyButton {
-            btn: Button::new(0, 0, 90, 0, title),
-        };
+        let mut b = Button::new(0, 0, 90, 0, title);
         b.set_label_size(20);
+        b.set_compact(true);
         match title {
             "0" => {
                 b.resize(0, 0, 90 * 2, 0);
@@ -69,7 +68,7 @@ impl MyButton {
                 b.set_shortcut(Shortcut::None | title.chars().next().unwrap());
             }
         }
-        b
+        Self { b }
     }
 }
 
@@ -77,13 +76,13 @@ impl Deref for MyButton {
     type Target = Button;
 
     fn deref(&self) -> &Self::Target {
-        &self.btn
+        &self.b
     }
 }
 
 impl DerefMut for MyButton {
     fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.btn
+        &mut self.b
     }
 }
 
