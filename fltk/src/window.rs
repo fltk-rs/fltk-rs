@@ -873,8 +873,7 @@ pub mod experimental {
     #[cfg(feature = "enable-glwindow")]
     #[derive(Debug)]
     pub struct GlWidgetWindow {
-        inner: *mut Fl_Gl_Window,
-        tracker: crate::widget::WidgetTracker,
+        inner: crate::widget::WidgetTracker,
         is_derived: bool,
     }
 
