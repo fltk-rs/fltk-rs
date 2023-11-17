@@ -1,6 +1,9 @@
 # Changelog
 
 
+# [1.4.18] - 2023-11-17
+- Fix build with enable-glwindowf feature.
+
 # [1.4.17] - 2023-11-17
 - Add Window::maximize, un_maximize, and maximize_active.
 - Add Button::set_compact.
