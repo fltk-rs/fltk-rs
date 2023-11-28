@@ -1,5 +1,4 @@
-use crate::enums::Align;
-use crate::enums::{Color, FrameType};
+use crate::enums::{Align, Color, FrameType};
 use crate::prelude::*;
 use crate::utils::FlString;
 use crate::widget::Widget;
@@ -956,6 +955,7 @@ crate::widget_extends!(Row, Flex, p);
 /// # Warning
 /// The api might change if changes happen upstream
 pub mod experimental {
+    use crate::enums::Font;
     use super::*;
     use std::ops::Range;
 
@@ -1175,6 +1175,500 @@ pub mod experimental {
         /// Debug the grid
         pub fn debug(&mut self, level: i32) {
             unsafe { Fl_Grid_debug(self.inner.widget() as _, level) }
+        }
+    }
+
+    /// Creates a scrollable display widget to handle terminal-like behavior, such as
+    /// logging events or debug information.
+    /// Replaces SimpleTerminal widget
+    ///
+    #[derive(Debug)]
+    pub struct Terminal {
+        inner: crate::widget::WidgetTracker,
+        is_derived: bool,
+    }
+
+    crate::macros::widget::impl_widget_ext!(Terminal, Fl_Terminal);
+    crate::macros::widget::impl_widget_base!(Terminal, Fl_Terminal);
+    crate::macros::widget::impl_widget_default!(Terminal);
+    crate::macros::group::impl_group_ext!(Terminal, Fl_Terminal);
+
+    ///   Determines when Fl_Terminal calls redraw() if new text is added.
+    /// RATE_LIMITED is the recommended setting, using redraw_rate(float) to determine
+    /// the maximum rate of redraws.
+    /// see redraw_style(), redraw_rate()
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[repr(u32)]
+    #[non_exhaustive]
+    pub enum RedrawStyle {
+        /// App must call redraw() as needed to update text to screen
+        NoRedraw = 0x0000,
+        /// timer controlled redraws. (DEFAULT)
+        RateLimited = 0x0001, // todo: this is dangerous, because enum values are implicitly assigned in the C++ code
+        /// redraw triggered after *every* append() / printf() / etc. operation
+        PerWrite = 0x0002,
+    }
+    impl RedrawStyle {
+        /// Build a RedrawStyle enum with an arbitrary value.
+        // todo: is there a cleaner way to do this without using unsafe::reinterpret_cast?
+        fn new(val: u32) -> RedrawStyle {
+            if val == RedrawStyle::RateLimited as u32 {
+                RedrawStyle::RateLimited
+            } else if val == RedrawStyle::NoRedraw as u32 {
+                RedrawStyle::NoRedraw
+            } else if val == RedrawStyle::PerWrite as u32 {
+                RedrawStyle::PerWrite
+            } else {
+                panic!("Unknown RedrawStyle value {val}")
+            }
+        }
+    }
+
+    /// Bits for the per-character attributes, which control text features
+    /// such as italic, bold, underlined text, etc.
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[repr(u8)]
+    #[non_exhaustive]
+    pub enum Attrib {
+        /// all attributes off
+        Normal = 0x00,
+        /// bold text: uses bold font, color brighter than normal
+        Bold = 0x01,
+        /// dim text; color slightly darker than normal
+        Dim = 0x02,
+        /// italic font text
+        Italic = 0x04,
+        /// underlined text
+        Underline = 0x08,
+        /// <EM>(reserved for internal future use)</EM>
+        _Reserved1 = 0x10,
+        /// inverse text; fg/bg color are swapped
+        Inverse = 0x20,
+        /// <EM>(reserved for internal future use)</EM>
+        _Reserved2 = 0x40,
+        /// strikeout text
+        Strikeout = 0x80,
+    }
+
+    ///    Per-character 8 bit flags (uchar) used to manage special states for characters.
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[repr(u8)]
+    #[non_exhaustive]
+    pub enum CharFlags {
+        /// this char's fg color is an XTERM color; can be affected by Dim+Bold
+        FgXterm = 0x01,
+        /// this char's bg color is an XTERM color; can be affected by Dim+Bold
+        BgXterm = 0x02,
+        /// this char at end of line, used for line wrap during screen resizing
+        Eol = 0x04,
+        /// Reserved for future use
+        _ResvA = 0x08,
+        /// Reserved for future use
+        _ResvB = 0x10,
+        /// Reserved for future use
+        _ResvC = 0x20,
+        /// Reserved for future use
+        _ResvD = 0x40,
+        /// Reserved for future use
+        _ResvE = 0x80,
+        /// (FgXterm | BgXterm)
+        Colormask = 0x03,
+    }
+
+    ///    'xterm color' values, used in set_text_fg_color_xterm and set_text_bg_color_xterm
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[repr(u8)]
+    #[allow(missing_docs)] // These color names are self-documenting
+    #[non_exhaustive]
+    pub enum XtermColor {
+        Black = 0,
+        Red = 1,
+        Green = 2,
+        Yellow = 3,
+        Blue = 4,
+        Magenta = 5,
+        Cyan = 6,
+        White = 7,
+    }
+
+
+    impl Terminal {
+        /// Returns whether the terminal is in ANSI mode.
+        pub fn ansi(&self) -> bool {
+            unsafe { Fl_Terminal_ansi(self.inner.widget() as _) != 0 }
+        }
+
+        /// Enable/disable ANSI mode. If true, ANSI and VT100/xterm codes will be processed.
+        /// If false, these codes won't be processed and will either be ignored or print the
+        /// error character "¿", depending on the value of show_unknown().
+        pub fn set_ansi(&mut self, arg1: bool) {
+            unsafe { Fl_Terminal_set_ansi(self.inner.widget() as _, arg1 as i32) }
+        }
+
+        /// Appends text to the terminal at current cursor position using the current text color/attributes.
+        /// Redraws are managed automatically by default; see redraw_style()
+        pub fn append(&mut self, s: &str) {
+            let s = CString::safe_new(s);
+            unsafe { Fl_Terminal_append(self.inner.widget() as _, s.into_raw() as _) }
+        }
+
+        /// Appends data to the terminal at current cursor position using the current text color/attributes
+        /// Redraws are managed automatically by default; see redraw_style()
+        pub fn append2(&mut self, s: &[u8]) {
+            unsafe { Fl_Terminal_append2(self.inner.widget() as _, s.as_ptr() as _, s.len() as _) }
+        }
+
+        /// Appends text to the terminal at current cursor position using the current text color/attributes.
+        /// Slightly more efficient than append_utf8
+        /// Redraws are managed automatically by default; see redraw_style()
+        pub fn append_ascii(&mut self, s: &str) {
+            let s = CString::safe_new(s);
+            unsafe { Fl_Terminal_append_ascii(self.inner.widget() as _, s.into_raw() as _) }
+        }
+
+        // /// Appends data to the terminal at current cursor position using the current text color/attributes
+        // /// Slightly more efficient than append_utf8_2
+        // /// Redraws are managed automatically by default; see redraw_style()
+        // pub fn append_ascii2(&mut self, s: &[u8]) {
+        //     unsafe {
+        //         Fl_Terminal_append2(self.inner.widget() as _, s.as_ptr() as _, s.len() as _)
+        //     }
+        // }
+
+        /// Appends text to the terminal at current cursor position using the current text color/attributes.
+        /// Handles UTF-8 chars split across calls
+        /// Redraws are managed automatically by default; see redraw_style()
+        pub fn append_utf8(&mut self, s: &str) {
+            let s = CString::safe_new(s);
+            unsafe { Fl_Terminal_append_utf8(self.inner.widget() as _, s.into_raw() as _) }
+        }
+
+        /// Appends data to the terminal at current cursor position using the current text color/attributes
+        /// Handles UTF-8 chars split across calls
+        /// Redraws are managed automatically by default; see redraw_style()
+        pub fn append_utf8_2(&mut self, s: &[u8]) {
+            unsafe {
+                Fl_Terminal_append_utf8_2(self.inner.widget() as _, s.as_ptr() as _, s.len() as _)
+            }
+        }
+
+        /// Clears the scroll history buffer and adjusts scrollbar, forcing it to redraw()
+        pub fn clear_history(&mut self) {
+            unsafe { Fl_Terminal_clear_history(self.inner.widget() as _) }
+        }
+
+        /// Return the cursor's current column position on the screen.
+        pub fn cursor_col(&self) -> i32 {
+            unsafe { Fl_Terminal_cursor_col(self.inner.widget() as _) }
+        }
+
+        /// Return the cursor's current row position on the screen.
+        pub fn cursor_row(&self) -> i32 {
+            unsafe { Fl_Terminal_cursor_row(self.inner.widget() as _) }
+        }
+
+        /// Get the cursor's background color used for the cursor itself.
+        pub fn cursor_bg_color(&mut self) -> Color {
+            Color::from_rgbi(unsafe { Fl_Terminal_cursor_bg_color(self.inner.widget() as _) })
+        }
+
+        /// Set the cursor's background color used for the cursor itself.
+        pub fn set_cursor_bg_color(&self, color: Color) {
+            unsafe { Fl_Terminal_set_cursor_bg_color(self.inner.widget() as _, color.bits()) }
+        }
+
+        /// Get the cursor's foreground color used for the cursor itself.
+        pub fn cursor_fg_color(&mut self) -> Color {
+            Color::from_rgbi(unsafe { Fl_Terminal_cursor_fg_color(self.inner.widget() as _) })
+        }
+
+        /// Set the cursor's foreground color used for the cursor itself.
+        pub fn set_cursor_fg_color(&self, color: Color) {
+            unsafe { Fl_Terminal_set_cursor_fg_color(self.inner.widget() as _, color.bits()) }
+        }
+
+        /// Return terminal's display width in columns of text characters.
+        pub fn display_columns(&self) -> i32 {
+            unsafe { Fl_Terminal_display_columns(self.inner.widget() as _) }
+        }
+
+        /// Set terminal's display width in columns of text characters.
+        pub fn set_display_columns(&self, val: i32) {
+            unsafe { Fl_Terminal_set_display_columns(self.inner.widget() as _, val) }
+        }
+
+        /// Return terminal's display height in lines of text.
+        pub fn display_rows(&self) -> i32 {
+            unsafe { Fl_Terminal_display_rows(self.inner.widget() as _) }
+        }
+
+        /// Set terminal's display height in lines of text.
+        pub fn set_display_rows(&self, val: i32) {
+            unsafe { Fl_Terminal_set_display_rows(self.inner.widget() as _, val) }
+        }
+
+        /// Sets the number of lines of screen history.
+        pub fn set_history_lines(&mut self, arg1: i32) {
+            unsafe { Fl_Terminal_set_history_lines(self.inner.widget() as _, arg1) }
+        }
+
+        /// Gets the number of lines of screen history.
+        pub fn history_lines(&self) -> i32 {
+            unsafe { Fl_Terminal_history_lines(self.inner.widget() as _) }
+        }
+
+        /// Sets the terminal's scrollback history buffer size in lines of text (rows).
+        pub fn set_history_rows(&mut self, arg1: i32) {
+            unsafe { Fl_Terminal_set_history_rows(self.inner.widget() as _, arg1) }
+        }
+
+        /// Gets the terminal's scrollback history buffer size in lines of text (rows).
+        pub fn history_rows(&self) -> i32 {
+            unsafe { Fl_Terminal_history_rows(self.inner.widget() as _) }
+        }
+
+        /// Returns how many lines are "in use" by the screen history buffer.
+        pub fn history_use(&self) -> i32 {
+            unsafe { Fl_Terminal_history_use(self.inner.widget() as _) }
+        }
+
+        /// Set the bottom margin
+        pub fn set_margin_bottom(&mut self, arg1: i32) {
+            unsafe { Fl_Terminal_set_margin_bottom(self.inner.widget() as _, arg1) }
+        }
+
+        /// Return the bottom margin
+        pub fn margin_bottom(&self) -> i32 {
+            unsafe { Fl_Terminal_margin_bottom(self.inner.widget() as _) }
+        }
+
+        /// Set the left margin
+        pub fn set_margin_left(&mut self, arg1: i32) {
+            unsafe { Fl_Terminal_set_margin_left(self.inner.widget() as _, arg1) }
+        }
+
+        /// Return the left margin
+        pub fn margin_left(&self) -> i32 {
+            unsafe { Fl_Terminal_margin_left(self.inner.widget() as _) }
+        }
+
+        /// Set the right margin
+        pub fn set_margin_right(&mut self, arg1: i32) {
+            unsafe { Fl_Terminal_set_margin_right(self.inner.widget() as _, arg1) }
+        }
+
+        /// Return the right margin
+        pub fn margin_right(&self) -> i32 {
+            unsafe { Fl_Terminal_margin_right(self.inner.widget() as _) }
+        }
+
+        /// Set the top margin
+        pub fn set_margin_top(&mut self, arg1: i32) {
+            unsafe { Fl_Terminal_set_margin_top(self.inner.widget() as _, arg1) }
+        }
+
+        /// Return the top margin
+        pub fn margin_top(&self) -> i32 {
+            unsafe { Fl_Terminal_margin_top(self.inner.widget() as _) }
+        }
+
+        /// Prints single ASCII char c at current cursor position, and advances the cursor.
+        pub fn print_char(&mut self, arg1: i8) {
+            unsafe { Fl_Terminal_print_char(self.inner.widget() as _, arg1) }
+        }
+
+        /// Prints UTF-8 char text of byte length len at current cursor position, and advances the cursor if the character is printable.
+        pub fn print_char2(&mut self, txt: &[i8], len: i32) {
+            unsafe { Fl_Terminal_print_char2(self.inner.widget() as _, txt.as_ptr(), len) }
+        }
+
+        /// Print the ASCII character c at the terminal's display position (drow,dcol).
+        pub fn put_char(&mut self, c: i8, row: i32, col: i32) {
+            unsafe { Fl_Terminal_put_char(self.inner.widget() as _, c, row, col) }
+        }
+
+        /// Print UTF-8 character text of length len at display position (drow,dcol).
+        pub fn put_char2(&mut self, txt: &[i8], len: i32, row: i32, col: i32) {
+            unsafe { Fl_Terminal_put_char2(self.inner.widget() as _, txt.as_ptr(), len, row, col) }
+        }
+
+        /// Set the maximum rate redraw speed in floating point seconds if redraw_style() is set to RATE_LIMITED.
+        pub fn set_redraw_rate(&mut self, set: f32) {
+            unsafe { Fl_Terminal_set_redraw_rate(self.inner.widget() as _, set) }
+        }
+
+        /// Get max rate redraw speed in floating point seconds.
+        pub fn redraw_rate(&self) -> f32 {
+            unsafe { Fl_Terminal_redraw_rate(self.inner.widget() as _) }
+        }
+
+        /// Set how Fl_Terminal manages screen redrawing.
+        pub fn set_redraw_style(&mut self, set: RedrawStyle) {
+            unsafe { Fl_Terminal_set_redraw_style(self.inner.widget() as _, set as i32) }
+        }
+
+        /// Get the redraw style.
+        pub fn redraw_style(&self) -> RedrawStyle {
+            let result = unsafe { Fl_Terminal_redraw_style(self.inner.widget() as _) as u32 };
+            RedrawStyle::new(result) // Construct a style with the given value
+        }
+        /// Resets terminal to default colors, clears screen, history and mouse selection, homes cursor, resets tabstops.
+        pub fn reset_terminal(&self) {
+            unsafe { Fl_Terminal_reset_terminal(self.inner.widget() as _) }
+        }
+
+        /// Returns the scrollbar's actual size; actual width for vertical scrollbars, actual height for horizontal scrollbars.
+        pub fn scrollbar_actual_size(&self) -> i32 {
+            unsafe { Fl_Terminal_scrollbar_actual_size(self.inner.widget() as _) }
+        }
+
+        /// Get the current size of the scrollbar's trough, in pixels.
+        pub fn scrollbar_size(&self) -> i32 {
+            unsafe { Fl_Terminal_scrollbar_size(self.inner.widget() as _) }
+        }
+
+        /// Set the width of the scrollbar's trough to val, in pixels.
+        pub fn set_scrollbar_size(&mut self, val: i32) {
+            unsafe { Fl_Terminal_set_scrollbar_size(self.inner.widget() as _, val) }
+        }
+
+        /// Get mouse selection background color.
+        pub fn selection_bg_color(&mut self) -> Color {
+            Color::from_rgbi(unsafe { Fl_Terminal_selection_bg_color(self.inner.widget() as _) })
+        }
+
+        /// Set mouse selection background color.
+        pub fn set_selection_bg_color(&self, color: Color) {
+            unsafe { Fl_Terminal_set_selection_bg_color(self.inner.widget() as _, color.bits()) }
+        }
+
+        /// Get mouse selection foreground color.
+        pub fn selection_fg_color(&mut self) -> Color {
+            Color::from_rgbi(unsafe { Fl_Terminal_selection_fg_color(self.inner.widget() as _) })
+        }
+
+        /// Set mouse selection foreground color.
+        pub fn set_selection_fg_color(&self, color: Color) {
+            unsafe { Fl_Terminal_set_selection_fg_color(self.inner.widget() as _, color.bits()) }
+        }
+
+        /// Return the "show unknown" flag. if true, show unknown chars as '¿'
+        pub fn show_unknown(&self) -> bool {
+            unsafe { Fl_Terminal_show_unknown(self.inner.widget() as _) != 0 }
+        }
+
+        /// Set the "show unknown" flag. if true, show unknown chars as '¿' (default off)
+        pub fn set_show_unknown(&mut self, arg1: bool) {
+            unsafe { Fl_Terminal_set_show_unknown(self.inner.widget() as _, arg1 as i32) }
+        }
+
+        /// Set text attribute bits (underline, inverse, etc).
+        pub fn text_attrib(&mut self, arg1: Attrib) {
+            unsafe { Fl_Terminal_text_attrib(self.inner.widget() as _, arg1 as u32) }
+        }
+
+        /// Set text background color to fltk color val.
+        /// Use this for temporary color changes, similar to <ESC>[48;2;{R};{G};{B}m
+        ///
+        /// This setting does not affect the 'default' text colors used by <ESC>[0m, <ESC>c, reset_terminal(), etc.
+        /// To change both the current and default bg color, also use text_bg_color_default(Fl_Color).
+        pub fn set_text_bg_color(&self, color: Color) {
+            unsafe { Fl_Terminal_set_text_bg_color(self.inner.widget() as _, color.bits()) }
+        }
+
+        /// Get the text background color.
+        pub fn text_bg_color(&mut self) -> Color {
+            Color::from_rgbi(unsafe { Fl_Terminal_text_bg_color(self.inner.widget() as _) })
+        }
+
+        /// Set the default text background color used by <ESC>c, <ESC>[0m, and reset_terminal().
+        /// Does not affect the 'current' text fg color; use set_text_bg_color(Fl_Color) to set that.
+        pub fn set_text_bg_color_default(&self, color: Color) {
+            unsafe { Fl_Terminal_set_text_bg_color_default(self.inner.widget() as _, color.bits()) }
+        }
+
+        /// Return the default text background color.
+        pub fn text_bg_color_default(&mut self) -> Color {
+            Color::from_rgbi(unsafe { Fl_Terminal_text_bg_color_default(self.inner.widget() as _) })
+        }
+
+        /// Sets the background text color as one of the 8 'xterm color' values.
+        ///
+        /// This will be the background color used for all newly printed text, similar to the <ESC>[#m escape sequence, where # is between 40 and 47.
+        ///
+        /// This color will be reset to the default bg color if reset_terminal() is called, or by <ESC>c, <ESC>[0m, etc.
+        ///
+        /// The xterm color intensity values can be influenced by the Dim/Bold/Normal modes (which can be set with e.g. <ESC>[1m, textattrib(), etc), so the actual RGB values of these colors allow room for Dim/Bold to influence their brightness. For instance, "Normal Red" is not full brightness to allow "Bold Red" to be brighter. This goes for all colors except 'Black', which is not influenced by Dim or Bold; Black is always Black.
+        ///
+        /// These background colors are slightly dimmer than the corresponding xterm foregroumd colors.
+        ///
+        /// The 8 color xterm values are:
+        /// 0 = Black, 1 = Red, 2 = Green, 3 = Yellow, 4 = Blue,5 = Magenta, 6 = Cyan, 7 = White
+        pub fn set_text_bg_color_xterm(&self, color: XtermColor) {
+            unsafe { Fl_Terminal_set_text_bg_color_xterm(self.inner.widget() as _, color as u8) }
+        }
+
+        /// Set text foreground drawing color to fltk color val.
+        /// Use this for temporary color changes, similar to <ESC>[38;2;{R};{G};{B}m
+        ///
+        /// This setting does not affect the 'default' text colors used by <ESC>[0m, <ESC>c, reset_terminal(), etc.
+        /// To change both the current and default fg color, also use textfgcolor_default(Fl_Color)
+        pub fn set_text_fg_color(&self, color: Color) {
+            unsafe { Fl_Terminal_set_text_fg_color(self.inner.widget() as _, color.bits()) }
+        }
+
+        /// Get the text foreground color.
+        pub fn text_fg_color(&mut self) -> Color {
+            Color::from_rgbi(unsafe { Fl_Terminal_text_fg_color(self.inner.widget() as _) })
+        }
+
+        /// Set the default text foreground color used by <ESC>c, <ESC>[0m, and reset_terminal().
+        /// Does not affect the 'current' text fg color; use set_text_fg_color(Fl_Color) to set that.
+        pub fn set_text_fg_color_default(&self, color: Color) {
+            unsafe { Fl_Terminal_set_text_fg_color_default(self.inner.widget() as _, color.bits()) }
+        }
+
+        /// Return the default text foreground color.
+        pub fn text_fg_color_default(&mut self) -> Color {
+            Color::from_rgbi(unsafe { Fl_Terminal_text_fg_color_default(self.inner.widget() as _) })
+        }
+
+        /// Sets the foreground text color as one of the 8 'xterm color' values.
+        ///
+        /// This will be the foreground color used for all newly printed text, similar to the <ESC>[#m escape sequence, where # is between 30 and 37.
+        ///
+        /// This color will be reset to the default bg color if reset_terminal() is called, or by <ESC>c, <ESC>[0m, etc.
+        ///
+        /// The xterm color intensity values can be influenced by the Dim/Bold/Normal modes (which can be set with e.g. <ESC>[1m, textattrib(), etc), so the actual RGB values of these colors allow room for Dim/Bold to influence their brightness. For instance, "Normal Red" is not full brightness to allow "Bold Red" to be brighter. This goes for all colors except 'Black', which is not influenced by Dim or Bold; Black is always Black.
+        ///
+        /// The 8 color xterm values are:
+        /// 0 = Black, 1 = Red, 2 = Green, 3 = Yellow, 4 = Blue,5 = Magenta, 6 = Cyan, 7 = White
+        pub fn set_text_fg_color_xterm(&self, color: XtermColor) {
+            unsafe { Fl_Terminal_set_text_fg_color_xterm(self.inner.widget() as _, color as u8) }
+        }
+
+        /// Get the text font
+        pub fn text_font(&mut self) -> Font {
+            Font::by_index(unsafe { Fl_Terminal_text_font(self.inner.widget() as _) } as usize)
+        }
+
+        /// Sets the font used for all text displayed in the terminal.
+        /// This affects all existing text (in display and history) as well as any newly printed text.
+        /// Only monospace fonts are recommended.
+        pub fn set_text_font(&self, font: Font) {
+            unsafe { Fl_Terminal_set_text_font(self.inner.widget() as _, font.bits()) }
+        }
+
+        /// Gets the text size
+        pub fn text_size(&mut self) -> i32 {
+            unsafe { Fl_Terminal_text_size(self.inner.widget() as _) }
+        }
+
+        /// Sets the font size used for all text displayed in the terminal.
+        /// This affects all existing text (in display and history) as well as any newly printed text.
+        /// Changing this will affect the display_rows() and display_columns().
+        pub fn set_text_size(&self, val: i32) {
+            unsafe { Fl_Terminal_set_text_size(self.inner.widget() as _, val) }
         }
     }
 }
