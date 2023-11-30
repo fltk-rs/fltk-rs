@@ -955,8 +955,8 @@ crate::widget_extends!(Row, Flex, p);
 /// # Warning
 /// The api might change if changes happen upstream
 pub mod experimental {
-    use crate::enums::Font;
     use super::*;
+    use crate::enums::Font;
     use std::ops::Range;
 
     /// Grid range
@@ -1226,31 +1226,49 @@ pub mod experimental {
 
     /// Bits for the per-character attributes, which control text features
     /// such as italic, bold, underlined text, etc.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-    #[repr(u8)]
-    #[non_exhaustive]
-    pub enum Attrib {
+    /// Can be combined with | operator
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct Attrib {
+        // Implemented this way to look like an enum but allow attributes to be ored together
+        bits: u8,
+    }
+
+    impl Attrib {
         /// all attributes off
-        Normal = 0x00,
+        pub const Normal: Attrib = Attrib { bits: 0x00 };
         /// bold text: uses bold font, color brighter than normal
-        Bold = 0x01,
+        pub const Bold: Attrib = Attrib { bits: 0x01 };
         /// dim text; color slightly darker than normal
-        Dim = 0x02,
+        pub const Dim: Attrib = Attrib { bits: 0x02 };
         /// italic font text
-        Italic = 0x04,
+        pub const Italic: Attrib = Attrib { bits: 0x04 };
         /// underlined text
-        Underline = 0x08,
+        pub const Underline: Attrib = Attrib { bits: 0x08 };
         /// <EM>(reserved for internal future use)</EM>
-        _Reserved1 = 0x10,
+        pub const _Reserved1: Attrib = Attrib { bits: 0x10 };
         /// inverse text; fg/bg color are swapped
-        Inverse = 0x20,
+        pub const Inverse: Attrib = Attrib { bits: 0x20 };
         /// <EM>(reserved for internal future use)</EM>
-        _Reserved2 = 0x40,
+        pub const _Reserved2: Attrib = Attrib { bits: 0x40 };
         /// strikeout text
-        Strikeout = 0x80,
+        pub const Strikeout: Attrib = Attrib { bits: 0x80 };
+        /// Get the bitflag representation
+        pub fn bits(&self) -> u8 {
+            self.bits
+        }
+    }
+
+    impl std::ops::BitOr<Attrib> for Attrib {
+        type Output = Attrib;
+        fn bitor(self, rhs: Self) -> Attrib {
+            Attrib {
+                bits: self.bits() | rhs.bits(),
+            }
+        }
     }
 
     ///    Per-character 8 bit flags (uchar) used to manage special states for characters.
+    // todo: make these combinable bitflags the way Attrib is done
     #[derive(Debug, Clone, Copy, PartialEq, Eq)]
     #[repr(u8)]
     #[non_exhaustive]
@@ -1291,7 +1309,6 @@ pub mod experimental {
         White = 7,
     }
 
-
     impl Terminal {
         /// Returns whether the terminal is in ANSI mode.
         pub fn ansi(&self) -> bool {
@@ -1314,8 +1331,10 @@ pub mod experimental {
 
         /// Appends data to the terminal at current cursor position using the current text color/attributes
         /// Redraws are managed automatically by default; see redraw_style()
-        pub fn append2(&mut self, s: &[u8]) {
-            unsafe { Fl_Terminal_append2(self.inner.widget() as _, s.as_ptr() as _, s.len() as _) }
+        pub fn append_u8(&mut self, s: &[u8]) {
+            unsafe {
+                Fl_Terminal_append_u8(self.inner.widget() as _, s.as_ptr() as _, s.len() as _)
+            }
         }
 
         /// Appends text to the terminal at current cursor position using the current text color/attributes.
@@ -1325,15 +1344,6 @@ pub mod experimental {
             let s = CString::safe_new(s);
             unsafe { Fl_Terminal_append_ascii(self.inner.widget() as _, s.into_raw() as _) }
         }
-
-        // /// Appends data to the terminal at current cursor position using the current text color/attributes
-        // /// Slightly more efficient than append_utf8_2
-        // /// Redraws are managed automatically by default; see redraw_style()
-        // pub fn append_ascii2(&mut self, s: &[u8]) {
-        //     unsafe {
-        //         Fl_Terminal_append2(self.inner.widget() as _, s.as_ptr() as _, s.len() as _)
-        //     }
-        // }
 
         /// Appends text to the terminal at current cursor position using the current text color/attributes.
         /// Handles UTF-8 chars split across calls
@@ -1346,9 +1356,9 @@ pub mod experimental {
         /// Appends data to the terminal at current cursor position using the current text color/attributes
         /// Handles UTF-8 chars split across calls
         /// Redraws are managed automatically by default; see redraw_style()
-        pub fn append_utf8_2(&mut self, s: &[u8]) {
+        pub fn append_utf8_u8(&mut self, s: &[u8]) {
             unsafe {
-                Fl_Terminal_append_utf8_2(self.inner.widget() as _, s.as_ptr() as _, s.len() as _)
+                Fl_Terminal_append_utf8_u8(self.inner.widget() as _, s.as_ptr() as _, s.len() as _)
             }
         }
 
@@ -1473,23 +1483,24 @@ pub mod experimental {
         }
 
         /// Prints single ASCII char c at current cursor position, and advances the cursor.
-        pub fn print_char(&mut self, arg1: i8) {
-            unsafe { Fl_Terminal_print_char(self.inner.widget() as _, arg1) }
+        pub fn print_char(&mut self, arg1: char) {
+            unsafe { Fl_Terminal_print_char(self.inner.widget() as _, arg1 as i8) }
         }
 
-        /// Prints UTF-8 char text of byte length len at current cursor position, and advances the cursor if the character is printable.
-        pub fn print_char2(&mut self, txt: &[i8], len: i32) {
-            unsafe { Fl_Terminal_print_char2(self.inner.widget() as _, txt.as_ptr(), len) }
-        }
+        // print_char_u8 seems to be an alias of append_u8()
+        // /// Prints UTF-8 char text of byte length len at current cursor position, and advances the cursor if the character is printable.
+        // pub fn print_char_u8(&mut self, txt: &[i8], len: i32) {
+        //     unsafe { Fl_Terminal_print_char_u8(self.inner.widget() as _, txt.as_ptr(), len) }
+        // }
 
         /// Print the ASCII character c at the terminal's display position (drow,dcol).
-        pub fn put_char(&mut self, c: i8, row: i32, col: i32) {
-            unsafe { Fl_Terminal_put_char(self.inner.widget() as _, c, row, col) }
+        pub fn put_char(&mut self, c: char, row: i32, col: i32) {
+            unsafe { Fl_Terminal_put_char(self.inner.widget() as _, c as i8, row, col) }
         }
 
         /// Print UTF-8 character text of length len at display position (drow,dcol).
-        pub fn put_char2(&mut self, txt: &[i8], len: i32, row: i32, col: i32) {
-            unsafe { Fl_Terminal_put_char2(self.inner.widget() as _, txt.as_ptr(), len, row, col) }
+        pub fn put_char_u8(&mut self, txt: &[i8], len: i32, row: i32, col: i32) {
+            unsafe { Fl_Terminal_put_char_u8(self.inner.widget() as _, txt.as_ptr(), len, row, col) }
         }
 
         /// Set the maximum rate redraw speed in floating point seconds if redraw_style() is set to RATE_LIMITED.
@@ -1523,11 +1534,15 @@ pub mod experimental {
         }
 
         /// Get the current size of the scrollbar's trough, in pixels.
+        /// If this value is zero (default), this widget is using fltk's
+        /// master scrollbar_size() value
         pub fn scrollbar_size(&self) -> i32 {
             unsafe { Fl_Terminal_scrollbar_size(self.inner.widget() as _) }
         }
 
         /// Set the width of the scrollbar's trough to val, in pixels.
+        /// If this value is zero (default), this widget will use fltk's
+        /// master scrollbar_size() value
         pub fn set_scrollbar_size(&mut self, val: i32) {
             unsafe { Fl_Terminal_set_scrollbar_size(self.inner.widget() as _, val) }
         }
@@ -1562,9 +1577,9 @@ pub mod experimental {
             unsafe { Fl_Terminal_set_show_unknown(self.inner.widget() as _, arg1 as i32) }
         }
 
-        /// Set text attribute bits (underline, inverse, etc).
-        pub fn text_attrib(&mut self, arg1: Attrib) {
-            unsafe { Fl_Terminal_text_attrib(self.inner.widget() as _, arg1 as u32) }
+        /// Set text attribute bits (underline, inverse, etc) for subsequent appends.
+        pub fn set_text_attrib(&mut self, arg1: Attrib) {
+            unsafe { Fl_Terminal_text_attrib(self.inner.widget() as _, arg1.bits() as u32) }
         }
 
         /// Set text background color to fltk color val.
