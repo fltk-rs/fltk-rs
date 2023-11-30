@@ -4255,7 +4255,7 @@ extern "C" {
     pub fn Fl_Terminal_print_char(self_: *mut Fl_Terminal, c: ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Terminal_print_char_u8(
+    pub fn Fl_Terminal_print_char_utf8(
         self_: *mut Fl_Terminal,
         txt: *const ::std::os::raw::c_char,
         len: ::std::os::raw::c_int,
@@ -4270,7 +4270,7 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Terminal_put_char_u8(
+    pub fn Fl_Terminal_put_char_utf8(
         self_: *mut Fl_Terminal,
         txt: *const ::std::os::raw::c_char,
         len: ::std::os::raw::c_int,

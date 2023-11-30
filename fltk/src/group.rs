@@ -1267,32 +1267,6 @@ pub mod experimental {
         }
     }
 
-    ///    Per-character 8 bit flags (uchar) used to manage special states for characters.
-    // todo: make these combinable bitflags the way Attrib is done
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-    #[repr(u8)]
-    #[non_exhaustive]
-    pub enum CharFlags {
-        /// this char's fg color is an XTERM color; can be affected by Dim+Bold
-        FgXterm = 0x01,
-        /// this char's bg color is an XTERM color; can be affected by Dim+Bold
-        BgXterm = 0x02,
-        /// this char at end of line, used for line wrap during screen resizing
-        Eol = 0x04,
-        /// Reserved for future use
-        _ResvA = 0x08,
-        /// Reserved for future use
-        _ResvB = 0x10,
-        /// Reserved for future use
-        _ResvC = 0x20,
-        /// Reserved for future use
-        _ResvD = 0x40,
-        /// Reserved for future use
-        _ResvE = 0x80,
-        /// (FgXterm | BgXterm)
-        Colormask = 0x03,
-    }
-
     ///    'xterm color' values, used in set_text_fg_color_xterm and set_text_bg_color_xterm
     #[derive(Debug, Clone, Copy, PartialEq, Eq)]
     #[repr(u8)]
@@ -1482,25 +1456,64 @@ pub mod experimental {
             unsafe { Fl_Terminal_margin_top(self.inner.widget() as _) }
         }
 
-        /// Prints single ASCII char c at current cursor position, and advances the cursor.
-        pub fn print_char(&mut self, arg1: char) {
-            unsafe { Fl_Terminal_print_char(self.inner.widget() as _, arg1 as i8) }
+        /// Prints single ASCII char `c` at current cursor position, and advances the cursor.
+        /// - `c` must be ASCII, not utf-8
+        /// - Does not trigger redraws
+        pub fn print_char(&mut self, c: char) {
+            unsafe { Fl_Terminal_print_char(self.inner.widget() as _, c as i8) }
         }
 
-        // print_char_u8 seems to be an alias of append_u8()
-        // /// Prints UTF-8 char text of byte length len at current cursor position, and advances the cursor if the character is printable.
-        // pub fn print_char_u8(&mut self, txt: &[i8], len: i32) {
-        //     unsafe { Fl_Terminal_print_char_u8(self.inner.widget() as _, txt.as_ptr(), len) }
-        // }
+        ///   Prints single UTF-8 char `c` at current cursor position, and advances the cursor if the character
+        ///   is printable. Handles ASCII and control codes (CR, LF, etc).
+        ///
+        ///  The character is displayed at the current cursor position
+        ///  using the current text color/attributes.
+        ///
+        /// Handles control codes and can be used to construct ANSI/XTERM escape sequences.
+        /// - `c` must be a single char only (whether UTF-8 or ASCII)
+        /// - `c` can be an ASCII character, though not as efficent as print_char()
+        /// - Invalid UTF-8 chars show the error character (¿) depending on show_unknown(bool).
+        /// - Does not trigger redraws
+        pub fn print_char_utf8(&mut self, c: char) {
+            let txt = c.to_string();
+            unsafe { Fl_Terminal_print_char_utf8(self.inner.widget() as _, txt.as_ptr() as _, txt.len() as _) }
+        }
 
-        /// Print the ASCII character c at the terminal's display position (drow,dcol).
+        /// Print the ASCII character `c` at the terminal's display position `(drow,dcol)`.
+        ///   The character MUST be printable (in range 0x20 - 0x7e), and is displayed
+        ///   using the current text color/attributes. Characters outside that range are either
+        ///   ignored or print the error character (¿), depending on show_unknown(bool).
+        ///
+        /// No range checking is done on drow,dcol:
+        /// - drow must be in range `0..(display_rows()-1)`
+        /// - dcol must be in range `0..(display_columns()-1)`
+        /// - Does not trigger redraws
+        /// - Does NOT handle control codes, ANSI or XTERM escape sequences.
         pub fn put_char(&mut self, c: char, row: i32, col: i32) {
             unsafe { Fl_Terminal_put_char(self.inner.widget() as _, c as i8, row, col) }
         }
 
-        /// Print UTF-8 character text of length len at display position (drow,dcol).
-        pub fn put_char_u8(&mut self, txt: &[i8], len: i32, row: i32, col: i32) {
-            unsafe { Fl_Terminal_put_char_u8(self.inner.widget() as _, txt.as_ptr(), len, row, col) }
+        /// Print a single UTF-8 character len at display position `(drow,dcol)`.
+        /// The character is displayed using the current text color/attributes.
+        ///
+        /// This is a very low level method.
+        /// No range checking is done on drow,dcol:
+        /// -  drow must be in range `0..(display_rows()-1)`
+        /// -  dcol must be in range `0..(display_columns()-1)`
+        /// - Does not trigger redraws
+        /// - Does not handle ANSI or XTERM escape sequences
+        /// - Invalid UTF-8 chars show the error character (¿) depending on show_unknown(bool).
+        pub fn put_char_utf8(&mut self, c: char, drow: i32, dcol: i32) {
+            let txt = c.to_string();
+            unsafe {
+                Fl_Terminal_put_char_utf8(
+                    self.inner.widget() as _,
+                    txt.as_ptr() as _,
+                    txt.len() as _,
+                    drow,
+                    dcol,
+                )
+            }
         }
 
         /// Set the maximum rate redraw speed in floating point seconds if redraw_style() is set to RATE_LIMITED.
