@@ -436,6 +436,8 @@ impl Font {
     }
 }
 
+
+// todo: implement Display for Font ?
 #[allow(unreachable_patterns)]
 impl std::fmt::Debug for Font {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -544,6 +546,41 @@ impl Color {
     pub const DarkCyan: Color = Color { bits: 140 };
     /// White
     pub const White: Color = Color { bits: 255 };
+
+    /// ANSI/xterm Black
+    pub const XtermBlack: Color = Color { bits: 0x00000000 };
+    /// ANSI/xterm Red
+    pub const XtermRed: Color = Color { bits: 0xd0000000 };
+    /// ANSI/xterm Green
+    pub const XtermGreen: Color = Color { bits: 0x00d00000 };
+    /// ANSI/xterm Yellow
+    pub const XtermYellow: Color = Color { bits: 0xd0d00000 };
+    /// ANSI/xterm Blue
+    pub const XtermBlue: Color = Color { bits: 0x0000d000 };
+    /// ANSI/xterm Magenta
+    pub const XtermMagenta: Color = Color { bits: 0xd000d000 };
+    /// ANSI/xterm Cyan
+    pub const XtermCyan: Color = Color { bits: 0x00d0d000 };
+    /// ANSI/xterm White
+    pub const XtermWhite: Color = Color { bits: 0xd0d0d000 };
+    /// ANSI/xterm background Red
+    pub const XtermBgRed: Color = Color { bits: 0xc0000000 };
+    /// ANSI/xterm background Green
+    pub const XtermBgGreen: Color = Color { bits: 0x00c00000 };
+    /// ANSI/xterm background Yelllow
+    pub const XtermBgYellow: Color = Color { bits: 0xc0c00000 };
+    /// ANSI/xterm background Blue
+    pub const XtermBgBlue: Color = Color { bits: 0x0000c000 };
+    /// ANSI/xterm background Magenta
+    pub const XtermBgMagenta: Color = Color { bits: 0xd000c000 };
+    /// ANSI/xterm background Cyan
+    pub const XtermBgCyan: Color = Color { bits: 0x00c0c000 };
+    /// ANSI/xterm background White
+    pub const XtermBgWhite: Color = Color { bits: 0xc0c0c000 };
+
+    /// Special background color value that lets the Terminal widget's box() color show through behind the text.
+    pub const TransparentBg: Color = Color { bits: 0xffffffff };
+
     /// Gets the inner color representation
     pub const fn bits(&self) -> u32 {
         self.bits
@@ -568,9 +605,51 @@ impl Color {
         Color::from_rgbi(val)
     }
 
-    /// Get a color from an RGBI value, the I stands for the Fltk colormap index.
-    pub const fn from_rgbi(val: u32) -> Color {
-        Color { bits: val }
+    /// Returns a color enum from RGBI encoding
+    pub const fn from_rgbi(rgbi: u32) -> Color {
+        match rgbi {
+            // These are all RGB aliases for the defined colors.
+            0x00000000 => Color::Black,
+            0xff000000 => Color::Red,
+            0x00ff0000 => Color::Green,
+            0xffff0000 => Color::Yellow,
+            0x0000ff00 => Color::Blue,
+            0xff00ff00 => Color::Magenta,
+            0x00ffff00 => Color::Cyan,
+            0x7f000000 => Color::DarkRed,
+            0x00910000 => Color::DarkGreen,
+            0x7f910000 => Color::DarkYellow,
+            0x00007f00 => Color::DarkBlue,
+            0x7f007f00 => Color::DarkMagenta,
+            0x00917f00 => Color::DarkCyan,
+            0xffffff00 => Color::White, // This RGB is also called Gray0
+            0xaaaaaa00 => Color::Dark1,
+            0x95959500 => Color::Dark2,
+            0x55555500 => Color::Dark3,
+            0xcbcbcb00 => Color::Light1,
+            0xe0e0e000 => Color::Light2,
+            0xf5f5f500 => Color::Light3,
+
+            0xd0000000 => Color::XtermRed,
+            0x00d00000 => Color::XtermGreen,
+            0xd0d00000 => Color::XtermYellow,
+            0x0000d000 => Color::XtermBlue,
+            0xd000d000 => Color::XtermMagenta,
+            0x00d0d000 => Color::XtermCyan,
+            0xd0d0d000 => Color::XtermWhite,
+            0xc0000000 => Color::XtermBgRed,
+            0x00c00000 => Color::XtermBgGreen,
+            0xc0c00000 => Color::XtermBgYellow,
+            0x0000c000 => Color::XtermBgBlue,
+            0xc000c000 => Color::XtermBgMagenta,
+            0x00c0c000 => Color::XtermBgCyan,
+            0xc0c0c000 => Color::XtermBgWhite,
+            // ? todo: define Xterm dim and bold modified colors?
+
+            0xffffffff => Color::TransparentBg, // Special value that lets the widget's box() color show through
+
+            _ => Color { bits: rgbi }, // Just use the provided value
+        }
     }
 
     /// Create color from RGBA using alpha compositing. Works for non-group types.
@@ -758,9 +837,26 @@ impl std::fmt::Display for Color {
             Color::DarkMagenta => write!(f, "Color::DarkMagenta"),
             Color::DarkCyan => write!(f, "Color::DarkCyan"),
             Color::White => write!(f, "Color::White"),
+
+            Color::XtermRed => write!(f, "Color::XtermRed"),
+            Color::XtermGreen => write!(f, "Color::XtermGreen"),
+            Color::XtermYellow => write!(f, "Color::XtermYellow"),
+            Color::XtermBlue => write!(f, "Color::XtermBlue"),
+            Color::XtermMagenta => write!(f, "Color::XtermMagenta"),
+            Color::XtermCyan => write!(f, "Color::XtermCyan"),
+            Color::XtermWhite => write!(f, "Color::XtermWhite"),
+            Color::XtermBgRed => write!(f, "Color::XtermBgRed"),
+            Color::XtermBgGreen => write!(f, "Color::XtermBgGreen"),
+            Color::XtermBgYellow => write!(f, "Color::XtermBgYellow"),
+            Color::XtermBgBlue => write!(f, "Color::XtermBgBlue"),
+            Color::XtermBgMagenta => write!(f, "Color::XtermBgMagenta"),
+            Color::XtermBgCyan => write!(f, "Color::XtermBgCyan"),
+            Color::XtermBgWhite => write!(f, "Color::XtermBgWhite"),
+
+            Color::TransparentBg => write!(f, "Color::TransparentBg"),
             _ => {
                 let temp = format!("{:08x}", self.bits());
-                write!(f, "Color::from_hex(0x{})", &temp[0..6])
+                write!(f, "Color::from_hex(0x{}_{})", &temp[0..6], &temp[6..8])
             }
         }
     }
