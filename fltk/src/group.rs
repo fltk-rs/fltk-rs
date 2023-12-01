@@ -1219,7 +1219,7 @@ pub mod experimental {
             } else if val == RedrawStyle::PerWrite as u32 {
                 RedrawStyle::PerWrite
             } else {
-                panic!("Unknown RedrawStyle value {val}")
+                panic!("Unknown RedrawStyle value {}", val)
             }
         }
     }

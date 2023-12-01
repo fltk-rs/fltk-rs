@@ -1,6 +1,11 @@
 # Changelog
 
 
+# [1.4.19] - Unreleased
+- Add group::experimental::Terminal widget by @jgriffitts.
+- Add some extra colors, helpful for the newly added Terminal widget.
+- Update fltk submodule.
+
 # [1.4.18] - 2023-11-17
 - Fix build with enable-glwindowf feature.
 
