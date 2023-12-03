@@ -806,6 +806,16 @@ impl GlutWindow {
         unsafe { Fl_Glut_Window_swap_buffers(self.inner.widget() as _) }
     }
 
+    /// Gets the swap interval
+    pub fn swap_interval(&self) -> i32 {
+        unsafe { Fl_Glut_Window_swap_interval(self.inner.widget() as _) }
+    }
+
+    /// Sets the swap interval
+    pub fn set_swap_interval(&mut self, frames: i32) {
+        unsafe { Fl_Glut_Window_set_swap_interval(self.inner.widget() as _, frames) }
+    }
+
     /// Sets the projection so 0,0 is in the lower left of the window
     /// and each pixel is 1 unit wide/tall.
     pub fn ortho(&mut self) {
@@ -976,6 +986,16 @@ pub mod experimental {
         /// Swaps the back and front buffers
         pub fn swap_buffers(&mut self) {
             unsafe { Fl_Gl_Window_swap_buffers(self.inner.widget() as _) }
+        }
+
+        /// Gets the swap interval
+        pub fn swap_interval(&self) -> i32 {
+            unsafe { Fl_Gl_Window_swap_interval(self.inner.widget() as _) }
+        }
+
+        /// Sets the swap interval
+        pub fn set_swap_interval(&mut self, frames: i32) {
+            unsafe { Fl_Gl_Window_set_swap_interval(self.inner.widget() as _, frames) }
         }
 
         /// Sets the projection so 0,0 is in the lower left of the window

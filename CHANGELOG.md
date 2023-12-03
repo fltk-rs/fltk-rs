@@ -1,9 +1,10 @@
 # Changelog
 
 
-# [1.4.19] - Unreleased
+# [1.4.19] - 2023-12-03
 - Add group::experimental::Terminal widget by @jgriffitts.
 - Add some extra colors, helpful for the newly added Terminal widget.
+- Add GlutWindow::swap_interval and set_swap_interval.
 - Update fltk submodule.
 
 # [1.4.18] - 2023-11-17

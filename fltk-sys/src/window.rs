@@ -3663,6 +3663,12 @@ extern "C" {
     pub fn Fl_Gl_Window_swap_buffers(self_: *mut Fl_Gl_Window);
 }
 extern "C" {
+    pub fn Fl_Gl_Window_set_swap_interval(self_: *mut Fl_Gl_Window, frames: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_swap_interval(self_: *const Fl_Gl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Gl_Window_ortho(self_: *mut Fl_Gl_Window);
 }
 extern "C" {
@@ -4296,6 +4302,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Glut_Window_swap_buffers(self_: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_swap_interval(
+        self_: *mut Fl_Glut_Window,
+        frames: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Glut_Window_swap_interval(self_: *const Fl_Glut_Window) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Glut_Window_ortho(self_: *mut Fl_Glut_Window);
