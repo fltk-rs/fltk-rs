@@ -935,14 +935,11 @@ macro_rules! impl_widget_base {
                 }
 
                 fn delete(wid: Self) {
-
                     if let Some(mut parent) = wid.parent() {
                         parent.remove(&wid);
                     }
                     unsafe {
-                        fltk_sys::fl::Fl_delete_widget(
-                            wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget
-                        );
+                        [<$flname _delete>](wid.as_widget_ptr() as _);
                     }
                 }
 
