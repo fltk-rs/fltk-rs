@@ -1147,8 +1147,12 @@ impl SimpleTerminal {
     /// Appends text to the terminal buffer
     pub fn append(&mut self, s: &str) {
         assert!(self.has_buffer());
-        let s = CString::safe_new(s);
-        unsafe { Fl_Simple_Terminal_append(self.inner.widget() as _, s.into_raw() as _) }
+        let raw_s = CString::safe_new(s).into_raw();
+        unsafe {
+            Fl_Simple_Terminal_append(self.inner.widget() as _, raw_s as _);
+            // Take ownership of raw_s back so it will be dropped
+            let _raw_s = CString::from_raw(raw_s);
+        }
     }
 
     /// Appends data to the terminal buffer
@@ -1162,8 +1166,12 @@ impl SimpleTerminal {
     /// Sets the text of the terminal buffer
     pub fn set_text(&mut self, s: &str) {
         assert!(self.has_buffer());
-        let s = CString::safe_new(s);
-        unsafe { Fl_Simple_Terminal_set_text(self.inner.widget() as _, s.into_raw() as _) }
+        let raw_s = CString::safe_new(s).into_raw();
+        unsafe {
+            Fl_Simple_Terminal_set_text(self.inner.widget() as _, raw_s as _);
+            // Take ownership of raw_s back so it will be dropped
+            let _raw_s = CString::from_raw(raw_s);
+        }
     }
 
     /// Sets the byte content of the terminal buffer
