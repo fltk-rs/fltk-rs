@@ -1224,46 +1224,30 @@ pub mod experimental {
         }
     }
 
-    /// Bits for the per-character attributes, which control text features
-    /// such as italic, bold, underlined text, etc.
-    /// Can be combined with | operator
-    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct Attrib {
-        // Implemented this way to look like an enum but allow attributes to be ored together
-        bits: u8,
-    }
-
-    impl Attrib {
-        /// all attributes off
-        pub const Normal: Attrib = Attrib { bits: 0x00 };
-        /// bold text: uses bold font, color brighter than normal
-        pub const Bold: Attrib = Attrib { bits: 0x01 };
-        /// dim text; color slightly darker than normal
-        pub const Dim: Attrib = Attrib { bits: 0x02 };
-        /// italic font text
-        pub const Italic: Attrib = Attrib { bits: 0x04 };
-        /// underlined text
-        pub const Underline: Attrib = Attrib { bits: 0x08 };
-        /// <EM>(reserved for internal future use)</EM>
-        pub const _Reserved1: Attrib = Attrib { bits: 0x10 };
-        /// inverse text; fg/bg color are swapped
-        pub const Inverse: Attrib = Attrib { bits: 0x20 };
-        /// <EM>(reserved for internal future use)</EM>
-        pub const _Reserved2: Attrib = Attrib { bits: 0x40 };
-        /// strikeout text
-        pub const Strikeout: Attrib = Attrib { bits: 0x80 };
-        /// Get the bitflag representation
-        pub fn bits(&self) -> u8 {
-            self.bits
-        }
-    }
-
-    impl std::ops::BitOr<Attrib> for Attrib {
-        type Output = Attrib;
-        fn bitor(self, rhs: Self) -> Attrib {
-            Attrib {
-                bits: self.bits() | rhs.bits(),
-            }
+    bitflags::bitflags! {
+        /// Bits for the per-character attributes, which control text features
+        /// such as italic, bold, underlined text, etc.
+        /// Can be combined with | operator
+        #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+        pub struct Attrib: u8 {
+            /// all attributes off
+            const Normal =  0x00 ;
+            /// bold text: uses bold font, color brighter than normal
+            const Bold = 0x01 ;
+            /// dim text; color slightly darker than normal
+            const Dim =  0x02 ;
+            /// italic font text
+            const Italic =  0x04 ;
+            /// underlined text
+            const Underline =  0x08 ;
+            /// <EM>(reserved for internal future use)</EM>
+            const _Reserved1 =   0x10 ;
+            /// inverse text; fg/bg color are swapped
+            const Inverse =   0x20 ;
+            /// <EM>(reserved for internal future use)</EM>
+            const _Reserved2 = 0x40 ;
+            /// strikeout text
+            const Strikeout = 0x80 ;
         }
     }
 
@@ -1299,8 +1283,12 @@ pub mod experimental {
         /// Appends text to the terminal at current cursor position using the current text color/attributes.
         /// Redraws are managed automatically by default; see redraw_style()
         pub fn append(&mut self, s: &str) {
-            let s = CString::safe_new(s);
-            unsafe { Fl_Terminal_append(self.inner.widget() as _, s.into_raw() as _) }
+            let raw_s = CString::safe_new(s).into_raw();
+            unsafe {
+                Fl_Terminal_append(self.inner.widget() as _, raw_s as _);
+                // Take ownership of raw_s back so it will be dropped
+                let _raw_s = CString::from_raw(raw_s);
+            }
         }
 
         /// Appends data to the terminal at current cursor position using the current text color/attributes
@@ -1315,16 +1303,24 @@ pub mod experimental {
         /// Slightly more efficient than append_utf8
         /// Redraws are managed automatically by default; see redraw_style()
         pub fn append_ascii(&mut self, s: &str) {
-            let s = CString::safe_new(s);
-            unsafe { Fl_Terminal_append_ascii(self.inner.widget() as _, s.into_raw() as _) }
+            let raw_s = CString::safe_new(s).into_raw();
+            unsafe {
+                Fl_Terminal_append_ascii(self.inner.widget() as _, raw_s as _);
+                // Take ownership of raw_s back so it will be dropped
+                let _raw_s = CString::from_raw(raw_s);
+            }
         }
 
         /// Appends text to the terminal at current cursor position using the current text color/attributes.
         /// Handles UTF-8 chars split across calls
         /// Redraws are managed automatically by default; see redraw_style()
         pub fn append_utf8(&mut self, s: &str) {
-            let s = CString::safe_new(s);
-            unsafe { Fl_Terminal_append_utf8(self.inner.widget() as _, s.into_raw() as _) }
+            let raw_s = CString::safe_new(s).into_raw();
+            unsafe {
+                Fl_Terminal_append_utf8(self.inner.widget() as _, raw_s as _);
+                // Take ownership of raw_s back so it will be dropped
+                let _raw_s = CString::from_raw(raw_s);
+            }
         }
 
         /// Appends data to the terminal at current cursor position using the current text color/attributes
@@ -1476,7 +1472,13 @@ pub mod experimental {
         /// - Does not trigger redraws
         pub fn print_char_utf8(&mut self, c: char) {
             let txt = c.to_string();
-            unsafe { Fl_Terminal_print_char_utf8(self.inner.widget() as _, txt.as_ptr() as _, txt.len() as _) }
+            unsafe {
+                Fl_Terminal_print_char_utf8(
+                    self.inner.widget() as _,
+                    txt.as_ptr() as _,
+                    txt.len() as _,
+                )
+            }
         }
 
         /// Print the ASCII character `c` at the terminal's display position `(drow,dcol)`.
