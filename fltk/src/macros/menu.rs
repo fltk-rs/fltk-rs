@@ -25,7 +25,6 @@ macro_rules! impl_menu_ext {
                     flag: MenuFlag,
                     cb: F,
                 ) -> i32 {
-
                     let temp = CString::safe_new(name);
                     unsafe {
                     unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
@@ -58,7 +57,6 @@ macro_rules! impl_menu_ext {
                     flag: MenuFlag,
                     cb: F,
                 ) -> i32 {
-
                     let idx = if idx < self.size() && idx >= 0 {
                         idx
                     } else {
@@ -119,13 +117,11 @@ macro_rules! impl_menu_ext {
                 }
 
                 fn remove(&mut self, idx: i32) {
-
                     assert!(self.size() != 0 && idx >= 0 && idx < self.size());
                     unsafe { [<$flname _remove>](self.inner.widget() as _, idx as i32) }
                 }
 
                 fn find_item(&self, name: &str) -> Option<MenuItem> {
-
                     let name = CString::safe_new(name);
                     unsafe {
                         let menu_item = [<$flname _get_item>](self.inner.widget() as _, name.as_ptr());
@@ -146,7 +142,6 @@ macro_rules! impl_menu_ext {
                 }
 
                 fn find_index(&self, label: &str) -> i32 {
-
                     let label = CString::safe_new(label);
                     unsafe { [<$flname _find_index>](self.inner.widget() as _, label.as_ptr()) as i32 }
                 }
@@ -233,7 +228,6 @@ macro_rules! impl_menu_ext {
                 }
 
                 unsafe fn unsafe_clear(&mut self) {
-
                     let sz = self.size();
                     if sz > 0 {
                         for i in 0..sz {
@@ -256,7 +250,6 @@ macro_rules! impl_menu_ext {
                 }
 
                 unsafe fn unsafe_clear_submenu(&mut self, idx: i32) -> Result<(), FltkError> {
-
                     let x = self.at(idx);
                     if x.is_none() {
                         return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
@@ -283,12 +276,10 @@ macro_rules! impl_menu_ext {
                 }
 
                 fn size(&self) -> i32 {
-
                     unsafe { [<$flname _size>](self.inner.widget() as _) as i32 }
                 }
 
                 fn text(&self, idx: i32) -> Option<String> {
-
                     assert!(self.size() != 0 && idx >= 0 && idx < self.size());
                     unsafe {
                         let text = [<$flname _text>](self.inner.widget() as _, idx as i32);
@@ -305,7 +296,6 @@ macro_rules! impl_menu_ext {
                 }
 
                 fn at(&self, idx: i32) -> Option<$crate::menu::MenuItem> {
-
                     assert!(self.size() != 0 && idx >= 0 && idx < self.size());
                     unsafe {
                         let ptr =
@@ -319,13 +309,11 @@ macro_rules! impl_menu_ext {
                 }
 
                 fn mode(&self, idx: i32) -> $crate::menu::MenuFlag {
-
                     assert!(self.size() != 0 && idx >= 0 && idx < self.size());
                     unsafe { std::mem::transmute([<$flname _mode>](self.inner.widget() as _, idx as i32)) }
                 }
 
                 fn set_mode(&mut self, idx: i32, flag: $crate::menu::MenuFlag) {
-
                     assert!(self.size() != 0 && idx >= 0 && idx < self.size());
                     unsafe { [<$flname _set_mode>](self.inner.widget() as _, idx as i32, flag.bits()) }
                 }
@@ -335,22 +323,18 @@ macro_rules! impl_menu_ext {
                 }
 
                 fn set_down_frame(&mut self, f: $crate::enums::FrameType) {
-
                     unsafe { [<$flname _set_down_box>](self.inner.widget() as _, f.as_i32()) }
                 }
 
                 fn down_frame(&self) -> $crate::enums::FrameType {
-
                     unsafe { $crate::enums::FrameType::from_i32([<$flname _down_box>](self.inner.widget() as _)) }
                 }
 
                 fn global(&mut self) {
-
                     unsafe { [<$flname _global>](self.inner.widget() as _) }
                 }
 
                 fn menu(&self) -> Option<$crate::menu::MenuItem> {
-
                     unsafe {
                         let ptr = [<$flname _menu>](self.inner.widget() as _);
                         if ptr.is_null() {
@@ -362,12 +346,10 @@ macro_rules! impl_menu_ext {
                 }
 
                 unsafe fn set_menu(&mut self, item: $crate::menu::MenuItem) {
-
                     [<$flname _set_menu>](self.inner.widget() as _, item.as_ptr())
                 }
 
                 fn item_pathname(&self, item: Option<&$crate::menu::MenuItem>) -> Result<String, FltkError> {
-
                     let item = if let Some(item) = item {
                     unsafe { item.as_ptr() }
                     } else {

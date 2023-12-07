@@ -18,16 +18,12 @@ crate::macros::button::impl_button_ext!(Button, Fl_Button);
 impl Button {
     /// Set whether a button is compact
     pub fn set_compact(&mut self, flag: bool) {
-        unsafe {
-            Fl_Button_set_compact(self.inner.widget() as _, flag as _)
-        }
+        unsafe { Fl_Button_set_compact(self.inner.widget() as _, flag as _) }
     }
 
     /// Get whether a button is compact
     pub fn compact(&self) -> bool {
-        unsafe {
-            Fl_Button_compact(self.inner.widget() as _) != 0
-        }
+        unsafe { Fl_Button_compact(self.inner.widget() as _) != 0 }
     }
 }
 

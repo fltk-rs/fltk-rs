@@ -159,7 +159,6 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn center_of_parent(mut self) -> Self {
-
                     if let Some(w) = self.parent() {
                         debug_assert!(
                             w.width() != 0 && w.height() != 0,
@@ -191,7 +190,6 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn size_of_parent(mut self) -> Self {
-
                     if let Some(parent) = self.parent() {
                         let w = parent.width();
                         let h = parent.height();
@@ -211,7 +209,6 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn set_label(&mut self, title: &str) {
-
                     if self.as_window().is_some() {
                         assert!($crate::app::is_ui_thread());
                     }
@@ -222,14 +219,12 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn redraw(&mut self) {
-
                     unsafe {
                         [<$flname _redraw>](self.inner.widget() as _);
                     }
                 }
 
                 fn show(&mut self) {
-
                     if self.as_window().is_some() {
                         assert!($crate::app::is_ui_thread());
                     }
@@ -237,7 +232,6 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn hide(&mut self) {
-
                     if self.as_window().is_some() {
                         assert!($crate::app::is_ui_thread());
                     }
@@ -245,37 +239,30 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn x(&self) -> i32 {
-
                     unsafe { [<$flname _x>](self.inner.widget() as _) }
                 }
 
                 fn y(&self) -> i32 {
-
                     unsafe { [<$flname _y>](self.inner.widget() as _) }
                 }
 
                 fn width(&self) -> i32 {
-
                     unsafe { [<$flname _width>](self.inner.widget() as _) }
                 }
 
                 fn height(&self) -> i32 {
-
                     unsafe { [<$flname _height>](self.inner.widget() as _) }
                 }
 
                 fn w(&self) -> i32 {
-
                     unsafe { [<$flname _width>](self.inner.widget() as _) }
                 }
 
                 fn h(&self) -> i32 {
-
                     unsafe { [<$flname _height>](self.inner.widget() as _) }
                 }
 
                 fn label(&self) -> String {
-
                     unsafe {
                         fltk_sys::fl::Fl_lock();
                         let ptr = [<$flname _label>](self.inner.widget() as _) as *mut std::os::raw::c_char;
@@ -290,7 +277,6 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn measure_label(&self) -> (i32, i32) {
-
                     let mut x = 0;
                     let mut y = 0;
                     unsafe {
@@ -304,33 +290,27 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn activate(&mut self) {
-
                     unsafe { [<$flname _activate>](self.inner.widget() as _) }
                 }
 
                 fn deactivate(&mut self) {
-
                     unsafe { [<$flname _deactivate>](self.inner.widget() as _) }
                 }
 
                 fn redraw_label(&mut self) {
-
                     unsafe { [<$flname _redraw_label>](self.inner.widget() as _) }
                 }
 
                 fn resize(&mut self, x: i32, y: i32, width: i32, height: i32) {
-
                     unsafe { [<$flname _resize>](self.inner.widget() as _, x, y, width, height) }
                 }
 
                 fn widget_resize(&mut self, x: i32, y: i32, width: i32, height: i32) {
-
                     assert!(self.is_derived);
                     unsafe { [<$flname _widget_resize>](self.inner.widget() as _, x, y, width, height) }
                 }
 
                 fn tooltip(&self) -> Option<String> {
-
                     unsafe {
                         let tooltip_ptr = [<$flname _tooltip>](self.inner.widget() as _);
                         fltk_sys::fl::Fl_lock();
@@ -349,7 +329,6 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn set_tooltip(&mut self, txt: &str) {
-
                     let txt = CString::safe_new(txt);
                     unsafe {
                         [<$flname _set_tooltip>](
@@ -360,109 +339,89 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn color(&self) -> $crate::enums::Color {
-
                     unsafe { std::mem::transmute([<$flname _color>](self.inner.widget() as _)) }
                 }
 
                 fn set_color(&mut self, color: $crate::enums::Color) {
-
                     unsafe { [<$flname _set_color>](self.inner.widget() as _, color.bits() as u32) }
                 }
 
                 fn label_color(&self) -> $crate::enums::Color {
-
                     unsafe { std::mem::transmute([<$flname _label_color>](self.inner.widget() as _)) }
                 }
 
                 fn set_label_color(&mut self, color: $crate::enums::Color) {
-
                     unsafe {
                         [<$flname _set_label_color>](self.inner.widget() as _, color.bits() as u32)
                     }
                 }
 
                 fn label_font(&self) -> $crate::enums::Font {
-
                     unsafe { std::mem::transmute([<$flname _label_font>](self.inner.widget() as _)) }
                 }
 
                 fn set_label_font(&mut self, font: $crate::enums::Font) {
-
                     unsafe { [<$flname _set_label_font>](self.inner.widget() as _, font.bits() as i32) }
                 }
 
                 fn label_size(&self) -> i32 {
-
                     unsafe { [<$flname _label_size>](self.inner.widget() as _) }
                 }
 
                 fn set_label_size(&mut self, sz: i32) {
-
                     let sz = if sz < 1 { 1 } else { sz };
                     unsafe { [<$flname _set_label_size>](self.inner.widget() as _, sz) }
                 }
 
                 fn label_type(&self) -> $crate::enums::LabelType {
-
                     unsafe { std::mem::transmute([<$flname _label_type>](self.inner.widget() as _)) }
                 }
 
                 fn set_label_type(&mut self, typ: $crate::enums::LabelType) {
-
                     unsafe {
                         [<$flname _set_label_type>](self.inner.widget() as _, typ as i32);
                     }
                 }
 
                 fn frame(&self) -> $crate::enums::FrameType {
-
                     unsafe { $crate::enums::FrameType::from_i32([<$flname _box>](self.inner.widget() as _)) }
                 }
 
                 fn set_frame(&mut self, typ: $crate::enums::FrameType) {
-
                     unsafe {
                         [<$flname _set_box>](self.inner.widget() as _, typ.as_i32());
                     }
                 }
 
                 fn changed(&self) -> bool {
-
                     unsafe { [<$flname _changed>](self.inner.widget() as _) != 0 }
                 }
 
                 fn set_changed(&mut self) {
-
                     unsafe { [<$flname _set_changed>](self.inner.widget() as _) }
                 }
 
                 fn clear_changed(&mut self) {
-
                     unsafe { [<$flname _clear_changed>](self.inner.widget() as _) }
                 }
 
                 fn align(&self) -> $crate::enums::Align {
-
                     unsafe { std::mem::transmute([<$flname _align>](self.inner.widget() as _)) }
                 }
 
                 fn set_align(&mut self, align: $crate::enums::Align) {
-
                     unsafe { [<$flname _set_align>](self.inner.widget() as _, align.bits() as i32) }
                 }
 
                 fn set_trigger(&mut self, trigger: $crate::enums::CallbackTrigger) {
-
                     unsafe { [<$flname _set_when>](self.inner.widget() as _, trigger.bits() as i32) }
                 }
 
                 fn trigger(&self) -> $crate::enums::CallbackTrigger {
-
                     unsafe { std::mem::transmute([<$flname _when>](self.inner.widget() as _)) }
                 }
 
                 fn parent(&self) -> Option<$crate::group::Group> {
-
                     unsafe {
                         let x = [<$flname _parent>](self.inner.widget() as _);
                         if x.is_null() {
@@ -474,26 +433,22 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn selection_color(&self) -> $crate::enums::Color {
-
                     unsafe { std::mem::transmute([<$flname _selection_color>](self.inner.widget() as _)) }
                 }
 
                 fn set_selection_color(&mut self, color: $crate::enums::Color) {
-
                     unsafe {
                         [<$flname _set_selection_color>](self.inner.widget() as _, color.bits() as u32);
                     }
                 }
 
                 fn do_callback(&mut self) {
-
                     unsafe {
                         [<$flname _do_callback>](self.inner.widget() as _);
                     }
                 }
 
                 fn window(&self) -> Option<Box<dyn WindowExt>> {
-
                     unsafe {
                         let wind_ptr = [<$flname _window>](self.inner.widget() as _);
                         if wind_ptr.is_null() {
@@ -507,7 +462,6 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn top_window(&self) -> Option<Box<dyn WindowExt>> {
-
                     unsafe {
                         let wind_ptr = [<$flname _top_window>](self.inner.widget() as _);
                         if wind_ptr.is_null() {
@@ -521,7 +475,6 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn takes_events(&self) -> bool {
-
                     unsafe { [<$flname _takes_events>](self.inner.widget() as _) != 0 }
                 }
 
@@ -546,7 +499,6 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn take_focus(&mut self) -> Result<(), FltkError> {
-
                     unsafe {
                         match [<$flname _take_focus>](self.inner.widget() as _) {
                             0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
@@ -556,27 +508,22 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn set_visible_focus(&mut self) {
-
                     unsafe { [<$flname _set_visible_focus>](self.inner.widget() as _) }
                 }
 
                 fn clear_visible_focus(&mut self) {
-
                     unsafe { [<$flname _clear_visible_focus>](self.inner.widget() as _) }
                 }
 
                 fn visible_focus(&mut self, v: bool) {
-
                     unsafe { [<$flname _visible_focus>](self.inner.widget() as _, v as i32) }
                 }
 
                 fn has_visible_focus(&self) -> bool {
-
                     unsafe { [<$flname _has_visible_focus>](self.inner.widget() as _) != 0 }
                 }
 
                 fn has_focus(&self) -> bool {
-
                     unsafe { fltk_sys::fl::Fl_focus() == self.inner.widget() as _ }
                 }
 
@@ -585,38 +532,31 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn damage(&self) -> bool {
-
                     unsafe { [<$flname _damage>](self.inner.widget() as _) != 0 }
                 }
 
                 fn set_damage(&mut self, flag: bool) {
-
                     let flag = if flag { 10 } else { 0 };
                     unsafe { [<$flname _set_damage>](self.inner.widget() as _, flag) }
                 }
 
                 fn damage_type(&self) -> $crate::enums::Damage {
-
                     unsafe { std::mem::transmute([<$flname _damage>](self.inner.widget() as _)) }
                 }
 
                 fn set_damage_type(&mut self, mask: $crate::enums::Damage) {
-
                     unsafe { [<$flname _set_damage>](self.inner.widget() as _, mask.bits()) }
                 }
 
                 fn set_damage_area(&mut self, mask: $crate::enums::Damage, x: i32, y: i32, w: i32, h: i32) {
-
                     unsafe { [<$flname _set_damage_area>](self.inner.widget() as _, mask.bits(), x, y, w, h) }
                 }
 
                 fn clear_damage(&mut self) {
-
                     unsafe { [<$flname _clear_damage>](self.inner.widget() as _) }
                 }
 
                 fn as_window(&self) -> Option<Box<dyn WindowExt>> {
-
                     unsafe {
                         let ptr = [<$flname _as_window>](self.inner.widget() as _);
                         if ptr.is_null() {
@@ -629,7 +569,6 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn as_group(&self) -> Option<$crate::group::Group> {
-
                     unsafe {
                         let ptr = [<$flname _as_group>](self.inner.widget() as _);
                         if ptr.is_null() {
@@ -651,19 +590,16 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn get_type<T: WidgetType>(&self) -> T {
-
                     unsafe { T::from_i32([<$flname _get_type>](self.inner.widget() as _)) }
                 }
 
                 fn set_type<T: WidgetType>(&mut self, typ: T) {
-
                     unsafe {
                         [<$flname _set_type>](self.inner.widget() as _, typ.to_i32());
                     }
                 }
 
                 fn set_image<I: ImageExt>(&mut self, image: Option<I>) {
-
                     if let Some(image) = image {
                         assert!(!image.was_deleted());
                         unsafe {
@@ -683,7 +619,6 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn set_image_scaled<I: ImageExt>(&mut self, image: Option<I>) {
-
                     if let Some(mut image) = image {
                         assert!(!image.was_deleted());
                         image.scale(self.w(), self.h(), false, true);
@@ -704,7 +639,6 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn image(&self) -> Option<Box<dyn ImageExt>> {
-
                     unsafe {
                         let image_ptr = [<$flname _image>](self.inner.widget() as _);
                         if image_ptr.is_null() {
@@ -718,7 +652,6 @@ macro_rules! impl_widget_ext {
                 }
 
                 unsafe fn image_mut(&self) -> Option<&mut $crate::image::Image> {
-
                     let image_ptr = [<$flname _image>](self.inner.widget() as _);
                     if image_ptr.is_null() {
                         None
@@ -730,7 +663,6 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn set_deimage<I: ImageExt>(&mut self, image: Option<I>) {
-
                     if let Some(image) = image {
                         assert!(!image.was_deleted());
                         unsafe {
@@ -750,7 +682,6 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn set_deimage_scaled<I: ImageExt>(&mut self, image: Option<I>) {
-
                     if let Some(mut image) = image {
                         assert!(!image.was_deleted());
                         image.scale(self.w(), self.h(), false, true);
@@ -771,7 +702,6 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn deimage(&self) -> Option<Box<dyn ImageExt>> {
-
                     unsafe {
                         let image_ptr = [<$flname _deimage>](self.inner.widget() as _);
                         if image_ptr.is_null() {
@@ -785,7 +715,6 @@ macro_rules! impl_widget_ext {
                 }
 
                 unsafe fn deimage_mut(&self) -> Option<&mut $crate::image::Image> {
-
                     let image_ptr = [<$flname _deimage>](self.inner.widget() as _);
                     if image_ptr.is_null() {
                         None
@@ -797,7 +726,6 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn set_callback<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
-
                     unsafe {
                     unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
                             let mut wid = $name::from_widget_ptr(wid as *mut _);
@@ -831,12 +759,10 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn visible(&self) -> bool {
-
                     unsafe { [<$flname _visible>](self.inner.widget() as _) != 0 }
                 }
 
                 fn visible_r(&self) -> bool {
-
                     unsafe { [<$flname _visible_r>](self.inner.widget() as _) != 0 }
                 }
 
@@ -845,17 +771,14 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn active(&self) -> bool {
-
                     unsafe { [<$flname _active>](self.inner.widget() as _) != 0 }
                 }
 
                 fn active_r(&self) -> bool {
-
                     unsafe { [<$flname _active_r>](self.inner.widget() as _) != 0 }
                 }
 
                 fn callback(&self) -> Option<Box<dyn FnMut()>> {
-
                     unsafe {
                         let cb = [<$flname _callback>](self.inner.widget() as _);
                         let data = [<$flname _user_data>](self.inner.widget() as _);
@@ -875,7 +798,6 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn handle_event(&mut self, event: $crate::enums::Event) -> bool {
-
                     unsafe { [<$flname _handle_event>](self.inner.widget() as _, event.bits()) != 0 }
                 }
 
@@ -961,7 +883,6 @@ macro_rules! impl_widget_base {
                 }
 
                 fn handle<F: FnMut(&mut Self, $crate::enums::Event) -> bool + 'static>(&mut self, cb: F) {
-
                     assert!(self.is_derived);
                     unsafe {
                     unsafe extern "C" fn shim(
@@ -999,7 +920,6 @@ macro_rules! impl_widget_base {
                 }
 
                 fn draw<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
-
                     assert!(self.is_derived);
                     unsafe {
                     unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
@@ -1047,7 +967,6 @@ macro_rules! impl_widget_base {
                     &mut self,
                     cb: F,
                 ) {
-
                     assert!(self.is_derived);
                     unsafe {
                     unsafe extern "C" fn shim(
@@ -1103,7 +1022,6 @@ macro_rules! impl_widget_base {
                 }
 
                 fn super_draw(&mut self, flag: bool) {
-
                     assert!(self.is_derived);
                     unsafe {
                         [<$flname _super_draw>](self.inner.widget() as _, flag as i32)
@@ -1111,7 +1029,6 @@ macro_rules! impl_widget_base {
                 }
 
                 fn super_draw_first(&mut self, flag: bool) {
-
                     assert!(self.is_derived);
                     unsafe {
                         [<$flname _super_draw_first>](self.inner.widget() as _, flag as i32)

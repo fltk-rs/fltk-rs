@@ -50,35 +50,29 @@ macro_rules! impl_display_ext {
                 }
 
                 fn text_font(&self) -> $crate::enums::Font {
-
                     assert!(self.has_buffer());
                     unsafe { std::mem::transmute([<$flname _text_font>](self.inner.widget() as _)) }
                 }
 
                 fn set_text_font(&mut self, font: $crate::enums::Font) {
-
                     unsafe { [<$flname _set_text_font>](self.inner.widget() as _, font.bits() as i32) }
                 }
 
                 fn text_color(&self) -> $crate::enums::Color {
-
                     assert!(self.has_buffer());
                     unsafe { std::mem::transmute([<$flname _text_color>](self.inner.widget() as _)) }
                 }
 
                 fn set_text_color(&mut self, color: $crate::enums::Color) {
-
                     unsafe { [<$flname _set_text_color>](self.inner.widget() as _, color.bits() as u32) }
                 }
 
                 fn text_size(&self) -> i32 {
-
                     assert!(self.has_buffer());
                     unsafe { [<$flname _text_size>](self.inner.widget() as _) as i32 }
                 }
 
                 fn set_text_size(&mut self, sz: i32) {
-
                     unsafe { [<$flname _set_text_size>](self.inner.widget() as _, sz as i32) }
                 }
 
@@ -321,7 +315,6 @@ macro_rules! impl_display_ext {
                 }
 
                 fn unset_highlight_data<B: Into<Option<$crate::text::TextBuffer>>>(&mut self, style_buffer: B) {
-
                     unsafe {
                         let mut colors = [$crate::enums::Color::Black.bits()];
                         let mut fonts = [$crate::enums::Font::Helvetica.bits()];
@@ -560,65 +553,55 @@ macro_rules! impl_display_ext {
                 }
 
                 fn wrap_mode(&mut self, wrap: $crate::text::WrapMode, wrap_margin: i32) {
-
                     unsafe { [<$flname _wrap_mode>](self.inner.widget() as _, wrap as i32, wrap_margin) }
                 }
 
                 fn wrapped_column(&self, row: i32, column: i32) -> i32 {
-
                     assert!(self.has_buffer());
                     unsafe { [<$flname _wrapped_column>](self.inner.widget() as _, row, column) }
                 }
 
                 fn wrapped_row(&self, row: i32) -> i32 {
-
                     assert!(self.has_buffer());
                     unsafe { [<$flname _wrapped_row>](self.inner.widget() as _, row) }
                 }
 
                 fn set_grammar_underline_color(&mut self, color: $crate::enums::Color) {
-
                     unsafe {
                         [<$flname _set_grammar_underline_color>](self.inner.widget() as _, color.bits() as u32)
                     }
                 }
 
                 fn grammar_underline_color(&self) -> $crate::enums::Color {
-
                     unsafe {
                         std::mem::transmute([<$flname _grammar_underline_color>](self.inner.widget() as _))
                     }
                 }
 
                 fn set_spelling_underline_color(&mut self, color: $crate::enums::Color) {
-
                     unsafe {
                         [<$flname _set_spelling_underline_color>](self.inner.widget() as _, color.bits() as u32)
                     }
                 }
 
                 fn spelling_underline_color(&self) -> $crate::enums::Color {
-
                     unsafe {
                         std::mem::transmute([<$flname _spelling_underline_color>](self.inner.widget() as _))
                     }
                 }
 
                 fn set_secondary_selection_color(&mut self, color: $crate::enums::Color) {
-
                     unsafe {
                         [<$flname _set_secondary_selection_color>](self.inner.widget() as _, color.bits() as u32)
                     }
                 }
 
                 fn secondary_selection_color(&self) -> $crate::enums::Color {
-
                     unsafe {
                         std::mem::transmute([<$flname _secondary_selection_color>](self.inner.widget() as _))
                     }
                 }
                 fn show_insert_position(&mut self) {
-
                     unsafe {
                         [<$flname _show_insert_position>](self.inner.widget() as _);
                     }

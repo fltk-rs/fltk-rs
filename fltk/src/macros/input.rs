@@ -16,7 +16,6 @@ macro_rules! impl_input_ext {
                 }
 
                 fn set_value(&mut self, val: &str) {
-
                     let temp = CString::safe_new(val);
                     unsafe {
                         [<$flname _set_value>](self.inner.widget() as _, temp.as_ptr());
@@ -68,7 +67,6 @@ macro_rules! impl_input_ext {
                 }
 
                 fn replace(&mut self, beg: i32, end: i32, val: &str) -> Result<(), FltkError> {
-
                     let val = CString::safe_new(val);
                     unsafe {
                         let x = [<$flname _replace>](
@@ -86,7 +84,6 @@ macro_rules! impl_input_ext {
                 }
 
                 fn insert(&mut self, txt: &str) -> Result<(), FltkError> {
-
                     let txt = CString::safe_new(txt);
                     unsafe {
                         let x = [<$flname _insert>](self.inner.widget() as _, txt.as_ptr(), 0);
@@ -98,7 +95,6 @@ macro_rules! impl_input_ext {
                 }
 
                 fn append(&mut self, txt: &str) -> Result<(), FltkError> {
-
                     let txt = CString::safe_new(txt);
                     unsafe {
                         let x = [<$flname _append>](self.inner.widget() as _, txt.as_ptr(), 0, 0);

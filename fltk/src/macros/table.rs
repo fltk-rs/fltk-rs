@@ -18,7 +18,6 @@ macro_rules! impl_table_ext {
                 }
 
                 fn table_frame(&self) -> $crate::enums::FrameType {
-
                     unsafe { $crate::enums::FrameType::from_i32([<$flname _table_box>](self.inner.widget() as _)) }
                 }
 
@@ -377,7 +376,6 @@ macro_rules! impl_table_ext {
                     &mut self,
                     cb: F,
                 ) {
-
                     assert!(self.is_derived);
                     pub type CustomDrawCellCallback = Option<
                         unsafe extern "C" fn(
@@ -489,7 +487,6 @@ macro_rules! impl_table_ext {
                 }
 
                 fn scrollbar(&self) -> $crate::valuator::Scrollbar {
-
                     unsafe {
                         let ptr = [<$flname _scrollbar>](self.inner.widget() as _);
                         assert!(!ptr.is_null());
@@ -500,7 +497,6 @@ macro_rules! impl_table_ext {
                 }
 
                 fn hscrollbar(&self) -> $crate::valuator::Scrollbar {
-
                     unsafe {
                         let ptr = [<$flname _hscrollbar>](self.inner.widget() as _);
                         assert!(!ptr.is_null());
@@ -516,7 +512,6 @@ macro_rules! impl_table_ext {
                     row: i32,
                     col: i32,
                 ) -> Option<(i32, i32, i32, i32)> {
-
                     let mut x = 0;
                     let mut y = 0;
                     let mut w = 0;
@@ -539,7 +534,6 @@ macro_rules! impl_table_ext {
                     i32,
                     $crate::table::TableResizeFlag,
                 )> {
-
                     let mut r = 0;
                     let mut c = 0;
                     let mut flag = 0;

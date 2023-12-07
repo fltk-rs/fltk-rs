@@ -436,7 +436,6 @@ impl Font {
     }
 }
 
-
 // todo: implement Display for Font ?
 #[allow(unreachable_patterns)]
 impl std::fmt::Debug for Font {
@@ -645,7 +644,6 @@ impl Color {
             0x00c0c000 => Color::XtermBgCyan,
             0xc0c0c000 => Color::XtermBgWhite,
             // ? todo: define Xterm dim and bold modified colors?
-
             0xffffffff => Color::TransparentBg, // Special value that lets the widget's box() color show through
 
             _ => Color { bits: rgbi }, // Just use the provided value

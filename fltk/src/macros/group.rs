@@ -19,24 +19,20 @@ macro_rules! impl_group_ext {
         paste::paste! {
             unsafe impl GroupExt for $name {
                 fn begin(&self) {
-
                     unsafe { [<$flname _begin>](self.inner.widget() as _) }
                 }
 
                 fn end(&self) {
-
                     unsafe { [<$flname _end>](self.inner.widget() as _) }
                 }
 
                 fn clear(&mut self) {
-
                     unsafe {
                         [<$flname _clear>](self.inner.widget() as _);
                     }
                 }
 
                 unsafe fn unsafe_clear(&mut self) {
-
                     [<$flname _clear>](self.inner.widget() as _);
                 }
 
@@ -110,7 +106,6 @@ macro_rules! impl_group_ext {
                 }
 
                 fn make_resizable(&mut self, val: bool) {
-
                     let ptr = if val {
                         self.inner.widget() as _
                     } else {
@@ -125,12 +120,10 @@ macro_rules! impl_group_ext {
                 }
 
                 fn set_clip_children(&mut self, flag: bool) {
-
                     unsafe { [<$flname _set_clip_children>](self.inner.widget() as _, flag as i32) }
                 }
 
                 fn clip_children(&self) -> bool {
-
                     unsafe { [<$flname _clip_children>](self.inner.widget() as _) != 0 }
                 }
 
@@ -159,7 +152,6 @@ macro_rules! impl_group_ext {
                 }
 
                 fn draw_children(&mut self) {
-
                     unsafe {
                         $crate::app::open_display();
                         [<$flname _draw_children>](self.inner.widget() as _)
