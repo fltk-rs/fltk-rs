@@ -77,17 +77,17 @@ impl MyPopup {
             pack.add(&*but);
         }
         pack.auto_layout();
-        win.handle(|w, ev| match ev {
+        Self { win, val, idx }
+    }
+    pub fn popup(&mut self, x: i32, y: i32) -> (String, i32) {
+        self.win.show();
+        self.win.handle(|w, ev| match ev {
             Event::Unfocus => {
                 w.hide();
                 true
             }
             _ => false,
         });
-        Self { win, val, idx }
-    }
-    pub fn popup(&mut self, x: i32, y: i32) -> (String, i32) {
-        self.win.show();
         self.win.force_position(true);
         self.win.set_pos(x, y);
         while self.win.shown() {
