@@ -1456,7 +1456,7 @@ pub mod experimental {
         /// - `c` must be ASCII, not utf-8
         /// - Does not trigger redraws
         pub fn print_char(&mut self, c: char) {
-            unsafe { Fl_Terminal_print_char(self.inner.widget() as _, c as i8) }
+            unsafe { Fl_Terminal_print_char(self.inner.widget() as _, c as std::os::raw::c_char) }
         }
 
         ///   Prints single UTF-8 char `c` at current cursor position, and advances the cursor if the character
@@ -1492,7 +1492,7 @@ pub mod experimental {
         /// - Does not trigger redraws
         /// - Does NOT handle control codes, ANSI or XTERM escape sequences.
         pub fn put_char(&mut self, c: char, row: i32, col: i32) {
-            unsafe { Fl_Terminal_put_char(self.inner.widget() as _, c as i8, row, col) }
+            unsafe { Fl_Terminal_put_char(self.inner.widget() as _, c as std::os::raw::c_char, row, col) }
         }
 
         /// Print a single UTF-8 character len at display position `(drow,dcol)`.
