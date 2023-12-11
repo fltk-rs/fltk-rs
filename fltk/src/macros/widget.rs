@@ -816,7 +816,7 @@ macro_rules! impl_widget_base {
     ($name: ident, $flname: ident) => {
         paste::paste! {
             unsafe impl WidgetBase for $name {
-                fn new<T: Into<Option<&'static str>>>(
+                fn new<'a, T: Into<Option<&'a str>>>(
                     x: i32,
                     y: i32,
                     width: i32,
@@ -1532,7 +1532,7 @@ macro_rules! impl_widget_ext_via {
 macro_rules! impl_widget_base_via {
     ($widget:ty, $base:ty, $member:tt) => {
         unsafe impl WidgetBase for $widget {
-            fn new<T: Into<Option<&'static str>>>(
+            fn new<'a, T: Into<Option<&'a str>>>(
                 x: i32,
                 y: i32,
                 width: i32,
