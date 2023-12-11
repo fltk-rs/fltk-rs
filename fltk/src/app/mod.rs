@@ -63,23 +63,6 @@ impl App {
     /// # Errors
     /// Can error on failure to run the application
     pub fn run(self) -> Result<(), FltkError> {
-        extern "C" {
-            fn atexit(f: extern "C" fn()) -> std::os::raw::c_int;
-        }
-        extern "C" fn shim() {
-            // if let Some(windows) = crate::app::windows() {
-                // for w in windows {
-                    unsafe {
-                        let win = fltk_sys::fl::Fl_first_window();
-                        if !win.is_null() {
-                            assert!(!win.is_null());
-                            fltk_sys::window::Fl_Double_Window_delete(win as _);
-                        }
-                    }
-                // }
-            // }
-        }
-        unsafe { atexit(shim); }
         run()
     }
 
