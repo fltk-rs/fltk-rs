@@ -840,8 +840,10 @@ macro_rules! impl_widget_base {
                         );
                         unsafe extern "C" fn shim(data: *mut std::os::raw::c_void) {
                             if !data.is_null() {
-                                let x = data as *mut Box<dyn FnMut()>;
-                                let _x = Box::from_raw(x);
+                                $crate::app::add_timeout3(0.0, move |_| {
+                                    let x = data as *mut Box<dyn FnMut()>;
+                                    let _x = Box::from_raw(x);
+                                });
                             }
                         }
                         [<$flname _set_deleter>](widget_ptr, Some(shim));
@@ -884,31 +886,28 @@ macro_rules! impl_widget_base {
 
                 fn handle<F: FnMut(&mut Self, $crate::enums::Event) -> bool + 'static>(&mut self, cb: F) {
                     assert!(self.is_derived);
-                    if self.as_window().is_some() {
-                        assert!(self.takes_events());
-                    }
                     unsafe {
                     unsafe extern "C" fn shim(
                             wid: *mut Fl_Widget,
                             ev: std::os::raw::c_int,
                             data: *mut std::os::raw::c_void,
                         ) -> i32 {
-                            let mut wid = $name::from_widget_ptr(wid as *mut _);
-                            let ev: $crate::enums::Event = std::mem::transmute(ev);
-                            let a: *mut Box<dyn FnMut(&mut $name, $crate::enums::Event) -> bool> =
-                                data as *mut Box<dyn FnMut(&mut $name, $crate::enums::Event) -> bool>;
-                            let f: &mut (dyn FnMut(&mut $name, $crate::enums::Event) -> bool) = &mut **a;
-                            let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-                                match f(&mut wid, ev) {
-                                    true => return 1,
-                                    false => return 0,
+                                let mut wid = $name::from_widget_ptr(wid as *mut _);
+                                let ev: $crate::enums::Event = std::mem::transmute(ev);
+                                let a: *mut Box<dyn FnMut(&mut $name, $crate::enums::Event) -> bool> =
+                                    data as *mut Box<dyn FnMut(&mut $name, $crate::enums::Event) -> bool>;
+                                let f: &mut (dyn FnMut(&mut $name, $crate::enums::Event) -> bool) = &mut **a;
+                                let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                                    match f(&mut wid, ev) {
+                                        true => return 1,
+                                        false => return 0,
+                                    }
+                                }));
+                                if let Ok(ret) = result {
+                                    ret
+                                } else {
+                                    0
                                 }
-                            }));
-                            if let Ok(ret) = result {
-                                ret
-                            } else {
-                                0
-                            }
                         }
                         let mut _old_data = None;
                         if self.is_derived {
