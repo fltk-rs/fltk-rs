@@ -886,6 +886,9 @@ macro_rules! impl_widget_base {
 
                 fn handle<F: FnMut(&mut Self, $crate::enums::Event) -> bool + 'static>(&mut self, cb: F) {
                     assert!(self.is_derived);
+                    if cfg!(target_os = "macos") && self.as_window().is_some() {
+                        assert!(self.takes_events());
+                    }
                     unsafe {
                     unsafe extern "C" fn shim(
                             wid: *mut Fl_Widget,
