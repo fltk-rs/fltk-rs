@@ -1700,5 +1700,22 @@ pub mod experimental {
         pub fn set_text_size(&self, val: i32) {
             unsafe { Fl_Terminal_set_text_size(self.inner.widget() as _, val) }
         }
+
+        /// Gets the selection text
+        pub fn selection_text(&self) -> Option<String> {
+            assert!(self.is_derived);
+            unsafe {
+                let ptr = Fl_Terminal_selection_text(self.inner.widget() as _);
+                if ptr.is_null() {
+                    None
+                } else {
+                    Some(
+                        CStr::from_ptr(ptr)
+                            .to_string_lossy()
+                            .to_string(),
+                    )
+                }
+            }
+        }
     }
 }
