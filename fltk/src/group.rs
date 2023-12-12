@@ -1197,30 +1197,26 @@ pub mod experimental {
     /// RATE_LIMITED is the recommended setting, using redraw_rate(float) to determine
     /// the maximum rate of redraws.
     /// see redraw_style(), redraw_rate()
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-    #[repr(u32)]
-    #[non_exhaustive]
-    pub enum RedrawStyle {
-        /// App must call redraw() as needed to update text to screen
-        NoRedraw = 0x0000,
-        /// timer controlled redraws. (DEFAULT)
-        RateLimited = 0x0001, // todo: this is dangerous, because enum values are implicitly assigned in the C++ code
-        /// redraw triggered after *every* append() / printf() / etc. operation
-        PerWrite = 0x0002,
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Debug)]
+    pub struct RedrawStyle {
+        bits: u32,
     }
+
     impl RedrawStyle {
+        /// App must call redraw() as needed to update text to screen
+        pub const NoRedraw: RedrawStyle = RedrawStyle { bits: 0x0000 };
+        /// timer controlled redraws. (DEFAULT)
+        pub const RateLimited: RedrawStyle = RedrawStyle { bits: 0x0001 };
+        /// redraw triggered after *every* append() / printf() / etc. operation
+        pub const PerWrite: RedrawStyle = RedrawStyle { bits: 0x0002 };
+
+        /// Gets the inner representation
+        pub const fn bits(&self) -> u32 {
+            self.bits
+        }
         /// Build a RedrawStyle enum with an arbitrary value.
-        // todo: is there a cleaner way to do this without using unsafe::reinterpret_cast?
-        fn new(val: u32) -> RedrawStyle {
-            if val == RedrawStyle::RateLimited as u32 {
-                RedrawStyle::RateLimited
-            } else if val == RedrawStyle::NoRedraw as u32 {
-                RedrawStyle::NoRedraw
-            } else if val == RedrawStyle::PerWrite as u32 {
-                RedrawStyle::PerWrite
-            } else {
-                panic!("Unknown RedrawStyle value {}", val)
-            }
+        pub const fn new(val: u32) -> Self {
+            RedrawStyle { bits: val }
         }
     }
 
@@ -1248,6 +1244,21 @@ pub mod experimental {
             const _Reserved2 = 0x40 ;
             /// strikeout text
             const Strikeout = 0x80 ;
+        }
+    }
+
+    bitflags::bitflags! {
+        /// Output translation flags for special control character translations.
+        #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+        pub struct OutFlags: u8 {
+            ///< no output translation
+            const OFF        = 0x00;
+            ///< carriage return generates a vertical line-feed (\\r -> \\n)
+            const CR_TO_LF   = 0x01;
+            ///< line-feed generates a carriage return (\\n -> \\r)
+            const LF_TO_CR   = 0x02;
+            ///< line-feed generates a carriage return line-feed (\\n -> \\r\\n)
+            const LF_TO_CRLF = 0x04;
         }
     }
 
@@ -1332,9 +1343,69 @@ pub mod experimental {
             }
         }
 
+        /// Clears the screen to the current `textbgcolor()`, and homes the cursor.
+        pub fn clear(&mut self) {
+            unsafe { Fl_Terminal_clear(self.inner.widget() as _) }
+        }
+
+        ///  Clears the screen to a specific color `val` and homes the cursor.
+        /// Does not affect the value of text_bg_color or text_bg_color_default
+        pub fn clear_to_color(&mut self, val: Color) {
+            unsafe { Fl_Terminal_clear_to_color(self.inner.widget() as _, val.bits()) }
+        }
+
+        ///   Clear the terminal screen only; does not affect the cursor position.
+        ///
+        /// Also clears the current mouse selection.
+        ///
+        /// If `scroll_to_hist` is true, the screen is cleared by scrolling the
+        /// contents into the scrollback history, where it can be retrieved with the
+        /// scrollbar. If false, the screen is cleared
+        /// and the scrollback history is unchanged.
+        ///
+        /// Similar to the escape sequence `\<ESC\>[2J`.
+        pub fn clear_screen(&mut self, arg1: bool) {
+            unsafe { Fl_Terminal_clear_screen(self.inner.widget() as _, arg1 as i32) }
+        }
+
+        ///   Clear the terminal screen and home the cursor
+        ///
+        /// Also clears the current mouse selection.
+        ///
+        /// If `scroll_to_hist` is true, the screen is cleared by scrolling the
+        /// contents into the scrollback history, where it can be retrieved with the
+        /// scrollbar. If false, the screen is cleared
+        /// and the scrollback history is unchanged.
+        ///
+        /// Similar to the escape sequence `\<ESC\>[2J\<ESC\>[H`.
+        pub fn clear_screen_home(&mut self, arg1: bool) {
+            unsafe { Fl_Terminal_clear_screen_home(self.inner.widget() as _, arg1 as i32) }
+        }
+
         /// Clears the scroll history buffer and adjusts scrollbar, forcing it to redraw()
         pub fn clear_history(&mut self) {
             unsafe { Fl_Terminal_clear_history(self.inner.widget() as _) }
+        }
+
+        /// Get the background color for the terminal's Fl_Group::box().
+        pub fn color(&mut self) -> Color {
+            Color::from_rgbi(unsafe { Fl_Terminal_color(self.inner.widget() as _) })
+        }
+
+        /// Sets the background color for the terminal's Fl_Group::box().
+        ///
+        /// If the textbgcolor() and textbgcolor_default() are set to the special
+        /// "see through" color 0xffffffff when any text was added, changing color()
+        /// affects the color that shows through behind that existing text.
+        ///
+        /// Otherwise, whatever specific background color was set for existing text will
+        ///  persist after changing color().
+        ///
+        /// To see the effects of a change to color(), follow up with a call to redraw().
+        ///
+        /// The default value is 0x0.
+        pub fn set_color(&self, color: Color) {
+            unsafe { Fl_Terminal_set_color(self.inner.widget() as _, color.bits()) }
         }
 
         /// Return the cursor's current column position on the screen.
@@ -1365,6 +1436,11 @@ pub mod experimental {
         /// Set the cursor's foreground color used for the cursor itself.
         pub fn set_cursor_fg_color(&self, color: Color) {
             unsafe { Fl_Terminal_set_cursor_fg_color(self.inner.widget() as _, color.bits()) }
+        }
+
+        /// Move cursor to the home position (top/left).
+        pub fn cursor_home(&mut self) {
+            unsafe { Fl_Terminal_cursor_home(self.inner.widget() as _) }
         }
 
         /// Return terminal's display width in columns of text characters.
@@ -1452,6 +1528,28 @@ pub mod experimental {
             unsafe { Fl_Terminal_margin_top(self.inner.widget() as _) }
         }
 
+        /// Sets the combined output translation flags to `val`.
+        ///
+        /// `val` can be sensible combinations of the OutFlags bit flags.
+        ///
+        /// The default is LF_TO_CRLF, so that \\n will generate both carriage-return (CR)
+        /// and line-feed (LF).
+        ///
+        /// For \\r and \\n to be handled literally, use output_translate(Fl_Terminal::OutFlags::OFF);
+        /// To disable all output translations, use 0 or Fl_Terminal::OutFlags::OFF.
+        pub fn set_output_translate(&mut self, val: OutFlags) {
+            unsafe { Fl_Terminal_set_output_translate(self.inner.widget() as _, val.bits() as u32) }
+        }
+
+        /// Return the current combined output translation flags.
+        pub fn output_translate(&self) -> OutFlags {
+            let result = unsafe { Fl_Terminal_output_translate(self.inner.widget() as _) as i32 };
+            OutFlags::from_bits(result as u8).expect(&format!(
+                "Unknown OutFlags value {} from output_translate",
+                result
+            ))
+        }
+
         /// Prints single ASCII char `c` at current cursor position, and advances the cursor.
         /// - `c` must be ASCII, not utf-8
         /// - Does not trigger redraws
@@ -1530,7 +1628,7 @@ pub mod experimental {
 
         /// Set how Fl_Terminal manages screen redrawing.
         pub fn set_redraw_style(&mut self, set: RedrawStyle) {
-            unsafe { Fl_Terminal_set_redraw_style(self.inner.widget() as _, set as i32) }
+            unsafe { Fl_Terminal_set_redraw_style(self.inner.widget() as _, set.bits() as i32) }
         }
 
         /// Get the redraw style.
@@ -1538,6 +1636,7 @@ pub mod experimental {
             let result = unsafe { Fl_Terminal_redraw_style(self.inner.widget() as _) as u32 };
             RedrawStyle::new(result) // Construct a style with the given value
         }
+
         /// Resets terminal to default colors, clears screen, history and mouse selection, homes cursor, resets tabstops.
         pub fn reset_terminal(&self) {
             unsafe { Fl_Terminal_reset_terminal(self.inner.widget() as _) }
@@ -1598,9 +1697,9 @@ pub mod experimental {
         }
 
         /// Set text background color to fltk color val.
-        /// Use this for temporary color changes, similar to <ESC>[48;2;{R};{G};{B}m
+        /// Use this for temporary color changes, similar to \<ESC\>[48;2;{R};{G};{B}m
         ///
-        /// This setting does not affect the 'default' text colors used by <ESC>[0m, <ESC>c, reset_terminal(), etc.
+        /// This setting does not affect the 'default' text colors used by \<ESC\>[0m, \<ESC\>c, reset_terminal(), etc.
         /// To change both the current and default bg color, also use text_bg_color_default(Fl_Color).
         pub fn set_text_bg_color(&self, color: Color) {
             unsafe { Fl_Terminal_set_text_bg_color(self.inner.widget() as _, color.bits()) }
@@ -1611,7 +1710,7 @@ pub mod experimental {
             Color::from_rgbi(unsafe { Fl_Terminal_text_bg_color(self.inner.widget() as _) })
         }
 
-        /// Set the default text background color used by <ESC>c, <ESC>[0m, and reset_terminal().
+        /// Set the default text background color used by \<ESC\>c, \<ESC\>[0m, and reset_terminal().
         /// Does not affect the 'current' text fg color; use set_text_bg_color(Fl_Color) to set that.
         pub fn set_text_bg_color_default(&self, color: Color) {
             unsafe { Fl_Terminal_set_text_bg_color_default(self.inner.widget() as _, color.bits()) }
@@ -1624,11 +1723,11 @@ pub mod experimental {
 
         /// Sets the background text color as one of the 8 'xterm color' values.
         ///
-        /// This will be the background color used for all newly printed text, similar to the <ESC>[#m escape sequence, where # is between 40 and 47.
+        /// This will be the background color used for all newly printed text, similar to the \<ESC\>[#m escape sequence, where # is between 40 and 47.
         ///
-        /// This color will be reset to the default bg color if reset_terminal() is called, or by <ESC>c, <ESC>[0m, etc.
+        /// This color will be reset to the default bg color if reset_terminal() is called, or by \<ESC\>c, \<ESC\>[0m, etc.
         ///
-        /// The xterm color intensity values can be influenced by the Dim/Bold/Normal modes (which can be set with e.g. <ESC>[1m, textattrib(), etc), so the actual RGB values of these colors allow room for Dim/Bold to influence their brightness. For instance, "Normal Red" is not full brightness to allow "Bold Red" to be brighter. This goes for all colors except 'Black', which is not influenced by Dim or Bold; Black is always Black.
+        /// The xterm color intensity values can be influenced by the Dim/Bold/Normal modes (which can be set with e.g. \<ESC\>[1m, textattrib(), etc), so the actual RGB values of these colors allow room for Dim/Bold to influence their brightness. For instance, "Normal Red" is not full brightness to allow "Bold Red" to be brighter. This goes for all colors except 'Black', which is not influenced by Dim or Bold; Black is always Black.
         ///
         /// These background colors are slightly dimmer than the corresponding xterm foregroumd colors.
         ///
@@ -1637,11 +1736,16 @@ pub mod experimental {
         pub fn set_text_bg_color_xterm(&self, color: XtermColor) {
             unsafe { Fl_Terminal_set_text_bg_color_xterm(self.inner.widget() as _, color as u8) }
         }
-
+        ///  Set the text color for the terminal.
+        ///  This is a convenience method that sets *both* textfgcolor() and textfgcolor_default(),
+        ///  ensuring both are set to the same value.
+        pub fn set_text_color(&self, color: Color) {
+            unsafe { Fl_Terminal_set_text_color(self.inner.widget() as _, color.bits()) }
+        }
         /// Set text foreground drawing color to fltk color val.
-        /// Use this for temporary color changes, similar to <ESC>[38;2;{R};{G};{B}m
+        /// Use this for temporary color changes, similar to \<ESC\>[38;2;{R};{G};{B}m
         ///
-        /// This setting does not affect the 'default' text colors used by <ESC>[0m, <ESC>c, reset_terminal(), etc.
+        /// This setting does not affect the 'default' text colors used by \<ESC\>[0m, \<ESC\>c, reset_terminal(), etc.
         /// To change both the current and default fg color, also use textfgcolor_default(Fl_Color)
         pub fn set_text_fg_color(&self, color: Color) {
             unsafe { Fl_Terminal_set_text_fg_color(self.inner.widget() as _, color.bits()) }
@@ -1652,7 +1756,7 @@ pub mod experimental {
             Color::from_rgbi(unsafe { Fl_Terminal_text_fg_color(self.inner.widget() as _) })
         }
 
-        /// Set the default text foreground color used by <ESC>c, <ESC>[0m, and reset_terminal().
+        /// Set the default text foreground color used by \<ESC\>c, \<ESC\>[0m, and reset_terminal().
         /// Does not affect the 'current' text fg color; use set_text_fg_color(Fl_Color) to set that.
         pub fn set_text_fg_color_default(&self, color: Color) {
             unsafe { Fl_Terminal_set_text_fg_color_default(self.inner.widget() as _, color.bits()) }
@@ -1665,11 +1769,11 @@ pub mod experimental {
 
         /// Sets the foreground text color as one of the 8 'xterm color' values.
         ///
-        /// This will be the foreground color used for all newly printed text, similar to the <ESC>[#m escape sequence, where # is between 30 and 37.
+        /// This will be the foreground color used for all newly printed text, similar to the \<ESC\>[#m escape sequence, where # is between 30 and 37.
         ///
-        /// This color will be reset to the default bg color if reset_terminal() is called, or by <ESC>c, <ESC>[0m, etc.
+        /// This color will be reset to the default bg color if reset_terminal() is called, or by \<ESC\>c, \<ESC\>[0m, etc.
         ///
-        /// The xterm color intensity values can be influenced by the Dim/Bold/Normal modes (which can be set with e.g. <ESC>[1m, textattrib(), etc), so the actual RGB values of these colors allow room for Dim/Bold to influence their brightness. For instance, "Normal Red" is not full brightness to allow "Bold Red" to be brighter. This goes for all colors except 'Black', which is not influenced by Dim or Bold; Black is always Black.
+        /// The xterm color intensity values can be influenced by the Dim/Bold/Normal modes (which can be set with e.g. \<ESC\>[1m, textattrib(), etc), so the actual RGB values of these colors allow room for Dim/Bold to influence their brightness. For instance, "Normal Red" is not full brightness to allow "Bold Red" to be brighter. This goes for all colors except 'Black', which is not influenced by Dim or Bold; Black is always Black.
         ///
         /// The 8 color xterm values are:
         /// 0 = Black, 1 = Red, 2 = Green, 3 = Yellow, 4 = Blue,5 = Magenta, 6 = Cyan, 7 = White
