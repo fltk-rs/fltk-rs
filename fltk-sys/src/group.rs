@@ -4435,11 +4435,7 @@ extern "C" {
     pub fn Fl_Terminal_selection_text(self_: *const Fl_Terminal) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn Fl_Terminal_vprintf(
-        self_: *mut Fl_Terminal,
-        fmt: *const ::std::os::raw::c_char,
-        ap: va_list,
-    );
+    pub fn Fl_Terminal_vprintf(self_: *mut Fl_Terminal, fmt: *const ::std::os::raw::c_char, ...);
 }
 extern "C" {
     pub fn Fl_Terminal_begin(self_: *mut Fl_Terminal);

@@ -149,6 +149,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             if cfg!(feature = "use-wayland") {
                 dst.define("OPTION_USE_WAYLAND", "ON");
                 dst.define("OPTION_ALLOW_GTK_PLUGIN", "OFF");
+                dst.define("OPTION_USE_SYSTEM_LIBDECOR", "OFF");
                 if let Ok(wayland_only) = std::env::var("CFLTK_WAYLAND_ONLY") {
                     if wayland_only == "1" {
                         dst.define("OPTION_WAYLAND_ONLY", "ON");

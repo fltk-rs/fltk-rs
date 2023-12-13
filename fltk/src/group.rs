@@ -1821,5 +1821,9 @@ pub mod experimental {
                 }
             }
         }
+
+        // pub fn str_free(s: String) {
+        //     unsafe { free(s.as_ptr()) }
+        // }
     }
 }
