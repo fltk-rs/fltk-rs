@@ -4,7 +4,7 @@
 ///
 use fltk::{
     enums::{Color, Font, LabelType},
-    group::experimental::{Attrib, RedrawStyle, Terminal},
+    group::experimental::{Attrib, OutFlags, RedrawStyle, Terminal},
     menu::MenuBar,
     // *,
     prelude::*,
@@ -28,14 +28,15 @@ fn main() {
     main_win.make_resizable(true);
 
     let mut menu_bar = MenuBar::new(0, 0, WIN_WIDTH, 30, None);
-    let idx = menu_bar.add_choice("Test&1");
 
     let mut term = Terminal::new(0, 30, WIN_WIDTH, WIN_HEIGHT - 30, None);
     term.set_label("term");
     main_win.resizable(&term);
     term.set_label_type(LabelType::None);
 
-    menu_bar.at(idx).unwrap().set_callback({
+
+    let idx = menu_bar.add_choice("Test&1");
+        menu_bar.at(idx).unwrap().set_callback({
         let mut term1 = term.clone();
         move |c| mb_test1_cb(c, &mut term1)
     });
@@ -43,6 +44,7 @@ fn main() {
         .at(idx)
         .unwrap()
         .set_shortcut(unsafe { std::mem::transmute(0x80031) }); // Alt-1
+
     let idx = menu_bar.add_choice("Test&2");
     menu_bar.at(idx).unwrap().set_callback({
         let mut term1 = term.clone();
@@ -52,6 +54,17 @@ fn main() {
         .at(idx)
         .unwrap()
         .set_shortcut(unsafe { std::mem::transmute(0x80032) }); // Alt-2
+
+    let idx = menu_bar.add_choice("Test&3");
+    menu_bar.at(idx).unwrap().set_callback({
+        let mut term1 = term.clone();
+        move |c| mb_test3_cb(c, &mut term1)
+    });
+    menu_bar
+        .at(idx)
+        .unwrap()
+        .set_shortcut(unsafe { std::mem::transmute(0x80033) }); // Alt-3
+
     menu_bar.end();
 
     main_win.end();
@@ -203,6 +216,23 @@ fn main() {
             assert_eq!(term.redraw_style(), RedrawStyle::NoRedraw);
             term.set_redraw_style(rs);
             assert_eq!(term.redraw_style(), rs);
+
+            // Sanity checks: enum values are implicitly assigned in the C++ code so could change unexpectedly
+            assert_eq!(
+                RedrawStyle::NoRedraw.bits(),
+                0x0000,
+                "RedrawStyle enum values have been reassigned"
+            );
+            assert_eq!(
+                RedrawStyle::RateLimited.bits(),
+                0x0001,
+                "RedrawStyle enum values have been reassigned"
+            );
+            assert_eq!(
+                RedrawStyle::PerWrite.bits(),
+                0x0002,
+                "RedrawStyle enum values have been reassigned"
+            );
 
             term.append(&format!(
                 "Scrollbar actual size {}\n",
@@ -389,6 +419,66 @@ fn mb_test2_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
 
     term.clear_history();
     assert_eq!(term.history_use(), 0);
+
+    term.set_text_attrib(Attrib::Inverse | Attrib::Italic);
+    term.append("\nDone!\n");
+    term.set_text_attrib(Attrib::Normal);
+}
+
+/// Another set of tests that run when Test3 is clicked
+fn mb_test3_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
+    term.take_focus().unwrap();
+    assert_eq!(term.text_bg_color_default(), Color::TransparentBg);
+
+    let hist = term.history_use();
+    assert_ne!(hist, 0);
+    term.clear();
+    assert_eq!(term.cursor_row(), 0);
+    assert_eq!(term.history_use(), hist + term.display_rows()); // A screenful of lines added to history
+
+    term.append("Test\ntext\na\nb\nc\nd");
+    assert_eq!(term.cursor_row(), 5);
+    let hist = term.history_use();
+    term.clear_screen_home(false);
+    assert_eq!(term.cursor_row(), 0);
+    assert_eq!(term.history_use(), hist); // History not changed
+
+    term.append("Test\ntext\na\nb\nc\nd\ne");
+    assert_eq!(term.cursor_row(), 6);
+    term.clear_screen_home(true);
+    assert_eq!(term.cursor_row(), 0);
+    assert_eq!(term.history_use(), hist + term.display_rows()); // A screenful of lines added to history
+
+    let hist = term.history_use();
+    term.append("Test\ntext\na\nb\nc\n");
+    assert_eq!(term.cursor_row(), 5);
+    term.clear_to_color(Color::DarkBlue);
+    assert_eq!(term.text_bg_color_default(), Color::TransparentBg);
+    assert_eq!(term.text_bg_color(), Color::TransparentBg);
+    assert!(term.history_use() > hist); // Some lines added to history
+    assert_eq!(term.cursor_row(), 0);
+
+    // Test cursor_home()
+    term.append("Test\n\n\n\n\n\n\n\n\n\n");
+    assert_eq!(term.cursor_row(), 10);
+    term.cursor_home();
+    assert_eq!(term.cursor_row(), 0);
+
+    // Test the widget color
+    assert_eq!(term.color(), Color::Black); // Default
+    term.set_color(Color::DarkGreen);
+    assert_eq!(term.color(), Color::DarkGreen);
+    term.set_color(Color::Black);
+    assert_eq!(term.color(), Color::Black);
+    term.append(
+        "This should be one line of white text on black, embedded into the top of a blue field.\n",
+    );
+
+    assert_eq!(term.output_translate(), OutFlags::LF_TO_CRLF); // default
+    term.set_output_translate(OutFlags::OFF);
+    assert_eq!(term.output_translate(), OutFlags::OFF);
+    term.set_output_translate(OutFlags::LF_TO_CRLF); // restore default
+    assert_eq!(term.output_translate(), OutFlags::LF_TO_CRLF);
 
     term.set_text_attrib(Attrib::Inverse | Attrib::Italic);
     term.append("\nDone!\n");
