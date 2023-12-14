@@ -26,6 +26,7 @@ jobs:
           toolchain: ${{ matrix.rust }}
           override: true
       - run: |
+          cargo update -p crossbeam-utils --precise 0.8.16
           cargo update -p crossbeam-channel --precise 0.5.8
           cargo check
   check-arm64:
@@ -61,5 +62,6 @@ jobs:
           toolchain: ${{ matrix.rust }}
           override: true
       - run: |
+          cargo update -p crossbeam-utils --precise 0.8.16
           cargo update -p crossbeam-channel --precise 0.5.8
           cargo check --target=aarch64-unknown-linux-gnu
