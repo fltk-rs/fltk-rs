@@ -7,8 +7,8 @@ on:
     branches: [ master ]
 
 jobs:
-  checks:
-    name: Check
+  check-x64:
+    name: Check-x64
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -25,6 +25,37 @@ jobs:
           profile: minimal
           toolchain: ${{ matrix.rust }}
           override: true
-      - run: |
-          cargo update -p cmake --precise 0.1.48
-          cargo check
+      - run: cargo check
+  check-arm64:
+    name: Check-arm64
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust:
+          - 1.56.0
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+      - name: Download deps
+        run: |
+          sudo dpkg --add-architecture arm64
+          echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ $(lsb_release -c -s) main restricted universe multiverse" | sudo tee /etc/apt/sources.list
+          echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ $(lsb_release -c -s)-updates main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ $(lsb_release -c -s)-security main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ $(lsb_release -c -s)-backports main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=arm64] http://ports.ubuntu.com/ $(lsb_release -c -s) main multiverse universe" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=arm64] http://ports.ubuntu.com/ $(lsb_release -c -s)-security main multiverse universe" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=arm64] http://ports.ubuntu.com/ $(lsb_release -c -s)-backports main multiverse universe" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=arm64] http://ports.ubuntu.com/ $(lsb_release -c -s)-updates main multiverse universe" | sudo tee -a /etc/apt/sources.list
+          sudo apt-get update -y
+          sudo apt-get install -y libpango1.0-dev:arm64 libx11-dev:arm64 libxext-dev:arm64 libxft-dev:arm64 libxinerama-dev:arm64 libxcursor-dev:arm64 libxrender-dev:arm64 libxfixes-dev:arm64 libpng-dev:arm64 libasound2-dev:arm64
+          sudo apt-get install g++-aarch64-linux-gnu
+      - name: Install toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          stable: true
+          target: aarch64-unknown-linux-gnu
+          profile: minimal
+          toolchain: ${{ matrix.rust }}
+          override: true
+      - run: cargo check --target=aarch64-unknown-linux-gnu
