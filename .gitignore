@@ -11,3 +11,6 @@ compile_commands.json
 *.ttf
 /.cache
 /example.png
+**/.vs/**/v17
+**/.vs/**/FileContentIndex
+*.sqlite

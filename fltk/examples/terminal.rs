@@ -34,9 +34,8 @@ fn main() {
     main_win.resizable(&term);
     term.set_label_type(LabelType::None);
 
-
     let idx = menu_bar.add_choice("Test&1");
-        menu_bar.at(idx).unwrap().set_callback({
+    menu_bar.at(idx).unwrap().set_callback({
         let mut term1 = term.clone();
         move |c| mb_test1_cb(c, &mut term1)
     });

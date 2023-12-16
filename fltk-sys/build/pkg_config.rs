@@ -9,7 +9,6 @@ pub fn build() {
             libs.push(stripped.to_string());
         } else if let Some(stripped) = lflag.strip_prefix("-L") {
             search_dirs.push(stripped.to_string());
-        } else {
         }
     }
     for dir in search_dirs {

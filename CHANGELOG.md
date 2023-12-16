@@ -1,6 +1,16 @@
 # Changelog
 
 
+# [1.4.20] - 2023-12-16
+- Add several Terminal methods by @jgriffitts.
+- Add Terminal::selection_text().
+- Fix drawing artifact on wayland.
+- Disable system libdecor by default.
+- Add takes_events() check for windows on macos.
+- Remove memory leak associated with calls to into_raw() by @jgriffitts.
+Relax static lifetime on Widget::new's title param.
+- Update FLTK submodule.
+
 # [1.4.19] - 2023-12-03
 - Add group::experimental::Terminal widget by @jgriffitts.
 - Add some extra colors, helpful for the newly added Terminal widget.

@@ -7,8 +7,8 @@ on:
     branches: [ master ]
 
 jobs:
-  checks:
-    name: Check
+  check-x64:
+    name: Check-x64
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -27,4 +27,43 @@ jobs:
           override: true
       - run: |
           cargo update -p cmake --precise 0.1.48
+          cargo update -p crossbeam-channel --precise 0.5.8
+          cargo update -p crossbeam-utils --precise 0.8.16
           cargo check
+  check-arm64:
+    name: Check-arm64
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust:
+          - 1.56.0
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+      - name: Download deps
+        run: |
+          git submodule update --init --recursive
+          sudo dpkg --add-architecture arm64
+          echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ $(lsb_release -c -s) main restricted universe multiverse" | sudo tee /etc/apt/sources.list
+          echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ $(lsb_release -c -s)-updates main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ $(lsb_release -c -s)-security main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ $(lsb_release -c -s)-backports main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=arm64] http://ports.ubuntu.com/ $(lsb_release -c -s) main multiverse universe" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=arm64] http://ports.ubuntu.com/ $(lsb_release -c -s)-security main multiverse universe" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=arm64] http://ports.ubuntu.com/ $(lsb_release -c -s)-backports main multiverse universe" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=arm64] http://ports.ubuntu.com/ $(lsb_release -c -s)-updates main multiverse universe" | sudo tee -a /etc/apt/sources.list
+          sudo apt-get update -y
+          sudo apt-get install -y libx11-dev:arm64 libxext-dev:arm64 libxft-dev:arm64 libxinerama-dev:arm64 libxcursor-dev:arm64 libxrender-dev:arm64 libxfixes-dev:arm64 libpng-dev:arm64 libasound2-dev:arm64
+          sudo apt-get install g++-aarch64-linux-gnu
+      - name: Install toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          target: aarch64-unknown-linux-gnu
+          profile: minimal
+          toolchain: stable
+          override: true
+      - run: |
+          cargo update -p cmake --precise 0.1.48
+          cargo update -p crossbeam-channel --precise 0.5.8
+          cargo update -p crossbeam-utils --precise 0.8.16
+          cargo check --target=aarch64-unknown-linux-gnu --features=no-pango

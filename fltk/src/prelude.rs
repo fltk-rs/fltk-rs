@@ -471,13 +471,8 @@ pub unsafe trait WidgetBase: WidgetExt {
     /// To use dynamic strings use `with_label(self, &str)` or `set_label(&mut self, &str)`
     /// labels support special symbols preceded by an `@` [sign](https://www.fltk.org/doc-1.3/symbols.png).
     /// and for the [associated formatting](https://www.fltk.org/doc-1.3/common.html).
-    fn new<'a, T: Into<Option<&'a str>>>(
-        x: i32,
-        y: i32,
-        width: i32,
-        height: i32,
-        title: T,
-    ) -> Self;
+    fn new<'a, T: Into<Option<&'a str>>>(x: i32, y: i32, width: i32, height: i32, title: T)
+        -> Self;
     /// Constructs a widget with the size of its parent
     fn default_fill() -> Self;
     /// Deletes widgets and their children.

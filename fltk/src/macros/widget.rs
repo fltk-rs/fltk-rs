@@ -840,10 +840,8 @@ macro_rules! impl_widget_base {
                         );
                         unsafe extern "C" fn shim(data: *mut std::os::raw::c_void) {
                             if !data.is_null() {
-                                $crate::app::add_timeout3(0.0, move |_| {
-                                    let x = data as *mut Box<dyn FnMut()>;
-                                    let _x = Box::from_raw(x);
-                                });
+                                let x = data as *mut Box<dyn FnMut()>;
+                                let _x = Box::from_raw(x);
                             }
                         }
                         [<$flname _set_deleter>](widget_ptr, Some(shim));
