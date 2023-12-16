@@ -2,6 +2,9 @@ use fltk::{enums::*, prelude::*, *};
 use std::cell::RefCell;
 use std::rc::Rc;
 
+const KEY_A: Key = Key::from_char('a');
+const KEY_D: Key = Key::from_char('d');
+
 #[repr(i32)]
 #[derive(Copy, Clone)]
 enum Direction {
@@ -55,9 +58,15 @@ fn main() {
         let paddle_pos = paddle_pos.clone();
         move |_, ev| {
             match ev {
-                Event::Move => {
+                Event::Focus => true,
+                Event::KeyDown => {
+                    let key = app::event_key();
+                    match key {
+                        Key::Left | KEY_A => *paddle_pos.borrow_mut() -= 20,
+                        Key::Right | KEY_D => *paddle_pos.borrow_mut() += 20,
+                        _ => return false,
+                    }
                     // Mouse's x position relative to the paddle's center
-                    *paddle_pos.borrow_mut() = app::event_coords().0 - 80;
                     true
                 }
                 _ => false,

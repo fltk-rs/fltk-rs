@@ -1544,7 +1544,7 @@ pub mod experimental {
         /// Return the current combined output translation flags.
         pub fn output_translate(&self) -> OutFlags {
             let result = unsafe { Fl_Terminal_output_translate(self.inner.widget() as _) as i32 };
-            OutFlags::from_bits(result as u8).expect(&format!(
+            OutFlags::from_bits(result as u8).unwrap_or_else(|| panic!(
                 "Unknown OutFlags value {} from output_translate",
                 result
             ))
@@ -1590,7 +1590,14 @@ pub mod experimental {
         /// - Does not trigger redraws
         /// - Does NOT handle control codes, ANSI or XTERM escape sequences.
         pub fn put_char(&mut self, c: char, row: i32, col: i32) {
-            unsafe { Fl_Terminal_put_char(self.inner.widget() as _, c as std::os::raw::c_char, row, col) }
+            unsafe {
+                Fl_Terminal_put_char(
+                    self.inner.widget() as _,
+                    c as std::os::raw::c_char,
+                    row,
+                    col,
+                )
+            }
         }
 
         /// Print a single UTF-8 character len at display position `(drow,dcol)`.
@@ -1813,11 +1820,7 @@ pub mod experimental {
                 if ptr.is_null() {
                     None
                 } else {
-                    Some(
-                        CStr::from_ptr(ptr)
-                            .to_string_lossy()
-                            .to_string(),
-                    )
+                    Some(CStr::from_ptr(ptr).to_string_lossy().to_string())
                 }
             }
         }
