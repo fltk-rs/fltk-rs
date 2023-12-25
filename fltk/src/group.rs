@@ -1278,6 +1278,29 @@ pub mod experimental {
         White = 7,
     }
 
+    bitflags::bitflags! {
+        /// Per-character 8 bit flags (u8) used to manage special states for characters.
+        #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+        pub struct CharFlags: u8 {
+            ///< this char's fg color is an XTERM color; can be affected by Dim+Bold
+            const FG_XTERM   = 0x01;
+            ///< this char's bg color is an XTERM color; can be affected by Dim+Bold
+            const BG_XTERM   = 0x02;
+            /// used internally for line re-wrap during screen resizing
+            const _EOL        = 0x04;
+            /// Reserved
+            const _RESV_A     = 0x08;
+            /// Reserved
+            const _RESV_B     = 0x10;
+            /// Reserved
+            const _RESV_C     = 0x20;
+            /// Reserved
+            const _RESV_D     = 0x40;
+            /// Reserved
+            const _RESV_E     = 0x80;
+        }
+    }
+
     impl Terminal {
         /// Returns whether the terminal is in ANSI mode.
         pub fn ansi(&self) -> bool {
@@ -1544,10 +1567,9 @@ pub mod experimental {
         /// Return the current combined output translation flags.
         pub fn output_translate(&self) -> OutFlags {
             let result = unsafe { Fl_Terminal_output_translate(self.inner.widget() as _) as i32 };
-            OutFlags::from_bits(result as u8).unwrap_or_else(|| panic!(
-                "Unknown OutFlags value {} from output_translate",
-                result
-            ))
+            OutFlags::from_bits(result as u8).unwrap_or_else(|| {
+                panic!("Unknown OutFlags value {} from output_translate", result)
+            })
         }
 
         /// Prints single ASCII char `c` at current cursor position, and advances the cursor.
@@ -1824,9 +1846,62 @@ pub mod experimental {
                 }
             }
         }
+    }
 
-        // pub fn str_free(s: String) {
-        //     unsafe { free(s.as_ptr()) }
-        // }
+    ///    Class to manage the terminal's individual UTF-8 characters.
+    ///    Includes fg/bg color, attributes (BOLD, UNDERLINE..)
+    #[derive(Debug)]
+    pub struct Utf8Char<'a> {
+        inner: &'a mut ::std::os::raw::c_void, // This points to a Fl_Terminal::Utf8Char structure
+    }
+
+    // So far only implementing "getter" methods. Todo: methods to modify Utf8Char
+    impl<'a> Utf8Char<'a> {
+        /// Construct a new Utf8Char. This is really only useful for testing.
+        /// Allocated Utf8Char will never be deleted.
+        pub fn new(c: ::std::os::raw::c_char) -> Self {
+            unsafe {
+                let u8c = Fl_Terminal_Utf8Char_new_obj(c);
+                let ret = Utf8Char { inner: &mut *u8c as _ };
+                ret
+            }
+        }
+
+        /// Return the attributes for this character.
+        pub fn attrib(&mut self) -> Attrib {
+            let result = unsafe { Fl_Terminal_Utf8Char_attrib(self.inner as _) as i32 };
+            Attrib::from_bits(result as u8).unwrap_or_else(|| {
+                panic!("Unknown Attrib value {}", result)
+            })
+        }
+
+        /// Return the background color for this character.
+        pub fn bgcolor(&mut self) -> Color {
+            Color::from_rgbi(unsafe { Fl_Terminal_Utf8Char_bgcolor(self.inner as _) })
+        }
+
+        /// Return the foreground color for this character.
+        pub fn fgcolor(&mut self) -> Color {
+            let result = unsafe { Fl_Terminal_Utf8Char_fgcolor(self.inner as _)  };
+            Color::from_rgbi(result)
+        }
+
+        /// Return the xterm CharFlags bits
+        pub fn charflags(&mut self) -> CharFlags {
+            let result = unsafe { Fl_Terminal_Utf8Char_charflags(self.inner as _) as i32 };
+            CharFlags::from_bits(result as u8).unwrap_or_else(|| {
+                panic!("Unknown CharFlags value {}", result)
+            })
+        }
+
+        /// Return the UTF-8 text string for this character.
+        pub fn text_utf8(&mut self) -> &[u8] {
+            unsafe {
+                let ptr = Fl_Terminal_Utf8Char_text_utf8(self.inner as _);
+                let len = Fl_Terminal_Utf8Char_length(self.inner as _);
+                let ret = std::slice::from_raw_parts(ptr, len as usize);
+                ret
+            }
+        }
     }
 }
