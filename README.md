@@ -50,6 +50,14 @@ To use the latest changes in the repo:
 [dependencies]
 fltk = { version = "^1.4", git = "https://github.com/fltk-rs/fltk-rs" }
 ```
+Or if you have other depenendencies which depend on fltk-rs:
+```toml
+[dependencies]
+fltk = "^1.4"
+
+[patch.crates-io]
+fltk = { git = "https://github.com/fltk-rs/fltk-rs" }
+```
 
 To use the bundled libs (available for x64 windows (msvc & gnu (msys2-mingw)), x64 & aarch64 linux & macos):
 ```toml
