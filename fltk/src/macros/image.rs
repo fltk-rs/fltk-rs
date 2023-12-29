@@ -28,7 +28,8 @@ macro_rules! impl_image_ext {
         paste::paste! {
             impl Drop for $name {
                 fn drop(&mut self) {
-                    if std::any::type_name::<$name>() != std::any::type_name::<$crate::image::Image>() {
+                    if std::any::type_name::<$name>() != std::any::type_name::<$crate::image::Image>()
+                    && std::any::type_name::<$name>() != std::any::type_name::<$crate::image::SharedImage>() {
                         if !self.was_deleted() {
                             if ImageRC::strong_count(&self.inner) == 1 {
                                 unsafe {
