@@ -1,6 +1,11 @@
 # Changelog
 
 
+# [1.4.21] - 2023-12-30
+- Fix Widget_Derived::resize() timing.
+- Fix deletion of SharedImage which is handled by FLTK.
+- Update FLTK submodule.
+
 # [1.4.20] - 2023-12-16
 - Add several Terminal methods by @jgriffitts.
 - Add Terminal::selection_text().
