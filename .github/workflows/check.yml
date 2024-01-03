@@ -33,6 +33,11 @@ jobs:
   check-arm64:
     name: Check-arm64
     runs-on: ubuntu-latest
+    env:
+      CC: aarch64-linux-gnu-gcc
+      CXX: aarch64-linux-gnu-g++
+      CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: aarch64-linux-gnu-gcc
+      PKG_CONFIG_PATH: "/usr/lib/aarch64-linux-gnu/pkgconfig/:${PKG_CONFIG_PATH}"
     strategy:
       matrix:
         rust:
@@ -53,7 +58,7 @@ jobs:
           echo "deb [arch=arm64] http://ports.ubuntu.com/ $(lsb_release -c -s)-backports main multiverse universe" | sudo tee -a /etc/apt/sources.list
           echo "deb [arch=arm64] http://ports.ubuntu.com/ $(lsb_release -c -s)-updates main multiverse universe" | sudo tee -a /etc/apt/sources.list
           sudo apt-get update -y
-          sudo apt-get install -y libx11-dev:arm64 libxext-dev:arm64 libxft-dev:arm64 libxinerama-dev:arm64 libxcursor-dev:arm64 libxrender-dev:arm64 libxfixes-dev:arm64 libpng-dev:arm64 libasound2-dev:arm64
+          sudo apt-get install -y libpango1.0-dev:arm64 libx11-dev:arm64 libxext-dev:arm64 libxft-dev:arm64 libxinerama-dev:arm64 libxcursor-dev:arm64 libxrender-dev:arm64 libxfixes-dev:arm64 libpng-dev:arm64 libasound2-dev:arm64
           sudo apt-get install g++-aarch64-linux-gnu
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
@@ -66,4 +71,4 @@ jobs:
           cargo update -p cmake --precise 0.1.48
           cargo update -p crossbeam-channel --precise 0.5.8
           cargo update -p crossbeam-utils --precise 0.8.16
-          cargo check --target=aarch64-unknown-linux-gnu --features=no-pango
+          cargo check --target=aarch64-unknown-linux-gnu
