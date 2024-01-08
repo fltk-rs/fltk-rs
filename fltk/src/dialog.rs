@@ -55,33 +55,25 @@ crate::macros::widget::impl_widget_type!(FileDialogType);
 /// Alias for `NativeFileChooserType`
 pub type NativeFileChooserType = FileDialogType;
 
-/// Defines the File dialog options, which can be set using the `set_option()` method.
-#[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub enum FileDialogOptions {
-    /// No options
-    NoOptions = 0,
-    /// Confirm on save as
-    SaveAsConfirm = 1,
-    /// New folder option
-    NewFolder = 2,
-    /// Enable preview
-    Preview = 4,
-    /// Use extension filter
-    UseFilterExt = 8,
+bitflags::bitflags! {
+    /// Defines the File dialog options, which can be set using the `set_option()` method.
+    #[derive(Debug, Copy, Clone, PartialEq, Eq)]
+    pub struct FileDialogOptions: i32 {
+        /// No options
+        const NoOptions = 0;
+        /// Confirm on save as
+        const SaveAsConfirm = 1;
+        /// New folder option
+        const NewFolder = 2;
+        /// Enable preview
+        const Preview = 4;
+        /// Use extension filter
+        const UseFilterExt = 8;
+    }
 }
-
-crate::macros::widget::impl_widget_type!(FileDialogOptions);
 
 /// Alias to `NativeFileChooserOptions`
 pub type NativeFileChooserOptions = FileDialogOptions;
-
-impl std::ops::BitOr<FileDialogOptions> for FileDialogOptions {
-    type Output = FileDialogOptions;
-    fn bitor(self, other: FileDialogOptions) -> Self::Output {
-        unsafe { std::mem::transmute(self as i32 | other as i32) }
-    }
-}
 
 impl FileDialog {
     /// Creates an new file dialog
@@ -173,7 +165,7 @@ impl FileDialog {
     /// Sets the option for the dialog
     pub fn set_option(&mut self, opt: FileDialogOptions) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Native_File_Chooser_set_option(self.inner, opt as i32) }
+        unsafe { Fl_Native_File_Chooser_set_option(self.inner, opt.bits()) }
     }
 
     /// Sets the type for the dialog
