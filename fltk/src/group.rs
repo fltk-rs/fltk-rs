@@ -1282,9 +1282,11 @@ pub mod experimental {
         /// Per-character 8 bit flags (u8) used to manage special states for characters.
         #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
         pub struct CharFlags: u8 {
-            ///< this char's fg color is an XTERM color; can be affected by Dim+Bold
+            /// No flags
+            const NONE   = 0x00;
+            /// this char's fg color is an XTERM color; can be affected by Dim+Bold
             const FG_XTERM   = 0x01;
-            ///< this char's bg color is an XTERM color; can be affected by Dim+Bold
+            /// this char's bg color is an XTERM color; can be affected by Dim+Bold
             const BG_XTERM   = 0x02;
             /// used internally for line re-wrap during screen resizing
             const _EOL        = 0x04;
@@ -1299,6 +1301,32 @@ pub mod experimental {
             /// Reserved
             const _RESV_E     = 0x80;
         }
+    }
+
+    ///    Class to manage the terminal's individual UTF-8 characters.
+    ///    Includes fg/bg color, attributes (BOLD, UNDERLINE..)
+    pub struct Utf8Char {
+        inner: *const Fl_Terminal_Utf8Char, // This points to a C++ Fl_Terminal::Utf8Char structure
+    }
+
+    impl<'a> std::fmt::Debug for Utf8Char {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            let x = self.text_utf8();
+            write!(f, "Utf8Char {:#?} '{:?}'", x, std::str::from_utf8(x))
+            // todo: add attrib and color information
+        }
+    }
+
+    ///    Class to read characters from the terminal's buffer rows.
+    ///    Includes indexing access and iterators
+    pub struct BuffRow<'a> {
+        inner: *const Fl_Terminal_Utf8Char, // This points to an array of Fl_Terminal::Utf8Char
+        /// Parent terminal widget that owns this buffer
+        _parent: &'a Terminal,
+        /// Number of characters in the row
+        pub length: usize,
+        /// sizeof(Fl_Terminal::Utf8Char)
+        pub char_size: usize
     }
 
     impl Terminal {
@@ -1411,7 +1439,7 @@ pub mod experimental {
         }
 
         /// Get the background color for the terminal's Fl_Group::box().
-        pub fn color(&mut self) -> Color {
+        pub fn color(&self) -> Color {
             Color::from_rgbi(unsafe { Fl_Terminal_color(self.inner.widget() as _) })
         }
 
@@ -1427,7 +1455,7 @@ pub mod experimental {
         /// To see the effects of a change to color(), follow up with a call to redraw().
         ///
         /// The default value is 0x0.
-        pub fn set_color(&self, color: Color) {
+        pub fn set_color(&mut self, color: Color) {
             unsafe { Fl_Terminal_set_color(self.inner.widget() as _, color.bits()) }
         }
 
@@ -1442,22 +1470,22 @@ pub mod experimental {
         }
 
         /// Get the cursor's background color used for the cursor itself.
-        pub fn cursor_bg_color(&mut self) -> Color {
+        pub fn cursor_bg_color(&self) -> Color {
             Color::from_rgbi(unsafe { Fl_Terminal_cursor_bg_color(self.inner.widget() as _) })
         }
 
         /// Set the cursor's background color used for the cursor itself.
-        pub fn set_cursor_bg_color(&self, color: Color) {
+        pub fn set_cursor_bg_color(&mut self, color: Color) {
             unsafe { Fl_Terminal_set_cursor_bg_color(self.inner.widget() as _, color.bits()) }
         }
 
         /// Get the cursor's foreground color used for the cursor itself.
-        pub fn cursor_fg_color(&mut self) -> Color {
+        pub fn cursor_fg_color(&self) -> Color {
             Color::from_rgbi(unsafe { Fl_Terminal_cursor_fg_color(self.inner.widget() as _) })
         }
 
         /// Set the cursor's foreground color used for the cursor itself.
-        pub fn set_cursor_fg_color(&self, color: Color) {
+        pub fn set_cursor_fg_color(&mut self, color: Color) {
             unsafe { Fl_Terminal_set_cursor_fg_color(self.inner.widget() as _, color.bits()) }
         }
 
@@ -1472,7 +1500,7 @@ pub mod experimental {
         }
 
         /// Set terminal's display width in columns of text characters.
-        pub fn set_display_columns(&self, val: i32) {
+        pub fn set_display_columns(&mut self, val: i32) {
             unsafe { Fl_Terminal_set_display_columns(self.inner.widget() as _, val) }
         }
 
@@ -1482,7 +1510,7 @@ pub mod experimental {
         }
 
         /// Set terminal's display height in lines of text.
-        pub fn set_display_rows(&self, val: i32) {
+        pub fn set_display_rows(&mut self, val: i32) {
             unsafe { Fl_Terminal_set_display_rows(self.inner.widget() as _, val) }
         }
 
@@ -1558,8 +1586,8 @@ pub mod experimental {
         /// The default is LF_TO_CRLF, so that \\n will generate both carriage-return (CR)
         /// and line-feed (LF).
         ///
-        /// For \\r and \\n to be handled literally, use output_translate(Fl_Terminal::OutFlags::OFF);
-        /// To disable all output translations, use 0 or Fl_Terminal::OutFlags::OFF.
+        /// For \\r and \\n to be handled literally, use output_translate(Terminal::OutFlags::OFF);
+        /// To disable all output translations, use 0 or Terminal::OutFlags::OFF.
         pub fn set_output_translate(&mut self, val: OutFlags) {
             unsafe { Fl_Terminal_set_output_translate(self.inner.widget() as _, val.bits() as u32) }
         }
@@ -1655,7 +1683,7 @@ pub mod experimental {
             unsafe { Fl_Terminal_redraw_rate(self.inner.widget() as _) }
         }
 
-        /// Set how Fl_Terminal manages screen redrawing.
+        /// Set how Terminal manages screen redrawing.
         pub fn set_redraw_style(&mut self, set: RedrawStyle) {
             unsafe { Fl_Terminal_set_redraw_style(self.inner.widget() as _, set.bits() as i32) }
         }
@@ -1667,7 +1695,7 @@ pub mod experimental {
         }
 
         /// Resets terminal to default colors, clears screen, history and mouse selection, homes cursor, resets tabstops.
-        pub fn reset_terminal(&self) {
+        pub fn reset_terminal(&mut self) {
             unsafe { Fl_Terminal_reset_terminal(self.inner.widget() as _) }
         }
 
@@ -1691,22 +1719,22 @@ pub mod experimental {
         }
 
         /// Get mouse selection background color.
-        pub fn selection_bg_color(&mut self) -> Color {
+        pub fn selection_bg_color(&self) -> Color {
             Color::from_rgbi(unsafe { Fl_Terminal_selection_bg_color(self.inner.widget() as _) })
         }
 
         /// Set mouse selection background color.
-        pub fn set_selection_bg_color(&self, color: Color) {
+        pub fn set_selection_bg_color(&mut self, color: Color) {
             unsafe { Fl_Terminal_set_selection_bg_color(self.inner.widget() as _, color.bits()) }
         }
 
         /// Get mouse selection foreground color.
-        pub fn selection_fg_color(&mut self) -> Color {
+        pub fn selection_fg_color(&self) -> Color {
             Color::from_rgbi(unsafe { Fl_Terminal_selection_fg_color(self.inner.widget() as _) })
         }
 
         /// Set mouse selection foreground color.
-        pub fn set_selection_fg_color(&self, color: Color) {
+        pub fn set_selection_fg_color(&mut self, color: Color) {
             unsafe { Fl_Terminal_set_selection_fg_color(self.inner.widget() as _, color.bits()) }
         }
 
@@ -1730,23 +1758,23 @@ pub mod experimental {
         ///
         /// This setting does not affect the 'default' text colors used by \<ESC\>[0m, \<ESC\>c, reset_terminal(), etc.
         /// To change both the current and default bg color, also use text_bg_color_default(Fl_Color).
-        pub fn set_text_bg_color(&self, color: Color) {
+        pub fn set_text_bg_color(&mut self, color: Color) {
             unsafe { Fl_Terminal_set_text_bg_color(self.inner.widget() as _, color.bits()) }
         }
 
         /// Get the text background color.
-        pub fn text_bg_color(&mut self) -> Color {
+        pub fn text_bg_color(&self) -> Color {
             Color::from_rgbi(unsafe { Fl_Terminal_text_bg_color(self.inner.widget() as _) })
         }
 
         /// Set the default text background color used by \<ESC\>c, \<ESC\>[0m, and reset_terminal().
         /// Does not affect the 'current' text fg color; use set_text_bg_color(Fl_Color) to set that.
-        pub fn set_text_bg_color_default(&self, color: Color) {
+        pub fn set_text_bg_color_default(&mut self, color: Color) {
             unsafe { Fl_Terminal_set_text_bg_color_default(self.inner.widget() as _, color.bits()) }
         }
 
         /// Return the default text background color.
-        pub fn text_bg_color_default(&mut self) -> Color {
+        pub fn text_bg_color_default(&self) -> Color {
             Color::from_rgbi(unsafe { Fl_Terminal_text_bg_color_default(self.inner.widget() as _) })
         }
 
@@ -1762,13 +1790,13 @@ pub mod experimental {
         ///
         /// The 8 color xterm values are:
         /// 0 = Black, 1 = Red, 2 = Green, 3 = Yellow, 4 = Blue,5 = Magenta, 6 = Cyan, 7 = White
-        pub fn set_text_bg_color_xterm(&self, color: XtermColor) {
+        pub fn set_text_bg_color_xterm(&mut self, color: XtermColor) {
             unsafe { Fl_Terminal_set_text_bg_color_xterm(self.inner.widget() as _, color as u8) }
         }
         ///  Set the text color for the terminal.
         ///  This is a convenience method that sets *both* textfgcolor() and textfgcolor_default(),
         ///  ensuring both are set to the same value.
-        pub fn set_text_color(&self, color: Color) {
+        pub fn set_text_color(&mut self, color: Color) {
             unsafe { Fl_Terminal_set_text_color(self.inner.widget() as _, color.bits()) }
         }
         /// Set text foreground drawing color to fltk color val.
@@ -1776,23 +1804,23 @@ pub mod experimental {
         ///
         /// This setting does not affect the 'default' text colors used by \<ESC\>[0m, \<ESC\>c, reset_terminal(), etc.
         /// To change both the current and default fg color, also use textfgcolor_default(Fl_Color)
-        pub fn set_text_fg_color(&self, color: Color) {
+        pub fn set_text_fg_color(&mut self, color: Color) {
             unsafe { Fl_Terminal_set_text_fg_color(self.inner.widget() as _, color.bits()) }
         }
 
         /// Get the text foreground color.
-        pub fn text_fg_color(&mut self) -> Color {
+        pub fn text_fg_color(&self) -> Color {
             Color::from_rgbi(unsafe { Fl_Terminal_text_fg_color(self.inner.widget() as _) })
         }
 
         /// Set the default text foreground color used by \<ESC\>c, \<ESC\>[0m, and reset_terminal().
         /// Does not affect the 'current' text fg color; use set_text_fg_color(Fl_Color) to set that.
-        pub fn set_text_fg_color_default(&self, color: Color) {
+        pub fn set_text_fg_color_default(&mut self, color: Color) {
             unsafe { Fl_Terminal_set_text_fg_color_default(self.inner.widget() as _, color.bits()) }
         }
 
         /// Return the default text foreground color.
-        pub fn text_fg_color_default(&mut self) -> Color {
+        pub fn text_fg_color_default(&self) -> Color {
             Color::from_rgbi(unsafe { Fl_Terminal_text_fg_color_default(self.inner.widget() as _) })
         }
 
@@ -1806,31 +1834,31 @@ pub mod experimental {
         ///
         /// The 8 color xterm values are:
         /// 0 = Black, 1 = Red, 2 = Green, 3 = Yellow, 4 = Blue,5 = Magenta, 6 = Cyan, 7 = White
-        pub fn set_text_fg_color_xterm(&self, color: XtermColor) {
+        pub fn set_text_fg_color_xterm(&mut self, color: XtermColor) {
             unsafe { Fl_Terminal_set_text_fg_color_xterm(self.inner.widget() as _, color as u8) }
         }
 
         /// Get the text font
-        pub fn text_font(&mut self) -> Font {
+        pub fn text_font(&self) -> Font {
             Font::by_index(unsafe { Fl_Terminal_text_font(self.inner.widget() as _) } as usize)
         }
 
         /// Sets the font used for all text displayed in the terminal.
         /// This affects all existing text (in display and history) as well as any newly printed text.
         /// Only monospace fonts are recommended.
-        pub fn set_text_font(&self, font: Font) {
+        pub fn set_text_font(&mut self, font: Font) {
             unsafe { Fl_Terminal_set_text_font(self.inner.widget() as _, font.bits()) }
         }
 
         /// Gets the text size
-        pub fn text_size(&mut self) -> i32 {
+        pub fn text_size(&self) -> i32 {
             unsafe { Fl_Terminal_text_size(self.inner.widget() as _) }
         }
 
         /// Sets the font size used for all text displayed in the terminal.
         /// This affects all existing text (in display and history) as well as any newly printed text.
         /// Changing this will affect the display_rows() and display_columns().
-        pub fn set_text_size(&self, val: i32) {
+        pub fn set_text_size(&mut self, val: i32) {
             unsafe { Fl_Terminal_set_text_size(self.inner.widget() as _, val) }
         }
 
@@ -1846,61 +1874,284 @@ pub mod experimental {
                 }
             }
         }
-    }
 
-    ///    Class to manage the terminal's individual UTF-8 characters.
-    ///    Includes fg/bg color, attributes (BOLD, UNDERLINE..)
-    #[derive(Debug)]
-    pub struct Utf8Char<'a> {
-        inner: &'a mut ::std::os::raw::c_void, // This points to a Fl_Terminal::Utf8Char structure
+        // Various methods to access the ring buffer
+
+        ///  Return the ending row# in the display area.
+        pub fn disp_erow(&self) -> i32 {
+            unsafe { Fl_Terminal_disp_erow(self.inner.widget() as _) }
+        }
+
+        /// Return the number of rows in the display area.
+        pub fn disp_rows(&self) -> i32 {
+            unsafe { Fl_Terminal_disp_rows(self.inner.widget() as _) }
+        }
+
+        /// Return the number of columns in the display area (always the same as ring_cols())
+        pub fn disp_cols(&self) -> i32 {
+            unsafe { Fl_Terminal_disp_cols(self.inner.widget() as _) }
+        }
+
+        /// Return the starting row# in the display area.
+        pub fn disp_srow(&self) -> i32 {
+            unsafe { Fl_Terminal_disp_srow(self.inner.widget() as _) }
+        }
+
+        /// Return the number of columns in the scrollback history (always the same as ring_cols())
+        pub fn hist_cols(&self) -> i32 {
+            unsafe { Fl_Terminal_hist_cols(self.inner.widget() as _) }
+        }
+
+        /// Return the ending row# of the scrollback history.
+        pub fn hist_erow(&self) -> i32 {
+            unsafe { Fl_Terminal_hist_erow(self.inner.widget() as _) }
+        }
+
+        /// Return the number of rows in the scrollback history.
+        pub fn hist_rows(&self) -> i32 {
+            unsafe { Fl_Terminal_hist_rows(self.inner.widget() as _) }
+        }
+
+        /// Return the starting row# of the scrollback history.
+        pub fn hist_srow(&self) -> i32 {
+            unsafe { Fl_Terminal_hist_srow(self.inner.widget() as _) }
+        }
+
+        /// Return number of rows in use by the scrollback history.
+        pub fn hist_use(&self) -> i32 {
+            unsafe { Fl_Terminal_hist_use(self.inner.widget() as _) }
+        }
+
+        /// Return the starting row of the \"in use\" scrollback history.
+        pub fn hist_use_srow(&self) -> i32 {
+            unsafe { Fl_Terminal_hist_use_srow(self.inner.widget() as _) }
+        }
+
+        /// Is global row/column inside the current mouse selection?
+        pub fn is_inside_selection(&self, row: i32, col: i32) -> bool {
+            unsafe { Fl_Terminal_is_inside_selection(self.inner.widget() as _, row, col) != 0 }
+        }
+
+        /// Returns true if there's a mouse selection.
+        pub fn is_selection(&self) -> bool {
+            unsafe { Fl_Terminal_is_selection(self.inner.widget() as _) != 0 }
+        }
+
+        /// Returns the current offset into the ring buffer.
+        pub fn offset(&self) -> i32 {
+            unsafe { Fl_Terminal_offset(self.inner.widget() as _) }
+        }
+
+        /// Return the number of columns in the ring buffer.
+        pub fn ring_cols(&self) -> i32 {
+            unsafe { Fl_Terminal_ring_cols(self.inner.widget() as _) }
+        }
+
+        /// Return the ending row# in the ring buffer (Always ring_rows()-1)
+        pub fn ring_erow(&self) -> i32 {
+            unsafe { Fl_Terminal_ring_erow(self.inner.widget() as _) }
+        }
+
+        /// Return the starting row# in the ring buffer (Always 0)
+        pub fn ring_srow(&self) -> i32 {
+            unsafe { Fl_Terminal_ring_srow(self.inner.widget() as _) }
+        }
+
+        /// Return the number of rows in the ring buffer.
+        pub fn ring_rows(&self) -> i32 {
+            unsafe { Fl_Terminal_ring_rows(self.inner.widget() as _) }
+        }
+
+        /// Return u8c for beginning of row drow of the display.
+        pub fn u8c_disp_row(&self, drow: i32) -> BuffRow {
+            // Fl_Terminal_u8c_disp_row returns pointer to the first C++ Utf8Char object,
+            //  which becomes the `inner` element in the Rust BuffRow object
+            let row_p = unsafe {
+                    Fl_Terminal_u8c_disp_row(self.inner.widget() as _, drow)
+            };
+            BuffRow::new(row_p, self)
+        }
+
+        /// Return u8c for beginning of row hrow inside the scrollback history.
+        pub fn u8c_hist_row(&self, hrow: i32) -> BuffRow {
+            // Fl_Terminal_u8c_hist_row returns pointer to the first C++ Utf8Char object,
+            //  which becomes the `inner` element in the Rust BuffRow object
+            let row_p = unsafe {
+                Fl_Terminal_u8c_hist_row(self.inner.widget() as _, hrow)
+            };
+            BuffRow::new(row_p, self)
+        }
+
+        /// Return u8c for beginning of row hurow inside the 'in use' part of the\n scrollback history.
+        pub fn u8c_hist_use_row(&self, hurow: i32) -> BuffRow {
+            // Fl_Terminal_u8c_hist_use_row returns pointer to the first  C++ Utf8Char object,
+            //  which becomes the `inner` element in the Rust BuffRow object
+            let row_p = unsafe {
+                Fl_Terminal_u8c_hist_use_row(self.inner.widget() as _, hurow)
+            };
+            BuffRow::new(row_p, self)
+        }
+
+        /// Return u8c for beginning of row grow in the ring buffer.
+        pub fn u8c_ring_row(&self, grow: i32) -> BuffRow {
+            // Fl_Terminal_u8c_ring_use_row returns pointer to the first  C++ Utf8Char object,
+            //  which becomes the `inner` element in the Rust BuffRow object
+            let row_p = unsafe {
+                Fl_Terminal_u8c_ring_row(self.inner.widget() as _, grow)
+            };
+            BuffRow::new(row_p, self)
+        }
     }
 
     // So far only implementing "getter" methods. Todo: methods to modify Utf8Char
-    impl<'a> Utf8Char<'a> {
-        /// Construct a new Utf8Char. This is really only useful for testing.
+    impl<'a> Utf8Char {
+        /// Construct a new Utf8Char, single-byte only. This is really only useful for testing.
+        ///  'c' must be "printable" ASCII in the range (0x20 <= c <= 0x7e).
+        ///     Anything outside of that is silently ignored.
+        ///
         /// Allocated Utf8Char will never be deleted.
-        pub fn new(c: ::std::os::raw::c_char) -> Self {
+        pub fn new(c: u8) -> Self {
             unsafe {
                 let u8c = Fl_Terminal_Utf8Char_new_obj(c);
-                let ret = Utf8Char { inner: &mut *u8c as _ };
+                let ret = Utf8Char {
+                    inner: u8c,
+                };
                 ret
             }
         }
 
         /// Return the attributes for this character.
-        pub fn attrib(&mut self) -> Attrib {
-            let result = unsafe { Fl_Terminal_Utf8Char_attrib(self.inner as _) as i32 };
-            Attrib::from_bits(result as u8).unwrap_or_else(|| {
-                panic!("Unknown Attrib value {}", result)
-            })
+        pub fn attrib(&self) -> Attrib {
+            let result = unsafe { Fl_Terminal_Utf8Char_attrib(self.inner) };
+            Attrib::from_bits(result).unwrap_or_else(|| panic!("Unknown Attrib value {}", result))
         }
 
         /// Return the background color for this character.
-        pub fn bgcolor(&mut self) -> Color {
-            Color::from_rgbi(unsafe { Fl_Terminal_Utf8Char_bgcolor(self.inner as _) })
+        pub fn bgcolor(&self) -> Color {
+            Color::from_rgbi(unsafe { Fl_Terminal_Utf8Char_bgcolor(self.inner) })
         }
 
         /// Return the foreground color for this character.
-        pub fn fgcolor(&mut self) -> Color {
-            let result = unsafe { Fl_Terminal_Utf8Char_fgcolor(self.inner as _)  };
+        pub fn fgcolor(&self) -> Color {
+            let result = unsafe { Fl_Terminal_Utf8Char_fgcolor(self.inner) };
             Color::from_rgbi(result)
         }
 
         /// Return the xterm CharFlags bits
-        pub fn charflags(&mut self) -> CharFlags {
-            let result = unsafe { Fl_Terminal_Utf8Char_charflags(self.inner as _) as i32 };
-            CharFlags::from_bits(result as u8).unwrap_or_else(|| {
-                panic!("Unknown CharFlags value {}", result)
-            })
+        pub fn charflags(&self) -> CharFlags {
+            let result = unsafe { Fl_Terminal_Utf8Char_charflags(self.inner) as i32 };
+            CharFlags::from_bits(result as u8)
+                .unwrap_or_else(|| panic!("Unknown CharFlags value {}", result))
         }
 
         /// Return the UTF-8 text string for this character.
-        pub fn text_utf8(&mut self) -> &[u8] {
+        pub fn text_utf8(&self) -> &[u8] {
             unsafe {
-                let ptr = Fl_Terminal_Utf8Char_text_utf8(self.inner as _);
-                let len = Fl_Terminal_Utf8Char_length(self.inner as _);
-                let ret = std::slice::from_raw_parts(ptr, len as usize);
-                ret
+                let ptr = Fl_Terminal_Utf8Char_text_utf8(self.inner);
+                let len = Fl_Terminal_Utf8Char_length(self.inner);
+                std::slice::from_raw_parts(ptr, len as usize)
+            }
+        }
+
+        /// Return the size of a Utf8Char object in the underlying C++ code
+        pub fn size() -> usize {
+            unsafe {Fl_Terminal_Utf8Char_size() as usize}
+        }
+    }
+
+    impl<'a> BuffRow<'a> {
+        /// Generate a new BuffRow object based on a pointer from C++ Fl_Terminal
+        pub fn new(ptr: *const Fl_Terminal_Utf8Char, parent: &'a Terminal) -> Self {
+            unsafe {
+                BuffRow {
+                    // inner is the pointer to the first C++ Utf8Char in the row
+                    inner: ptr,
+                    _parent: parent,
+                    // length: (i + 1) as usize,
+                    length: parent.ring_cols() as usize,
+                    char_size: Fl_Terminal_Utf8Char_size() as usize
+                }
+            }
+        }
+
+        /// Trim trailing blanks off of BuffRow object.
+        /// Does not affect the data in the RingBuff, just this object's access.
+        pub fn trim(mut self) -> Self  {
+            unsafe {
+                let mut last_char = self.inner.add((self.length - 1) * self.char_size);
+                let c = Utf8Char {inner: last_char};
+                // If the last character is a blank, trim the length back.
+                if c.text_utf8() == b" " {
+                    // Record the attributes etc of the last character
+                    let attr = c.attrib();
+                    let fg = c.fgcolor();
+                    let bg = c.bgcolor();
+                    self.length -= 1;        // Already checked the last character
+                    while self.length > 0 {
+                        last_char = last_char.sub(self.char_size);
+                        let c = Utf8Char {inner: last_char};
+                        if c.text_utf8() != b" "
+                            || c.attrib() != attr
+                            || c.fgcolor() != fg
+                            || c.bgcolor() != bg
+                        {
+                            break;  // Found a non-blank character or one with attrib changes
+                        }
+                        self.length -= 1;
+                    }
+                }
+            }
+            self
+        }
+
+        /// Index into row array of Utf8Char
+        pub fn col(&self, idx: usize) -> Utf8Char {
+            if idx > self.length {
+                panic!("Index {} out of range", idx);
+            }
+            unsafe {
+                let base = self.inner;
+                Utf8Char{inner: base.add(idx * self.char_size)}
+            }
+        }
+
+        /// Iterator object to step through a sequence of Utf8Char in a BuffRow
+        pub fn iter(&self) -> BuffRowIter {
+            BuffRowIter::new(&self, self.length)
+        }
+    }
+
+
+    /// Iterator object to step through a sequence of Utf8Char in a BuffRow
+    pub struct BuffRowIter <'a> {
+        parent: &'a BuffRow<'a>,
+        ptr: *const Fl_Terminal_Utf8Char,   // This points to an array of Fl_Terminal::Utf8Char
+        end: *const Fl_Terminal_Utf8Char    // points just past the ptr array end
+    }
+
+    impl <'a> BuffRowIter <'a> {
+        fn new(parent: &'a BuffRow, len: usize) -> BuffRowIter <'a> {
+            unsafe {
+                BuffRowIter{
+                    parent,
+                    ptr: parent.inner,
+                    end: parent.inner.add(len * parent.char_size)
+                }
+            }
+        }
+    }
+
+    impl <'a> Iterator for BuffRowIter <'a> {
+        type Item = Utf8Char;
+        fn next(&mut self) -> Option<Self::Item> {
+            if self.ptr < self.end {
+                let result = Utf8Char{inner: self.ptr};
+                unsafe {
+                    self.ptr = self.ptr.add(self.parent.char_size);
+                }
+                Some(result)
+            } else {
+                None
             }
         }
     }

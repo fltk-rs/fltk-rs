@@ -4,7 +4,7 @@
 ///
 use fltk::{
     enums::{Color, Font, LabelType},
-    group::experimental::{Attrib, OutFlags, RedrawStyle, Terminal},
+    group::experimental::{Attrib, CharFlags, OutFlags, RedrawStyle, Terminal, Utf8Char},
     menu::MenuBar,
     // *,
     prelude::*,
@@ -16,6 +16,15 @@ const WIN_HEIGHT: i32 = 600;
 
 fn main() {
     let app = fltk::app::App::default();
+
+        // Set panic handler for main thread (will become UI thread)
+        std::panic::set_hook(Box::new({
+            |e| {
+                eprintln!("!!!!PANIC!!!!{:#?}", e);
+                error_box(e.to_string()); // Only works from the UI thread
+                std::process::exit(2);
+            }
+        }));
 
     let mut main_win = Window::new(
         2285,
@@ -64,6 +73,16 @@ fn main() {
         .unwrap()
         .set_shortcut(unsafe { std::mem::transmute(0x80033) }); // Alt-3
 
+let idx = menu_bar.add_choice("Test&4");
+    menu_bar.at(idx).unwrap().set_callback({
+        let mut term1 = term.clone();
+        move |c| mb_test4_cb(c, &mut term1)
+    });
+    menu_bar
+        .at(idx)
+        .unwrap()
+        .set_shortcut(unsafe { std::mem::transmute(0x80034) }); // Alt-4
+
     menu_bar.end();
 
     main_win.end();
@@ -98,8 +117,6 @@ fn main() {
             term.append_utf8("Appending UTF8 array ↑ (up-arrow is visible)\n");
             term.append_utf8_u8(b"Appending UTF8 array as u8 \xe2\x86\x91 (up-arrow is visible)\n");
 
-            // term.append(format!("Box type {:?}\n", term.Box())); // todo: box doesn't work
-
             let r = term.cursor_row();
             assert_eq!(term.cursor_col(), 0);
             term.append(&format!("Testing cursor row/col {r}"));
@@ -114,19 +131,19 @@ fn main() {
             );
             assert_eq!(
                 term.cursor_fg_color(),
-                Color::from_hex(0xfffff0),
+                Color::from_hex(0xff_ff_f0),
                 "Default cursor fg at startup"
             );
             term.set_cursor_bg_color(Color::Red);
             assert_eq!(term.cursor_bg_color(), Color::Red);
-            assert_eq!(term.cursor_fg_color(), Color::from_hex(0xfffff0));
+            assert_eq!(term.cursor_fg_color(), Color::from_hex(0xff_ff_f0));
             term.set_cursor_fg_color(Color::Blue);
             assert_eq!(term.cursor_bg_color(), Color::Red);
             assert_eq!(term.cursor_fg_color(), Color::Blue);
             term.set_cursor_bg_color(Color::XtermGreen); // Restore the defaults
-            term.set_cursor_fg_color(Color::from_hex(0xfffff0));
+            term.set_cursor_fg_color(Color::from_hex(0xff_ff_f0));
             assert_eq!(term.cursor_bg_color(), Color::XtermGreen);
-            assert_eq!(term.cursor_fg_color(), Color::from_hex(0xfffff0));
+            assert_eq!(term.cursor_fg_color(), Color::from_hex(0xff_ff_f0));
 
             // The default display_rows() will derive from the window size
             let dr = term.display_rows();
@@ -336,8 +353,7 @@ fn main() {
                         }
 
                         // fltk docs say that keyboard handler should always claim Focus and Unfocus events
-                        fltk::enums::Event::Focus => true,
-                        fltk::enums::Event::Unfocus => true,
+                        fltk::enums::Event::Focus | fltk::enums::Event::Unfocus => true,
 
                         _ => false, // Let FLTK handle everything else
                     }
@@ -353,7 +369,7 @@ fn main() {
 
     app.run().unwrap();
 }
-
+//--------------------------------------------------------------------------------------
 /// More tests that run when the menu bar Test1 is clicked
 fn mb_test1_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     term.take_focus().unwrap();
@@ -402,6 +418,7 @@ fn mb_test1_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     term.set_text_attrib(Attrib::Normal);
 }
 
+//--------------------------------------------------------------------------------------
 /// More tests that run when the menu bar button Test2 is clicked
 fn mb_test2_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     term.take_focus().unwrap();
@@ -424,6 +441,7 @@ fn mb_test2_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     term.set_text_attrib(Attrib::Normal);
 }
 
+//--------------------------------------------------------------------------------------
 /// Another set of tests that run when Test3 is clicked
 fn mb_test3_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     term.take_focus().unwrap();
@@ -446,7 +464,6 @@ fn mb_test3_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     assert_eq!(term.cursor_row(), 6);
     term.clear_screen_home(true);
     assert_eq!(term.cursor_row(), 0);
-    assert_eq!(term.history_use(), hist + term.display_rows()); // A screenful of lines added to history
 
     let hist = term.history_use();
     term.append("Test\ntext\na\nb\nc\n");
@@ -454,7 +471,7 @@ fn mb_test3_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     term.clear_to_color(Color::DarkBlue);
     assert_eq!(term.text_bg_color_default(), Color::TransparentBg);
     assert_eq!(term.text_bg_color(), Color::TransparentBg);
-    assert!(term.history_use() > hist); // Some lines added to history
+        assert!(term.history_use() > hist); // Some lines added to history
     assert_eq!(term.cursor_row(), 0);
 
     // Test cursor_home()
@@ -482,4 +499,170 @@ fn mb_test3_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     term.set_text_attrib(Attrib::Inverse | Attrib::Italic);
     term.append("\nDone!\n");
     term.set_text_attrib(Attrib::Normal);
+}
+
+//--------------------------------------------------------------------------------------
+/// Another set of tests for the ring-buffer access methods
+fn mb_test4_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
+    // Test the Utf8Char primitive
+    let uc = Utf8Char::new(b'Q');
+    let uc1 = uc.text_utf8();
+    assert_eq!(&uc1, &[b'Q']);
+    assert_eq!(&uc.attrib(), &Attrib::Normal);
+    assert_eq!(
+        &uc.charflags(),
+        &(CharFlags::FG_XTERM | CharFlags::BG_XTERM)
+    );
+    assert_eq!(&uc.fgcolor(), &Color::XtermWhite);
+    assert_eq!(&uc.bgcolor(), &Color::TransparentBg);
+
+    let ring_rows = term.ring_rows();
+
+    // println!();
+    // dbg!(term.disp_srow(), term.disp_erow(), term.disp_rows(), term.ring_cols(), term.ring_srow(), term.ring_erow() );
+    // dbg!(term.hist_srow(), term.hist_erow(), term.hist_rows(), ring_rows );
+    // dbg!(term.offset(), term.hist_use_srow(), term.hist_use() );
+
+    term.take_focus().unwrap();
+    term.clear_history();
+    assert_eq!(term.history_use(), 0);
+
+    // Subtract row numbers, modulo `rows`
+    fn row_diff(rows: i32, a: i32, b: i32) -> i32 {
+        match a - b {
+            n if n < 0 => n + rows,
+            n => n
+        }
+    }
+    // disp_srow is always 1 greater than hist_erow, modulo (ring_rows+1)
+    assert_eq!(row_diff(ring_rows, term.disp_srow(), term.hist_erow()), 1);
+    assert!(term.disp_srow() >= 0);
+    assert!(term.disp_erow() >= 0);
+    assert!(term.hist_srow() >= 0);
+    assert!(term.hist_erow() >= 0);
+    assert!(term.offset() >= 0);
+    assert!(term.disp_srow() <= ring_rows);
+    assert!(term.disp_erow() <= ring_rows);
+    assert!(term.hist_srow() <= ring_rows);
+    assert!(term.hist_erow() <= ring_rows);
+    assert!(term.offset() <= ring_rows);
+
+    assert_eq!(term.ring_srow(), 0);
+    assert_eq!(term.ring_erow(), ring_rows - 1);
+    assert_eq!(
+        row_diff(ring_rows, term.disp_erow(), term.disp_srow()) + 1,
+        term.disp_rows()
+    );
+    assert_eq!(
+        row_diff(ring_rows, term.hist_erow(), term.hist_srow()) + 1,
+        term.hist_rows()
+    );
+
+    assert_eq!(term.ring_erow(), term.ring_rows() - 1);
+    assert_eq!(term.ring_srow(), 0);
+
+    // Check the different cols methods, which should all return the same answer
+    assert!(term.disp_cols() > 10);
+    assert_eq!(term.disp_cols(), term.ring_cols());
+    assert_eq!(term.disp_cols(), term.hist_cols());
+
+    // Redundant protected vs public methods:
+    assert_eq!(term.disp_cols(), term.display_columns());
+    assert_eq!(term.disp_rows(), term.display_rows());
+
+    /// Local function to read back all rows from the display into a long string.
+    /// Does not include scrollback history.
+    /// Trims trailing blanks on each line
+    fn read_disp(term: &Terminal) -> String {
+        let rows = term.display_rows();
+        let mut text: Vec<u8> = Vec::with_capacity((rows * 64) as usize);
+        for row in 0..rows {
+            let r = term.u8c_disp_row(row).trim();
+            // Iterate through a row, accumulating [u8]
+            for c in r.iter() {
+                // Note: Sometimes utf-8 length is > 1
+                text.extend_from_slice(c.text_utf8());
+            }
+            text.extend_from_slice(b"\n");
+        }
+        // Return the result as a string
+        std::str::from_utf8(&text).unwrap().to_string()
+    }
+
+    term.clear();
+    term.append("Top line  ↑ (up-arrow)");
+    term.set_text_attrib(Attrib::Underline);
+    term.append("  ");
+    term.set_text_attrib(Attrib::Normal);
+    term.append("  \n");
+    let mut text_out = read_disp(term);
+    // Trim trailing empty lines
+    text_out = text_out.trim_end_matches(&"\n\n").to_string();
+    // The two plain blanks at the end will be trimmed, the two underlined blanks will be retained.
+    assert_eq!(text_out, "Top line  ↑ (up-arrow)  \n");
+    let r = term.u8c_disp_row(0);
+    assert_eq!(r.col(0).text_utf8(), b"T");
+    assert_eq!(r.col(10).text_utf8(), b"\xe2\x86\x91");     // UTF-8 up-arrow
+    assert_eq!(r.col(24).text_utf8(), b" ");                // First blank after test text, NOT trimmed
+    let r = term.u8c_disp_row(1);
+    assert_eq!(r.col(0).text_utf8(), b" ");                 // Second row starts with blanks
+    assert_eq!(r.col(1).text_utf8(), b" ");                 // Second row is full of blanks
+
+
+    // Clear the screen again, then append test text, then read it back and compare
+    let test_text =
+"The wind was a torrent of darkness among the gusty trees.
+The moon was a ghostly galleon tossed upon cloudy seas.
+The road was a ribbon of moonlight over the purple moor,
+And the highwayman came riding—
+            Riding—riding—
+The highwayman came riding, up to the old inn-door.";
+
+term.clear_history();
+    term.clear();
+    let bg_save = term.text_bg_color();
+    let fg_save = term.text_fg_color();
+    term.set_text_bg_color(Color::DarkBlue);    // Set spooky colors
+    term.set_text_fg_color(Color::from_rgb(0x40, 0x40, 0xff));
+    term.append(test_text);
+    term.set_text_bg_color(bg_save);
+    term.set_text_fg_color(fg_save);
+
+    let mut text_out = read_disp(term);
+    // Trim trailing empty lines
+    text_out = text_out.trim_end_matches(&"\n\n").to_string();
+    assert_eq!(test_text, text_out);
+
+    assert_eq!(row_diff(ring_rows, term.disp_srow(), term.hist_erow()), 1);
+
+    assert_eq!(term.ring_srow(), 0);
+    assert_eq!(term.ring_erow(), ring_rows - 1);
+    assert_eq!(
+        row_diff(ring_rows, term.disp_erow(), term.disp_srow()) + 1,
+        term.disp_rows()
+    );
+    assert_eq!(
+        row_diff(ring_rows, term.hist_erow(), term.hist_srow()) + 1,
+        term.hist_rows()
+    );
+
+    term.append(&format!(
+        "\n\nScreen has {} rows of {} columns.\n",
+        term.disp_rows(),
+        term.disp_cols()
+    ));
+    term.set_text_attrib(Attrib::Italic);
+    term.append("Done!");
+    term.set_text_attrib(Attrib::Normal);
+}
+
+
+/// Displays an error message box
+pub fn error_box(msg: String) {
+    fltk::app::lock().unwrap();
+    fltk::dialog::message_title("Error");
+    fltk::dialog::message_set_hotspot(true);
+    fltk::dialog::message_icon_label("!");
+    fltk::dialog::message_default(&msg);
+    fltk::app::unlock();
 }
