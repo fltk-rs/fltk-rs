@@ -16,10 +16,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     wind.make_resizable(true);
     wind.show();
 
-    while app.wait() {
-        frame.set_image(Some(image.clone()));
-        let _ = unsafe { frame.image_mut() };
-        let _ = frame.image();
-    }
+    // while app.wait() {
+    //     frame.set_image(Some(image.clone()));
+    //     let _ = unsafe { frame.image_mut() };
+    //     let _ = frame.image();
+    // }
     Ok(())
 }

@@ -2,6 +2,7 @@
 
 
 # [1.4.22] - Unreleased
+- Add more Fl_Terminal protected methods by @jgriffitts.
 - Fix enum with unknown value in FileDialogOptions.
 - Update FLTK submodule.
 
