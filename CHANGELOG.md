@@ -1,6 +1,10 @@
 # Changelog
 
 
+# [1.4.22] - Unreleased
+- Fix enum with unknown value in FileDialogOptions.
+- Update FLTK submodule.
+
 # [1.4.21] - 2023-12-30
 - Fix Widget_Derived::resize() timing.
 - Fix deletion of SharedImage which is handled by FLTK.
