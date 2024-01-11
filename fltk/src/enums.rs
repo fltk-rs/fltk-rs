@@ -777,7 +777,7 @@ impl Color {
             let g = ((val >> 16) & 0xff) as u8;
             let b = ((val >> 8) & 0xff) as u8;
             let i = (val & 0xff) as u8;
-            if i == 0 {
+            if i == 0 || val > 255 {
                 (r, g, b)
             } else {
                 let val = fl::Fl_cmap(val);
