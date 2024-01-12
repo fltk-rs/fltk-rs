@@ -683,6 +683,7 @@ impl OverlayWindow {
         unsafe {
             unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
                 let mut wid = OverlayWindow::from_widget_ptr(wid as *mut _);
+                wid.assume_derived();
                 let a: *mut Box<dyn FnMut(&mut OverlayWindow)> =
                     data as *mut Box<dyn FnMut(&mut OverlayWindow)>;
                 let f: &mut (dyn FnMut(&mut OverlayWindow)) = &mut **a;

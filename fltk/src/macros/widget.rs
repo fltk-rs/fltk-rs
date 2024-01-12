@@ -727,7 +727,15 @@ macro_rules! impl_widget_ext {
 
                 fn set_callback<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
                     unsafe {
-                    unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
+                        unsafe extern "C" fn shim_derived(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
+                            let mut wid = $name::from_widget_ptr(wid as *mut _);
+                            wid.assume_derived();
+                            let a = data as *mut Box<dyn FnMut(&mut $name)>;
+                            let f: &mut (dyn FnMut(&mut $name)) = &mut **a;
+                            let _ =
+                                std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                        }
+                        unsafe extern "C" fn shim_not_derived(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
                             let mut wid = $name::from_widget_ptr(wid as *mut _);
                             let a = data as *mut Box<dyn FnMut(&mut $name)>;
                             let f: &mut (dyn FnMut(&mut $name)) = &mut **a;
@@ -740,7 +748,7 @@ macro_rules! impl_widget_ext {
                         }
                         let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
-                        let callback: Fl_Callback = Some(shim);
+                        let callback: Fl_Callback = Some(if self.is_derived { shim_derived } else { shim_not_derived });
                         [<$flname _set_callback>](self.inner.widget() as _, callback, data);
                     }
                 }
@@ -894,6 +902,7 @@ macro_rules! impl_widget_base {
                             data: *mut std::os::raw::c_void,
                         ) -> i32 {
                                 let mut wid = $name::from_widget_ptr(wid as *mut _);
+                                wid.assume_derived();
                                 let ev: $crate::enums::Event = std::mem::transmute(ev);
                                 let a: *mut Box<dyn FnMut(&mut $name, $crate::enums::Event) -> bool> =
                                     data as *mut Box<dyn FnMut(&mut $name, $crate::enums::Event) -> bool>;
@@ -927,6 +936,7 @@ macro_rules! impl_widget_base {
                     unsafe {
                     unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
                             let mut wid = $name::from_widget_ptr(wid as *mut _);
+                            wid.assume_derived();
                             let a: *mut Box<dyn FnMut(&mut $name)> =
                                 data as *mut Box<dyn FnMut(&mut $name)>;
                             let f: &mut (dyn FnMut(&mut $name)) = &mut **a;
@@ -981,6 +991,7 @@ macro_rules! impl_widget_base {
                             data: *mut std::os::raw::c_void,
                         ) {
                             let mut wid = $name::from_widget_ptr(wid as *mut _);
+                            wid.assume_derived();
                             let a: *mut Box<dyn FnMut(&mut $name, i32, i32, i32, i32)> =
                                 data as *mut Box<dyn FnMut(&mut $name, i32, i32, i32, i32)>;
                             let f: &mut (dyn FnMut(&mut $name, i32, i32, i32, i32)) = &mut **a;

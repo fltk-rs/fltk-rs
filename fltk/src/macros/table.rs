@@ -403,6 +403,7 @@ macro_rules! impl_table_ext {
                             data: *mut std::os::raw::c_void,
                         ) {
                             let mut wid = $name::from_widget_ptr(wid as *mut _);
+                            wid.assume_derived();
                             let ctx: TableContext = std::mem::transmute(ctx);
                             let a: *mut Box<
                                 dyn FnMut(
