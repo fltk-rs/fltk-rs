@@ -56,6 +56,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     println!("cargo:rerun-if-changed=cfltk/src/cfl_font.cpp");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_utils.cpp");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_prefs.cpp");
+    println!("cargo:rerun-if-changed=cfltk/src/Fl_Simple_Terminal.cxx");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_nswindow.m");
     println!("cargo:rerun-if-changed=cfltk/fltk.patch");
 

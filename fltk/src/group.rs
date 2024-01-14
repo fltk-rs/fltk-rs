@@ -1863,14 +1863,14 @@ pub mod experimental {
         }
 
         /// Gets the selection text
-        pub fn selection_text(&self) -> Option<String> {
+        pub fn selection_text(&self) -> String {
             assert!(self.is_derived);
             unsafe {
                 let ptr = Fl_Terminal_selection_text(self.inner.widget() as _);
                 if ptr.is_null() {
-                    None
+                    String::new()
                 } else {
-                    Some(CStr::from_ptr(ptr).to_string_lossy().to_string())
+                    CStr::from_ptr(ptr).to_string_lossy().to_string()
                 }
             }
         }
