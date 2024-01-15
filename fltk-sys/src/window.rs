@@ -354,9 +354,6 @@ extern "C" {
     pub fn Fl_Window_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Window_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -964,9 +961,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Single_Window_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Single_Window_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Single_Window_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -1596,9 +1590,6 @@ extern "C" {
     pub fn Fl_Double_Window_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Double_Window_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -2205,9 +2196,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Window_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Menu_Window_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -2820,9 +2808,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Overlay_Window_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Overlay_Window_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Overlay_Window_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -3446,9 +3431,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Gl_Window_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Gl_Window_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Gl_Window_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -4086,9 +4068,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Glut_Window_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Glut_Window_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Glut_Window_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);

@@ -348,9 +348,6 @@ extern "C" {
     pub fn Fl_Button_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Button_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Button_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -735,9 +732,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Check_Button_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Check_Button_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Check_Button_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -1133,9 +1127,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Radio_Button_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Radio_Button_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Radio_Button_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -1546,9 +1537,6 @@ extern "C" {
     pub fn Fl_Toggle_Button_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Toggle_Button_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -1942,9 +1930,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Round_Button_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Round_Button_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Round_Button_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -2425,9 +2410,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Radio_Round_Button_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_super_handle_first(
@@ -2933,9 +2915,6 @@ extern "C" {
     pub fn Fl_Radio_Light_Button_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Radio_Light_Button_super_handle_first(
         ptr: *mut Fl_Widget,
         flag: ::std::os::raw::c_int,
@@ -3354,9 +3333,6 @@ extern "C" {
     pub fn Fl_Light_Button_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Light_Button_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Light_Button_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -3765,9 +3741,6 @@ extern "C" {
     pub fn Fl_Repeat_Button_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Repeat_Button_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -4168,9 +4141,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Return_Button_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Return_Button_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Return_Button_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -4607,9 +4577,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Shortcut_Button_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Shortcut_Button_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Shortcut_Button_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);

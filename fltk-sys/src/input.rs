@@ -348,9 +348,6 @@ extern "C" {
     pub fn Fl_Input_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Input_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Input_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -795,9 +792,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Int_Input_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Int_Input_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Int_Input_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -1259,9 +1253,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Float_Input_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Float_Input_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Float_Input_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -1781,9 +1772,6 @@ extern "C" {
     pub fn Fl_Multiline_Input_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Multiline_Input_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -2281,9 +2269,6 @@ extern "C" {
     pub fn Fl_Secret_Input_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Secret_Input_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -2736,9 +2721,6 @@ extern "C" {
     pub fn Fl_File_Input_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Input_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_File_Input_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -3186,9 +3168,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Output_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Output_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Output_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -3722,9 +3701,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Multiline_Output_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Multiline_Output_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Multiline_Output_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);

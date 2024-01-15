@@ -540,12 +540,8 @@ pub unsafe trait WidgetBase: WidgetExt {
         let _ = flag;
     }
     #[doc(hidden)]
-    /// Determine whether the base class's draw method is called, default is true
-    fn super_handle(&mut self, flag: bool) {
-        let _ = flag;
-    }
-    #[doc(hidden)]
-    /// Determine whether the base class's draw method is called last, default is true
+    /// Determine whether the base class's handle method should have an event propagated even
+    /// if handled by the instantiated widget
     fn super_handle_first(&mut self, flag: bool) {
         let _ = flag;
     }

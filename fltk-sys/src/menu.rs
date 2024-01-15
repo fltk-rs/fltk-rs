@@ -353,9 +353,6 @@ extern "C" {
     pub fn Fl_Menu_Bar_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Menu_Bar_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -844,9 +841,6 @@ extern "C" {
     pub fn Fl_Menu_Button_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Menu_Button_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -1318,9 +1312,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Choice_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Choice_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Choice_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -1815,9 +1806,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Sys_Menu_Bar_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);

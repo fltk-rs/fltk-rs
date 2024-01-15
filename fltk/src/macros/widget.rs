@@ -1049,13 +1049,6 @@ macro_rules! impl_widget_base {
                     }
                 }
 
-                fn super_handle(&mut self, flag: bool) {
-                    assert!(self.is_derived);
-                    unsafe {
-                        [<$flname _super_handle>](self.inner.widget() as _, flag as i32)
-                    }
-                }
-
                 fn super_handle_first(&mut self, flag: bool) {
                     assert!(self.is_derived);
                     unsafe {

@@ -348,9 +348,6 @@ extern "C" {
     pub fn Fl_Spinner_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Spinner_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Spinner_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -740,9 +737,6 @@ extern "C" {
     pub fn Fl_Clock_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Clock_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Clock_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 #[repr(C)]
@@ -1073,9 +1067,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Chart_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Chart_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Chart_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -1476,9 +1467,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Progress_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Progress_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Progress_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -1922,9 +1910,6 @@ extern "C" {
     pub fn Fl_Help_View_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Help_View_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Help_View_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -2355,9 +2340,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Input_Choice_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Input_Choice_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Input_Choice_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);

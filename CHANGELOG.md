@@ -3,7 +3,7 @@
 
 # [1.4.22] - 2024-01-15
 - Add more Fl_Terminal protected methods by @jgriffitts.
-- Add WidgetBase::super_handle and super_handle_first.
+- Add WidgetBase::super_handle_first.
 - Use WidgetBase::assume_derived() in handle() and draw() methods when appropriate.
 - Fix enum with unknown value in FileDialogOptions.
 - Update FLTK submodule.

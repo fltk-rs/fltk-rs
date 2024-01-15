@@ -348,9 +348,6 @@ extern "C" {
     pub fn Fl_Slider_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Slider_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Slider_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -762,9 +759,6 @@ extern "C" {
     pub fn Fl_Nice_Slider_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Nice_Slider_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -1149,9 +1143,6 @@ extern "C" {
     pub fn Fl_Counter_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Counter_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Counter_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -1534,9 +1525,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Dial_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Dial_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Dial_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -1934,9 +1922,6 @@ extern "C" {
     pub fn Fl_Line_Dial_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Line_Dial_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Line_Dial_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -2321,9 +2306,6 @@ extern "C" {
     pub fn Fl_Roller_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Roller_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Roller_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -2706,9 +2688,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scrollbar_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Scrollbar_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Scrollbar_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -3122,9 +3101,6 @@ extern "C" {
     pub fn Fl_Value_Slider_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Value_Slider_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -3530,9 +3506,6 @@ extern "C" {
     pub fn Fl_Adjuster_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Adjuster_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Adjuster_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -3933,9 +3906,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Value_Input_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Value_Input_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Value_Input_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -4373,9 +4343,6 @@ extern "C" {
     pub fn Fl_Value_Output_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Output_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Value_Output_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -4799,9 +4766,6 @@ extern "C" {
     pub fn Fl_Fill_Slider_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Fill_Slider_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -5187,9 +5151,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Fill_Dial_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Fill_Dial_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Fill_Dial_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -5583,9 +5544,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hor_Slider_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Hor_Slider_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Slider_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -6044,9 +6002,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Hor_Fill_Slider_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -6515,9 +6470,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Hor_Nice_Slider_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
@@ -7002,9 +6954,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_super_draw_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Hor_Value_Slider_super_handle(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
