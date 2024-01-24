@@ -174,6 +174,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
 
         if cfg!(feature = "single-threaded") {
             dst.define("CFLTK_SINGLE_THREADED", "ON");
+            dst.define("OPTION_USE_THREADS", "OFF");
         } else {
             dst.define("CFLTK_SINGLE_THREADED", "OFF");
         }
