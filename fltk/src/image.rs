@@ -465,8 +465,6 @@ pub struct AnimGifImage {
 
 crate::macros::image::impl_image_ext!(AnimGifImage, Fl_Anim_GIF_Image);
 
-static AnimGifCount: std::sync::atomic::AtomicU8 = std::sync::atomic::AtomicU8::new(0);
-
 impl AnimGifImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     /// # Errors
@@ -519,13 +517,8 @@ impl AnimGifImage {
             if data.is_empty() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
-                let mut name = AnimGifCount.load(std::sync::atomic::Ordering::Relaxed);
-                let mut name_str = name.to_string();
-                name_str.push('\0');
-                name += 1;
-                AnimGifCount.store(name, std::sync::atomic::Ordering::Relaxed);
                 let x = Fl_Anim_GIF_Image_from(
-                    name_str.as_ptr() as _,
+                    std::ptr::null() as _,
                     data.as_ptr(),
                     data.len() as _,
                     w.as_widget_ptr() as _,
