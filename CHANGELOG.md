@@ -1,6 +1,11 @@
 # Changelog
 
 
+# [1.4.23] - 2024-01-29
+- Allow a widget's inner handler to execute first. Super::handle only executes if inner_handler returns false by @jgriffitts.
+- use OPTION_USE_THREADS=OFF with CFLTK_SINGLE_THREADED.
+- Update FLTK submodule.
+
 # [1.4.22] - 2024-01-15
 - Add more Fl_Terminal protected methods by @jgriffitts.
 - Add WidgetBase::super_handle_first.
