@@ -606,48 +606,7 @@ impl Color {
 
     /// Returns a color enum from RGBI encoding
     pub const fn from_rgbi(rgbi: u32) -> Color {
-        match rgbi {
-            // These are all RGB aliases for the defined colors.
-            0x00000000 => Color::Black,
-            0xff000000 => Color::Red,
-            0x00ff0000 => Color::Green,
-            0xffff0000 => Color::Yellow,
-            0x0000ff00 => Color::Blue,
-            0xff00ff00 => Color::Magenta,
-            0x00ffff00 => Color::Cyan,
-            0x7f000000 => Color::DarkRed,
-            0x00910000 => Color::DarkGreen,
-            0x7f910000 => Color::DarkYellow,
-            0x00007f00 => Color::DarkBlue,
-            0x7f007f00 => Color::DarkMagenta,
-            0x00917f00 => Color::DarkCyan,
-            0xffffff00 => Color::White, // This RGB is also called Gray0
-            0xaaaaaa00 => Color::Dark1,
-            0x95959500 => Color::Dark2,
-            0x55555500 => Color::Dark3,
-            0xcbcbcb00 => Color::Light1,
-            0xe0e0e000 => Color::Light2,
-            0xf5f5f500 => Color::Light3,
-
-            0xd0000000 => Color::XtermRed,
-            0x00d00000 => Color::XtermGreen,
-            0xd0d00000 => Color::XtermYellow,
-            0x0000d000 => Color::XtermBlue,
-            0xd000d000 => Color::XtermMagenta,
-            0x00d0d000 => Color::XtermCyan,
-            0xd0d0d000 => Color::XtermWhite,
-            0xc0000000 => Color::XtermBgRed,
-            0x00c00000 => Color::XtermBgGreen,
-            0xc0c00000 => Color::XtermBgYellow,
-            0x0000c000 => Color::XtermBgBlue,
-            0xc000c000 => Color::XtermBgMagenta,
-            0x00c0c000 => Color::XtermBgCyan,
-            0xc0c0c000 => Color::XtermBgWhite,
-            // ? todo: define Xterm dim and bold modified colors?
-            0xffffffff => Color::TransparentBg, // Special value that lets the widget's box() color show through
-
-            _ => Color { bits: rgbi }, // Just use the provided value
-        }
+            Color { bits: rgbi }
     }
 
     /// Create color from RGBA using alpha compositing. Works for non-group types.
@@ -777,10 +736,10 @@ impl Color {
             let g = ((val >> 16) & 0xff) as u8;
             let b = ((val >> 8) & 0xff) as u8;
             let i = (val & 0xff) as u8;
-            if i == 0 || val > 255 {
+            if (i == 0 && val != 0) || val > 255 {
                 (r, g, b)
             } else {
-                let val = fl::Fl_cmap(val);
+                let val = fl::Fl_cmap(i as u32);
                 let r = ((val >> 24) & 0xff) as u8;
                 let g = ((val >> 16) & 0xff) as u8;
                 let b = ((val >> 8) & 0xff) as u8;
