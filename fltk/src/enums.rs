@@ -546,38 +546,39 @@ impl Color {
     /// White
     pub const White: Color = Color { bits: 255 };
 
-    /// ANSI/xterm Black
+    /// ANSI/xterm Black, not part of FLTK's colormap
     pub const XtermBlack: Color = Color { bits: 0x00000000 };
-    /// ANSI/xterm Red
+    /// ANSI/xterm Red, not part of FLTK's colormap
     pub const XtermRed: Color = Color { bits: 0xd0000000 };
-    /// ANSI/xterm Green
+    /// ANSI/xterm Green, not part of FLTK's colormap
     pub const XtermGreen: Color = Color { bits: 0x00d00000 };
-    /// ANSI/xterm Yellow
+    /// ANSI/xterm Yellow, not part of FLTK's colormap
     pub const XtermYellow: Color = Color { bits: 0xd0d00000 };
-    /// ANSI/xterm Blue
+    /// ANSI/xterm Blue, not part of FLTK's colormap
     pub const XtermBlue: Color = Color { bits: 0x0000d000 };
-    /// ANSI/xterm Magenta
+    /// ANSI/xterm Magenta, not part of FLTK's colormap
     pub const XtermMagenta: Color = Color { bits: 0xd000d000 };
-    /// ANSI/xterm Cyan
+    /// ANSI/xterm Cyan, not part of FLTK's colormap
     pub const XtermCyan: Color = Color { bits: 0x00d0d000 };
-    /// ANSI/xterm White
+    /// ANSI/xterm White, not part of FLTK's colormap
     pub const XtermWhite: Color = Color { bits: 0xd0d0d000 };
-    /// ANSI/xterm background Red
+    /// ANSI/xterm background Red, not part of FLTK's colormap
     pub const XtermBgRed: Color = Color { bits: 0xc0000000 };
-    /// ANSI/xterm background Green
+    /// ANSI/xterm background Green, not part of FLTK's colormap
     pub const XtermBgGreen: Color = Color { bits: 0x00c00000 };
-    /// ANSI/xterm background Yelllow
+    /// ANSI/xterm background Yelllow, not part of FLTK's colormap
     pub const XtermBgYellow: Color = Color { bits: 0xc0c00000 };
-    /// ANSI/xterm background Blue
+    /// ANSI/xterm background Blue, not part of FLTK's colormap
     pub const XtermBgBlue: Color = Color { bits: 0x0000c000 };
-    /// ANSI/xterm background Magenta
+    /// ANSI/xterm background Magenta, not part of FLTK's colormap
     pub const XtermBgMagenta: Color = Color { bits: 0xd000c000 };
-    /// ANSI/xterm background Cyan
+    /// ANSI/xterm background Cyan, not part of FLTK's colormap
     pub const XtermBgCyan: Color = Color { bits: 0x00c0c000 };
-    /// ANSI/xterm background White
+    /// ANSI/xterm background White, not part of FLTK's colormap
     pub const XtermBgWhite: Color = Color { bits: 0xc0c0c000 };
 
     /// Special background color value that lets the Terminal widget's box() color show through behind the text.
+    /// Not part of FLTK's colormap
     pub const TransparentBg: Color = Color { bits: 0xffffffff };
 
     /// Gets the inner color representation
