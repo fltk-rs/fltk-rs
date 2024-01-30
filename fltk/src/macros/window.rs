@@ -138,8 +138,8 @@ macro_rules! impl_window_ext {
             fn window_handle(&self) ->  Result<WindowHandle<'_>, HandleError> {
                 #[cfg(target_os = "windows")]
                 {
-                    let mut handle = Win32WindowHandle::new(std::num::NonZeroIsize::new(self.raw_handle() as Isize));
-                    handle.hinstance = std::num::NonZeroIsize::new($crate::app::display() as Isize);
+                    let mut handle = Win32WindowHandle::new(std::num::NonZeroIsize::new(self.raw_handle() as isize).unwrap());
+                    handle.hinstance = std::num::NonZeroIsize::new($crate::app::display() as isize);
                     return Ok(unsafe { WindowHandle::borrow_raw(RawWindowHandle::Win32(handle)) });
                 }
 

@@ -30,4 +30,4 @@ jobs:
           override: true
     - name: Build
       shell: bash
-      run: git submodule update --init --recursive && cargo build --examples --verbose --features=use-ninja
+      run: git submodule update --init --recursive && cargo build --examples --verbose --features=use-ninja,rwh06
