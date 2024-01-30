@@ -24,6 +24,8 @@ use fltk_sys::window::*;
 use raw_window_handle::*;
 #[cfg(feature = "rwh05")]
 use rwh05::*;
+#[cfg(feature = "rwh06")]
+use rwh06::*;
 use std::{
     ffi::{CStr, CString},
     mem,

@@ -133,6 +133,104 @@ macro_rules! impl_window_ext {
             }
         }
 
+        #[cfg(feature = "rwh06")]
+        impl HasWindowHandle for $name {
+            fn window_handle(&self) ->  Result<WindowHandle<'_>, HandleError> {
+                #[cfg(target_os = "windows")]
+                {
+                    let mut handle = Win32WindowHandle::new(std::num::NonZeroIsize::new(self.raw_handle() as Isize));
+                    handle.hinstance = std::num::NonZeroIsize::new($crate::app::display() as Isize);
+                    return Ok(unsafe { WindowHandle::borrow_raw(RawWindowHandle::Win32(handle)) });
+                }
+
+                #[cfg(target_os = "macos")]
+                {
+                    let raw = self.raw_handle();
+                    extern "C" {
+                        pub fn cfltk_getContentView(xid: *mut raw::c_void) -> *mut raw::c_void;
+                    }
+                    let cv = unsafe { cfltk_getContentView(raw) };
+                    let handle = AppKitWindowHandle::new(std::ptr::NonNull::new(cv).unwrap());
+                    return Ok(unsafe { WindowHandle::borrow_raw(RawWindowHandle::AppKit(handle)) });
+                }
+
+                #[cfg(target_os = "android")]
+                {
+                    let handle = AndroidNdkWindowHandle::new(std::ptr::NonNull::new(self.raw_handle()).unwrap());
+                    return Ok(unsafe { WindowHandle::borrow_raw(RawWindowHandle::AndroidNdk(handle)) });
+                }
+
+                #[cfg(any(
+                    target_os = "linux",
+                    target_os = "dragonfly",
+                    target_os = "freebsd",
+                    target_os = "netbsd",
+                    target_os = "openbsd",
+                ))]
+                {
+                    #[cfg(not(feature = "use-wayland"))]
+                    {
+                        let handle = XlibWindowHandle::new(self.raw_handle());
+                        return Ok(unsafe { WindowHandle::borrow_raw(RawWindowHandle::Xlib(handle)) });
+                    }
+
+
+                    #[cfg(feature = "use-wayland")]
+                    {
+                        let handle = WaylandWindowHandle::new(std::ptr::NonNull::new(self.raw_handle()).unwrap());
+                        return Ok(unsafe { WindowHandle::borrow_raw(RawWindowHandle::Wayland(handle)) });
+                    }
+                }
+            }
+        }
+
+        #[cfg(feature = "rwh06")]
+        impl HasDisplayHandle for $name {
+            fn display_handle(&self) -> Result<DisplayHandle<'_>, HandleError> {
+                #[cfg(target_os = "windows")]
+                {
+                    let handle = WindowsDisplayHandle::new();
+                    return Ok(unsafe { DisplayHandle::borrow_raw(RawDisplayHandle::Windows(handle)) });
+                }
+
+                #[cfg(target_os = "macos")]
+                {
+                    let handle = AppKitDisplayHandle::new();
+                    return Ok(unsafe { DisplayHandle::borrow_raw(RawDisplayHandle::AppKit(handle)) });
+                }
+
+                #[cfg(target_os = "android")]
+                {
+                    let handle = AndroidDisplayHandle::new();
+                    return Ok(unsafe { DisplayHandle::borrow_raw(RawDisplayHandle::Android(handle)) });
+                }
+
+                #[cfg(any(
+                    target_os = "linux",
+                    target_os = "dragonfly",
+                    target_os = "freebsd",
+                    target_os = "netbsd",
+                    target_os = "openbsd",
+                ))]
+                {
+                    #[cfg(not(feature = "use-wayland"))]
+                    {
+                        let display = std::ptr::NonNull::new($crate::app::display());
+                        let screen = self.screen_num();
+                        let handle = XlibDisplayHandle::new(display, screen);
+                        return Ok(unsafe { DisplayHandle::borrow_raw(RawDisplayHandle::Xlib(handle)) });
+                    }
+
+
+                    #[cfg(feature = "use-wayland")]
+                    {
+                        let handle = WaylandDisplayHandle::new(std::ptr::NonNull::new($crate::app::display()).unwrap());
+                        return Ok(unsafe { DisplayHandle::borrow_raw(RawDisplayHandle::Wayland(handle)) });
+                    }
+                }
+            }
+        }
+
         paste::paste! {
             unsafe impl WindowExt for $name {
                 fn center_screen(mut self) -> Self {
