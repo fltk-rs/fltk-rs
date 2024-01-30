@@ -1,6 +1,11 @@
 # Changelog
 
 
+# [1.4.24] - Unreleased
+- Revert to initial implementation of Color::from_rgbi().
+- Add check to Color::to_rgb() for colors within FLTK's colormap.
+- Add support for raw-window-handle version 0.6.
+
 # [1.4.23] - 2024-01-29
 - Allow a widget's inner handler to execute first. Super::handle only executes if inner_handler returns false by @jgriffitts.
 - use OPTION_USE_THREADS=OFF with CFLTK_SINGLE_THREADED.
