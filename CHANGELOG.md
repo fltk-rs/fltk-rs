@@ -1,6 +1,10 @@
 # Changelog
 
 
+# [1.4.25] - Unreleased
+- Add NativeFileChooser::try_show().
+- Add NativeFileChooserAction enum.
+
 # [1.4.24] - 2024-01-31
 - Revert to initial implementation of Color::from_rgbi().
 - Add check to Color::to_rgb() for colors within FLTK's colormap.
