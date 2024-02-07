@@ -4,6 +4,8 @@
 # [1.4.25] - Unreleased
 - Add NativeFileChooser::try_show().
 - Add NativeFileChooserAction enum.
+- Add Tile::move_intersection method.
+- Update FLTK submodule.
 
 # [1.4.24] - 2024-01-31
 - Revert to initial implementation of Color::from_rgbi().

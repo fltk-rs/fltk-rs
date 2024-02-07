@@ -1990,6 +1990,15 @@ extern "C" {
     pub fn Fl_Tile_super_handle_first(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
+    pub fn Fl_Tile_move_intersection(
+        self_: *mut Fl_Tile,
+        oldx: ::std::os::raw::c_int,
+        oldy: ::std::os::raw::c_int,
+        newx: ::std::os::raw::c_int,
+        newy: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Tile_begin(self_: *mut Fl_Tile);
 }
 extern "C" {
