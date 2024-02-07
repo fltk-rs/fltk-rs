@@ -42,7 +42,7 @@ fn main() {
             );
         }
         #[cfg(feature = "fltk-config")]
-        fltk_config::build();
+        fltk_config::build(&target_triple);
         return;
     } else if cfg!(feature = "pkg-config") {
         pkg_config::build();
