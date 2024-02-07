@@ -83,7 +83,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
         }
 
         if cfg!(feature = "cairoext") {
-            dst.define("OPTION_CAIROEXT", "ON");
+            dst.define("FLTK_OPTION_CAIRO_EXT", "ON");
             dst.define("CFLTK_USE_CAIROEXT", "ON");
         }
 
@@ -98,21 +98,21 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
         }
 
         if cfg!(feature = "system-libpng") {
-            dst.define("OPTION_USE_SYSTEM_LIBPNG", "ON");
+            dst.define("FLTK_USE_SYSTEM_LIBPNG", "ON");
         } else {
-            dst.define("OPTION_USE_SYSTEM_LIBPNG", "OFF");
+            dst.define("FLTK_USE_SYSTEM_LIBPNG", "OFF");
         }
 
         if cfg!(feature = "system-libjpeg") {
-            dst.define("OPTION_USE_SYSTEM_LIBJPEG", "ON");
+            dst.define("FLTK_USE_SYSTEM_LIBJPEG", "ON");
         } else {
-            dst.define("OPTION_USE_SYSTEM_LIBJPEG", "OFF");
+            dst.define("FLTK_USE_SYSTEM_LIBJPEG", "OFF");
         }
 
         if cfg!(feature = "system-zlib") {
-            dst.define("OPTION_USE_SYSTEM_ZLIB", "ON");
+            dst.define("FLTK_USE_SYSTEM_ZLIB", "ON");
         } else {
-            dst.define("OPTION_USE_SYSTEM_ZLIB", "OFF");
+            dst.define("FLTK_USE_SYSTEM_ZLIB", "OFF");
         }
 
         if cfg!(feature = "no-images") {
@@ -128,10 +128,10 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
         }
 
         if cfg!(feature = "enable-glwindow") {
-            dst.define("OPTION_USE_GL", "ON");
+            dst.define("FLTK_BUILD_GL", "ON");
             dst.define("CFLTK_USE_OPENGL", "ON");
         } else {
-            dst.define("OPTION_USE_GL", "OFF");
+            dst.define("FLTK_BUILD_GL", "OFF");
             dst.define("CFLTK_USE_OPENGL", "OFF");
         }
 
@@ -141,23 +141,23 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
 
         if target_triple.contains("linux") && !target_triple.contains("android") {
             if cfg!(feature = "no-pango") {
-                dst.define("OPTION_USE_PANGO", "OFF");
-                dst.define("OPTION_USE_CAIRO", "OFF");
+                dst.define("FLTK_USE_PANGO", "OFF");
+                dst.define("FLTK_GRAPHICS_CAIRO", "OFF");
             } else {
-                dst.define("OPTION_USE_PANGO", "ON");
-                dst.define("OPTION_USE_CAIRO", "ON");
+                dst.define("FLTK_USE_PANGO", "ON");
+                dst.define("FLTK_GRAPHICS_CAIRO", "ON");
             }
             if cfg!(feature = "use-wayland") {
-                dst.define("OPTION_USE_WAYLAND", "ON");
-                dst.define("OPTION_ALLOW_GTK_PLUGIN", "OFF");
-                dst.define("OPTION_USE_SYSTEM_LIBDECOR", "OFF");
+                dst.define("FLTK_BACKEND_WAYLAND", "ON");
+                dst.define("FLTK_USE_LIBDECOR_GTK", "OFF");
+                dst.define("FLTK_USE_SYSTEM_LIBDECOR", "OFF");
                 if let Ok(wayland_only) = std::env::var("CFLTK_WAYLAND_ONLY") {
                     if wayland_only == "1" {
-                        dst.define("OPTION_WAYLAND_ONLY", "ON");
+                        dst.define("FLTK_BACKEND_X11", "OFF");
                     }
                 }
             } else {
-                dst.define("OPTION_USE_WAYLAND", "OFF");
+                dst.define("FLTK_BACKEND_WAYLAND", "OFF");
             }
         }
 
@@ -169,14 +169,12 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
         }
 
         if target_triple.contains("windows") && cfg!(feature = "no-gdiplus") {
-            dst.define("OPTION_USE_GDIPLUS", "OFF");
+            dst.define("FLTK_GRAPHICS_GDIPLUS", "OFF");
         }
 
         if cfg!(feature = "single-threaded") {
             dst.define("CFLTK_SINGLE_THREADED", "ON");
-            dst.define("OPTION_USE_THREADS", "OFF");
-        } else {
-            dst.define("CFLTK_SINGLE_THREADED", "OFF");
+            dst.define("FLTK_USE_PTHREADS", "OFF");
         }
 
         let profile = if let Ok(prof) = env::var("OPT_LEVEL") {
@@ -203,10 +201,9 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             .define("FLTK_BUILD_TEST", "OFF")
             .define("FLTK_BUILD_FLUID", "OFF")
             .define("FLTK_BUILD_FLTK_OPTIONS", "OFF")
-            .define("OPTION_LARGE_FILE", "ON")
-            .define("OPTION_USE_THREADS", "ON")
-            .define("OPTION_BUILD_HTML_DOCUMENTATION", "OFF")
-            .define("OPTION_BUILD_PDF_DOCUMENTATION", "OFF")
+            .define("FLTK_OPTION_LARGE_FILE", "ON")
+            .define("FLTK_BUILD_HTML_DOCS", "OFF")
+            .define("FLTK_BUILD_PDF_DOCS", "OFF")
             .build();
     } else {
         crate::android::build(out_dir, target_triple);
