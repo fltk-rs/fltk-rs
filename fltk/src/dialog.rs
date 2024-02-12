@@ -72,8 +72,20 @@ bitflags::bitflags! {
     }
 }
 
-/// Alias to `NativeFileChooserOptions`
+/// Alias to `FileDialogOptions`
 pub type NativeFileChooserOptions = FileDialogOptions;
+
+/// Rusult of try_show
+#[derive(Debug, Copy, Clone)]
+pub enum FileDialogAction {
+    /// Cancelled operation
+    Cancelled,
+    /// User chose a file/dir
+    Success,
+}
+
+/// Alias to `FileDialogAction`
+pub type NativeFileChooserAction = FileDialogAction;
 
 impl FileDialog {
     /// Creates an new file dialog
@@ -91,7 +103,7 @@ impl FileDialog {
         unsafe {
             let cnt = Fl_Native_File_Chooser_count(self.inner);
             if cnt == 0 {
-                return PathBuf::from("");
+                return PathBuf::new();
             }
             let x = Fl_Native_File_Chooser_filenames(self.inner, 0);
             PathBuf::from(
@@ -152,6 +164,19 @@ impl FileDialog {
         })?)?;
         unsafe { Fl_Native_File_Chooser_set_directory(self.inner, dir.as_ptr()) }
         Ok(())
+    }
+
+    /// Shows the file dialog
+    pub fn try_show(&mut self) -> Result<FileDialogAction, FltkError> {
+        assert!(!self.inner.is_null());
+        unsafe {
+            match Fl_Native_File_Chooser_show(self.inner) {
+                0 => Ok(FileDialogAction::Success),
+                -1 => Err(FltkError::Unknown(self.error_message().unwrap())),
+                1 => Ok(FileDialogAction::Cancelled),
+                _ => unreachable!(),
+            }
+        }
     }
 
     /// Shows the file dialog

@@ -1,4 +1,5 @@
 use std::process::Command;
+use std::path::Path;
 
 const CPP_SRC: &[&str] = &[
     "cfltk/src/cfl_new.cpp",
@@ -26,7 +27,7 @@ const CPP_SRC: &[&str] = &[
     "cfltk/src/cfl_printer.cpp",
 ];
 
-pub fn build() {
+pub fn build(target_triple: &str) {
     let mut args = vec![];
     let mut use_gl = false;
     if cfg!(feature = "enable-glwindow") {
@@ -56,6 +57,18 @@ pub fn build() {
         } else if let Some(stripped) = lflag.strip_prefix("-L") {
             search_dirs.push(stripped.to_string());
         } else {
+            let lpath = Path::new(&lflag);
+            if lpath.exists() {
+                let dir = lpath.parent();
+                search_dirs.push(dir.unwrap().to_string_lossy().to_string());
+                let stem = lpath.file_stem().unwrap().to_string_lossy().to_string();
+                let stem = if target_triple.contains("msvc") {
+                    stem
+                } else {
+                    stem.strip_prefix("lib").unwrap().to_string()
+                };
+                libs.push(stem);
+            }
         }
     }
     let mut b = cc::Build::new();

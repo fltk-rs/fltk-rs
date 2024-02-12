@@ -34,6 +34,34 @@ pub fn center() -> (i32, i32) {
     )
 }
 
+fn nfc_get_file(mode: dialog::NativeFileChooserType) -> Option<PathBuf> {
+    let mut nfc = dialog::NativeFileChooser::new(mode);
+    if mode == dialog::NativeFileChooserType::BrowseSaveFile {
+        nfc.set_option(dialog::NativeFileChooserOptions::SaveAsConfirm);
+    } else if mode == dialog::NativeFileChooserType::BrowseFile {
+        nfc.set_option(dialog::NativeFileChooserOptions::NoOptions);
+        nfc.set_filter("*.{txt,rs,toml}");
+    }
+    match nfc.try_show() {
+        Err(e) => {
+            eprintln!("{}", e);
+            None
+        },
+        Ok(a) => match a {
+            dialog::NativeFileChooserAction::Success => {
+                let name = nfc.filename();
+                if name.as_os_str().is_empty() {
+                    dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!");
+                    None
+                } else {
+                    Some(name)
+                }
+            },
+            dialog::NativeFileChooserAction::Cancelled => None,
+        }
+    }
+}
+
 pub struct MyEditor {
     editor: text::TextEditor,
 }
@@ -322,29 +350,26 @@ impl MyApp {
     /** Called by "Save As..." or by "Save" in case no file was set yet.
      * Returns true if the file was succesfully saved. */
     pub fn save_file_as(&mut self) -> Result<bool, Box<dyn error::Error>> {
-        let mut dlg = dialog::FileDialog::new(dialog::FileDialogType::BrowseSaveFile);
-        dlg.set_option(dialog::FileDialogOptions::SaveAsConfirm);
-        dlg.show();
-        if dlg.filename().to_string_lossy().to_string().is_empty() {
-            dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!");
-            return Ok(false);
+        if let Some(c) = nfc_get_file(dialog::NativeFileChooserType::BrowseSaveFile) {
+            self.buf.save_file(&c)?;
+            self.modified = false;
+            self.menu
+                .menu
+                .find_item("&File/Save\t")
+                .unwrap()
+                .deactivate();
+            self.menu
+                .menu
+                .find_item("&File/Quit\t")
+                .unwrap()
+                .set_label_color(Color::Black);
+            self.filename = Some(c);
+            self.main_win
+                .set_label(&format!("{:?} - RustyEd", self.filename.as_ref().unwrap()));
+            Ok(true)
+        } else {
+            Ok(false)
         }
-        self.buf.save_file(&dlg.filename())?;
-        self.modified = false;
-        self.menu
-            .menu
-            .find_item("&File/Save\t")
-            .unwrap()
-            .deactivate();
-        self.menu
-            .menu
-            .find_item("&File/Quit\t")
-            .unwrap()
-            .set_label_color(Color::Black);
-        self.filename = Some(dlg.filename());
-        self.main_win
-            .set_label(&format!("{:?} - RustyEd", self.filename.as_ref().unwrap()));
-        Ok(true)
     }
 
     pub fn launch(&mut self) {
@@ -377,15 +402,10 @@ impl MyApp {
                         }
                     },
                     Open => {
-                        let mut dlg = dialog::FileDialog::new(dialog::FileDialogType::BrowseFile);
-                        dlg.set_option(dialog::FileDialogOptions::NoOptions);
-                        dlg.set_filter("*.{txt,rs,toml}");
-                        dlg.show();
-                        let filename = dlg.filename();
-                        if !filename.to_string_lossy().to_string().is_empty() {
-                            if filename.exists() {
-                                match self.buf.load_file(&filename) {
-                                    Ok(_) => self.filename = Some(filename),
+                        if let Some(c) = nfc_get_file(dialog::NativeFileChooserType::BrowseFile) {
+                            if c.exists() {
+                                match self.buf.load_file(&c) {
+                                    Ok(_) => self.filename = Some(c),
                                     Err(e) => dialog::alert(center().0 - 200, center().1 - 100, &format!("An issue occured while loading the file: {e}")),
                                 }
                             } else {

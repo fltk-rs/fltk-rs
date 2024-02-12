@@ -343,6 +343,32 @@ crate::macros::widget::impl_widget_base!(Tile, Fl_Tile);
 crate::macros::widget::impl_widget_default!(Tile);
 crate::macros::group::impl_group_ext!(Tile, Fl_Tile);
 
+impl Tile {
+    /**
+    Drags the intersection at (\p oldx,\p oldy) to (\p newx,\p newy).
+
+    This redraws all the necessary children.
+
+    If no size ranges are set, the new intersection position is limited to the
+    size of the tile group. The resizable() option is not taken into account here.
+
+    If size ranges are set, the actual new position of the intersection will
+    depend on the size range of every individual child. No child will be smaller
+    than their minw and minh. After the new position is found, move_intersection()
+    will call init_sizes(). The resizable() range is ignored.
+
+    \param[in] oldx, oldy move the intersection at this coordinate, pass zero to
+        disable drag in that direction.
+    \param[in] newx, newy move the intersection as close to this new coordinate
+        as possible
+    */
+    pub fn move_intersection(&mut self, oldx: i32, oldy: i32, newx: i32, newy: i32) {
+        unsafe {
+            Fl_Tile_move_intersection(self.inner.widget() as _, oldx, oldy, newx, newy);
+        }
+    }
+}
+
 /// Creates a wizard widget
 #[derive(Debug)]
 pub struct Wizard {

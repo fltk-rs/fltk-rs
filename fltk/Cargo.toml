@@ -1,6 +1,6 @@
 [package]
 name = "fltk"
-version = "1.4.24"
+version = "1.4.25"
 authors = ["The fltk-rs Authors"]
 edition = "2021"
 rust-version = "1.56"
@@ -18,7 +18,7 @@ name = "fltk"
 path = "src/lib.rs"
 
 [dependencies]
-fltk-sys = { path = "../fltk-sys", version = "1.4.23" }
+fltk-sys = { path = "../fltk-sys", version = "1.4.25" }
 bitflags = "^2"
 paste = "1"
 crossbeam-channel = "0.5"
@@ -62,7 +62,7 @@ single-threaded = ["fltk-sys/single-threaded"]
 use-wayland = ["fltk-sys/use-wayland"] 
 # Ensure MSVCRT is linked statically even if cargo does not pass the flag to the build script.
 static-msvcrt = ["fltk-sys/static-msvcrt"] 
-# Sets FLTK's OPTION_CAIROEXT which enables user code to get the cairo context for drawing
+# Sets FLTK's FLTK_OPTION_CAIRO_EXT which enables user code to get the cairo context for drawing
 cairoext = ["fltk-sys/cairoext"] 
 # Allows the use of an installed instance of FLTK via fltk-config. This requires FLTK 1.4
 fltk-config = ["fltk-sys/fltk-config"]
