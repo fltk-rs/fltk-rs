@@ -4372,7 +4372,10 @@ extern "C" {
     pub fn Fl_Terminal_set_show_unknown(self_: *mut Fl_Terminal, boolean: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Terminal_text_attrib(self_: *mut Fl_Terminal, set: ::std::os::raw::c_uint);
+    pub fn Fl_Terminal_set_text_attrib(self_: *mut Fl_Terminal, set: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Terminal_text_attrib(self_: *const Fl_Terminal) -> ::std::os::raw::c_uchar;
 }
 extern "C" {
     pub fn Fl_Terminal_text_bg_color(self_: *const Fl_Terminal) -> ::std::os::raw::c_uint;
@@ -4434,6 +4437,25 @@ extern "C" {
 #[doc = " Utf8Char class, used to describe characters in the terminal ring buffer"]
 pub type Fl_Terminal_Utf8Char = ::std::os::raw::c_void;
 extern "C" {
+    pub fn Fl_Terminal_Utf8Char_attr_bgcolor(
+        self_: *const Fl_Terminal_Utf8Char,
+        grp: *const Fl_Terminal,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Terminal_Utf8Char_attr_color(
+        self_: *const Fl_Terminal_Utf8Char,
+        col: ::std::os::raw::c_uint,
+        grp: *const Fl_Terminal,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Terminal_Utf8Char_attr_fgcolor(
+        self_: *const Fl_Terminal_Utf8Char,
+        grp: *const Fl_Terminal,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
     pub fn Fl_Terminal_Utf8Char_attrib(
         self_: *const Fl_Terminal_Utf8Char,
     ) -> ::std::os::raw::c_uchar;
@@ -4449,6 +4471,29 @@ extern "C" {
     ) -> ::std::os::raw::c_uint;
 }
 extern "C" {
+    pub fn Fl_Terminal_Utf8Char_is_char(
+        self_: *const Fl_Terminal_Utf8Char,
+        c: ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Terminal_Utf8Char_length(self_: *const Fl_Terminal_Utf8Char)
+        -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Terminal_Utf8Char_max_utf8(
+        self_: *const Fl_Terminal_Utf8Char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Terminal_Utf8Char_pwidth(self_: *const Fl_Terminal_Utf8Char) -> f64;
+}
+extern "C" {
+    pub fn Fl_Terminal_Utf8Char_pwidth_int(
+        self_: *const Fl_Terminal_Utf8Char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Terminal_Utf8Char_text_utf8(
         self_: *const Fl_Terminal_Utf8Char,
     ) -> *const ::std::os::raw::c_uchar;
@@ -4457,10 +4502,6 @@ extern "C" {
     pub fn Fl_Terminal_Utf8Char_charflags(
         self_: *const Fl_Terminal_Utf8Char,
     ) -> ::std::os::raw::c_uchar;
-}
-extern "C" {
-    pub fn Fl_Terminal_Utf8Char_length(self_: *const Fl_Terminal_Utf8Char)
-        -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Terminal_Utf8Char_new_obj(c: ::std::os::raw::c_uchar) -> *mut Fl_Terminal_Utf8Char;

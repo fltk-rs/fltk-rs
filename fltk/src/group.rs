@@ -1326,7 +1326,7 @@ pub mod experimental {
         /// Number of characters in the row
         pub length: usize,
         /// sizeof(Fl_Terminal::Utf8Char)
-        pub char_size: usize
+        pub char_size: usize,
     }
 
     impl Terminal {
@@ -1748,9 +1748,16 @@ pub mod experimental {
             unsafe { Fl_Terminal_set_show_unknown(self.inner.widget() as _, arg1 as i32) }
         }
 
+        /// Return the text attribute bits (underline, inverse, etc) for subsequent appends.
+        pub fn text_attrib(&self) -> Attrib {
+            // Attrib::from_bits( unsafe { Fl_Terminal_text_attrib(self.inner.widget()) as _ } ).unwrap()
+            let result = unsafe { Fl_Terminal_text_attrib(self.inner.widget() as _) };
+            Attrib::from_bits(result).unwrap_or_else(|| panic!("Unknown Attrib value {}", result))
+        }
+
         /// Set text attribute bits (underline, inverse, etc) for subsequent appends.
         pub fn set_text_attrib(&mut self, arg1: Attrib) {
-            unsafe { Fl_Terminal_text_attrib(self.inner.widget() as _, arg1.bits() as u32) }
+            unsafe { Fl_Terminal_set_text_attrib(self.inner.widget() as _, arg1.bits()) }
         }
 
         /// Set text background color to fltk color val.
@@ -1967,7 +1974,7 @@ pub mod experimental {
             // Fl_Terminal_u8c_disp_row returns pointer to the first C++ Utf8Char object,
             //  which becomes the `inner` element in the Rust BuffRow object
             let row_p = unsafe {
-                    Fl_Terminal_u8c_disp_row(self.inner.widget() as _, drow)
+                Fl_Terminal_u8c_disp_row(self.inner.widget() as _, drow)
             };
             BuffRow::new(row_p, self)
         }
@@ -2014,10 +2021,45 @@ pub mod experimental {
             unsafe {
                 let u8c = Fl_Terminal_Utf8Char_new_obj(c);
                 let ret = Utf8Char {
-                    inner: u8c,
+                    inner: u8c
                 };
                 ret
             }
+        }
+
+        /// Return the actual displayed color of char `u8c` possibly influenced by BOLD or DIM if the char is from Xterm.
+        ///    BG color will be derived from the widget color if a widget is specified and the color is `TransparentBg`,
+        ///    and that won't be influenced by charflag attributes.
+        pub fn attr_bgcolor(&self, term: Option<&Terminal>) -> Color {
+            Color::from_rgbi(match term {
+                None => unsafe { Fl_Terminal_Utf8Char_attr_bgcolor(self.inner, std::ptr::null()) },
+                Some(t) => unsafe {
+                    Fl_Terminal_Utf8Char_attr_bgcolor(self.inner, t.inner.widget() as _)
+                },
+            })
+        }
+
+        // /// Return the actual displayed color of char `u8c` possibly influenced by BOLD or DIM if the char is from Xterm.
+        // ///    If a `grp` widget is specified (i.e. not `None`), don't let the color be
+        // ///    influenced by the attribute bits *if* it matches the `grp` widget's own `color()`.
+        // pub fn attr_color(&self, grp: Option<*const Fl_Widget>) -> Color {
+        //     Color::from_rgbi(match grp {
+        //         None => unsafe { Fl_Terminal_Utf8Char_attr_color(self.inner, std::ptr::null()) },
+        //         Some(g) => unsafe { Fl_Terminal_Utf8Char_attr_color(self.inner, g) },
+        //     })
+        // }
+
+        /// Return the actual displayed fg color of char `u8c` possibly influenced by BOLD or DIM if the char is from Xterm.
+        ///    If a `term` widget is specified (i.e. not `None`), don't let the color be
+        ///    influenced by the attribute bits *if* it matches the `term` widget's own `color()`.
+        // pub fn attr_fgcolor(&self, grp: Option<*const Fl_Terminal>) -> Color {
+        pub fn attr_fgcolor(&self, term: Option<&Terminal>) -> Color {
+            Color::from_rgbi(match term {
+                None => unsafe { Fl_Terminal_Utf8Char_attr_fgcolor(self.inner, std::ptr::null()) },
+                Some(t) => unsafe {
+                    Fl_Terminal_Utf8Char_attr_fgcolor(self.inner, t.inner.widget() as _)
+                },
+            })
         }
 
         /// Return the attributes for this character.
@@ -2044,6 +2086,38 @@ pub mod experimental {
                 .unwrap_or_else(|| panic!("Unknown CharFlags value {}", result))
         }
 
+        /// Returns true if the character text in this struct matches the given ASCII character
+        pub fn is_char(&self, c: u8) -> bool {
+            let result = unsafe { Fl_Terminal_Utf8Char_is_char(self.inner, c as i8) as i32 };
+            result != 0
+        }
+
+        /// Return the length of this character in bytes (UTF-8 can be multibyte)
+        pub fn length(&self) -> usize {
+            unsafe { Fl_Terminal_Utf8Char_length(self.inner) as usize }
+        }
+
+        /// Return the maximum length in bytes of a UTF-8 character
+        pub fn max_utf8(&self) -> usize {
+            unsafe { Fl_Terminal_Utf8Char_max_utf8(self.inner) as usize }
+        }
+
+        /// Return the width of this character in floating point pixels.
+        ///
+        ///    WARNING: Uses current font, so assumes font and font_size
+        ///             have already been set to current font!
+        pub fn pwidth(&self) -> f64 {
+            unsafe { Fl_Terminal_Utf8Char_pwidth(self.inner) as f64 }
+        }
+
+        /// Return the width of this character in integer pixels.
+        ///
+        ///    WARNING: Uses current font, so assumes font and font_size
+        ///             have already been set to current font!
+        pub fn pwidth_int(&self) -> usize {
+            unsafe { Fl_Terminal_Utf8Char_pwidth_int(self.inner) as usize }
+        }
+
         /// Return the UTF-8 text string for this character.
         pub fn text_utf8(&self) -> &[u8] {
             unsafe {
@@ -2055,7 +2129,7 @@ pub mod experimental {
 
         /// Return the size of a Utf8Char object in the underlying C++ code
         pub fn size() -> usize {
-            unsafe {Fl_Terminal_Utf8Char_size() as usize}
+            unsafe { Fl_Terminal_Utf8Char_size() as usize }
         }
     }
 
@@ -2069,33 +2143,33 @@ pub mod experimental {
                     _parent: parent,
                     // length: (i + 1) as usize,
                     length: parent.ring_cols() as usize,
-                    char_size: Fl_Terminal_Utf8Char_size() as usize
+                    char_size: Fl_Terminal_Utf8Char_size() as usize,
                 }
             }
         }
 
         /// Trim trailing blanks off of BuffRow object.
         /// Does not affect the data in the RingBuff, just this object's access.
-        pub fn trim(mut self) -> Self  {
+        pub fn trim(mut self) -> Self {
             unsafe {
                 let mut last_char = self.inner.add((self.length - 1) * self.char_size);
-                let c = Utf8Char {inner: last_char};
+                let c = Utf8Char { inner: last_char };
                 // If the last character is a blank, trim the length back.
                 if c.text_utf8() == b" " {
                     // Record the attributes etc of the last character
                     let attr = c.attrib();
                     let fg = c.fgcolor();
                     let bg = c.bgcolor();
-                    self.length -= 1;        // Already checked the last character
+                    self.length -= 1; // Already checked the last character
                     while self.length > 0 {
                         last_char = last_char.sub(self.char_size);
-                        let c = Utf8Char {inner: last_char};
+                        let c = Utf8Char { inner: last_char };
                         if c.text_utf8() != b" "
                             || c.attrib() != attr
                             || c.fgcolor() != fg
                             || c.bgcolor() != bg
                         {
-                            break;  // Found a non-blank character or one with attrib changes
+                            break; // Found a non-blank character or one with attrib changes
                         }
                         self.length -= 1;
                     }
@@ -2111,7 +2185,9 @@ pub mod experimental {
             }
             unsafe {
                 let base = self.inner;
-                Utf8Char{inner: base.add(idx * self.char_size)}
+                Utf8Char {
+                    inner: base.add(idx * self.char_size),
+                }
             }
         }
 
@@ -2121,31 +2197,30 @@ pub mod experimental {
         }
     }
 
-
     /// Iterator object to step through a sequence of Utf8Char in a BuffRow
-    pub struct BuffRowIter <'a> {
+    pub struct BuffRowIter<'a> {
         parent: &'a BuffRow<'a>,
-        ptr: *const Fl_Terminal_Utf8Char,   // This points to an array of Fl_Terminal::Utf8Char
-        end: *const Fl_Terminal_Utf8Char    // points just past the ptr array end
+        ptr: *const Fl_Terminal_Utf8Char, // This points to an array of Fl_Terminal::Utf8Char
+        end: *const Fl_Terminal_Utf8Char, // points just past the ptr array end
     }
 
-    impl <'a> BuffRowIter <'a> {
-        fn new(parent: &'a BuffRow, len: usize) -> BuffRowIter <'a> {
+    impl<'a> BuffRowIter<'a> {
+        fn new(parent: &'a BuffRow, len: usize) -> BuffRowIter<'a> {
             unsafe {
-                BuffRowIter{
+                BuffRowIter {
                     parent,
                     ptr: parent.inner,
-                    end: parent.inner.add(len * parent.char_size)
+                    end: parent.inner.add(len * parent.char_size),
                 }
             }
         }
     }
 
-    impl <'a> Iterator for BuffRowIter <'a> {
+    impl<'a> Iterator for BuffRowIter<'a> {
         type Item = Utf8Char;
         fn next(&mut self) -> Option<Self::Item> {
             if self.ptr < self.end {
-                let result = Utf8Char{inner: self.ptr};
+                let result = Utf8Char { inner: self.ptr };
                 unsafe {
                     self.ptr = self.ptr.add(self.parent.char_size);
                 }
