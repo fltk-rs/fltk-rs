@@ -1338,8 +1338,15 @@ pub mod experimental {
     impl<'a> std::fmt::Debug for Utf8Char {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             let x = self.text_utf8();
-            write!(f, "Utf8Char {:#?} '{:?}'", x, std::str::from_utf8(x))
-            // todo: add attrib and color information
+            write!(
+                f,
+                "Utf8Char {:?} '{}'  fg:{} bg:{} {:?}",
+                x,
+                std::str::from_utf8(x).unwrap(),
+                self.fgcolor(),
+                self.bgcolor(),
+                self.attrib()
+            )
         }
     }
 
@@ -1425,6 +1432,11 @@ pub mod experimental {
             unsafe { Fl_Terminal_clear(self.inner.widget() as _) }
         }
 
+        /// Clear any current mouse selection.
+        pub fn clear_mouse_selection(&mut self) {
+            unsafe { Fl_Terminal_clear_mouse_selection(self.inner.widget() as _) }
+        }
+
         ///  Clears the screen to a specific color `val` and homes the cursor.
         /// Does not affect the value of text_bg_color or text_bg_color_default
         pub fn clear_to_color(&mut self, val: Color) {
@@ -1490,9 +1502,50 @@ pub mod experimental {
             unsafe { Fl_Terminal_cursor_col(self.inner.widget() as _) }
         }
 
+        /// Set the cursor's current column position on the screen.
+        pub fn set_cursor_col(&mut self, val: i32) {
+            unsafe { Fl_Terminal_set_cursor_col(self.inner.widget() as _, val) }
+        }
+
         /// Return the cursor's current row position on the screen.
         pub fn cursor_row(&self) -> i32 {
             unsafe { Fl_Terminal_cursor_row(self.inner.widget() as _) }
+        }
+
+        /// Set the cursor's current row position on the screen.
+        pub fn set_cursor_row(&mut self, val: i32) {
+            unsafe { Fl_Terminal_set_cursor_row(self.inner.widget() as _, val) }
+        }
+
+        /// Moves cursor up `count` lines.
+        ///  If cursor hits screen top, it either stops (does not wrap) if `do_scroll`
+        ///  is false, or scrolls down if `do_scroll` is true.
+        pub fn cursor_up(&mut self, count: i32, do_scroll: bool) {
+            unsafe { Fl_Terminal_cursor_up(self.inner.widget() as _, count, do_scroll as i32) }
+        }
+
+        /// Moves cursor down `count` lines.
+        ///  If cursor hits screen bottom, it either stops (does not wrap) if `do_scroll`
+        ///  is false, or wraps and scrolls up if `do_scroll` is true.
+        pub fn cursor_down(&mut self, count: i32, do_scroll: bool) {
+            unsafe { Fl_Terminal_cursor_down(self.inner.widget() as _, count, do_scroll as i32) }
+        }
+
+        /// Moves cursor left `count` columns, and cursor stops (does not wrap) if it hits screen edge.
+        pub fn cursor_left(&mut self, count: i32) {
+            unsafe { Fl_Terminal_cursor_left(self.inner.widget() as _, count) }
+        }
+
+        /// Moves cursor right `count` columns. If cursor hits right edge of screen,
+        ///  it either stops (does not wrap) if `do_scroll` is false, or wraps and
+        ///  scrolls up one line if `do_scroll` is true.
+        pub fn cursor_right(&mut self, count: i32, do_scroll: bool) {
+            unsafe { Fl_Terminal_cursor_right(self.inner.widget() as _, count, do_scroll as i32) }
+        }
+
+        /// Scroll the selection up(+)/down(-) number of rows
+        pub fn scroll(&mut self, count: i32) {
+            unsafe { Fl_Terminal_scroll(self.inner.widget() as _, count) }
         }
 
         /// Get the cursor's background color used for the cursor itself.
@@ -1513,6 +1566,19 @@ pub mod experimental {
         /// Set the cursor's foreground color used for the cursor itself.
         pub fn set_cursor_fg_color(&mut self, color: Color) {
             unsafe { Fl_Terminal_set_cursor_fg_color(self.inner.widget() as _, color.bits()) }
+        }
+
+        /// Get the current mouse selection. Returns `None` if no selection, or `Some([srow, scol, erow, ecol])` if there is a selection,
+        ///   where row and col represent start/end positions in the ring buffer.
+        pub fn get_selection(&self) -> Option<[i32; 4]> {
+            let mut retval: [i32; 4] = [0; 4];
+            let ret =
+                unsafe { Fl_Terminal_get_selection(self.inner.widget() as _, retval.as_mut_ptr()) };
+            if ret != 0 {
+                Some(retval)
+            } else {
+                None
+            }
         }
 
         /// Move cursor to the home position (top/left).
@@ -1993,6 +2059,15 @@ pub mod experimental {
         /// Return the number of rows in the ring buffer.
         pub fn ring_rows(&self) -> i32 {
             unsafe { Fl_Terminal_ring_rows(self.inner.widget() as _) }
+        }
+
+        /// Return the Utf8Char for character under cursor.
+        pub fn u8c_cursor(&self) -> Utf8Char {
+            unsafe {
+                let x = self.inner.widget();
+                let utf8_p = Fl_Terminal_u8c_cursor(x as _);
+                Utf8Char { inner: utf8_p }
+            }
         }
 
         /// Return u8c for beginning of row drow of the display.

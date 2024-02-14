@@ -4219,6 +4219,9 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Terminal_clear_mouse_selection(self_: *mut Fl_Terminal);
+}
+extern "C" {
     pub fn Fl_Terminal_clear_to_color(self_: *mut Fl_Terminal, set: ::std::os::raw::c_uint);
 }
 extern "C" {
@@ -4234,10 +4237,43 @@ extern "C" {
     pub fn Fl_Terminal_cursor_col(self_: *const Fl_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Terminal_set_cursor_col(self_: *mut Fl_Terminal, val: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Terminal_cursor_home(self_: *mut Fl_Terminal);
 }
 extern "C" {
     pub fn Fl_Terminal_cursor_row(self_: *const Fl_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Terminal_set_cursor_row(self_: *mut Fl_Terminal, val: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Terminal_cursor_up(
+        self_: *mut Fl_Terminal,
+        count: ::std::os::raw::c_int,
+        do_scroll: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Terminal_cursor_down(
+        self_: *mut Fl_Terminal,
+        count: ::std::os::raw::c_int,
+        do_scroll: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Terminal_cursor_left(self_: *mut Fl_Terminal, count: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Terminal_cursor_right(
+        self_: *mut Fl_Terminal,
+        count: ::std::os::raw::c_int,
+        do_scroll: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Terminal_scroll(self_: *mut Fl_Terminal, count: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Terminal_cursor_bg_color(self_: *const Fl_Terminal) -> ::std::os::raw::c_uint;
@@ -4274,6 +4310,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Terminal_set_history_rows(self_: *mut Fl_Terminal, set: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Terminal_get_selection(
+        self_: *const Fl_Terminal,
+        retval: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Terminal_history_use(self_: *const Fl_Terminal) -> ::std::os::raw::c_int;
@@ -4381,10 +4423,10 @@ extern "C" {
     pub fn Fl_Terminal_set_show_unknown(self_: *mut Fl_Terminal, boolean: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Terminal_set_text_attrib(self_: *mut Fl_Terminal, set: ::std::os::raw::c_uchar);
+    pub fn Fl_Terminal_text_attrib(self_: *const Fl_Terminal) -> ::std::os::raw::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Terminal_text_attrib(self_: *const Fl_Terminal) -> ::std::os::raw::c_uchar;
+    pub fn Fl_Terminal_set_text_attrib(self_: *mut Fl_Terminal, set: ::std::os::raw::c_uchar);
 }
 extern "C" {
     pub fn Fl_Terminal_text_bg_color(self_: *const Fl_Terminal) -> ::std::os::raw::c_uint;
@@ -4572,6 +4614,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Terminal_ring_rows(self_: *const Fl_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Terminal_u8c_cursor(self_: *const Fl_Terminal) -> *const Fl_Terminal_Utf8Char;
 }
 extern "C" {
     pub fn Fl_Terminal_u8c_disp_row(
