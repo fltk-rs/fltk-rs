@@ -1331,6 +1331,7 @@ pub mod experimental {
 
     ///    Class to manage the terminal's individual UTF-8 characters.
     ///    Includes fg/bg color, attributes (BOLD, UNDERLINE..)
+    /// *This is a low-level "protected" class in the fltk library*
     pub struct Utf8Char {
         inner: *const Fl_Terminal_Utf8Char, // This points to a C++ Fl_Terminal::Utf8Char structure
     }
@@ -1352,6 +1353,7 @@ pub mod experimental {
 
     ///    Class to read characters from the terminal's buffer rows.
     ///    Includes indexing access and iterators
+    ///    *This is a low-level "protected" class*
     pub struct BuffRow<'a> {
         inner: *const Fl_Terminal_Utf8Char, // This points to an array of Fl_Terminal::Utf8Char
         /// Parent terminal widget that owns this buffer
@@ -1503,6 +1505,7 @@ pub mod experimental {
         }
 
         /// Set the cursor's current column position on the screen.
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn set_cursor_col(&mut self, val: i32) {
             unsafe { Fl_Terminal_set_cursor_col(self.inner.widget() as _, val) }
         }
@@ -1513,6 +1516,7 @@ pub mod experimental {
         }
 
         /// Set the cursor's current row position on the screen.
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn set_cursor_row(&mut self, val: i32) {
             unsafe { Fl_Terminal_set_cursor_row(self.inner.widget() as _, val) }
         }
@@ -1520,6 +1524,7 @@ pub mod experimental {
         /// Moves cursor up `count` lines.
         ///  If cursor hits screen top, it either stops (does not wrap) if `do_scroll`
         ///  is false, or scrolls down if `do_scroll` is true.
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn cursor_up(&mut self, count: i32, do_scroll: bool) {
             unsafe { Fl_Terminal_cursor_up(self.inner.widget() as _, count, do_scroll as i32) }
         }
@@ -1527,11 +1532,13 @@ pub mod experimental {
         /// Moves cursor down `count` lines.
         ///  If cursor hits screen bottom, it either stops (does not wrap) if `do_scroll`
         ///  is false, or wraps and scrolls up if `do_scroll` is true.
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn cursor_down(&mut self, count: i32, do_scroll: bool) {
             unsafe { Fl_Terminal_cursor_down(self.inner.widget() as _, count, do_scroll as i32) }
         }
 
         /// Moves cursor left `count` columns, and cursor stops (does not wrap) if it hits screen edge.
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn cursor_left(&mut self, count: i32) {
             unsafe { Fl_Terminal_cursor_left(self.inner.widget() as _, count) }
         }
@@ -1539,11 +1546,13 @@ pub mod experimental {
         /// Moves cursor right `count` columns. If cursor hits right edge of screen,
         ///  it either stops (does not wrap) if `do_scroll` is false, or wraps and
         ///  scrolls up one line if `do_scroll` is true.
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn cursor_right(&mut self, count: i32, do_scroll: bool) {
             unsafe { Fl_Terminal_cursor_right(self.inner.widget() as _, count, do_scroll as i32) }
         }
 
         /// Scroll the selection up(+)/down(-) number of rows
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn scroll(&mut self, count: i32) {
             unsafe { Fl_Terminal_scroll(self.inner.widget() as _, count) }
         }
@@ -1581,6 +1590,7 @@ pub mod experimental {
         ///   Insert char `c` at the current cursor position for `rep`` times.
         ///   Works only for single-byte characters, `c` can't be multi-byte UTF-8.
         ///   Does not wrap; characters at end of line are lost.
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn insert_char(&mut self, c: char, rep: i32) {
             let c = if c.len_utf8() > 1 {b' '}
             else  {c as u8};
@@ -1590,6 +1600,7 @@ pub mod experimental {
         /// Insert char `c` for `rep` times at display row `drow` and column `dcol`.
         ///   Works only for single-byte characters, `c` can't be multi-byte UTF-8.
         ///   Does not wrap; characters at end of line are lost.
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn insert_char_eol(&mut self, c: char, drow: i32, dcol: i32, rep: i32) {
             let c = if c.len_utf8() > 1 {b' '}
             else  {c as u8};
@@ -1599,6 +1610,7 @@ pub mod experimental {
         /// Insert `count` rows at current cursor position.
         ///  Causes rows below to scroll down, and empty lines created.
         ///  Lines deleted by scroll down are NOT moved into the scroll history.
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn insert_rows(&mut self, count: i32) {
             unsafe { Fl_Terminal_insert_rows(self.inner.widget() as _, count) }
         }
@@ -1616,6 +1628,7 @@ pub mod experimental {
         ///  Delete `count` rows at cursor position.
         ///   Causes rows to scroll up, and empty lines created at bottom of screen.
         ///    Lines deleted by scroll up are NOT moved into the scroll history.
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn delete_rows(&mut self, count: i32) {
             unsafe { Fl_Terminal_delete_rows(self.inner.widget() as _, count) }
         }
@@ -1642,6 +1655,7 @@ pub mod experimental {
 
         /// Get the current mouse selection. Returns `None` if no selection, or `Some([srow, scol, erow, ecol])` if there is a selection,
         ///   where row and col represent start/end positions in the ring buffer.
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn get_selection(&self) -> Option<[i32; 4]> {
             let mut retval: [i32; 4] = [0; 4];
             let ret =
@@ -2034,6 +2048,7 @@ pub mod experimental {
         }
 
         /// Gets the selection text
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn selection_text(&self) -> String {
             assert!(self.is_derived);
             unsafe {
@@ -2099,6 +2114,7 @@ pub mod experimental {
         }
 
         /// Is global row/column inside the current mouse selection?
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn is_inside_selection(&self, row: i32, col: i32) -> bool {
             unsafe { Fl_Terminal_is_inside_selection(self.inner.widget() as _, row, col) != 0 }
         }
@@ -2143,6 +2159,7 @@ pub mod experimental {
         }
 
         /// Return u8c for beginning of row drow of the display.
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn u8c_disp_row(&self, drow: i32) -> BuffRow {
             // Fl_Terminal_u8c_disp_row returns pointer to the first C++ Utf8Char object,
             //  which becomes the `inner` element in the Rust BuffRow object
@@ -2153,6 +2170,7 @@ pub mod experimental {
         }
 
         /// Return u8c for beginning of row hrow inside the scrollback history.
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn u8c_hist_row(&self, hrow: i32) -> BuffRow {
             // Fl_Terminal_u8c_hist_row returns pointer to the first C++ Utf8Char object,
             //  which becomes the `inner` element in the Rust BuffRow object
@@ -2163,6 +2181,7 @@ pub mod experimental {
         }
 
         /// Return u8c for beginning of row hurow inside the 'in use' part of the\n scrollback history.
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn u8c_hist_use_row(&self, hurow: i32) -> BuffRow {
             // Fl_Terminal_u8c_hist_use_row returns pointer to the first  C++ Utf8Char object,
             //  which becomes the `inner` element in the Rust BuffRow object
@@ -2173,6 +2192,7 @@ pub mod experimental {
         }
 
         /// Return u8c for beginning of row grow in the ring buffer.
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn u8c_ring_row(&self, grow: i32) -> BuffRow {
             // Fl_Terminal_u8c_ring_use_row returns pointer to the first  C++ Utf8Char object,
             //  which becomes the `inner` element in the Rust BuffRow object
@@ -2225,7 +2245,6 @@ pub mod experimental {
         /// Return the actual displayed fg color of char `u8c` possibly influenced by BOLD or DIM if the char is from Xterm.
         ///    If a `term` widget is specified (i.e. not `None`), don't let the color be
         ///    influenced by the attribute bits *if* it matches the `term` widget's own `color()`.
-        // pub fn attr_fgcolor(&self, grp: Option<*const Fl_Terminal>) -> Color {
         pub fn attr_fgcolor(&self, term: Option<&Terminal>) -> Color {
             Color::from_rgbi(match term {
                 None => unsafe { Fl_Terminal_Utf8Char_attr_fgcolor(self.inner, std::ptr::null()) },
