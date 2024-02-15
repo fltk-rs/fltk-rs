@@ -1331,6 +1331,7 @@ pub mod experimental {
 
     ///    Class to manage the terminal's individual UTF-8 characters.
     ///    Includes fg/bg color, attributes (BOLD, UNDERLINE..)
+    /// *This is a low-level "protected" class in the fltk library*
     pub struct Utf8Char {
         inner: *const Fl_Terminal_Utf8Char, // This points to a C++ Fl_Terminal::Utf8Char structure
     }
@@ -1338,13 +1339,21 @@ pub mod experimental {
     impl<'a> std::fmt::Debug for Utf8Char {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             let x = self.text_utf8();
-            write!(f, "Utf8Char {:#?} '{:?}'", x, std::str::from_utf8(x))
-            // todo: add attrib and color information
+            write!(
+                f,
+                "Utf8Char {:?} '{}'  fg:{} bg:{} {:?}",
+                x,
+                std::str::from_utf8(x).unwrap(),
+                self.fgcolor(),
+                self.bgcolor(),
+                self.attrib()
+            )
         }
     }
 
     ///    Class to read characters from the terminal's buffer rows.
     ///    Includes indexing access and iterators
+    ///    *This is a low-level "protected" class*
     pub struct BuffRow<'a> {
         inner: *const Fl_Terminal_Utf8Char, // This points to an array of Fl_Terminal::Utf8Char
         /// Parent terminal widget that owns this buffer
@@ -1352,7 +1361,7 @@ pub mod experimental {
         /// Number of characters in the row
         pub length: usize,
         /// sizeof(Fl_Terminal::Utf8Char)
-        pub char_size: usize
+        pub char_size: usize,
     }
 
     impl Terminal {
@@ -1425,6 +1434,11 @@ pub mod experimental {
             unsafe { Fl_Terminal_clear(self.inner.widget() as _) }
         }
 
+        /// Clear any current mouse selection.
+        pub fn clear_mouse_selection(&mut self) {
+            unsafe { Fl_Terminal_clear_mouse_selection(self.inner.widget() as _) }
+        }
+
         ///  Clears the screen to a specific color `val` and homes the cursor.
         /// Does not affect the value of text_bg_color or text_bg_color_default
         pub fn clear_to_color(&mut self, val: Color) {
@@ -1490,9 +1504,133 @@ pub mod experimental {
             unsafe { Fl_Terminal_cursor_col(self.inner.widget() as _) }
         }
 
+        /// Set the cursor's current column position on the screen.
+        /// *This is a low-level "protected" function of the fltk library*
+        pub fn set_cursor_col(&mut self, val: i32) {
+            unsafe { Fl_Terminal_set_cursor_col(self.inner.widget() as _, val) }
+        }
+
         /// Return the cursor's current row position on the screen.
         pub fn cursor_row(&self) -> i32 {
             unsafe { Fl_Terminal_cursor_row(self.inner.widget() as _) }
+        }
+
+        /// Set the cursor's current row position on the screen.
+        /// *This is a low-level "protected" function of the fltk library*
+        pub fn set_cursor_row(&mut self, val: i32) {
+            unsafe { Fl_Terminal_set_cursor_row(self.inner.widget() as _, val) }
+        }
+
+        /// Moves cursor up `count` lines.
+        ///  If cursor hits screen top, it either stops (does not wrap) if `do_scroll`
+        ///  is false, or scrolls down if `do_scroll` is true.
+        /// *This is a low-level "protected" function of the fltk library*
+        pub fn cursor_up(&mut self, count: i32, do_scroll: bool) {
+            unsafe { Fl_Terminal_cursor_up(self.inner.widget() as _, count, do_scroll as i32) }
+        }
+
+        /// Moves cursor down `count` lines.
+        ///  If cursor hits screen bottom, it either stops (does not wrap) if `do_scroll`
+        ///  is false, or wraps and scrolls up if `do_scroll` is true.
+        /// *This is a low-level "protected" function of the fltk library*
+        pub fn cursor_down(&mut self, count: i32, do_scroll: bool) {
+            unsafe { Fl_Terminal_cursor_down(self.inner.widget() as _, count, do_scroll as i32) }
+        }
+
+        /// Moves cursor left `count` columns, and cursor stops (does not wrap) if it hits screen edge.
+        /// *This is a low-level "protected" function of the fltk library*
+        pub fn cursor_left(&mut self, count: i32) {
+            unsafe { Fl_Terminal_cursor_left(self.inner.widget() as _, count) }
+        }
+
+        /// Moves cursor right `count` columns. If cursor hits right edge of screen,
+        ///  it either stops (does not wrap) if `do_scroll` is false, or wraps and
+        ///  scrolls up one line if `do_scroll` is true.
+        /// *This is a low-level "protected" function of the fltk library*
+        pub fn cursor_right(&mut self, count: i32, do_scroll: bool) {
+            unsafe { Fl_Terminal_cursor_right(self.inner.widget() as _, count, do_scroll as i32) }
+        }
+
+        /// Scroll the selection up(+)/down(-) number of rows
+        /// *This is a low-level "protected" function of the fltk library*
+        pub fn scroll(&mut self, count: i32) {
+            unsafe { Fl_Terminal_scroll(self.inner.widget() as _, count) }
+        }
+
+        /// Clear from cursor to End Of Display (EOD), like "`<ESC>[J<ESC>[0J`".
+        pub fn clear_eod(&mut self) {
+            unsafe { Fl_Terminal_clear_eod(self.inner.widget() as _) }
+        }
+
+        /// Clear from cursor to End Of Line (EOL), like "`<ESC>[K`".
+        pub fn clear_eol(&mut self) {
+            unsafe { Fl_Terminal_clear_eol(self.inner.widget() as _) }
+        }
+
+        /// Clear entire line cursor is currently on.
+        pub fn clear_cur_line(&mut self) {
+            unsafe { Fl_Terminal_clear_cur_line(self.inner.widget() as _) }
+        }
+
+        /// Clear entire line for specified row.
+        pub fn clear_line(&mut self, drow: i32) {
+            unsafe { Fl_Terminal_clear_line(self.inner.widget() as _, drow) }
+        }
+
+        /// Clear from cursor to Start Of Display (EOD), like "`<ESC>[1J`".
+        pub fn clear_sod(&mut self) {
+            unsafe { Fl_Terminal_clear_sod(self.inner.widget() as _) }
+        }
+
+        /// Clear from cursor to Start Of Line (SOL), like "`<ESC>[1K`".
+        pub fn clear_sol(&mut self) {
+            unsafe { Fl_Terminal_clear_sol(self.inner.widget() as _) }
+        }
+
+        ///   Insert char `c` at the current cursor position for `rep`` times.
+        ///   Works only for single-byte characters, `c` can't be multi-byte UTF-8.
+        ///   Does not wrap; characters at end of line are lost.
+        /// *This is a low-level "protected" function of the fltk library*
+        pub fn insert_char(&mut self, c: char, rep: i32) {
+            let c = if c.len_utf8() > 1 {b' '}
+            else  {c as u8};
+            unsafe { Fl_Terminal_insert_char(self.inner.widget() as _, c as i8, rep) }
+        }
+
+        /// Insert char `c` for `rep` times at display row `drow` and column `dcol`.
+        ///   Works only for single-byte characters, `c` can't be multi-byte UTF-8.
+        ///   Does not wrap; characters at end of line are lost.
+        /// *This is a low-level "protected" function of the fltk library*
+        pub fn insert_char_eol(&mut self, c: char, drow: i32, dcol: i32, rep: i32) {
+            let c = if c.len_utf8() > 1 {b' '}
+            else  {c as u8};
+            unsafe { Fl_Terminal_insert_char_eol(self.inner.widget() as _, c as i8, drow, dcol, rep) }
+        }
+
+        /// Insert `count` rows at current cursor position.
+        ///  Causes rows below to scroll down, and empty lines created.
+        ///  Lines deleted by scroll down are NOT moved into the scroll history.
+        /// *This is a low-level "protected" function of the fltk library*
+        pub fn insert_rows(&mut self, count: i32) {
+            unsafe { Fl_Terminal_insert_rows(self.inner.widget() as _, count) }
+        }
+
+        /// Delete char(s) at (`drow`,`dcol`) for `count` times.
+        pub fn delete_chars(&mut self, drow: i32, dcol: i32, count: i32) {
+            unsafe { Fl_Terminal_delete_chars(self.inner.widget() as _, drow, dcol, count) }
+        }
+
+        /// Delete char(s) at cursor position for `count` times.
+        pub fn delete_cur_chars(&mut self, count: i32) {
+            unsafe { Fl_Terminal_delete_cur_chars(self.inner.widget() as _, count) }
+        }
+
+        ///  Delete `count` rows at cursor position.
+        ///   Causes rows to scroll up, and empty lines created at bottom of screen.
+        ///    Lines deleted by scroll up are NOT moved into the scroll history.
+        /// *This is a low-level "protected" function of the fltk library*
+        pub fn delete_rows(&mut self, count: i32) {
+            unsafe { Fl_Terminal_delete_rows(self.inner.widget() as _, count) }
         }
 
         /// Get the cursor's background color used for the cursor itself.
@@ -1513,6 +1651,20 @@ pub mod experimental {
         /// Set the cursor's foreground color used for the cursor itself.
         pub fn set_cursor_fg_color(&mut self, color: Color) {
             unsafe { Fl_Terminal_set_cursor_fg_color(self.inner.widget() as _, color.bits()) }
+        }
+
+        /// Get the current mouse selection. Returns `None` if no selection, or `Some([srow, scol, erow, ecol])` if there is a selection,
+        ///   where row and col represent start/end positions in the ring buffer.
+        /// *This is a low-level "protected" function of the fltk library*
+        pub fn get_selection(&self) -> Option<[i32; 4]> {
+            let mut retval: [i32; 4] = [0; 4];
+            let ret =
+                unsafe { Fl_Terminal_get_selection(self.inner.widget() as _, retval.as_mut_ptr()) };
+            if ret != 0 {
+                Some(retval)
+            } else {
+                None
+            }
         }
 
         /// Move cursor to the home position (top/left).
@@ -1774,9 +1926,16 @@ pub mod experimental {
             unsafe { Fl_Terminal_set_show_unknown(self.inner.widget() as _, arg1 as i32) }
         }
 
+        /// Return the text attribute bits (underline, inverse, etc) for subsequent appends.
+        pub fn text_attrib(&self) -> Attrib {
+            // Attrib::from_bits( unsafe { Fl_Terminal_text_attrib(self.inner.widget()) as _ } ).unwrap()
+            let result = unsafe { Fl_Terminal_text_attrib(self.inner.widget() as _) };
+            Attrib::from_bits(result).unwrap_or_else(|| panic!("Unknown Attrib value {}", result))
+        }
+
         /// Set text attribute bits (underline, inverse, etc) for subsequent appends.
         pub fn set_text_attrib(&mut self, arg1: Attrib) {
-            unsafe { Fl_Terminal_text_attrib(self.inner.widget() as _, arg1.bits() as u32) }
+            unsafe { Fl_Terminal_set_text_attrib(self.inner.widget() as _, arg1.bits()) }
         }
 
         /// Set text background color to fltk color val.
@@ -1889,6 +2048,7 @@ pub mod experimental {
         }
 
         /// Gets the selection text
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn selection_text(&self) -> String {
             assert!(self.is_derived);
             unsafe {
@@ -1954,6 +2114,7 @@ pub mod experimental {
         }
 
         /// Is global row/column inside the current mouse selection?
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn is_inside_selection(&self, row: i32, col: i32) -> bool {
             unsafe { Fl_Terminal_is_inside_selection(self.inner.widget() as _, row, col) != 0 }
         }
@@ -1988,17 +2149,28 @@ pub mod experimental {
             unsafe { Fl_Terminal_ring_rows(self.inner.widget() as _) }
         }
 
+        /// Return the Utf8Char for character under cursor.
+        pub fn u8c_cursor(&self) -> Utf8Char {
+            unsafe {
+                let x = self.inner.widget();
+                let utf8_p = Fl_Terminal_u8c_cursor(x as _);
+                Utf8Char { inner: utf8_p }
+            }
+        }
+
         /// Return u8c for beginning of row drow of the display.
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn u8c_disp_row(&self, drow: i32) -> BuffRow {
             // Fl_Terminal_u8c_disp_row returns pointer to the first C++ Utf8Char object,
             //  which becomes the `inner` element in the Rust BuffRow object
             let row_p = unsafe {
-                    Fl_Terminal_u8c_disp_row(self.inner.widget() as _, drow)
+                Fl_Terminal_u8c_disp_row(self.inner.widget() as _, drow)
             };
             BuffRow::new(row_p, self)
         }
 
         /// Return u8c for beginning of row hrow inside the scrollback history.
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn u8c_hist_row(&self, hrow: i32) -> BuffRow {
             // Fl_Terminal_u8c_hist_row returns pointer to the first C++ Utf8Char object,
             //  which becomes the `inner` element in the Rust BuffRow object
@@ -2009,6 +2181,7 @@ pub mod experimental {
         }
 
         /// Return u8c for beginning of row hurow inside the 'in use' part of the\n scrollback history.
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn u8c_hist_use_row(&self, hurow: i32) -> BuffRow {
             // Fl_Terminal_u8c_hist_use_row returns pointer to the first  C++ Utf8Char object,
             //  which becomes the `inner` element in the Rust BuffRow object
@@ -2019,6 +2192,7 @@ pub mod experimental {
         }
 
         /// Return u8c for beginning of row grow in the ring buffer.
+        /// *This is a low-level "protected" function of the fltk library*
         pub fn u8c_ring_row(&self, grow: i32) -> BuffRow {
             // Fl_Terminal_u8c_ring_use_row returns pointer to the first  C++ Utf8Char object,
             //  which becomes the `inner` element in the Rust BuffRow object
@@ -2040,10 +2214,44 @@ pub mod experimental {
             unsafe {
                 let u8c = Fl_Terminal_Utf8Char_new_obj(c);
                 let ret = Utf8Char {
-                    inner: u8c,
+                    inner: u8c
                 };
                 ret
             }
+        }
+
+        /// Return the actual displayed color of char `u8c` possibly influenced by BOLD or DIM if the char is from Xterm.
+        ///    BG color will be derived from the widget color if a widget is specified and the color is `TransparentBg`,
+        ///    and that won't be influenced by charflag attributes.
+        pub fn attr_bgcolor(&self, term: Option<&Terminal>) -> Color {
+            Color::from_rgbi(match term {
+                None => unsafe { Fl_Terminal_Utf8Char_attr_bgcolor(self.inner, std::ptr::null()) },
+                Some(t) => unsafe {
+                    Fl_Terminal_Utf8Char_attr_bgcolor(self.inner, t.inner.widget() as _)
+                },
+            })
+        }
+
+        // /// Return the actual displayed color of char `u8c` possibly influenced by BOLD or DIM if the char is from Xterm.
+        // ///    If a `grp` widget is specified (i.e. not `None`), don't let the color be
+        // ///    influenced by the attribute bits *if* it matches the `grp` widget's own `color()`.
+        // pub fn attr_color(&self, grp: Option<*const Fl_Widget>) -> Color {
+        //     Color::from_rgbi(match grp {
+        //         None => unsafe { Fl_Terminal_Utf8Char_attr_color(self.inner, std::ptr::null()) },
+        //         Some(g) => unsafe { Fl_Terminal_Utf8Char_attr_color(self.inner, g) },
+        //     })
+        // }
+
+        /// Return the actual displayed fg color of char `u8c` possibly influenced by BOLD or DIM if the char is from Xterm.
+        ///    If a `term` widget is specified (i.e. not `None`), don't let the color be
+        ///    influenced by the attribute bits *if* it matches the `term` widget's own `color()`.
+        pub fn attr_fgcolor(&self, term: Option<&Terminal>) -> Color {
+            Color::from_rgbi(match term {
+                None => unsafe { Fl_Terminal_Utf8Char_attr_fgcolor(self.inner, std::ptr::null()) },
+                Some(t) => unsafe {
+                    Fl_Terminal_Utf8Char_attr_fgcolor(self.inner, t.inner.widget() as _)
+                },
+            })
         }
 
         /// Return the attributes for this character.
@@ -2070,6 +2278,38 @@ pub mod experimental {
                 .unwrap_or_else(|| panic!("Unknown CharFlags value {}", result))
         }
 
+        /// Returns true if the character text in this struct matches the given ASCII character
+        pub fn is_char(&self, c: u8) -> bool {
+            let result = unsafe { Fl_Terminal_Utf8Char_is_char(self.inner, c as i8) as i32 };
+            result != 0
+        }
+
+        /// Return the length of this character in bytes (UTF-8 can be multibyte)
+        pub fn length(&self) -> usize {
+            unsafe { Fl_Terminal_Utf8Char_length(self.inner) as usize }
+        }
+
+        /// Return the maximum length in bytes of a UTF-8 character
+        pub fn max_utf8(&self) -> usize {
+            unsafe { Fl_Terminal_Utf8Char_max_utf8(self.inner) as usize }
+        }
+
+        /// Return the width of this character in floating point pixels.
+        ///
+        ///    WARNING: Uses current font, so assumes font and font_size
+        ///             have already been set to current font!
+        pub fn pwidth(&self) -> f64 {
+            unsafe { Fl_Terminal_Utf8Char_pwidth(self.inner) as f64 }
+        }
+
+        /// Return the width of this character in integer pixels.
+        ///
+        ///    WARNING: Uses current font, so assumes font and font_size
+        ///             have already been set to current font!
+        pub fn pwidth_int(&self) -> usize {
+            unsafe { Fl_Terminal_Utf8Char_pwidth_int(self.inner) as usize }
+        }
+
         /// Return the UTF-8 text string for this character.
         pub fn text_utf8(&self) -> &[u8] {
             unsafe {
@@ -2081,7 +2321,7 @@ pub mod experimental {
 
         /// Return the size of a Utf8Char object in the underlying C++ code
         pub fn size() -> usize {
-            unsafe {Fl_Terminal_Utf8Char_size() as usize}
+            unsafe { Fl_Terminal_Utf8Char_size() as usize }
         }
     }
 
@@ -2095,33 +2335,33 @@ pub mod experimental {
                     _parent: parent,
                     // length: (i + 1) as usize,
                     length: parent.ring_cols() as usize,
-                    char_size: Fl_Terminal_Utf8Char_size() as usize
+                    char_size: Fl_Terminal_Utf8Char_size() as usize,
                 }
             }
         }
 
         /// Trim trailing blanks off of BuffRow object.
         /// Does not affect the data in the RingBuff, just this object's access.
-        pub fn trim(mut self) -> Self  {
+        pub fn trim(mut self) -> Self {
             unsafe {
                 let mut last_char = self.inner.add((self.length - 1) * self.char_size);
-                let c = Utf8Char {inner: last_char};
+                let c = Utf8Char { inner: last_char };
                 // If the last character is a blank, trim the length back.
                 if c.text_utf8() == b" " {
                     // Record the attributes etc of the last character
                     let attr = c.attrib();
                     let fg = c.fgcolor();
                     let bg = c.bgcolor();
-                    self.length -= 1;        // Already checked the last character
+                    self.length -= 1; // Already checked the last character
                     while self.length > 0 {
                         last_char = last_char.sub(self.char_size);
-                        let c = Utf8Char {inner: last_char};
+                        let c = Utf8Char { inner: last_char };
                         if c.text_utf8() != b" "
                             || c.attrib() != attr
                             || c.fgcolor() != fg
                             || c.bgcolor() != bg
                         {
-                            break;  // Found a non-blank character or one with attrib changes
+                            break; // Found a non-blank character or one with attrib changes
                         }
                         self.length -= 1;
                     }
@@ -2137,7 +2377,9 @@ pub mod experimental {
             }
             unsafe {
                 let base = self.inner;
-                Utf8Char{inner: base.add(idx * self.char_size)}
+                Utf8Char {
+                    inner: base.add(idx * self.char_size),
+                }
             }
         }
 
@@ -2147,31 +2389,30 @@ pub mod experimental {
         }
     }
 
-
     /// Iterator object to step through a sequence of Utf8Char in a BuffRow
-    pub struct BuffRowIter <'a> {
+    pub struct BuffRowIter<'a> {
         parent: &'a BuffRow<'a>,
-        ptr: *const Fl_Terminal_Utf8Char,   // This points to an array of Fl_Terminal::Utf8Char
-        end: *const Fl_Terminal_Utf8Char    // points just past the ptr array end
+        ptr: *const Fl_Terminal_Utf8Char, // This points to an array of Fl_Terminal::Utf8Char
+        end: *const Fl_Terminal_Utf8Char, // points just past the ptr array end
     }
 
-    impl <'a> BuffRowIter <'a> {
-        fn new(parent: &'a BuffRow, len: usize) -> BuffRowIter <'a> {
+    impl<'a> BuffRowIter<'a> {
+        fn new(parent: &'a BuffRow, len: usize) -> BuffRowIter<'a> {
             unsafe {
-                BuffRowIter{
+                BuffRowIter {
                     parent,
                     ptr: parent.inner,
-                    end: parent.inner.add(len * parent.char_size)
+                    end: parent.inner.add(len * parent.char_size),
                 }
             }
         }
     }
 
-    impl <'a> Iterator for BuffRowIter <'a> {
+    impl<'a> Iterator for BuffRowIter<'a> {
         type Item = Utf8Char;
         fn next(&mut self) -> Option<Self::Item> {
             if self.ptr < self.end {
-                let result = Utf8Char{inner: self.ptr};
+                let result = Utf8Char { inner: self.ptr };
                 unsafe {
                     self.ptr = self.ptr.add(self.parent.char_size);
                 }

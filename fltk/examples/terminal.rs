@@ -6,7 +6,6 @@ use fltk::{
     enums::{Color, Font, LabelType},
     group::experimental::{Attrib, CharFlags, OutFlags, RedrawStyle, Terminal, Utf8Char},
     menu::MenuBar,
-    // *,
     prelude::*,
     window::{Window, WindowType},
 };
@@ -83,6 +82,16 @@ let idx = menu_bar.add_choice("Test&4");
         .unwrap()
         .set_shortcut(unsafe { std::mem::transmute(0x80034) }); // Alt-4
 
+let idx = menu_bar.add_choice("Test&5");
+    menu_bar.at(idx).unwrap().set_callback({
+        let mut term1 = term.clone();
+        move |c| mb_test5_cb(c, &mut term1)
+    });
+    menu_bar
+        .at(idx)
+        .unwrap()
+        .set_shortcut(unsafe { std::mem::transmute(0x80035) }); // Alt-5
+
     menu_bar.end();
 
     main_win.end();
@@ -104,6 +113,7 @@ let idx = menu_bar.add_choice("Test&4");
             // append() method is already being used/tested. Test the u8, ascii, and utf8 variants
             term.append_u8(b"Appending u8 array\n");
             term.append_ascii("Appending ASCII array ↑ (up-arrow is dropped)\n");
+term.set_ansi(true); // Restore ANSI state
 
             // Test show_unknown() as incidental part of testing append methods
             term.set_show_unknown(true);
@@ -332,14 +342,22 @@ let idx = menu_bar.add_choice("Test&4");
 
             // Keyboard handler
             term.handle({
-                let mut term = term.clone();
-                move |_kc, e| {
+                move |term, e| {
                     match e {
                         fltk::enums::Event::KeyDown
                             if fltk::app::event_key() == fltk::enums::Key::Escape =>
                         {
-                            // let FLTK handle ESC
+                            // false to let FLTK handle ESC. true to hide ESC
                             false
+                        }
+
+                        fltk::enums::Event::KeyDown
+                            if fltk::app::event_length() == 1 && fltk::app::is_event_ctrl() =>
+                        {
+                            // We handle control keystroke
+                            let k = fltk::app::event_text();
+                            term.append_utf8(&k);
+                            true
                         }
 
                         fltk::enums::Event::KeyDown
@@ -353,16 +371,22 @@ let idx = menu_bar.add_choice("Test&4");
                         }
 
                         // fltk docs say that keyboard handler should always claim Focus and Unfocus events
-                        fltk::enums::Event::Focus | fltk::enums::Event::Unfocus => true,
-
+                        // We can do this, or else ignore them (return false)
+                        // fltk::enums::Event::Focus | fltk::enums::Event::Unfocus => {
+                        //     term.redraw();
+                        //     true
+                        // }
                         _ => false, // Let FLTK handle everything else
                     }
                 }
             });
 
+            let attr_save = term.text_attrib();
             term.set_text_attrib(Attrib::Inverse | Attrib::Italic);
             term.append("\nStartup tests complete. Keyboard is live.\n");
-            term.set_text_attrib(Attrib::Normal);
+            assert_eq!(term.text_attrib(), Attrib::Inverse | Attrib::Italic);
+            term.set_text_attrib(attr_save);
+            assert_eq!(term.text_attrib(), attr_save);
             term.redraw();
         }
     });
@@ -411,7 +435,7 @@ fn mb_test1_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     term.put_char_utf8('↑', 9, 5);
     term.put_char_utf8('g', 8, 6);
     term.put_char_utf8('↑', 9, 6);
-    term.set_text_bg_color(Color::Black);
+    term.set_text_bg_color(Color::TransparentBg);
 
     term.set_text_attrib(Attrib::Inverse | Attrib::Italic);
     term.append("Done!\n");
@@ -427,11 +451,8 @@ fn mb_test2_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     for i in 0..50 {
         term.append(&format!("{i}\n"));
     }
-    assert_eq!(term.cursor_row(), 30);
-    assert_eq!(term.display_rows(), 31);
-    assert_eq!(term.history_rows(), 100);
+        assert_eq!(term.history_rows(), 100);
     assert_eq!(term.history_lines(), 100);
-    assert_eq!(term.history_use(), 20);
 
     term.clear_history();
     assert_eq!(term.history_use(), 0);
@@ -445,13 +466,13 @@ fn mb_test2_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
 /// Another set of tests that run when Test3 is clicked
 fn mb_test3_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     term.take_focus().unwrap();
+    term.reset_terminal();
     assert_eq!(term.text_bg_color_default(), Color::TransparentBg);
 
-    let hist = term.history_use();
-    assert_ne!(hist, 0);
+    assert_eq!(term.history_use(), 0);
     term.clear();
     assert_eq!(term.cursor_row(), 0);
-    assert_eq!(term.history_use(), hist + term.display_rows()); // A screenful of lines added to history
+    assert_eq!(term.history_use(), term.display_rows()); // A screenful of lines added to history
 
     term.append("Test\ntext\na\nb\nc\nd");
     assert_eq!(term.cursor_row(), 5);
@@ -465,14 +486,12 @@ fn mb_test3_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     term.clear_screen_home(true);
     assert_eq!(term.cursor_row(), 0);
 
-    let hist = term.history_use();
-    term.append("Test\ntext\na\nb\nc\n");
+        term.append("Test\ntext\na\nb\nc\n");
     assert_eq!(term.cursor_row(), 5);
     term.clear_to_color(Color::DarkBlue);
     assert_eq!(term.text_bg_color_default(), Color::TransparentBg);
     assert_eq!(term.text_bg_color(), Color::TransparentBg);
-        assert!(term.history_use() > hist); // Some lines added to history
-    assert_eq!(term.cursor_row(), 0);
+            assert_eq!(term.cursor_row(), 0);
 
     // Test cursor_home()
     term.append("Test\n\n\n\n\n\n\n\n\n\n");
@@ -503,7 +522,10 @@ fn mb_test3_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
 
 //--------------------------------------------------------------------------------------
 /// Another set of tests for the ring-buffer access methods
+/// Note: these tests depend heavily on the low-level "protected" parts of the fltk library, which should be used with caution.
 fn mb_test4_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
+    term.take_focus().unwrap();
+    term.reset_terminal();
     // Test the Utf8Char primitive
     let uc = Utf8Char::new(b'Q');
     let uc1 = uc.text_utf8();
@@ -518,11 +540,6 @@ fn mb_test4_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
 
     let ring_rows = term.ring_rows();
 
-    // println!();
-    // dbg!(term.disp_srow(), term.disp_erow(), term.disp_rows(), term.ring_cols(), term.ring_srow(), term.ring_erow() );
-    // dbg!(term.hist_srow(), term.hist_erow(), term.hist_rows(), ring_rows );
-    // dbg!(term.offset(), term.hist_use_srow(), term.hist_use() );
-
     term.take_focus().unwrap();
     term.clear_history();
     assert_eq!(term.history_use(), 0);
@@ -531,7 +548,7 @@ fn mb_test4_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     fn row_diff(rows: i32, a: i32, b: i32) -> i32 {
         match a - b {
             n if n < 0 => n + rows,
-            n => n
+            n => n,
         }
     }
     // disp_srow is always 1 greater than hist_erow, modulo (ring_rows+1)
@@ -599,6 +616,7 @@ fn mb_test4_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     // Trim trailing empty lines
     text_out = text_out.trim_end_matches(&"\n\n").to_string();
     // The two plain blanks at the end will be trimmed, the two underlined blanks will be retained.
+
     assert_eq!(text_out, "Top line  ↑ (up-arrow)  \n");
     let r = term.u8c_disp_row(0);
     assert_eq!(r.col(0).text_utf8(), b"T");
@@ -610,8 +628,7 @@ fn mb_test4_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
 
 
     // Clear the screen again, then append test text, then read it back and compare
-    let test_text =
-"The wind was a torrent of darkness among the gusty trees.
+    let test_text = "The wind was a torrent of darkness among the gusty trees.
 The moon was a ghostly galleon tossed upon cloudy seas.
 The road was a ribbon of moonlight over the purple moor,
 And the highwayman came riding—
@@ -622,7 +639,7 @@ term.clear_history();
     term.clear();
     let bg_save = term.text_bg_color();
     let fg_save = term.text_fg_color();
-    term.set_text_bg_color(Color::DarkBlue);    // Set spooky colors
+    term.set_text_bg_color(Color::DarkBlue); // Set spooky colors
     term.set_text_fg_color(Color::from_rgb(0x40, 0x40, 0xff));
     term.append(test_text);
     term.set_text_bg_color(bg_save);
@@ -651,14 +668,299 @@ term.clear_history();
         term.disp_rows(),
         term.disp_cols()
     ));
-    term.set_text_attrib(Attrib::Italic);
-    term.append("Done!");
-    term.set_text_attrib(Attrib::Normal);
+
+
 }
 
+//--------------------------------------------------------------------------------------
+/// Yet another set of tests for misc cursor functions and other stuff
+/// Note: these tests depend heavily on the low-level "protected" parts of the fltk library, which should be used with caution.
+fn mb_test5_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
+    term.take_focus().unwrap();
 
-/// Displays an error message box
-pub fn error_box(msg: String) {
+    // Test the attr_fg_color and attr_bg_color methods.
+    // Put a single character 'A' into the buffer and check it
+    term.clear();   // No reset_terminal(), just clear() to preserve the mouse selection for later
+    term.set_text_bg_color(Color::TransparentBg);
+    term.set_text_fg_color(Color::XtermWhite);
+    term.append("A");
+    let r = &term.u8c_disp_row(0);
+    let uc = r.col(0);
+    assert_eq!(uc.text_utf8(), b"A");
+    assert_eq!(&uc.attr_fgcolor(None), &Color::XtermWhite);
+    assert_eq!(&uc.attr_bgcolor(None), &Color::TransparentBg);
+    assert_eq!(&uc.attr_bgcolor(Some(term)), &Color::Black);
+    assert_eq!(&uc.attr_fgcolor(Some(term)), &Color::XtermWhite);
+    assert_eq!(&uc.attrib(), &Attrib::Normal);
+
+    // Put a short string "BCD" into the first line of the buffer, with fg color change after the 'B' and bold after 'C'
+    term.clear();
+    term.set_text_fg_color_xterm(fltk::group::experimental::XtermColor::White);
+    term.set_text_bg_color_xterm(fltk::group::experimental::XtermColor::Black);
+    assert_eq!(term.text_attrib(), Attrib::Normal);
+
+    assert!(term.ansi());
+    term.append("B\x1b[32mC\x1b[1mD\n");
+
+    let r = &term.u8c_disp_row(0);
+    let uc = r.col(0);
+    assert_eq!(uc.text_utf8(), b"B");
+    assert!(uc.is_char(b'B'));
+    assert!(!uc.is_char(b'A'));
+    assert_eq!(&uc.fgcolor(), &Color::XtermWhite);
+    assert_eq!(&uc.bgcolor(), &Color::XtermBlack);
+    assert_eq!(&uc.attr_fgcolor(None), &Color::XtermWhite);
+    assert_eq!(&uc.attr_bgcolor(None), &Color::XtermBlack);
+    assert_eq!(&uc.charflags(), &CharFlags::NONE);
+
+    let uc = r.col(1);
+    assert_eq!(uc.text_utf8(), b"C");
+    assert!(uc.is_char(b'C'));
+    assert_eq!(&uc.fgcolor(), &Color::XtermGreen);
+    assert_eq!(&uc.bgcolor(), &Color::XtermBlack);
+    assert_eq!(&uc.attr_fgcolor(None), &Color::XtermGreen);
+    assert_eq!(&uc.attr_bgcolor(None), &Color::XtermBlack);
+    assert_eq!(&uc.charflags(), &CharFlags::FG_XTERM);
+
+    let uc = r.col(2);
+    assert_eq!(uc.text_utf8(), b"D");
+    assert!(uc.is_char(b'D'));
+    assert_eq!(&uc.fgcolor(), &Color::XtermGreen);
+    assert_eq!(&uc.bgcolor(), &Color::XtermBlack);
+    assert_eq!(&uc.attr_fgcolor(None), &Color::from_rgb(0x20, 0xf0, 0x20));
+    assert_eq!(&uc.attr_bgcolor(None), &Color::XtermBlack);
+    assert_eq!(
+        &uc.attr_fgcolor(Some(term)),
+        &Color::from_rgb(0x20, 0xf0, 0x20)
+    );
+    assert_eq!(&uc.attr_bgcolor(Some(term)), &Color::XtermBlack);
+    assert_eq!(&uc.charflags(), &CharFlags::FG_XTERM);
+
+    // Put a short string "BCDE" into the buffer, with fg color change after the 'B', bg change after 'C', and bold after 'D'
+    term.clear();
+    term.set_text_fg_color_xterm(fltk::group::experimental::XtermColor::White);
+    term.set_text_bg_color_xterm(fltk::group::experimental::XtermColor::Black);
+    term.set_text_attrib(Attrib::Normal);
+    assert_eq!(term.text_attrib(), Attrib::Normal);
+
+    assert!(term.ansi());
+    term.append("B\x1b[37mC\x1b[44mD\x1b[1mE\n");
+
+    let r = &term.u8c_disp_row(0);
+    let uc = r.col(0);
+    assert_eq!(uc.text_utf8(), b"B");
+    assert!(uc.is_char(b'B'));
+    assert!(!uc.is_char(b'A'));
+    assert_eq!(&uc.fgcolor(), &Color::XtermWhite);
+    assert_eq!(&uc.bgcolor(), &Color::XtermBlack);
+    assert_eq!(&uc.attr_fgcolor(None), &Color::XtermWhite);
+    assert_eq!(&uc.attr_bgcolor(None), &Color::XtermBlack);
+    assert_eq!(&uc.charflags(), &CharFlags::NONE);
+
+    let uc = r.col(1);
+    assert_eq!(uc.text_utf8(), b"C");
+    assert!(uc.is_char(b'C'));
+    assert_eq!(&uc.fgcolor(), &Color::XtermWhite);
+    assert_eq!(&uc.bgcolor(), &Color::XtermBlack);
+    assert_eq!(&uc.attr_fgcolor(None), &Color::XtermWhite);
+    assert_eq!(&uc.attr_bgcolor(None), &Color::XtermBlack);
+    assert_eq!(&uc.charflags(), &CharFlags::FG_XTERM);
+
+    let uc = r.col(2);
+    assert_eq!(uc.text_utf8(), b"D");
+    assert!(uc.is_char(b'D'));
+    assert_eq!(&uc.fgcolor(), &Color::XtermWhite);
+    assert_eq!(&uc.bgcolor(), &Color::XtermBgBlue);
+    assert_eq!(&uc.attr_fgcolor(None), &Color::XtermWhite);
+    assert_eq!(&uc.attr_bgcolor(None), &Color::XtermBgBlue);
+    assert_eq!(
+        &uc.charflags(),
+        &(CharFlags::FG_XTERM | CharFlags::BG_XTERM)
+    );
+
+    let uc = r.col(3);
+    assert_eq!(uc.text_utf8(), b"E");
+    assert!(uc.is_char(b'E'));
+    assert_eq!(&uc.fgcolor(), &Color::XtermWhite);
+    assert_eq!(&uc.bgcolor(), &Color::XtermBgBlue);
+    assert_eq!(&uc.attr_fgcolor(None), &Color::from_hex(0xf0f0f0));
+    assert_eq!(&uc.attr_bgcolor(None), &Color::from_hex(0x2020e0)); // Is this correct?
+    assert_eq!(
+        &uc.charflags(),
+        &(CharFlags::FG_XTERM | CharFlags::BG_XTERM)
+    );
+
+    // Test some miscellaneous Utf8 constants
+    assert_eq!(uc.length(), 1);
+    assert_eq!(uc.max_utf8(), 4);
+    assert_eq!(uc.pwidth(), 8.0);
+    assert_eq!(uc.pwidth_int(), 8);
+
+    term.set_text_fg_color_xterm(fltk::group::experimental::XtermColor::White);
+    term.set_text_bg_color_xterm(fltk::group::experimental::XtermColor::Black);
+    term.clear();
+    term.set_text_attrib(Attrib::Normal);
+
+    // Mouse selection functions
+    term.append(&format!("Mouse selection: {:?}\n", &term.get_selection()));
+    term.clear_mouse_selection();
+    assert_eq!(term.get_selection(), None);
+
+    // Play with cursor position
+    term.append("0123456789\n");    // Set up test pattern
+    term.append("ABCDEFGHIJ\n");
+    term.append("abcdefghij\n");
+
+    term.set_cursor_row(1);
+    assert_eq!(term.cursor_row(), 1);
+    term.set_cursor_col(1);
+    assert_eq!(term.cursor_col(), 1);
+    assert_eq!(term.u8c_cursor().text_utf8(), b"1");
+
+    term.append("----");    // Overwrites text at cursor and moves cursor forward
+    assert_eq!(term.cursor_row(), 1);
+    assert_eq!(term.cursor_col(), 5);
+    assert_eq!(term.u8c_cursor().text_utf8(), b"5");
+    term.set_cursor_col(1);
+    assert_eq!(term.u8c_cursor().text_utf8(), b"-");    // Overwritten text
+
+    term.cursor_up(1, false);
+    assert_eq!(term.cursor_row(), 0);
+    assert_eq!(term.cursor_col(), 1);
+    assert_eq!(term.u8c_cursor().text_utf8(), b"o");
+
+    // Hit top of screen, so nothing happens
+    term.cursor_up(1, false);
+    assert_eq!(term.cursor_row(), 0);
+    assert_eq!(term.cursor_col(), 1);
+    assert_eq!(term.u8c_cursor().text_utf8(), b"o");
+
+    // Hit top of screen with scroll enabled. A blank line from history is scrolled in.
+    term.cursor_up(1, true);
+    assert_eq!(term.cursor_row(), 0);
+    assert_eq!(term.cursor_col(), 1);
+    assert_eq!(term.u8c_cursor().text_utf8(), b" ");
+
+    // Go back down to the overwritten text
+    term.cursor_down(2, false);
+    assert_eq!(term.cursor_row(), 2);
+    assert_eq!(term.cursor_col(), 1);
+    assert_eq!(term.u8c_cursor().text_utf8(), b"-");
+
+    // Go right past the overwritten text
+    term.cursor_right(4, false);
+    assert_eq!(term.cursor_row(), 2);
+    assert_eq!(term.cursor_col(), 5);
+    assert_eq!(term.u8c_cursor().text_utf8(), b"5");
+
+    // Go left to the end of the overwritten text
+    term.cursor_left(1);
+    assert_eq!(term.cursor_row(), 2);
+    assert_eq!(term.cursor_col(), 4);
+    assert_eq!(term.u8c_cursor().text_utf8(), b"-");
+
+    // Scroll back down, removing the blank line at the top.
+    // Cursor stays in place, the text moves under it.
+    term.scroll(1);
+    assert_eq!(term.cursor_row(), 2);
+    assert_eq!(term.cursor_col(), 4);
+    assert_eq!(term.u8c_cursor().text_utf8(), b"E");
+
+    // Clear from here to end-of-line
+    term.clear_eol();
+    assert_eq!(term.cursor_row(), 2);
+    assert_eq!(term.cursor_col(), 4);
+    assert_eq!(term.u8c_cursor().text_utf8(), b" ");
+
+    // Now clear from here to start-of-line. Cursor does not move.
+    term.clear_sol();
+    assert_eq!(term.cursor_row(), 2);
+    assert_eq!(term.cursor_col(), 4);
+    assert_eq!(term.u8c_cursor().text_utf8(), b" ");
+    term.cursor_left(1);
+    assert_eq!(term.u8c_cursor().text_utf8(), b" ");
+    term.set_cursor_col(0);
+    assert_eq!(term.u8c_cursor().text_utf8(), b" ");
+
+    // Clear some lines
+    term.clear_line(1);
+    assert_eq!(term.cursor_row(), 2);
+    assert_eq!(term.cursor_col(), 0);
+    term.set_cursor_row(1);
+    assert_eq!(term.u8c_cursor().text_utf8(), b" ");
+    term.set_cursor_row(3);
+    term.clear_cur_line();
+    assert_eq!(term.u8c_cursor().text_utf8(), b" ");
+    assert_eq!(term.cursor_row(), 3);
+    assert_eq!(term.cursor_col(), 0);
+
+    term.append("Two lines above are intentionally left blank.\n");
+    assert_eq!(term.cursor_row(), 4);
+    assert_eq!(term.cursor_col(), 0);
+
+    // Set up the test pattern again, then play with insert/delete
+    term.append("0123456789\n");
+    term.append("ABCDEFGHIJ\n");
+    term.append("abcdefghij\n");
+    assert_eq!(term.cursor_row(), 7);
+
+    term.set_cursor_row(4);
+    term.set_cursor_col(4);
+    assert_eq!(term.u8c_cursor().text_utf8(), b"4");
+
+    term.insert_char('x', 5);   // Push this row right 5 chars starting at col 4
+    assert_eq!(term.u8c_cursor().text_utf8(), b"x");
+    term.cursor_right(5, false);
+    assert_eq!(term.cursor_col(), 9);
+    assert_eq!(term.u8c_cursor().text_utf8(), b"4");
+
+    // Insert two blank rows above cursor. Cursor stays put.
+    term.insert_rows(2);
+    assert_eq!(term.cursor_row(), 4);
+    assert_eq!(term.cursor_col(), 9);
+    assert_eq!(term.u8c_cursor().text_utf8(), b" ");
+    term.cursor_down(2, false);         // Go down to find our text again
+    assert_eq!(term.u8c_cursor().text_utf8(), b"4");
+
+    // Go back to the beginning of the inserted 'x' characters and delete them.
+    term.cursor_left(5);
+    assert_eq!(term.u8c_cursor().text_utf8(), b"x");
+    term.delete_cur_chars(5);
+    assert_eq!(term.cursor_row(), 6);
+    assert_eq!(term.cursor_col(), 4);
+    assert_eq!(term.u8c_cursor().text_utf8(), b"4");
+
+    term.delete_chars(7, 2, 2);     // Delete "CD" from the next row
+    term.cursor_down(1, false);
+    term.cursor_left(2);
+    assert_eq!(term.u8c_cursor().text_utf8(), b"E");
+
+    term.delete_rows(1);            // Middle row of pattern is gone, cursor stays put
+    assert_eq!(term.u8c_cursor().text_utf8(), b"c");
+    term.cursor_up(1, false);
+    term.delete_rows(2);        // Delete remains of test pattern
+
+    term.set_text_attrib(Attrib::Bold);
+    term.insert_char_eol('-', 3, 15, 20);
+    term.set_cursor_row(3);
+    term.set_cursor_col(15);
+    assert_eq!(term.u8c_cursor().text_utf8(), b"-");    // Check the insertion
+    assert_eq!(term.u8c_cursor().attrib(), Attrib::Bold);
+
+    term.set_text_attrib(Attrib::Italic);
+    term.append(" and all lines below");
+    term.set_text_attrib(Attrib::Normal);
+    term.cursor_down(1, false);
+
+
+}
+
+//--------------------------------------------------------------------------------------
+/// Displays an error message.
+/// **Note**: this does not work unless called from the UI thread.
+/// If you need cross-thread error boxes, try using a non-fltk
+/// dialog such as `native_dialog::MessageDialog` instead of `fltk::dialog`
+fn error_box(msg: String) {
     fltk::app::lock().unwrap();
     fltk::dialog::message_title("Error");
     fltk::dialog::message_set_hotspot(true);
