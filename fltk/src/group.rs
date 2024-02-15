@@ -1548,6 +1548,78 @@ pub mod experimental {
             unsafe { Fl_Terminal_scroll(self.inner.widget() as _, count) }
         }
 
+        /// Clear from cursor to End Of Display (EOD), like "`<ESC>[J<ESC>[0J`".
+        pub fn clear_eod(&mut self) {
+            unsafe { Fl_Terminal_clear_eod(self.inner.widget() as _) }
+        }
+
+        /// Clear from cursor to End Of Line (EOL), like "`<ESC>[K`".
+        pub fn clear_eol(&mut self) {
+            unsafe { Fl_Terminal_clear_eol(self.inner.widget() as _) }
+        }
+
+        /// Clear entire line cursor is currently on.
+        pub fn clear_cur_line(&mut self) {
+            unsafe { Fl_Terminal_clear_cur_line(self.inner.widget() as _) }
+        }
+
+        /// Clear entire line for specified row.
+        pub fn clear_line(&mut self, drow: i32) {
+            unsafe { Fl_Terminal_clear_line(self.inner.widget() as _, drow) }
+        }
+
+        /// Clear from cursor to Start Of Display (EOD), like "`<ESC>[1J`".
+        pub fn clear_sod(&mut self) {
+            unsafe { Fl_Terminal_clear_sod(self.inner.widget() as _) }
+        }
+
+        /// Clear from cursor to Start Of Line (SOL), like "`<ESC>[1K`".
+        pub fn clear_sol(&mut self) {
+            unsafe { Fl_Terminal_clear_sol(self.inner.widget() as _) }
+        }
+
+        ///   Insert char `c` at the current cursor position for `rep`` times.
+        ///   Works only for single-byte characters, `c` can't be multi-byte UTF-8.
+        ///   Does not wrap; characters at end of line are lost.
+        pub fn insert_char(&mut self, c: char, rep: i32) {
+            let c = if c.len_utf8() > 1 {b' '}
+            else  {c as u8};
+            unsafe { Fl_Terminal_insert_char(self.inner.widget() as _, c as i8, rep) }
+        }
+
+        /// Insert char `c` for `rep` times at display row `drow` and column `dcol`.
+        ///   Works only for single-byte characters, `c` can't be multi-byte UTF-8.
+        ///   Does not wrap; characters at end of line are lost.
+        pub fn insert_char_eol(&mut self, c: char, drow: i32, dcol: i32, rep: i32) {
+            let c = if c.len_utf8() > 1 {b' '}
+            else  {c as u8};
+            unsafe { Fl_Terminal_insert_char_eol(self.inner.widget() as _, c as i8, drow, dcol, rep) }
+        }
+
+        /// Insert `count` rows at current cursor position.
+        ///  Causes rows below to scroll down, and empty lines created.
+        ///  Lines deleted by scroll down are NOT moved into the scroll history.
+        pub fn insert_rows(&mut self, count: i32) {
+            unsafe { Fl_Terminal_insert_rows(self.inner.widget() as _, count) }
+        }
+
+        /// Delete char(s) at (`drow`,`dcol`) for `count` times.
+        pub fn delete_chars(&mut self, drow: i32, dcol: i32, count: i32) {
+            unsafe { Fl_Terminal_delete_chars(self.inner.widget() as _, drow, dcol, count) }
+        }
+
+        /// Delete char(s) at cursor position for `count` times.
+        pub fn delete_cur_chars(&mut self, count: i32) {
+            unsafe { Fl_Terminal_delete_cur_chars(self.inner.widget() as _, count) }
+        }
+
+        ///  Delete `count` rows at cursor position.
+        ///   Causes rows to scroll up, and empty lines created at bottom of screen.
+        ///    Lines deleted by scroll up are NOT moved into the scroll history.
+        pub fn delete_rows(&mut self, count: i32) {
+            unsafe { Fl_Terminal_delete_rows(self.inner.widget() as _, count) }
+        }
+
         /// Get the cursor's background color used for the cursor itself.
         pub fn cursor_bg_color(&self) -> Color {
             Color::from_rgbi(unsafe { Fl_Terminal_cursor_bg_color(self.inner.widget() as _) })

@@ -4276,6 +4276,57 @@ extern "C" {
     pub fn Fl_Terminal_scroll(self_: *mut Fl_Terminal, count: ::std::os::raw::c_int);
 }
 extern "C" {
+    pub fn Fl_Terminal_clear_eod(self_: *mut Fl_Terminal);
+}
+extern "C" {
+    pub fn Fl_Terminal_clear_eol(self_: *mut Fl_Terminal);
+}
+extern "C" {
+    pub fn Fl_Terminal_clear_cur_line(self_: *mut Fl_Terminal);
+}
+extern "C" {
+    pub fn Fl_Terminal_clear_line(self_: *mut Fl_Terminal, drow: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Terminal_clear_sod(self_: *mut Fl_Terminal);
+}
+extern "C" {
+    pub fn Fl_Terminal_clear_sol(self_: *mut Fl_Terminal);
+}
+extern "C" {
+    pub fn Fl_Terminal_insert_char(
+        self_: *mut Fl_Terminal,
+        c: ::std::os::raw::c_char,
+        rep: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Terminal_insert_char_eol(
+        self_: *mut Fl_Terminal,
+        c: ::std::os::raw::c_char,
+        drow: ::std::os::raw::c_int,
+        dcol: ::std::os::raw::c_int,
+        rep: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Terminal_insert_rows(self_: *mut Fl_Terminal, count: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Terminal_delete_chars(
+        self_: *mut Fl_Terminal,
+        drow: ::std::os::raw::c_int,
+        dcol: ::std::os::raw::c_int,
+        count: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Terminal_delete_cur_chars(self_: *mut Fl_Terminal, count: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Terminal_delete_rows(self_: *mut Fl_Terminal, count: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Terminal_cursor_bg_color(self_: *const Fl_Terminal) -> ::std::os::raw::c_uint;
 }
 extern "C" {
