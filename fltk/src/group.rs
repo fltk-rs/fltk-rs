@@ -6,6 +6,7 @@ use fltk_sys::group::*;
 use std::{
     ffi::{CStr, CString},
     mem,
+    os::raw::c_char,
     sync::atomic::{AtomicBool, Ordering},
 };
 
@@ -1594,7 +1595,7 @@ pub mod experimental {
         pub fn insert_char(&mut self, c: char, rep: i32) {
             let c = if c.len_utf8() > 1 {b' '}
             else  {c as u8};
-            unsafe { Fl_Terminal_insert_char(self.inner.widget() as _, c as i8, rep) }
+            unsafe { Fl_Terminal_insert_char(self.inner.widget() as _, c as c_char, rep) }
         }
 
         /// Insert char `c` for `rep` times at display row `drow` and column `dcol`.
@@ -1604,7 +1605,7 @@ pub mod experimental {
         pub fn insert_char_eol(&mut self, c: char, drow: i32, dcol: i32, rep: i32) {
             let c = if c.len_utf8() > 1 {b' '}
             else  {c as u8};
-            unsafe { Fl_Terminal_insert_char_eol(self.inner.widget() as _, c as i8, drow, dcol, rep) }
+            unsafe { Fl_Terminal_insert_char_eol(self.inner.widget() as _, c as c_char, drow, dcol, rep) }
         }
 
         /// Insert `count` rows at current cursor position.
@@ -2280,7 +2281,7 @@ pub mod experimental {
 
         /// Returns true if the character text in this struct matches the given ASCII character
         pub fn is_char(&self, c: u8) -> bool {
-            let result = unsafe { Fl_Terminal_Utf8Char_is_char(self.inner, c as i8) as i32 };
+            let result = unsafe { Fl_Terminal_Utf8Char_is_char(self.inner, c as c_char) as i32 };
             result != 0
         }
 
