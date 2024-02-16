@@ -399,6 +399,48 @@ impl MenuItem {
         }
     }
 
+    /// Creates a pulldown menu at the specified coordinates and returns its choice
+    pub fn pulldown(
+        &self,
+        x: i32,
+        y: i32,
+        w: i32,
+        h: i32,
+        picked: Option<MenuItem>,
+        menu: Option<&impl MenuExt>,
+        title: Option<MenuItem>,
+        menubar: bool,
+    ) -> Option<MenuItem> {
+        if self.size() == 0 {
+            return None;
+        }
+        unsafe {
+            let picked = if let Some(m) = picked {
+                *m.inner as _
+            } else {
+                std::ptr::null()
+            };
+            let title = if let Some(m) = title {
+                *m.inner as _
+            } else {
+                std::ptr::null()
+            };
+            let menu = if let Some(m) = menu {
+                m.as_widget_ptr() as _
+            } else {
+                std::ptr::null()
+            };
+            let item =
+                Fl_Menu_Item_pulldown(*self.inner, x, y, w, h, picked, menu, title, menubar as i32);
+            if item.is_null() {
+                None
+            } else {
+                let item = MenuItem::from_ptr(item as *mut Fl_Menu_Item);
+                Some(item)
+            }
+        }
+    }
+
     /// Returns the label of the menu item
     pub fn label(&self) -> Option<String> {
         unsafe {

@@ -368,6 +368,14 @@ macro_rules! impl_menu_ext {
                         }
                     }
                 }
+
+                fn set_menu_frame(&mut self, f: $crate::enums::FrameType) {
+                    unsafe { [<$flname _set_menu_box>](self.inner.widget() as _, f.as_i32()) }
+                }
+
+                fn menu_frame(&self) -> $crate::enums::FrameType {
+                    unsafe { $crate::enums::FrameType::from_i32([<$flname _menu_box>](self.inner.widget() as _)) }
+                }
             }
         }
     };

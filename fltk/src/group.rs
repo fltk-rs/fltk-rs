@@ -1593,8 +1593,7 @@ pub mod experimental {
         ///   Does not wrap; characters at end of line are lost.
         /// *This is a low-level "protected" function of the fltk library*
         pub fn insert_char(&mut self, c: char, rep: i32) {
-            let c = if c.len_utf8() > 1 {b' '}
-            else  {c as u8};
+            let c = if c.len_utf8() > 1 { b' ' } else { c as u8 };
             unsafe { Fl_Terminal_insert_char(self.inner.widget() as _, c as c_char, rep) }
         }
 
@@ -1603,9 +1602,10 @@ pub mod experimental {
         ///   Does not wrap; characters at end of line are lost.
         /// *This is a low-level "protected" function of the fltk library*
         pub fn insert_char_eol(&mut self, c: char, drow: i32, dcol: i32, rep: i32) {
-            let c = if c.len_utf8() > 1 {b' '}
-            else  {c as u8};
-            unsafe { Fl_Terminal_insert_char_eol(self.inner.widget() as _, c as c_char, drow, dcol, rep) }
+            let c = if c.len_utf8() > 1 { b' ' } else { c as u8 };
+            unsafe {
+                Fl_Terminal_insert_char_eol(self.inner.widget() as _, c as c_char, drow, dcol, rep)
+            }
         }
 
         /// Insert `count` rows at current cursor position.
@@ -2164,9 +2164,7 @@ pub mod experimental {
         pub fn u8c_disp_row(&self, drow: i32) -> BuffRow {
             // Fl_Terminal_u8c_disp_row returns pointer to the first C++ Utf8Char object,
             //  which becomes the `inner` element in the Rust BuffRow object
-            let row_p = unsafe {
-                Fl_Terminal_u8c_disp_row(self.inner.widget() as _, drow)
-            };
+            let row_p = unsafe { Fl_Terminal_u8c_disp_row(self.inner.widget() as _, drow) };
             BuffRow::new(row_p, self)
         }
 
@@ -2175,9 +2173,7 @@ pub mod experimental {
         pub fn u8c_hist_row(&self, hrow: i32) -> BuffRow {
             // Fl_Terminal_u8c_hist_row returns pointer to the first C++ Utf8Char object,
             //  which becomes the `inner` element in the Rust BuffRow object
-            let row_p = unsafe {
-                Fl_Terminal_u8c_hist_row(self.inner.widget() as _, hrow)
-            };
+            let row_p = unsafe { Fl_Terminal_u8c_hist_row(self.inner.widget() as _, hrow) };
             BuffRow::new(row_p, self)
         }
 
@@ -2186,9 +2182,7 @@ pub mod experimental {
         pub fn u8c_hist_use_row(&self, hurow: i32) -> BuffRow {
             // Fl_Terminal_u8c_hist_use_row returns pointer to the first  C++ Utf8Char object,
             //  which becomes the `inner` element in the Rust BuffRow object
-            let row_p = unsafe {
-                Fl_Terminal_u8c_hist_use_row(self.inner.widget() as _, hurow)
-            };
+            let row_p = unsafe { Fl_Terminal_u8c_hist_use_row(self.inner.widget() as _, hurow) };
             BuffRow::new(row_p, self)
         }
 
@@ -2197,9 +2191,7 @@ pub mod experimental {
         pub fn u8c_ring_row(&self, grow: i32) -> BuffRow {
             // Fl_Terminal_u8c_ring_use_row returns pointer to the first  C++ Utf8Char object,
             //  which becomes the `inner` element in the Rust BuffRow object
-            let row_p = unsafe {
-                Fl_Terminal_u8c_ring_row(self.inner.widget() as _, grow)
-            };
+            let row_p = unsafe { Fl_Terminal_u8c_ring_row(self.inner.widget() as _, grow) };
             BuffRow::new(row_p, self)
         }
     }
@@ -2214,9 +2206,7 @@ pub mod experimental {
         pub fn new(c: u8) -> Self {
             unsafe {
                 let u8c = Fl_Terminal_Utf8Char_new_obj(c);
-                let ret = Utf8Char {
-                    inner: u8c
-                };
+                let ret = Utf8Char { inner: u8c };
                 ret
             }
         }

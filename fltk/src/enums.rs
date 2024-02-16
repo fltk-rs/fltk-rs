@@ -607,7 +607,7 @@ impl Color {
 
     /// Returns a color enum from RGBI encoding
     pub const fn from_rgbi(rgbi: u32) -> Color {
-            Color { bits: rgbi }
+        Color { bits: rgbi }
     }
 
     /// Create color from RGBA using alpha compositing. Works for non-group types.

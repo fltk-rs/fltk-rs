@@ -16,14 +16,14 @@ const WIN_HEIGHT: i32 = 600;
 fn main() {
     let app = fltk::app::App::default();
 
-        // Set panic handler for main thread (will become UI thread)
-        std::panic::set_hook(Box::new({
-            |e| {
-                eprintln!("!!!!PANIC!!!!{:#?}", e);
-                error_box(e.to_string()); // Only works from the UI thread
-                std::process::exit(2);
-            }
-        }));
+    // Set panic handler for main thread (will become UI thread)
+    std::panic::set_hook(Box::new({
+        |e| {
+            eprintln!("!!!!PANIC!!!!{:#?}", e);
+            error_box(e.to_string()); // Only works from the UI thread
+            std::process::exit(2);
+        }
+    }));
 
     let mut main_win = Window::new(
         2285,
@@ -72,7 +72,7 @@ fn main() {
         .unwrap()
         .set_shortcut(unsafe { std::mem::transmute(0x80033) }); // Alt-3
 
-let idx = menu_bar.add_choice("Test&4");
+    let idx = menu_bar.add_choice("Test&4");
     menu_bar.at(idx).unwrap().set_callback({
         let mut term1 = term.clone();
         move |c| mb_test4_cb(c, &mut term1)
@@ -82,7 +82,7 @@ let idx = menu_bar.add_choice("Test&4");
         .unwrap()
         .set_shortcut(unsafe { std::mem::transmute(0x80034) }); // Alt-4
 
-let idx = menu_bar.add_choice("Test&5");
+    let idx = menu_bar.add_choice("Test&5");
     menu_bar.at(idx).unwrap().set_callback({
         let mut term1 = term.clone();
         move |c| mb_test5_cb(c, &mut term1)
@@ -113,7 +113,7 @@ let idx = menu_bar.add_choice("Test&5");
             // append() method is already being used/tested. Test the u8, ascii, and utf8 variants
             term.append_u8(b"Appending u8 array\n");
             term.append_ascii("Appending ASCII array ↑ (up-arrow is dropped)\n");
-term.set_ansi(true); // Restore ANSI state
+            term.set_ansi(true); // Restore ANSI state
 
             // Test show_unknown() as incidental part of testing append methods
             term.set_show_unknown(true);
@@ -451,7 +451,7 @@ fn mb_test2_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     for i in 0..50 {
         term.append(&format!("{i}\n"));
     }
-        assert_eq!(term.history_rows(), 100);
+    assert_eq!(term.history_rows(), 100);
     assert_eq!(term.history_lines(), 100);
 
     term.clear_history();
@@ -486,12 +486,12 @@ fn mb_test3_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     term.clear_screen_home(true);
     assert_eq!(term.cursor_row(), 0);
 
-        term.append("Test\ntext\na\nb\nc\n");
+    term.append("Test\ntext\na\nb\nc\n");
     assert_eq!(term.cursor_row(), 5);
     term.clear_to_color(Color::DarkBlue);
     assert_eq!(term.text_bg_color_default(), Color::TransparentBg);
     assert_eq!(term.text_bg_color(), Color::TransparentBg);
-            assert_eq!(term.cursor_row(), 0);
+    assert_eq!(term.cursor_row(), 0);
 
     // Test cursor_home()
     term.append("Test\n\n\n\n\n\n\n\n\n\n");
@@ -620,12 +620,11 @@ fn mb_test4_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     assert_eq!(text_out, "Top line  ↑ (up-arrow)  \n");
     let r = term.u8c_disp_row(0);
     assert_eq!(r.col(0).text_utf8(), b"T");
-    assert_eq!(r.col(10).text_utf8(), b"\xe2\x86\x91");     // UTF-8 up-arrow
-    assert_eq!(r.col(24).text_utf8(), b" ");                // First blank after test text, NOT trimmed
+    assert_eq!(r.col(10).text_utf8(), b"\xe2\x86\x91"); // UTF-8 up-arrow
+    assert_eq!(r.col(24).text_utf8(), b" "); // First blank after test text, NOT trimmed
     let r = term.u8c_disp_row(1);
-    assert_eq!(r.col(0).text_utf8(), b" ");                 // Second row starts with blanks
-    assert_eq!(r.col(1).text_utf8(), b" ");                 // Second row is full of blanks
-
+    assert_eq!(r.col(0).text_utf8(), b" "); // Second row starts with blanks
+    assert_eq!(r.col(1).text_utf8(), b" "); // Second row is full of blanks
 
     // Clear the screen again, then append test text, then read it back and compare
     let test_text = "The wind was a torrent of darkness among the gusty trees.
@@ -635,7 +634,7 @@ And the highwayman came riding—
             Riding—riding—
 The highwayman came riding, up to the old inn-door.";
 
-term.clear_history();
+    term.clear_history();
     term.clear();
     let bg_save = term.text_bg_color();
     let fg_save = term.text_fg_color();
@@ -668,8 +667,6 @@ term.clear_history();
         term.disp_rows(),
         term.disp_cols()
     ));
-
-
 }
 
 //--------------------------------------------------------------------------------------
@@ -680,7 +677,7 @@ fn mb_test5_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
 
     // Test the attr_fg_color and attr_bg_color methods.
     // Put a single character 'A' into the buffer and check it
-    term.clear();   // No reset_terminal(), just clear() to preserve the mouse selection for later
+    term.clear(); // No reset_terminal(), just clear() to preserve the mouse selection for later
     term.set_text_bg_color(Color::TransparentBg);
     term.set_text_fg_color(Color::XtermWhite);
     term.append("A");
@@ -807,7 +804,7 @@ fn mb_test5_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     assert_eq!(term.get_selection(), None);
 
     // Play with cursor position
-    term.append("0123456789\n");    // Set up test pattern
+    term.append("0123456789\n"); // Set up test pattern
     term.append("ABCDEFGHIJ\n");
     term.append("abcdefghij\n");
 
@@ -817,12 +814,12 @@ fn mb_test5_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     assert_eq!(term.cursor_col(), 1);
     assert_eq!(term.u8c_cursor().text_utf8(), b"1");
 
-    term.append("----");    // Overwrites text at cursor and moves cursor forward
+    term.append("----"); // Overwrites text at cursor and moves cursor forward
     assert_eq!(term.cursor_row(), 1);
     assert_eq!(term.cursor_col(), 5);
     assert_eq!(term.u8c_cursor().text_utf8(), b"5");
     term.set_cursor_col(1);
-    assert_eq!(term.u8c_cursor().text_utf8(), b"-");    // Overwritten text
+    assert_eq!(term.u8c_cursor().text_utf8(), b"-"); // Overwritten text
 
     term.cursor_up(1, false);
     assert_eq!(term.cursor_row(), 0);
@@ -908,7 +905,7 @@ fn mb_test5_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     term.set_cursor_col(4);
     assert_eq!(term.u8c_cursor().text_utf8(), b"4");
 
-    term.insert_char('x', 5);   // Push this row right 5 chars starting at col 4
+    term.insert_char('x', 5); // Push this row right 5 chars starting at col 4
     assert_eq!(term.u8c_cursor().text_utf8(), b"x");
     term.cursor_right(5, false);
     assert_eq!(term.cursor_col(), 9);
@@ -919,7 +916,7 @@ fn mb_test5_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     assert_eq!(term.cursor_row(), 4);
     assert_eq!(term.cursor_col(), 9);
     assert_eq!(term.u8c_cursor().text_utf8(), b" ");
-    term.cursor_down(2, false);         // Go down to find our text again
+    term.cursor_down(2, false); // Go down to find our text again
     assert_eq!(term.u8c_cursor().text_utf8(), b"4");
 
     // Go back to the beginning of the inserted 'x' characters and delete them.
@@ -930,29 +927,27 @@ fn mb_test5_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     assert_eq!(term.cursor_col(), 4);
     assert_eq!(term.u8c_cursor().text_utf8(), b"4");
 
-    term.delete_chars(7, 2, 2);     // Delete "CD" from the next row
+    term.delete_chars(7, 2, 2); // Delete "CD" from the next row
     term.cursor_down(1, false);
     term.cursor_left(2);
     assert_eq!(term.u8c_cursor().text_utf8(), b"E");
 
-    term.delete_rows(1);            // Middle row of pattern is gone, cursor stays put
+    term.delete_rows(1); // Middle row of pattern is gone, cursor stays put
     assert_eq!(term.u8c_cursor().text_utf8(), b"c");
     term.cursor_up(1, false);
-    term.delete_rows(2);        // Delete remains of test pattern
+    term.delete_rows(2); // Delete remains of test pattern
 
     term.set_text_attrib(Attrib::Bold);
     term.insert_char_eol('-', 3, 15, 20);
     term.set_cursor_row(3);
     term.set_cursor_col(15);
-    assert_eq!(term.u8c_cursor().text_utf8(), b"-");    // Check the insertion
+    assert_eq!(term.u8c_cursor().text_utf8(), b"-"); // Check the insertion
     assert_eq!(term.u8c_cursor().attrib(), Attrib::Bold);
 
     term.set_text_attrib(Attrib::Italic);
     term.append(" and all lines below");
     term.set_text_attrib(Attrib::Normal);
     term.cursor_down(1, false);
-
-
 }
 
 //--------------------------------------------------------------------------------------

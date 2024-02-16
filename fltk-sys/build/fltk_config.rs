@@ -1,5 +1,5 @@
-use std::process::Command;
 use std::path::Path;
+use std::process::Command;
 
 const CPP_SRC: &[&str] = &[
     "cfltk/src/cfl_new.cpp",

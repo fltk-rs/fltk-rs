@@ -98,7 +98,7 @@ fn nfc_get_file(mode: dialog::NativeFileChooserType) -> Option<PathBuf> {
         Err(e) => {
             eprintln!("{}", e);
             None
-        },
+        }
         Ok(a) => match a {
             dialog::NativeFileChooserAction::Success => {
                 let name = nfc.filename();
@@ -108,9 +108,9 @@ fn nfc_get_file(mode: dialog::NativeFileChooserType) -> Option<PathBuf> {
                 } else {
                     Some(name)
                 }
-            },
+            }
             dialog::NativeFileChooserAction::Cancelled => None,
-        }
+        },
     }
 }
 

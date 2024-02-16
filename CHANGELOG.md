@@ -5,6 +5,9 @@
 - Add NativeFileChooser::try_show().
 - Add NativeFileChooserAction enum.
 - Add Tile::move_intersection method.
+- Add Color contrast functions.
+- Add MenuExt::menu_box() and set_menu_box().
+- Add MenuItem::pulldown().
 - Update FLTK submodule.
 
 # [1.4.24] - 2024-01-31

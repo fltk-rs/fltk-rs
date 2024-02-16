@@ -493,6 +493,12 @@ extern "C" {
         item: *const Fl_Menu_Item,
     ) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Menu_Bar_set_menu_box(self_: *mut Fl_Menu_Bar, b: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_menu_box(self_: *const Fl_Menu_Bar) -> ::std::os::raw::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Button {
@@ -984,6 +990,12 @@ extern "C" {
         item: *const Fl_Menu_Item,
     ) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Menu_Button_set_menu_box(self_: *mut Fl_Menu_Button, b: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Menu_Button_menu_box(self_: *const Fl_Menu_Button) -> ::std::os::raw::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Choice {
@@ -1450,6 +1462,12 @@ extern "C" {
         pathnamelen: ::std::os::raw::c_int,
         item: *const Fl_Menu_Item,
     ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Choice_set_menu_box(self_: *mut Fl_Choice, b: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Choice_menu_box(self_: *const Fl_Choice) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1959,6 +1977,12 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_menu_box(self_: *mut Fl_Sys_Menu_Bar, b: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_menu_box(self_: *const Fl_Sys_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Menu_Item_new(
         args: *mut *mut ::std::os::raw::c_char,
         sz: ::std::os::raw::c_int,
@@ -1985,6 +2009,19 @@ extern "C" {
         self_: *mut Fl_Menu_Item,
         x: ::std::os::raw::c_int,
         y: ::std::os::raw::c_int,
+    ) -> *const Fl_Menu_Item;
+}
+extern "C" {
+    pub fn Fl_Menu_Item_pulldown(
+        self_: *mut Fl_Menu_Item,
+        X: ::std::os::raw::c_int,
+        Y: ::std::os::raw::c_int,
+        W: ::std::os::raw::c_int,
+        H: ::std::os::raw::c_int,
+        picked: *const Fl_Menu_Item,
+        arg1: *const ::std::os::raw::c_void,
+        title: *const Fl_Menu_Item,
+        menubar: ::std::os::raw::c_int,
     ) -> *const Fl_Menu_Item;
 }
 extern "C" {

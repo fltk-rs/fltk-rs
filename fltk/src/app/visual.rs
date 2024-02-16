@@ -334,3 +334,42 @@ pub fn add_symbol(label: &str, scalable: bool, draw_cb: fn(Color)) -> Result<(),
         }
     }
 }
+
+/// Contrast modes supported by FLTK
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub enum ContrastMode {
+    /// always return foreground color
+    None = 0,
+    /// legacy (FLTK 1.3.x) contrast function
+    Legacy,
+    /// new (FLTK 1.4.0) default function
+    Cielab,
+    /// optional custom contrast function  
+    Custom,
+}
+
+/// Set the contrast level
+pub fn set_contrast_level(level: i32) {
+    unsafe { fl::Fl_set_contrast_level(level) }
+}
+
+/// Get the contrast level
+pub fn contrast_level() -> i32 {
+    unsafe { fl::Fl_contrast_level() }
+}
+
+/// Set the contrast mode
+pub fn set_contrast_mode(mode: ContrastMode) {
+    unsafe { fl::Fl_set_contrast_mode(mode as i32) }
+}
+
+/// Get the contrast mode
+pub fn contrast_mode() -> ContrastMode {
+    unsafe { mem::transmute(fl::Fl_contrast_mode()) }
+}
+
+/// Set the contrast function, for use in `set_contrast_mode(ContrastMode::Custom)`
+pub fn set_contrast_function(f: fn(fg: Color, bg: Color, fontsize: i32, ctx: i32) -> Color) {
+    unsafe { fl::Fl_set_contrast_function(mem::transmute(f)) }
+}

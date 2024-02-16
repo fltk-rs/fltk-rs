@@ -1037,6 +1037,10 @@ pub unsafe trait MenuExt: WidgetExt {
     unsafe fn set_menu(&mut self, item: crate::menu::MenuItem);
     /// Get an item's pathname
     fn item_pathname(&self, item: Option<&crate::menu::MenuItem>) -> Result<String, FltkError>;
+    /// Set the menu's popup frame type
+    fn set_menu_frame(&mut self, f: FrameType);
+    /// Get the menu's popup frame type
+    fn menu_frame(&self) -> FrameType;
 }
 
 /// Defines the methods implemented by all valuator widgets

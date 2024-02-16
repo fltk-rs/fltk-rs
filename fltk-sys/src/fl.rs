@@ -767,3 +767,27 @@ extern "C" {
 extern "C" {
     pub fn Fl_load_system_icons();
 }
+extern "C" {
+    pub fn Fl_set_contrast_level(level: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_contrast_level() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_set_contrast_mode(mode: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_contrast_mode() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_set_contrast_function(
+        f: ::core::option::Option<
+            unsafe extern "C" fn(
+                arg1: ::std::os::raw::c_uint,
+                arg2: ::std::os::raw::c_uint,
+                arg3: ::std::os::raw::c_int,
+                arg4: ::std::os::raw::c_int,
+            ) -> ::std::os::raw::c_uint,
+        >,
+    );
+}
