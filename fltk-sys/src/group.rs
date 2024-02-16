@@ -4545,13 +4545,6 @@ extern "C" {
     ) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Terminal_Utf8Char_attr_color(
-        self_: *const Fl_Terminal_Utf8Char,
-        col: ::std::os::raw::c_uint,
-        grp: *const Fl_Terminal,
-    ) -> ::std::os::raw::c_uint;
-}
-extern "C" {
     pub fn Fl_Terminal_Utf8Char_attr_fgcolor(
         self_: *const Fl_Terminal_Utf8Char,
         grp: *const Fl_Terminal,
