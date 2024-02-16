@@ -399,6 +399,7 @@ impl MenuItem {
         }
     }
 
+    #[allow(clippy::too_many_arguments)]
     /// Creates a pulldown menu at the specified coordinates and returns its choice
     pub fn pulldown(
         &self,

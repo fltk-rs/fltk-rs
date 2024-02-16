@@ -1337,7 +1337,7 @@ pub mod experimental {
         inner: *const Fl_Terminal_Utf8Char, // This points to a C++ Fl_Terminal::Utf8Char structure
     }
 
-    impl<'a> std::fmt::Debug for Utf8Char {
+    impl std::fmt::Debug for Utf8Char {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             let x = self.text_utf8();
             write!(
@@ -2197,7 +2197,7 @@ pub mod experimental {
     }
 
     // So far only implementing "getter" methods. Todo: methods to modify Utf8Char
-    impl<'a> Utf8Char {
+    impl Utf8Char {
         /// Construct a new Utf8Char, single-byte only. This is really only useful for testing.
         ///  'c' must be "printable" ASCII in the range (0x20 <= c <= 0x7e).
         ///     Anything outside of that is silently ignored.
@@ -2206,8 +2206,7 @@ pub mod experimental {
         pub fn new(c: u8) -> Self {
             unsafe {
                 let u8c = Fl_Terminal_Utf8Char_new_obj(c);
-                let ret = Utf8Char { inner: u8c };
-                ret
+                Utf8Char { inner: u8c }
             }
         }
 
@@ -2376,7 +2375,7 @@ pub mod experimental {
 
         /// Iterator object to step through a sequence of Utf8Char in a BuffRow
         pub fn iter(&self) -> BuffRowIter {
-            BuffRowIter::new(&self, self.length)
+            BuffRowIter::new(self, self.length)
         }
     }
 

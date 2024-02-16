@@ -183,7 +183,7 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
 */
 pub fn belowmouse<Wid: WidgetExt>() -> Option<impl WidgetExt> {
     unsafe {
-        let x = fl::Fl_belowmouse() as *mut fltk_sys::fl::Fl_Widget;
+        let x = fl::Fl_belowmouse();
         if x.is_null() {
             None
         } else {
