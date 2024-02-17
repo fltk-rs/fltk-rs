@@ -708,7 +708,10 @@ fn mb_test5_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     assert_eq!(&uc.bgcolor(), &Color::XtermBlack);
     assert_eq!(&uc.attr_fgcolor(None), &Color::XtermWhite);
     assert_eq!(&uc.attr_bgcolor(None), &Color::XtermBlack);
-    assert_eq!(&uc.charflags(), &CharFlags::NONE);
+    assert_eq!(
+        &uc.charflags(),
+        &(CharFlags::FG_XTERM | CharFlags::BG_XTERM)
+    );
 
     let uc = r.col(1);
     assert_eq!(uc.text_utf8(), b"C");
@@ -717,7 +720,10 @@ fn mb_test5_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     assert_eq!(&uc.bgcolor(), &Color::XtermBlack);
     assert_eq!(&uc.attr_fgcolor(None), &Color::XtermGreen);
     assert_eq!(&uc.attr_bgcolor(None), &Color::XtermBlack);
-    assert_eq!(&uc.charflags(), &CharFlags::FG_XTERM);
+    assert_eq!(
+        &uc.charflags(),
+        &(CharFlags::FG_XTERM | CharFlags::BG_XTERM)
+    );
 
     let uc = r.col(2);
     assert_eq!(uc.text_utf8(), b"D");
@@ -725,13 +731,16 @@ fn mb_test5_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     assert_eq!(&uc.fgcolor(), &Color::XtermGreen);
     assert_eq!(&uc.bgcolor(), &Color::XtermBlack);
     assert_eq!(&uc.attr_fgcolor(None), &Color::from_rgb(0x20, 0xf0, 0x20));
-    assert_eq!(&uc.attr_bgcolor(None), &Color::XtermBlack);
+    assert_eq!(&uc.attr_bgcolor(None), &Color::from_rgb(0x20, 0x20, 0x20));
     assert_eq!(
         &uc.attr_fgcolor(Some(term)),
         &Color::from_rgb(0x20, 0xf0, 0x20)
     );
-    assert_eq!(&uc.attr_bgcolor(Some(term)), &Color::XtermBlack);
-    assert_eq!(&uc.charflags(), &CharFlags::FG_XTERM);
+    assert_eq!(&uc.attr_bgcolor(None), &Color::from_rgb(0x20, 0x20, 0x20));
+    assert_eq!(
+        &uc.charflags(),
+        &(CharFlags::FG_XTERM | CharFlags::BG_XTERM)
+    );
 
     // Put a short string "BCDE" into the buffer, with fg color change after the 'B', bg change after 'C', and bold after 'D'
     term.clear();
@@ -752,7 +761,11 @@ fn mb_test5_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     assert_eq!(&uc.bgcolor(), &Color::XtermBlack);
     assert_eq!(&uc.attr_fgcolor(None), &Color::XtermWhite);
     assert_eq!(&uc.attr_bgcolor(None), &Color::XtermBlack);
-    assert_eq!(&uc.charflags(), &CharFlags::NONE);
+    assert_eq!(
+        &uc.charflags(),
+        &(CharFlags::FG_XTERM | CharFlags::BG_XTERM)
+    );
+
 
     let uc = r.col(1);
     assert_eq!(uc.text_utf8(), b"C");
@@ -761,7 +774,10 @@ fn mb_test5_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     assert_eq!(&uc.bgcolor(), &Color::XtermBlack);
     assert_eq!(&uc.attr_fgcolor(None), &Color::XtermWhite);
     assert_eq!(&uc.attr_bgcolor(None), &Color::XtermBlack);
-    assert_eq!(&uc.charflags(), &CharFlags::FG_XTERM);
+    assert_eq!(
+        &uc.charflags(),
+        &(CharFlags::FG_XTERM | CharFlags::BG_XTERM)
+    );
 
     let uc = r.col(2);
     assert_eq!(uc.text_utf8(), b"D");
@@ -781,7 +797,7 @@ fn mb_test5_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     assert_eq!(&uc.fgcolor(), &Color::XtermWhite);
     assert_eq!(&uc.bgcolor(), &Color::XtermBgBlue);
     assert_eq!(&uc.attr_fgcolor(None), &Color::from_hex(0xf0f0f0));
-    assert_eq!(&uc.attr_bgcolor(None), &Color::from_hex(0x2020e0)); // Is this correct?
+    assert_eq!(&uc.attr_bgcolor(None), &Color::from_hex(0x2020e0));
     assert_eq!(
         &uc.charflags(),
         &(CharFlags::FG_XTERM | CharFlags::BG_XTERM)
