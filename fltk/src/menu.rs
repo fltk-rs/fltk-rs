@@ -409,8 +409,6 @@ impl MenuItem {
         h: i32,
         picked: Option<MenuItem>,
         menu: Option<&impl MenuExt>,
-        title: Option<MenuItem>,
-        menubar: bool,
     ) -> Option<MenuItem> {
         if self.size() == 0 {
             return None;
@@ -421,18 +419,14 @@ impl MenuItem {
             } else {
                 std::ptr::null()
             };
-            let title = if let Some(m) = title {
-                *m.inner as _
-            } else {
-                std::ptr::null()
-            };
+            let title = std::ptr::null();
             let menu = if let Some(m) = menu {
                 m.as_widget_ptr() as _
             } else {
                 std::ptr::null()
             };
             let item =
-                Fl_Menu_Item_pulldown(*self.inner, x, y, w, h, picked, menu, title, menubar as i32);
+                Fl_Menu_Item_pulldown(*self.inner, x, y, w, h, picked, menu, title, 0);
             if item.is_null() {
                 None
             } else {
