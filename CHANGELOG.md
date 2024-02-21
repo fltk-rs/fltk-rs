@@ -1,13 +1,14 @@
 # Changelog
 
 
-# [1.4.25] - Unreleased
+# [1.4.25] - 2024-02-21
 - Add NativeFileChooser::try_show().
 - Add NativeFileChooserAction enum.
 - Add Tile::move_intersection method.
 - Add Color contrast functions.
 - Add MenuExt::menu_box() and set_menu_box().
 - Add MenuItem::pulldown().
+- Update Terminal widget and track changes in fltk Fl_Terminal widget color handling and docs by @jgriffitts.
 - Update FLTK submodule.
 
 # [1.4.24] - 2024-01-31
