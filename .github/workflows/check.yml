@@ -71,4 +71,4 @@ jobs:
           cargo update -p cmake --precise 0.1.48
           cargo update -p crossbeam-channel --precise 0.5.8
           cargo update -p crossbeam-utils --precise 0.8.16
-          cargo check --target=aarch64-unknown-linux-gnu
+          cargo build --example hello_button --target=aarch64-unknown-linux-gnu
