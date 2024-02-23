@@ -1999,6 +1999,26 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Tile_size_range_by_index(
+        self_: *mut Fl_Tile,
+        index: ::std::os::raw::c_int,
+        minw: ::std::os::raw::c_int,
+        minh: ::std::os::raw::c_int,
+        maxw: ::std::os::raw::c_int,
+        maxh: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Tile_size_range_by_child(
+        self_: *mut Fl_Tile,
+        w: *mut Fl_Widget,
+        minw: ::std::os::raw::c_int,
+        minh: ::std::os::raw::c_int,
+        maxw: ::std::os::raw::c_int,
+        maxh: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Tile_begin(self_: *mut Fl_Tile);
 }
 extern "C" {
