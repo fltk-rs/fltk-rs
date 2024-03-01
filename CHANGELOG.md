@@ -1,6 +1,11 @@
 # Changelog
 
 
+# [1.4.26] - TBD
+- Add Tile::size_range_by_child() and size_range_by_index().
+- Fix TreeItem draw_item_content with newed items.
+- Update FLTK submodule.
+
 # [1.4.25] - 2024-02-21
 - Add NativeFileChooser::try_show().
 - Add NativeFileChooserAction enum.
