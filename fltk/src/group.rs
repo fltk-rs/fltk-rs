@@ -379,7 +379,7 @@ impl Tile {
     /// Set the allowed size range for the given child widget
     pub fn size_range_by_widget<W: WidgetExt>(&mut self, w: &W, minw: i32, minh: i32, maxw: i32, maxh: i32) {
         unsafe {
-            Fl_Tile_size_range_by_index(self.inner.widget() as _, w.as_widget_ptr() as _, minw, minh, maxw, maxh)
+            Fl_Tile_size_range_by_child(self.inner.widget() as _, w.as_widget_ptr() as _, minw, minh, maxw, maxh)
         }
     }
 }
