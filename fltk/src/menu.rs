@@ -425,8 +425,7 @@ impl MenuItem {
             } else {
                 std::ptr::null()
             };
-            let item =
-                Fl_Menu_Item_pulldown(*self.inner, x, y, w, h, picked, menu, title, 0);
+            let item = Fl_Menu_Item_pulldown(*self.inner, x, y, w, h, picked, menu, title, 0);
             if item.is_null() {
                 None
             } else {

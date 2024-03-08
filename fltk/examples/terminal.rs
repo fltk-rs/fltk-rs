@@ -766,7 +766,6 @@ fn mb_test5_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
         &(CharFlags::FG_XTERM | CharFlags::BG_XTERM)
     );
 
-
     let uc = r.col(1);
     assert_eq!(uc.text_utf8(), b"C");
     assert!(uc.is_char(b'C'));
