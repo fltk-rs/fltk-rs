@@ -377,7 +377,7 @@ impl Tile {
     }
 
     /// Set the allowed size range for the given child widget
-    pub fn size_range_by_widget<W: WidgetExt>(
+    pub fn size_range_by_child<W: WidgetExt>(
         &mut self,
         w: &W,
         minw: i32,
@@ -1149,10 +1149,10 @@ pub mod experimental {
             widget: &mut W,
             row: impl Into<GridRange>,
             col: impl Into<GridRange>,
-        ) {
+        ) -> Result<(), FltkError> {
             let row = row.into();
             let col = col.into();
-            self.set_widget_ext(widget, row, col, GridAlign::FILL);
+            self.set_widget_ext(widget, row, col, GridAlign::FILL)
         }
         /// Set the widget at row/column along with row span and column span and alignment
         fn set_widget_ext_<W: WidgetExt>(
@@ -1183,10 +1183,10 @@ pub mod experimental {
             row: impl Into<GridRange>,
             col: impl Into<GridRange>,
             align: GridAlign,
-        ) {
+        ) -> Result<(), FltkError> {
             let row = row.into();
             let col = col.into();
-            self.set_widget_ext_(
+            let e = self.set_widget_ext_(
                 widget,
                 row.start as _,
                 col.start as _,
@@ -1194,6 +1194,11 @@ pub mod experimental {
                 col.len() as _,
                 align,
             );
+            if e.is_null() {
+                Err(FltkError::Internal(FltkErrorKind::FailedGridSetWidget))
+            } else {
+                Ok(())
+            }
         }
         /// Set the column width
         pub fn set_col_width(&mut self, col: i32, value: i32) {

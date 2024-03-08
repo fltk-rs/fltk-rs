@@ -51,6 +51,8 @@ pub enum FltkErrorKind {
     PrintError,
     /// Invalid color
     InvalidColor,
+    /// Failed to set grid widget
+    FailedGridSetWidget,
 }
 
 impl std::error::Error for FltkError {
