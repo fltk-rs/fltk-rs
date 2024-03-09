@@ -141,7 +141,8 @@ pub fn is_ptr_of<W: crate::prelude::WidgetBase>(w: *mut fltk_sys::widget::Fl_Wid
     W::from_dyn_widget_ptr(w).is_some()
 }
 
-/// Get the dynamic typeinfo of a widget
+/// Get the dynamic typeinfo of a widget, useful for debugging.
+/// This prints the mangled name, which can be unmangled using a crate like cpp_demangle
 pub fn type_name<W: crate::prelude::WidgetExt>(w: &W) -> String {
     unsafe {
         let p = Fl_type_name(w.as_widget_ptr() as _);

@@ -1,9 +1,11 @@
 # Changelog
 
 
-# [1.4.26] - TBD
+# [1.4.26] - 2024-03-10
 - Add Tile::size_range_by_child() and size_range_by_index().
+- Add utils::type_name for debugging purposes.
 - Fix TreeItem draw_item_content with newed items.
+- Fix single-threaded builds and linux arm64 cross-compilation.
 - Update FLTK submodule.
 
 # [1.4.25] - 2024-02-21
