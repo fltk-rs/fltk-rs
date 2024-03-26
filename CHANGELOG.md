@@ -1,6 +1,11 @@
 # Changelog
 
 
+# [1.4.27] - TBD
+- Document that WindowExt::fullscreen() requires that the window is resizable as per upstream.
+- Use data_w and data_h for the RgbImage::convert method.
+- Update FLTK submodule.
+
 # [1.4.26] - 2024-03-10
 - Add Tile::size_range_by_child() and size_range_by_index().
 - Add utils::type_name for debugging purposes.

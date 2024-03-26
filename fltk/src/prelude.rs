@@ -713,7 +713,8 @@ pub unsafe trait WindowExt: GroupExt {
         Self: Sized;
     /// Makes a window modal, should be called before `show`
     fn make_modal(&mut self, val: bool);
-    /// Makes a window fullscreen
+    /// Makes a window fullscreen.
+    /// Requires that the window is resizable.
     fn fullscreen(&mut self, val: bool);
     /// Makes the window current
     fn make_current(&mut self);
