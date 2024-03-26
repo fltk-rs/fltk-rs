@@ -899,8 +899,8 @@ impl RgbImage {
         if depth == new_depth {
             Ok(self.copy())
         } else {
-            let w = self.w();
-            let h = self.h();
+            let w = self.data_w();
+            let h = self.data_h();
             let data = self.to_rgb_data();
             let mut temp = Vec::new();
             match depth {
