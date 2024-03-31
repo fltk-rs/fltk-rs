@@ -189,7 +189,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
 
         if target_triple == "aarch64-apple-darwin" {
             dst.define("CMAKE_OSX_ARCHITECTURES", "arm64");
-            if target_triple != std::env::var("TARGET").unwrap() {
+            if target_triple != std::env::var("HOST").unwrap() {
                 dst.define("CMAKE_SYSTEM_VERSION", "20.0.0");
             }
         } else if target_triple == "x86_64-apple-darwin" {
