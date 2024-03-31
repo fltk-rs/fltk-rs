@@ -1,7 +1,7 @@
 # Changelog
 
 
-# [1.4.27] - TBD
+# [1.4.27] - 2024-04-01
 - Document that WindowExt::fullscreen() requires that the window is resizable as per upstream.
 - Use data_w and data_h for the RgbImage::convert method.
 - Update FLTK submodule.
