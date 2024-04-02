@@ -34,7 +34,7 @@ fn main() {
     if cfg!(feature = "fltk-bundled") {
         bundled::get(&target_triple, &out_dir);
     } else if cfg!(feature = "fltk-config") {
-        let version = utils::fltk_config_version();
+        let version = utils::proc_output(&["fltk-config", "--api-version"]);
         if version != "1.4" {
             panic!(
                 "The fltk-config feature requires FLTK 1.4. The current version is {}",

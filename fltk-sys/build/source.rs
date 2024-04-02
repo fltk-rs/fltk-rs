@@ -1,3 +1,4 @@
+use crate::utils;
 use std::{env, path::Path, process::Command};
 
 pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
@@ -187,13 +188,16 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             "Release"
         };
 
-        if target_triple == "aarch64-apple-darwin" {
-            dst.define("CMAKE_OSX_ARCHITECTURES", "arm64");
-            if target_triple != std::env::var("HOST").unwrap() {
-                dst.define("CMAKE_SYSTEM_VERSION", "20.0.0");
+        if target_triple.contains("darwin") {
+            if target_triple == "aarch64-apple-darwin" {
+                dst.define("CMAKE_OSX_ARCHITECTURES", "arm64");
+            } else if target_triple == "x86_64-apple-darwin" {
+                dst.define("CMAKE_OSX_ARCHITECTURES", "x86_64");
             }
-        } else if target_triple == "x86_64-apple-darwin" {
-            dst.define("CMAKE_OSX_ARCHITECTURES", "x86_64");
+            let host_triple = std::env::var("HOST").unwrap();
+            if target_triple != host_triple {
+                dst.define("CMAKE_SYSTEM_VERSION", utils::proc_output(&["uname", "-r"]));
+            }
         }
 
         let _dst = dst

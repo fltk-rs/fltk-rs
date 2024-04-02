@@ -8,9 +8,9 @@ pub fn has_program(prog: &str) -> bool {
     }
 }
 
-pub fn fltk_config_version() -> String {
-    let out = match std::process::Command::new("fltk-config")
-        .arg("--api-version")
+pub fn proc_output(args: &[&str]) -> String {
+    let out = match std::process::Command::new(args[0])
+        .args(&args[1..])
         .output()
     {
         Ok(out) => out.stdout,
