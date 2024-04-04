@@ -31,8 +31,5 @@ jobs:
     - name: Build
       shell: bash
       run: |
-        if [ "$RUNNER_OS" == "Linux" ]; then
           git submodule update --init --recursive && cargo build --examples --verbose --features=use-ninja
-        else
-          git submodule update --init --recursive && cargo build --verbose --features=use-ninja
-        fi
+
