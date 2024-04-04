@@ -1,5 +1,7 @@
 # Changelog
 
+# [1.4.28] - 2024-04-05
+- Fix macos link error required for macos > 11.0 by @volitionsystems.
 
 # [1.4.27] - 2024-04-01
 - Document that WindowExt::fullscreen() requires that the window is resizable as per upstream.
