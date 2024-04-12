@@ -411,30 +411,30 @@ fn mb_test1_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     term.append("------------\n");
 
     term.set_text_fg_color(Color::Green);
-    term.put_char('A', 0, 0);
-    term.put_char('B', 1, 1);
-    term.put_char('C', 2, 2);
-    term.put_char('D', 3, 3);
-    term.put_char('E', 4, 4);
-    term.put_char('F', 5, 5);
+    term.plot_char('A', 0, 0);
+    term.plot_char('B', 1, 1);
+    term.plot_char('C', 2, 2);
+    term.plot_char('D', 3, 3);
+    term.plot_char('E', 4, 4);
+    term.plot_char('F', 5, 5);
     term.set_text_fg_color(Color::XtermWhite);
 
     assert_eq!(term.cursor_row(), 11);
     assert_eq!(term.cursor_col(), 0);
 
     term.set_text_bg_color(Color::DarkBlue);
-    term.put_char_utf8('b', 8, 1);
-    term.put_char_utf8('↑', 9, 1);
-    term.put_char_utf8('c', 8, 2);
-    term.put_char_utf8('↑', 9, 2);
-    term.put_char_utf8('d', 8, 3);
-    term.put_char_utf8('↑', 9, 3);
-    term.put_char_utf8('e', 8, 4);
-    term.put_char_utf8('↑', 9, 4);
-    term.put_char_utf8('f', 8, 5);
-    term.put_char_utf8('↑', 9, 5);
-    term.put_char_utf8('g', 8, 6);
-    term.put_char_utf8('↑', 9, 6);
+    term.plot_char_utf8('b', 8, 1);
+    term.plot_char_utf8('↑', 9, 1);
+    term.plot_char_utf8('c', 8, 2);
+    term.plot_char_utf8('↑', 9, 2);
+    term.plot_char_utf8('d', 8, 3);
+    term.plot_char_utf8('↑', 9, 3);
+    term.plot_char_utf8('e', 8, 4);
+    term.plot_char_utf8('↑', 9, 4);
+    term.plot_char_utf8('f', 8, 5);
+    term.plot_char_utf8('↑', 9, 5);
+    term.plot_char_utf8('g', 8, 6);
+    term.plot_char_utf8('↑', 9, 6);
     term.set_text_bg_color(Color::TransparentBg);
 
     term.set_text_attrib(Attrib::Inverse | Attrib::Italic);

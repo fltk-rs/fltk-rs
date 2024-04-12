@@ -1851,9 +1851,9 @@ pub mod experimental {
         /// - dcol must be in range `0..(display_columns()-1)`
         /// - Does not trigger redraws
         /// - Does NOT handle control codes, ANSI or XTERM escape sequences.
-        pub fn put_char(&mut self, c: char, row: i32, col: i32) {
+        pub fn plot_char(&mut self, c: char, row: i32, col: i32) {
             unsafe {
-                Fl_Terminal_put_char(
+                Fl_Terminal_plot_char(
                     self.inner.widget() as _,
                     c as std::os::raw::c_char,
                     row,
@@ -1872,10 +1872,10 @@ pub mod experimental {
         /// - Does not trigger redraws
         /// - Does not handle ANSI or XTERM escape sequences
         /// - Invalid UTF-8 chars show the error character (¿) depending on show_unknown(bool).
-        pub fn put_char_utf8(&mut self, c: char, drow: i32, dcol: i32) {
+        pub fn plot_char_utf8(&mut self, c: char, drow: i32, dcol: i32) {
             let txt = c.to_string();
             unsafe {
-                Fl_Terminal_put_char_utf8(
+                Fl_Terminal_plot_char_utf8(
                     self.inner.widget() as _,
                     txt.as_ptr() as _,
                     txt.len() as _,

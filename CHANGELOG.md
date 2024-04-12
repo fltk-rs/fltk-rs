@@ -1,5 +1,10 @@
 # Changelog
 
+
+# [1.4.29] - TBD
+- Rename experimental Terminal::put_char* to plot_char*.
+- Update FLTK submodule.
+
 # [1.4.28] - 2024-04-05
 - Fix macos link error required for macos > 11.0 by @volitionsystems.
 

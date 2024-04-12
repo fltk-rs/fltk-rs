@@ -4435,7 +4435,7 @@ extern "C" {
     pub fn Fl_Terminal_printf(self_: *mut Fl_Terminal, fmt: *const ::std::os::raw::c_char, ...);
 }
 extern "C" {
-    pub fn Fl_Terminal_put_char(
+    pub fn Fl_Terminal_plot_char(
         self_: *mut Fl_Terminal,
         c: ::std::os::raw::c_char,
         row: ::std::os::raw::c_int,
@@ -4443,7 +4443,7 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Terminal_put_char_utf8(
+    pub fn Fl_Terminal_plot_char_utf8(
         self_: *mut Fl_Terminal,
         txt: *const ::std::os::raw::c_char,
         len: ::std::os::raw::c_int,
