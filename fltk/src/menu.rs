@@ -641,6 +641,13 @@ impl MenuItem {
         }
     }
 
+    /// Run the menu item's callback
+    pub fn do_callback<W: MenuExt>(&mut self, w: &W) {
+        unsafe {
+            Fl_Menu_Item_do_callback(*self.inner, w.as_widget_ptr() as _);
+        }
+    }
+
     /// Use a sender to send a message during callback
     pub fn emit<T: 'static + Clone + Send + Sync>(
         &mut self,

@@ -3,6 +3,7 @@
 
 # [1.4.29] - TBD
 - Rename experimental Terminal::put_char* to plot_char*.
+- Add MenuItem::do_callback().
 - Update FLTK submodule.
 
 # [1.4.28] - 2024-04-05
