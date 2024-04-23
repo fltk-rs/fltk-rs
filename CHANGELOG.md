@@ -1,7 +1,7 @@
 # Changelog
 
 
-# [1.4.29] - TBD
+# [1.4.29] - 2024-04-24
 - Rename experimental Terminal::put_char* to plot_char*.
 - Add MenuItem::do_callback().
 - Update FLTK submodule.
