@@ -196,7 +196,10 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             }
             let host_triple = std::env::var("HOST").unwrap();
             if target_triple != host_triple {
-                dst.define("CMAKE_SYSTEM_VERSION", utils::proc_output(&["uname", "-r"]));
+                dst.define(
+                    "CMAKE_SYSTEM_VERSION",
+                    &format!("{}.0.0", utils::get_taget_darwin_major_version().unwrap()),
+                );
             }
         }
 
