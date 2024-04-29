@@ -18,7 +18,7 @@ name = "fltk"
 path = "src/lib.rs"
 
 [dependencies]
-fltk-sys = { path = "../fltk-sys", version = "1.4.29" }
+fltk-sys = { path = "../fltk-sys", version = "=1.4.29" }
 bitflags = "^2"
 paste = "1"
 crossbeam-channel = "0.5"
