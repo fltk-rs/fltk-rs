@@ -1,10 +1,10 @@
 [package]
 name = "fltk-sys"
-version = "1.4.29"
+version = "1.4.30"
 authors = ["The fltk-rs Authors"]
 build = "build/main.rs"
 edition = "2021"
-rust-version = "1.56"
+rust-version = "1.63"
 description = "Rust bindings for the FLTK GUI library"
 repository = "https://github.com/fltk-rs/fltk-rs"
 keywords = ["gui", "bindings", "graphics"]

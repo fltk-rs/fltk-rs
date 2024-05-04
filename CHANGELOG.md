@@ -1,6 +1,12 @@
 # Changelog
 
 
+# [1.4.30] - TBA
+- Pin fltk to fltk-sys version so that users targeting older versions of fltk don't get a newer version of fltk-sys automatically.
+- Use MACOSX_DEPLOYMENT_TARGET to determine CMAKE_SYSTEM_VERSION when crosscompiling from linux to macos.
+- Update MSRV to 1.63 since cc-rs requires it, which is depended on by cmake-rs.
+- Update FLTK submodule (fixes wayland IME and crosscompiling from linux to macos with sdk < 11).
+
 # [1.4.29] - 2024-04-24
 - Rename experimental Terminal::put_char* to plot_char*.
 - Add MenuItem::do_callback().
