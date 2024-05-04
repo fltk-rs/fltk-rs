@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         rust:
-          - 1.56.0
+          - 1.63.0
     steps:
       - name: Checkout sources
         uses: actions/checkout@v3
@@ -26,9 +26,6 @@ jobs:
           toolchain: ${{ matrix.rust }}
           override: true
       - run: |
-          cargo update -p cmake --precise 0.1.48
-          cargo update -p crossbeam-channel --precise 0.5.8
-          cargo update -p crossbeam-utils --precise 0.8.16
           cargo check
   check-arm64:
     name: Check-arm64
@@ -68,7 +65,4 @@ jobs:
           toolchain: stable
           override: true
       - run: |
-          cargo update -p cmake --precise 0.1.48
-          cargo update -p crossbeam-channel --precise 0.5.8
-          cargo update -p crossbeam-utils --precise 0.8.16
           cargo check --example hello_button --target=aarch64-unknown-linux-gnu
