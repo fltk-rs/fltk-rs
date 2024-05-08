@@ -2,11 +2,11 @@
 
 extern "C" {
     pub fn Fl_filename_expand(
-        out: *mut ::std::os::raw::c_char,
-        len: ::std::os::raw::c_int,
-        in_: *const ::std::os::raw::c_char,
-    ) -> ::std::os::raw::c_int;
+        out: *mut ::core::ffi::c_char,
+        len: ::core::ffi::c_int,
+        in_: *const ::core::ffi::c_char,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_type_name(w: *mut ::std::os::raw::c_void) -> *const ::std::os::raw::c_char;
+    pub fn Fl_type_name(w: *mut ::core::ffi::c_void) -> *const ::core::ffi::c_char;
 }

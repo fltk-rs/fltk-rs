@@ -249,8 +249,7 @@ For default application colors, fltk-rs provides `app::background()`, `app::back
 
 ## Build Dependencies
 
-Rust (version > 1.62), CMake (version > 3.15), Git and a C++17 compiler need to be installed and in your PATH for a cross-platform build from source. [Ninja](https://github.com/ninja-build/ninja) is recommended, but not required. This crate also offers a bundled form of fltk on selected x86_64 and aarch64 platforms (Windows (msvc and gnu), MacOS, Linux), this can be enabled using the fltk-bundled feature flag as mentioned in the usage section (this requires curl and tar to download and unpack the bundled libraries).
-The Rust and CMake versions depend on the underlying dependencies of fltk-rs.
+Rust (version > 1.63), CMake (version > 3.15), Git and a C++17 compiler need to be installed and in your PATH for a cross-platform build from source. [Ninja](https://github.com/ninja-build/ninja) is recommended, but not required. This crate also offers a bundled form of fltk on selected x86_64 and aarch64 platforms (Windows (msvc and gnu), MacOS, Linux), this can be enabled using the fltk-bundled feature flag as mentioned in the usage section (this requires curl and tar to download and unpack the bundled libraries).
 
 - Windows: 
     - MSVC: Windows SDK

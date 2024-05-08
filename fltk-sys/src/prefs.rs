@@ -6,38 +6,38 @@ pub struct Fl_Preferences {
     _unused: [u8; 0],
 }
 extern "C" {
-    pub fn Fl_Preferences_set_file_access(flags: ::std::os::raw::c_uint);
+    pub fn Fl_Preferences_set_file_access(flags: ::core::ffi::c_uint);
 }
 extern "C" {
-    pub fn Fl_Preferences_file_access() -> ::std::os::raw::c_uint;
+    pub fn Fl_Preferences_file_access() -> ::core::ffi::c_uint;
 }
 extern "C" {
-    pub fn Fl_Preferences_remove(id_: *mut ::std::os::raw::c_void) -> ::std::os::raw::c_char;
+    pub fn Fl_Preferences_remove(id_: *mut ::core::ffi::c_void) -> ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Preferences_new(
-        root: ::std::os::raw::c_int,
-        vendor: *const ::std::os::raw::c_char,
-        application: *const ::std::os::raw::c_char,
+        root: ::core::ffi::c_int,
+        vendor: *const ::core::ffi::c_char,
+        application: *const ::core::ffi::c_char,
     ) -> *mut Fl_Preferences;
 }
 extern "C" {
     pub fn Fl_Preferences_from_path(
-        path: *const ::std::os::raw::c_char,
-        vendor: *const ::std::os::raw::c_char,
-        application: *const ::std::os::raw::c_char,
+        path: *const ::core::ffi::c_char,
+        vendor: *const ::core::ffi::c_char,
+        application: *const ::core::ffi::c_char,
     ) -> *mut Fl_Preferences;
 }
 extern "C" {
     pub fn Fl_Preferences_from_parent_group(
         parent: *mut Fl_Preferences,
-        group: *const ::std::os::raw::c_char,
+        group: *const ::core::ffi::c_char,
     ) -> *mut Fl_Preferences;
 }
 extern "C" {
     pub fn Fl_Preferences_from_parent_idx(
         parent: *mut Fl_Preferences,
-        groupIndex: ::std::os::raw::c_int,
+        groupIndex: ::core::ffi::c_int,
     ) -> *mut Fl_Preferences;
 }
 extern "C" {
@@ -47,190 +47,190 @@ extern "C" {
     pub fn Fl_Preferences_delete(arg1: *mut Fl_Preferences);
 }
 extern "C" {
-    pub fn Fl_Preferences_from_id(id: *mut ::std::os::raw::c_void) -> *mut Fl_Preferences;
+    pub fn Fl_Preferences_from_id(id: *mut ::core::ffi::c_void) -> *mut Fl_Preferences;
 }
 extern "C" {
     pub fn Fl_Preferences_filename(
         prefs: *mut Fl_Preferences,
-        buffer: *mut ::std::os::raw::c_char,
-        buffer_size: ::std::os::raw::c_ulong,
-    ) -> ::std::os::raw::c_int;
+        buffer: *mut ::core::ffi::c_char,
+        buffer_size: ::core::ffi::c_ulong,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Preferences_get_userdata_path(
         prefs: *mut Fl_Preferences,
-        path: *mut ::std::os::raw::c_char,
-        pathlen: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_char;
+        path: *mut ::core::ffi::c_char,
+        pathlen: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Preferences_id(prefs: *mut Fl_Preferences) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Preferences_id(prefs: *mut Fl_Preferences) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
-    pub fn Fl_Preferences_name(prefs: *mut Fl_Preferences) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Preferences_name(prefs: *mut Fl_Preferences) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Preferences_path(prefs: *mut Fl_Preferences) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Preferences_path(prefs: *mut Fl_Preferences) -> *const ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Preferences_groups(prefs: *mut Fl_Preferences) -> ::std::os::raw::c_int;
+    pub fn Fl_Preferences_groups(prefs: *mut Fl_Preferences) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Preferences_group(
         prefs: *mut Fl_Preferences,
-        num_group: ::std::os::raw::c_int,
-    ) -> *const ::std::os::raw::c_char;
+        num_group: ::core::ffi::c_int,
+    ) -> *const ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Preferences_group_exists(
         prefs: *mut Fl_Preferences,
-        key: *const ::std::os::raw::c_char,
-    ) -> ::std::os::raw::c_char;
+        key: *const ::core::ffi::c_char,
+    ) -> ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Preferences_delete_group(
         prefs: *mut Fl_Preferences,
-        group: *const ::std::os::raw::c_char,
-    ) -> ::std::os::raw::c_char;
+        group: *const ::core::ffi::c_char,
+    ) -> ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Preferences_delete_all_groups(prefs: *mut Fl_Preferences) -> ::std::os::raw::c_char;
+    pub fn Fl_Preferences_delete_all_groups(prefs: *mut Fl_Preferences) -> ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Preferences_entries(prefs: *mut Fl_Preferences) -> ::std::os::raw::c_int;
+    pub fn Fl_Preferences_entries(prefs: *mut Fl_Preferences) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Preferences_entry(
         prefs: *mut Fl_Preferences,
-        index: ::std::os::raw::c_int,
-    ) -> *const ::std::os::raw::c_char;
+        index: ::core::ffi::c_int,
+    ) -> *const ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Preferences_entry_exists(
         prefs: *mut Fl_Preferences,
-        key: *const ::std::os::raw::c_char,
-    ) -> ::std::os::raw::c_char;
+        key: *const ::core::ffi::c_char,
+    ) -> ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Preferences_delete_entry(
         prefs: *mut Fl_Preferences,
-        entry: *const ::std::os::raw::c_char,
-    ) -> ::std::os::raw::c_char;
+        entry: *const ::core::ffi::c_char,
+    ) -> ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Preferences_delete_all_entries(prefs: *mut Fl_Preferences) -> ::std::os::raw::c_char;
+    pub fn Fl_Preferences_delete_all_entries(prefs: *mut Fl_Preferences) -> ::core::ffi::c_char;
 }
 extern "C" {
-    pub fn Fl_Preferences_clear(prefs: *mut Fl_Preferences) -> ::std::os::raw::c_char;
+    pub fn Fl_Preferences_clear(prefs: *mut Fl_Preferences) -> ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Preferences_seti(
         prefs: *mut Fl_Preferences,
-        entry: *const ::std::os::raw::c_char,
-        value: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_char;
+        entry: *const ::core::ffi::c_char,
+        value: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Preferences_setf(
         prefs: *mut Fl_Preferences,
-        entry: *const ::std::os::raw::c_char,
+        entry: *const ::core::ffi::c_char,
         value: f32,
-    ) -> ::std::os::raw::c_char;
+    ) -> ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Preferences_setfp(
         prefs: *mut Fl_Preferences,
-        entry: *const ::std::os::raw::c_char,
+        entry: *const ::core::ffi::c_char,
         value: f32,
-        precision: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_char;
+        precision: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Preferences_setd(
         prefs: *mut Fl_Preferences,
-        entry: *const ::std::os::raw::c_char,
+        entry: *const ::core::ffi::c_char,
         value: f64,
-    ) -> ::std::os::raw::c_char;
+    ) -> ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Preferences_setdp(
         prefs: *mut Fl_Preferences,
-        entry: *const ::std::os::raw::c_char,
+        entry: *const ::core::ffi::c_char,
         value: f64,
-        precision: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_char;
+        precision: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Preferences_sets(
         prefs: *mut Fl_Preferences,
-        entry: *const ::std::os::raw::c_char,
-        value: *const ::std::os::raw::c_char,
-    ) -> ::std::os::raw::c_char;
+        entry: *const ::core::ffi::c_char,
+        value: *const ::core::ffi::c_char,
+    ) -> ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Preferences_setv(
         prefs: *mut Fl_Preferences,
-        entry: *const ::std::os::raw::c_char,
-        value: *const ::std::os::raw::c_void,
-        size: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_char;
+        entry: *const ::core::ffi::c_char,
+        value: *const ::core::ffi::c_void,
+        size: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Preferences_geti(
         prefs: *mut Fl_Preferences,
-        entry: *const ::std::os::raw::c_char,
-        value: *mut ::std::os::raw::c_int,
-        defaultValue: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_char;
+        entry: *const ::core::ffi::c_char,
+        value: *mut ::core::ffi::c_int,
+        defaultValue: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Preferences_getf(
         prefs: *mut Fl_Preferences,
-        entry: *const ::std::os::raw::c_char,
+        entry: *const ::core::ffi::c_char,
         value: *mut f32,
         defaultValue: f32,
-    ) -> ::std::os::raw::c_char;
+    ) -> ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Preferences_getd(
         prefs: *mut Fl_Preferences,
-        entry: *const ::std::os::raw::c_char,
+        entry: *const ::core::ffi::c_char,
         value: *mut f64,
         defaultValue: f64,
-    ) -> ::std::os::raw::c_char;
+    ) -> ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Preferences_gets(
         prefs: *mut Fl_Preferences,
-        entry: *const ::std::os::raw::c_char,
-        value: *mut ::std::os::raw::c_char,
-        defaultValue: *const ::std::os::raw::c_char,
-        maxSize: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_char;
+        entry: *const ::core::ffi::c_char,
+        value: *mut ::core::ffi::c_char,
+        defaultValue: *const ::core::ffi::c_char,
+        maxSize: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Preferences_getv(
         prefs: *mut Fl_Preferences,
-        entry: *const ::std::os::raw::c_char,
-        value: *mut ::std::os::raw::c_void,
-        defaultValue: *const ::std::os::raw::c_void,
-        defaultSize: ::std::os::raw::c_int,
-        maxSize: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_char;
+        entry: *const ::core::ffi::c_char,
+        value: *mut ::core::ffi::c_void,
+        defaultValue: *const ::core::ffi::c_void,
+        defaultSize: ::core::ffi::c_int,
+        maxSize: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Preferences_getv2(
         prefs: *mut Fl_Preferences,
-        entry: *const ::std::os::raw::c_char,
-        value: *mut ::std::os::raw::c_void,
-        defaultValue: *const ::std::os::raw::c_void,
-        defaultSize: ::std::os::raw::c_int,
-        size: *mut ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_char;
+        entry: *const ::core::ffi::c_char,
+        value: *mut ::core::ffi::c_void,
+        defaultValue: *const ::core::ffi::c_void,
+        defaultSize: ::core::ffi::c_int,
+        size: *mut ::core::ffi::c_int,
+    ) -> ::core::ffi::c_char;
 }
 extern "C" {
     pub fn Fl_Preferences_size(
         prefs: *mut Fl_Preferences,
-        entry: *const ::std::os::raw::c_char,
-    ) -> ::std::os::raw::c_int;
+        entry: *const ::core::ffi::c_char,
+    ) -> ::core::ffi::c_int;
 }
