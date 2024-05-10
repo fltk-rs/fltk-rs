@@ -179,10 +179,10 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
         }
 
         let profile = if let Ok(prof) = env::var("OPT_LEVEL") {
-            if prof == "z" || prof == "s" {
-                "MinSizeRel"
-            } else {
-                "Release"
+            match prof.as_str() {
+                "z" | "s" => "MinSizeRel",
+                "0" if !target_triple.contains("msvc") => "Debug",
+                _ => "Release",
             }
         } else {
             "Release"
