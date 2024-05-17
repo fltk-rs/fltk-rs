@@ -4344,15 +4344,6 @@ extern "C" {
     pub fn Fl_Terminal_display_rows(self_: *const Fl_Terminal) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Terminal_set_display_rows(self_: *mut Fl_Terminal, set: ::core::ffi::c_int);
-}
-extern "C" {
-    pub fn Fl_Terminal_history_lines(self_: *const Fl_Terminal) -> ::core::ffi::c_int;
-}
-extern "C" {
-    pub fn Fl_Terminal_set_history_lines(self_: *mut Fl_Terminal, set: ::core::ffi::c_int);
-}
-extern "C" {
     pub fn Fl_Terminal_history_rows(self_: *const Fl_Terminal) -> ::core::ffi::c_int;
 }
 extern "C" {
@@ -4452,6 +4443,12 @@ extern "C" {
     pub fn Fl_Terminal_set_scrollbar_size(self_: *mut Fl_Terminal, set: ::core::ffi::c_int);
 }
 extern "C" {
+    pub fn Fl_Terminal_hscrollbar_style(self_: *const Fl_Terminal) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Terminal_set_hscrollbar_style(self_: *mut Fl_Terminal, set: ::core::ffi::c_int);
+}
+extern "C" {
     pub fn Fl_Terminal_selection_bg_color(self_: *const Fl_Terminal) -> ::core::ffi::c_uint;
 }
 extern "C" {
@@ -4520,6 +4517,26 @@ extern "C" {
 extern "C" {
     pub fn Fl_Terminal_set_text_size(self_: *mut Fl_Terminal, set: ::core::ffi::c_int);
 }
+extern "C" {
+    pub fn Fl_Terminal_text(
+        self_: *const Fl_Terminal,
+        lines_below_cursor: ::core::ffi::c_int,
+    ) -> *const ::core::ffi::c_char;
+}
+extern "C" {
+    pub fn Fl_Terminal_selection_text(self_: *const Fl_Terminal) -> *const ::core::ffi::c_char;
+}
+extern "C" {
+    pub fn Fl_Terminal_selection_text_len(self_: *const Fl_Terminal) -> ::core::ffi::c_int;
+}
+#[doc = " Access to terminal widget's vertical and horizontal scrollbar"]
+pub type Fl_Terminal_Scrollbar = ::core::ffi::c_void;
+extern "C" {
+    pub fn Fl_Terminal_scrollbar(self_: *mut Fl_Terminal) -> *mut Fl_Terminal_Scrollbar;
+}
+extern "C" {
+    pub fn Fl_Terminal_hscrollbar(self_: *mut Fl_Terminal) -> *mut Fl_Terminal_Scrollbar;
+}
 #[doc = " Utf8Char class, used to describe characters in the terminal ring buffer"]
 pub type Fl_Terminal_Utf8Char = ::core::ffi::c_void;
 extern "C" {
@@ -4577,28 +4594,13 @@ extern "C" {
     pub fn Fl_Terminal_Utf8Char_new_obj(c: ::core::ffi::c_uchar) -> *mut Fl_Terminal_Utf8Char;
 }
 extern "C" {
-    pub fn Fl_Terminal_selection_text(self_: *const Fl_Terminal) -> *const ::core::ffi::c_char;
-}
-extern "C" {
     pub fn Fl_Terminal_disp_erow(self_: *const Fl_Terminal) -> ::core::ffi::c_int;
-}
-extern "C" {
-    pub fn Fl_Terminal_disp_rows(self_: *const Fl_Terminal) -> ::core::ffi::c_int;
-}
-extern "C" {
-    pub fn Fl_Terminal_disp_cols(self_: *const Fl_Terminal) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Terminal_disp_srow(self_: *const Fl_Terminal) -> ::core::ffi::c_int;
 }
 extern "C" {
-    pub fn Fl_Terminal_hist_cols(self_: *const Fl_Terminal) -> ::core::ffi::c_int;
-}
-extern "C" {
     pub fn Fl_Terminal_hist_erow(self_: *const Fl_Terminal) -> ::core::ffi::c_int;
-}
-extern "C" {
-    pub fn Fl_Terminal_hist_rows(self_: *const Fl_Terminal) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Terminal_hist_srow(self_: *const Fl_Terminal) -> ::core::ffi::c_int;
@@ -4608,6 +4610,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Terminal_hist_use_srow(self_: *const Fl_Terminal) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Terminal_h_to_row(
+        self_: *const Fl_Terminal,
+        H: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Terminal_w_to_col(
+        self_: *const Fl_Terminal,
+        W: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Terminal_is_inside_selection(
@@ -4621,9 +4635,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Terminal_offset(self_: *const Fl_Terminal) -> ::core::ffi::c_int;
-}
-extern "C" {
-    pub fn Fl_Terminal_ring_cols(self_: *const Fl_Terminal) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Terminal_ring_erow(self_: *const Fl_Terminal) -> ::core::ffi::c_int;
@@ -4663,6 +4674,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Terminal_Utf8Char_size() -> ::core::ffi::c_uint;
+}
+extern "C" {
+    pub fn Fl_free_str(str_: *const ::core::ffi::c_char);
 }
 extern "C" {
     pub fn Fl_Terminal_begin(self_: *mut Fl_Terminal);
