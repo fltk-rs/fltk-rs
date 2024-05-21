@@ -2339,6 +2339,9 @@ extern "C" {
     pub fn Fl_Input_Choice_value(self_: *const Fl_Input_Choice) -> *const ::core::ffi::c_char;
 }
 extern "C" {
+    pub fn Fl_Input_Choice_value2(self_: *mut Fl_Input_Choice) -> ::core::ffi::c_int;
+}
+extern "C" {
     pub fn Fl_Input_Choice_set_value(self_: *mut Fl_Input_Choice, val: *const ::core::ffi::c_char);
 }
 extern "C" {

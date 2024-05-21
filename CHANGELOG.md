@@ -1,6 +1,10 @@
 # Changelog
 
 
+# [1.4.31] - TBD
+- Add InputChoice::value_index().
+- Update FLTK submodule.
+
 # [1.4.30] - 2024-05-09
 - Pin fltk to fltk-sys version so that users targeting older versions of fltk don't get a newer version of fltk-sys automatically.
 - Use MACOSX_DEPLOYMENT_TARGET to determine CMAKE_SYSTEM_VERSION when crosscompiling from linux to macos.

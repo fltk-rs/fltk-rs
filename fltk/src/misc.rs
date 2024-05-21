@@ -508,7 +508,7 @@ impl InputChoice {
         unsafe { Fl_Input_Choice_clear(self.inner.widget() as _) }
     }
 
-    /// Get the value of the current choice
+    /// Get the value of the current input choice
     pub fn value(&self) -> Option<String> {
         unsafe {
             let ptr = Fl_Input_Choice_value(self.inner.widget() as _);
@@ -518,6 +518,11 @@ impl InputChoice {
                 Some(CStr::from_ptr(ptr).to_string_lossy().to_string())
             }
         }
+    }
+
+    /// Get the value index of the current input choice
+    pub fn value_index(&self) -> i32 {
+        unsafe { Fl_Input_Choice_value2(self.inner.widget() as _) }
     }
 
     /// Set the value to a string
