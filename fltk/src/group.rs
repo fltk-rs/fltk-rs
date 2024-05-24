@@ -1389,10 +1389,10 @@ pub mod experimental {
 
     impl std::fmt::Debug for ScrollbarStyle {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            match self {
-                &ScrollbarStyle::OFF => write!(f, "ScrollbarStyle::OFF"),
-                &ScrollbarStyle::ON => write!(f, "ScrollbarStyle::ON"),
-                &ScrollbarStyle::AUTO => write!(f, "ScrollbarStyle::AUTO"),
+            match *self {
+                ScrollbarStyle::OFF => write!(f, "ScrollbarStyle::OFF"),
+                ScrollbarStyle::ON => write!(f, "ScrollbarStyle::ON"),
+                ScrollbarStyle::AUTO => write!(f, "ScrollbarStyle::AUTO"),
                 _ => write!(f, "ScrollbarStyle::{}", self.bits())
             }
         }
@@ -1977,7 +1977,25 @@ pub mod experimental {
             Color::from_rgbi(unsafe { Fl_Terminal_selection_bg_color(self.inner.widget() as _) })
         }
 
-                /// Get the horizontal scrollbar behavior style.
+        /// Returns the vertical scrollbar
+        pub fn scrollbar(&self) -> crate::valuator::Scrollbar {
+            unsafe {
+                let ptr = Fl_Terminal_scrollbar(self.inner.widget() as _);
+                assert!(!ptr.is_null());
+                crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)
+            }
+        }
+
+        /// Returns the horizontal scrollbar
+        pub fn hscrollbar(&self) -> crate::valuator::Scrollbar {
+            unsafe {
+                let ptr = Fl_Terminal_hscrollbar(self.inner.widget() as _);
+                assert!(!ptr.is_null());
+                crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)
+            }
+        }
+
+        /// Get the horizontal scrollbar behavior style.
         ///
         ///  This determines when the scrollbar is visible.
         ///
@@ -2148,7 +2166,7 @@ pub mod experimental {
         }
 
 
-                /// Return a string copy of all lines in the terminal (including history).
+        /// Return a string copy of all lines in the terminal (including history).
         /// The returned string is allocated with strdup(3), which the caller must free.
         ///
         /// If `lines_below_cursor` is false, lines below the cursor on down
