@@ -1363,6 +1363,42 @@ pub mod experimental {
         }
     }
 
+
+    ///    Controls behavior of scrollbar
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct ScrollbarStyle {
+        bits: i32,
+    }
+    impl ScrollbarStyle {
+        /// Scrollbar is always invisible
+        pub const OFF: ScrollbarStyle = ScrollbarStyle {bits: 0};
+        /// scrollbar is visible if widget has been resized in a way that hides some columns (default)
+        pub const AUTO: ScrollbarStyle = ScrollbarStyle{bits: 1};
+        /// Scrollbar is always visible
+        pub const ON: ScrollbarStyle = ScrollbarStyle{bits: 2};
+
+        /// Gets the inner representation
+        pub const fn bits(&self) -> i32 {
+            self.bits
+        }
+        /// Build a HScrollbarStyle with an arbitrary value.
+        pub const fn new(val: i32) -> Self {
+            ScrollbarStyle { bits: val }
+        }
+    }
+
+    impl std::fmt::Debug for ScrollbarStyle {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match *self {
+                ScrollbarStyle::OFF => write!(f, "ScrollbarStyle::OFF"),
+                ScrollbarStyle::ON => write!(f, "ScrollbarStyle::ON"),
+                ScrollbarStyle::AUTO => write!(f, "ScrollbarStyle::AUTO"),
+                _ => write!(f, "ScrollbarStyle::{}", self.bits())
+            }
+        }
+    }
+
+
     ///    Class to manage the terminal's individual UTF-8 characters.
     ///    Includes fg/bg color, attributes (BOLD, UNDERLINE..)
     /// *This is a low-level "protected" class in the fltk library*
@@ -1712,6 +1748,7 @@ pub mod experimental {
         }
 
         /// Set terminal's display width in columns of text characters.
+        /// Does not resize the terminal.
         pub fn set_display_columns(&mut self, val: i32) {
             unsafe { Fl_Terminal_set_display_columns(self.inner.widget() as _, val) }
         }
@@ -1719,21 +1756,6 @@ pub mod experimental {
         /// Return terminal's display height in lines of text.
         pub fn display_rows(&self) -> i32 {
             unsafe { Fl_Terminal_display_rows(self.inner.widget() as _) }
-        }
-
-        /// Set terminal's display height in lines of text.
-        pub fn set_display_rows(&mut self, val: i32) {
-            unsafe { Fl_Terminal_set_display_rows(self.inner.widget() as _, val) }
-        }
-
-        /// Sets the number of lines of screen history.
-        pub fn set_history_lines(&mut self, arg1: i32) {
-            unsafe { Fl_Terminal_set_history_lines(self.inner.widget() as _, arg1) }
-        }
-
-        /// Gets the number of lines of screen history.
-        pub fn history_lines(&self) -> i32 {
-            unsafe { Fl_Terminal_history_lines(self.inner.widget() as _) }
         }
 
         /// Sets the terminal's scrollback history buffer size in lines of text (rows).
@@ -1789,6 +1811,18 @@ pub mod experimental {
         /// Return the top margin
         pub fn margin_top(&self) -> i32 {
             unsafe { Fl_Terminal_margin_top(self.inner.widget() as _) }
+        }
+
+        /// Given a height in pixels, return number of rows that "fits" into that area.
+        /// *This is a low-level "protected" function of the fltk library*
+        pub fn h_to_row(&self, pix: i32) -> i32 {
+            unsafe { Fl_Terminal_h_to_row(self.inner.widget() as _, pix) }
+        }
+
+        /// Given a width in pixels, return number of columns that "fits" into that area.
+        /// *This is a low-level "protected" function of the fltk library*
+        pub fn w_to_col(&self, pix: i32) -> i32 {
+            unsafe { Fl_Terminal_w_to_col(self.inner.widget() as _, pix) }
         }
 
         /// Sets the combined output translation flags to `val`.
@@ -1911,21 +1945,29 @@ pub mod experimental {
             unsafe { Fl_Terminal_reset_terminal(self.inner.widget() as _) }
         }
 
-        /// Returns the scrollbar's actual size; actual width for vertical scrollbars, actual height for horizontal scrollbars.
+        /// Returns the scrollbar's actual "trough size", which is the width of FL_VERTICAL
+        /// scrollbars, or height of FL_HORIZONTAL scrollbars.
+        ///
+        /// If `scrollbar_size()` is zero (default), then the value of the global Fl::scrollbar_size()
+        /// is returned, which is the default global scrollbar size for the entire application.
         pub fn scrollbar_actual_size(&self) -> i32 {
             unsafe { Fl_Terminal_scrollbar_actual_size(self.inner.widget() as _) }
         }
 
-        /// Get the current size of the scrollbar's trough, in pixels.
-        /// If this value is zero (default), this widget is using fltk's
-        /// master scrollbar_size() value
+        ///   Get current pixel size of all the scrollbar's troughs for this widget,
+        ///   or zero if the global Fl::scrollbar_size() is being used (default).
+        ///
+        ///   If this value returns *zero*, this widget's scrollbars are using the
+        ///   global Fl::scrollbar_size(), in which case use scrollbar_actual_size()
+        ///   to get the actual (effective) pixel scrollbar size being used.
+        ///
+        ///   __returns__ Scrollbar trough size in pixels, or 0 if the global Fl::scrollbar_size() is being used.
         pub fn scrollbar_size(&self) -> i32 {
             unsafe { Fl_Terminal_scrollbar_size(self.inner.widget() as _) }
         }
 
-        /// Set the width of the scrollbar's trough to val, in pixels.
-        /// If this value is zero (default), this widget will use fltk's
-        /// master scrollbar_size() value
+        /// Set the width of the both horizontal and vertical scrollbar's trough to `val``, in pixels.
+        /// If this value is zero (default), this widget will use fltk's master scrollbar_size() value
         pub fn set_scrollbar_size(&mut self, val: i32) {
             unsafe { Fl_Terminal_set_scrollbar_size(self.inner.widget() as _, val) }
         }
@@ -1933,6 +1975,48 @@ pub mod experimental {
         /// Get mouse selection background color.
         pub fn selection_bg_color(&self) -> Color {
             Color::from_rgbi(unsafe { Fl_Terminal_selection_bg_color(self.inner.widget() as _) })
+        }
+
+        /// Returns the vertical scrollbar
+        pub fn scrollbar(&self) -> crate::valuator::Scrollbar {
+            unsafe {
+                let ptr = Fl_Terminal_scrollbar(self.inner.widget() as _);
+                assert!(!ptr.is_null());
+                crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)
+            }
+        }
+
+        /// Returns the horizontal scrollbar
+        pub fn hscrollbar(&self) -> crate::valuator::Scrollbar {
+            unsafe {
+                let ptr = Fl_Terminal_hscrollbar(self.inner.widget() as _);
+                assert!(!ptr.is_null());
+                crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)
+            }
+        }
+
+        /// Get the horizontal scrollbar behavior style.
+        ///
+        ///  This determines when the scrollbar is visible.
+        ///
+        /// Value will be one of the Fl_Terminal::HScrollbarStyle enum values.
+        pub fn hscrollbar_style(&self) -> ScrollbarStyle {
+            unsafe { ScrollbarStyle::new(Fl_Terminal_hscrollbar_style(self.inner.widget() as _)) }
+        }
+
+        ///   Set the scrollbar behavior style.
+        ///
+        ///  This determines when the scrollbar is visible.
+        ///
+        ///  |   ScrollbarStyle enum    | Description                                           |
+        ///  |---------------------------|-------------------------------------------------------|
+        ///  |   ON                      | Scrollbar is always displayed.             |
+        ///  |   OFF                     | Scrollbar is never displayed.              |
+        ///  |   AUTO                    | Scrollbar is displayed whenever the widget has been resized so that some of the text is hidden. |
+        ///
+        ///  The default style is AUTO
+        pub fn set_hscrollbar_style(&mut self, val: ScrollbarStyle) {
+            unsafe { Fl_Terminal_set_hscrollbar_style(self.inner.widget() as _, val.bits()) }
         }
 
         /// Set mouse selection background color.
@@ -2069,7 +2153,7 @@ pub mod experimental {
             unsafe { Fl_Terminal_set_text_font(self.inner.widget() as _, font.bits()) }
         }
 
-        /// Gets the text size
+        /// Return text font size used to draw all text in the terminal.
         pub fn text_size(&self) -> i32 {
             unsafe { Fl_Terminal_text_size(self.inner.widget() as _) }
         }
@@ -2081,8 +2165,34 @@ pub mod experimental {
             unsafe { Fl_Terminal_set_text_size(self.inner.widget() as _, val) }
         }
 
-        /// Gets the selection text
-        /// *This is a low-level "protected" function of the fltk library*
+
+        /// Return a string copy of all lines in the terminal (including history).
+        /// The returned string is allocated with strdup(3), which the caller must free.
+        ///
+        /// If `lines_below_cursor` is false, lines below the cursor on down
+        /// to the bottom of the display are ignored, and not included in the returned string.
+        ///
+        ///  If `lines_below_cursor` is true, then all lines in the display are returned
+        ///  including any below the cursor, even if all are blank.
+        ///
+        ///  Example use:
+        ///  ```
+        ///      let mut tty = Terminal::new( ... );
+        ///      :
+        ///      let s = tty.text();   // get a copy of the terminal's contents
+        ///      println!("Terminal's contents:\n{}", s);
+        ///  ```
+        pub fn text(&self, lines_below_cursor: bool) -> String {
+            unsafe {
+                let ptr = Fl_Terminal_text(self.inner.widget() as _, lines_below_cursor as i32);
+                assert!(!ptr.is_null());    // Sanity check
+                let result= CStr::from_ptr(ptr).to_string_lossy().to_string().clone();
+                Fl_free_str(ptr);
+                result
+            }
+        }
+
+        /// Return text selection (for copy()/paste() operations)
         pub fn selection_text(&self) -> String {
             assert!(self.is_derived);
             unsafe {
@@ -2090,10 +2200,20 @@ pub mod experimental {
                 if ptr.is_null() {
                     String::new()
                 } else {
-                    CStr::from_ptr(ptr).to_string_lossy().to_string()
+                    let result = CStr::from_ptr(ptr).to_string_lossy().to_string();
+                    Fl_free_str(ptr);
+                    result
                 }
             }
         }
+
+        ///  Return byte length of all UTF-8 chars in selection, or 0 if no selection.
+        ///  NOTE: Length includes trailing white on each line.
+        pub fn selection_text_len(&self) -> i32 {
+            unsafe { Fl_Terminal_selection_text_len(self.inner.widget() as _) }
+        }
+
+
 
         // Various methods to access the ring buffer
 
@@ -2102,34 +2222,14 @@ pub mod experimental {
             unsafe { Fl_Terminal_disp_erow(self.inner.widget() as _) }
         }
 
-        /// Return the number of rows in the display area.
-        pub fn disp_rows(&self) -> i32 {
-            unsafe { Fl_Terminal_disp_rows(self.inner.widget() as _) }
-        }
-
-        /// Return the number of columns in the display area (always the same as ring_cols())
-        pub fn disp_cols(&self) -> i32 {
-            unsafe { Fl_Terminal_disp_cols(self.inner.widget() as _) }
-        }
-
         /// Return the starting row# in the display area.
         pub fn disp_srow(&self) -> i32 {
             unsafe { Fl_Terminal_disp_srow(self.inner.widget() as _) }
         }
 
-        /// Return the number of columns in the scrollback history (always the same as ring_cols())
-        pub fn hist_cols(&self) -> i32 {
-            unsafe { Fl_Terminal_hist_cols(self.inner.widget() as _) }
-        }
-
         /// Return the ending row# of the scrollback history.
         pub fn hist_erow(&self) -> i32 {
             unsafe { Fl_Terminal_hist_erow(self.inner.widget() as _) }
-        }
-
-        /// Return the number of rows in the scrollback history.
-        pub fn hist_rows(&self) -> i32 {
-            unsafe { Fl_Terminal_hist_rows(self.inner.widget() as _) }
         }
 
         /// Return the starting row# of the scrollback history.
@@ -2161,11 +2261,6 @@ pub mod experimental {
         /// Returns the current offset into the ring buffer.
         pub fn offset(&self) -> i32 {
             unsafe { Fl_Terminal_offset(self.inner.widget() as _) }
-        }
-
-        /// Return the number of columns in the ring buffer.
-        pub fn ring_cols(&self) -> i32 {
-            unsafe { Fl_Terminal_ring_cols(self.inner.widget() as _) }
         }
 
         /// Return the ending row# in the ring buffer (Always ring_rows()-1)
@@ -2342,11 +2437,9 @@ pub mod experimental {
             }
         }
 
-        /// Return the size of a Utf8Char object in the underlying C++ code
-        pub fn size() -> usize {
-            unsafe { Fl_Terminal_Utf8Char_size() as usize }
-        }
+        // Note: Fl_Terminal_Utf8Char_size() is used internally but not exposed to user Rust programs
     }
+
 
     impl<'a> BuffRow<'a> {
         /// Generate a new BuffRow object based on a pointer from C++ Fl_Terminal
@@ -2357,7 +2450,7 @@ pub mod experimental {
                     inner: ptr,
                     _parent: parent,
                     // length: (i + 1) as usize,
-                    length: parent.ring_cols() as usize,
+                    length: parent.display_columns() as usize,
                     char_size: Fl_Terminal_Utf8Char_size() as usize,
                 }
             }

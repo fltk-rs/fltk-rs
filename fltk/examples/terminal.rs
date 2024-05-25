@@ -4,7 +4,7 @@
 ///
 use fltk::{
     enums::{Color, Font, LabelType},
-    group::experimental::{Attrib, CharFlags, OutFlags, RedrawStyle, Terminal, Utf8Char},
+    group::experimental::{Attrib, CharFlags, ScrollbarStyle, OutFlags, RedrawStyle, Terminal, Utf8Char},
     menu::MenuBar,
     prelude::*,
     window::{Window, WindowType},
@@ -103,6 +103,11 @@ fn main() {
         move || {
             println!("Startup tests\n");
             term.append("Startup tests\n\n");
+            term.append("<tmp>\n");     // This line will be overwritten later
+
+            term.cursor_up(2, false);
+            assert_eq!(term.text(false), "Startup tests\n\n");      // Ignores lines below cursor
+            assert_eq!(term.text(true), "Startup tests\n\n<tmp>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
             // Testing ansi() and set_ansi() methods
             assert!(term.ansi(), "Default ANSI mode should be ON at startup");
@@ -114,6 +119,12 @@ fn main() {
             term.append_u8(b"Appending u8 array\n");
             term.append_ascii("Appending ASCII array ↑ (up-arrow is dropped)\n");
             term.set_ansi(true); // Restore ANSI state
+
+
+            // Play with the horizontal scrollbar
+            assert_eq!(term.hscrollbar_style(), ScrollbarStyle::AUTO);
+            term.set_hscrollbar_style(ScrollbarStyle::ON);
+            assert_eq!(term.hscrollbar_style(), ScrollbarStyle::ON);
 
             // Test show_unknown() as incidental part of testing append methods
             term.set_show_unknown(true);
@@ -157,11 +168,14 @@ fn main() {
 
             // The default display_rows() will derive from the window size
             let dr = term.display_rows();
+            let height = term.height();
+            assert_eq!(height, term.h());
             assert!(dr > 20, "Default display_rows at startup");
-            term.set_display_rows(60);
-            assert_eq!(term.display_rows(), 60);
-            term.set_display_rows(dr); // Set back to default
-            assert_eq!(term.display_rows(), dr);
+            term.resize(term.x(), term.y(), term.w(), height*2);
+            assert_eq!(term.h(), height*2);
+            assert_eq!(height*2, term.h());
+            assert! (term.display_rows() > dr);
+            term.resize(term.x(), term.y(), term.w(), height);
 
             // The default display_columns() will derive from the window size
             let dc = term.display_columns();
@@ -176,19 +190,11 @@ fn main() {
             term.set_display_columns(dc); // Set back to default
             assert_eq!(term.display_columns(), dc);
 
-            let hl = term.history_lines();
-            assert_eq!(hl, 100, "Default history_lines at startup");
-            term.set_history_lines(60);
-            assert_eq!(term.history_lines(), 60);
-            term.set_history_lines(hl); // Set back to default
-            assert_eq!(term.history_lines(), hl);
-
-            // Is history_rows() an alias for history_lines()?
             assert_eq!(term.history_rows(), 100, "Default history_rows at startup");
             term.set_history_rows(50);
             assert_eq!(term.history_rows(), 50);
-            term.set_history_lines(100); // Set back to default
-            assert_eq!(term.history_lines(), 100);
+            term.set_history_rows(100); // Set back to default
+            assert_eq!(term.history_rows(), 100);
 
             let hu = term.history_use();
             term.append(&format!(
@@ -259,6 +265,13 @@ fn main() {
                 0x0002,
                 "RedrawStyle enum values have been reassigned"
             );
+
+            let sb = term.scrollbar();
+            let hsb = term.hscrollbar();
+            // Both vertical and horizontal scrollbars are at zero
+            assert_eq!(sb.value(), 0.0);
+            assert_eq!(hsb.value(), 0.0);
+            term.set_hscrollbar_style(ScrollbarStyle::AUTO);
 
             term.append(&format!(
                 "Scrollbar actual size {}\n",
@@ -333,12 +346,16 @@ fn main() {
             assert_eq!(term.text_font(), Font::Courier);
 
             let ts = term.text_size();
-            term.append(&format!("Text size: {ts}\n"));
+            let r = term.h_to_row(100);
+            let c = term.w_to_col(100);
+            term.append(&format!("Text size: {ts}, h_to_row(100): {r}, w_to_col(100): {c}\n"));
             assert_eq!(ts, 14);
             term.set_text_size(30);
             assert_eq!(term.text_size(), 30);
+            term.append(&format!("Text size: {}, h_to_row(100): {}, w_to_col(100): {}\n", term.text_size(), term.h_to_row(100), term.w_to_col(100)));
             term.set_text_size(ts);
             assert_eq!(term.text_size(), ts);
+            term.append(&format!("Text size: {}, h_to_row(100): {}, w_to_col(100): {}\n", term.text_size(), term.h_to_row(100), term.w_to_col(100)));
 
             // Keyboard handler
             term.handle({
@@ -388,6 +405,8 @@ fn main() {
             term.set_text_attrib(attr_save);
             assert_eq!(term.text_attrib(), attr_save);
             term.redraw();
+
+
         }
     });
 
@@ -452,7 +471,6 @@ fn mb_test2_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
         term.append(&format!("{i}\n"));
     }
     assert_eq!(term.history_rows(), 100);
-    assert_eq!(term.history_lines(), 100);
 
     term.clear_history();
     assert_eq!(term.history_use(), 0);
@@ -524,6 +542,9 @@ fn mb_test3_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
 /// Another set of tests for the ring-buffer access methods
 /// Note: these tests depend heavily on the low-level "protected" parts of the fltk library, which should be used with caution.
 fn mb_test4_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
+    let sel_len = term.selection_text_len();
+    let sel = term.selection_text();
+
     term.take_focus().unwrap();
     term.reset_terminal();
     // Test the Utf8Char primitive
@@ -568,24 +589,15 @@ fn mb_test4_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     assert_eq!(term.ring_erow(), ring_rows - 1);
     assert_eq!(
         row_diff(ring_rows, term.disp_erow(), term.disp_srow()) + 1,
-        term.disp_rows()
+        term.display_rows()
     );
     assert_eq!(
         row_diff(ring_rows, term.hist_erow(), term.hist_srow()) + 1,
-        term.hist_rows()
+        term.history_rows()
     );
 
     assert_eq!(term.ring_erow(), term.ring_rows() - 1);
     assert_eq!(term.ring_srow(), 0);
-
-    // Check the different cols methods, which should all return the same answer
-    assert!(term.disp_cols() > 10);
-    assert_eq!(term.disp_cols(), term.ring_cols());
-    assert_eq!(term.disp_cols(), term.hist_cols());
-
-    // Redundant protected vs public methods:
-    assert_eq!(term.disp_cols(), term.display_columns());
-    assert_eq!(term.disp_rows(), term.display_rows());
 
     /// Local function to read back all rows from the display into a long string.
     /// Does not include scrollback history.
@@ -614,10 +626,10 @@ fn mb_test4_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     term.append("  \n");
     let mut text_out = read_disp(term);
     // Trim trailing empty lines
-    text_out = text_out.trim_end_matches(&"\n\n").to_string();
+    text_out = text_out.trim_end_matches(&"\n").to_string();
     // The two plain blanks at the end will be trimmed, the two underlined blanks will be retained.
 
-    assert_eq!(text_out, "Top line  ↑ (up-arrow)  \n");
+    assert_eq!(text_out, "Top line  ↑ (up-arrow)  ");
     let r = term.u8c_disp_row(0);
     assert_eq!(r.col(0).text_utf8(), b"T");
     assert_eq!(r.col(10).text_utf8(), b"\xe2\x86\x91"); // UTF-8 up-arrow
@@ -646,7 +658,7 @@ The highwayman came riding, up to the old inn-door.";
 
     let mut text_out = read_disp(term);
     // Trim trailing empty lines
-    text_out = text_out.trim_end_matches(&"\n\n").to_string();
+    text_out = text_out.trim_end_matches(&"\n").to_string();
     assert_eq!(test_text, text_out);
 
     assert_eq!(row_diff(ring_rows, term.disp_srow(), term.hist_erow()), 1);
@@ -655,18 +667,25 @@ The highwayman came riding, up to the old inn-door.";
     assert_eq!(term.ring_erow(), ring_rows - 1);
     assert_eq!(
         row_diff(ring_rows, term.disp_erow(), term.disp_srow()) + 1,
-        term.disp_rows()
+        term.display_rows()
     );
     assert_eq!(
         row_diff(ring_rows, term.hist_erow(), term.hist_srow()) + 1,
-        term.hist_rows()
+        term.history_rows()
     );
 
     term.append(&format!(
         "\n\nScreen has {} rows of {} columns.\n",
-        term.disp_rows(),
-        term.disp_cols()
+        term.display_rows(),
+        term.display_columns()
     ));
+
+
+    term.append(&format!("Selection len: {sel_len}\nSelection: '{sel}'\n"));
+
+
+
+
 }
 
 //--------------------------------------------------------------------------------------
@@ -765,6 +784,7 @@ fn mb_test5_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
         &uc.charflags(),
         &(CharFlags::FG_XTERM | CharFlags::BG_XTERM)
     );
+
 
     let uc = r.col(1);
     assert_eq!(uc.text_utf8(), b"C");
@@ -963,6 +983,18 @@ fn mb_test5_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     term.append(" and all lines below");
     term.set_text_attrib(Attrib::Normal);
     term.cursor_down(1, false);
+
+    let mut hsb = term.hscrollbar();
+    let mut sb = term.scrollbar();
+    hsb.set_value(100.0);
+    assert_eq!(hsb.value(), 100.0);
+    sb.set_value(50.0);
+    assert_eq!(sb.value(), 50.0);
+    hsb.set_value(0.0);
+    assert_eq!(hsb.value(), 0.0);
+    sb.set_value(0.0);
+    assert_eq!(sb.value(), 0.0);
+
 }
 
 //--------------------------------------------------------------------------------------
