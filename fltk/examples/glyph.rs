@@ -68,8 +68,8 @@ fn view() {
         let mut left = Flex::default_fill().column();
         crate::browser("List").handle(crate::choice);
         let mut buttons = Flex::default();
-        Button::default().with_label("@#<").handle(crate::shift);
-        Button::default().with_label("@#>").handle(crate::shift);
+        Button::default().with_label("@<").handle(crate::shift);
+        Button::default().with_label("@>").handle(crate::shift);
         buttons.end();
         buttons.set_pad(0);
         left.end();
@@ -140,7 +140,7 @@ fn shift(button: &mut Button, event: Event) -> bool {
     if [Event::from_i32(SHIFT), Event::Push].contains(&event) {
         button.deactivate();
         let label = button.label();
-        app::GlobalState::<Model>::get().with(move |model| match label == "@#<" {
+        app::GlobalState::<Model>::get().with(move |model| match label == "@<" {
             true => model.dec(),
             false => model.inc(),
         });
