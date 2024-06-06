@@ -1,5 +1,6 @@
 #![forbid(unsafe_code)]
 
+
 use fltk::{
     app,
     button::Button,
@@ -102,7 +103,7 @@ fn choice(browser: &mut Browser, event: Event) -> bool {
             }
             browser.select(model.curr as i32 + 1);
         }
-        true
+        false
     } else if event == Event::Push {
         if browser.value() > 0 {
             let curr: usize = browser.value() as usize - 1;
@@ -125,7 +126,7 @@ fn frame(tooltip: &str) -> Frame {
 }
 
 fn show(frame: &mut Frame, event: Event) -> bool {
-    if [Event::from_i32(HEARTBEAT), Event::Released].contains(&event) {
+    if event == Event::from_i32(HEARTBEAT) {
         let model = app::GlobalState::<Model>::get().with(move |model| model.clone());
         if !model.list.is_empty() {
             frame.set_label(&model.list[model.curr].to_string());
@@ -164,7 +165,7 @@ fn window() -> Window {
             let value =
                 app::GlobalState::<Model>::get().with(move |model| model.list[model.curr]);
             window.set_label(&format!("{value} - {NAME}"));
-            true
+            false
         } else if app::event() == Event::Close {
             app::quit();
             true
