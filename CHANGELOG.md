@@ -1,8 +1,10 @@
 # Changelog
 
 
-# [1.4.31] - TBD
+# [1.4.31] - 2024-06-07
 - Add InputChoice::value_index().
+- Tweak the Terminal widget API, remove some redundant methods by @jgriffitts.
+- Update ttf-parser to 0.21.
 - Update FLTK submodule.
 
 # [1.4.30] - 2024-05-09
