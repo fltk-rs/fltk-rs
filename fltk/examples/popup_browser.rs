@@ -24,6 +24,9 @@ fn main() {
     );
 
     let menu = menu::MenuItem::new(&["1st menu item\t", "2nd menu item\t", "3rd menu item\t"]);
+    b.select(2);
+
+    
 
     b.set_callback(move |_| {
         if app::event_mouse_button() == app::MouseButton::Right {
@@ -35,6 +38,8 @@ fn main() {
             }
         }
     });
+
+    app::add_timeout(1.0, move || b.deselect(2));
 
     win.make_resizable(true);
     win.end();

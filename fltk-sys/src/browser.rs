@@ -383,6 +383,13 @@ extern "C" {
         -> ::core::ffi::c_int;
 }
 extern "C" {
+    pub fn Fl_Browser_select_ext(
+        arg1: *mut Fl_Browser,
+        line: ::core::ffi::c_int,
+        val: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
     pub fn Fl_Browser_selected(
         arg1: *const Fl_Browser,
         line: ::core::ffi::c_int,
@@ -898,6 +905,13 @@ extern "C" {
     pub fn Fl_Hold_Browser_select(
         arg1: *mut Fl_Hold_Browser,
         line: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_select_ext(
+        arg1: *mut Fl_Hold_Browser,
+        line: ::core::ffi::c_int,
+        val: ::core::ffi::c_int,
     ) -> ::core::ffi::c_int;
 }
 extern "C" {
@@ -1451,6 +1465,13 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 extern "C" {
+    pub fn Fl_Select_Browser_select_ext(
+        arg1: *mut Fl_Select_Browser,
+        line: ::core::ffi::c_int,
+        val: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
     pub fn Fl_Select_Browser_selected(
         arg1: *const Fl_Select_Browser,
         line: ::core::ffi::c_int,
@@ -1994,6 +2015,13 @@ extern "C" {
     pub fn Fl_Multi_Browser_select(
         arg1: *mut Fl_Multi_Browser,
         line: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Multi_Browser_select_ext(
+        arg1: *mut Fl_Multi_Browser,
+        line: ::core::ffi::c_int,
+        val: ::core::ffi::c_int,
     ) -> ::core::ffi::c_int;
 }
 extern "C" {
@@ -2547,6 +2575,13 @@ extern "C" {
     pub fn Fl_File_Browser_select(
         arg1: *mut Fl_File_Browser,
         line: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_File_Browser_select_ext(
+        arg1: *mut Fl_File_Browser,
+        line: ::core::ffi::c_int,
+        val: ::core::ffi::c_int,
     ) -> ::core::ffi::c_int;
 }
 extern "C" {

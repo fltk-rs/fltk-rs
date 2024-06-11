@@ -65,6 +65,14 @@ macro_rules! impl_browser_ext {
                     }
                 }
 
+                fn deselect(&mut self, line: i32) {
+                    if line > 0 && line <= self.size() + 1 {
+                        unsafe {
+                            [<$flname _select_ext>](self.inner.widget() as _, line as i32, 0);
+                        }
+                    }
+                }
+
                 fn selected(&self, line: i32) -> bool {
                     if line > 0 && line <= self.size() + 1 {
                         unsafe {

@@ -1295,6 +1295,9 @@ pub unsafe trait BrowserExt: WidgetExt {
     /// Select an item at the specified line.
     /// Lines start at 1
     fn select(&mut self, line: i32);
+    /// Select an item at the specified line.
+    /// Lines start at 1
+    fn deselect(&mut self, line: i32);
     /// Returns whether the item is selected
     /// Lines start at 1
     fn selected(&self, line: i32) -> bool;
