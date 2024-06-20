@@ -1,6 +1,10 @@
 # Changelog
 
 
+# [1.4.32] - TBD
+- Add BrowserExt::deselect.
+- Update FLTK submodule.
+
 # [1.4.31] - 2024-06-07
 - Add InputChoice::value_index().
 - Tweak the Terminal widget API, remove some redundant methods by @jgriffitts.
