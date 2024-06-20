@@ -1,7 +1,7 @@
 # Changelog
 
 
-# [1.4.32] - TBD
+# [1.4.32] - 2024-06-21
 - Add BrowserExt::deselect.
 - Update FLTK submodule.
 
