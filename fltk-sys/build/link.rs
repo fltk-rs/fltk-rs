@@ -89,6 +89,9 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                 if darwin_version > 19 {
                     println!("cargo:rustc-link-lib=framework=UniformTypeIdentifiers");
                 }
+                if darwin_version > 23 {
+                    println!("cargo:rustc-link-lib=framework=ScreenCaptureKit");
+                }
                 println!("cargo:rustc-link-lib=framework=Carbon");
                 println!("cargo:rustc-link-lib=framework=Cocoa");
                 println!("cargo:rustc-link-lib=framework=ApplicationServices");
