@@ -87,10 +87,12 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
             "macos" => {
                 let darwin_version: i32 = utils::get_taget_darwin_major_version().unwrap();
                 if darwin_version > 19 {
-                    println!("cargo:rustc-link-lib=framework=UniformTypeIdentifiers");
+                    println!("cargo:rustc-link-arg=-weak_framework");
+                    println!("cargo:rustc-link-arg=UniformTypeIdentifiers");
                 }
                 if darwin_version > 23 {
-                    println!("cargo:rustc-link-lib=framework=ScreenCaptureKit");
+                    println!("cargo:rustc-link-arg=-weak_framework");
+                    println!("cargo:rustc-link-arg=framework=ScreenCaptureKit");
                 }
                 println!("cargo:rustc-link-lib=framework=Carbon");
                 println!("cargo:rustc-link-lib=framework=Cocoa");
