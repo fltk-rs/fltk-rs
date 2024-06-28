@@ -42,7 +42,7 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
     if !cfg!(feature = "fltk-shared") {
         println!("cargo:rustc-link-lib=static=fltk");
 
-        if !cfg!(features = "no-images") {
+        if !cfg!(feature = "no-images") {
             println!("cargo:rustc-link-lib=static=fltk_images");
 
             if cfg!(feature = "system-libpng") {
