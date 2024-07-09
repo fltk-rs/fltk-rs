@@ -754,7 +754,8 @@ impl Pixmap {
                 .map(|x| CString::new(*x).unwrap().into_raw() as *const std::ffi::c_char)
                 .collect();
             unsafe {
-                let x = Fl_Pixmap_new(data.leak().as_ptr() as _);
+                let x = Fl_Pixmap_new(data.as_ptr() as _);
+                data.iter().for_each(|x| { let _ = CString::from_raw(*x as _); });
                 if x.is_null() {
                     Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
                 } else {
