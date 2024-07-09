@@ -1,13 +1,12 @@
 #![forbid(unsafe_code)]
 
-
 use fltk::{
     app,
+    browser::{Browser, BrowserType},
     button::Button,
-    group::Flex,
+    enums::{Event, Font, FrameType},
     frame::Frame,
-    enums::{Font,Event,FrameType},
-    browser::{Browser,BrowserType},
+    group::Flex,
     prelude::*,
     window::Window,
 };
@@ -27,7 +26,9 @@ struct Model {
 impl Model {
     fn init() -> Self {
         Self {
-            list: (0x2700..=0x27BF).map(|x| char::from_u32(x).unwrap()).collect(),
+            list: (0x2700..=0x27BF)
+                .map(|x| char::from_u32(x).unwrap())
+                .collect(),
             curr: 0,
         }
     }
@@ -155,15 +156,12 @@ fn shift(button: &mut Button, event: Event) -> bool {
 
 fn window() -> Window {
     const NAME: &str = "Glyph";
-    let mut element = Window::default()
-        .with_size(640, 360)
-        .center_screen();
+    let mut element = Window::default().with_size(640, 360).center_screen();
     element.make_resizable(true);
     element.set_xclass(NAME);
     element.handle(move |window, event| {
         if event == Event::from_i32(HEARTBEAT) {
-            let value =
-                app::GlobalState::<Model>::get().with(move |model| model.list[model.curr]);
+            let value = app::GlobalState::<Model>::get().with(move |model| model.list[model.curr]);
             window.set_label(&format!("{value} - {NAME}"));
             false
         } else if app::event() == Event::Close {

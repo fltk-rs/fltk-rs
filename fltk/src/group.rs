@@ -1363,7 +1363,6 @@ pub mod experimental {
         }
     }
 
-
     ///    Controls behavior of scrollbar
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ScrollbarStyle {
@@ -1371,11 +1370,11 @@ pub mod experimental {
     }
     impl ScrollbarStyle {
         /// Scrollbar is always invisible
-        pub const OFF: ScrollbarStyle = ScrollbarStyle {bits: 0};
+        pub const OFF: ScrollbarStyle = ScrollbarStyle { bits: 0 };
         /// scrollbar is visible if widget has been resized in a way that hides some columns (default)
-        pub const AUTO: ScrollbarStyle = ScrollbarStyle{bits: 1};
+        pub const AUTO: ScrollbarStyle = ScrollbarStyle { bits: 1 };
         /// Scrollbar is always visible
-        pub const ON: ScrollbarStyle = ScrollbarStyle{bits: 2};
+        pub const ON: ScrollbarStyle = ScrollbarStyle { bits: 2 };
 
         /// Gets the inner representation
         pub const fn bits(&self) -> i32 {
@@ -1393,11 +1392,10 @@ pub mod experimental {
                 ScrollbarStyle::OFF => write!(f, "ScrollbarStyle::OFF"),
                 ScrollbarStyle::ON => write!(f, "ScrollbarStyle::ON"),
                 ScrollbarStyle::AUTO => write!(f, "ScrollbarStyle::AUTO"),
-                _ => write!(f, "ScrollbarStyle::{}", self.bits())
+                _ => write!(f, "ScrollbarStyle::{}", self.bits()),
             }
         }
     }
-
 
     ///    Class to manage the terminal's individual UTF-8 characters.
     ///    Includes fg/bg color, attributes (BOLD, UNDERLINE..)
@@ -2165,7 +2163,6 @@ pub mod experimental {
             unsafe { Fl_Terminal_set_text_size(self.inner.widget() as _, val) }
         }
 
-
         /// Return a string copy of all lines in the terminal (including history).
         /// The returned string is allocated with strdup(3), which the caller must free.
         ///
@@ -2185,8 +2182,8 @@ pub mod experimental {
         pub fn text(&self, lines_below_cursor: bool) -> String {
             unsafe {
                 let ptr = Fl_Terminal_text(self.inner.widget() as _, lines_below_cursor as i32);
-                assert!(!ptr.is_null());    // Sanity check
-                let result= CStr::from_ptr(ptr).to_string_lossy().to_string().clone();
+                assert!(!ptr.is_null()); // Sanity check
+                let result = CStr::from_ptr(ptr).to_string_lossy().to_string().clone();
                 Fl_free_str(ptr);
                 result
             }
@@ -2212,8 +2209,6 @@ pub mod experimental {
         pub fn selection_text_len(&self) -> i32 {
             unsafe { Fl_Terminal_selection_text_len(self.inner.widget() as _) }
         }
-
-
 
         // Various methods to access the ring buffer
 
@@ -2439,7 +2434,6 @@ pub mod experimental {
 
         // Note: Fl_Terminal_Utf8Char_size() is used internally but not exposed to user Rust programs
     }
-
 
     impl<'a> BuffRow<'a> {
         /// Generate a new BuffRow object based on a pointer from C++ Fl_Terminal

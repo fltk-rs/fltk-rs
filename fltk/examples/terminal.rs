@@ -4,7 +4,9 @@
 ///
 use fltk::{
     enums::{Color, Font, LabelType},
-    group::experimental::{Attrib, CharFlags, ScrollbarStyle, OutFlags, RedrawStyle, Terminal, Utf8Char},
+    group::experimental::{
+        Attrib, CharFlags, OutFlags, RedrawStyle, ScrollbarStyle, Terminal, Utf8Char,
+    },
     menu::MenuBar,
     prelude::*,
     window::{Window, WindowType},
@@ -103,10 +105,10 @@ fn main() {
         move || {
             println!("Startup tests\n");
             term.append("Startup tests\n\n");
-            term.append("<tmp>\n");     // This line will be overwritten later
+            term.append("<tmp>\n"); // This line will be overwritten later
 
             term.cursor_up(2, false);
-            assert_eq!(term.text(false), "Startup tests\n\n");      // Ignores lines below cursor
+            assert_eq!(term.text(false), "Startup tests\n\n"); // Ignores lines below cursor
             assert_eq!(term.text(true), "Startup tests\n\n<tmp>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
             // Testing ansi() and set_ansi() methods
@@ -119,7 +121,6 @@ fn main() {
             term.append_u8(b"Appending u8 array\n");
             term.append_ascii("Appending ASCII array ↑ (up-arrow is dropped)\n");
             term.set_ansi(true); // Restore ANSI state
-
 
             // Play with the horizontal scrollbar
             assert_eq!(term.hscrollbar_style(), ScrollbarStyle::AUTO);
@@ -171,10 +172,10 @@ fn main() {
             let height = term.height();
             assert_eq!(height, term.h());
             assert!(dr > 20, "Default display_rows at startup");
-            term.resize(term.x(), term.y(), term.w(), height*2);
-            assert_eq!(term.h(), height*2);
-            assert_eq!(height*2, term.h());
-            assert! (term.display_rows() > dr);
+            term.resize(term.x(), term.y(), term.w(), height * 2);
+            assert_eq!(term.h(), height * 2);
+            assert_eq!(height * 2, term.h());
+            assert!(term.display_rows() > dr);
             term.resize(term.x(), term.y(), term.w(), height);
 
             // The default display_columns() will derive from the window size
@@ -348,14 +349,26 @@ fn main() {
             let ts = term.text_size();
             let r = term.h_to_row(100);
             let c = term.w_to_col(100);
-            term.append(&format!("Text size: {ts}, h_to_row(100): {r}, w_to_col(100): {c}\n"));
+            term.append(&format!(
+                "Text size: {ts}, h_to_row(100): {r}, w_to_col(100): {c}\n"
+            ));
             assert_eq!(ts, 14);
             term.set_text_size(30);
             assert_eq!(term.text_size(), 30);
-            term.append(&format!("Text size: {}, h_to_row(100): {}, w_to_col(100): {}\n", term.text_size(), term.h_to_row(100), term.w_to_col(100)));
+            term.append(&format!(
+                "Text size: {}, h_to_row(100): {}, w_to_col(100): {}\n",
+                term.text_size(),
+                term.h_to_row(100),
+                term.w_to_col(100)
+            ));
             term.set_text_size(ts);
             assert_eq!(term.text_size(), ts);
-            term.append(&format!("Text size: {}, h_to_row(100): {}, w_to_col(100): {}\n", term.text_size(), term.h_to_row(100), term.w_to_col(100)));
+            term.append(&format!(
+                "Text size: {}, h_to_row(100): {}, w_to_col(100): {}\n",
+                term.text_size(),
+                term.h_to_row(100),
+                term.w_to_col(100)
+            ));
 
             // Keyboard handler
             term.handle({
@@ -405,8 +418,6 @@ fn main() {
             term.set_text_attrib(attr_save);
             assert_eq!(term.text_attrib(), attr_save);
             term.redraw();
-
-
         }
     });
 
@@ -680,12 +691,7 @@ The highwayman came riding, up to the old inn-door.";
         term.display_columns()
     ));
 
-
     term.append(&format!("Selection len: {sel_len}\nSelection: '{sel}'\n"));
-
-
-
-
 }
 
 //--------------------------------------------------------------------------------------
@@ -784,7 +790,6 @@ fn mb_test5_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
         &uc.charflags(),
         &(CharFlags::FG_XTERM | CharFlags::BG_XTERM)
     );
-
 
     let uc = r.col(1);
     assert_eq!(uc.text_utf8(), b"C");
@@ -994,7 +999,6 @@ fn mb_test5_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     assert_eq!(hsb.value(), 0.0);
     sb.set_value(0.0);
     assert_eq!(sb.value(), 0.0);
-
 }
 
 //--------------------------------------------------------------------------------------
