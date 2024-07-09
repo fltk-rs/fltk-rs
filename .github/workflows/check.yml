@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         rust:
-          - 1.64.0
+          - 1.67.0
     steps:
       - name: Checkout sources
         uses: actions/checkout@v3
@@ -38,7 +38,7 @@ jobs:
     strategy:
       matrix:
         rust:
-          - 1.64.0
+          - 1.67.0
     steps:
       - name: Checkout sources
         uses: actions/checkout@v3
