@@ -263,7 +263,7 @@ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcurso
 ```
 For RHEL-based GUI distributions, that means running:
 ```bash
-sudo yum groupinstall "X Software Development" && yum install pango-devel libXinerama-devel libstdc++-static
+sudo yum groupinstall "X Software Development" && sudo yum install pango-devel libXinerama-devel libstdc++-static
 ```
 For Arch-based GUI distributions, that means running:
 ```bash
