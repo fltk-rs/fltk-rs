@@ -23,56 +23,56 @@ impl State {
 
 fn init_menu(m: &mut menu::SysMenuBar) {
     m.add(
-        "&File/New...\t",
+        "&File/&New...\t",
         Shortcut::Ctrl | 'n',
         menu::MenuFlag::Normal,
         menu_cb,
     );
     m.add(
-        "&File/Open...\t",
+        "&File/&Open...\t",
         Shortcut::Ctrl | 'o',
         menu::MenuFlag::Normal,
         menu_cb,
     );
     m.add(
-        "&File/Save\t",
+        "&File/&Save\t",
         Shortcut::Ctrl | 's',
         menu::MenuFlag::Normal,
         menu_cb,
     );
     m.add(
-        "&File/Save as...\t",
+        "&File/Save &as...\t",
         Shortcut::Ctrl | 'w',
         menu::MenuFlag::MenuDivider,
         menu_cb,
     );
     let idx = m.add(
-        "&File/Quit\t",
+        "&File/&Quit\t",
         Shortcut::Ctrl | 'q',
         menu::MenuFlag::Normal,
         menu_cb,
     );
     m.at(idx).unwrap().set_label_color(Color::Red);
     m.add(
-        "&Edit/Cut\t",
+        "&Edit/Cu&t\t",
         Shortcut::Ctrl | 'x',
         menu::MenuFlag::Normal,
         menu_cb,
     );
     m.add(
-        "&Edit/Copy\t",
+        "&Edit/&Copy\t",
         Shortcut::Ctrl | 'c',
         menu::MenuFlag::Normal,
         menu_cb,
     );
     m.add(
-        "&Edit/Paste\t",
+        "&Edit/&Paste\t",
         Shortcut::Ctrl | 'v',
         menu::MenuFlag::Normal,
         menu_cb,
     );
     m.add(
-        "&Help/About\t",
+        "&Help/&About\t",
         Shortcut::None,
         menu::MenuFlag::Normal,
         menu_cb,
@@ -121,8 +121,8 @@ fn quit_cb() {
         } else {
             let c = dialog::choice2_default(
                 "Are you sure you want to exit without saving?",
-                "Yes",
-                "No",
+                "&Yes",
+                "&No",
                 "",
             );
             if c == Some(0) {
@@ -196,13 +196,13 @@ fn menu_cb(m: &mut impl MenuExt) {
     if let Ok(mpath) = m.item_pathname(None) {
         let ed: text::TextEditor = app::widget_from_id("ed").unwrap();
         match mpath.as_str() {
-            "&File/New...\t" => {
+            "&File/&New...\t" => {
                 STATE.with(|s| {
                     if !s.buf.text().is_empty() {
                         let c = dialog::choice2_default(
                             "Are you sure you want to clear the buffer?",
-                            "Yes",
-                            "No",
+                            "&Yes",
+                            "&No",
                             "",
                         );
                         if c == Some(0) {
@@ -212,7 +212,7 @@ fn menu_cb(m: &mut impl MenuExt) {
                     }
                 });
             }
-            "&File/Open...\t" => {
+            "&File/&Open...\t" => {
                 if let Some(c) = nfc_get_file(dialog::NativeFileChooserType::BrowseFile) {
                     if let Ok(text) = std::fs::read_to_string(&c) {
                         STATE.with(move |s| {
@@ -223,14 +223,14 @@ fn menu_cb(m: &mut impl MenuExt) {
                     }
                 }
             }
-            "&File/Save\t" => {
+            "&File/&Save\t" => {
                 STATE.with(|s| {
                     if !s.saved && s.current_file.exists() {
                         std::fs::write(&s.current_file, s.buf.text()).ok();
                     }
                 });
             }
-            "&File/Save as...\t" => {
+            "&File/Save &as...\t" => {
                 if let Some(c) = nfc_get_file(dialog::NativeFileChooserType::BrowseSaveFile) {
                     STATE.with(move |s| {
                         std::fs::write(&c, s.buf.text()).ok();
@@ -239,11 +239,11 @@ fn menu_cb(m: &mut impl MenuExt) {
                     });
                 }
             }
-            "&File/Quit\t" => quit_cb(),
-            "&Edit/Cut\t" => ed.cut(),
-            "&Edit/Copy\t" => ed.copy(),
-            "&Edit/Paste\t" => ed.paste(),
-            "&Help/About\t" => {
+            "&File/&Quit\t" => quit_cb(),
+            "&Edit/Cu&t\t" => ed.cut(),
+            "&Edit/&Copy\t" => ed.copy(),
+            "&Edit/&Paste\t" => ed.paste(),
+            "&Help/&About\t" => {
                 dialog::message_default("A minimal text editor written using fltk-rs!")
             }
             _ => unreachable!(),

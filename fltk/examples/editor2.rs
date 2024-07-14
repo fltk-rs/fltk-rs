@@ -107,7 +107,7 @@ impl MyMenu {
         let mut menu = menu::SysMenuBar::default().with_size(800, 35);
         menu.set_frame(FrameType::FlatBox);
         menu.add_emit(
-            "&File/New...\t",
+            "&File/&New...\t",
             Shortcut::Ctrl | 'n',
             menu::MenuFlag::Normal,
             *s,
@@ -115,7 +115,7 @@ impl MyMenu {
         );
 
         menu.add_emit(
-            "&File/Open...\t",
+            "&File/&Open...\t",
             Shortcut::Ctrl | 'o',
             menu::MenuFlag::Normal,
             *s,
@@ -123,7 +123,7 @@ impl MyMenu {
         );
 
         menu.add_emit(
-            "&File/Save\t",
+            "&File/&Save\t",
             Shortcut::Ctrl | 's',
             menu::MenuFlag::Normal,
             *s,
@@ -131,7 +131,7 @@ impl MyMenu {
         );
 
         menu.add_emit(
-            "&File/Save as...\t",
+            "&File/Save &as...\t",
             Shortcut::Ctrl | 'w',
             menu::MenuFlag::Normal,
             *s,
@@ -139,7 +139,7 @@ impl MyMenu {
         );
 
         menu.add_emit(
-            "&File/Print...\t",
+            "&File/&Print...\t",
             Shortcut::Ctrl | 'p',
             menu::MenuFlag::MenuDivider,
             *s,
@@ -147,7 +147,7 @@ impl MyMenu {
         );
 
         menu.add_emit(
-            "&File/Quit\t",
+            "&File/&Quit\t",
             Shortcut::Ctrl | 'q',
             menu::MenuFlag::Normal,
             *s,
@@ -155,7 +155,7 @@ impl MyMenu {
         );
 
         menu.add_emit(
-            "&Edit/Cut\t",
+            "&Edit/Cu&t\t",
             Shortcut::Ctrl | 'x',
             menu::MenuFlag::Normal,
             *s,
@@ -163,7 +163,7 @@ impl MyMenu {
         );
 
         menu.add_emit(
-            "&Edit/Copy\t",
+            "&Edit/&Copy\t",
             Shortcut::Ctrl | 'c',
             menu::MenuFlag::Normal,
             *s,
@@ -171,7 +171,7 @@ impl MyMenu {
         );
 
         menu.add_emit(
-            "&Edit/Paste\t",
+            "&Edit/&Paste\t",
             Shortcut::Ctrl | 'v',
             menu::MenuFlag::Normal,
             *s,
@@ -179,7 +179,7 @@ impl MyMenu {
         );
 
         menu.add_emit(
-            "&Help/About\t",
+            "&Help/&About\t",
             Shortcut::None,
             menu::MenuFlag::Normal,
             *s,
@@ -215,7 +215,7 @@ impl MyApp {
             .with_label("RustyEd");
         let menu = MyMenu::new(&s);
         let modified = false;
-        menu.menu.find_item("&File/Save\t").unwrap().deactivate();
+        menu.menu.find_item("&File/&Save\t").unwrap().deactivate();
         let mut editor = MyEditor::new(buf.clone());
         editor.emit(s, Message::Changed);
         main_win.make_resizable(true);
@@ -328,12 +328,12 @@ impl MyApp {
                 self.modified = false;
                 self.menu
                     .menu
-                    .find_item("&File/Save\t")
+                    .find_item("&File/&Save\t")
                     .unwrap()
                     .deactivate();
                 self.menu
                     .menu
-                    .find_item("&File/Quit\t")
+                    .find_item("&File/&Quit\t")
                     .unwrap()
                     .set_label_color(Color::Black);
                 let name = match &self.filename {
@@ -355,12 +355,12 @@ impl MyApp {
             self.modified = false;
             self.menu
                 .menu
-                .find_item("&File/Save\t")
+                .find_item("&File/&Save\t")
                 .unwrap()
                 .deactivate();
             self.menu
                 .menu
-                .find_item("&File/Quit\t")
+                .find_item("&File/&Quit\t")
                 .unwrap()
                 .set_label_color(Color::Black);
             self.filename = Some(c);
@@ -380,8 +380,8 @@ impl MyApp {
                     Changed => {
                         if !self.modified {
                             self.modified = true;
-                            self.menu.menu.find_item("&File/Save\t").unwrap().activate();
-                            self.menu.menu.find_item("&File/Quit\t").unwrap().set_label_color(Color::Red);
+                            self.menu.menu.find_item("&File/&Save\t").unwrap().activate();
+                            self.menu.menu.find_item("&File/&Quit\t").unwrap().set_label_color(Color::Red);
                             let name = match &self.filename {
                                 Some(f) => f.to_string_lossy().to_string(),
                                 None => "(Untitled)".to_string(),
@@ -391,7 +391,7 @@ impl MyApp {
                     }
                     New => {
                         if self.buf.text() != "" {
-                            let clear = if let Some(x) = dialog::choice2(center().0 - 200, center().1 - 100, "File unsaved, Do you wish to continue?", "Yes", "No!", "") {
+                            let clear = if let Some(x) = dialog::choice2(center().0 - 200, center().1 - 100, "File unsaved, Do you wish to continue?", "&Yes", "&No!", "") {
                                 x == 0
                             } else {
                                 false
@@ -434,7 +434,7 @@ impl MyApp {
                     Quit => {
                         if self.modified {
                             match dialog::choice2(center().0 - 200, center().1 - 100,
-                                "Would you like to save your work?", "Yes", "No", "") {
+                                "Would you like to save your work?", "&Yes", "&No", "") {
                                 Some(0) => {
                                     if self.save_file().unwrap() {
                                         self.app.quit();
