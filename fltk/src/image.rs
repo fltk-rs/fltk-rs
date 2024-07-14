@@ -755,7 +755,9 @@ impl Pixmap {
                 .collect();
             unsafe {
                 let x = Fl_Pixmap_new(data.as_ptr() as _);
-                data.iter().for_each(|x| { let _ = CString::from_raw(*x as _); });
+                data.iter().for_each(|x| {
+                    let _ = CString::from_raw(*x as _);
+                });
                 if x.is_null() {
                     Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
                 } else {
