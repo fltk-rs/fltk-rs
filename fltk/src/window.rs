@@ -256,9 +256,8 @@ impl SingleWindow {
 
     /// Set the window to be on top of other windows. 
     /// Must only be called after the window has been shown.
-    #[cfg(any(target_os = "macos", target_os = "windows"))]
     pub fn set_on_top(&mut self) {
-        assert!(!self.raw_handle().is_null());
+        assert!(!self.raw_handle() as isize != 0);
         #[cfg(target_os = "macos")]
         {
             extern "C" {
@@ -278,6 +277,15 @@ impl SingleWindow {
             const SWP_NOMOVE: u32 = 2;
             unsafe {
                 SetWindowPos(self.raw_handle(), TOP_MOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
+            }
+        }
+        #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows", feature = "use-wayland")))]
+        {
+            extern "C" {
+                pub fn cfltk_setOnTop(handle: u64);
+            }
+            unsafe {
+                cfltk_setOnTop(self.raw_handle());
             }
         }
     }
@@ -539,9 +547,8 @@ impl DoubleWindow {
 
     /// Set the window to be on top of other windows. 
     /// Must only be called after the window has been shown.
-    #[cfg(any(target_os = "macos", target_os = "windows"))]
     pub fn set_on_top(&mut self) {
-        assert!(!self.raw_handle().is_null());
+        assert!(!self.raw_handle() as isize != 0);
         #[cfg(target_os = "macos")]
         {
             extern "C" {
@@ -561,6 +568,15 @@ impl DoubleWindow {
             const SWP_NOMOVE: u32 = 2;
             unsafe {
                 SetWindowPos(self.raw_handle(), TOP_MOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
+            }
+        }
+        #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows", feature = "use-wayland")))]
+        {
+            extern "C" {
+                pub fn cfltk_setOnTop(handle: u64);
+            }
+            unsafe {
+                cfltk_setOnTop(self.raw_handle());
             }
         }
     }
