@@ -1,6 +1,15 @@
 # Changelog
 
 
+# [1.4.33] - TBA
+- Add Window::set_on_top() support on windows by @caesay.
+- Update docs and improve editor examples by @ntrrgc.
+- image::Pixmap improvements.
+- Fix cfg(no-images) in build script.
+- Link ScreenCaptureKit for macos 15 (required by FLTK).
+- Update ttf-parser to 0.24.
+- Update FLTK submodule.
+
 # [1.4.32] - 2024-06-21
 - Add BrowserExt::deselect.
 - Update FLTK submodule.
