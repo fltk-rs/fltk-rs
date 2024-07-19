@@ -365,49 +365,27 @@ macro_rules! impl_window_ext {
                         assert!(!ptr.is_null());
                         let winid = resolve_raw_handle(ptr);
 
-                        #[cfg(any(
-                            target_os = "windows",
-                            target_os = "macos",
-                            target_os = "android",
-                            target_os = "ios"
-                        ))]
-                        return winid.opaque;
+                        // #[cfg(any(
+                        //     target_os = "windows",
+                        //     target_os = "macos",
+                        //     target_os = "android",
+                        //     target_os = "ios"
+                        // ))]
+                        // return winid as RawHandle;
 
-                        #[cfg(any(
-                            target_os = "linux",
-                            target_os = "dragonfly",
-                            target_os = "freebsd",
-                            target_os = "netbsd",
-                            target_os = "openbsd",
-                        ))]
-                        return winid.x_id as RawHandle;
+                        // #[cfg(any(
+                        //     target_os = "linux",
+                        //     target_os = "dragonfly",
+                        //     target_os = "freebsd",
+                        //     target_os = "netbsd",
+                        //     target_os = "openbsd",
+                        // ))]
+                        return winid as RawHandle;
                     }
                 }
 
                 unsafe fn set_raw_handle(&mut self, handle: RawHandle) {
-                    #[cfg(any(
-                        target_os = "windows",
-                        target_os = "macos",
-                        target_os = "android",
-                        target_os = "ios",
-                    ))]
-                    assert!(!handle.is_null());
-
-                    #[cfg(any(
-                        target_os = "linux",
-                        target_os = "dragonfly",
-                        target_os = "freebsd",
-                        target_os = "netbsd",
-                        target_os = "openbsd",
-                    ))]
-                    {
-                        #[cfg(feature = "use-wayland")]
-                        assert!(!handle.is_null());
-
-                        #[cfg(not(feature = "use-wayland"))]
-                        assert!(handle != 0);
-                    }
-
+                    assert!(handle as isize != 0);
                     Fl_Window_set_raw_handle(self.inner.widget() as *mut Fl_Window, &handle as *const _ as *mut _);
                 }
 

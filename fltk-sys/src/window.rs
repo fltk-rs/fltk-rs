@@ -19,12 +19,6 @@ pub type custom_draw_callback = ::core::option::Option<
     unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::core::ffi::c_void),
 >;
 #[repr(C)]
-#[derive(Copy, Clone)]
-pub union winid {
-    pub x_id: ::core::ffi::c_ulong,
-    pub opaque: *mut ::core::ffi::c_void,
-}
-#[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Window {
     _unused: [u8; 0],
@@ -575,7 +569,7 @@ extern "C" {
     pub fn Fl_Window_find_by_handle(handle: *mut ::core::ffi::c_void) -> *mut Fl_Window;
 }
 extern "C" {
-    pub fn resolve_raw_handle(handle: *mut ::core::ffi::c_void) -> winid;
+    pub fn resolve_raw_handle(handle: *mut ::core::ffi::c_void) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_display() -> *mut ::core::ffi::c_void;
