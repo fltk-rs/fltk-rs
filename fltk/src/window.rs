@@ -256,6 +256,7 @@ impl SingleWindow {
 
     /// Set the window to be on top of other windows. 
     /// Must only be called after the window has been shown.
+    #[cfg(any(target_os = "macos", target_os = "windows"))]
     pub fn set_on_top(&mut self) {
         assert!(!self.raw_handle().is_null());
         #[cfg(target_os = "macos")]
@@ -538,6 +539,7 @@ impl DoubleWindow {
 
     /// Set the window to be on top of other windows. 
     /// Must only be called after the window has been shown.
+    #[cfg(any(target_os = "macos", target_os = "windows"))]
     pub fn set_on_top(&mut self) {
         assert!(!self.raw_handle().is_null());
         #[cfg(target_os = "macos")]
