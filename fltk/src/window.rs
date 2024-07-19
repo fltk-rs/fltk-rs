@@ -210,7 +210,7 @@ impl SingleWindow {
 
     /// Returns the pixels per unit/point
     pub fn pixels_per_unit(&self) -> f32 {
-        #[allow(unused_mut)]
+        #[allow(unused_mut)] 
         let mut factor = 1.0;
         #[cfg(target_os = "macos")]
         {
@@ -254,16 +254,29 @@ impl SingleWindow {
         unsafe { Fl_Single_Window_set_default_xclass(s.as_ptr()) }
     }
 
-    /// Set the borderless window to be on top of the macos system menu bar
-    pub fn set_on_top(&self) {
+    /// Set the window to be on top of other windows. 
+    /// Must only be called after the window has been shown.
+    pub fn set_on_top(&mut self) {
+        assert!(!self.raw_handle().is_null());
         #[cfg(target_os = "macos")]
         {
             extern "C" {
                 pub fn cfltk_setOnTop(handle: *mut raw::c_void);
             }
-            assert!(self.border());
             unsafe {
                 cfltk_setOnTop(self.raw_handle());
+            }
+        }
+        #[cfg(target_os = "windows")]
+        {
+            extern "system" {
+                fn SetWindowPos(hwnd: *mut raw::c_void, insert_after: isize, x: i32, y: i32, cx: i32, cy: i32, flags: u32) -> bool;
+            }
+            const TOP_MOST: isize = -1;
+            const SWP_NOSIZE: u32 = 1;
+            const SWP_NOMOVE: u32 = 2;
+            unsafe {
+                SetWindowPos(self.raw_handle(), TOP_MOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
             }
         }
     }
@@ -476,7 +489,7 @@ impl DoubleWindow {
                 }
                 cfltk_winHide(self.raw_handle());
             }
-            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows",)))]
+            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
             {
                 #[cfg(not(feature = "use-wayland"))]
                 {
@@ -523,15 +536,30 @@ impl DoubleWindow {
         unsafe { Fl_Double_Window_set_default_xclass(s.as_ptr()) }
     }
 
-    #[cfg(target_os = "macos")]
-    /// Set the borderless window to be on top of the macos system menu bar
+    /// Set the window to be on top of other windows. 
+    /// Must only be called after the window has been shown.
     pub fn set_on_top(&mut self) {
-        assert!(!self.border());
-        extern "C" {
-            pub fn cfltk_setOnTop(handle: *mut raw::c_void);
+        assert!(!self.raw_handle().is_null());
+        #[cfg(target_os = "macos")]
+        {
+            extern "C" {
+                pub fn cfltk_setOnTop(handle: *mut raw::c_void);
+            }
+            unsafe {
+                cfltk_setOnTop(self.raw_handle());
+            }
         }
-        unsafe {
-            cfltk_setOnTop(self.raw_handle());
+        #[cfg(target_os = "windows")]
+        {
+            extern "system" {
+                fn SetWindowPos(hwnd: *mut raw::c_void, insert_after: isize, x: i32, y: i32, cx: i32, cy: i32, flags: u32) -> bool;
+            }
+            const TOP_MOST: isize = -1;
+            const SWP_NOSIZE: u32 = 1;
+            const SWP_NOMOVE: u32 = 2;
+            unsafe {
+                SetWindowPos(self.raw_handle(), TOP_MOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
+            }
         }
     }
 
