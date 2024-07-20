@@ -6,6 +6,7 @@
 - Update docs and improve editor examples by @ntrrgc.
 - image::Pixmap improvements.
 - Fix cfg(no-images) in build script.
+- Add runtime check for wayland use.
 - Link ScreenCaptureKit for macos 15 (required by FLTK).
 - Update ttf-parser to 0.24.
 - Update FLTK submodule.
