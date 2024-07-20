@@ -86,6 +86,46 @@ pub type RawHandle = u32;
 ))]
 pub type RawHandle = u64;
 
+// Opaque raw window handle on 32-bit linux running on a Raspberry Pi
+#[cfg(all(
+    not(any(
+        target_os = "windows",
+        target_os = "macos",
+        target_os = "ios",
+        target_os = "android",
+    )),
+    any(
+        target_arch = "arm",
+        target_arch = "mips",
+        target_arch = "powerpc",
+        target_arch = "sparc",
+        target_arch = "wasm32",
+        target_arch = "x86",
+    )
+))]
+pub type RawXlibHandle = u32;
+
+/// Opaque raw window handle (`*mut c_void` to `HWND` on Windows and `NSWindow` on macOS),
+/// `XID` (`u64`) raw window handle for X11, and `wl_suface *` for wayland
+#[cfg(all(
+    not(any(
+        target_os = "windows",
+        target_os = "macos",
+        target_os = "ios",
+        target_os = "android",
+    )),
+    any(
+        target_arch = "aarch64",
+        target_arch = "loongarch64",
+        target_arch = "mips64",
+        target_arch = "powerpc64",
+        target_arch = "s390x",
+        target_arch = "sparc64",
+        target_arch = "x86_64",
+    )
+))]
+pub type RawXlibHandle = u64;
+
 /// Creates a window widget
 pub type Window = DoubleWindow;
 
@@ -282,11 +322,11 @@ impl SingleWindow {
         #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
         {
             extern "C" {
-                pub fn cfltk_setOnTop(handle: usize);
+                pub fn cfltk_setOnTop(handle: RawXlibHandle);
             }
             if !crate::app::using_wayland() {
                 unsafe {
-                    cfltk_setOnTop(self.raw_handle() as usize);
+                    cfltk_setOnTop(self.raw_handle() as RawXlibHandle);
                 }
             }
         }
@@ -472,7 +512,7 @@ impl DoubleWindow {
                     extern "C" {
                         fn XMapWindow(display: *mut Display, win: u64);
                     }
-                    XMapWindow(crate::app::display() as _, self.raw_handle() as _);
+                    XMapWindow(crate::app::display() as _, self.raw_handle() as RawXlibHandle);
                     crate::app::flush();
                 } else {
                     Fl_Double_Window_show(self.inner.widget() as _);
@@ -507,20 +547,20 @@ impl DoubleWindow {
                     extern "C" {
                         fn XUnmapWindow(display: *mut Display, win: u64);
                     }
-                    XUnmapWindow(crate::app::display() as _, self.raw_handle() as _);
+                    XUnmapWindow(crate::app::display() as _, self.raw_handle() as RawXlibHandle);
                     crate::app::flush();
                 } else {
                     extern "C" {
                         fn wl_proxy_marshal(proxy: *mut raw::c_void, opcode: u32, ...);
                     }
                     wl_proxy_marshal(
-                        self.raw_handle() as _,
+                        self.raw_handle() as *mut raw::c_void,
                         1,
                         std::ptr::null_mut() as *mut raw::c_void,
                         0,
                         0,
                     ); // attach
-                    wl_proxy_marshal(self.raw_handle() as _, 6); // commit
+                    wl_proxy_marshal(self.raw_handle() as *mut raw::c_void, 6); // commit
                 }
             }
         }
@@ -572,11 +612,11 @@ impl DoubleWindow {
         #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
         {
             extern "C" {
-                pub fn cfltk_setOnTop(handle: usize);
+                pub fn cfltk_setOnTop(handle: RawXlibHandle);
             }
             if !crate::app::using_wayland() {
                 unsafe {
-                    cfltk_setOnTop(self.raw_handle() as usize);
+                    cfltk_setOnTop(self.raw_handle() as RawXlibHandle);
                 }
             }
         }

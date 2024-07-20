@@ -60,7 +60,7 @@ macro_rules! impl_window_ext {
                         #[cfg(feature = "raw-window-handle")]
                         type Handle = XlibHandle;
                         let mut handle = Handle::empty();
-                        handle.window = self.raw_handle() as _;
+                        handle.window = self.raw_handle() as RawXlibHandle;
                         return RawWindowHandle::Xlib(handle);
                     } else {
                         #[cfg(feature = "rwh05")]
@@ -159,10 +159,10 @@ macro_rules! impl_window_ext {
                 ))]
                 {
                     if !$crate::app::using_wayland() {
-                        let handle = XlibWindowHandle::new(self.raw_handle() as _);
+                        let handle = XlibWindowHandle::new(self.raw_handle() as RawXlibHandle);
                         return Ok(unsafe { WindowHandle::borrow_raw(RawWindowHandle::Xlib(handle)) });
                     } else {
-                        let handle = WaylandWindowHandle::new(std::ptr::NonNull::new(self.raw_handle() as *mut raw::c_void).unwrap());
+                        let handle = WaylandWindowHandle::new(std::ptr::NonNull::new(unsafe { resolve_raw_handle(self.raw_handle() as *mut raw::c_void) }).unwrap());
                         return Ok(unsafe { WindowHandle::borrow_raw(RawWindowHandle::Wayland(handle)) });
                     }
                 }
