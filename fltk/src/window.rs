@@ -133,7 +133,7 @@ impl SingleWindow {
     /// # Safety
     /// The data must be valid and is OS-dependent.
     pub unsafe fn find_by_handle(handle: RawHandle) -> Option<impl WindowExt> {
-        let ptr = Fl_Window_find_by_handle(&handle as *const _ as *mut _);
+        let ptr = Fl_Window_find_by_handle(handle as *const raw::c_void as *mut _);
         if ptr.is_null() {
             None
         } else {
@@ -335,7 +335,7 @@ impl DoubleWindow {
     /// # Safety
     /// The data must be valid and is OS-dependent.
     pub unsafe fn find_by_handle(handle: RawHandle) -> Option<impl WindowExt> {
-        let ptr = Fl_Window_find_by_handle(&handle as *const _ as *mut _);
+        let ptr = Fl_Window_find_by_handle(handle as *const raw::c_void as *mut _);
         if ptr.is_null() {
             None
         } else {

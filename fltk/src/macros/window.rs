@@ -60,7 +60,7 @@ macro_rules! impl_window_ext {
                         #[cfg(feature = "raw-window-handle")]
                         type Handle = XlibHandle;
                         let mut handle = Handle::empty();
-                        handle.window = self.raw_handle();
+                        handle.window = self.raw_handle() as _;
                         return RawWindowHandle::Xlib(handle);
                     } else {
                         #[cfg(feature = "rwh05")]
@@ -68,7 +68,7 @@ macro_rules! impl_window_ext {
                         #[cfg(feature = "raw-window-handle")]
                         type Handle = WaylandHandle;
                         let mut handle = Handle::empty();
-                        handle.surface = self.raw_handle() as *mut raw::c_void;
+                        handle.surface = unsafe { resolve_raw_handle(self.raw_handle() as *mut raw::c_void) };
                         return RawWindowHandle::Wayland(handle);
                     }
                 }
@@ -159,7 +159,7 @@ macro_rules! impl_window_ext {
                 ))]
                 {
                     if !$crate::app::using_wayland() {
-                        let handle = XlibWindowHandle::new(self.raw_handle());
+                        let handle = XlibWindowHandle::new(self.raw_handle() as _);
                         return Ok(unsafe { WindowHandle::borrow_raw(RawWindowHandle::Xlib(handle)) });
                     } else {
                         let handle = WaylandWindowHandle::new(std::ptr::NonNull::new(self.raw_handle() as *mut raw::c_void).unwrap());
@@ -343,24 +343,7 @@ macro_rules! impl_window_ext {
                     unsafe {
                         let ptr = [<$flname _raw_handle>](self.inner.widget() as _);
                         assert!(!ptr.is_null());
-                        let winid = resolve_raw_handle(ptr);
-
-                        // #[cfg(any(
-                        //     target_os = "windows",
-                        //     target_os = "macos",
-                        //     target_os = "android",
-                        //     target_os = "ios"
-                        // ))]
-                        // return winid as RawHandle;
-
-                        // #[cfg(any(
-                        //     target_os = "linux",
-                        //     target_os = "dragonfly",
-                        //     target_os = "freebsd",
-                        //     target_os = "netbsd",
-                        //     target_os = "openbsd",
-                        // ))]
-                        return winid as RawHandle;
+                        return ptr as RawHandle;
                     }
                 }
 
