@@ -373,3 +373,8 @@ pub fn contrast_mode() -> ContrastMode {
 pub fn set_contrast_function(f: fn(fg: Color, bg: Color, fontsize: i32, ctx: i32) -> Color) {
     unsafe { fl::Fl_set_contrast_function(mem::transmute(f)) }
 }
+
+/// Check whether we're using wayland
+pub(crate) fn using_wayland() -> bool {
+    unsafe { fl::Fl_using_wayland() != 0 }
+}

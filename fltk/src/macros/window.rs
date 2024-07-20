@@ -54,8 +54,7 @@ macro_rules! impl_window_ext {
                     target_os = "openbsd",
                 ))]
                 {
-                    #[cfg(not(feature = "use-wayland"))]
-                    {
+                    if !$crate::app::using_wayland() {
                         #[cfg(feature = "rwh05")]
                         type Handle = XlibWindowHandle;
                         #[cfg(feature = "raw-window-handle")]
@@ -63,17 +62,13 @@ macro_rules! impl_window_ext {
                         let mut handle = Handle::empty();
                         handle.window = self.raw_handle();
                         return RawWindowHandle::Xlib(handle);
-                    }
-
-
-                    #[cfg(feature = "use-wayland")]
-                    {
+                    } else {
                         #[cfg(feature = "rwh05")]
                         type Handle = WaylandWindowHandle;
                         #[cfg(feature = "raw-window-handle")]
                         type Handle = WaylandHandle;
                         let mut handle = Handle::empty();
-                        handle.surface = self.raw_handle();
+                        handle.surface = self.raw_handle() as *mut raw::c_void;
                         return RawWindowHandle::Wayland(handle);
                     }
                 }
@@ -112,18 +107,13 @@ macro_rules! impl_window_ext {
                     target_os = "openbsd",
                 ))]
                 {
-                    #[cfg(not(feature = "use-wayland"))]
-                    {
+                    if !$crate::app::using_wayland() {
                         type Handle = XlibDisplayHandle;
                         let mut handle = Handle::empty();
                         handle.display = $crate::app::display();
                         handle.screen = self.screen_num();
                         return RawDisplayHandle::Xlib(handle);
-                    }
-
-
-                    #[cfg(feature = "use-wayland")]
-                    {
+                    } else {
                         type Handle = WaylandDisplayHandle;
                         let mut handle = Handle::empty();
                         handle.display = $crate::app::display();
@@ -168,16 +158,11 @@ macro_rules! impl_window_ext {
                     target_os = "openbsd",
                 ))]
                 {
-                    #[cfg(not(feature = "use-wayland"))]
-                    {
+                    if !$crate::app::using_wayland() {
                         let handle = XlibWindowHandle::new(self.raw_handle());
                         return Ok(unsafe { WindowHandle::borrow_raw(RawWindowHandle::Xlib(handle)) });
-                    }
-
-
-                    #[cfg(feature = "use-wayland")]
-                    {
-                        let handle = WaylandWindowHandle::new(std::ptr::NonNull::new(self.raw_handle()).unwrap());
+                    } else {
+                        let handle = WaylandWindowHandle::new(std::ptr::NonNull::new(self.raw_handle() as *mut raw::c_void).unwrap());
                         return Ok(unsafe { WindowHandle::borrow_raw(RawWindowHandle::Wayland(handle)) });
                     }
                 }
@@ -213,17 +198,12 @@ macro_rules! impl_window_ext {
                     target_os = "openbsd",
                 ))]
                 {
-                    #[cfg(not(feature = "use-wayland"))]
-                    {
+                    if !$crate::app::using_wayland() {
                         let display = std::ptr::NonNull::new($crate::app::display());
                         let screen = self.screen_num();
                         let handle = XlibDisplayHandle::new(display, screen);
                         return Ok(unsafe { DisplayHandle::borrow_raw(RawDisplayHandle::Xlib(handle)) });
-                    }
-
-
-                    #[cfg(feature = "use-wayland")]
-                    {
+                    } else {
                         let handle = WaylandDisplayHandle::new(std::ptr::NonNull::new($crate::app::display()).unwrap());
                         return Ok(unsafe { DisplayHandle::borrow_raw(RawDisplayHandle::Wayland(handle)) });
                     }

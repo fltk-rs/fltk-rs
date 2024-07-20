@@ -777,3 +777,6 @@ extern "C" {
         >,
     );
 }
+extern "C" {
+    pub fn Fl_using_wayland() -> ::core::ffi::c_int;
+}

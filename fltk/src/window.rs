@@ -279,13 +279,15 @@ impl SingleWindow {
                 SetWindowPos(self.raw_handle(), TOP_MOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
             }
         }
-        #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows", feature = "use-wayland")))]
+        #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
         {
             extern "C" {
-                pub fn cfltk_setOnTop(handle: u64);
+                pub fn cfltk_setOnTop(handle: usize);
             }
-            unsafe {
-                cfltk_setOnTop(self.raw_handle());
+            if !crate::app::using_wayland() {
+                unsafe {
+                    cfltk_setOnTop(self.raw_handle() as usize);
+                }
             }
         }
     }
@@ -463,19 +465,19 @@ impl DoubleWindow {
                 target_os = "macos",
                 target_os = "android",
                 target_os = "windows",
-                feature = "use-wayland"
             )))]
             {
-                enum Display {}
-                extern "C" {
-                    fn XMapWindow(display: *mut Display, win: u64);
+                if !crate::app::using_wayland() {
+                    enum Display {}
+                    extern "C" {
+                        fn XMapWindow(display: *mut Display, win: u64);
+                    }
+                    XMapWindow(crate::app::display() as _, self.raw_handle() as _);
+                    crate::app::flush();
+                } else {
+                    Fl_Double_Window_show(self.inner.widget() as _);
                 }
-                XMapWindow(crate::app::display() as _, self.raw_handle() as _);
-                crate::app::flush();
-            }
-            #[cfg(feature = "use-wayland")]
-            {
-                Fl_Double_Window_show(self.inner.widget() as _);
+
             }
         }
     }
@@ -500,17 +502,14 @@ impl DoubleWindow {
             }
             #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
             {
-                #[cfg(not(feature = "use-wayland"))]
-                {
+                if !crate::app::using_wayland() {
                     enum Display {}
                     extern "C" {
                         fn XUnmapWindow(display: *mut Display, win: u64);
                     }
                     XUnmapWindow(crate::app::display() as _, self.raw_handle() as _);
                     crate::app::flush();
-                }
-                #[cfg(feature = "use-wayland")]
-                {
+                } else {
                     extern "C" {
                         fn wl_proxy_marshal(proxy: *mut raw::c_void, opcode: u32, ...);
                     }
@@ -570,13 +569,15 @@ impl DoubleWindow {
                 SetWindowPos(self.raw_handle(), TOP_MOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
             }
         }
-        #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows", feature = "use-wayland")))]
+        #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
         {
             extern "C" {
-                pub fn cfltk_setOnTop(handle: u64);
+                pub fn cfltk_setOnTop(handle: usize);
             }
-            unsafe {
-                cfltk_setOnTop(self.raw_handle());
+            if !crate::app::using_wayland() {
+                unsafe {
+                    cfltk_setOnTop(self.raw_handle() as usize);
+                }
             }
         }
     }
