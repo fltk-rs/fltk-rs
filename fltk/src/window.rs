@@ -117,6 +117,198 @@ impl WindowType {
 
 crate::macros::widget::impl_widget_type!(WindowType);
 
+macro_rules! impl_ppu {
+    ($name:ident) => {
+        impl $name {
+            /// Returns the pixels per unit/point
+            pub fn pixels_per_unit(&self) -> f32 {
+                #[allow(unused_mut)] 
+                let mut factor = 1.0;
+                #[cfg(target_os = "macos")]
+                {
+                    extern "C" {
+                        pub fn cfltk_getScalingFactor(handle: *mut raw::c_void) -> f64;
+                    }
+                    let mac_version = unsafe { fltk_sys::fl::Fl_mac_os_version() };
+                    if mac_version >= 100700 {
+                        factor = unsafe { cfltk_getScalingFactor(self.raw_handle()) };
+                    }
+                }
+                let s = crate::app::screen_scale(self.screen_num());
+                s * factor as f32
+            }
+
+            /// Gets the window's width in pixels
+            pub fn pixel_w(&self) -> i32 {
+                (self.pixels_per_unit() * self.w() as f32) as i32
+            }
+
+            /// Gets the window's height in pixels
+            pub fn pixel_h(&self) -> i32 {
+                (self.pixels_per_unit() * self.h() as f32) as i32
+            }
+        }
+    }
+}
+
+macro_rules! impl_top_win {
+    ($name:ident) => {
+        impl $name {
+            /// Find an `Fl_Window` through a raw handle. The window must have been instantiated by the app.
+            /// `void *` to: (Windows: `HWND`, X11: `Xid` (`u64`), macOS: `NSWindow`)
+            /// # Safety
+            /// The data must be valid and is OS-dependent.
+            pub unsafe fn find_by_handle(handle: RawHandle) -> Option<impl WindowExt> {
+                let ptr = Fl_Window_find_by_handle(handle as *const raw::c_void as *mut _);
+                if ptr.is_null() {
+                    None
+                } else {
+                    Some(Window::from_widget_ptr(
+                        ptr as *mut fltk_sys::widget::Fl_Widget,
+                    ))
+                }
+            }
+
+            /// Use FLTK specific arguments for the application:
+            /// More info [here](https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48).
+            /// The options are:
+            /// - `-bg2 color`
+            /// - `-bg color`
+            /// - `-di[splay] host:n.n`
+            /// - `-dn[d]`
+            /// - `-fg color`
+            /// - `-g[eometry] WxH+X+Y`
+            /// - `-i[conic]`
+            /// - `-k[bd]`
+            /// - `-na[me] classname`
+            /// - `-nod[nd]`
+            /// - `-nok[bd]`
+            /// - `-not[ooltips]`
+            /// - `-s[cheme] scheme`
+            /// - `-ti[tle] windowtitle`
+            /// - `-to[oltips]`
+            pub fn show_with_env_args(&mut self) {
+                unsafe {
+                    let args: Vec<String> = std::env::args().collect();
+                    let len = args.len() as i32;
+                    let mut v: Vec<*mut raw::c_char> = vec![];
+                    for arg in args {
+                        let c = CString::safe_new(arg.as_str());
+                        v.push(c.into_raw() as *mut raw::c_char);
+                    }
+                    let mut v = mem::ManuallyDrop::new(v);
+                    Fl_Window_show_with_args(self.inner.widget() as *mut Fl_Window, len, v.as_mut_ptr())
+                }
+            }
+
+            /// Use FLTK specific arguments for the application:
+            /// More info [here](https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48).
+            /// The options are:
+            /// - `-bg2 color`
+            /// - `-bg color`
+            /// - `-di[splay] host:n.n`
+            /// - `-dn[d]`
+            /// - `-fg color`
+            /// - `-g[eometry] WxH+X+Y`
+            /// - `-i[conic]`
+            /// - `-k[bd]`
+            /// - `-na[me] classname`
+            /// - `-nod[nd]`
+            /// - `-nok[bd]`
+            /// - `-not[ooltips]`
+            /// - `-s[cheme] scheme`
+            /// - `-ti[tle] windowtitle`
+            /// - `-to[oltips]`
+            pub fn show_with_args(&mut self, args: &[&str]) {
+                unsafe {
+                    let mut temp = vec![""];
+                    temp.extend(args);
+                    let len = temp.len() as i32;
+                    let mut v: Vec<*mut raw::c_char> = vec![];
+                    for arg in temp {
+                        let c = CString::safe_new(arg);
+                        v.push(c.into_raw() as *mut raw::c_char);
+                    }
+                    let mut v = mem::ManuallyDrop::new(v);
+                    Fl_Window_show_with_args(self.inner.widget() as *mut Fl_Window, len, v.as_mut_ptr())
+                }
+            }
+
+            /// Set the window to be on top of other windows. 
+            /// Must only be called after the window has been shown.
+            pub fn set_on_top(&mut self) {
+                assert!(self.raw_handle() as isize != 0);
+                #[cfg(target_os = "macos")]
+                {
+                    extern "C" {
+                        pub fn cfltk_setOnTop(handle: *mut raw::c_void);
+                    }
+                    unsafe {
+                        cfltk_setOnTop(self.raw_handle());
+                    }
+                }
+                #[cfg(target_os = "windows")]
+                {
+                    extern "system" {
+                        fn SetWindowPos(hwnd: *mut raw::c_void, insert_after: isize, x: i32, y: i32, cx: i32, cy: i32, flags: u32) -> bool;
+                    }
+                    const TOP_MOST: isize = -1;
+                    const SWP_NOSIZE: u32 = 1;
+                    const SWP_NOMOVE: u32 = 2;
+                    unsafe {
+                        SetWindowPos(self.raw_handle(), TOP_MOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
+                    }
+                }
+                #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
+                {
+                    extern "C" {
+                        pub fn cfltk_setOnTop(handle: RawXlibHandle);
+                    }
+                    if !crate::app::using_wayland() {
+                        unsafe {
+                            cfltk_setOnTop(self.raw_handle() as RawXlibHandle);
+                        }
+                    }
+                }
+            }
+
+            /// Maximize the window
+            pub fn maximize(&mut self) {
+                unsafe { Fl_Window_maximize(self.inner.widget() as _) }
+            }
+
+            /// Unmaximize the window
+            pub fn un_maximize(&mut self) {
+                unsafe { Fl_Window_un_maximize(self.inner.widget() as _) }
+            }
+
+            /// Checks whether the window is maximized
+            pub fn maximize_active(&self) -> bool {
+                unsafe { Fl_Window_maximize_active(self.inner.widget() as _) != 0 }
+            }
+
+            /// Get the default XA_WM_CLASS property for all windows of your application
+            pub fn default_xclass() -> Option<String> {
+                unsafe {
+                    let ptr = Fl_Single_Window_default_xclass();
+                    if ptr.is_null() {
+                        None
+                    } else {
+                        Some(CStr::from_ptr(ptr).to_string_lossy().to_string())
+                    }
+                }
+            }
+
+            /// Set the default XA_WM_CLASS property for all windows of your application.
+            /// This should be called before showing with window
+            pub fn set_default_xclass(s: &str) {
+                let s = CString::safe_new(s);
+                unsafe { Fl_Single_Window_set_default_xclass(s.as_ptr()) }
+            }
+        }
+    }
+}
+
 /// Creates a single (buffered) window widget
 #[derive(Debug)]
 pub struct SingleWindow {
@@ -138,186 +330,8 @@ impl Default for SingleWindow {
     }
 }
 
-impl SingleWindow {
-    /// Find an `Fl_Window` through a raw handle. The window must have been instantiated by the app.
-    /// `void *` to: (Windows: `HWND`, X11: `Xid` (`u64`), macOS: `NSWindow`)
-    /// # Safety
-    /// The data must be valid and is OS-dependent.
-    pub unsafe fn find_by_handle(handle: RawHandle) -> Option<impl WindowExt> {
-        let ptr = Fl_Window_find_by_handle(handle as *const raw::c_void as *mut _);
-        if ptr.is_null() {
-            None
-        } else {
-            Some(Window::from_widget_ptr(
-                ptr as *mut fltk_sys::widget::Fl_Widget,
-            ))
-        }
-    }
-
-    /// Use FLTK specific arguments for the application:
-    /// More info [here](https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48).
-    /// The options are:
-    /// - `-bg2 color`
-    /// - `-bg color`
-    /// - `-di[splay] host:n.n`
-    /// - `-dn[d]`
-    /// - `-fg color`
-    /// - `-g[eometry] WxH+X+Y`
-    /// - `-i[conic]`
-    /// - `-k[bd]`
-    /// - `-na[me] classname`
-    /// - `-nod[nd]`
-    /// - `-nok[bd]`
-    /// - `-not[ooltips]`
-    /// - `-s[cheme] scheme`
-    /// - `-ti[tle] windowtitle`
-    /// - `-to[oltips]`
-    pub fn show_with_env_args(&mut self) {
-        unsafe {
-            let args: Vec<String> = std::env::args().collect();
-            let len = args.len() as i32;
-            let mut v: Vec<*mut raw::c_char> = vec![];
-            for arg in args {
-                let c = CString::safe_new(arg.as_str());
-                v.push(c.into_raw() as *mut raw::c_char);
-            }
-            let mut v = mem::ManuallyDrop::new(v);
-            Fl_Window_show_with_args(self.inner.widget() as *mut Fl_Window, len, v.as_mut_ptr())
-        }
-    }
-
-    /// Use FLTK specific arguments for the application:
-    /// More info [here](https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48).
-    /// The options are:
-    /// - `-bg2 color`
-    /// - `-bg color`
-    /// - `-di[splay] host:n.n`
-    /// - `-dn[d]`
-    /// - `-fg color`
-    /// - `-g[eometry] WxH+X+Y`
-    /// - `-i[conic]`
-    /// - `-k[bd]`
-    /// - `-na[me] classname`
-    /// - `-nod[nd]`
-    /// - `-nok[bd]`
-    /// - `-not[ooltips]`
-    /// - `-s[cheme] scheme`
-    /// - `-ti[tle] windowtitle`
-    /// - `-to[oltips]`
-    pub fn show_with_args(&mut self, args: &[&str]) {
-        unsafe {
-            let mut temp = vec![""];
-            temp.extend(args);
-            let len = temp.len() as i32;
-            let mut v: Vec<*mut raw::c_char> = vec![];
-            for arg in temp {
-                let c = CString::safe_new(arg);
-                v.push(c.into_raw() as *mut raw::c_char);
-            }
-            let mut v = mem::ManuallyDrop::new(v);
-            Fl_Window_show_with_args(self.inner.widget() as *mut Fl_Window, len, v.as_mut_ptr())
-        }
-    }
-
-    /// Returns the pixels per unit/point
-    pub fn pixels_per_unit(&self) -> f32 {
-        #[allow(unused_mut)] 
-        let mut factor = 1.0;
-        #[cfg(target_os = "macos")]
-        {
-            extern "C" {
-                pub fn cfltk_getScalingFactor(handle: *mut raw::c_void) -> f64;
-            }
-            let mac_version = unsafe { fltk_sys::fl::Fl_mac_os_version() };
-            if mac_version >= 100700 {
-                factor = unsafe { cfltk_getScalingFactor(self.raw_handle()) };
-            }
-        }
-        let s = crate::app::screen_scale(self.screen_num());
-        s * factor as f32
-    }
-
-    /// Gets the window's width in pixels
-    pub fn pixel_w(&self) -> i32 {
-        (self.pixels_per_unit() * self.w() as f32) as i32
-    }
-
-    /// Gets the window's height in pixels
-    pub fn pixel_h(&self) -> i32 {
-        (self.pixels_per_unit() * self.h() as f32) as i32
-    }
-
-    /// Get the default XA_WM_CLASS property for all windows of your application
-    pub fn default_xclass() -> Option<String> {
-        unsafe {
-            let ptr = Fl_Single_Window_default_xclass();
-            if ptr.is_null() {
-                None
-            } else {
-                Some(CStr::from_ptr(ptr).to_string_lossy().to_string())
-            }
-        }
-    }
-    /// Set the default XA_WM_CLASS property for all windows of your application.
-    /// This should be called before showing with window
-    pub fn set_default_xclass(s: &str) {
-        let s = CString::safe_new(s);
-        unsafe { Fl_Single_Window_set_default_xclass(s.as_ptr()) }
-    }
-
-    /// Set the window to be on top of other windows. 
-    /// Must only be called after the window has been shown.
-    pub fn set_on_top(&mut self) {
-        assert!(self.raw_handle() as isize != 0);
-        #[cfg(target_os = "macos")]
-        {
-            extern "C" {
-                pub fn cfltk_setOnTop(handle: *mut raw::c_void);
-            }
-            unsafe {
-                cfltk_setOnTop(self.raw_handle());
-            }
-        }
-        #[cfg(target_os = "windows")]
-        {
-            extern "system" {
-                fn SetWindowPos(hwnd: *mut raw::c_void, insert_after: isize, x: i32, y: i32, cx: i32, cy: i32, flags: u32) -> bool;
-            }
-            const TOP_MOST: isize = -1;
-            const SWP_NOSIZE: u32 = 1;
-            const SWP_NOMOVE: u32 = 2;
-            unsafe {
-                SetWindowPos(self.raw_handle(), TOP_MOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
-            }
-        }
-        #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
-        {
-            extern "C" {
-                pub fn cfltk_setOnTop(handle: RawXlibHandle);
-            }
-            if !crate::app::using_wayland() {
-                unsafe {
-                    cfltk_setOnTop(self.raw_handle() as RawXlibHandle);
-                }
-            }
-        }
-    }
-
-    /// Maximize the window
-    pub fn maximize(&mut self) {
-        unsafe { Fl_Window_maximize(self.inner.widget() as _) }
-    }
-
-    /// Unmaximize the window
-    pub fn un_maximize(&mut self) {
-        unsafe { Fl_Window_un_maximize(self.inner.widget() as _) }
-    }
-
-    /// Checks whether the window is maximized
-    pub fn maximize_active(&self) -> bool {
-        unsafe { Fl_Window_maximize_active(self.inner.widget() as _) != 0 }
-    }
-}
+impl_top_win!(SingleWindow);
+impl_ppu!(SingleWindow);
 
 /// Creates a double (buffered) window widget
 #[derive(Debug)]
@@ -340,118 +354,13 @@ impl Default for DoubleWindow {
     }
 }
 
+impl_top_win!(DoubleWindow);
+impl_ppu!(DoubleWindow);
+
 impl DoubleWindow {
-    /// Find an `Fl_Window` through a raw handle. The window must have been instantiated by the app.
-    /// `void *` to: (Windows: `HWND`, X11: `Xid` (`u64`), macOS: `NSWindow`)
-    /// # Safety
-    /// The data must be valid and is OS-dependent.
-    pub unsafe fn find_by_handle(handle: RawHandle) -> Option<impl WindowExt> {
-        let ptr = Fl_Window_find_by_handle(handle as *const raw::c_void as *mut _);
-        if ptr.is_null() {
-            None
-        } else {
-            Some(Window::from_widget_ptr(
-                ptr as *mut fltk_sys::widget::Fl_Widget,
-            ))
-        }
-    }
-
-    /// Use FLTK specific arguments for the application:
-    /// More info [here](https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48).
-    /// The options are:
-    /// - `-bg2 color`
-    /// - `-bg color`
-    /// - `-di[splay] host:n.n`
-    /// - `-dn[d]`
-    /// - `-fg color`
-    /// - `-g[eometry] WxH+X+Y`
-    /// - `-i[conic]`
-    /// - `-k[bd]`
-    /// - `-na[me] classname`
-    /// - `-nod[nd]`
-    /// - `-nok[bd]`
-    /// - `-not[ooltips]`
-    /// - `-s[cheme] scheme`
-    /// - `-ti[tle] windowtitle`
-    /// - `-to[oltips]`
-    pub fn show_with_env_args(&mut self) {
-        unsafe {
-            let args: Vec<String> = std::env::args().collect();
-            let len = args.len() as i32;
-            let mut v: Vec<*mut raw::c_char> = vec![];
-            for arg in args {
-                let c = CString::safe_new(arg.as_str());
-                v.push(c.into_raw() as *mut raw::c_char);
-            }
-            let mut v = mem::ManuallyDrop::new(v);
-            Fl_Window_show_with_args(self.inner.widget() as *mut Fl_Window, len, v.as_mut_ptr())
-        }
-    }
-
-    /// Use FLTK specific arguments for the application:
-    /// More info [here](https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48).
-    /// The options are:
-    /// - `-bg2 color`
-    /// - `-bg color`
-    /// - `-di[splay] host:n.n`
-    /// - `-dn[d]`
-    /// - `-fg color`
-    /// - `-g[eometry] WxH+X+Y`
-    /// - `-i[conic]`
-    /// - `-k[bd]`
-    /// - `-na[me] classname`
-    /// - `-nod[nd]`
-    /// - `-nok[bd]`
-    /// - `-not[ooltips]`
-    /// - `-s[cheme] scheme`
-    /// - `-ti[tle] windowtitle`
-    /// - `-to[oltips]`
-    pub fn show_with_args(&mut self, args: &[&str]) {
-        unsafe {
-            let mut temp = vec![""];
-            temp.extend(args);
-            let len = temp.len() as i32;
-            let mut v: Vec<*mut raw::c_char> = vec![];
-            for arg in temp {
-                let c = CString::safe_new(arg);
-                v.push(c.into_raw() as *mut raw::c_char);
-            }
-            let mut v = mem::ManuallyDrop::new(v);
-            Fl_Window_show_with_args(self.inner.widget() as *mut Fl_Window, len, v.as_mut_ptr())
-        }
-    }
-
     /// Forces the window to be drawn, this window is also made current and calls draw()
     pub fn flush(&mut self) {
         unsafe { Fl_Double_Window_flush(self.inner.widget() as _) }
-    }
-
-    /// Returns the pixels per unit./point
-    pub fn pixels_per_unit(&self) -> f32 {
-        #[allow(unused_mut)]
-        let mut factor = 1.0;
-        #[cfg(target_os = "macos")]
-        {
-            extern "C" {
-                pub fn cfltk_getScalingFactor(handle: *mut raw::c_void) -> f64;
-            }
-            let mac_version = unsafe { fltk_sys::fl::Fl_mac_os_version() };
-            if mac_version >= 100700 {
-                factor = unsafe { cfltk_getScalingFactor(self.raw_handle()) };
-            }
-        }
-        let s = crate::app::screen_scale(self.screen_num());
-        s * factor as f32
-    }
-
-    /// Gets the window's width in pixels
-    pub fn pixel_w(&self) -> i32 {
-        (self.pixels_per_unit() * self.w() as f32) as i32
-    }
-
-    /// Gets the window's height in pixels
-    pub fn pixel_h(&self) -> i32 {
-        (self.pixels_per_unit() * self.h() as f32) as i32
     }
 
     /// Show a window after it had been hidden. Works on Windows and X11 systems
@@ -536,77 +445,6 @@ impl DoubleWindow {
             }
         }
     }
-
-    /// Get the default XA_WM_CLASS property for all windows of your application
-    pub fn default_xclass() -> Option<String> {
-        unsafe {
-            let ptr = Fl_Double_Window_default_xclass();
-            if ptr.is_null() {
-                None
-            } else {
-                Some(CStr::from_ptr(ptr).to_string_lossy().to_string())
-            }
-        }
-    }
-    /// Set the default XA_WM_CLASS property for all windows of your application.
-    /// This should be called before showing with window
-    pub fn set_default_xclass(s: &str) {
-        let s = CString::safe_new(s);
-        unsafe { Fl_Double_Window_set_default_xclass(s.as_ptr()) }
-    }
-
-    /// Set the window to be on top of other windows. 
-    /// Must only be called after the window has been shown.
-    pub fn set_on_top(&mut self) {
-        assert!(self.raw_handle() as isize != 0);
-        #[cfg(target_os = "macos")]
-        {
-            extern "C" {
-                pub fn cfltk_setOnTop(handle: *mut raw::c_void);
-            }
-            unsafe {
-                cfltk_setOnTop(self.raw_handle());
-            }
-        }
-        #[cfg(target_os = "windows")]
-        {
-            extern "system" {
-                fn SetWindowPos(hwnd: *mut raw::c_void, insert_after: isize, x: i32, y: i32, cx: i32, cy: i32, flags: u32) -> bool;
-            }
-            const TOP_MOST: isize = -1;
-            const SWP_NOSIZE: u32 = 1;
-            const SWP_NOMOVE: u32 = 2;
-            unsafe {
-                SetWindowPos(self.raw_handle(), TOP_MOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
-            }
-        }
-        #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
-        {
-            extern "C" {
-                pub fn cfltk_setOnTop(handle: RawXlibHandle);
-            }
-            if !crate::app::using_wayland() {
-                unsafe {
-                    cfltk_setOnTop(self.raw_handle() as RawXlibHandle);
-                }
-            }
-        }
-    }
-
-    /// Maximize the window
-    pub fn maximize(&mut self) {
-        unsafe { Fl_Window_maximize(self.inner.widget() as _) }
-    }
-
-    /// Unmaximize the window
-    pub fn un_maximize(&mut self) {
-        unsafe { Fl_Window_un_maximize(self.inner.widget() as _) }
-    }
-
-    /// Checks whether the window is maximized
-    pub fn maximize_active(&self) -> bool {
-        unsafe { Fl_Window_maximize_active(self.inner.widget() as _) != 0 }
-    }
 }
 
 /// Creates a Menu window widget
@@ -651,87 +489,10 @@ impl Default for OverlayWindow {
     }
 }
 
+impl_top_win!(OverlayWindow);
+impl_ppu!(OverlayWindow);
+
 impl OverlayWindow {
-    /// Find an `Fl_Window` through a raw handle. The window must have been instantiated by the app.
-    /// `void *` to: (Windows: `HWND`, X11: `Xid` (`u64`), macOS: `NSWindow`)
-    /// # Safety
-    /// The data must be valid and is OS-dependent.
-    pub unsafe fn find_by_handle(handle: RawHandle) -> Option<impl WindowExt> {
-        let ptr = Fl_Window_find_by_handle(&handle as *const _ as *mut _);
-        if ptr.is_null() {
-            None
-        } else {
-            Some(Window::from_widget_ptr(
-                ptr as *mut fltk_sys::widget::Fl_Widget,
-            ))
-        }
-    }
-
-    /// Use FLTK specific arguments for the application:
-    /// More info [here](https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48).
-    /// The options are:
-    /// - `-bg2 color`
-    /// - `-bg color`
-    /// - `-di[splay] host:n.n`
-    /// - `-dn[d]`
-    /// - `-fg color`
-    /// - `-g[eometry] WxH+X+Y`
-    /// - `-i[conic]`
-    /// - `-k[bd]`
-    /// - `-na[me] classname`
-    /// - `-nod[nd]`
-    /// - `-nok[bd]`
-    /// - `-not[ooltips]`
-    /// - `-s[cheme] scheme`
-    /// - `-ti[tle] windowtitle`
-    /// - `-to[oltips]`
-    pub fn show_with_env_args(&mut self) {
-        unsafe {
-            let args: Vec<String> = std::env::args().collect();
-            let len = args.len() as i32;
-            let mut v: Vec<*mut raw::c_char> = vec![];
-            for arg in args {
-                let c = CString::safe_new(arg.as_str());
-                v.push(c.into_raw() as *mut raw::c_char);
-            }
-            let mut v = mem::ManuallyDrop::new(v);
-            Fl_Window_show_with_args(self.inner.widget() as *mut Fl_Window, len, v.as_mut_ptr())
-        }
-    }
-
-    /// Use FLTK specific arguments for the application:
-    /// More info [here](https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48).
-    /// The options are:
-    /// - `-bg2 color`
-    /// - `-bg color`
-    /// - `-di[splay] host:n.n`
-    /// - `-dn[d]`
-    /// - `-fg color`
-    /// - `-g[eometry] WxH+X+Y`
-    /// - `-i[conic]`
-    /// - `-k[bd]`
-    /// - `-na[me] classname`
-    /// - `-nod[nd]`
-    /// - `-nok[bd]`
-    /// - `-not[ooltips]`
-    /// - `-s[cheme] scheme`
-    /// - `-ti[tle] windowtitle`
-    /// - `-to[oltips]`
-    pub fn show_with_args(&mut self, args: &[&str]) {
-        unsafe {
-            let mut temp = vec![""];
-            temp.extend(args);
-            let len = temp.len() as i32;
-            let mut v: Vec<*mut raw::c_char> = vec![];
-            for arg in temp {
-                let c = CString::safe_new(arg);
-                v.push(c.into_raw() as *mut raw::c_char);
-            }
-            let mut v = mem::ManuallyDrop::new(v);
-            Fl_Window_show_with_args(self.inner.widget() as *mut Fl_Window, len, v.as_mut_ptr())
-        }
-    }
-
     /// Forces the window to be drawn, this window is also made current and calls draw()
     pub fn flush(&mut self) {
         unsafe { Fl_Double_Window_flush(self.inner.widget() as _) }
@@ -792,6 +553,9 @@ crate::macros::widget::impl_widget_default!(GlutWindow);
 crate::macros::group::impl_group_ext!(GlutWindow, Fl_Glut_Window);
 #[cfg(feature = "enable-glwindow")]
 crate::macros::window::impl_window_ext!(GlutWindow, Fl_Glut_Window);
+
+#[cfg(feature = "enable-glwindow")]
+impl_top_win!(GlutWindow);
 
 #[cfg(feature = "enable-glwindow")]
 impl GlutWindow {
@@ -958,6 +722,9 @@ pub mod experimental {
     crate::macros::group::impl_group_ext!(GlWidgetWindow, Fl_Gl_Window);
     #[cfg(feature = "enable-glwindow")]
     crate::macros::window::impl_window_ext!(GlWidgetWindow, Fl_Gl_Window);
+
+    #[cfg(feature = "enable-glwindow")]
+    impl_top_win!(GlWidgetWindow);
 
     #[cfg(feature = "enable-glwindow")]
     impl GlWidgetWindow {
