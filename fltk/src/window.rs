@@ -33,6 +33,46 @@ use std::{
     os::raw,
 };
 
+// Opaque raw window handle on 32-bit linux running on a Raspberry Pi
+#[cfg(all(
+    not(any(
+        target_os = "windows",
+        target_os = "macos",
+        target_os = "ios",
+        target_os = "android",
+    )),
+    any(
+        target_arch = "arm",
+        target_arch = "mips",
+        target_arch = "powerpc",
+        target_arch = "sparc",
+        target_arch = "wasm32",
+        target_arch = "x86",
+    )
+))]
+type RawXlibHandle = u32;
+
+/// Opaque raw window handle (`*mut c_void` to `HWND` on Windows and `NSWindow` on macOS),
+/// `XID` (`u64`) raw window handle for X11, and `wl_suface *` for wayland
+#[cfg(all(
+    not(any(
+        target_os = "windows",
+        target_os = "macos",
+        target_os = "ios",
+        target_os = "android",
+    )),
+    any(
+        target_arch = "aarch64",
+        target_arch = "loongarch64",
+        target_arch = "mips64",
+        target_arch = "powerpc64",
+        target_arch = "s390x",
+        target_arch = "sparc64",
+        target_arch = "x86_64",
+    )
+))]
+type RawXlibHandle = u64;
+
 /// Opaque raw window handle (`*mut c_void` to `HWND` on Windows and `NSWindow` on macOS),
 /// `XID` (`u64`) raw window handle for X11
 #[cfg(any(
@@ -44,8 +84,9 @@ use std::{
 ))]
 pub type RawHandle = *mut raw::c_void;
 
-// Opaque raw window handle on 32-bit linux running on a Raspberry Pi
-#[cfg(all(
+/// Opaque raw window handle (`*mut c_void` to `HWND` on Windows and `NSWindow` on macOS),
+/// `XID` (`u64`) raw window handle for X11
+#[cfg(
     not(any(
         target_os = "windows",
         target_os = "macos",
@@ -53,78 +94,8 @@ pub type RawHandle = *mut raw::c_void;
         target_os = "android",
         feature = "use-wayland"
     )),
-    any(
-        target_arch = "arm",
-        target_arch = "mips",
-        target_arch = "powerpc",
-        target_arch = "sparc",
-        target_arch = "wasm32",
-        target_arch = "x86",
-    )
-))]
-pub type RawHandle = u32;
-
-/// Opaque raw window handle (`*mut c_void` to `HWND` on Windows and `NSWindow` on macOS),
-/// `XID` (`u64`) raw window handle for X11, and `wl_suface *` for wayland
-#[cfg(all(
-    not(any(
-        target_os = "windows",
-        target_os = "macos",
-        target_os = "ios",
-        target_os = "android",
-        feature = "use-wayland"
-    )),
-    any(
-        target_arch = "aarch64",
-        target_arch = "loongarch64",
-        target_arch = "mips64",
-        target_arch = "powerpc64",
-        target_arch = "s390x",
-        target_arch = "sparc64",
-        target_arch = "x86_64",
-    )
-))]
-pub type RawHandle = u64;
-
-// Opaque raw window handle on 32-bit linux running on a Raspberry Pi
-#[cfg(all(
-    not(any(
-        target_os = "windows",
-        target_os = "macos",
-        target_os = "ios",
-        target_os = "android",
-    )),
-    any(
-        target_arch = "arm",
-        target_arch = "mips",
-        target_arch = "powerpc",
-        target_arch = "sparc",
-        target_arch = "wasm32",
-        target_arch = "x86",
-    )
-))]
-pub type RawXlibHandle = u32;
-
-/// Opaque raw window handle (`*mut c_void` to `HWND` on Windows and `NSWindow` on macOS),
-/// `XID` (`u64`) raw window handle for X11, and `wl_suface *` for wayland
-#[cfg(all(
-    not(any(
-        target_os = "windows",
-        target_os = "macos",
-        target_os = "ios",
-        target_os = "android",
-    )),
-    any(
-        target_arch = "aarch64",
-        target_arch = "loongarch64",
-        target_arch = "mips64",
-        target_arch = "powerpc64",
-        target_arch = "s390x",
-        target_arch = "sparc64",
-        target_arch = "x86_64",
-    )
-))]
-pub type RawXlibHandle = u64;
+)]
+pub type RawHandle = RawXlibHandle;
 
 /// Creates a window widget
 pub type Window = DoubleWindow;

@@ -4,6 +4,7 @@
 # [1.4.33] - TBA
 - Add Window::set_on_top() support on windows by @caesay.
 - Update docs and improve editor examples by @ntrrgc.
+- Refactor Window::raw_handle() code.
 - image::Pixmap improvements.
 - Fix cfg(no-images) in build script.
 - Add runtime check for wayland use.
