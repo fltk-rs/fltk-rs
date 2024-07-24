@@ -16,15 +16,13 @@ jobs:
           - 1.67.0
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install deps
         run: git submodule update --init --recursive && sudo apt-get update && sudo apt-get install -y libpango1.0-dev libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpng-dev libgl1-mesa-dev libglu1-mesa-dev
       - name: Install toolchain
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@stable
         with:
-          profile: minimal
           toolchain: ${{ matrix.rust }}
-          override: true
       - run: |
           cargo check
   check-arm64:
@@ -41,7 +39,7 @@ jobs:
           - 1.67.0
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Download deps
         run: |
           git submodule update --init --recursive
@@ -58,11 +56,8 @@ jobs:
           sudo apt-get install -y libpango1.0-dev:arm64 libx11-dev:arm64 libxext-dev:arm64 libxft-dev:arm64 libxinerama-dev:arm64 libxcursor-dev:arm64 libxrender-dev:arm64 libxfixes-dev:arm64 libpng-dev:arm64 libasound2-dev:arm64
           sudo apt-get install g++-aarch64-linux-gnu
       - name: Install toolchain
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@stable
         with:
-          target: aarch64-unknown-linux-gnu
-          profile: minimal
-          toolchain: stable
-          override: true
+          targets: "aarch64-unknown-linux-gnu"
       - run: |
           cargo check --example hello_button --target=aarch64-unknown-linux-gnu
