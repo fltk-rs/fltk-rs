@@ -495,6 +495,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Bar_menu_box(self_: *const Fl_Menu_Bar) -> ::core::ffi::c_int;
 }
+extern "C" {
+    pub fn Fl_Menu_Bar_mvalue(arg1: *const Fl_Menu_Bar) -> *mut Fl_Menu_Item;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_prev_mvalue(arg1: *const Fl_Menu_Bar) -> *mut Fl_Menu_Item;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Button {
@@ -980,6 +986,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Button_menu_box(self_: *const Fl_Menu_Button) -> ::core::ffi::c_int;
 }
+extern "C" {
+    pub fn Fl_Menu_Button_mvalue(arg1: *const Fl_Menu_Button) -> *mut Fl_Menu_Item;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_prev_mvalue(arg1: *const Fl_Menu_Button) -> *mut Fl_Menu_Item;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Choice {
@@ -1439,6 +1451,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Choice_menu_box(self_: *const Fl_Choice) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Choice_mvalue(arg1: *const Fl_Choice) -> *mut Fl_Menu_Item;
+}
+extern "C" {
+    pub fn Fl_Choice_prev_mvalue(arg1: *const Fl_Choice) -> *mut Fl_Menu_Item;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1937,6 +1955,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_menu_box(self_: *const Fl_Sys_Menu_Bar) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_mvalue(arg1: *const Fl_Sys_Menu_Bar) -> *mut Fl_Menu_Item;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_prev_mvalue(arg1: *const Fl_Sys_Menu_Bar) -> *mut Fl_Menu_Item;
 }
 extern "C" {
     pub fn Fl_Menu_Item_new(

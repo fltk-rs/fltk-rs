@@ -1044,6 +1044,10 @@ pub unsafe trait MenuExt: WidgetExt {
     fn set_menu_frame(&mut self, f: FrameType);
     /// Get the menu's popup frame type
     fn menu_frame(&self) -> FrameType;
+    /// Get the selected menu item
+    fn mvalue(&self) -> Option<crate::menu::MenuItem>;
+    /// Get the previously selected menu item
+    fn prev_mvalue(&self) -> Option<crate::menu::MenuItem>;
 }
 
 /// Defines the methods implemented by all valuator widgets
