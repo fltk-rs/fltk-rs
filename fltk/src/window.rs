@@ -86,15 +86,13 @@ pub type RawHandle = *mut raw::c_void;
 
 /// Opaque raw window handle (`*mut c_void` to `HWND` on Windows and `NSWindow` on macOS),
 /// `XID` (`u64`) raw window handle for X11
-#[cfg(
-    not(any(
-        target_os = "windows",
-        target_os = "macos",
-        target_os = "ios",
-        target_os = "android",
-        feature = "use-wayland"
-    )),
-)]
+#[cfg(not(any(
+    target_os = "windows",
+    target_os = "macos",
+    target_os = "ios",
+    target_os = "android",
+    feature = "use-wayland"
+)))]
 pub type RawHandle = RawXlibHandle;
 
 /// Creates a window widget
@@ -122,7 +120,7 @@ macro_rules! impl_ppu {
         impl $name {
             /// Returns the pixels per unit/point
             pub fn pixels_per_unit(&self) -> f32 {
-                #[allow(unused_mut)] 
+                #[allow(unused_mut)]
                 let mut factor = 1.0;
                 #[cfg(target_os = "macos")]
                 {
@@ -148,7 +146,7 @@ macro_rules! impl_ppu {
                 (self.pixels_per_unit() * self.h() as f32) as i32
             }
         }
-    }
+    };
 }
 
 macro_rules! impl_top_win {
@@ -197,7 +195,11 @@ macro_rules! impl_top_win {
                         v.push(c.into_raw() as *mut raw::c_char);
                     }
                     let mut v = mem::ManuallyDrop::new(v);
-                    Fl_Window_show_with_args(self.inner.widget() as *mut Fl_Window, len, v.as_mut_ptr())
+                    Fl_Window_show_with_args(
+                        self.inner.widget() as *mut Fl_Window,
+                        len,
+                        v.as_mut_ptr(),
+                    )
                 }
             }
 
@@ -230,11 +232,15 @@ macro_rules! impl_top_win {
                         v.push(c.into_raw() as *mut raw::c_char);
                     }
                     let mut v = mem::ManuallyDrop::new(v);
-                    Fl_Window_show_with_args(self.inner.widget() as *mut Fl_Window, len, v.as_mut_ptr())
+                    Fl_Window_show_with_args(
+                        self.inner.widget() as *mut Fl_Window,
+                        len,
+                        v.as_mut_ptr(),
+                    )
                 }
             }
 
-            /// Set the window to be on top of other windows. 
+            /// Set the window to be on top of other windows.
             /// Must only be called after the window has been shown.
             pub fn set_on_top(&mut self) {
                 assert!(self.raw_handle() as isize != 0);
@@ -250,16 +256,36 @@ macro_rules! impl_top_win {
                 #[cfg(target_os = "windows")]
                 {
                     extern "system" {
-                        fn SetWindowPos(hwnd: *mut raw::c_void, insert_after: isize, x: i32, y: i32, cx: i32, cy: i32, flags: u32) -> bool;
+                        fn SetWindowPos(
+                            hwnd: *mut raw::c_void,
+                            insert_after: isize,
+                            x: i32,
+                            y: i32,
+                            cx: i32,
+                            cy: i32,
+                            flags: u32,
+                        ) -> bool;
                     }
                     const TOP_MOST: isize = -1;
                     const SWP_NOSIZE: u32 = 1;
                     const SWP_NOMOVE: u32 = 2;
                     unsafe {
-                        SetWindowPos(self.raw_handle(), TOP_MOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
+                        SetWindowPos(
+                            self.raw_handle(),
+                            TOP_MOST,
+                            0,
+                            0,
+                            0,
+                            0,
+                            SWP_NOSIZE | SWP_NOMOVE,
+                        );
                     }
                 }
-                #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
+                #[cfg(not(any(
+                    target_os = "macos",
+                    target_os = "android",
+                    target_os = "windows"
+                )))]
                 {
                     extern "C" {
                         pub fn cfltk_setOnTop(handle: RawXlibHandle);
@@ -306,7 +332,7 @@ macro_rules! impl_top_win {
                 unsafe { Fl_Single_Window_set_default_xclass(s.as_ptr()) }
             }
         }
-    }
+    };
 }
 
 /// Creates a single (buffered) window widget
@@ -381,23 +407,21 @@ impl DoubleWindow {
                 }
                 cfltk_winShow(self.raw_handle());
             }
-            #[cfg(not(any(
-                target_os = "macos",
-                target_os = "android",
-                target_os = "windows",
-            )))]
+            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows",)))]
             {
                 if !crate::app::using_wayland() {
                     enum Display {}
                     extern "C" {
                         fn XMapWindow(display: *mut Display, win: u64);
                     }
-                    XMapWindow(crate::app::display() as _, self.raw_handle() as RawXlibHandle);
+                    XMapWindow(
+                        crate::app::display() as _,
+                        self.raw_handle() as RawXlibHandle,
+                    );
                     crate::app::flush();
                 } else {
                     Fl_Double_Window_show(self.inner.widget() as _);
                 }
-
             }
         }
     }
@@ -427,7 +451,10 @@ impl DoubleWindow {
                     extern "C" {
                         fn XUnmapWindow(display: *mut Display, win: u64);
                     }
-                    XUnmapWindow(crate::app::display() as _, self.raw_handle() as RawXlibHandle);
+                    XUnmapWindow(
+                        crate::app::display() as _,
+                        self.raw_handle() as RawXlibHandle,
+                    );
                     crate::app::flush();
                 } else {
                     extern "C" {

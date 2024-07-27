@@ -187,9 +187,7 @@ pub fn belowmouse<Wid: WidgetBase>() -> Option<Wid> {
         if x.is_null() {
             None
         } else {
-            Wid::from_dyn_widget_ptr(
-                x as _,
-            )
+            Wid::from_dyn_widget_ptr(x as _)
         }
     }
 }

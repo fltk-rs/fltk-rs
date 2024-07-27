@@ -377,7 +377,7 @@ macro_rules! impl_menu_ext {
                     unsafe { $crate::enums::FrameType::from_i32([<$flname _menu_box>](self.inner.widget() as _)) }
                 }
 
-                fn mvalue(&self) -> Option<crate::menu::MenuItem> {
+                fn mvalue(&self) -> Option<$crate::menu::MenuItem> {
                     unsafe {
                         let ptr =
                             [<$flname _mvalue>](self.inner.widget() as _) as *mut Fl_Menu_Item;
@@ -389,7 +389,7 @@ macro_rules! impl_menu_ext {
                     }
                 }
 
-                fn prev_mvalue(&self) -> Option<crate::menu::MenuItem> {
+                fn prev_mvalue(&self) -> Option<$crate::menu::MenuItem> {
                     unsafe {
                         let ptr =
                             [<$flname _prev_mvalue>](self.inner.widget() as _) as *mut Fl_Menu_Item;
