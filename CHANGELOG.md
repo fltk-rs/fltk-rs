@@ -1,7 +1,7 @@
 # Changelog
 
 
-# [1.4.33] - TBA
+# [1.4.33] - 2024-07-30
 - Add Window::set_on_top() support on windows by @caesay.
 - Add MenuExt::mvalue() and prev_mvalue().
 - Update docs and improve editor examples by @ntrrgc.
