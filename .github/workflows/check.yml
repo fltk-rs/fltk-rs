@@ -61,3 +61,39 @@ jobs:
           targets: "aarch64-unknown-linux-gnu"
       - run: |
           cargo check --example hello_button --target=aarch64-unknown-linux-gnu
+  check-i386:
+    name: Check-i386
+    runs-on: ubuntu-latest
+    env:
+      CC: i686-linux-gnu-gcc
+      CXX: i686-linux-gnu-g++
+      CARGO_TARGET_I686_UNKNOWN_LINUX_GNU_LINKER: i686-linux-gnu-gcc
+      PKG_CONFIG_PATH: "/usr/lib/i386-linux-gnu/pkgconfig/:${PKG_CONFIG_PATH}"
+    strategy:
+      matrix:
+        rust:
+          - 1.67.0
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Download deps
+        run: |
+          git submodule update --init --recursive
+          sudo dpkg --add-architecture i386
+          echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ $(lsb_release -c -s) main restricted universe multiverse" | sudo tee /etc/apt/sources.list
+          echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ $(lsb_release -c -s)-updates main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ $(lsb_release -c -s)-security main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ $(lsb_release -c -s)-backports main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=i386] http://ports.ubuntu.com/ $(lsb_release -c -s) main multiverse universe" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=i386] http://ports.ubuntu.com/ $(lsb_release -c -s)-security main multiverse universe" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=i386] http://ports.ubuntu.com/ $(lsb_release -c -s)-backports main multiverse universe" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=i386] http://ports.ubuntu.com/ $(lsb_release -c -s)-updates main multiverse universe" | sudo tee -a /etc/apt/sources.list
+          sudo apt-get update -y
+          sudo apt-get install -y libpango1.0-dev:i386 libx11-dev:i386 libxext-dev:i386 libxft-dev:i386 libxinerama-dev:i386 libxcursor-dev:i386 libxrender-dev:i386 libxfixes-dev:i386 libpng-dev:i386 libasound2-dev:i386
+          sudo apt-get install g++-i686-linux-gnu
+      - name: Install toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: "i686-unknown-linux-gnu"
+      - run: |
+          cargo check --example hello_button --target=i686-unknown-linux-gnu
