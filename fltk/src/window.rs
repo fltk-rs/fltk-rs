@@ -441,10 +441,14 @@ impl DoubleWindow {
             }
             #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
             {
-                extern "C" {
-                    fn cfltk_platform_hide(proxy: *mut raw::c_void);
+                if !crate::app::using_wayland() {
+                    extern "C" {
+                        fn cfltk_platform_hide(proxy: *mut raw::c_void);
+                    }
+                    cfltk_platform_hide(self.raw_handle() as *mut raw::c_void);
+                } else {
+                    Fl_Double_Window_hide(self.inner.widget() as _);
                 }
-                cfltk_platform_hide(self.raw_handle() as *mut raw::c_void);
             }
         }
     }
