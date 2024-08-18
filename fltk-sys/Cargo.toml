@@ -1,6 +1,6 @@
 [package]
 name = "fltk-sys"
-version = "1.4.33"
+version = "1.4.34"
 authors = ["The fltk-rs Authors"]
 build = "build/main.rs"
 edition = "2021"
@@ -41,6 +41,7 @@ static-msvcrt = []
 cairoext = []
 fltk-config = ["cc"]
 pkg-config = []
+gtk-decor = []
 
 [package.metadata.docs.rs]
 features = ["enable-glwindow"]

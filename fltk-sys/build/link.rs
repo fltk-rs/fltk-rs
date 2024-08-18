@@ -39,6 +39,14 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
         println!("cargo:rustc-link-lib=dylib=cfltk");
     }
 
+    if cfg!(feature = "system-fltk") {
+        if target_triple.contains("gnu") || target_triple.contains("darwin") {
+            println!(
+                "cargo:rustc-link-search=native=/usr/local/lib"
+            );
+        }
+    }
+
     if !cfg!(feature = "fltk-shared") {
         println!("cargo:rustc-link-lib=static=fltk");
 
@@ -145,6 +153,9 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                         if wayland_only == "1" {
                             link_x11 = false;
                         }
+                    }
+                    if cfg!(feature = "gtk-decor") {
+                        allow_gtk_plugin();
                     }
                 }
                 if link_x11 {

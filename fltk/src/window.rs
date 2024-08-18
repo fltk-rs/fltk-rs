@@ -410,15 +410,10 @@ impl DoubleWindow {
             #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows",)))]
             {
                 if !crate::app::using_wayland() {
-                    enum Display {}
                     extern "C" {
-                        fn XMapWindow(display: *mut Display, win: u64);
+                        fn cfltk_platform_show(proxy: *mut raw::c_void);
                     }
-                    XMapWindow(
-                        crate::app::display() as _,
-                        self.raw_handle() as RawXlibHandle,
-                    );
-                    crate::app::flush();
+                    cfltk_platform_show(self.raw_handle() as *mut raw::c_void);
                 } else {
                     Fl_Double_Window_show(self.inner.widget() as _);
                 }
@@ -446,29 +441,10 @@ impl DoubleWindow {
             }
             #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
             {
-                if !crate::app::using_wayland() {
-                    enum Display {}
-                    extern "C" {
-                        fn XUnmapWindow(display: *mut Display, win: u64);
-                    }
-                    XUnmapWindow(
-                        crate::app::display() as _,
-                        self.raw_handle() as RawXlibHandle,
-                    );
-                    crate::app::flush();
-                } else {
-                    extern "C" {
-                        fn wl_proxy_marshal(proxy: *mut raw::c_void, opcode: u32, ...);
-                    }
-                    wl_proxy_marshal(
-                        self.raw_handle() as *mut raw::c_void,
-                        1,
-                        std::ptr::null_mut() as *mut raw::c_void,
-                        0,
-                        0,
-                    ); // attach
-                    wl_proxy_marshal(self.raw_handle() as *mut raw::c_void, 6); // commit
+                extern "C" {
+                    fn cfltk_platform_hide(proxy: *mut raw::c_void);
                 }
+                cfltk_platform_hide(self.raw_handle() as *mut raw::c_void);
             }
         }
     }

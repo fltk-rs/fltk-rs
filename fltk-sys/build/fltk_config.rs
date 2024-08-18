@@ -77,6 +77,9 @@ pub fn build(target_triple: &str) {
     if cfg!(target_os = "macos") {
         b.file("cfltk/src/cfl_nswindow.m");
     }
+    if !(target_triple.contains("windows") || target_triple.contains("darwin")) {
+        b.file("cfltk/src/cfl_platform.cpp");
+    }
     if use_gl {
         b.define("CFLTK_USE_GL", None);
         b.file("cfltk/src/glad.c");
