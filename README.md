@@ -534,7 +534,7 @@ And more...
 
 ### Extra widgets
 
-This crate exposes FLTK's set of widgets, which are all customizable. Additional custom widgets can be found in the [fltk-extras crate](https://github.com/fltk-rs/fltk-theme).
+This crate exposes FLTK's set of widgets, which are all customizable. Additional custom widgets can be found in the [fltk-extras crate](https://github.com/fltk-rs/fltk-extras).
 
 ![image](https://user-images.githubusercontent.com/37966791/212541355-91062d78-5c5d-4b7a-aa6d-e1be49cff340.png)
 
