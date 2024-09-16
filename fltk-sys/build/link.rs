@@ -141,6 +141,9 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                 // Experimental
                 println!("cargo:rustc-link-lib=framework=UIKit");
             }
+            "emscripten" => {
+                // Experimental
+            }
             _ => {
                 println!("cargo:rustc-link-lib=dylib=pthread");
                 let mut link_x11 = true;
