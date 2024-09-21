@@ -237,6 +237,16 @@ impl Scrollbar {
     pub fn set_slider_frame(&mut self, c: FrameType) {
         unsafe { Fl_Slider_set_slider_box(self.inner.widget() as _, c.as_i32()) }
     }
+
+    /// Get the scrollbar's linesize
+    pub fn linesize(&self) -> i32 {
+        unsafe { Fl_Scrollbar_linesize(self.inner.widget() as _) }
+    }
+
+    /// Set the scrollbar's linesize
+    pub fn set_linesize(&mut self, sz: i32) {
+        unsafe { Fl_Scrollbar_set_linesize(self.inner.widget() as _, sz) }
+    }
 }
 
 /// Defines scrollbar types

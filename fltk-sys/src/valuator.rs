@@ -2667,6 +2667,12 @@ extern "C" {
     pub fn Fl_Scrollbar_super_handle_first(ptr: *mut Fl_Widget, flag: ::core::ffi::c_int);
 }
 extern "C" {
+    pub fn Fl_Scrollbar_set_linesize(self_: *mut Fl_Scrollbar, sz: ::core::ffi::c_int);
+}
+extern "C" {
+    pub fn Fl_Scrollbar_linesize(self_: *const Fl_Scrollbar) -> ::core::ffi::c_int;
+}
+extern "C" {
     pub fn Fl_Scrollbar_set_bounds(arg1: *mut Fl_Scrollbar, a: f64, b: f64);
 }
 extern "C" {
