@@ -1,6 +1,12 @@
 # Changelog
 
 
+# [1.4.34] - TBA
+- Add Scrollbar::set_linesize and linesize.
+- Make fltk-rs build with emscripten.
+- Fix link error with Window::platform_hide
+- Update FLTK.
+
 # [1.4.33] - 2024-07-30
 - Add Window::set_on_top() support on windows by @caesay.
 - Add MenuExt::mvalue() and prev_mvalue().
