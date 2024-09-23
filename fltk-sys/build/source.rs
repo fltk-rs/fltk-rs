@@ -73,6 +73,40 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             .ok();
     }
 
+    if target_triple.contains("emscripten") {
+        Command::new("git")
+            .args([
+                "clone",
+                "-b",
+                "emscripten",
+                "https://github.com/MoAlyousef/fltk_wasm32_emscripten",
+                "--depth=1",
+            ])
+            .current_dir(out_dir)
+            .status()
+            .ok();
+        Command::new("emcmake")
+            .args([
+                "cmake",
+                "-Bbin",
+                "-GNinja",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DFLTK_USE_PTHREADS=OFF",
+                "-DFLTK_BUILD_FLUID=OFF",
+                "-DFLTK_BUILD_FLTK_OPTIONS=OFF",
+                "-DFLTK_BUILD_TEST=OFF",
+                "-DFLTK_BUILD_GL=OFF",
+            ])
+            .current_dir(out_dir.join("fltk_wasm32_emscripten"))
+            .status()
+            .ok();
+        Command::new("cmake")
+            .args(["--build", "bin", "--target", "install"])
+            .current_dir(out_dir.join("fltk_wasm32_emscripten"))
+            .status()
+            .ok();
+    }
+
     if !target_triple.contains("android") {
         let mut dst = cmake::Config::new("cfltk");
 
@@ -95,7 +129,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             dst.generator("Ninja");
         }
 
-        if cfg!(feature = "system-fltk") {
+        if cfg!(feature = "system-fltk") || target_triple.contains("emscripten") {
             dst.define("USE_SYSTEM_FLTK", "ON");
         }
 
@@ -174,7 +208,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             dst.define("FLTK_GRAPHICS_GDIPLUS", "OFF");
         }
 
-        if cfg!(feature = "single-threaded") {
+        if cfg!(feature = "single-threaded") || target_triple.contains("emscripten") {
             dst.define("CFLTK_SINGLE_THREADED", "ON");
             dst.define("FLTK_USE_PTHREADS", "OFF");
         }

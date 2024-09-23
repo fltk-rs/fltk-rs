@@ -39,11 +39,19 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
         println!("cargo:rustc-link-lib=dylib=cfltk");
     }
 
-    if cfg!(feature = "system-fltk") {
+    if cfg!(feature = "system-fltk") || target_triple.contains("emscripten") {
         if target_triple.contains("gnu") || target_triple.contains("darwin") {
-            println!(
-                "cargo:rustc-link-search=native=/usr/local/lib"
-            );
+            println!("cargo:rustc-link-search=native=/usr/local/lib");
+        }
+        if target_triple.contains("emscripten") {
+            let emsdk = std::env::var("EMSDK").unwrap();
+            let sysroot_lib = std::path::PathBuf::from(emsdk)
+                .join("upstream")
+                .join("emscripten")
+                .join("cache")
+                .join("sysroot")
+                .join("lib");
+            println!("cargo:rustc-link-search=native={}", sysroot_lib.display());
         }
     }
 
