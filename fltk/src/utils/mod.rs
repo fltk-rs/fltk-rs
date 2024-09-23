@@ -2,7 +2,7 @@
 pub mod oncelock;
 
 use fltk_sys::utils::*;
-use std::ffi::CString;
+use std::ffi::{CStr, CString};
 use std::os::raw;
 
 use crate::prelude::FltkError;
@@ -113,12 +113,38 @@ pub fn filename_expand(path: &str) -> Result<String, FltkError> {
     }
 }
 
+/// Open a uri using the system's browser
+pub fn open_uri(s: &str) -> Result<(), FltkError> {
+    let s = CString::safe_new(s);
+    let mut v: Vec<u8> = vec![0u8; 255];
+    unsafe {
+        let ret = Fl_open_uri(s.as_ptr(), v.as_mut_ptr() as _, 255);
+        if ret != 0 {
+            Err(FltkError::Unknown(String::from_utf8(v)?))
+        } else {
+            Ok(())
+        }
+    }
+}
+
+/// Decode a uri
+pub fn decode_uri(s: &str) -> String {
+    let mut s = s.as_bytes().to_vec();
+    s.push(0);
+    unsafe {
+        Fl_decode_uri(s.as_mut_ptr() as _);
+        return CStr::from_ptr(s.as_ptr() as _)
+            .to_string_lossy()
+            .to_string()
+    }
+}
+
 /// Get the length of a char in terms of C strings
 pub fn char_len(c: char) -> usize {
     extern "C" {
         pub fn strlen(s: *const std::os::raw::c_char) -> usize;
     }
-    let s = std::ffi::CString::new(c.to_string()).unwrap();
+    let s = CString::new(c.to_string()).unwrap();
     unsafe { strlen(s.as_ptr() as _) }
 }
 
@@ -146,7 +172,7 @@ pub fn is_ptr_of<W: crate::prelude::WidgetBase>(w: *mut fltk_sys::widget::Fl_Wid
 pub fn type_name<W: crate::prelude::WidgetExt>(w: &W) -> String {
     unsafe {
         let p = Fl_type_name(w.as_widget_ptr() as _);
-        std::ffi::CStr::from_ptr(p as *mut raw::c_char)
+        CStr::from_ptr(p as *mut raw::c_char)
             .to_string_lossy()
             .to_string()
     }

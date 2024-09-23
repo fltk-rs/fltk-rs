@@ -10,3 +10,13 @@ extern "C" {
 extern "C" {
     pub fn Fl_type_name(w: *mut ::core::ffi::c_void) -> *const ::core::ffi::c_char;
 }
+extern "C" {
+    pub fn Fl_open_uri(
+        uri: *const ::core::ffi::c_char,
+        msg: *mut ::core::ffi::c_char,
+        msglen: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_decode_uri(uri: *mut ::core::ffi::c_char);
+}

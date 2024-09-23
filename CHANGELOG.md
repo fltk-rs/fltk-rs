@@ -3,6 +3,7 @@
 
 # [1.4.34] - TBA
 - Add Scrollbar::set_linesize and linesize.
+- Add utils::open_uri and utils::decode_uri.
 - Make fltk-rs build with emscripten.
 - Fix link error with Window::platform_hide
 - Update FLTK.
