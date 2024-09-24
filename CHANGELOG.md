@@ -1,7 +1,7 @@
 # Changelog
 
 
-# [1.4.34] - TBA
+# [1.4.34] - 2024-09-24
 - Add Scrollbar::set_linesize and linesize.
 - Add utils::open_uri and utils::decode_uri.
 - Make fltk-rs build with emscripten.
