@@ -114,15 +114,17 @@ pub fn filename_expand(path: &str) -> Result<String, FltkError> {
 }
 
 /// Open a uri using the system's browser
-pub fn open_uri(s: &str) -> Result<(), FltkError> {
+pub fn open_uri(s: &str) -> Result<String, FltkError> {
     let s = CString::safe_new(s);
     let mut v: Vec<u8> = vec![0u8; 255];
     unsafe {
         let ret = Fl_open_uri(s.as_ptr(), v.as_mut_ptr() as _, 255);
-        if ret != 0 {
-            Err(FltkError::Unknown(String::from_utf8(v)?))
+        let v: Vec<u8> = v.into_iter().partition(|x| *x == 0).1;
+        let s = String::from_utf8(v)?;
+        if ret == 1 {
+            Ok(s)
         } else {
-            Ok(())
+            Err(FltkError::Unknown(s))
         }
     }
 }
