@@ -74,6 +74,15 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     }
 
     if target_triple.contains("emscripten") {
+        let emsdk = std::env::var("EMSDK").unwrap();
+        let toolchain_file = std::path::PathBuf::from(emsdk)
+            .join("upstream")
+            .join("emscripten")
+            .join("cmake")
+            .join("Modules")
+            .join("Platform")
+            .join("Emscripten.cmake");
+        env::set_var("CFLTK_TOOLCHAIN", toolchain_file.clone());
         Command::new("git")
             .args([
                 "clone",
@@ -85,9 +94,8 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             .current_dir(out_dir)
             .status()
             .ok();
-        Command::new("emcmake")
+        Command::new("cmake")
             .args([
-                "cmake",
                 "-Bbin",
                 "-GNinja",
                 "-DCMAKE_BUILD_TYPE=Release",
@@ -96,6 +104,10 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
                 "-DFLTK_BUILD_FLTK_OPTIONS=OFF",
                 "-DFLTK_BUILD_TEST=OFF",
                 "-DFLTK_BUILD_GL=OFF",
+                "-DFLTK_BACKEND_WAYLAND=OFF",
+                "-DFLTK_BACKEND_X11=OFF",
+                &format!("-DCMAKE_TOOLCHAIN_FILE={}", toolchain_file.display()),
+                &format!("-DCMAKE_INSTALL_PREFIX={}", out_dir.display()),
             ])
             .current_dir(out_dir.join("fltk_wasm32_emscripten"))
             .status()
@@ -109,6 +121,11 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
 
     if !target_triple.contains("android") {
         let mut dst = cmake::Config::new("cfltk");
+
+        if target_triple.contains("emscripten") {
+            dst.define("CMAKE_PREFIX_PATH", out_dir);
+            dst.define("FLTK_DIR", out_dir.join("share").join("fltk"));
+        }
 
         if crate::utils::use_static_msvcrt() && target_triple.contains("windows-msvc") {
             dst.define("CFLTK_MSVC_CRT_STATIC", "ON");

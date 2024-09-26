@@ -45,17 +45,6 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
         }
     }
 
-    if target_triple.contains("emscripten") {
-        let emsdk = std::env::var("EMSDK").unwrap();
-        let sysroot_lib = std::path::PathBuf::from(emsdk)
-            .join("upstream")
-            .join("emscripten")
-            .join("cache")
-            .join("sysroot")
-            .join("lib");
-        println!("cargo:rustc-link-search=native={}", sysroot_lib.display());
-    }
-
     if !cfg!(feature = "fltk-shared") {
         println!("cargo:rustc-link-lib=static=fltk");
 
