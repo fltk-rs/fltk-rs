@@ -73,59 +73,8 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             .ok();
     }
 
-    if target_triple.contains("emscripten") {
-        let emsdk = std::env::var("EMSDK").unwrap();
-        let toolchain_file = std::path::PathBuf::from(emsdk)
-            .join("upstream")
-            .join("emscripten")
-            .join("cmake")
-            .join("Modules")
-            .join("Platform")
-            .join("Emscripten.cmake");
-        env::set_var("CFLTK_TOOLCHAIN", toolchain_file.clone());
-        Command::new("git")
-            .args([
-                "clone",
-                "-b",
-                "emscripten",
-                "https://github.com/MoAlyousef/fltk_wasm32_emscripten",
-                "--depth=1",
-            ])
-            .current_dir(out_dir)
-            .status()
-            .ok();
-        Command::new("cmake")
-            .args([
-                "-Bbin",
-                "-GNinja",
-                "-DCMAKE_BUILD_TYPE=Release",
-                "-DFLTK_USE_PTHREADS=OFF",
-                "-DFLTK_BUILD_FLUID=OFF",
-                "-DFLTK_BUILD_FLTK_OPTIONS=OFF",
-                "-DFLTK_BUILD_TEST=OFF",
-                "-DFLTK_BUILD_GL=OFF",
-                "-DFLTK_BACKEND_WAYLAND=OFF",
-                "-DFLTK_BACKEND_X11=OFF",
-                &format!("-DCMAKE_TOOLCHAIN_FILE={}", toolchain_file.display()),
-                &format!("-DCMAKE_INSTALL_PREFIX={}", out_dir.display()),
-            ])
-            .current_dir(out_dir.join("fltk_wasm32_emscripten"))
-            .status()
-            .ok();
-        Command::new("cmake")
-            .args(["--build", "bin", "--target", "install"])
-            .current_dir(out_dir.join("fltk_wasm32_emscripten"))
-            .status()
-            .ok();
-    }
-
-    if !target_triple.contains("android") {
+    if !target_triple.contains("android") && !target_triple.contains("emscripten") {
         let mut dst = cmake::Config::new("cfltk");
-
-        if target_triple.contains("emscripten") {
-            dst.define("CMAKE_PREFIX_PATH", out_dir);
-            dst.define("FLTK_DIR", out_dir.join("share").join("fltk"));
-        }
 
         if crate::utils::use_static_msvcrt() && target_triple.contains("windows-msvc") {
             dst.define("CFLTK_MSVC_CRT_STATIC", "ON");
@@ -146,7 +95,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             dst.generator("Ninja");
         }
 
-        if cfg!(feature = "system-fltk") || target_triple.contains("emscripten") {
+        if cfg!(feature = "system-fltk") {
             dst.define("USE_SYSTEM_FLTK", "ON");
         }
 
@@ -192,7 +141,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             dst.define("CMAKE_TOOLCHAIN_FILE", &toolchain);
         }
 
-        if target_triple.contains("linux") && !target_triple.contains("android") {
+        if target_triple.contains("linux") {
             if cfg!(feature = "no-pango") {
                 dst.define("FLTK_USE_PANGO", "OFF");
                 dst.define("FLTK_GRAPHICS_CAIRO", "OFF");
@@ -225,7 +174,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             dst.define("FLTK_GRAPHICS_GDIPLUS", "OFF");
         }
 
-        if cfg!(feature = "single-threaded") || target_triple.contains("emscripten") {
+        if cfg!(feature = "single-threaded") {
             dst.define("CFLTK_SINGLE_THREADED", "ON");
             dst.define("FLTK_USE_PTHREADS", "OFF");
         }
@@ -267,8 +216,10 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             .define("FLTK_BUILD_HTML_DOCS", "OFF")
             .define("FLTK_BUILD_PDF_DOCS", "OFF")
             .build();
-    } else {
+    } else if target_triple.contains("android") {
         crate::android::build(out_dir, target_triple);
+    } else {
+        crate::emscripten::build(out_dir, target_triple);
     }
 
     if target_triple.contains("android") || target_triple.contains("windows") {

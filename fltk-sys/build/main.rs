@@ -4,6 +4,7 @@ use std::{env, path::PathBuf};
 
 mod android;
 mod bundled;
+mod emscripten;
 #[cfg(feature = "fltk-config")]
 mod fltk_config;
 mod link;

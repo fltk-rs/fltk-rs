@@ -141,6 +141,7 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
             }
             "emscripten" => {
                 // Experimental
+                println!("cargo:rustc-link-lib=embind");
             }
             _ => {
                 println!("cargo:rustc-link-lib=dylib=pthread");
