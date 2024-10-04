@@ -40,6 +40,7 @@ use std::{
         target_os = "macos",
         target_os = "ios",
         target_os = "android",
+        target_os = "emscripten",
     )),
     any(
         target_arch = "arm",
@@ -60,6 +61,7 @@ type RawXlibHandle = u32;
         target_os = "macos",
         target_os = "ios",
         target_os = "android",
+        target_os = "emscripten"
     )),
     any(
         target_arch = "aarch64",
@@ -80,6 +82,7 @@ type RawXlibHandle = u64;
     target_os = "macos",
     target_os = "ios",
     target_os = "android",
+    target_os = "emscripten",
     feature = "use-wayland"
 ))]
 pub type RawHandle = *mut raw::c_void;
@@ -91,6 +94,7 @@ pub type RawHandle = *mut raw::c_void;
     target_os = "macos",
     target_os = "ios",
     target_os = "android",
+    target_os = "emscripten",
     feature = "use-wayland"
 )))]
 pub type RawHandle = RawXlibHandle;
@@ -284,7 +288,8 @@ macro_rules! impl_top_win {
                 #[cfg(not(any(
                     target_os = "macos",
                     target_os = "android",
-                    target_os = "windows"
+                    target_os = "windows",
+                    target_os = "emscripten"
                 )))]
                 {
                     extern "C" {
@@ -407,7 +412,7 @@ impl DoubleWindow {
                 }
                 cfltk_winShow(self.raw_handle());
             }
-            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows",)))]
+            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows", target_os = "emscripten")))]
             {
                 if !crate::app::using_wayland() {
                     extern "C" {
@@ -439,7 +444,7 @@ impl DoubleWindow {
                 }
                 cfltk_winHide(self.raw_handle());
             }
-            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
+            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows", target_os = "emscripten")))]
             {
                 if !crate::app::using_wayland() {
                     extern "C" {

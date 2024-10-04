@@ -150,6 +150,12 @@ macro_rules! impl_window_ext {
                     return Ok(unsafe { WindowHandle::borrow_raw(RawWindowHandle::AndroidNdk(handle)) });
                 }
 
+                #[cfg(target_os = "emscripten")]
+                {
+                    let handle = WebCanvasWindowHandle::new(std::ptr::NonNull::new(unsafe { resolve_raw_handle(self.raw_handle() as *mut raw::c_void) }).unwrap());
+                    return Ok(unsafe { WindowHandle::borrow_raw(RawWindowHandle::WebCanvas(handle)) });
+                }
+
                 #[cfg(any(
                     target_os = "linux",
                     target_os = "dragonfly",
@@ -188,6 +194,12 @@ macro_rules! impl_window_ext {
                 {
                     let handle = AndroidDisplayHandle::new();
                     return Ok(unsafe { DisplayHandle::borrow_raw(RawDisplayHandle::Android(handle)) });
+                }
+
+                #[cfg(target_os = "emscripten")]
+                {
+                    let handle = WebDisplayHandle::new();
+                    return Ok(unsafe { DisplayHandle::borrow_raw(RawDisplayHandle::Web(handle)) });
                 }
 
                 #[cfg(any(

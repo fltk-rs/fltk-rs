@@ -374,6 +374,7 @@ pub fn set_contrast_function(f: fn(fg: Color, bg: Color, fontsize: i32, ctx: i32
     unsafe { fl::Fl_set_contrast_function(mem::transmute(f)) }
 }
 
+#[allow(dead_code)]
 /// Check whether we're using wayland
 pub(crate) fn using_wayland() -> bool {
     unsafe { fl::Fl_using_wayland() != 0 }
