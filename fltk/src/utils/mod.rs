@@ -179,3 +179,56 @@ pub fn type_name<W: crate::prelude::WidgetExt>(w: &W) -> String {
             .to_string()
     }
 }
+
+#[cfg(target_os = "emscripten")]
+extern "C" {
+    fn fl_read_to_string(empath: *const raw::c_char) -> *mut raw::c_char;
+    fn fl_read_to_binary(empath: *const raw::c_char, len: *mut i32) -> *mut u8;
+    fn fl_write_to_file(empath: *const raw::c_char, data: *const u8, len: i32) -> i32;
+    fn free(data: *mut raw::c_void);
+}
+
+/// Read a web text file (chosen from the browser's file picker) to a string
+#[cfg(target_os = "emscripten")]
+pub fn em_file_read_to_string<S: AsRef<str>>(path: S) -> Result<String, FltkError> {
+    unsafe {
+        let path = CString::safe_new(path.as_ref());
+        let ptr = fl_read_to_string(path.as_ptr());
+        if ptr.is_null() {
+            Err(FltkError::Unknown(String::from("Failed to read from file")))
+        } else {
+            let s = CStr::from_ptr(ptr).to_string_lossy().to_string();
+            free(ptr as _);
+            Ok(s)
+        }
+    }
+}
+
+/// Read a web binary file (chosen from the browser's file picker) to a Vec
+#[cfg(target_os = "emscripten")]
+pub fn em_file_read_to_binary(path: &str) -> Result<Vec<u8>, FltkError> {
+    unsafe {
+        let path = CString::safe_new(path);
+        let mut len = 0;
+        let ptr = fl_read_to_binary(path.as_ptr(), &mut len as _);
+        if ptr.is_null() {
+            Err(FltkError::Unknown(String::from("Failed to read from file")))
+        } else {
+            Ok(std::slice::from_raw_parts(ptr, len as _).to_vec())
+        }
+    }
+}
+
+/// Write to a file chosen by the browser's file picker
+#[cfg(target_os = "emscripten")]
+pub fn em_write_to_file(path: &str, data: &[u8]) -> Result<(), FltkError> {
+    unsafe {
+        let path = CString::safe_new(path);
+        let ret = fl_write_to_file(path.as_ptr(), data.as_ptr(), data.len() as _);
+        if ret == -1 {
+            Err(FltkError::Unknown(String::from("Failed to write to file")))
+        } else {
+            Ok(())
+        }
+    }
+}
