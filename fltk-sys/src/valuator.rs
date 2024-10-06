@@ -363,6 +363,15 @@ extern "C" {
     pub fn Fl_Slider_set_slider_box(self_: *mut Fl_Slider, c: ::core::ffi::c_int);
 }
 extern "C" {
+    pub fn Fl_Slider_scroll_value(
+        self_: *mut Fl_Slider,
+        pos: ::core::ffi::c_int,
+        windowSize: ::core::ffi::c_int,
+        first_line: ::core::ffi::c_int,
+        total_lines: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
     pub fn Fl_Slider_set_bounds(arg1: *mut Fl_Slider, a: f64, b: f64);
 }
 extern "C" {
@@ -2671,6 +2680,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scrollbar_linesize(self_: *const Fl_Scrollbar) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Scrollbar_scroll_value(
+        self_: *mut Fl_Scrollbar,
+        pos: ::core::ffi::c_int,
+        windowSize: ::core::ffi::c_int,
+        first_line: ::core::ffi::c_int,
+        total_lines: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 extern "C" {
     pub fn Fl_Scrollbar_set_bounds(arg1: *mut Fl_Scrollbar, a: f64, b: f64);

@@ -1,6 +1,15 @@
 # Changelog
 
 
+# [1.4.35] - TBD
+- Add MouseButton::Back and MouseButton::Forward.
+- Add Scrollbar and Slider `scrollvalue()` method.
+- Refactor emscripten build script.
+- Support raw-window-handle v0.6 for emscripten canvas.
+- Add ability to read and write to web browser files via the local FS api.
+- Update ttf-parser to 0.25.
+- Update FLTK.
+
 # [1.4.34] - 2024-09-24
 - Add Scrollbar::set_linesize and linesize.
 - Add utils::open_uri and utils::decode_uri.

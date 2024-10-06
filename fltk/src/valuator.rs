@@ -247,6 +247,22 @@ impl Scrollbar {
     pub fn set_linesize(&mut self, sz: i32) {
         unsafe { Fl_Scrollbar_set_linesize(self.inner.widget() as _, sz) }
     }
+
+    /// Sets the position, size and range of the slider in the scrollbar.
+    /// `pos`   position, first line displayed.
+    /// `win_size`  number of lines displayed.
+    /// `first_line` number of first line.
+    /// `total_lines` total number of lines.
+    /// 
+    /// You should call this every time your window changes size, your data
+    /// changes size, or your scroll position changes (even if in response
+    /// to a callback from this scrollbar).
+    /// All necessary calls to redraw() are done
+    pub fn scroll_value(&mut self, pos: i32, win_size: i32, first_line: i32, total_lines: i32) -> i32 {
+        unsafe {
+            Fl_Scrollbar_scroll_value(self.inner.widget() as _, pos, win_size, first_line, total_lines)
+        }
+    }
 }
 
 /// Defines scrollbar types
@@ -342,6 +358,22 @@ impl ValueSlider {
     /// Set the frame type of the slider box
     pub fn set_slider_frame(&mut self, c: FrameType) {
         unsafe { Fl_Slider_set_slider_box(self.inner.widget() as _, c.as_i32()) }
+    }
+
+    /// Sets the position, size and range of the slider.
+    /// `pos`   position, first line displayed.
+    /// `win_size`  number of lines displayed.
+    /// `first_line` number of first line.
+    /// `total_lines` total number of lines.
+    /// 
+    /// You should call this every time your window changes size, your data
+    /// changes size, or your scroll position changes (even if in response
+    /// to a callback from this slider).
+    /// All necessary calls to redraw() are done
+    pub fn scroll_value(&mut self, pos: i32, win_size: i32, first_line: i32, total_lines: i32) -> i32 {
+        unsafe {
+            Fl_Slider_scroll_value(self.inner.widget() as _, pos, win_size, first_line, total_lines)
+        }
     }
 }
 

@@ -1200,8 +1200,12 @@ bitflags::bitflags! {
         const Button2 = 0x0200_0000;
         /// Mouse button 3 is pushed
         const Button3 = 0x0400_0000;
+        /// Mouse button 4 is pushed
+        const Button4 = 0x0800_0000;
+        /// Mouse button 5 is pushed
+        const Button5 = 0x1000_0000;
         /// Any mouse button is pushed
-        const Buttons = 0x7f00_0000;
+        const Buttons = 0x1f00_0000;
     }
 }
 

@@ -65,6 +65,10 @@ pub enum MouseButton {
     Middle = 2,
     /// Right mouse button
     Right = 3,
+    /// Back mouse button
+    Back = 4,
+    /// Forward mouse button
+    Forward = 5,
 }
 
 /// Returns the captured button event
