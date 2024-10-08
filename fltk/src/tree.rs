@@ -1193,13 +1193,8 @@ impl TreeItem {
                 let mut item = TreeItem::from_raw(item).unwrap();
                 let a = data as *mut Box<dyn FnMut(&mut TreeItem, bool) -> i32>;
                 let f: &mut (dyn FnMut(&mut TreeItem, bool) -> i32) = &mut **a;
-                if let Ok(ret) = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-                    f(&mut item, render != 0)
-                })) {
-                    ret
-                } else {
-                    0
-                }
+                std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut item, render != 0)))
+                    .unwrap_or_default()
             }
             let a: *mut Box<dyn FnMut(&mut Self, bool) -> i32> =
                 Box::into_raw(Box::new(Box::new(cb)));

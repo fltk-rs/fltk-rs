@@ -253,14 +253,26 @@ impl Scrollbar {
     /// `win_size`  number of lines displayed.
     /// `first_line` number of first line.
     /// `total_lines` total number of lines.
-    /// 
+    ///
     /// You should call this every time your window changes size, your data
     /// changes size, or your scroll position changes (even if in response
     /// to a callback from this scrollbar).
     /// All necessary calls to redraw() are done
-    pub fn scroll_value(&mut self, pos: i32, win_size: i32, first_line: i32, total_lines: i32) -> i32 {
+    pub fn scroll_value(
+        &mut self,
+        pos: i32,
+        win_size: i32,
+        first_line: i32,
+        total_lines: i32,
+    ) -> i32 {
         unsafe {
-            Fl_Scrollbar_scroll_value(self.inner.widget() as _, pos, win_size, first_line, total_lines)
+            Fl_Scrollbar_scroll_value(
+                self.inner.widget() as _,
+                pos,
+                win_size,
+                first_line,
+                total_lines,
+            )
         }
     }
 }
@@ -365,14 +377,26 @@ impl ValueSlider {
     /// `win_size`  number of lines displayed.
     /// `first_line` number of first line.
     /// `total_lines` total number of lines.
-    /// 
+    ///
     /// You should call this every time your window changes size, your data
     /// changes size, or your scroll position changes (even if in response
     /// to a callback from this slider).
     /// All necessary calls to redraw() are done
-    pub fn scroll_value(&mut self, pos: i32, win_size: i32, first_line: i32, total_lines: i32) -> i32 {
+    pub fn scroll_value(
+        &mut self,
+        pos: i32,
+        win_size: i32,
+        first_line: i32,
+        total_lines: i32,
+    ) -> i32 {
         unsafe {
-            Fl_Slider_scroll_value(self.inner.widget() as _, pos, win_size, first_line, total_lines)
+            Fl_Slider_scroll_value(
+                self.inner.widget() as _,
+                pos,
+                win_size,
+                first_line,
+                total_lines,
+            )
         }
     }
 }

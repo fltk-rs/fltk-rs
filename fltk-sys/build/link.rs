@@ -39,10 +39,10 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
         println!("cargo:rustc-link-lib=dylib=cfltk");
     }
 
-    if cfg!(feature = "system-fltk") {
-        if target_triple.contains("gnu") || target_triple.contains("darwin") {
-            println!("cargo:rustc-link-search=native=/usr/local/lib");
-        }
+    if cfg!(feature = "system-fltk")
+        && (target_triple.contains("gnu") || target_triple.contains("darwin"))
+    {
+        println!("cargo:rustc-link-search=native=/usr/local/lib");
     }
 
     if !cfg!(feature = "fltk-shared") {

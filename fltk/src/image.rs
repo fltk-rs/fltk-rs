@@ -971,7 +971,7 @@ impl RgbImage {
                 },
                 3 => match new_depth {
                     1 => {
-                        for (_, pixel) in data.chunks_exact(3).enumerate() {
+                        for pixel in data.chunks_exact(3) {
                             temp.push(
                                 (pixel[0] as f32 * 0.299
                                     + pixel[1] as f32 * 0.587
@@ -983,7 +983,7 @@ impl RgbImage {
                         RgbImage::new(&temp, w, h, ColorDepth::L8)
                     }
                     2 => {
-                        for (_, pixel) in data.chunks_exact(3).enumerate() {
+                        for pixel in data.chunks_exact(3) {
                             temp.push(
                                 (pixel[0] as f32 * 0.299
                                     + pixel[1] as f32 * 0.587
@@ -996,7 +996,7 @@ impl RgbImage {
                         RgbImage::new(&temp, w, h, ColorDepth::La8)
                     }
                     4 => {
-                        for (_, pixel) in data.chunks_exact(3).enumerate() {
+                        for pixel in data.chunks_exact(3) {
                             temp.push(pixel[0]);
                             temp.push(pixel[1]);
                             temp.push(pixel[2]);
@@ -1009,7 +1009,7 @@ impl RgbImage {
                 },
                 4 => match new_depth {
                     1 => {
-                        for (_, pixel) in data.chunks_exact(4).enumerate() {
+                        for pixel in data.chunks_exact(4) {
                             temp.push(
                                 (pixel[0] as f32 * 0.299
                                     + pixel[1] as f32 * 0.587
@@ -1021,7 +1021,7 @@ impl RgbImage {
                         RgbImage::new(&temp, w, h, ColorDepth::L8)
                     }
                     2 => {
-                        for (_, pixel) in data.chunks_exact(4).enumerate() {
+                        for pixel in data.chunks_exact(4) {
                             temp.push(
                                 (pixel[0] as f32 * 0.299
                                     + pixel[1] as f32 * 0.587
@@ -1034,7 +1034,7 @@ impl RgbImage {
                         RgbImage::new(&temp, w, h, ColorDepth::La8)
                     }
                     3 => {
-                        for (_, pixel) in data.chunks_exact(4).enumerate() {
+                        for pixel in data.chunks_exact(4) {
                             temp.push(pixel[0]);
                             temp.push(pixel[1]);
                             temp.push(pixel[2]);
@@ -1073,7 +1073,7 @@ impl RgbImage {
                     RgbImage::new(&temp, w, h, ColorDepth::La8)
                 }
                 3 => {
-                    for (_, pixel) in data.chunks_exact(3).enumerate() {
+                    for pixel in data.chunks_exact(3) {
                         let r = pixel[0];
                         let g = pixel[1];
                         let b = pixel[2];
@@ -1212,7 +1212,7 @@ impl RgbImage {
         let data = self.to_rgb_data();
         match depth {
             3 => {
-                for (_, pixel) in data.chunks_exact(3).enumerate() {
+                for pixel in data.chunks_exact(3) {
                     let r = (correct_gamma(pixel[0] as f32 / 255.0) * 255.0) as u8;
                     let g = (correct_gamma(pixel[1] as f32 / 255.0) * 255.0) as u8;
                     let b = (correct_gamma(pixel[2] as f32 / 255.0) * 255.0) as u8;
@@ -1224,7 +1224,7 @@ impl RgbImage {
                 RgbImage::new(&temp, w, h, ColorDepth::Rgb8)
             }
             4 => {
-                for (_, pixel) in data.chunks_exact(4).enumerate() {
+                for pixel in data.chunks_exact(4) {
                     let r = (correct_gamma(pixel[0] as f32 / 255.0) * 255.0) as u8;
                     let g = (correct_gamma(pixel[1] as f32 / 255.0) * 255.0) as u8;
                     let b = (correct_gamma(pixel[2] as f32 / 255.0) * 255.0) as u8;

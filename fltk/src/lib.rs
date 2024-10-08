@@ -7,6 +7,7 @@
 #![allow(clippy::type_complexity)]
 #![allow(clippy::unnecessary_cast)]
 #![allow(clippy::arc_with_non_send_sync)]
+#![allow(clippy::missing_transmute_annotations)]
 
 /// Application related methods and functions
 pub mod app;

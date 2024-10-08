@@ -412,7 +412,12 @@ impl DoubleWindow {
                 }
                 cfltk_winShow(self.raw_handle());
             }
-            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows", target_os = "emscripten")))]
+            #[cfg(not(any(
+                target_os = "macos",
+                target_os = "android",
+                target_os = "windows",
+                target_os = "emscripten"
+            )))]
             {
                 if !crate::app::using_wayland() {
                     extern "C" {
@@ -444,7 +449,12 @@ impl DoubleWindow {
                 }
                 cfltk_winHide(self.raw_handle());
             }
-            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows", target_os = "emscripten")))]
+            #[cfg(not(any(
+                target_os = "macos",
+                target_os = "android",
+                target_os = "windows",
+                target_os = "emscripten"
+            )))]
             {
                 if !crate::app::using_wayland() {
                     extern "C" {

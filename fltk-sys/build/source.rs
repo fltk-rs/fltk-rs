@@ -199,7 +199,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             if target_triple != host_triple {
                 dst.define(
                     "CMAKE_SYSTEM_VERSION",
-                    &format!("{}.0.0", utils::get_taget_darwin_major_version().unwrap()),
+                    format!("{}.0.0", utils::get_taget_darwin_major_version().unwrap()),
                 );
             }
         }
@@ -219,7 +219,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     } else if target_triple.contains("android") {
         crate::android::build(out_dir, target_triple);
     } else {
-        crate::emscripten::build(out_dir, target_triple);
+        crate::emscripten::build(out_dir);
     }
 
     if target_triple.contains("android") || target_triple.contains("windows") {

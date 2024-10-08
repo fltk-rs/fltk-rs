@@ -1,31 +1,33 @@
-use std::{
-    env,
-    path::{Path, PathBuf},
-    process::Command,
-};
+use std::{env, path::Path, process::Command};
 
-pub fn build(out_dir: &Path, target_triple: &str) {
-    let emscripten = PathBuf::from("emscripten")
-        .join("cmake")
-        .join("Modules")
-        .join("Platform")
-        .join("Emscripten.cmake");
+pub fn build(out_dir: &Path) {
+    let host = env::var("HOST").unwrap();
+    // const TOOLCHAIN_SUBPATH: &str = "cmake/Modules/Platform/Emscripten.cmake";
+    // let emscripten_root = if let Ok(emsdk) = env::var("EMSDK") {
+    //     PathBuf::from(emsdk).join("upstream/emscripten")
+    // } else if let Ok(emscripten) = env::var("EMSCRIPTEN_ROOT") {
+    //     // Users can define EMSCRIPTEN_ROOT as with godot engine
+    //     PathBuf::from(emscripten)
+    // } else {
+    //     // Assume emscripten is globally installed. In that case we need to invoke em-config
+    //     let em_config = if host.contains("windows") {
+    //         "em-config.bat"
+    //     } else {
+    //         "em-config"
+    //     };
+    //     let output = Command::new(em_config)
+    //         .arg("EMSCRIPTEN_ROOT")
+    //         .output()
+    //         .expect("Failed to find emscripten toolchain!")
+    //         .stdout;
+    //     PathBuf::from(std::str::from_utf8(&output).unwrap().trim())
+    // };
 
-    let toolchain_file = if let Ok(emsdk) = env::var("EMSDK") {
-        PathBuf::from(emsdk).join("upstream").join(emscripten)
-    } else if let Ok(mingw_prefix) = env::var("MINGW_PREFIX") {
-        println!("cargo:warning=EMSDK not set, looking for default msys2 installation path!");
-        PathBuf::from(mingw_prefix).join("lib").join(emscripten)
-    } else if target_triple.contains("linux") {
-        println!("cargo:warning=EMSDK not set, looking for default linux installation path!");
-        PathBuf::from("/usr/share").join(emscripten)
-    } else {
-        println!("cargo:warning=EMSDK not set, checking EMSCRIPTEN_TOOLCHAIN_FILE env variable!");
-        PathBuf::from(
-            env::var("EMSCRIPTEN_TOOLCHAIN_FILE")
-                .expect("Couldn't find Emscripten.cmake toolchain file!"),
-        )
-    };
+    // let toolchain_file = emscripten_root.join(TOOLCHAIN_SUBPATH);
+
+    if host.contains("windows") {
+        env::set_var("EMCMAKE", "emcmake.bat");
+    }
 
     Command::new("git")
         .args([
@@ -38,53 +40,25 @@ pub fn build(out_dir: &Path, target_triple: &str) {
         .current_dir(out_dir)
         .status()
         .ok();
-    Command::new("cmake")
-        .args([
-            "-Bbin",
-            "-GNinja",
-            "-DCMAKE_BUILD_TYPE=Release",
-            "-DFLTK_USE_PTHREADS=OFF",
-            "-DFLTK_BUILD_FLUID=OFF",
-            "-DFLTK_BUILD_FLTK_OPTIONS=OFF",
-            "-DFLTK_BUILD_TEST=OFF",
-            "-DFLTK_BUILD_GL=OFF",
-            "-DFLTK_BACKEND_WAYLAND=OFF",
-            "-DFLTK_BACKEND_X11=OFF",
-            &format!("-DCMAKE_TOOLCHAIN_FILE={}", toolchain_file.display()),
-            &format!("-DCMAKE_INSTALL_PREFIX={}", out_dir.display()),
-        ])
-        .current_dir(out_dir.join("fltk_wasm32_emscripten"))
-        .status()
-        .ok();
-    Command::new("cmake")
-        .args(["--build", "bin", "--target", "install"])
-        .current_dir(out_dir.join("fltk_wasm32_emscripten"))
-        .status()
-        .ok();
+    cmake::Config::new(out_dir.join("fltk_wasm32_emscripten"))
+        .profile("Release")
+        .define("FLTK_USE_PTHREADS", "OFF")
+        .define("FLTK_BUILD_FLUID", "OFF")
+        .define("FLTK_BUILD_FLTK_OPTIONS", "OFF")
+        .define("FLTK_BUILD_TEST", "OFF")
+        .define("FLTK_BUILD_GL", "OFF")
+        .define("FLTK_BACKEND_WAYLAND", "OFF")
+        .define("FLTK_BACKEND_X11", "OFF")
+        // .define("CMAKE_TOOLCHAIN_FILE", &toolchain_file)
+        .build();
 
-    Command::new("cmake")
-        .args([
-            "-Bbin",
-            "-GNinja",
-            "-DCMAKE_BUILD_TYPE=Release",
-            "-DUSE_SYSTEM_FLTK=ON",
-            "-DCFLTK_USE_OPENGL=OFF",
-            "-DCFLTK_SINGLE_THREADED=ON",
-            "-DCFLTK_CARGO_BUILD=ON",
-            &format!("-DCMAKE_PREFIX_PATH={}", out_dir.display()),
-            &format!(
-                "-DFLTK_DIR={}",
-                out_dir.join("share").join("fltk").display()
-            ),
-            &format!("-DCMAKE_TOOLCHAIN_FILE={}", toolchain_file.display()),
-            &format!("-DCMAKE_INSTALL_PREFIX={}", out_dir.display()),
-        ])
-        .current_dir("cfltk")
-        .status()
-        .ok();
-    Command::new("cmake")
-        .args(["--build", "bin", "--target", "install"])
-        .current_dir("cfltk")
-        .status()
-        .ok();
+    cmake::Config::new("cfltk")
+        .profile("Release")
+        .define("USE_SYSTEM_FLTK", "ON")
+        .define("CFLTK_USE_OPENGL", "OFF")
+        .define("CFLTK_SINGLE_THREADED", "ON")
+        .define("CFLTK_CARGO_BUILD", "ON")
+        .define("FLTK_DIR", out_dir.join("share").join("fltk"))
+        // .define("CMAKE_TOOLCHAIN_FILE", toolchain_file)
+        .build();
 }

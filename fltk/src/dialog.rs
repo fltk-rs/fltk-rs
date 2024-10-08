@@ -657,11 +657,7 @@ impl FileChooser {
     }
 
     fn new_(dir: &Path, pattern: &str, typ: FileChooserType, title: &str) -> FileChooser {
-        let dir = if let Some(dir) = dir.to_str() {
-            dir
-        } else {
-            "."
-        };
+        let dir = dir.to_str().unwrap_or(".");
         let dir = CString::safe_new(dir);
         let pattern = CString::safe_new(pattern);
         let title = CString::safe_new(title);
