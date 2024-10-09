@@ -19,11 +19,7 @@ path = "src/lib.rs"
 
 [build-dependencies]
 cc = { version = "1", features = ["parallel"], optional = true }
-
-[target.'cfg(not(target_os = "emscripten"))'.build-dependencies]
 cmake = "0.1.51"
-
-[target.'cfg(target_os = "emscripten")'.build-dependencies]
 cmk = "0.1"
 
 [features]

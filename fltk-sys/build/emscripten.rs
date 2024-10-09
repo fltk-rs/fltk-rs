@@ -3,8 +3,6 @@ use std::{
     path::{Path, PathBuf},
     process::Command,
 };
-#[cfg(target_os = "emscripten")]
-use cmk as cmake;
 
 pub fn build(out_dir: &Path) {
     let host = env::var("HOST").unwrap();
@@ -42,7 +40,7 @@ pub fn build(out_dir: &Path) {
         .current_dir(out_dir)
         .status()
         .ok();
-    cmake::Config::new(out_dir.join("fltk_wasm32_emscripten"))
+    cmk::Config::new(out_dir.join("fltk_wasm32_emscripten"))
         .profile("Release")
         .define("FLTK_USE_PTHREADS", "OFF")
         .define("FLTK_BUILD_FLUID", "OFF")
@@ -54,7 +52,7 @@ pub fn build(out_dir: &Path) {
         .define("CMAKE_TOOLCHAIN_FILE", &toolchain_file)
         .build();
 
-    cmake::Config::new("cfltk")
+    cmk::Config::new("cfltk")
         .profile("Release")
         .define("USE_SYSTEM_FLTK", "ON")
         .define("CFLTK_USE_OPENGL", "OFF")
