@@ -42,6 +42,7 @@ pub fn build(out_dir: &Path) {
         .ok();
     cmk::Config::new(out_dir.join("fltk_wasm32_emscripten"))
         .profile("Release")
+        .generator("Ninja")
         .define("FLTK_USE_PTHREADS", "OFF")
         .define("FLTK_BUILD_FLUID", "OFF")
         .define("FLTK_BUILD_FLTK_OPTIONS", "OFF")
@@ -54,6 +55,7 @@ pub fn build(out_dir: &Path) {
 
     cmk::Config::new("cfltk")
         .profile("Release")
+        .generator("Ninja")
         .define("USE_SYSTEM_FLTK", "ON")
         .define("CFLTK_USE_OPENGL", "OFF")
         .define("CFLTK_SINGLE_THREADED", "ON")
