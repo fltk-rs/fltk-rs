@@ -20,7 +20,7 @@ path = "src/lib.rs"
 [build-dependencies]
 cc = { version = "1", features = ["parallel"], optional = true }
 cmake = "0.1.51"
-cmk = "0.1"
+cmk = "0.1.1"
 
 [features]
 default = []
