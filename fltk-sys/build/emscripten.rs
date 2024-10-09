@@ -25,10 +25,6 @@ pub fn build(out_dir: &Path) {
 
     // let toolchain_file = emscripten_root.join(TOOLCHAIN_SUBPATH);
 
-    if host.contains("windows") {
-        env::set_var("EMCMAKE", "emcmake.bat");
-    }
-
     Command::new("git")
         .args([
             "clone",
