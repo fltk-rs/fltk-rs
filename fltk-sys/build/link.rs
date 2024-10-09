@@ -3,35 +3,35 @@ use std::path::Path;
 use std::process::Command;
 
 pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
-    println!(
-        "cargo:rustc-link-search=native={}",
-        out_dir.join("build").display()
-    );
+    // println!(
+    //     "cargo:rustc-link-search=native={}",
+    //     out_dir.join("build").display()
+    // );
 
-    println!(
-        "cargo:rustc-link-search=native={}",
-        out_dir.join("build").join("Release").display()
-    );
+    // println!(
+    //     "cargo:rustc-link-search=native={}",
+    //     out_dir.join("build").join("Release").display()
+    // );
 
-    println!(
-        "cargo:rustc-link-search=native={}",
-        out_dir.join("lib").display()
-    );
+    // println!(
+    //     "cargo:rustc-link-search=native={}",
+    //     out_dir.join("lib").display()
+    // );
 
     println!(
         "cargo:rustc-link-search=native={}",
         out_dir.join("lib64").display()
     );
 
-    println!(
-        "cargo:rustc-link-search=native={}",
-        out_dir.join("lib").join("Release").display()
-    );
+    // println!(
+    //     "cargo:rustc-link-search=native={}",
+    //     out_dir.join("lib").join("Release").display()
+    // );
 
-    println!(
-        "cargo:rustc-link-search=native={}",
-        out_dir.join("lib64").join("Release").display()
-    );
+    // println!(
+    //     "cargo:rustc-link-search=native={}",
+    //     out_dir.join("lib64").join("Release").display()
+    // );
 
     if !cfg!(feature = "fltk-shared") {
         println!("cargo:rustc-link-lib=static=cfltk");
