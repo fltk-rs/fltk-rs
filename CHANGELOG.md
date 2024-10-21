@@ -1,7 +1,7 @@
 # Changelog
 
 
-# [1.4.35] - TBD
+# [1.4.35] - 2024-10-21
 - Add MouseButton::Back and MouseButton::Forward.
 - Add Scrollbar and Slider `scrollvalue()` method.
 - Refactor emscripten build script.
