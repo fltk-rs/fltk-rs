@@ -1,6 +1,10 @@
 # Changelog
 
 
+# [1.4.36] - TBA
+- Add draw::capture_window_part.
+- Update FLTK to 1.4.0rc3.
+
 # [1.4.35] - 2024-10-21
 - Add MouseButton::Back and MouseButton::Forward.
 - Add Scrollbar and Slider `scrollvalue()` method.

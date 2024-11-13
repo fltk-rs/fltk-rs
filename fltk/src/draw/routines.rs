@@ -745,7 +745,7 @@ pub fn reset_spot() {
 }
 
 /**
-    Captures part of the window and returns raw data.
+    Captures the window and returns raw data.
     Example usage:
     ```rust,no_run
     use fltk::{prelude::*, *};
@@ -768,6 +768,36 @@ pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkErr
                 x,
                 win.width(),
                 win.height(),
+                ColorDepth::Rgb8,
+            )?)
+        }
+    }
+}
+
+/**
+    Captures part of the window and returns raw data.
+    Example usage:
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    let mut win = window::Window::default();
+    let image = draw::capture_window(&mut win).unwrap();
+    ```
+    # Errors
+    The api can fail to capture the window as an image
+*/
+pub fn capture_window_part<Win: WindowExt>(win: &mut Win, x: i32, y: i32, w: i32, h: i32) -> Result<RgbImage, FltkError> {
+    let cp = win.width() * win.height() * 3;
+    win.show();
+    unsafe {
+        let x = Fl_capture_window_part(win.as_widget_ptr() as _, x, y, w, h);
+        if x.is_null() {
+            Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+        } else {
+            let x = std::slice::from_raw_parts(x, cp as usize);
+            Ok(RgbImage::new(
+                x,
+                w,
+                h,
                 ColorDepth::Rgb8,
             )?)
         }
