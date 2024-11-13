@@ -1,7 +1,7 @@
 # Changelog
 
 
-# [1.4.36] - TBA
+# [1.4.36] - 2024-11-14
 - Add draw::capture_window_part.
 - Update FLTK to 1.4.0rc3.
 
