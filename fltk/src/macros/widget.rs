@@ -536,7 +536,7 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn set_damage(&mut self, flag: bool) {
-                    let flag = if flag { 10 } else { 0 };
+                    let flag = if flag { 0x80 } else { 0 };
                     unsafe { [<$flname _set_damage>](self.inner.widget() as _, flag) }
                 }
 
