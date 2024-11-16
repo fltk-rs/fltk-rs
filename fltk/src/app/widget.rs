@@ -143,7 +143,8 @@ pub fn delete_widget<Wid: WidgetBase>(wid: Wid) {
 
 /// Sets the damage to true or false, eliciting a redraw by the application
 pub fn set_damage(flag: bool) {
-    unsafe { fl::Fl_set_damage(flag as i32) }
+    let flag = if flag { 0x80 } else { 0 };
+    unsafe { fl::Fl_set_damage(flag) }
 }
 
 /// Returns whether any of the widgets were damaged
