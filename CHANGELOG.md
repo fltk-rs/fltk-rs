@@ -1,6 +1,10 @@
 # Changelog
 
 
+# [1.5.0] - TBA
+- Update FLTK to 1.4.0.
+- Grid and Terminal are no longer experimental.
+
 # [1.4.36] - 2024-11-14
 - Add draw::capture_window_part.
 - Update FLTK to 1.4.0rc3.

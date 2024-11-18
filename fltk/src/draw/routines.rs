@@ -785,7 +785,13 @@ pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkErr
     # Errors
     The api can fail to capture the window as an image
 */
-pub fn capture_window_part<Win: WindowExt>(win: &mut Win, x: i32, y: i32, w: i32, h: i32) -> Result<RgbImage, FltkError> {
+pub fn capture_window_part<Win: WindowExt>(
+    win: &mut Win,
+    x: i32,
+    y: i32,
+    w: i32,
+    h: i32,
+) -> Result<RgbImage, FltkError> {
     let cp = win.width() * win.height() * 3;
     win.show();
     unsafe {
@@ -794,12 +800,7 @@ pub fn capture_window_part<Win: WindowExt>(win: &mut Win, x: i32, y: i32, w: i32
             Err(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {
             let x = std::slice::from_raw_parts(x, cp as usize);
-            Ok(RgbImage::new(
-                x,
-                w,
-                h,
-                ColorDepth::Rgb8,
-            )?)
+            Ok(RgbImage::new(x, w, h, ColorDepth::Rgb8)?)
         }
     }
 }
