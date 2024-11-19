@@ -1,14 +1,16 @@
+#![allow(clippy::missing_transmute_annotations)]
+
 /// Test program for fltk-rs wrapper for Terminal widget
 /// Intended to test the wrapper interface but not the underlying fltk functionality
 /// Jonathan Griffitts, 11-2023
 ///
 use fltk::{
     enums::{Color, Font, LabelType},
-    group::experimental::{
-        Attrib, CharFlags, OutFlags, RedrawStyle, ScrollbarStyle, Terminal, Utf8Char,
-    },
     menu::MenuBar,
     prelude::*,
+    terminal::{
+        Attrib, CharFlags, OutFlags, RedrawStyle, ScrollbarStyle, Terminal, Utf8Char, XtermColor,
+    },
     window::{Window, WindowType},
 };
 
@@ -561,7 +563,7 @@ fn mb_test4_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     // Test the Utf8Char primitive
     let uc = Utf8Char::new(b'Q');
     let uc1 = uc.text_utf8();
-    assert_eq!(&uc1, &[b'Q']);
+    assert_eq!(&uc1, b"Q");
     assert_eq!(&uc.attrib(), &Attrib::Normal);
     assert_eq!(
         &uc.charflags(),
@@ -717,8 +719,8 @@ fn mb_test5_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
 
     // Put a short string "BCD" into the first line of the buffer, with fg color change after the 'B' and bold after 'C'
     term.clear();
-    term.set_text_fg_color_xterm(fltk::group::experimental::XtermColor::White);
-    term.set_text_bg_color_xterm(fltk::group::experimental::XtermColor::Black);
+    term.set_text_fg_color_xterm(XtermColor::White);
+    term.set_text_bg_color_xterm(XtermColor::Black);
     assert_eq!(term.text_attrib(), Attrib::Normal);
 
     assert!(term.ansi());
@@ -769,8 +771,8 @@ fn mb_test5_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
 
     // Put a short string "BCDE" into the buffer, with fg color change after the 'B', bg change after 'C', and bold after 'D'
     term.clear();
-    term.set_text_fg_color_xterm(fltk::group::experimental::XtermColor::White);
-    term.set_text_bg_color_xterm(fltk::group::experimental::XtermColor::Black);
+    term.set_text_fg_color_xterm(XtermColor::White);
+    term.set_text_bg_color_xterm(XtermColor::Black);
     term.set_text_attrib(Attrib::Normal);
     assert_eq!(term.text_attrib(), Attrib::Normal);
 
@@ -833,8 +835,8 @@ fn mb_test5_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     assert_eq!(uc.pwidth(), 8.0);
     assert_eq!(uc.pwidth_int(), 8);
 
-    term.set_text_fg_color_xterm(fltk::group::experimental::XtermColor::White);
-    term.set_text_bg_color_xterm(fltk::group::experimental::XtermColor::Black);
+    term.set_text_fg_color_xterm(XtermColor::White);
+    term.set_text_bg_color_xterm(XtermColor::Black);
     term.clear();
     term.set_text_attrib(Attrib::Normal);
 

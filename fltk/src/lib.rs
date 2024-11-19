@@ -60,6 +60,9 @@ pub mod surface;
 /// Table widgets
 pub mod table;
 
+/// Terminal widget
+pub mod terminal;
+
 /// Text display widgets
 pub mod text;
 
@@ -72,8 +75,10 @@ pub mod utils;
 /// Valuator widgets
 pub mod valuator;
 
+/// Base Widget
 pub mod widget;
 
+/// Window widgets
 pub mod window;
 
 /// Printing related functions

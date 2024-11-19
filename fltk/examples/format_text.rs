@@ -41,10 +41,7 @@ impl Style {
         attr: TextAttr,
         text_editor: &mut TextEditor,
     ) {
-        let mut style_buffer = match text_editor.style_buffer() {
-            Some(sb) => sb,
-            None => TextBuffer::default(),
-        };
+        let mut style_buffer = text_editor.style_buffer().unwrap_or_default();
 
         // get existent style or create new one
         let style_char =

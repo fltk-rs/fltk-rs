@@ -37,8 +37,6 @@ fn main() {
         }
     });
 
-    app::add_timeout(1.0, move || b.deselect(2));
-
     win.make_resizable(true);
     win.end();
     win.show();

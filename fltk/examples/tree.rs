@@ -149,8 +149,7 @@ fn main() {
         .to_str()
         .unwrap()
         .chars()
-        .enumerate()
-        .map(|(_, c)| match c {
+        .map(|c| match c {
             '\\' => '/', // change window paths to posix paths
             _ => c,
         })
