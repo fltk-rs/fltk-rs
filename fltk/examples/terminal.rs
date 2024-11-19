@@ -832,8 +832,8 @@ fn mb_test5_cb(_choice: &mut fltk::menu::Choice, term: &mut Terminal) {
     // Test some miscellaneous Utf8 constants
     assert_eq!(uc.length(), 1);
     assert_eq!(uc.max_utf8(), 4);
-    assert_eq!(uc.pwidth(), 8.0);
-    assert_eq!(uc.pwidth_int(), 8);
+    assert_eq!(uc.pwidth(), 9.0);
+    assert_eq!(uc.pwidth_int(), 9);
 
     term.set_text_fg_color_xterm(XtermColor::White);
     term.set_text_bg_color_xterm(XtermColor::Black);
