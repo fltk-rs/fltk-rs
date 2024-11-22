@@ -11,7 +11,7 @@ pub enum Option {
     ///
     /// When switched off (default), the cursor will stop at the end of the text.
     /// Pressing Tab or Ctrl-Tab will advance the keyboard focus.
-    FrrowFocus = 0,
+    ArrowFocus = 0,
     /// If visible focus is switched on (default), FLTK will draw a dotted rectangle
     /// inside the widget that will receive the next keystroke. If switched
     /// off, no such indicator will be drawn and keyboard navigation
