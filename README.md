@@ -43,17 +43,17 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^1.4"
+fltk = "^1.5"
 ```
 To use the latest changes in the repo:
 ```toml
 [dependencies]
-fltk = { version = "^1.4", git = "https://github.com/fltk-rs/fltk-rs" }
+fltk = { version = "^1.5", git = "https://github.com/fltk-rs/fltk-rs" }
 ```
 Or if you have other depenendencies which depend on fltk-rs:
 ```toml
 [dependencies]
-fltk = "^1.4"
+fltk = "^1.5"
 
 [patch.crates-io]
 fltk = { git = "https://github.com/fltk-rs/fltk-rs" }
@@ -62,7 +62,7 @@ fltk = { git = "https://github.com/fltk-rs/fltk-rs" }
 To use the bundled libs (available for x64 windows (msvc & gnu (msys2-mingw)), x64 & aarch64 linux & macos):
 ```toml
 [dependencies]
-fltk = { version = "^1.4", features = ["fltk-bundled"] }
+fltk = { version = "^1.5", features = ["fltk-bundled"] }
 ```
 
 The library is automatically built and statically linked to your binary.
