@@ -1,8 +1,8 @@
 # Changelog
 
 
-# [1.5.0] - TBA
-- Update FLTK to 1.4.0.
+# [1.5.0] - 2024-12-08
+- Update FLTK to 1.4.0-1.
 - Grid and Terminal are no longer experimental.
 - Move Terminal under its own module.
 

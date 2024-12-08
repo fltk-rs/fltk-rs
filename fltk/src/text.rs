@@ -1,3 +1,5 @@
+#![allow(deprecated)]
+
 use crate::enums::{Color, Font, Key};
 use crate::prelude::*;
 use crate::utils::FlString;
@@ -755,6 +757,7 @@ crate::macros::display::impl_display_ext!(TextEditor, Fl_Text_Editor);
 /// Alias Fl_Text_Editor for use in `add_key_binding`
 pub type TextEditorPtr = *mut Fl_Text_Editor;
 
+#[deprecated(since = "1.5.0", note = "please use `fltk::terminal::Terminal` instead")]
 /// Creates an editable text display widget to handle terminal-like behavior, such as
 /// logging events or debug information.
 /// `SimpleTerminal` already has an internal buffer.
