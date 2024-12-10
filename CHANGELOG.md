@@ -1,6 +1,9 @@
 # Changelog
 
 
+# [1.5.1] - 2024-12-10
+- Add empty experimental module to group module.
+
 # [1.5.0] - 2024-12-08
 - Update FLTK to 1.4.0-1.
 - Grid and Terminal are no longer experimental.

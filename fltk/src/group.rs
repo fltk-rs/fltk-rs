@@ -1229,3 +1229,9 @@ impl Grid {
         unsafe { Fl_Grid_debug(self.inner.widget() as _, level) }
     }
 }
+
+#[allow(missing_docs)]
+pub mod experimental {
+    #[allow(unused_imports)]
+    use super::*;
+}
