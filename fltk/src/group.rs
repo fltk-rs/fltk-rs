@@ -290,6 +290,7 @@ impl Tabs {
     /// Returns the position and size available to be used by its children
     pub fn client_area(&self) -> (i32, i32, i32, i32) {
         unsafe {
+            fltk_sys::fl::Fl_open_display();
             let mut i1 = 0;
             let mut i2 = 0;
             let mut i3 = 0;
