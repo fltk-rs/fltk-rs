@@ -578,6 +578,9 @@ extern "C" {
     pub fn Fl_gc() -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_cairo_gc() -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Window_show_with_args(
         w: *mut Fl_Window,
         argc: ::core::ffi::c_int,
