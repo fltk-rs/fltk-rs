@@ -262,6 +262,15 @@ pub fn graphics_context() -> GraphicsContext {
     }
 }
 
+/// Get the graphics context, `fl_gc`
+pub fn cairo_gc() -> *mut raw::c_void {
+    unsafe {
+        let ctx = fltk_sys::window::Fl_cairo_gc();
+        assert!(!ctx.is_null());
+        ctx
+    }
+}
+
 /// The display global variable, `fl_display`.
 /// `_XDisplay` on X11, `HINSTANCE` on Windows.
 pub type Display = *mut raw::c_void;
