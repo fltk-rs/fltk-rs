@@ -121,4 +121,14 @@ impl TableRow {
     pub fn select_all_rows(&mut self, selection_flag: TableRowSelectFlag) {
         unsafe { Fl_Table_Row_select_all_rows(self.inner.widget() as _, selection_flag as i32) }
     }
+
+    /// Set the row count, redraws the table.
+    pub fn set_rows(&mut self, n: i32) {
+        unsafe { Fl_Table_Row_set_rows(self.inner.widget() as _, n) }
+    }
+
+    /// Clear setting the row count to 0.
+    pub fn clear_rows(&mut self) {
+        unsafe { Fl_Table_Row_clear_rows(self.inner.widget() as _) }
+    }
 }

@@ -1,6 +1,11 @@
 # Changelog
 
 
+# [1.5.2] - TBA
+- Add TableRow::clear_rows().
+- Expose app::cairo_gc().
+- Update FLTK.
+
 # [1.5.1] - 2024-12-10
 - Add empty experimental module to group module.
 

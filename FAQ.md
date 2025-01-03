@@ -2,7 +2,7 @@
 
 ## Build issues
 
-### Why does the build fails when I follow one of the tutorials?
+### Why does the build fail when I follow one of the tutorials?
 The first tutorial uses the fltk-bundled feature flag, which is only supported for certain platforms since these are built using the Github Actions CI, namely:
 - Windows 10 x64 (msvc and gnu).
 - MacOS 12 x64 and aarch64.
@@ -59,6 +59,9 @@ You can use the "use-ninja" feature flag if you have ninja installed.
 
 ### Can I cache a previous build of the FLTK library?
 You can use the fltk-bundled feature and use either the CFLTK_BUNDLE_DIR or CFLTK_BUNDLE_URL to point to the location of your cached cfltk and fltk libraries.
+
+### How can I target FLTK 1.3?
+You can't. Adding support in fltk-rs for FLTK 1.3 is non-trivial. However, interested parties can contribute to the repo if such effort is needed.
 
 ## Deployment
 

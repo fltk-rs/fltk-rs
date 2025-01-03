@@ -6,7 +6,7 @@
 [![Build](https://github.com/fltk-rs/fltk-rs/workflows/Build/badge.svg?branch=master)](https://github.com/fltk-rs/fltk-rs/actions)
 
 
-Rust bindings for the FLTK Graphical User Interface library. 
+Rust bindings for the FLTK 1.4 Graphical User Interface library. 
 
 The fltk crate is a cross-platform lightweight gui library which can be statically linked to produce small, self-contained and fast gui applications.
 
@@ -255,7 +255,7 @@ Rust (version > 1.63), CMake (version > 3.15), Git and a C++17 compiler need to 
     - MSVC: Windows SDK
     - Gnu: No dependencies
 - MacOS: No dependencies.
-- Linux/BSD: X11 and OpenGL development headers need to be installed for development. The libraries themselves are normally available on linux/bsd distros with a graphical user interface.
+- Linux/BSD: X11 (and wayland for `use-wayland` feature flag) and OpenGL development headers need to be installed for development. The libraries themselves are normally available on linux/bsd distros with a graphical user interface.
 
 For Debian-based GUI distributions, that means running:
 ```bash
@@ -276,6 +276,11 @@ apk add pango-dev fontconfig-dev libxinerama-dev libxfixes-dev libxcursor-dev me
 For NixOS (Linux distribution) this `nix-shell` environment can be used:
 ```bash
 nix-shell --packages rustc cmake git gcc xorg.libXext xorg.libXft xorg.libXinerama xorg.libXcursor xorg.libXrender xorg.libXfixes libcerf pango cairo libGL mesa pkg-config
+```
+For Freebsd:
+```bash
+pkg install -y cairo pango fontconfig freetype2 libX11 libXext libXfixes mesa-libs
+# building might require setting `CPATH=/usr/local/include` and `LIBRARY_PATH=$LIBRARY_PATH:/usr/local/lib
 ```
 
 ## Runtime Dependencies

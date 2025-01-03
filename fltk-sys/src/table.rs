@@ -1323,3 +1323,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_Table_Row_select_all_rows(self_: *mut Fl_Table_Row, flag: ::core::ffi::c_int);
 }
+extern "C" {
+    pub fn Fl_Table_Row_clear_rows(self_: *mut Fl_Table_Row);
+}
