@@ -125,22 +125,34 @@ pub enum MouseWheel {
 /// Returns [`MouseWheel::None`], `Right` or `Left`
 pub fn event_dx() -> MouseWheel {
     match 0.cmp(unsafe { &fl::Fl_event_dx() }) {
-        cmp::Ordering::Greater => MouseWheel::Right,
+        cmp::Ordering::Greater => MouseWheel::Left,
         cmp::Ordering::Equal => MouseWheel::None,
-        cmp::Ordering::Less => MouseWheel::Left,
+        cmp::Ordering::Less => MouseWheel::Right,
     }
 }
 
-/// Returns the current horizontal mouse scrolling associated with the Mousewheel event.
+/// Returns the current vertical mouse scrolling associated with the Mousewheel event.
 /// Returns [`MouseWheel::None`], `Up` or `Down`.
-/// Doesn't indicate scrolling direction which depends on system preferences
 pub fn event_dy() -> MouseWheel {
     match 0.cmp(unsafe { &fl::Fl_event_dy() }) {
-        cmp::Ordering::Greater => MouseWheel::Down,
+        cmp::Ordering::Greater => MouseWheel::Up,
         cmp::Ordering::Equal => MouseWheel::None,
-        cmp::Ordering::Less => MouseWheel::Up,
+        cmp::Ordering::Less => MouseWheel::Down,
     }
 }
+
+/// Returns the current horizontal mouse scrolling value associated with the Mousewheel event.
+/// Right is positive
+pub fn event_dx_value() -> i32 {
+    unsafe {fl::Fl_event_dx() }
+}
+
+/// Returns the current vertical mouse scrolling value associated with the Mousewheel event.
+/// Down is positive
+pub fn event_dy_value() -> i32 {
+    unsafe { fl::Fl_event_dy() }
+}
+
 
 /// Returns the x and y coordinates of the captured event
 pub fn event_coords() -> (i32, i32) {
