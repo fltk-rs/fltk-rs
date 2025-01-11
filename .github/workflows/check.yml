@@ -9,7 +9,7 @@ on:
 jobs:
   check-x64:
     name: Check-x64
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         rust:
@@ -27,7 +27,7 @@ jobs:
           cargo check
   check-arm64:
     name: Check-arm64
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       CC: aarch64-linux-gnu-gcc
       CXX: aarch64-linux-gnu-g++
@@ -63,7 +63,7 @@ jobs:
           cargo check --example hello_button --target=aarch64-unknown-linux-gnu
   check-i386:
     name: Check-i386
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       CC: i686-linux-gnu-gcc
       CXX: i686-linux-gnu-g++
