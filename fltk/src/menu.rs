@@ -876,72 +876,72 @@ impl MacAppMenu {
     /// Sets the about text
     pub fn set_about(about: &'static str) {
         unsafe {
-            let about = CString::safe_new(about).as_ptr();
-            Fl_Mac_App_Menu_set_about(about);
+            let about = CString::safe_new(about);
+            Fl_Mac_App_Menu_set_about(about.as_ptr());
         }
     }
 
     /// Sets the print text
     pub fn set_print(print: &'static str) {
         unsafe {
-            let print = CString::safe_new(print).as_ptr();
-            Fl_Mac_App_Menu_set_print(print);
+            let print = CString::safe_new(print);
+            Fl_Mac_App_Menu_set_print(print.as_ptr());
         }
     }
 
     /// Sets the print no titlebar text
     pub fn set_print_no_titlebar(print_no_titlebar: &'static str) {
         unsafe {
-            let print_no_titlebar = CString::safe_new(print_no_titlebar).as_ptr();
-            Fl_Mac_App_Menu_set_print_no_titlebar(print_no_titlebar);
+            let print_no_titlebar = CString::safe_new(print_no_titlebar);
+            Fl_Mac_App_Menu_set_print_no_titlebar(print_no_titlebar.as_ptr());
         }
     }
 
     /// Sets the toggle print titlebar text
     pub fn set_toggle_print_titlebar(toggle_print_titlebar: &'static str) {
         unsafe {
-            let toggle_print_titlebar = CString::safe_new(toggle_print_titlebar).as_ptr();
-            Fl_Mac_App_Menu_set_toggle_print_titlebar(toggle_print_titlebar);
+            let toggle_print_titlebar = CString::safe_new(toggle_print_titlebar);
+            Fl_Mac_App_Menu_set_toggle_print_titlebar(toggle_print_titlebar.as_ptr());
         }
     }
 
     /// Sets the services text
     pub fn set_services(services: &'static str) {
         unsafe {
-            let services = CString::safe_new(services).as_ptr();
-            Fl_Mac_App_Menu_set_services(services);
+            let services = CString::safe_new(services);
+            Fl_Mac_App_Menu_set_services(services.as_ptr());
         }
     }
 
     /// Sets the hide text
     pub fn set_hide(hide: &'static str) {
         unsafe {
-            let hide = CString::safe_new(hide).as_ptr();
-            Fl_Mac_App_Menu_set_hide(hide);
+            let hide = CString::safe_new(hide);
+            Fl_Mac_App_Menu_set_hide(hide.as_ptr());
         }
     }
 
     /// Sets the hide others text
     pub fn set_hide_others(hide_others: &'static str) {
         unsafe {
-            let hide_others = CString::safe_new(hide_others).as_ptr();
-            Fl_Mac_App_Menu_set_hide_others(hide_others);
+            let hide_others = CString::safe_new(hide_others);
+            Fl_Mac_App_Menu_set_hide_others(hide_others.as_ptr());
         }
     }
 
     /// Sets the show text
     pub fn set_show(show: &'static str) {
         unsafe {
-            let show = CString::safe_new(show).as_ptr();
-            Fl_Mac_App_Menu_set_show(show);
+            let show = CString::safe_new(show);
+            Fl_Mac_App_Menu_set_show(show.as_ptr());
         }
     }
 
     /// Sets the quit text
     pub fn set_quit(quit: &'static str) {
         unsafe {
-            let quit = CString::safe_new(quit).as_ptr();
-            Fl_Mac_App_Menu_set_quit(quit);
+            let quit = CString::safe_new(quit);
+            Fl_Mac_App_Menu_set_quit(quit.as_ptr());
         }
     }
 

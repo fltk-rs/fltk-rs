@@ -144,7 +144,7 @@ pub fn event_dy() -> MouseWheel {
 /// Returns the current horizontal mouse scrolling value associated with the Mousewheel event.
 /// Right is positive
 pub fn event_dx_value() -> i32 {
-    unsafe {fl::Fl_event_dx() }
+    unsafe { fl::Fl_event_dx() }
 }
 
 /// Returns the current vertical mouse scrolling value associated with the Mousewheel event.
@@ -152,7 +152,6 @@ pub fn event_dx_value() -> i32 {
 pub fn event_dy_value() -> i32 {
     unsafe { fl::Fl_event_dy() }
 }
-
 
 /// Returns the x and y coordinates of the captured event
 pub fn event_coords() -> (i32, i32) {
