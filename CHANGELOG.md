@@ -1,7 +1,7 @@
 # Changelog
 
 
-# [1.5.2] - TBA
+# [1.5.2] - 2025-01-11
 - Add TableRow::clear_rows().
 - Expose app::cairo_gc().
 - Inverse event_d{x,y} values.
