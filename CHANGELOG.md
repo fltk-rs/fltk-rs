@@ -4,6 +4,8 @@
 # [1.5.2] - TBA
 - Add TableRow::clear_rows().
 - Expose app::cairo_gc().
+- Inverse event_d{x,y} values.
+- cfltk: remove no longer necessary widget deletion code.
 - Update FLTK.
 
 # [1.5.1] - 2024-12-10
