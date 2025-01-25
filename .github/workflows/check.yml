@@ -27,6 +27,24 @@ jobs:
           cargo check
   check-arm64:
     name: Check-arm64
+    runs-on: ubuntu-22.04-arm
+    strategy:
+      matrix:
+        rust:
+          - 1.67.0
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Install deps
+        run: git submodule update --init --recursive && sudo apt-get update && sudo apt-get install -y libpango1.0-dev libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpng-dev libgl1-mesa-dev libglu1-mesa-dev
+      - name: Install toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: ${{ matrix.rust }}
+      - run: |
+          cargo check
+  check-Crosscompile-arm64:
+    name: Check-Crosscompile-arm64
     runs-on: ubuntu-22.04
     env:
       CC: aarch64-linux-gnu-gcc
@@ -61,8 +79,8 @@ jobs:
           targets: "aarch64-unknown-linux-gnu"
       - run: |
           cargo check --example hello_button --target=aarch64-unknown-linux-gnu
-  check-i386:
-    name: Check-i386
+  check-Crosscompile-i386:
+    name: Check-Crosscompile-i386
     runs-on: ubuntu-22.04
     env:
       CC: i686-linux-gnu-gcc

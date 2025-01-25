@@ -453,6 +453,21 @@ impl Wizard {
             )
         }
     }
+
+    /// Set the index of the wizard
+    pub fn set_index(&mut self, idx: i32) -> Result<(), FltkError> {
+        if let Some(w) = self.child(idx) {
+            self.set_current_widget(&w);
+            Ok(())
+        } else {
+            Err(FltkError::Unknown("Index out of bounds".to_string()))
+        }
+    }
+
+    /// Get the index of the wizard
+    pub fn index(&self) -> Option<i32> {
+        Some(self.find(&self.try_current_widget()?))
+    }   
 }
 
 /// Creates a color chooser widget

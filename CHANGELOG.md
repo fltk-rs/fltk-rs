@@ -1,6 +1,10 @@
 # Changelog
 
 
+# [1.5.3] - TBA
+- Add Wizard::set_index() and index().
+- Update FLTK.
+
 # [1.5.2] - 2025-01-11
 - Add TableRow::clear_rows().
 - Expose app::cairo_gc().
