@@ -135,9 +135,9 @@ pub fn decode_uri(s: &str) -> String {
     s.push(0);
     unsafe {
         Fl_decode_uri(s.as_mut_ptr() as _);
-        return CStr::from_ptr(s.as_ptr() as _)
+        CStr::from_ptr(s.as_ptr() as _)
             .to_string_lossy()
-            .to_string();
+            .to_string()
     }
 }
 

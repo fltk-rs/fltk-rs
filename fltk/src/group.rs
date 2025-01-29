@@ -200,6 +200,17 @@ impl Scroll {
     pub fn set_scrollbar_size(&mut self, new_size: i32) {
         unsafe { Fl_Scroll_set_scrollbar_size(self.inner.widget() as _, new_size) }
     }
+
+    /// Auto layout a scroll widget
+    pub fn auto_layout(&mut self) {
+        self.resize_callback(|t, x, y, w, h| {
+            if t.children() == 1 {
+                if let Some(mut c) = t.child(0) {
+                    c.resize(x, y, w, h);
+                }
+            }
+        });
+    }
 }
 
 /// Defines how Tabs handle overflow

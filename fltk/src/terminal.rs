@@ -1280,7 +1280,7 @@ impl<'a> BuffRowIter<'a> {
     }
 }
 
-impl<'a> Iterator for BuffRowIter<'a> {
+impl Iterator for BuffRowIter<'_> {
     type Item = Utf8Char;
     fn next(&mut self) -> Option<Self::Item> {
         if self.ptr < self.end {

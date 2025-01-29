@@ -54,7 +54,6 @@ impl App {
     }
 
     /// Gets the scheme of the application
-
     pub fn scheme(self) -> Scheme {
         scheme()
     }
