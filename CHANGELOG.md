@@ -3,6 +3,8 @@
 
 # [1.5.3] - TBA
 - Add Wizard::set_index() and index().
+- Add draw::restore_scale() and override_scale().
+- Add Scroll::auto_layout().
 - Update FLTK.
 
 # [1.5.2] - 2025-01-11
