@@ -1094,3 +1094,17 @@ pub fn draw_text_n(string: &str, x: i32, y: i32) {
     }
     unsafe { Fl_draw3(string.as_ptr() as _, len as _, x, y) }
 }
+
+/// Override the drawing scale
+pub fn override_scale() -> f32 {
+    unsafe {
+        Fl_override_scale()
+    }
+}
+
+/// Restore the drawing scale
+pub fn restore_scale(s: f32) {
+    unsafe {
+        Fl_restore_scale(s)
+    }
+}

@@ -701,3 +701,9 @@ extern "C" {
         r: ::core::ffi::c_int,
     );
 }
+extern "C" {
+    pub fn Fl_override_scale() -> f32;
+}
+extern "C" {
+    pub fn Fl_restore_scale(s: f32);
+}
