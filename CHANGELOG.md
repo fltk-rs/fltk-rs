@@ -1,7 +1,7 @@
 # Changelog
 
 
-# [1.5.3] - TBA
+# [1.5.3] - 2025-02-04
 - Add Wizard::set_index() and index().
 - Add draw::restore_scale() and override_scale().
 - Add Scroll::auto_layout().
