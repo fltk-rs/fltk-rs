@@ -254,7 +254,7 @@ Rust (version > 1.63), CMake (version > 3.15), Git and a C++17 compiler need to 
 - Windows: 
     - MSVC: Windows SDK
     - Gnu: No dependencies
-- MacOS: No dependencies.
+- MacOS: MacOS SDK (installed as part of xcode or the xcode command line tools).
 - Linux/BSD: X11 (and wayland for `use-wayland` feature flag) and OpenGL development headers need to be installed for development. The libraries themselves are normally available on linux/bsd distros with a graphical user interface.
 
 For Debian-based GUI distributions, that means running:
