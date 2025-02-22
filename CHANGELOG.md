@@ -1,6 +1,10 @@
 # Changelog
 
 
+# [1.5.4] - 2025-02-22
+- Add Grid::set_margins().
+- Update FLTK.
+
 # [1.5.3] - 2025-02-04
 - Add Wizard::set_index() and index().
 - Add draw::restore_scale() and override_scale().
