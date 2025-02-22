@@ -1139,6 +1139,10 @@ impl Grid {
     pub fn set_margin(&mut self, left: i32, top: i32, right: i32, bottom: i32) {
         unsafe { Fl_Grid_set_margin(self.inner.widget() as _, left, top, right, bottom) }
     }
+    /// Set the grid's margins
+    pub fn set_margins(&mut self, left: i32, top: i32, right: i32, bottom: i32) {
+        unsafe { Fl_Grid_set_margin(self.inner.widget() as _, left, top, right, bottom) }
+    }
     /// Set the grid's gap
     pub fn set_gap(&mut self, row_gap: i32, col_gap: i32) {
         unsafe { Fl_Grid_set_gap(self.inner.widget() as _, row_gap, col_gap) }
