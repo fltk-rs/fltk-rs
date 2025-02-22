@@ -1,6 +1,6 @@
 [package]
 name = "fltk-sys"
-version = "1.5.3"
+version = "1.5.4"
 authors = ["The fltk-rs Authors"]
 build = "build/main.rs"
 edition = "2021"
