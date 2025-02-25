@@ -478,7 +478,7 @@ impl Wizard {
     /// Get the index of the wizard
     pub fn index(&self) -> Option<i32> {
         Some(self.find(&self.try_current_widget()?))
-    }   
+    }
 }
 
 /// Creates a color chooser widget
