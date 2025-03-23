@@ -1,6 +1,10 @@
 # Changelog
 
 
+# [1.5.5] - 2025-03-23
+- Check for stay_at_bottom in SimpleTerminal::draw.
+- Update FLTK.
+
 # [1.5.4] - 2025-02-22
 - Add Grid::set_margins().
 - Update FLTK.
