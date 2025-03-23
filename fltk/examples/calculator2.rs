@@ -187,12 +187,12 @@ fn main() {
     let (s, r) = app::channel::<Message>();
 
     for but in but_vec {
-        let label = but.label();
+        let label = but.label().unwrap();
         but.emit(s, Message::Number(label.parse().unwrap()));
     }
 
     for mut but in but_op_vec {
-        let op = match but.label().as_str() {
+        let op = match but.label().unwrap().as_str() {
             "+" => Ops::Add,
             "-" => Ops::Sub,
             "x" => Ops::Mul,
@@ -212,7 +212,7 @@ fn main() {
         if let Some(val) = r.recv() {
             match val {
                 Message::Number(num) => {
-                    if out.label() == "0" {
+                    if out.label().unwrap() == "0" {
                         txt.clear();
                     }
                     txt.push_str(&num.to_string());
@@ -233,12 +233,12 @@ fn main() {
                 Message::Op(op) => match op {
                     Ops::Add | Ops::Sub | Ops::Div | Ops::Mul => {
                         old_val.clear();
-                        old_val.push_str(&out.label());
+                        old_val.push_str(&out.label().unwrap());
                         operation = op;
                         out.set_label("0");
                     }
                     Ops::Back => {
-                        let val = out.label();
+                        let val = out.label().unwrap();
                         txt.pop();
                         if val.len() > 1 {
                             out.set_label(txt.as_str());
@@ -258,7 +258,7 @@ fn main() {
                         out.set_label(txt.as_str());
                     }
                     Ops::Eq => {
-                        new_val = out.label();
+                        new_val = out.label().unwrap();
                         let old: f64 = old_val.parse().unwrap();
                         let new: f64 = new_val.parse().unwrap();
                         let val = match operation {

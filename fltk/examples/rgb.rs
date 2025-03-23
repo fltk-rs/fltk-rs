@@ -23,7 +23,7 @@ fn main() {
             .unwrap()
             .convert(ColorDepth::Rgb8)
             .unwrap();
-        image.draw(f.x(), f.y(), f.width(), f.height());
+        image.draw(f.x(), f.y(), f.w(), f.h());
     });
 
     app.run().unwrap();

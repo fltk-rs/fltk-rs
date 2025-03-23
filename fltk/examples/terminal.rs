@@ -111,7 +111,10 @@ fn main() {
 
             term.cursor_up(2, false);
             assert_eq!(term.text(false), "Startup tests\n\n"); // Ignores lines below cursor
-            assert_eq!(term.text(true), "Startup tests\n\n<tmp>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+            assert_eq!(
+                term.text(true),
+                "Startup tests\n\n<tmp>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+            );
 
             // Testing ansi() and set_ansi() methods
             assert!(term.ansi(), "Default ANSI mode should be ON at startup");
@@ -171,7 +174,7 @@ fn main() {
 
             // The default display_rows() will derive from the window size
             let dr = term.display_rows();
-            let height = term.height();
+            let height = term.h();
             assert_eq!(height, term.h());
             assert!(dr > 20, "Default display_rows at startup");
             term.resize(term.x(), term.y(), term.w(), height * 2);

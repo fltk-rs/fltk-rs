@@ -80,10 +80,7 @@ fn init_menu(m: &mut menu::SysMenuBar) {
 }
 
 pub fn center() -> (i32, i32) {
-    (
-        (app::screen_size().0 / 2.0) as i32,
-        (app::screen_size().1 / 2.0) as i32,
-    )
+    (app::screen_size().0 / 2, app::screen_size().1 / 2)
 }
 
 fn nfc_get_file(mode: dialog::NativeFileChooserType) -> Option<PathBuf> {
@@ -94,7 +91,7 @@ fn nfc_get_file(mode: dialog::NativeFileChooserType) -> Option<PathBuf> {
         nfc.set_option(dialog::NativeFileChooserOptions::NoOptions);
         nfc.set_filter("*.{txt,rs,toml}");
     }
-    match nfc.try_show() {
+    match nfc.show() {
         Err(e) => {
             eprintln!("{}", e);
             None
@@ -119,7 +116,7 @@ fn quit_cb() {
         if s.saved {
             app::quit();
         } else {
-            let c = dialog::choice2_default(
+            let c = dialog::choice_default(
                 "Are you sure you want to exit without saving?",
                 "&Yes",
                 "&No",
@@ -165,7 +162,7 @@ fn handle_drag_drop(editor: &mut text::TextEditor) {
                     let path = std::path::PathBuf::from(&path);
                     if path.exists() {
                         // we use a timeout to avoid pasting the path into the buffer
-                        app::add_timeout3(0.0, {
+                        app::add_timeout(0.0, {
                             let mut buf = buf.clone();
                             move |_| match buf.load_file(&path) {
                                 Ok(_) => (),
@@ -199,7 +196,7 @@ fn menu_cb(m: &mut impl MenuExt) {
             "&File/&New...\t" => {
                 STATE.with(|s| {
                     if !s.buf.text().is_empty() {
-                        let c = dialog::choice2_default(
+                        let c = dialog::choice_default(
                             "Are you sure you want to clear the buffer?",
                             "&Yes",
                             "&No",

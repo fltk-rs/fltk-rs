@@ -1,8 +1,8 @@
 use crate::utils::oncelock::Lazy;
 use fltk_sys::fl;
 use std::sync::{
-    atomic::{AtomicBool, AtomicI32, Ordering},
     Arc, Mutex,
+    atomic::{AtomicBool, AtomicI32, Ordering},
 };
 
 /// Basically a check for global locking
@@ -63,7 +63,7 @@ pub fn init_all() {
         register_images();
         #[cfg(feature = "enable-glwindow")]
         {
-            extern "C" {
+            unsafe extern "C" {
                 pub fn open_gl() -> i32;
             }
             open_gl();

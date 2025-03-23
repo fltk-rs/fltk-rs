@@ -1,9 +1,9 @@
 [package]
 name = "fltk"
-version = "1.5.5"
+version = "0.20.0"
 authors = ["The fltk-rs Authors"]
-edition = "2021"
-rust-version = "1.64"
+edition = "2024"
+rust-version = "1.85"
 description = "Rust bindings for the FLTK GUI library"
 repository = "https://github.com/fltk-rs/fltk-rs"
 documentation = "https://docs.rs/fltk"
@@ -18,7 +18,7 @@ name = "fltk"
 path = "src/lib.rs"
 
 [dependencies]
-fltk-sys = { path = "../fltk-sys", version = "=1.5.5" }
+fltk-sys = { path = "../fltk-sys", version = "=0.20.0" }
 bitflags = "^2"
 paste = "1"
 crossbeam-channel = "0.5"
@@ -38,7 +38,7 @@ fltk-bundled = ["fltk-sys/fltk-bundled"]
 # Support for systems without OpenGL
 enable-glwindow = ["fltk-sys/enable-glwindow"] 
 # You can use this if you don't need rtl or cjk unicode support
-no-pango = ["fltk-sys/no-pango"] 
+no-pango-cairo = ["fltk-sys/no-pango-cairo"] 
 # Builds a shared lib of fltk
 fltk-shared = ["fltk-sys/fltk-shared"] 
 # If you have ninja build installed or it's available, it builds faster than make or VS

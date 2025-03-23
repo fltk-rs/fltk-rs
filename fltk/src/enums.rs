@@ -1,4 +1,4 @@
-use crate::app::{font_index, FONTS};
+use crate::app::{FONTS, font_index};
 use crate::prelude::{FltkError, FltkErrorKind};
 use crate::utils::{self, FlString};
 use fltk_sys::fl;
@@ -613,7 +613,7 @@ impl Color {
     /// Create color from RGBA using alpha compositing. Works for non-group types.
     pub fn from_rgba_tuple(tup: (u8, u8, u8, u8)) -> Color {
         if tup.3 != 255 {
-            let bg_col = if let Some(grp) = crate::group::Group::try_current() {
+            let bg_col = if let Some(grp) = crate::group::Group::current() {
                 use crate::prelude::WidgetExt;
                 grp.color()
             } else {

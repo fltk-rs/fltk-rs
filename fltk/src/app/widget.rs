@@ -28,12 +28,6 @@ pub fn set_grab<W: WindowExt>(win: Option<W>) {
     }
 }
 
-#[deprecated = "use app::set_grab(None) instead"]
-/// Unset the currently grabbed window
-pub fn release() {
-    unsafe { fl::Fl_release() }
-}
-
 /// Sets the callback of a widget
 pub fn set_callback<F, W>(widget: &mut W, cb: F)
 where
@@ -187,11 +181,11 @@ pub fn set_focus<W: WidgetExt>(wid: &W) {
 pub fn windows() -> Option<Vec<impl WindowExt>> {
     let mut v: Vec<Window> = vec![];
     if let Some(first) = first_window() {
-        let first: Window = unsafe { first.into_widget() };
+        let first: Window = unsafe { first.as_widget() };
         v.push(first.clone());
         let mut win = first;
-        while let Some(wind) = next_window(&win) {
-            let w = unsafe { wind.into_widget::<Window>() };
+        while let Some(wind) = next_window(&win.clone()) {
+            let w = unsafe { wind.as_widget::<Window>() };
             v.push(w.clone());
             win = w;
         }

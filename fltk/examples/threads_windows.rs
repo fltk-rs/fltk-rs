@@ -61,7 +61,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     while app.wait() {
         if let Some(msg) = r.recv() {
-            let label: i32 = frame.label().parse()?;
+            let label: i32 = frame.label().unwrap().parse()?;
             match msg {
                 Message::Increment => frame.set_label(&(label + 1).to_string()),
                 Message::Decrement => frame.set_label(&(label - 1).to_string()),

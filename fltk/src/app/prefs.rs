@@ -318,7 +318,7 @@ impl Preferences {
                 self.inner,
                 entry.as_ptr(),
                 val.as_mut_ptr(),
-                "\0".as_ptr() as _,
+                c"".as_ptr() as _,
                 sz + 1,
             );
             if ret == 0 {

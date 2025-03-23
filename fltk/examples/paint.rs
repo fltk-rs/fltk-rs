@@ -1,6 +1,6 @@
 use fltk::{
     app,
-    draw::{draw_line, draw_point, draw_rect_fill, set_draw_color, set_line_style, LineStyle},
+    draw::{LineStyle, draw_line, draw_point, draw_rect_fill, set_draw_color, set_line_style},
     enums::{Color, Event, FrameType},
     frame::Frame,
     prelude::*,
@@ -22,7 +22,7 @@ impl Canvas {
         frame.set_color(Color::White);
         frame.set_frame(FrameType::DownBox);
 
-        let surf = ImageSurface::new(frame.width(), frame.height(), false);
+        let surf = ImageSurface::new(frame.w(), frame.h(), false);
         ImageSurface::push_current(&surf);
         draw_rect_fill(0, 0, w, h, Color::White);
         ImageSurface::pop_current();

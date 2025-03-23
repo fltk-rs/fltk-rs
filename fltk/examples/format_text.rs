@@ -185,7 +185,7 @@ fn main() {
         let size1 = size.clone();
         let color1 = color.clone();
         let choice1 = choice.clone();
-        move |pos: i32, ins_items: i32, del_items: i32, _: i32, _: &str| {
+        move |_buf, pos: i32, ins_items: i32, del_items: i32, _: i32, _: Option<&str>| {
             let attr = if choice1.value() == 1 {
                 TextAttr::Underline
             } else if choice1.value() == 2 {

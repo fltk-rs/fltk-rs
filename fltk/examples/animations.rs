@@ -47,9 +47,9 @@ fn move_image(mut frm: Frame, handle: app::TimeoutHandle) {
     frm.set_pos(x + 5, y);
     app::redraw();
     if frm.x() > 260 {
-        app::remove_timeout3(handle)
+        app::remove_timeout(handle)
     } else {
-        app::repeat_timeout3(0.016, handle);
+        app::repeat_timeout(0.016, handle);
     }
 }
 
@@ -67,7 +67,7 @@ fn main() {
     wind.end();
     wind.show_with_env_args();
 
-    app::add_timeout3(0.016, move |handle| {
+    app::add_timeout(0.016, move |handle| {
         let frame = frame.clone();
         move_image(frame, handle);
     });

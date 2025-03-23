@@ -22,9 +22,11 @@ fn main() {
 
     let (s, r) = app::channel::<Message>();
 
-    std::thread::spawn(move || loop {
-        app::sleep(1.);
-        s.send(Message::Increment(2));
+    std::thread::spawn(move || {
+        loop {
+            app::sleep(1.);
+            s.send(Message::Increment(2));
+        }
     });
 
     while app.wait() {

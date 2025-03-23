@@ -76,13 +76,8 @@ pub fn event_mouse_button() -> MouseButton {
     unsafe { mem::transmute(fl::Fl_event_button()) }
 }
 
-/// Returns false for a single click and true for more
-pub fn event_clicks() -> bool {
-    unsafe { fl::Fl_event_clicks() != 0 }
-}
-
 /// Returns the number of clicks - 1
-pub fn event_clicks_num() -> i32 {
+pub fn event_clicks() -> i32 {
     unsafe { fl::Fl_event_clicks() }
 }
 
@@ -124,7 +119,8 @@ pub enum MouseWheel {
 /// Returns the current horizontal mouse scrolling associated with the Mousewheel event.
 /// Returns [`MouseWheel::None`], `Right` or `Left`
 pub fn event_dx() -> MouseWheel {
-    match 0.cmp(unsafe { &fl::Fl_event_dx() }) {
+    let t = unsafe { fl::Fl_event_dx() };
+    match 0.cmp(&t) {
         cmp::Ordering::Greater => MouseWheel::Left,
         cmp::Ordering::Equal => MouseWheel::None,
         cmp::Ordering::Less => MouseWheel::Right,
@@ -134,7 +130,8 @@ pub fn event_dx() -> MouseWheel {
 /// Returns the current vertical mouse scrolling associated with the Mousewheel event.
 /// Returns [`MouseWheel::None`], `Up` or `Down`.
 pub fn event_dy() -> MouseWheel {
-    match 0.cmp(unsafe { &fl::Fl_event_dy() }) {
+    let t = unsafe { fl::Fl_event_dy() };
+    match 0.cmp(&t) {
         cmp::Ordering::Greater => MouseWheel::Up,
         cmp::Ordering::Equal => MouseWheel::None,
         cmp::Ordering::Less => MouseWheel::Down,
@@ -177,8 +174,8 @@ pub fn event_state() -> Shortcut {
 pub fn event_inside_widget<Wid: WidgetExt>(wid: &Wid) -> bool {
     let x = wid.x();
     let y = wid.y();
-    let w = wid.width();
-    let h = wid.height();
+    let w = wid.w();
+    let h = wid.h();
     unsafe { fl::Fl_event_inside(x, y, w, h) != 0 }
 }
 

@@ -1,4 +1,4 @@
-use fltk::{app, draw, frame, prelude::*, window::Window};
+use fltk::{app, frame, prelude::*, utils, window::Window};
 
 const WIDTH: i32 = 600;
 const HEIGHT: i32 = 400;
@@ -25,13 +25,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut world = World::new();
 
     unsafe {
-        draw::draw_rgba_nocopy(&mut frame, &framebuf);
+        utils::blit_rgba_nocopy(&mut frame, &framebuf);
     }
 
-    app::add_idle3(move |_| {
+    app::add_idle(move |_| {
         world.update();
         world.draw(&mut framebuf);
-        // draw::draw_rgba(&mut frame, &framebuf).unwrap(); // A safe variant of draw_rgba_nocopy
+        // utils::blit_rgba(&mut frame, &framebuf).unwrap(); // A safe variant of draw_rgba_nocopy
         win.redraw();
         // sleeps are necessary when calling redraw in the event loop
         app::sleep(0.016);

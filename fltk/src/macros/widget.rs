@@ -36,8 +36,8 @@ macro_rules! impl_widget_ext {
                 fn with_size(mut self, width: i32, height: i32) -> Self {
                     let x = self.x();
                     let y = self.y();
-                    let w = self.width();
-                    let h = self.height();
+                    let w = self.w();
+                    let h = self.h();
                     if w == 0 || h == 0 {
                         self.widget_resize(x, y, width, height);
                     } else {
@@ -91,7 +91,7 @@ macro_rules! impl_widget_ext {
                         w != 0 && h != 0,
                         "right_of requires the size of the widget to be known!"
                     );
-                    self.resize(wid.x() + wid.width() + padding, wid.y(), w, h);
+                    self.resize(wid.x() + wid.w() + padding, wid.y(), w, h);
                     self
                 }
 
@@ -108,13 +108,13 @@ macro_rules! impl_widget_ext {
 
                 fn center_of<W: WidgetExt>(mut self, w: &W) -> Self {
                         debug_assert!(
-                        w.width() != 0 && w.height() != 0,
+                        w.w() != 0 && w.h() != 0,
                         "center_of requires the size of the widget to be known!"
                     );
-                    let sw = self.width() as f64;
-                    let sh = self.height() as f64;
-                    let ww = w.width() as f64;
-                    let wh = w.height() as f64;
+                    let sw = self.w() as f64;
+                    let sh = self.h() as f64;
+                    let ww = w.w() as f64;
+                    let wh = w.h() as f64;
                     let sx = (ww - sw) / 2.0;
                     let sy = (wh - sh) / 2.0;
                     let wx = if w.as_window().is_some() { 0 } else { w.x() };
@@ -127,12 +127,12 @@ macro_rules! impl_widget_ext {
                 /// Initialize center of another widget
                 fn center_x<W: $crate::prelude::WidgetExt>(mut self, w: &W) -> Self {
                         debug_assert!(
-                        w.width() != 0 && w.height() != 0,
+                        w.w() != 0 && w.h() != 0,
                         "center_of requires the size of the widget to be known!"
                     );
-                    let sw = self.width() as f64;
-                    let sh = self.height() as f64;
-                    let ww = w.width() as f64;
+                    let sw = self.w() as f64;
+                    let sh = self.h() as f64;
+                    let ww = w.w() as f64;
                     let sx = (ww - sw) / 2.0;
                     let sy = self.y();
                     let wx = if w.as_window().is_some() { 0 } else { w.x() };
@@ -144,12 +144,12 @@ macro_rules! impl_widget_ext {
                 /// Initialize center of another widget
                 fn center_y<W: $crate::prelude::WidgetExt>(mut self, w: &W) -> Self {
                         debug_assert!(
-                        w.width() != 0 && w.height() != 0,
+                        w.w() != 0 && w.h() != 0,
                         "center_of requires the size of the widget to be known!"
                     );
-                    let sw = self.width() as f64;
-                    let sh = self.height() as f64;
-                    let wh = w.height() as f64;
+                    let sw = self.w() as f64;
+                    let sh = self.h() as f64;
+                    let wh = w.h() as f64;
                     let sx = self.x();
                     let sy = (wh - sh) / 2.0;
                     let wy = if w.as_window().is_some() { 0 } else { w.y() };
@@ -161,13 +161,13 @@ macro_rules! impl_widget_ext {
                 fn center_of_parent(mut self) -> Self {
                     if let Some(w) = self.parent() {
                         debug_assert!(
-                            w.width() != 0 && w.height() != 0,
+                            w.w() != 0 && w.h() != 0,
                             "center_of requires the size of the widget to be known!"
                         );
-                        let sw = self.width() as f64;
-                        let sh = self.height() as f64;
-                        let ww = w.width() as f64;
-                        let wh = w.height() as f64;
+                        let sw = self.w() as f64;
+                        let sh = self.h() as f64;
+                        let ww = w.w() as f64;
+                        let wh = w.h() as f64;
                         let sx = (ww - sw) / 2.0;
                         let sy = (wh - sh) / 2.0;
                         let wx = if w.as_window().is_some() { 0 } else { w.x() };
@@ -180,19 +180,19 @@ macro_rules! impl_widget_ext {
 
                 fn size_of<W: WidgetExt>(mut self, w: &W) -> Self {
                         debug_assert!(
-                        w.width() != 0 && w.height() != 0,
+                        w.w() != 0 && w.h() != 0,
                         "size_of requires the size of the widget to be known!"
                     );
                     let x = self.x();
                     let y = self.y();
-                    self.resize(x, y, w.width(), w.height());
+                    self.resize(x, y, w.w(), w.h());
                     self
                 }
 
                 fn size_of_parent(mut self) -> Self {
                     if let Some(parent) = self.parent() {
-                        let w = parent.width();
-                        let h = parent.height();
+                        let w = parent.w();
+                        let h = parent.h();
                         let x = self.x();
                         let y = self.y();
                         self.resize(x, y, w, h);
@@ -201,7 +201,7 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn set_pos(&mut self, x: i32, y: i32) {
-                    self.resize(x, y, self.width(), self.height());
+                    self.resize(x, y, self.w(), self.h());
                 }
 
                 fn set_size(&mut self, width: i32, height: i32) {
@@ -215,6 +215,15 @@ macro_rules! impl_widget_ext {
                     unsafe {
                         let temp = CString::safe_new(title);
                         [<$flname _set_label>](self.inner.widget() as _, temp.as_ptr());
+                    }
+                }
+
+                fn unset_label(&mut self) {
+                    if self.as_window().is_some() {
+                        assert!($crate::app::is_ui_thread());
+                    }
+                    unsafe {
+                        [<$flname _set_label>](self.inner.widget() as _, std::ptr::null() as _);
                     }
                 }
 
@@ -246,14 +255,6 @@ macro_rules! impl_widget_ext {
                     unsafe { [<$flname _y>](self.inner.widget() as _) }
                 }
 
-                fn width(&self) -> i32 {
-                    unsafe { [<$flname _width>](self.inner.widget() as _) }
-                }
-
-                fn height(&self) -> i32 {
-                    unsafe { [<$flname _height>](self.inner.widget() as _) }
-                }
-
                 fn w(&self) -> i32 {
                     unsafe { [<$flname _width>](self.inner.widget() as _) }
                 }
@@ -262,14 +263,14 @@ macro_rules! impl_widget_ext {
                     unsafe { [<$flname _height>](self.inner.widget() as _) }
                 }
 
-                fn label(&self) -> String {
+                fn label(&self) -> Option<String> {
                     unsafe {
                         fltk_sys::fl::Fl_lock();
                         let ptr = [<$flname _label>](self.inner.widget() as _) as *mut std::os::raw::c_char;
                         let s = if ptr.is_null() {
-                            String::from("")
+                            None
                         } else {
-                            CStr::from_ptr(ptr).to_string_lossy().to_string()
+                            Some(CStr::from_ptr(ptr).to_string_lossy().to_string())
                         };
                         fltk_sys::fl::Fl_unlock();
                         s
@@ -762,7 +763,7 @@ macro_rules! impl_widget_ext {
                     self.set_callback(move |_| sender.send(msg.clone()))
                 }
 
-                unsafe fn into_widget<W: WidgetBase>(&self) -> W {
+                unsafe fn as_widget<W: WidgetBase>(&self) -> W {
                     W::from_widget_ptr(self.as_widget_ptr() as *mut _)
                 }
 
@@ -1207,14 +1208,6 @@ macro_rules! impl_widget_ext_via {
                 self.$member.y()
             }
 
-            fn width(&self) -> i32 {
-                self.$member.width()
-            }
-
-            fn height(&self) -> i32 {
-                self.$member.height()
-            }
-
             fn w(&self) -> i32 {
                 self.$member.w()
             }
@@ -1223,7 +1216,7 @@ macro_rules! impl_widget_ext_via {
                 self.$member.h()
             }
 
-            fn label(&self) -> String {
+            fn label(&self) -> Option<String> {
                 self.$member.label()
             }
 
@@ -1501,8 +1494,8 @@ macro_rules! impl_widget_ext_via {
                 self.$member.set_raw_user_data(data)
             }
 
-            unsafe fn into_widget<W: WidgetBase>(&self) -> W {
-                self.$member.into_widget()
+            unsafe fn as_widget<W: WidgetBase>(&self) -> W {
+                self.$member.as_widget()
             }
 
             fn visible(&self) -> bool {

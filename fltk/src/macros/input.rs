@@ -34,7 +34,7 @@ macro_rules! impl_input_ext {
                     }
                 }
 
-                fn position(&self) -> i32 {
+                fn insert_position(&self) -> i32 {
                     unsafe {
                         [<$flname _position>](self.inner.widget() as _) as i32
                     }

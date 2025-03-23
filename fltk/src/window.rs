@@ -107,14 +107,9 @@ pub type Window = DoubleWindow;
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum WindowType {
     /// Single window
-    Normal = 240,
+    Single = 240,
     /// Double window
     Double = 241,
-}
-
-impl WindowType {
-    /// An alias for WindowType::Normal
-    pub const Single: WindowType = WindowType::Normal;
 }
 
 crate::macros::widget::impl_widget_type!(WindowType);
@@ -128,7 +123,7 @@ macro_rules! impl_ppu {
                 let mut factor = 1.0;
                 #[cfg(target_os = "macos")]
                 {
-                    extern "C" {
+                    unsafe extern "C" {
                         pub fn cfltk_getScalingFactor(handle: *mut raw::c_void) -> f64;
                     }
                     let mac_version = unsafe { fltk_sys::fl::Fl_mac_os_version() };
@@ -250,7 +245,7 @@ macro_rules! impl_top_win {
                 assert!(self.raw_handle() as isize != 0);
                 #[cfg(target_os = "macos")]
                 {
-                    extern "C" {
+                    unsafe extern "C" {
                         pub fn cfltk_setOnTop(handle: *mut raw::c_void);
                     }
                     unsafe {
@@ -292,7 +287,7 @@ macro_rules! impl_top_win {
                     target_os = "emscripten"
                 )))]
                 {
-                    extern "C" {
+                    unsafe extern "C" {
                         pub fn cfltk_setOnTop(handle: RawXlibHandle);
                     }
                     if !crate::app::using_wayland() {
@@ -407,7 +402,7 @@ impl DoubleWindow {
             }
             #[cfg(target_os = "macos")]
             {
-                extern "C" {
+                unsafe extern "C" {
                     fn cfltk_winShow(xid: *mut raw::c_void);
                 }
                 cfltk_winShow(self.raw_handle());
@@ -420,7 +415,7 @@ impl DoubleWindow {
             )))]
             {
                 if !crate::app::using_wayland() {
-                    extern "C" {
+                    unsafe extern "C" {
                         fn cfltk_platform_show(proxy: *mut raw::c_void);
                     }
                     cfltk_platform_show(self.raw_handle() as *mut raw::c_void);
@@ -444,7 +439,7 @@ impl DoubleWindow {
             }
             #[cfg(target_os = "macos")]
             {
-                extern "C" {
+                unsafe extern "C" {
                     fn cfltk_winHide(xid: *mut raw::c_void);
                 }
                 cfltk_winHide(self.raw_handle());
@@ -457,7 +452,7 @@ impl DoubleWindow {
             )))]
             {
                 if !crate::app::using_wayland() {
-                    extern "C" {
+                    unsafe extern "C" {
                         fn cfltk_platform_hide(proxy: *mut raw::c_void);
                     }
                     cfltk_platform_hide(self.raw_handle() as *mut raw::c_void);
@@ -591,7 +586,7 @@ impl GlutWindow {
 
     /// Gets an opengl function address
     pub fn get_proc_address(&self, s: &str) -> *const raw::c_void {
-        extern "C" {
+        unsafe extern "C" {
             pub fn get_proc(name: *const raw::c_char) -> *mut raw::c_void;
         }
         let s = CString::safe_new(s);
@@ -634,11 +629,7 @@ impl GlutWindow {
     pub fn context(&self) -> Option<GlContext> {
         unsafe {
             let ctx = Fl_Glut_Window_context(self.inner.widget() as _);
-            if ctx.is_null() {
-                None
-            } else {
-                Some(ctx)
-            }
+            if ctx.is_null() { None } else { Some(ctx) }
         }
     }
 
@@ -761,7 +752,7 @@ pub mod experimental {
         }
 
         /// Creates a new GlWidgetWindow
-        pub fn new<T: Into<Option<&'static str>>>(
+        pub fn new<'a, T: Into<Option<&'a str>>>(
             x: i32,
             y: i32,
             w: i32,
@@ -776,7 +767,7 @@ pub mod experimental {
 
         /// Gets an opengl function address
         pub fn get_proc_address(&self, s: &str) -> *const raw::c_void {
-            extern "C" {
+            unsafe extern "C" {
                 pub fn get_proc(name: *const raw::c_char) -> *mut raw::c_void;
             }
             let s = CString::safe_new(s);
@@ -819,11 +810,7 @@ pub mod experimental {
         pub fn context(&self) -> Option<GlContext> {
             unsafe {
                 let ctx = Fl_Gl_Window_context(self.inner.widget() as _);
-                if ctx.is_null() {
-                    None
-                } else {
-                    Some(ctx)
-                }
+                if ctx.is_null() { None } else { Some(ctx) }
             }
         }
 
@@ -903,20 +890,3 @@ pub mod experimental {
     }
 }
 
-/// An Android window
-pub struct AndroidWindow {
-    win: Window,
-}
-
-impl Default for AndroidWindow {
-    fn default() -> Self {
-        let (w, h) = screen_size();
-        let mut w = AndroidWindow {
-            win: Window::new(0, 30, w as i32, h as i32 - 30, ""),
-        };
-        w.win.set_color(Color::White);
-        w
-    }
-}
-
-crate::widget_extends!(AndroidWindow, Window, win);

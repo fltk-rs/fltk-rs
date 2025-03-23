@@ -28,10 +28,7 @@ pub enum Message {
 }
 
 pub fn center() -> (i32, i32) {
-    (
-        (app::screen_size().0 / 2.0) as i32,
-        (app::screen_size().1 / 2.0) as i32,
-    )
+    (app::screen_size().0 / 2, app::screen_size().1 / 2)
 }
 
 fn nfc_get_file(mode: dialog::NativeFileChooserType) -> Option<PathBuf> {
@@ -42,7 +39,7 @@ fn nfc_get_file(mode: dialog::NativeFileChooserType) -> Option<PathBuf> {
         nfc.set_option(dialog::NativeFileChooserOptions::NoOptions);
         nfc.set_filter("*.{txt,rs,toml}");
     }
-    match nfc.try_show() {
+    match nfc.show() {
         Err(e) => {
             eprintln!("{}", e);
             None
@@ -272,7 +269,7 @@ impl MyApp {
                         let path = std::path::PathBuf::from(&path);
                         if path.exists() {
                             // we use a timeout to avoid pasting the path into the buffer
-                            app::add_timeout3(0.0, {
+                            app::add_timeout(0.0, {
                                 let mut buf = buf.clone();
                                 move |_| match buf.load_file(&path) {
                                     Ok(_) => (),
@@ -380,8 +377,16 @@ impl MyApp {
                     Changed => {
                         if !self.modified {
                             self.modified = true;
-                            self.menu.menu.find_item("&File/&Save\t").unwrap().activate();
-                            self.menu.menu.find_item("&File/&Quit\t").unwrap().set_label_color(Color::Red);
+                            self.menu
+                                .menu
+                                .find_item("&File/&Save\t")
+                                .unwrap()
+                                .activate();
+                            self.menu
+                                .menu
+                                .find_item("&File/&Quit\t")
+                                .unwrap()
+                                .set_label_color(Color::Red);
                             let name = match &self.filename {
                                 Some(f) => f.to_string_lossy().to_string(),
                                 None => "(Untitled)".to_string(),
@@ -391,7 +396,14 @@ impl MyApp {
                     }
                     New => {
                         if self.buf.text() != "" {
-                            let clear = if let Some(x) = dialog::choice2(center().0 - 200, center().1 - 100, "File unsaved, Do you wish to continue?", "&Yes", "&No!", "") {
+                            let clear = if let Some(x) = dialog::choice(
+                                center().0 - 200,
+                                center().1 - 100,
+                                "File unsaved, Do you wish to continue?",
+                                "&Yes",
+                                "&No!",
+                                "",
+                            ) {
                                 x == 0
                             } else {
                                 false
@@ -400,28 +412,44 @@ impl MyApp {
                                 self.buf.set_text("");
                             }
                         }
-                    },
+                    }
                     Open => {
                         if let Some(c) = nfc_get_file(dialog::NativeFileChooserType::BrowseFile) {
                             if c.exists() {
                                 match self.buf.load_file(&c) {
                                     Ok(_) => self.filename = Some(c),
-                                    Err(e) => dialog::alert(center().0 - 200, center().1 - 100, &format!("An issue occured while loading the file: {e}")),
+                                    Err(e) => dialog::alert(
+                                        center().0 - 200,
+                                        center().1 - 100,
+                                        &format!("An issue occured while loading the file: {e}"),
+                                    ),
                                 }
                             } else {
-                                dialog::alert(center().0 - 200, center().1 - 100, "File does not exist!")
+                                dialog::alert(
+                                    center().0 - 200,
+                                    center().1 - 100,
+                                    "File does not exist!",
+                                )
                             }
                         }
-                    },
-                    Save => { self.save_file().unwrap(); },
-                    SaveAs => { self.save_file_as().unwrap(); },
+                    }
+                    Save => {
+                        self.save_file().unwrap();
+                    }
+                    SaveAs => {
+                        self.save_file_as().unwrap();
+                    }
                     Print => {
                         let mut printer = printer::Printer::default();
                         if printer.begin_job(0).is_ok() {
                             let (w, h) = printer.printable_rect();
                             self.printable.set_size(w - 40, h - 40);
                             // Needs cleanup
-                            let line_count = self.printable.count_lines(0, self.printable.buffer().unwrap().length(), true) / 45;
+                            let line_count = self.printable.count_lines(
+                                0,
+                                self.printable.buffer().unwrap().length(),
+                                true,
+                            ) / 45;
                             for i in 0..=line_count {
                                 self.printable.scroll(45 * i, 0);
                                 printer.begin_page().ok();
@@ -430,27 +458,37 @@ impl MyApp {
                             }
                             printer.end_job();
                         }
-                    },
+                    }
                     Quit => {
                         if self.modified {
-                            match dialog::choice2(center().0 - 200, center().1 - 100,
-                                "Would you like to save your work?", "&Yes", "&No", "") {
+                            match dialog::choice(
+                                center().0 - 200,
+                                center().1 - 100,
+                                "Would you like to save your work?",
+                                "&Yes",
+                                "&No",
+                                "",
+                            ) {
                                 Some(0) => {
                                     if self.save_file().unwrap() {
                                         self.app.quit();
                                     }
-                                },
-                                Some(1) => { self.app.quit() },
-                                Some(_) | None  => (),
+                                }
+                                Some(1) => self.app.quit(),
+                                Some(_) | None => (),
                             }
                         } else {
                             self.app.quit();
                         }
-                    },
+                    }
                     Cut => self.editor.cut(),
                     Copy => self.editor.copy(),
                     Paste => self.editor.paste(),
-                    About => dialog::message(center().0 - 300, center().1 - 100, "This is an example application written in Rust and using the FLTK Gui library."),
+                    About => dialog::message(
+                        center().0 - 300,
+                        center().1 - 100,
+                        "This is an example application written in Rust and using the FLTK Gui library.",
+                    ),
                 }
             }
         }

@@ -6,7 +6,7 @@
 [![Build](https://github.com/fltk-rs/fltk-rs/workflows/Build/badge.svg?branch=master)](https://github.com/fltk-rs/fltk-rs/actions)
 
 
-Rust bindings for the FLTK 1.4 Graphical User Interface library. 
+Rust bindings for the FLTK 1.5 Graphical User Interface library. 
 
 The fltk crate is a cross-platform lightweight gui library which can be statically linked to produce small, self-contained and fast gui applications.
 
@@ -194,7 +194,7 @@ Another way is to use message passing:
     but_dec.emit(s, Message::Decrement);
     
     while app.wait() {
-        let label: i32 = frame.label().parse().unwrap();
+        let label: i32 = frame.label().unwrap().parse().unwrap();
         if let Some(msg) = r.recv() {
             match msg {
                 Message::Increment => frame.set_label(&(label + 1).to_string()),
@@ -298,14 +298,14 @@ Also note that most graphical desktop environments already have these libs alrea
 
 The following are the features offered by the crate:
 - use-ninja: Uses the ninja build system if available for a faster build, especially on Windows.
-- no-pango: Build without pango support on Linux/BSD, if rtl/cjk font support is not needed.
+- no-pango-cairo: Build without pango and cairo support on Linux/BSD, if rtl/cjk font support is not needed.
 - fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms (requires curl and tar)
 - enable-glwindow: Support for drawing using OpenGL functions.
 - system-libpng: Uses the system libpng
 - system-libjpeg: Uses the system libjpeg
 - system-zlib: Uses the system zlib
 - use-wayland: Uses FLTK's wayland hybrid backend (runs on wayland when present, and on X11 when not present). Requires libwayland-dev, wayland-protocols, libdbus-1-dev, libxkbcommon-dev, libgtk-3-dev (optional, for the GTK-style titlebar), in addition to the X11 development packages. Sample [CI](https://github.com/MoAlyousef/test_wayland/blob/main/.github/workflows/rust.yml).
-- fltk-config: Uses an already installed FLTK's fltk-config to build this crate against. This still requires FLTK 1.4. Useful for reducing build times, testing against a locally built FLTK and doesn't need to invoke neither git nor cmake. 
+- fltk-config: Uses an already installed FLTK's fltk-config to build this crate against. This still requires FLTK 1.5. Useful for reducing build times, testing against a locally built FLTK and doesn't need to invoke neither git nor cmake. 
 
 ## FAQ
 
@@ -398,6 +398,7 @@ cargo build
     - MenuItem
     - Choice (dropdown list)
     - SysMenuBar (MacOS menu bar which appears at the top of the screen)
+    - MenuButton
 - Valuator widgets
     - Slider
     - NiceSlider

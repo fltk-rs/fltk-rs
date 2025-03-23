@@ -495,11 +495,7 @@ impl Terminal {
         let mut retval: [i32; 4] = [0; 4];
         let ret =
             unsafe { Fl_Terminal_get_selection(self.inner.widget() as _, retval.as_mut_ptr()) };
-        if ret != 0 {
-            Some(retval)
-        } else {
-            None
-        }
+        if ret != 0 { Some(retval) } else { None }
     }
 
     /// Move cursor to the home position (top/left).

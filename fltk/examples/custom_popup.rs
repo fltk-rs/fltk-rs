@@ -64,7 +64,7 @@ impl MyPopup {
                 let mut win = win.clone();
                 let val = val.clone();
                 move |b| {
-                    *val.borrow_mut() = b.label();
+                    *val.borrow_mut() = b.label().unwrap();
                     win.hide();
                 }
             });

@@ -7,6 +7,8 @@ use std::os::raw;
 
 use crate::prelude::FltkError;
 use crate::prelude::FltkErrorKind;
+use crate::prelude::ImageExt;
+use crate::enums::ColorDepth;
 
 #[doc(hidden)]
 /// A helper trait to get CStrings from Strings without panicking
@@ -143,7 +145,7 @@ pub fn decode_uri(s: &str) -> String {
 
 /// Get the length of a char in terms of C strings
 pub fn char_len(c: char) -> usize {
-    extern "C" {
+    unsafe extern "C" {
         pub fn strlen(s: *const std::os::raw::c_char) -> usize;
     }
     let s = CString::new(c.to_string()).unwrap();
@@ -153,7 +155,7 @@ pub fn char_len(c: char) -> usize {
 #[cfg(target_os = "macos")]
 /// Get a window's content view
 pub fn content_view<W: crate::prelude::WindowExt>(w: &W) -> *const raw::c_void {
-    extern "C" {
+    unsafe extern "C" {
         pub fn cfltk_getContentView(xid: *mut raw::c_void) -> *mut raw::c_void;
     }
     unsafe { cfltk_getContentView(w.raw_handle() as _) as _ }
@@ -181,7 +183,7 @@ pub fn type_name<W: crate::prelude::WidgetExt>(w: &W) -> String {
 }
 
 #[cfg(target_os = "emscripten")]
-extern "C" {
+unsafe extern "C" {
     fn fl_read_to_string(empath: *const raw::c_char) -> *mut raw::c_char;
     fn fl_read_to_binary(empath: *const raw::c_char, len: *mut i32) -> *mut u8;
     fn fl_write_to_file(empath: *const raw::c_char, data: *const u8, len: i32) -> i32;
@@ -231,4 +233,91 @@ pub fn em_write_to_file(path: &str, data: &[u8]) -> Result<(), FltkError> {
             Ok(())
         }
     }
+}
+
+
+/// Draw a framebuffer (rgba) into a widget
+/// # Errors
+/// Errors on invalid or unsupported image formats
+pub fn blit_rgba<'a, T: crate::prelude::WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), FltkError> {
+    let width = wid.w();
+    let height = wid.h();
+    let mut img = crate::image::RgbImage::new(fb, width, height, ColorDepth::Rgba8)?;
+    wid.draw(move |s| {
+        let x = s.x();
+        let y = s.y();
+        let w = s.w();
+        let h = s.h();
+        img.scale(w, h, false, true);
+        img.draw(x, y, w, h);
+    });
+    Ok(())
+}
+
+/// Draw a framebuffer (rgba) into a widget
+/// # Safety
+/// The data passed should be valid and outlive the widget
+pub unsafe fn blit_rgba_nocopy<T: crate::prelude::WidgetBase>(wid: &mut T, fb: &[u8]) {
+    let ptr = fb.as_ptr();
+    let len = fb.len();
+    let width = wid.w();
+    let height = wid.h();
+    wid.draw(move |s| {
+        let x = s.x();
+        let y = s.y();
+        let w = s.w();
+        let h = s.h();
+        if let Ok(mut img) = crate::image::RgbImage::from_data(
+            std::slice::from_raw_parts(ptr, len),
+            width,
+            height,
+            ColorDepth::Rgba8,
+        ) {
+            img.scale(w, h, false, true);
+            img.draw(x, y, w, h);
+        }
+    });
+}
+
+/// Draw a framebuffer (rgba) into a widget
+/// # Errors
+/// Errors on invalid or unsupported image formats
+pub fn blit_rgb<'a, T: crate::prelude::WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), FltkError> {
+    let width = wid.w();
+    let height = wid.h();
+    let mut img = crate::image::RgbImage::new(fb, width, height, ColorDepth::Rgb8)?;
+    wid.draw(move |s| {
+        let x = s.x();
+        let y = s.y();
+        let w = s.w();
+        let h = s.h();
+        img.scale(w, h, false, true);
+        img.draw(x, y, w, h);
+    });
+    Ok(())
+}
+
+/// Draw a framebuffer (rgba) into a widget
+/// # Safety
+/// The data passed should be valid and outlive the widget
+pub unsafe fn blit_rgb_nocopy<T: crate::prelude::WidgetBase>(wid: &mut T, fb: &[u8]) {
+    let ptr = fb.as_ptr();
+    let len = fb.len();
+    let width = wid.w();
+    let height = wid.h();
+    wid.draw(move |s| {
+        let x = s.x();
+        let y = s.y();
+        let w = s.w();
+        let h = s.h();
+        if let Ok(mut img) = crate::image::RgbImage::from_data(
+            std::slice::from_raw_parts(ptr, len),
+            width,
+            height,
+            ColorDepth::Rgb8,
+        ) {
+            img.scale(w, h, false, true);
+            img.draw(x, y, w, h);
+        }
+    });
 }

@@ -1,7 +1,10 @@
 # Roadmap for version 2 (when FLTK 1.4 is released). 
+- Refactor drawing code to use Coord and Rect.
 
+## Done
 - Update to edition2021.
 - Rename WidgetExt::into_widget() to as_widget() and GroupExt::into_group() to as_group() to conform to Rust's self convention.
+- WidgetExt::label() returns an `Option<String>`.
 - Rename TreeItem::try_widget() to widget() and remove old widget() method.
 - Rename TreeItem::label_fg/bg_color() and TreeItem::set_label_fg/bg_color() to label_fg/bg_color() and set_label_fg/bg_color(), respectively
 - Rename Wizard::try_current_widget() to current_widget() and remove old current_widget() method.
@@ -11,10 +14,15 @@
 - Support opacity and platform_hide/platform_show for the wayland backend.
 - Rename no-pango feature to no-pango-cairo, to better reflect the linked libs.
 - app::screen_size() should return (i32, i32) since the implementation changed.
-- Refactor drawing code to use Coord and Rect.
 - Rust 1.63 constifies Mutex::new, so lazy_static can be removed.
 - Replace WindowType::Normal with WindowType::Single.
 - Default Flex to Column as is now the default in FLTK.
 - Rename Flex::set_size to fixed. 
 - Rename InputExt::position to insert_position.
 - Rename Browser::position to vposition.
+- Removed app::event_clicks_num(), now app::event_clicks() returns the number of clicks -1.
+- Remove WidgetExt/ImageExt::width/height in favor of w/h methods.
+- Removes VGrid and HGrid, Row, Column and AndroidWindow.
+- Remove confusing alias FileDialog. Stick to FileChooser and NativeFileChooser.
+- TextBuffer::add_modify_callback() now returns an opaque handle which can be used by remove_modify_callback().
+- draw_rgb* functions moved to utils modules, and renamed to blit_rgb*.

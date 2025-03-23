@@ -22,7 +22,7 @@ fn main() {
         });
     });
 
-    app::add_idle3(move |_| {
+    app::add_idle(move |_| {
         if let Some(msg) = r.recv() {
             frame.set_label(format!("Hello {msg}").as_str());
         }

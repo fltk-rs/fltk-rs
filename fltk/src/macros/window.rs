@@ -21,7 +21,7 @@ macro_rules! impl_window_ext {
                 #[cfg(target_os = "macos")]
                 {
                     let raw = self.raw_handle();
-                    extern "C" {
+                    unsafe extern "C" {
                         pub fn cfltk_getContentView(xid: *mut raw::c_void) -> *mut raw::c_void;
                     }
                     let cv = unsafe { cfltk_getContentView(raw) };
@@ -136,7 +136,7 @@ macro_rules! impl_window_ext {
                 #[cfg(target_os = "macos")]
                 {
                     let raw = self.raw_handle();
-                    extern "C" {
+                    unsafe extern "C" {
                         pub fn cfltk_getContentView(xid: *mut raw::c_void) -> *mut raw::c_void;
                     }
                     let cv = unsafe { cfltk_getContentView(raw) };
@@ -227,17 +227,17 @@ macro_rules! impl_window_ext {
             unsafe impl WindowExt for $name {
                 fn center_screen(mut self) -> Self {
                     debug_assert!(
-                        self.width() != 0 && self.height() != 0,
+                        self.w() != 0 && self.h() != 0,
                         "center_screen requires the size of the widget to be known!"
                     );
                     let (mut x, mut y) = screen_size();
-                    x -= self.width() as f64;
-                    y -= self.height() as f64;
+                    x -= self.w();
+                    y -= self.h();
                     self.resize(
-                        (x / 2.0) as i32,
-                        (y / 2.0) as i32,
-                        self.width(),
-                        self.height(),
+                        x / 2,
+                        y / 2,
+                        self.w(),
+                        self.h(),
                     );
                     self
                 }

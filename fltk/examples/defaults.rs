@@ -4,7 +4,7 @@ fn main() {
     let app = app::App::default();
     // global theming
     app::background(55, 55, 55); // background color.
-                                 // For input/output and text widgets, use app::background2
+    // For input/output and text widgets, use app::background2
     app::background2(0, 0, 0);
     app::foreground(255, 255, 255); // labels
     app::set_font_size(16);

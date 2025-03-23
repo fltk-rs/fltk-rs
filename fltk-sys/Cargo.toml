@@ -1,10 +1,10 @@
 [package]
 name = "fltk-sys"
-version = "1.5.5"
+version = "0.20.0"
 authors = ["The fltk-rs Authors"]
 build = "build/main.rs"
-edition = "2021"
-rust-version = "1.64"
+edition = "2024"
+rust-version = "1.85"
 description = "Rust bindings for the FLTK GUI library"
 repository = "https://github.com/fltk-rs/fltk-rs"
 keywords = ["gui", "bindings", "graphics"]
@@ -34,7 +34,7 @@ legacy-opengl = []
 fltk-bundled = []
 enable-glwindow = []
 no-images = []
-no-pango = []
+no-pango-cairo = []
 no-gdiplus = []
 single-threaded = []
 use-wayland = []

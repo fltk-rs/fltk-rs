@@ -1,5 +1,5 @@
 use crate::app::{
-    font::unload_font, init::init_all, init::is_initialized, init::LOADED_FONT, widget::windows,
+    font::unload_font, init::LOADED_FONT, init::init_all, init::is_initialized, widget::windows,
 };
 use crate::prelude::*;
 use fltk_sys::fl;
@@ -157,86 +157,6 @@ pub fn quit() {
     }
 }
 
-#[deprecated(since = "1.2.26", note = "please use `add_idle3` instead")]
-/// Add an idle callback to run within the event loop.
-/// Calls to [`WidgetExt::redraw`](`crate::prelude::WidgetExt::redraw`) within the callback require an explicit sleep
-pub fn add_idle<F: FnMut() + 'static>(cb: F) {
-    unsafe {
-        unsafe extern "C" fn shim(data: *mut raw::c_void) {
-            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
-            let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
-        }
-        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
-        let data: *mut raw::c_void = a as *mut raw::c_void;
-        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
-        fl::Fl_add_idle(callback, data);
-    }
-}
-
-#[deprecated(since = "1.2.26", note = "please use `remove_idle3` instead")]
-/// Remove an idle function
-pub fn remove_idle<F: FnMut() + 'static>(cb: F) {
-    unsafe {
-        unsafe extern "C" fn shim(data: *mut raw::c_void) {
-            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
-            let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
-        }
-        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
-        let data: *mut raw::c_void = a as *mut raw::c_void;
-        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
-        fl::Fl_remove_idle(callback, data);
-    }
-}
-
-#[deprecated(since = "1.2.26", note = "please use `has_idle3` instead")]
-/// Checks whether an idle function is installed
-pub fn has_idle<F: FnMut() + 'static>(cb: F) -> bool {
-    unsafe {
-        unsafe extern "C" fn shim(data: *mut raw::c_void) {
-            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
-            let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
-        }
-        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
-        let data: *mut raw::c_void = a as *mut raw::c_void;
-        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
-        fl::Fl_has_idle(callback, data) != 0
-    }
-}
-
-/// Add an idle callback to run within the event loop.
-/// Calls to [`WidgetExt::redraw`](`crate::prelude::WidgetExt::redraw`) within the callback require an explicit sleep
-pub fn add_idle2(cb: fn()) {
-    unsafe {
-        let data: *mut raw::c_void = std::ptr::null_mut();
-        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> =
-            Some(mem::transmute(cb));
-        fl::Fl_add_idle(callback, data);
-    }
-}
-
-/// Remove an idle function
-pub fn remove_idle2(cb: fn()) {
-    unsafe {
-        let data: *mut raw::c_void = std::ptr::null_mut();
-        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> =
-            Some(mem::transmute(cb));
-        fl::Fl_remove_idle(callback, data);
-    }
-}
-
-/// Checks whether an idle function is installed
-pub fn has_idle2(cb: fn()) -> bool {
-    unsafe {
-        let data: *mut raw::c_void = std::ptr::null_mut();
-        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> =
-            Some(mem::transmute(cb));
-        fl::Fl_has_idle(callback, data) != 0
-    }
-}
-
 /// Handle object for interacting with idle callbacks
 pub type IdleHandle = *mut ();
 
@@ -249,7 +169,7 @@ unsafe extern "C" fn idle_shim(data: *mut raw::c_void) {
 /// Add an idle callback to run within the event loop.
 /// This function returns a handle that can be used for future interaction with the callback.
 /// Calls to [`WidgetExt::redraw`](`crate::prelude::WidgetExt::redraw`) within the callback require an explicit sleep
-pub fn add_idle3<F: FnMut(IdleHandle) + 'static>(cb: F) -> IdleHandle {
+pub fn add_idle<F: FnMut(IdleHandle) + 'static>(cb: F) -> IdleHandle {
     unsafe {
         let a: *mut Box<dyn FnMut(IdleHandle)> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
@@ -261,7 +181,7 @@ pub fn add_idle3<F: FnMut(IdleHandle) + 'static>(cb: F) -> IdleHandle {
 }
 
 /// Remove the idle function associated with the handle
-pub fn remove_idle3(handle: IdleHandle) {
+pub fn remove_idle(handle: IdleHandle) {
     unsafe {
         let data: *mut raw::c_void = handle as *mut raw::c_void;
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(idle_shim);
@@ -270,7 +190,7 @@ pub fn remove_idle3(handle: IdleHandle) {
 }
 
 /// Checks whether the idle function, associated with the handle, is installed
-pub fn has_idle3(handle: IdleHandle) -> bool {
+pub fn has_idle(handle: IdleHandle) -> bool {
     unsafe {
         let data: *mut raw::c_void = handle as *mut raw::c_void;
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(idle_shim);
@@ -312,47 +232,6 @@ pub fn has_check(handle: CheckHandle) -> bool {
     }
 }
 
-/// Register a callback whenever there is a change to the selection buffer or the clipboard.
-/// The clipboard is source 1 and the selection buffer is source 0
-pub fn add_clipboard_notify(cb: fn(source: i32)) {
-    unsafe {
-        let data: *mut raw::c_void = std::ptr::null_mut();
-        let callback: Option<unsafe extern "C" fn(source: i32, arg1: *mut raw::c_void)> =
-            Some(mem::transmute(cb));
-        fl::Fl_add_clipboard_notify(callback, data);
-    }
-}
-
-/// Stop calling the specified callback when there are changes to the selection
-/// buffer or the clipboard.
-/// The clipboard is source 1 and the selection buffer is source 0
-pub fn remove_clipboard_notify(cb: fn(source: i32)) {
-    unsafe {
-        let callback: Option<unsafe extern "C" fn(source: i32, arg1: *mut raw::c_void)> =
-            Some(mem::transmute(cb));
-        fl::Fl_remove_clipboard_notify(callback);
-    }
-}
-
-#[deprecated(since = "1.2.26", note = "please use `add_clipboard_notify3` instead")]
-/// Register a callback whenever there is a change to the selection buffer or the clipboard.
-/// The clipboard is source 1 and the selection buffer is source 0.
-/// A callback via closure cannot be removed!
-pub fn add_clipboard_notify2<F: FnMut(i32) + 'static>(cb: F) {
-    unsafe {
-        unsafe extern "C" fn shim(source: i32, data: *mut raw::c_void) {
-            let a: *mut Box<dyn FnMut(i32)> = data as *mut Box<dyn FnMut(i32)>;
-            let f: &mut (dyn FnMut(i32)) = &mut **a;
-            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f(source)));
-        }
-        let a: *mut Box<dyn FnMut(i32)> = Box::into_raw(Box::new(Box::new(cb)));
-        let data: *mut raw::c_void = a as *mut raw::c_void;
-        let callback: Option<unsafe extern "C" fn(source: i32, arg1: *mut raw::c_void)> =
-            Some(shim);
-        fl::Fl_add_clipboard_notify(callback, data);
-    }
-}
-
 unsafe extern "C" fn clipboard_notify_shim(source: i32, data: *mut raw::c_void) {
     let a: *mut Box<dyn FnMut(i32)> = data as *mut Box<dyn FnMut(i32)>;
     let f: &mut (dyn FnMut(i32)) = &mut **a;
@@ -362,7 +241,7 @@ unsafe extern "C" fn clipboard_notify_shim(source: i32, data: *mut raw::c_void) 
 /// Register a callback whenever there is a change to the selection buffer or the clipboard.
 /// The clipboard is source 1 and the selection buffer is source 0.
 /// A callback via closure cannot be removed!
-pub fn add_clipboard_notify3<F: FnMut(i32) + 'static>(cb: F) {
+pub fn add_clipboard_notify<F: FnMut(i32) + 'static>(cb: F) {
     unsafe {
         let a: *mut Box<dyn FnMut(i32)> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
@@ -375,195 +254,11 @@ pub fn add_clipboard_notify3<F: FnMut(i32) + 'static>(cb: F) {
 /// Stop calling the specified callback when there are changes to the selection
 /// buffer or the clipboard.
 /// The clipboard is source 1 and the selection buffer is source 0
-pub fn remove_clipboard_notify3() {
+pub fn remove_clipboard_notify() {
     unsafe {
         let callback: Option<unsafe extern "C" fn(source: i32, arg1: *mut raw::c_void)> =
             Some(clipboard_notify_shim);
         fl::Fl_remove_clipboard_notify(callback);
-    }
-}
-
-#[deprecated(since = "1.2.26", note = "please use `add_timeout3` instead")]
-/**
-    Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
-    Example:
-    ```rust,no_run
-    use fltk::{prelude::*, *};
-    fn callback() {
-        println!("TICK");
-        app::repeat_timeout(1.0, callback);
-    }
-    fn main() {
-        let app = app::App::default();
-        let mut wind = window::Window::new(100, 100, 400, 300, "");
-        wind.show();
-        app::add_timeout(1.0, callback);
-        app.run().unwrap();
-    }
-    ```
-*/
-pub fn add_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
-    unsafe {
-        assert!(crate::app::is_ui_thread());
-        unsafe extern "C" fn shim(data: *mut raw::c_void) {
-            let mut a: Box<Box<dyn FnMut()>> = Box::from_raw(data as *mut Box<dyn FnMut()>);
-            let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
-        }
-        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
-        let data: *mut raw::c_void = a as *mut raw::c_void;
-        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
-        fl::Fl_add_timeout(tm, callback, data);
-    }
-}
-
-#[deprecated(since = "1.2.26", note = "please use `repeat_timeout3` instead")]
-/**
-    Repeats a timeout callback from the expiration of the previous timeout.
-    You may only call this method inside a timeout callback.
-    The timeout duration `tm` is indicated in seconds
-    Example:
-    ```rust,no_run
-    use fltk::{prelude::*, *};
-    fn callback() {
-        println!("TICK");
-        app::repeat_timeout(1.0, callback);
-    }
-    fn main() {
-        let app = app::App::default();
-        let mut wind = window::Window::new(100, 100, 400, 300, "");
-        wind.show();
-        app::add_timeout(1.0, callback);
-        app.run().unwrap();
-    }
-    ```
-*/
-pub fn repeat_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
-    assert!(crate::app::is_ui_thread());
-    unsafe {
-        unsafe extern "C" fn shim(data: *mut raw::c_void) {
-            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
-            let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
-        }
-        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
-        let data: *mut raw::c_void = a as *mut raw::c_void;
-        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
-        fl::Fl_repeat_timeout(tm, callback, data);
-    }
-}
-
-#[deprecated(since = "1.2.26", note = "please use `remove_timeout3` instead")]
-/// Removes a timeout callback
-pub fn remove_timeout<F: FnMut() + 'static>(cb: F) {
-    assert!(crate::app::is_ui_thread());
-    unsafe {
-        unsafe extern "C" fn shim(data: *mut raw::c_void) {
-            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
-            let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
-        }
-        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
-        let data: *mut raw::c_void = a as *mut raw::c_void;
-        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
-        fl::Fl_remove_timeout(callback, data);
-    }
-}
-
-#[deprecated(since = "1.2.26", note = "please use `has_timeout3` instead")]
-/// Check whether a timeout is installed
-pub fn has_timeout<F: FnMut() + 'static>(cb: F) -> bool {
-    unsafe {
-        unsafe extern "C" fn shim(data: *mut raw::c_void) {
-            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
-            let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
-        }
-        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
-        let data: *mut raw::c_void = a as *mut raw::c_void;
-        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
-        fl::Fl_has_timeout(callback, data) != 0
-    }
-}
-
-/**
-    Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
-    Example:
-    ```rust,no_run
-    use fltk::{prelude::*, *};
-    fn callback() {
-        println!("TICK");
-        app::repeat_timeout2(1.0, callback);
-    }
-    fn main() {
-        let app = app::App::default();
-        let mut wind = window::Window::new(100, 100, 400, 300, "");
-        wind.show();
-        app::add_timeout2(1.0, callback);
-        app.run().unwrap();
-    }
-    ```
-*/
-pub fn add_timeout2(tm: f64, cb: fn()) {
-    assert!(crate::app::is_ui_thread());
-    unsafe {
-        let data: *mut raw::c_void = std::ptr::null_mut();
-        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> =
-            Some(mem::transmute(cb));
-        fl::Fl_add_timeout(tm, callback, data);
-    }
-}
-
-/**
-    Repeats a timeout callback from the expiration of the previous timeout.
-    You may only call this method inside a timeout callback.
-    The timeout duration `tm` is indicated in seconds
-    Example:
-    ```rust,no_run
-    use fltk::{prelude::*, *};
-    fn callback() {
-        println!("TICK");
-        app::repeat_timeout2(1.0, callback);
-    }
-    fn main() {
-        let app = app::App::default();
-        let mut wind = window::Window::new(100, 100, 400, 300, "");
-        wind.show();
-        app::add_timeout2(1.0, callback);
-        app.run().unwrap();
-    }
-    ```
-*/
-pub fn repeat_timeout2(tm: f64, cb: fn()) {
-    assert!(crate::app::is_ui_thread());
-    unsafe {
-        let data: *mut raw::c_void = std::ptr::null_mut();
-        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> =
-            Some(mem::transmute(cb));
-        fl::Fl_repeat_timeout(tm, callback, data);
-    }
-}
-
-/// Removes a timeout callback
-pub fn remove_timeout2(cb: fn()) {
-    assert!(crate::app::is_ui_thread());
-    if has_timeout2(cb) {
-        unsafe {
-            let data: *mut raw::c_void = std::ptr::null_mut();
-            let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> =
-                Some(mem::transmute(cb));
-            fl::Fl_remove_timeout(callback, data);
-        }
-    }
-}
-
-/// Check whether a timeout is installed
-pub fn has_timeout2(cb: fn()) -> bool {
-    unsafe {
-        let data: *mut raw::c_void = std::ptr::null_mut();
-        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> =
-            Some(mem::transmute(cb));
-        fl::Fl_has_timeout(callback, data) != 0
     }
 }
 
@@ -590,12 +285,12 @@ unsafe extern "C" fn timeout_shim(data: *mut raw::c_void) {
         let app = app::App::default();
         let mut wind = window::Window::new(100, 100, 400, 300, "");
         wind.show();
-        let _handle = app::add_timeout3(1.0, callback);
+        let _handle = app::add_timeout(1.0, callback);
         app.run().unwrap();
     }
     ```
 */
-pub fn add_timeout3<F: FnMut(TimeoutHandle) + 'static>(tm: f64, cb: F) -> TimeoutHandle {
+pub fn add_timeout<F: FnMut(TimeoutHandle) + 'static>(tm: f64, cb: F) -> TimeoutHandle {
     assert!(crate::app::is_ui_thread());
     unsafe {
         let a: *mut Box<dyn FnMut(TimeoutHandle)> = Box::into_raw(Box::new(Box::new(cb)));
@@ -617,18 +312,18 @@ pub fn add_timeout3<F: FnMut(TimeoutHandle) + 'static>(tm: f64, cb: F) -> Timeou
     fn main() {
         let callback = |handle| {
             println!("TICK");
-            app::repeat_timeout3(1.0, handle);
+            app::repeat_timeout(1.0, handle);
         };
 
         let app = app::App::default();
         let mut wind = window::Window::new(100, 100, 400, 300, "");
         wind.show();
-        app::add_timeout3(1.0, callback);
+        app::add_timeout(1.0, callback);
         app.run().unwrap();
     }
     ```
 */
-pub fn repeat_timeout3(tm: f64, handle: TimeoutHandle) {
+pub fn repeat_timeout(tm: f64, handle: TimeoutHandle) {
     assert!(crate::app::is_ui_thread());
     unsafe {
         let data: *mut raw::c_void = handle as *mut raw::c_void;
@@ -649,13 +344,13 @@ pub fn repeat_timeout3(tm: f64, handle: TimeoutHandle) {
         let app = app::App::default();
         let mut wind = window::Window::new(100, 100, 400, 300, "");
         wind.show();
-        let handle = app::add_timeout3(1.0, callback);
-        app::remove_timeout3(handle);
+        let handle = app::add_timeout(1.0, callback);
+        app::remove_timeout(handle);
         app.run().unwrap();
     }
     ```
 */
-pub fn remove_timeout3(handle: TimeoutHandle) {
+pub fn remove_timeout(handle: TimeoutHandle) {
     assert!(crate::app::is_ui_thread());
     unsafe {
         let data: *mut raw::c_void = handle as *mut raw::c_void;
@@ -665,7 +360,7 @@ pub fn remove_timeout3(handle: TimeoutHandle) {
 }
 
 /// Check whether the timeout, associated with the handle, is installed
-pub fn has_timeout3(handle: TimeoutHandle) -> bool {
+pub fn has_timeout(handle: TimeoutHandle) -> bool {
     assert!(crate::app::is_ui_thread());
     unsafe {
         let data: *mut raw::c_void = handle as *mut raw::c_void;

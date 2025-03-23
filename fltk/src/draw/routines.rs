@@ -756,18 +756,18 @@ pub fn reset_spot() {
     The api can fail to capture the window as an image
 */
 pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkError> {
-    let cp = win.width() * win.height() * 3;
+    let cp = win.w() * win.h() * 3;
     win.show();
     unsafe {
-        let x = Fl_read_image(std::ptr::null_mut(), 0, 0, win.width(), win.height(), 0);
+        let x = Fl_read_image(std::ptr::null_mut(), 0, 0, win.w(), win.h(), 0);
         if x.is_null() {
             Err(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {
             let x = std::slice::from_raw_parts(x, cp as usize);
             Ok(RgbImage::new(
                 x,
-                win.width(),
-                win.height(),
+                win.w(),
+                win.h(),
                 ColorDepth::Rgb8,
             )?)
         }
@@ -792,7 +792,7 @@ pub fn capture_window_part<Win: WindowExt>(
     w: i32,
     h: i32,
 ) -> Result<RgbImage, FltkError> {
-    let cp = win.width() * win.height() * 3;
+    let cp = win.w() * win.h() * 3;
     win.show();
     unsafe {
         let x = Fl_capture_window_part(win.as_widget_ptr() as _, x, y, w, h);
@@ -855,92 +855,6 @@ pub fn capture_surface(surface: &ImageSurface, w: i32, h: i32) -> Result<RgbImag
             Ok(RgbImage::new(x, w, h, ColorDepth::Rgb8)?)
         }
     }
-}
-
-/// Draw a framebuffer (rgba) into a widget
-/// # Errors
-/// Errors on invalid or unsupported image formats
-pub fn draw_rgba<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), FltkError> {
-    let width = wid.width();
-    let height = wid.height();
-    let mut img = crate::image::RgbImage::new(fb, width, height, ColorDepth::Rgba8)?;
-    wid.draw(move |s| {
-        let x = s.x();
-        let y = s.y();
-        let w = s.width();
-        let h = s.height();
-        img.scale(w, h, false, true);
-        img.draw(x, y, w, h);
-    });
-    Ok(())
-}
-
-/// Draw a framebuffer (rgba) into a widget
-/// # Safety
-/// The data passed should be valid and outlive the widget
-pub unsafe fn draw_rgba_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
-    let ptr = fb.as_ptr();
-    let len = fb.len();
-    let width = wid.width();
-    let height = wid.height();
-    wid.draw(move |s| {
-        let x = s.x();
-        let y = s.y();
-        let w = s.width();
-        let h = s.height();
-        if let Ok(mut img) = crate::image::RgbImage::from_data(
-            std::slice::from_raw_parts(ptr, len),
-            width,
-            height,
-            ColorDepth::Rgba8,
-        ) {
-            img.scale(w, h, false, true);
-            img.draw(x, y, w, h);
-        }
-    });
-}
-
-/// Draw a framebuffer (rgba) into a widget
-/// # Errors
-/// Errors on invalid or unsupported image formats
-pub fn draw_rgb<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), FltkError> {
-    let width = wid.width();
-    let height = wid.height();
-    let mut img = crate::image::RgbImage::new(fb, width, height, ColorDepth::Rgb8)?;
-    wid.draw(move |s| {
-        let x = s.x();
-        let y = s.y();
-        let w = s.width();
-        let h = s.height();
-        img.scale(w, h, false, true);
-        img.draw(x, y, w, h);
-    });
-    Ok(())
-}
-
-/// Draw a framebuffer (rgba) into a widget
-/// # Safety
-/// The data passed should be valid and outlive the widget
-pub unsafe fn draw_rgb_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
-    let ptr = fb.as_ptr();
-    let len = fb.len();
-    let width = wid.width();
-    let height = wid.height();
-    wid.draw(move |s| {
-        let x = s.x();
-        let y = s.y();
-        let w = s.width();
-        let h = s.height();
-        if let Ok(mut img) = crate::image::RgbImage::from_data(
-            std::slice::from_raw_parts(ptr, len),
-            width,
-            height,
-            ColorDepth::Rgb8,
-        ) {
-            img.scale(w, h, false, true);
-            img.draw(x, y, w, h);
-        }
-    });
 }
 
 /// Draw an image into a widget.

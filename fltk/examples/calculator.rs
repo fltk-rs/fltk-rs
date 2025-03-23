@@ -169,12 +169,12 @@ fn main() {
     let (s, r) = app::channel::<Message>();
 
     for but in but_vec {
-        let label = but.label();
+        let label = but.label().unwrap();
         but.emit(s, Message::Number(label.parse().unwrap()));
     }
 
     for mut but in but_op_vec {
-        let op = match but.label().as_str() {
+        let op = match but.label().unwrap().as_str() {
             "+" => Ops::Add,
             "-" => Ops::Sub,
             "x" => Ops::Mul,

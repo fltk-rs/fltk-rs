@@ -101,7 +101,7 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                 println!("cargo:rustc-link-lib=framework=Carbon");
                 println!("cargo:rustc-link-lib=framework=Cocoa");
                 println!("cargo:rustc-link-lib=framework=ApplicationServices");
-                println!("cargo:rustc-link-lib=c++abi");
+                println!("cargo:rustc-link-lib=c++");
             }
             "windows" => {
                 let linkage = if crate::utils::use_static_msvcrt() {
@@ -126,7 +126,7 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                     println!("cargo:rustc-link-lib{}gdiplus", linkage);
                 }
                 if target_triple.contains("gnu") {
-                    println!("cargo:rustc-link-lib=supc++");
+                    println!("cargo:rustc-link-lib=stdc++");
                     println!("cargo:rustc-link-lib=gcc");
                 }
             }
@@ -170,7 +170,7 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                     println!("cargo:rustc-link-lib=dylib=Xft");
                 }
                 println!("cargo:rustc-link-lib=dylib=fontconfig");
-                if !cfg!(feature = "no-pango") {
+                if !cfg!(feature = "no-pango-cairo") {
                     println!("cargo:rustc-link-lib=dylib=pango-1.0");
                     println!("cargo:rustc-link-lib=dylib=pangoxft-1.0");
                     println!("cargo:rustc-link-lib=dylib=gobject-2.0");
@@ -178,9 +178,9 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                     println!("cargo:rustc-link-lib=dylib=pangocairo-1.0");
                 }
                 if target_triple.contains("gnu") || target_triple.contains("musl") {
-                    println!("cargo:rustc-link-lib=supc++");
+                    println!("cargo:rustc-link-lib=stdc++");
                 } else {
-                    println!("cargo:rustc-link-lib=cxxrt");
+                    println!("cargo:rustc-link-lib=c++");
                 }
             }
         }

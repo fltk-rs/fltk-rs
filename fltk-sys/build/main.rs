@@ -20,7 +20,9 @@ fn main() {
 
     // hack for recent build failure with cross-rs, as of 2023-01-12
     if env::var("CROSS_SYSROOT").is_ok() {
-        env::remove_var("CROSS_SYSROOT");
+        unsafe {
+            env::remove_var("CROSS_SYSROOT");
+        }
     }
 
     println!("cargo:rerun-if-changed=build/android.rs");

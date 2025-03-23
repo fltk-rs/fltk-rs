@@ -19,7 +19,7 @@ use std::ffi::CString;
             draw::draw_rect(0, 0, width, height);
             draw::set_font(enums::Font::Courier, 12);
             printer.set_origin(width / 2, height / 2);
-            printer.print_widget(widget, -widget.width() / 2, -widget.height() / 2);
+            printer.print_widget(widget, -widget.w() / 2, -widget.h() / 2);
             printer.end_page().ok();
             printer.end_job();
         }

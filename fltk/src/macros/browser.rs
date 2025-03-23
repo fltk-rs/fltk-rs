@@ -269,11 +269,11 @@ macro_rules! impl_browser_ext {
                     }
                 }
 
-                fn position(&self) -> i32 {
+                fn vposition(&self) -> i32 {
                     unsafe { [<$flname _position>](self.inner.widget() as _) as i32 }
                 }
 
-                fn set_position(&mut self, pos: i32) {
+                fn set_vposition(&mut self, pos: i32) {
                     unsafe { [<$flname _set_position>](self.inner.widget() as _, pos as i32) }
                 }
 

@@ -45,8 +45,8 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn visible_cells(&self) -> (i32, i32, i32, i32) {
-                    unsafe {
+                fn visible_cells(&self) -> Option<(i32, i32, i32, i32)> {
+                    let (a, b, c, d) =                     unsafe {
                         let mut row_top = 0;
                         let mut col_left = 0;
                         let mut row_bot = 0;
@@ -59,11 +59,7 @@ macro_rules! impl_table_ext {
                             &mut col_right,
                         );
                         (row_top, col_left, row_bot, col_right)
-                    }
-                }
-
-                fn try_visible_cells(&self) -> Option<(i32, i32, i32, i32)> {
-                    let (a, b, c, d) = self.visible_cells();
+                    };
                     if a == -1 || b == -1 || c == -1 || d == -1 {
                         None
                     } else {
@@ -275,8 +271,8 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn get_selection(&self) -> (i32, i32, i32, i32) {
-                    unsafe {
+                fn get_selection(&self) -> Option<(i32, i32, i32, i32)> {
+                    let (a, b, c, d) = unsafe {
                         let mut row_top = 0;
                         let mut col_left = 0;
                         let mut row_bot = 0;
@@ -289,11 +285,7 @@ macro_rules! impl_table_ext {
                             &mut col_right,
                         );
                         (row_top, col_left, row_bot, col_right)
-                    }
-                }
-
-                fn try_get_selection(&self) -> Option<(i32, i32, i32, i32)> {
-                    let (a, b, c, d) = self.get_selection();
+                    };
                     if a < 0 && b < 0 && c >= 0 && d >= 0 {
                         Some((0, 0, c, d))
                     } else if a >= 0 && b >=0 && c >=0 && d >= 0 {

@@ -64,7 +64,9 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
 
     if target_triple.contains("windows") {
         if !crate::utils::has_program("git") {
-            println!("cargo:warning=Could not find invokable git. It's needed to apply a security patch on windows!");
+            println!(
+                "cargo:warning=Could not find invokable git. It's needed to apply a security patch on windows!"
+            );
         }
         Command::new("git")
             .args(["apply", "../fltk.patch"])
@@ -142,7 +144,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
         }
 
         if target_triple.contains("linux") {
-            if cfg!(feature = "no-pango") {
+            if cfg!(feature = "no-pango-cairo") {
                 dst.define("FLTK_USE_PANGO", "OFF");
                 dst.define("FLTK_GRAPHICS_CAIRO", "OFF");
             } else {

@@ -12,7 +12,7 @@ fn main() {
     chart.add(3.2, "C", enums::Color::Black);
     chart.set_color(enums::Color::White);
     let mut choice = menu::Choice::new(300, 5, 200, 40, "Chart type");
-    choice.add_choice("Bar | HorzBar | Line | Fill | Spike | Pie | SpecialPie");
+    choice.add_choice("Bar|HorzBar|Line|Fill|Spike|Pie|SpecialPie");
     choice.set_value(5);
     choice.set_color(enums::Color::White);
     win.end();
