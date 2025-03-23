@@ -254,7 +254,7 @@ macro_rules! impl_top_win {
                 }
                 #[cfg(target_os = "windows")]
                 {
-                    extern "system" {
+                    unsafe extern "system" {
                         fn SetWindowPos(
                             hwnd: *mut raw::c_void,
                             insert_after: isize,
@@ -395,7 +395,7 @@ impl DoubleWindow {
         unsafe {
             #[cfg(target_os = "windows")]
             {
-                extern "system" {
+                unsafe extern "system" {
                     fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: raw::c_int) -> raw::c_int;
                 }
                 ShowWindow(self.raw_handle(), 9);
@@ -432,7 +432,7 @@ impl DoubleWindow {
         unsafe {
             #[cfg(target_os = "windows")]
             {
-                extern "system" {
+                unsafe extern "system" {
                     fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: raw::c_int) -> raw::c_int;
                 }
                 ShowWindow(self.raw_handle(), 0);
