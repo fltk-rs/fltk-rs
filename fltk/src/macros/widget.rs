@@ -846,13 +846,24 @@ macro_rules! impl_widget_base {
                         let tracker = $crate::widget::WidgetTracker::new(
                             widget_ptr as _
                         );
-                        unsafe extern "C" fn shim(data: *mut std::os::raw::c_void) {
-                            if !data.is_null() {
-                                let x = data as *mut Box<dyn FnMut()>;
-                                let _x = Box::from_raw(x);
-                            }
+                        unsafe extern "C" fn shim(wid: *mut Fl_Widget, _data: *mut std::os::raw::c_void) {
+                            let user_data = [<$flname _user_data>](wid as _);
+                            let draw_data = [<$flname _draw_data>](wid as _);
+                            let handle_data = [<$flname _handle_data>](wid as _);
+                            $crate::app::add_timeout3(0., move |h| {
+                                if !user_data.is_null() {
+                                    let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
+                                }
+                                if !draw_data.is_null() {
+                                    let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
+                                }
+                                if !handle_data.is_null() {
+                                    let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
+                                }
+                                $crate::app::remove_timeout3(h);
+                            });
                         }
-                        [<$flname _set_deleter>](widget_ptr, Some(shim));
+                        [<$flname _set_deletion_callback>](widget_ptr, Some(shim), std::ptr::null_mut());
                         $name {
                             inner: tracker,
                             is_derived: true,
