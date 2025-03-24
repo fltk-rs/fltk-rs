@@ -198,23 +198,6 @@ macro_rules! impl_image_ext {
                     let image = ImageRC::from_raw(ptr);
                     I::from_image_ptr(*image as *mut _)
                 }
-
-                fn from_dyn_image_ptr(p: *mut fltk_sys::image::Fl_Image) -> Option<Self> {
-                    unsafe {
-                        let ptr = [<$flname _from_dyn_ptr>](p as _);
-                        if ptr.is_null() {
-                            None
-                        } else {
-                            Some($name {
-                                inner: ImageRC::from(ptr as *mut $flname),
-                            })
-                        }
-                    }
-                }
-
-                fn from_dyn_image<I: ImageExt>(i: &I) -> Option<Self> {
-                    Self::from_dyn_image_ptr(i.as_image_ptr())
-                }
             }
         }
     };

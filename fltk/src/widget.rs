@@ -35,7 +35,7 @@ pub struct Widget {
 
 crate::macros::widget::impl_widget_ext!(Widget, Fl_Widget);
 crate::macros::widget::impl_widget_base!(Widget, Fl_Widget);
-crate::macros::widget::impl_widget_default!(Widget);
+crate::macros::widget::impl_widget_default!(Widget, Fl_Widget);
 
 /// An alias exposing the Widget tracker
 pub type WidgetTrackerPtr = *mut fltk_sys::fl::Fl_Widget_Tracker;

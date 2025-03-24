@@ -13,7 +13,7 @@ pub struct Input {
 
 crate::macros::widget::impl_widget_ext!(Input, Fl_Input);
 crate::macros::widget::impl_widget_base!(Input, Fl_Input);
-crate::macros::widget::impl_widget_default!(Input);
+crate::macros::widget::impl_widget_default!(Input, Fl_Input);
 crate::macros::input::impl_input_ext!(Input, Fl_Input);
 
 /// Sets the input widget's type
@@ -49,7 +49,7 @@ pub struct IntInput {
 
 crate::macros::widget::impl_widget_ext!(IntInput, Fl_Int_Input);
 crate::macros::widget::impl_widget_base!(IntInput, Fl_Int_Input);
-crate::macros::widget::impl_widget_default!(IntInput);
+crate::macros::widget::impl_widget_default!(IntInput, Fl_Int_Input);
 crate::macros::input::impl_input_ext!(IntInput, Fl_Int_Input);
 
 /// Creates an input widget which takes only floats
@@ -61,7 +61,7 @@ pub struct FloatInput {
 
 crate::macros::widget::impl_widget_ext!(FloatInput, Fl_Float_Input);
 crate::macros::widget::impl_widget_base!(FloatInput, Fl_Float_Input);
-crate::macros::widget::impl_widget_default!(FloatInput);
+crate::macros::widget::impl_widget_default!(FloatInput, Fl_Float_Input);
 crate::macros::input::impl_input_ext!(FloatInput, Fl_Float_Input);
 
 /// Creates a multiline-input widget
@@ -73,7 +73,7 @@ pub struct MultilineInput {
 
 crate::macros::widget::impl_widget_ext!(MultilineInput, Fl_Multiline_Input);
 crate::macros::widget::impl_widget_base!(MultilineInput, Fl_Multiline_Input);
-crate::macros::widget::impl_widget_default!(MultilineInput);
+crate::macros::widget::impl_widget_default!(MultilineInput, Fl_Multiline_Input);
 crate::macros::input::impl_input_ext!(MultilineInput, Fl_Multiline_Input);
 
 /// Creates a File-input widget
@@ -85,7 +85,7 @@ pub struct FileInput {
 
 crate::macros::widget::impl_widget_ext!(FileInput, Fl_File_Input);
 crate::macros::widget::impl_widget_base!(FileInput, Fl_File_Input);
-crate::macros::widget::impl_widget_default!(FileInput);
+crate::macros::widget::impl_widget_default!(FileInput, Fl_File_Input);
 crate::macros::input::impl_input_ext!(FileInput, Fl_File_Input);
 
 impl FileInput {
@@ -109,5 +109,5 @@ pub struct SecretInput {
 
 crate::macros::widget::impl_widget_ext!(SecretInput, Fl_Secret_Input);
 crate::macros::widget::impl_widget_base!(SecretInput, Fl_Secret_Input);
-crate::macros::widget::impl_widget_default!(SecretInput);
+crate::macros::widget::impl_widget_default!(SecretInput, Fl_Secret_Input);
 crate::macros::input::impl_input_ext!(SecretInput, Fl_Secret_Input);

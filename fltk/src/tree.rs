@@ -111,7 +111,7 @@ pub struct Tree {
 
 crate::macros::widget::impl_widget_ext!(Tree, Fl_Tree);
 crate::macros::widget::impl_widget_base!(Tree, Fl_Tree);
-crate::macros::widget::impl_widget_default!(Tree);
+crate::macros::widget::impl_widget_default!(Tree, Fl_Tree);
 
 /// Defines a tree item
 #[derive(Debug, Clone)]

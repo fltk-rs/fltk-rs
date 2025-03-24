@@ -645,57 +645,6 @@ macro_rules! impl_widget_base {
     ($name: ident, $flname: ident) => {
         paste::paste! {
             unsafe impl WidgetBase for $name {
-                fn new<'a, T: Into<Option<&'a str>>>(
-                    x: i32,
-                    y: i32,
-                    width: i32,
-                    height: i32,
-                    title: T,
-                ) -> $name {
-                    let temp = if let Some(title) = title.into() {
-                        CString::safe_new(title).into_raw()
-                    } else {
-                        std::ptr::null_mut()
-                    };
-                    unsafe {
-                        let widget_ptr = [<$flname _new>](x, y, width, height, temp);
-                        assert!(!widget_ptr.is_null());
-                        let win = [<$flname _as_window>](widget_ptr as _);
-                        if !win.is_null() {
-                            assert!($crate::app::is_ui_thread());
-                        }
-                        let tracker = $crate::widget::WidgetTracker::new(
-                            widget_ptr as _
-                        );
-                        unsafe extern "C" fn shim(wid: *mut Fl_Widget, _data: *mut std::os::raw::c_void) {
-                            let user_data = [<$flname _user_data>](wid as _);
-                            let draw_data = [<$flname _draw_data>](wid as _);
-                            let handle_data = [<$flname _handle_data>](wid as _);
-                            $crate::app::add_timeout(0., move |h| {
-                                if !user_data.is_null() {
-                                    let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
-                                }
-                                if !draw_data.is_null() {
-                                    let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
-                                }
-                                if !handle_data.is_null() {
-                                    let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
-                                }
-                                $crate::app::remove_timeout(h);
-                            });
-                        }
-                        [<$flname _set_deletion_callback>](widget_ptr, Some(shim), std::ptr::null_mut());
-                        $name {
-                            inner: tracker,
-                            is_derived: true,
-                        }
-                    }
-                }
-
-                fn default_fill() -> Self {
-                    Self::default().size_of_parent().center_of_parent()
-                }
-
                 fn delete(wid: Self) {
                     if let Some(mut parent) = wid.parent() {
                         parent.remove(&wid);
@@ -895,10 +844,71 @@ macro_rules! impl_widget_base {
 #[doc(hidden)]
 #[macro_export]
 macro_rules! impl_widget_default {
-    ($name: ident) => {
+    ($name: ident, $flname: ident) => {
         impl Default for $name {
             fn default() -> Self {
                 Self::new(0, 0, 0, 0, None)
+            }
+        }
+        paste::paste!{
+            impl $name {
+                /// Creates a new widget, takes an x, y coordinates, as well as a width and height, plus a title
+                /// # Arguments
+                /// * `x` - The x coordinate in the screen
+                /// * `y` - The y coordinate in the screen
+                /// * `width` - The width of the widget
+                /// * `heigth` - The height of the widget
+                /// * `title` - The title or label of the widget
+                ///
+                /// To use dynamic strings use `with_label(self, &str)` or `set_label(&mut self, &str)`.
+                /// labels support special symbols preceded by an `@` [sign](https://www.fltk.org/doc-1.3/symbols.png)
+                /// and for the [associated formatting](https://www.fltk.org/doc-1.3/common.html).
+                pub fn new<'a, T: Into<Option<&'a str>>>(
+                    x: i32,
+                    y: i32,
+                    width: i32,
+                    height: i32,
+                    title: T,
+                ) -> $name {
+                    let temp = if let Some(title) = title.into() {
+                        CString::safe_new(title).into_raw()
+                    } else {
+                        std::ptr::null_mut()
+                    };
+                    unsafe {
+                        let widget_ptr = [<$flname _new>](x, y, width, height, temp);
+                        assert!(!widget_ptr.is_null());
+                        let tracker = $crate::widget::WidgetTracker::new(
+                            widget_ptr as _
+                        );
+                        unsafe extern "C" fn shim(wid: *mut Fl_Widget, _data: *mut std::os::raw::c_void) {
+                            let user_data = [<$flname _user_data>](wid as _);
+                            let draw_data = [<$flname _draw_data>](wid as _);
+                            let handle_data = [<$flname _handle_data>](wid as _);
+                            $crate::app::add_timeout(0., move |h| {
+                                if !user_data.is_null() {
+                                    let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
+                                }
+                                if !draw_data.is_null() {
+                                    let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
+                                }
+                                if !handle_data.is_null() {
+                                    let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
+                                }
+                                $crate::app::remove_timeout(h);
+                            });
+                        }
+                        [<$flname _set_deletion_callback>](widget_ptr, Some(shim), std::ptr::null_mut());
+                        $name {
+                            inner: tracker,
+                            is_derived: true,
+                        }
+                    }
+                }
+                /// Constructs a widget with the size of its parent
+                pub fn default_fill() -> Self {
+                    Self::default().size_of_parent().center_of_parent()
+                }
             }
         }
     };
@@ -1008,7 +1018,7 @@ macro_rules! impl_widget_ext_via {
             }
         }
         unsafe impl WidgetExt for $widget {
-            fn set_label(&mut self, title: &str) {
+            fn set_label<'a, T: Into<Option<&'a str>>>(&mut self, title: T) {
                 self.$member.set_label(title)
             }
 
@@ -1367,26 +1377,6 @@ macro_rules! impl_widget_ext_via {
 macro_rules! impl_widget_base_via {
     ($widget:ty, $base:ty, $member:tt) => {
         unsafe impl WidgetBase for $widget {
-            fn new<'a, T: Into<Option<&'a str>>>(
-                x: i32,
-                y: i32,
-                width: i32,
-                height: i32,
-                title: T,
-            ) -> Self {
-                let $member = <$base>::new(x, y, width, height, title);
-                Self {
-                    $member,
-                    ..Default::default()
-                }
-            }
-
-            fn default_fill() -> Self {
-                Self::new(0, 0, 0, 0, None)
-                    .size_of_parent()
-                    .center_of_parent()
-            }
-
             fn delete(wid: Self) {
                 <$base>::delete(wid.$member)
             }

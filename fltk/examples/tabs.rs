@@ -5,7 +5,7 @@ use fltk::{
     input::Input,
     menu::{Choice, MenuButton},
     output::Output,
-    prelude::{GroupExt, InputExt, MenuExt, WidgetBase, WidgetExt, WidgetProps, WindowExt},
+    prelude::{GroupExt, InputExt, MenuExt, WidgetExt, WidgetProps, WindowExt},
     window::Window,
 };
 

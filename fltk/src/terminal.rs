@@ -19,7 +19,7 @@ pub struct Terminal {
 
 crate::macros::widget::impl_widget_ext!(Terminal, Fl_Terminal);
 crate::macros::widget::impl_widget_base!(Terminal, Fl_Terminal);
-crate::macros::widget::impl_widget_default!(Terminal);
+crate::macros::widget::impl_widget_default!(Terminal, Fl_Terminal);
 crate::macros::group::impl_group_ext!(Terminal, Fl_Terminal);
 
 ///   Determines when Fl_Terminal calls redraw() if new text is added.

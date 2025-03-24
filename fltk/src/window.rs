@@ -347,6 +347,47 @@ crate::macros::widget::impl_widget_base!(SingleWindow, Fl_Single_Window);
 crate::macros::group::impl_group_ext!(SingleWindow, Fl_Single_Window);
 crate::macros::window::impl_window_ext!(SingleWindow, Fl_Single_Window);
 
+impl SingleWindow {
+    /// Creates a new window, with title as its window title if the window is decorated
+    pub fn new<'a, T: Into<Option<&'a str>>>(x: i32, y: i32, w: i32, h: i32, title: T) -> Self {
+        let temp = if let Some(title) = title.into() {
+            CString::safe_new(title).into_raw()
+        } else {
+            std::ptr::null_mut()
+        };
+        unsafe {
+            let widget_ptr = Fl_Single_Window_new(x, y, w, h, temp);
+            assert!(!widget_ptr.is_null());
+            assert!(crate::app::is_ui_thread());
+            let tracker = crate::widget::WidgetTracker::new(
+                widget_ptr as _
+            );
+            unsafe extern "C" fn shim(wid: *mut Fl_Widget, _data: *mut std::os::raw::c_void) {
+                let user_data = Fl_Single_Window_user_data(wid as _);
+                let draw_data = Fl_Single_Window_draw_data(wid as _);
+                let handle_data = Fl_Single_Window_handle_data(wid as _);
+                crate::app::add_timeout(0., move |h| {
+                    if !user_data.is_null() {
+                        let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
+                    }
+                    if !draw_data.is_null() {
+                        let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
+                    }
+                    if !handle_data.is_null() {
+                        let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
+                    }
+                    crate::app::remove_timeout(h);
+                });
+            }
+            Fl_Single_Window_set_deletion_callback(widget_ptr, Some(shim), std::ptr::null_mut());
+            Self {
+                inner: tracker,
+                is_derived: true,
+            }
+        }
+    }
+}
+
 impl Default for SingleWindow {
     fn default() -> Self {
         assert!(crate::app::is_ui_thread());
@@ -384,6 +425,44 @@ impl_top_win!(DoubleWindow);
 impl_ppu!(DoubleWindow);
 
 impl DoubleWindow {
+    /// Creates a new window, with title as its window title if the window is decorated
+    pub fn new<'a, T: Into<Option<&'a str>>>(x: i32, y: i32, w: i32, h: i32, title: T) -> Self {
+        let temp = if let Some(title) = title.into() {
+            CString::safe_new(title).into_raw()
+        } else {
+            std::ptr::null_mut()
+        };
+        unsafe {
+            let widget_ptr = Fl_Double_Window_new(x, y, w, h, temp);
+            assert!(!widget_ptr.is_null());
+            assert!(crate::app::is_ui_thread());
+            let tracker = crate::widget::WidgetTracker::new(
+                widget_ptr as _
+            );
+            unsafe extern "C" fn shim(wid: *mut Fl_Widget, _data: *mut std::os::raw::c_void) {
+                let user_data = Fl_Double_Window_user_data(wid as _);
+                let draw_data = Fl_Double_Window_draw_data(wid as _);
+                let handle_data = Fl_Double_Window_handle_data(wid as _);
+                crate::app::add_timeout(0., move |h| {
+                    if !user_data.is_null() {
+                        let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
+                    }
+                    if !draw_data.is_null() {
+                        let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
+                    }
+                    if !handle_data.is_null() {
+                        let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
+                    }
+                    crate::app::remove_timeout(h);
+                });
+            }
+            Fl_Double_Window_set_deletion_callback(widget_ptr, Some(shim), std::ptr::null_mut());
+            Self {
+                inner: tracker,
+                is_derived: true,
+            }
+        }
+    }
     /// Forces the window to be drawn, this window is also made current and calls draw()
     pub fn flush(&mut self) {
         unsafe { Fl_Double_Window_flush(self.inner.widget() as _) }
@@ -485,6 +564,47 @@ impl Default for MenuWindow {
     }
 }
 
+impl MenuWindow {
+    /// Creates a new window, with title as its window title if the window is decorated
+    pub fn new<'a, T: Into<Option<&'a str>>>(x: i32, y: i32, w: i32, h: i32, title: T) -> Self {
+        let temp = if let Some(title) = title.into() {
+            CString::safe_new(title).into_raw()
+        } else {
+            std::ptr::null_mut()
+        };
+        unsafe {
+            let widget_ptr = Fl_Menu_Window_new(x, y, w, h, temp);
+            assert!(!widget_ptr.is_null());
+            assert!(crate::app::is_ui_thread());
+            let tracker = crate::widget::WidgetTracker::new(
+                widget_ptr as _
+            );
+            unsafe extern "C" fn shim(wid: *mut Fl_Widget, _data: *mut std::os::raw::c_void) {
+                let user_data = Fl_Menu_Window_user_data(wid as _);
+                let draw_data = Fl_Menu_Window_draw_data(wid as _);
+                let handle_data = Fl_Menu_Window_handle_data(wid as _);
+                crate::app::add_timeout(0., move |h| {
+                    if !user_data.is_null() {
+                        let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
+                    }
+                    if !draw_data.is_null() {
+                        let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
+                    }
+                    if !handle_data.is_null() {
+                        let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
+                    }
+                    crate::app::remove_timeout(h);
+                });
+            }
+            Fl_Menu_Window_set_deletion_callback(widget_ptr, Some(shim), std::ptr::null_mut());
+            Self {
+                inner: tracker,
+                is_derived: true,
+            }
+        }
+    }
+}
+
 /// Creates an overlay (buffered) window widget
 #[derive(Debug)]
 pub struct OverlayWindow {
@@ -500,9 +620,7 @@ crate::macros::window::impl_window_ext!(OverlayWindow, Fl_Overlay_Window);
 impl Default for OverlayWindow {
     fn default() -> Self {
         assert!(crate::app::is_ui_thread());
-        let mut win = OverlayWindow::new(0, 0, 0, 0, None);
-        win.free_position();
-        win
+        OverlayWindow::new(0, 0, 0, 0, None)
     }
 }
 
@@ -510,6 +628,44 @@ impl_top_win!(OverlayWindow);
 impl_ppu!(OverlayWindow);
 
 impl OverlayWindow {
+    /// Creates a new window, with title as its window title if the window is decorated
+    pub fn new<'a, T: Into<Option<&'a str>>>(x: i32, y: i32, w: i32, h: i32, title: T) -> Self {
+        let temp = if let Some(title) = title.into() {
+            CString::safe_new(title).into_raw()
+        } else {
+            std::ptr::null_mut()
+        };
+        unsafe {
+            let widget_ptr = Fl_Overlay_Window_new(x, y, w, h, temp);
+            assert!(!widget_ptr.is_null());
+            assert!(crate::app::is_ui_thread());
+            let tracker = crate::widget::WidgetTracker::new(
+                widget_ptr as _
+            );
+            unsafe extern "C" fn shim(wid: *mut Fl_Widget, _data: *mut std::os::raw::c_void) {
+                let user_data = Fl_Overlay_Window_user_data(wid as _);
+                let draw_data = Fl_Overlay_Window_draw_data(wid as _);
+                let handle_data = Fl_Overlay_Window_handle_data(wid as _);
+                crate::app::add_timeout(0., move |h| {
+                    if !user_data.is_null() {
+                        let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
+                    }
+                    if !draw_data.is_null() {
+                        let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
+                    }
+                    if !handle_data.is_null() {
+                        let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
+                    }
+                    crate::app::remove_timeout(h);
+                });
+            }
+            Fl_Overlay_Window_set_deletion_callback(widget_ptr, Some(shim), std::ptr::null_mut());
+            Self {
+                inner: tracker,
+                is_derived: true,
+            }
+        }
+    }
     /// Forces the window to be drawn, this window is also made current and calls draw()
     pub fn flush(&mut self) {
         unsafe { Fl_Double_Window_flush(self.inner.widget() as _) }
@@ -565,7 +721,7 @@ crate::macros::widget::impl_widget_ext!(GlutWindow, Fl_Glut_Window);
 #[cfg(feature = "enable-glwindow")]
 crate::macros::widget::impl_widget_base!(GlutWindow, Fl_Glut_Window);
 #[cfg(feature = "enable-glwindow")]
-crate::macros::widget::impl_widget_default!(GlutWindow);
+crate::macros::widget::impl_widget_default!(GlutWindow, Fl_Glut_Window);
 #[cfg(feature = "enable-glwindow")]
 crate::macros::group::impl_group_ext!(GlutWindow, Fl_Glut_Window);
 #[cfg(feature = "enable-glwindow")]
@@ -575,13 +731,54 @@ crate::macros::window::impl_window_ext!(GlutWindow, Fl_Glut_Window);
 impl_top_win!(GlutWindow);
 
 #[cfg(feature = "enable-glwindow")]
-impl GlutWindow {
-    /// Creates a default initialized glut window
-    pub fn default() -> GlutWindow {
+impl Default for GlutWindow {
+    fn default() -> GlutWindow {
         assert!(crate::app::is_ui_thread());
-        let mut win = <GlutWindow as Default>::default();
+        let mut win = GlutWindow::new(0, 0, 0, 0, None);
         win.free_position();
         win
+    }
+}
+
+#[cfg(feature = "enable-glwindow")]
+impl GlutWindow {
+    /// Creates a new window, with title as its window title if the window is decorated
+    pub fn new<'a, T: Into<Option<&'a str>>>(x: i32, y: i32, w: i32, h: i32, title: T) -> Self {
+        let temp = if let Some(title) = title.into() {
+            CString::safe_new(title).into_raw()
+        } else {
+            std::ptr::null_mut()
+        };
+        unsafe {
+            let widget_ptr = Fl_Glut_Window_new(x, y, w, h, temp);
+            assert!(!widget_ptr.is_null());
+            assert!(crate::app::is_ui_thread());
+            let tracker = crate::widget::WidgetTracker::new(
+                widget_ptr as _
+            );
+            unsafe extern "C" fn shim(wid: *mut Fl_Widget, _data: *mut std::os::raw::c_void) {
+                let user_data = Fl_Glut_Window_user_data(wid as _);
+                let draw_data = Fl_Glut_Window_draw_data(wid as _);
+                let handle_data = Fl_Glut_Window_handle_data(wid as _);
+                crate::app::add_timeout(0., move |h| {
+                    if !user_data.is_null() {
+                        let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
+                    }
+                    if !draw_data.is_null() {
+                        let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
+                    }
+                    if !handle_data.is_null() {
+                        let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
+                    }
+                    crate::app::remove_timeout(h);
+                });
+            }
+            Fl_Glut_Window_set_deletion_callback(widget_ptr, Some(shim), std::ptr::null_mut());
+            Self {
+                inner: tracker,
+                is_derived: true,
+            }
+        }
     }
 
     /// Gets an opengl function address
@@ -730,7 +927,7 @@ pub mod experimental {
     #[cfg(feature = "enable-glwindow")]
     crate::macros::widget::impl_widget_base!(GlWidgetWindow, Fl_Gl_Window);
     #[cfg(feature = "enable-glwindow")]
-    crate::macros::widget::impl_widget_default!(GlWidgetWindow);
+    crate::macros::widget::impl_widget_default!(GlWidgetWindow, Fl_Gl_Window);
     #[cfg(feature = "enable-glwindow")]
     crate::macros::group::impl_group_ext!(GlWidgetWindow, Fl_Gl_Window);
     #[cfg(feature = "enable-glwindow")]
@@ -740,15 +937,56 @@ pub mod experimental {
     impl_top_win!(GlWidgetWindow);
 
     #[cfg(feature = "enable-glwindow")]
-    impl GlWidgetWindow {
-        /// Creates a default initialized glut window
-        pub fn default() -> GlWidgetWindow {
+    impl Default for GlWidgetWindow {
+        fn default() -> GlWidgetWindow {
             assert!(crate::app::is_ui_thread());
-            let mut win = <GlWidgetWindow as Default>::default();
+            let mut win = GlWidgetWindow::new(0, 0, 0, 0, None);
             win.free_position();
             win.set_frame(FrameType::FlatBox);
             win.begin();
             win
+        }
+    }
+
+    #[cfg(feature = "enable-glwindow")]
+    impl GlWidgetWindow {
+        /// Creates a new window, with title as its window title if the window is decorated
+        pub fn new<'a, T: Into<Option<&'a str>>>(x: i32, y: i32, w: i32, h: i32, title: T) -> Self {
+            let temp = if let Some(title) = title.into() {
+                CString::safe_new(title).into_raw()
+            } else {
+                std::ptr::null_mut()
+            };
+            unsafe {
+                let widget_ptr = Fl_Gl_Window_new(x, y, w, h, temp);
+                assert!(!widget_ptr.is_null());
+                assert!(crate::app::is_ui_thread());
+                let tracker = crate::widget::WidgetTracker::new(
+                    widget_ptr as _
+                );
+                unsafe extern "C" fn shim(wid: *mut Fl_Widget, _data: *mut std::os::raw::c_void) {
+                    let user_data = Fl_Gll_Window_user_data(wid as _);
+                    let draw_data = Fl_Gl_Window_draw_data(wid as _);
+                    let handle_data = Fl_Gl_Window_handle_data(wid as _);
+                    crate::app::add_timeout(0., move |h| {
+                        if !user_data.is_null() {
+                            let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
+                        }
+                        if !draw_data.is_null() {
+                            let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
+                        }
+                        if !handle_data.is_null() {
+                            let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
+                        }
+                        crate::app::remove_timeout(h);
+                    });
+                }
+                Fl_Gl_Window_set_deletion_callback(widget_ptr, Some(shim), std::ptr::null_mut());
+                Self {
+                    inner: tracker,
+                    is_derived: true,
+                }
+            }
         }
 
         /// Creates a new GlWidgetWindow

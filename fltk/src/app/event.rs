@@ -190,7 +190,7 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
     ```rust,no_run
     use fltk::app;
     use fltk::widget;
-    let w = app::belowmouse::<widget::Widget>(); // or by specifying a more concrete type
+    let w = app::belowmouse(); // or by specifying a more concrete type
     ```
 */
 pub fn belowmouse() -> Option<crate::widget::Widget> {
