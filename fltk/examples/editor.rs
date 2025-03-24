@@ -1,9 +1,10 @@
-use fltk::{enums::*, prelude::*, utils::oncelock::Lazy, *};
+use fltk::{enums::*, prelude::*, *};
 use std::path::PathBuf;
+use std::sync::LazyLock;
 
 const WIDTH: i32 = 800;
 const HEIGHT: i32 = 600;
-static STATE: Lazy<app::GlobalState<State>> = Lazy::new(app::GlobalState::<State>::get);
+static STATE: LazyLock<app::GlobalState<State>> = LazyLock::new(app::GlobalState::<State>::get);
 
 pub struct State {
     pub saved: bool,

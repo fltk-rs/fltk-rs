@@ -208,8 +208,8 @@ impl MyApp {
         buf.set_tab_distance(4);
         let mut main_win = window::Window::default()
             .with_size(800, 600)
-            .center_screen()
             .with_label("RustyEd");
+        main_win.set_center_screen();
         let menu = MyMenu::new(&s);
         let modified = false;
         menu.menu.find_item("&File/&Save\t").unwrap().deactivate();
@@ -443,7 +443,12 @@ impl MyApp {
                         let mut printer = printer::Printer::default();
                         if printer.begin_job(0).is_ok() {
                             let (w, h) = printer.printable_rect();
-                            self.printable.set_size(w - 40, h - 40);
+                            self.printable.resize(
+                                self.printable.x(),
+                                self.printable.y(),
+                                w - 40,
+                                h - 40,
+                            );
                             // Needs cleanup
                             let line_count = self.printable.count_lines(
                                 0,

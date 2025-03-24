@@ -1,6 +1,6 @@
 use fltk::{
     app, button, group,
-    prelude::{GroupExt, WidgetExt},
+    prelude::{GroupExt, WidgetExt, WidgetProps},
     window,
 };
 

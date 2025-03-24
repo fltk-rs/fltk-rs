@@ -2705,7 +2705,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Color_Chooser_handle_data(self_: *const Fl_Color_Chooser)
-        -> *mut ::core::ffi::c_void;
+    -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Color_Chooser_set_draw_data(

@@ -1,10 +1,10 @@
 use crate::prelude::WidgetExt;
-use crate::utils::oncelock::{Lazy, OnceCell};
 use std::any::Any;
 use std::collections::HashMap;
 use std::sync::Mutex;
+use std::sync::{LazyLock, OnceLock};
 
-static STATE: OnceCell<Mutex<Box<dyn Any + Send + Sync + 'static>>> = OnceCell::new();
+static STATE: OnceLock<Mutex<Box<dyn Any + Send + Sync + 'static>>> = OnceLock::new();
 
 /// Represents global state
 #[derive(Debug, Copy)]
@@ -56,8 +56,8 @@ impl<T: Sync + Send + 'static> GlobalState<T> {
     }
 }
 
-static WIDGET_MAP: Lazy<Mutex<HashMap<String, Box<dyn Any + Send + Sync + 'static>>>> =
-    Lazy::new(|| Mutex::new(HashMap::default()));
+static WIDGET_MAP: LazyLock<Mutex<HashMap<String, Box<dyn Any + Send + Sync + 'static>>>> =
+    LazyLock::new(|| Mutex::new(HashMap::default()));
 
 /// Allows setting a an id to a widget.
 /// Will not work with the single-threaded feature.

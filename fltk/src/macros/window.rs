@@ -225,7 +225,7 @@ macro_rules! impl_window_ext {
 
         paste::paste! {
             unsafe impl WindowExt for $name {
-                fn center_screen(mut self) -> Self {
+                fn set_center_screen(&mut self) {
                     debug_assert!(
                         self.w() != 0 && self.h() != 0,
                         "center_screen requires the size of the widget to be known!"
@@ -239,7 +239,6 @@ macro_rules! impl_window_ext {
                         self.w(),
                         self.h(),
                     );
-                    self
                 }
 
                 fn make_modal(&mut self, val: bool) {

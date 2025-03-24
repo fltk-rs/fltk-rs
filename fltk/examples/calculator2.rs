@@ -115,8 +115,8 @@ fn main() {
 
     let mut wind = Window::default()
         .with_label("FLTK Calc")
-        .with_size(win_w, win_h)
-        .center_screen();
+        .with_size(win_w, win_h);
+    wind.set_center_screen();
 
     let mut out = Frame::new(0, 0, win_w, 160, "").with_align(Align::Right | Align::Inside);
     out.set_color(Color::from_hex(0x1b1b1b));

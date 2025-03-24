@@ -89,7 +89,7 @@ impl MyPopup {
             _ => false,
         });
         self.win.force_position(true);
-        self.win.set_pos(x, y);
+        self.win.resize(x, y, self.win.w(), self.win.h());
         while self.win.shown() {
             app::wait();
         }

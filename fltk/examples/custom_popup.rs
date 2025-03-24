@@ -75,7 +75,7 @@ impl MyPopup {
     }
     pub fn popup(&mut self, x: i32, y: i32) -> String {
         self.win.show();
-        self.win.set_pos(x, y);
+        self.win.resize(x, y, self.win.w(), self.win.h());
         self.win.redraw();
         while self.win.shown() {
             app::wait();

@@ -1544,7 +1544,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Dial_format(arg1: *mut Fl_Dial, arg2: *mut ::core::ffi::c_char)
-        -> ::core::ffi::c_int;
+    -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn Fl_Dial_round(arg1: *mut Fl_Dial, arg2: f64) -> f64;
@@ -5654,7 +5654,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Fill_Slider_selection_color(arg1: *mut Fl_Hor_Fill_Slider)
-        -> ::core::ffi::c_uint;
+    -> ::core::ffi::c_uint;
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Fill_Slider_set_selection_color(
@@ -5756,7 +5756,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Fill_Slider_as_window(self_: *mut Fl_Hor_Fill_Slider)
-        -> *mut ::core::ffi::c_void;
+    -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Fill_Slider_as_group(self_: *mut Fl_Hor_Fill_Slider) -> *mut ::core::ffi::c_void;
@@ -6092,7 +6092,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Nice_Slider_selection_color(arg1: *mut Fl_Hor_Nice_Slider)
-        -> ::core::ffi::c_uint;
+    -> ::core::ffi::c_uint;
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Nice_Slider_set_selection_color(
@@ -6194,7 +6194,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Nice_Slider_as_window(self_: *mut Fl_Hor_Nice_Slider)
-        -> *mut ::core::ffi::c_void;
+    -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Nice_Slider_as_group(self_: *mut Fl_Hor_Nice_Slider) -> *mut ::core::ffi::c_void;
@@ -6562,7 +6562,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Value_Slider_window(arg1: *const Fl_Hor_Value_Slider)
-        -> *mut ::core::ffi::c_void;
+    -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Value_Slider_top_window(
@@ -6571,7 +6571,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Value_Slider_takes_events(arg1: *const Fl_Hor_Value_Slider)
-        -> ::core::ffi::c_int;
+    -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Value_Slider_user_data(

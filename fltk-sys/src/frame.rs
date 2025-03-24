@@ -171,7 +171,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Box_handle_event(self_: *mut Fl_Box, event: ::core::ffi::c_int)
-        -> ::core::ffi::c_int;
+    -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn Fl_Box_draw(

@@ -1,7 +1,6 @@
-use crate::utils::oncelock::Lazy;
 use fltk_sys::fl;
 use std::sync::{
-    Arc, Mutex,
+    Arc, LazyLock, Mutex,
     atomic::{AtomicBool, AtomicI32, Ordering},
 };
 
@@ -18,7 +17,7 @@ pub(crate) static CURRENT_FONT: AtomicI32 = AtomicI32::new(0);
 pub(crate) static CURRENT_FRAME: AtomicI32 = AtomicI32::new(2);
 
 /// The fonts associated with the application
-pub(crate) static FONTS: Lazy<Arc<Mutex<Vec<String>>>> = Lazy::new(|| {
+pub(crate) static FONTS: LazyLock<Arc<Mutex<Vec<String>>>> = LazyLock::new(|| {
     Arc::from(Mutex::from(vec![
         "Helvetica".to_owned(),
         "HelveticaBold".to_owned(),
@@ -38,7 +37,7 @@ pub(crate) static FONTS: Lazy<Arc<Mutex<Vec<String>>>> = Lazy::new(|| {
         "Zapfdingbats".to_owned(),
     ]))
 });
-static UI_THREAD: Lazy<std::thread::ThreadId> = Lazy::new(|| std::thread::current().id());
+static UI_THREAD: LazyLock<std::thread::ThreadId> = LazyLock::new(|| std::thread::current().id());
 
 /// Registers all images supported by `SharedImage`
 pub(crate) fn register_images() {

@@ -44,7 +44,7 @@ const PXM: &[&str] = &[
 
 fn move_image(mut frm: Frame, handle: app::TimeoutHandle) {
     let (x, y) = (frm.x(), frm.y());
-    frm.set_pos(x + 5, y);
+    frm.resize(x + 5, y, frm.w(), frm.h());
     app::redraw();
     if frm.x() > 260 {
         app::remove_timeout(handle)
@@ -55,10 +55,8 @@ fn move_image(mut frm: Frame, handle: app::TimeoutHandle) {
 
 fn main() {
     let app = app::App::default();
-    let mut wind = Window::default()
-        .with_label("timeout")
-        .with_size(720, 486)
-        .center_screen();
+    let mut wind = Window::default().with_label("timeout").with_size(720, 486);
+    wind.set_center_screen();
     let mut frame = Frame::new(-200, 150, 200, 200, "");
     let mut pxm = Pixmap::new(PXM).unwrap();
     pxm.scale(200, 200, true, true);

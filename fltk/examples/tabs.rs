@@ -5,7 +5,7 @@ use fltk::{
     input::Input,
     menu::{Choice, MenuButton},
     output::Output,
-    prelude::{GroupExt, InputExt, MenuExt, WidgetBase, WidgetExt, WindowExt},
+    prelude::{GroupExt, InputExt, MenuExt, WidgetBase, WidgetExt, WidgetProps, WindowExt},
     window::Window,
 };
 
@@ -42,10 +42,8 @@ fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
     app::background(221, 221, 221);
 
-    let mut wind = Window::default()
-        .with_size(500, 450)
-        .with_label("Tabs")
-        .center_screen();
+    let mut wind = Window::default().with_size(500, 450).with_label("Tabs");
+    wind.set_center_screen();
 
     draw_gallery();
 

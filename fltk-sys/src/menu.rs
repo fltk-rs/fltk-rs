@@ -438,7 +438,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Menu_Bar_at(arg1: *const Fl_Menu_Bar, idx: ::core::ffi::c_int)
-        -> *const Fl_Menu_Item;
+    -> *const Fl_Menu_Item;
 }
 unsafe extern "C" {
     pub fn Fl_Menu_Bar_set_mode(
@@ -449,7 +449,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Menu_Bar_mode(self_: *const Fl_Menu_Bar, i: ::core::ffi::c_int)
-        -> ::core::ffi::c_int;
+    -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn Fl_Menu_Bar_find_index(

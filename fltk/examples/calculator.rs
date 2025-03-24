@@ -100,8 +100,8 @@ fn main() {
 
     let mut wind = Window::default()
         .with_label("FLTK Calc")
-        .with_size(win_w, win_h)
-        .center_screen();
+        .with_size(win_w, win_h);
+    wind.set_center_screen();
     wind.set_color(Color::Light3);
 
     let mut out = Output::new(border, border, win_w - 40, 140, "");

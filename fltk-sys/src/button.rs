@@ -1370,7 +1370,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Toggle_Button_handle_data(self_: *const Fl_Toggle_Button)
-        -> *mut ::core::ffi::c_void;
+    -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Toggle_Button_set_draw_data(
@@ -1993,7 +1993,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Round_Button_label_font(arg1: *mut Fl_Radio_Round_Button)
-        -> ::core::ffi::c_int;
+    -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Round_Button_set_label_font(
@@ -2003,7 +2003,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Round_Button_label_size(arg1: *mut Fl_Radio_Round_Button)
-        -> ::core::ffi::c_int;
+    -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Round_Button_set_label_size(
@@ -2013,7 +2013,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Round_Button_label_type(arg1: *mut Fl_Radio_Round_Button)
-        -> ::core::ffi::c_int;
+    -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Round_Button_set_label_type(
@@ -2253,7 +2253,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Round_Button_visible(self_: *const Fl_Radio_Round_Button)
-        -> ::core::ffi::c_int;
+    -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Round_Button_visible_r(
@@ -2262,7 +2262,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Round_Button_active(self_: *const Fl_Radio_Round_Button)
-        -> ::core::ffi::c_uint;
+    -> ::core::ffi::c_uint;
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Round_Button_active_r(
@@ -2300,7 +2300,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Round_Button_is_toggled(arg1: *mut Fl_Radio_Round_Button)
-        -> ::core::ffi::c_int;
+    -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Round_Button_toggle(arg1: *mut Fl_Radio_Round_Button, arg2: ::core::ffi::c_int);
@@ -2347,7 +2347,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Round_Button_compact(self_: *mut Fl_Radio_Round_Button)
-        -> ::core::ffi::c_uchar;
+    -> ::core::ffi::c_uchar;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2471,7 +2471,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Light_Button_label_font(arg1: *mut Fl_Radio_Light_Button)
-        -> ::core::ffi::c_int;
+    -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Light_Button_set_label_font(
@@ -2481,7 +2481,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Light_Button_label_size(arg1: *mut Fl_Radio_Light_Button)
-        -> ::core::ffi::c_int;
+    -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Light_Button_set_label_size(
@@ -2491,7 +2491,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Light_Button_label_type(arg1: *mut Fl_Radio_Light_Button)
-        -> ::core::ffi::c_int;
+    -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Light_Button_set_label_type(
@@ -2731,7 +2731,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Light_Button_visible(self_: *const Fl_Radio_Light_Button)
-        -> ::core::ffi::c_int;
+    -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Light_Button_visible_r(
@@ -2740,7 +2740,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Light_Button_active(self_: *const Fl_Radio_Light_Button)
-        -> ::core::ffi::c_uint;
+    -> ::core::ffi::c_uint;
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Light_Button_active_r(
@@ -2778,7 +2778,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Light_Button_is_toggled(arg1: *mut Fl_Radio_Light_Button)
-        -> ::core::ffi::c_int;
+    -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Light_Button_toggle(arg1: *mut Fl_Radio_Light_Button, arg2: ::core::ffi::c_int);
@@ -2825,7 +2825,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Radio_Light_Button_compact(self_: *mut Fl_Radio_Light_Button)
-        -> ::core::ffi::c_uchar;
+    -> ::core::ffi::c_uchar;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -3455,7 +3455,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Repeat_Button_handle_data(self_: *const Fl_Repeat_Button)
-        -> *mut ::core::ffi::c_void;
+    -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Repeat_Button_set_draw_data(
@@ -3836,7 +3836,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Return_Button_handle_data(self_: *const Fl_Return_Button)
-        -> *mut ::core::ffi::c_void;
+    -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Return_Button_set_draw_data(
@@ -4172,7 +4172,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Shortcut_Button_selection_color(arg1: *mut Fl_Shortcut_Button)
-        -> ::core::ffi::c_uint;
+    -> ::core::ffi::c_uint;
 }
 unsafe extern "C" {
     pub fn Fl_Shortcut_Button_set_selection_color(
@@ -4274,7 +4274,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Shortcut_Button_as_window(self_: *mut Fl_Shortcut_Button)
-        -> *mut ::core::ffi::c_void;
+    -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Shortcut_Button_as_group(self_: *mut Fl_Shortcut_Button) -> *mut ::core::ffi::c_void;

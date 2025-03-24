@@ -23,8 +23,8 @@ fn main() {
     let app = app::App::default();
     let mut win = window::Window::default()
         .with_size(1000, 800)
-        .with_label("Frames")
-        .center_screen();
+        .with_label("Frames");
+    win.set_center_screen();
 
     let mut col = group::Flex::default_fill().column();
     col.set_margin(20);

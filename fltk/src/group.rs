@@ -103,9 +103,9 @@ impl Pack {
             let c_w = c.w();
             let c_h = c.h();
             if t == PackType::Vertical {
-                c.set_size(c_w, h);
+                c.resize(c.x(), c.y(), c_w, h);
             } else {
-                c.set_size(w, c_h);
+                c.resize(c.x(), c.y(), w, c_h);
             }
         }
     }

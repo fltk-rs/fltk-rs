@@ -764,12 +764,7 @@ pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkErr
             Err(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {
             let x = std::slice::from_raw_parts(x, cp as usize);
-            Ok(RgbImage::new(
-                x,
-                win.w(),
-                win.h(),
-                ColorDepth::Rgb8,
-            )?)
+            Ok(RgbImage::new(x, win.w(), win.h(), ColorDepth::Rgb8)?)
         }
     }
 }

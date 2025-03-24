@@ -35,8 +35,8 @@ fn main() {
     let app = app::App::default();
     let mut wind = window::Window::default()
         .with_size(800, 600)
-        .center_screen()
         .with_label("Pong!");
+    wind.set_center_screen();
     let mut ball = Ball::new(40, 40);
     ball.wid.set_color(Color::White);
     wind.set_color(Color::Black);

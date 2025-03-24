@@ -193,13 +193,13 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
     let w = app::belowmouse::<widget::Widget>(); // or by specifying a more concrete type
     ```
 */
-pub fn belowmouse<Wid: WidgetBase>() -> Option<Wid> {
+pub fn belowmouse() -> Option<crate::widget::Widget> {
     unsafe {
         let x = fl::Fl_belowmouse();
         if x.is_null() {
             None
         } else {
-            Wid::from_dyn_widget_ptr(x as _)
+            crate::widget::Widget::from_dyn_widget_ptr(x as _)
         }
     }
 }

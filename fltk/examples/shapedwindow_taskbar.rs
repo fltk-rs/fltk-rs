@@ -20,8 +20,8 @@ fn main() {
     // Act as the application in the taskbar (scroll to event handling)
     let mut dock_win = window::Window::default()
         .with_size(1, 1) // So we can place it at the center of the screen (needs a size >0 to be centered)
-        .with_label("TestApplication")
-        .center_screen();
+        .with_label("TestApplication");
+    dock_win.set_center_screen();
     dock_win.size_range(0, 0, 0, 0);
     dock_win.make_resizable(false);
 
@@ -30,8 +30,8 @@ fn main() {
 
     let mut win = window::Window::default()
         .with_size(900, 500)
-        .with_label("TestApplication")
-        .center_screen();
+        .with_label("TestApplication");
+    win.set_center_screen();
     win.set_color(enums::Color::from_rgb(26, 25, 55));
 
     let mut but = button::Button::default()
@@ -64,10 +64,20 @@ fn main() {
                 true
             }
             enums::Event::Drag => {
-                wself.set_pos(app::event_x_root() - x, app::event_y_root() - y);
+                wself.resize(
+                    app::event_x_root() - x,
+                    app::event_y_root() - y,
+                    wself.w(),
+                    wself.h(),
+                );
 
                 // Changing dock window position so it's close enough to the center of the application (not "visible" to user)
-                dock_win.set_pos(wself.x() + (wself.w() / 2), wself.y() + (wself.w() / 2));
+                dock_win.resize(
+                    wself.x() + (wself.w() / 2),
+                    wself.y() + (wself.w() / 2),
+                    dock_win.w(),
+                    dock_win.h(),
+                );
 
                 true
             }

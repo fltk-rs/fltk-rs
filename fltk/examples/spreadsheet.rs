@@ -2,7 +2,7 @@
 
 use fltk::{
     app, draw, enums, input,
-    prelude::{GroupExt, InputExt, TableExt, WidgetBase, WidgetExt},
+    prelude::{GroupExt, InputExt, TableExt, WidgetBase, WidgetExt, WidgetProps},
     table, window,
 };
 use std::cell::RefCell;

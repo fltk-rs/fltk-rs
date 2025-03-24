@@ -43,20 +43,20 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^1.5"
+fltk = "^0.20"
 ```
 To use the latest changes in the repo:
 ```toml
 [dependencies]
-fltk = { version = "^1.5", git = "https://github.com/fltk-rs/fltk-rs" }
+fltk = { version = "^0.20", git = "https://github.com/fltk-rs/fltk-rs", branch = "dev" }
 ```
 Or if you have other depenendencies which depend on fltk-rs:
 ```toml
 [dependencies]
-fltk = "^1.5"
+fltk = "^0.20"
 
 [patch.crates-io]
-fltk = { git = "https://github.com/fltk-rs/fltk-rs" }
+fltk = { git = "https://github.com/fltk-rs/fltk-rs", branch = "dev" }
 ```
 
 To use the bundled libs (available for x64 windows (msvc & gnu (msys2-mingw)), x64 & aarch64 linux & macos):
@@ -138,7 +138,7 @@ fn main() {
 }
 ```
 
-Alternatively, you can use Flex (for flexbox layouts), Pack or [Grid](https://github.com/fltk-rs/fltk-grid):
+Alternatively, you can use Flex (for flexbox layouts), Pack or Grid:
 ```rust,no_run
 use fltk::{app, button::Button, frame::Frame, group::Flex, prelude::*, window::Window};
 fn main() {
@@ -378,7 +378,7 @@ cargo build
     - Wizard
     - ColorChooser
     - Flex (Column and Row)
-    - Grid (https://github.com/fltk-rs/fltk-grid)
+    - Grid
 - Text display widgets
     - TextDisplay
     - TextEditor
@@ -435,6 +435,8 @@ cargo build
     - Table
     - TableRow
     - SmartTable (via the [fltk-table crate](https://crates.io/crates/fltk-table))
+- Terminal Widget
+    - Terminal
 - Trees
     - Tree
     - TreeItem

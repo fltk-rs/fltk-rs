@@ -853,7 +853,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Text_Display_linenumber_fgcolor(self_: *const Fl_Text_Display)
-        -> ::core::ffi::c_uint;
+    -> ::core::ffi::c_uint;
 }
 unsafe extern "C" {
     pub fn Fl_Text_Display_set_linenumber_bgcolor(
@@ -863,7 +863,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Text_Display_linenumber_bgcolor(self_: *const Fl_Text_Display)
-        -> ::core::ffi::c_uint;
+    -> ::core::ffi::c_uint;
 }
 unsafe extern "C" {
     pub fn Fl_Text_Display_set_linenumber_align(

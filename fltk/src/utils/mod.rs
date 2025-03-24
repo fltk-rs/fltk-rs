@@ -1,14 +1,11 @@
-/// A utility module containing a OnceCell and Lazy types
-pub mod oncelock;
-
 use fltk_sys::utils::*;
 use std::ffi::{CStr, CString};
 use std::os::raw;
 
+use crate::enums::ColorDepth;
 use crate::prelude::FltkError;
 use crate::prelude::FltkErrorKind;
 use crate::prelude::ImageExt;
-use crate::enums::ColorDepth;
 
 #[doc(hidden)]
 /// A helper trait to get CStrings from Strings without panicking
@@ -235,11 +232,13 @@ pub fn em_write_to_file(path: &str, data: &[u8]) -> Result<(), FltkError> {
     }
 }
 
-
 /// Draw a framebuffer (rgba) into a widget
 /// # Errors
 /// Errors on invalid or unsupported image formats
-pub fn blit_rgba<'a, T: crate::prelude::WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), FltkError> {
+pub fn blit_rgba<'a, T: crate::prelude::WidgetBase>(
+    wid: &'a mut T,
+    fb: &'a [u8],
+) -> Result<(), FltkError> {
     let width = wid.w();
     let height = wid.h();
     let mut img = crate::image::RgbImage::new(fb, width, height, ColorDepth::Rgba8)?;
@@ -282,7 +281,10 @@ pub unsafe fn blit_rgba_nocopy<T: crate::prelude::WidgetBase>(wid: &mut T, fb: &
 /// Draw a framebuffer (rgba) into a widget
 /// # Errors
 /// Errors on invalid or unsupported image formats
-pub fn blit_rgb<'a, T: crate::prelude::WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), FltkError> {
+pub fn blit_rgb<'a, T: crate::prelude::WidgetBase>(
+    wid: &'a mut T,
+    fb: &'a [u8],
+) -> Result<(), FltkError> {
     let width = wid.w();
     let height = wid.h();
     let mut img = crate::image::RgbImage::new(fb, width, height, ColorDepth::Rgb8)?;
