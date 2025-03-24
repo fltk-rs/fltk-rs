@@ -393,7 +393,7 @@ macro_rules! impl_table_ext {
                             arg6: std::os::raw::c_int,
                             arg7: std::os::raw::c_int,
                             data: *mut std::os::raw::c_void,
-                        ) {
+                        ) { unsafe {
                             let mut wid = $name::from_widget_ptr(wid as *mut _);
                             wid.assume_derived();
                             let ctx: TableContext = std::mem::transmute(ctx);
@@ -433,7 +433,7 @@ macro_rules! impl_table_ext {
                             let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
                                 f(&mut wid, ctx, arg2, arg3, arg4, arg5, arg6, arg7)
                             }));
-                        }
+                        }}
                         let mut _old_data = None;
                         if self.is_derived {
                             _old_data = self.draw_cell_data();
@@ -456,7 +456,7 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                unsafe fn draw_cell_data(&self) -> Option<Box<dyn FnMut()>> {
+                unsafe fn draw_cell_data(&self) -> Option<Box<dyn FnMut()>> { unsafe {
                     let ptr = [<$flname _draw_cell_data>](self.inner.widget() as _);
                     if ptr.is_null() {
                         None
@@ -465,7 +465,7 @@ macro_rules! impl_table_ext {
                         let data = Box::from_raw(data);
                         Some(*data)
                     }
-                }
+                }}
 
                 fn callback_col(&self) -> i32 {
                     unsafe { [<$flname _callback_col>](self.inner.widget() as _) }

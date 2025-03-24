@@ -50,24 +50,26 @@ unsafe extern "C" fn modify_callback_shim(
     deleted_text: *const raw::c_char,
     data: *mut raw::c_void,
 ) {
-    let temp = if deleted_text.is_null() {
-        None
-    } else if let Ok(tmp) = CStr::from_ptr(deleted_text).to_str() {
-        Some(tmp)
-    } else {
-        None
-    };
-    let a = data as *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, Option<&'r str>)>;
-    let f: &mut (dyn FnMut(i32, i32, i32, i32, Option<&str>)) = &mut **a;
-    let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-        f(
-            pos as i32,
-            inserted as i32,
-            deleted as i32,
-            restyled as i32,
-            temp,
-        )
-    }));
+    unsafe {
+        let temp = if deleted_text.is_null() {
+            None
+        } else if let Ok(tmp) = CStr::from_ptr(deleted_text).to_str() {
+            Some(tmp)
+        } else {
+            None
+        };
+        let a = data as *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, Option<&'r str>)>;
+        let f: &mut (dyn FnMut(i32, i32, i32, i32, Option<&str>)) = &mut **a;
+        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            f(
+                pos as i32,
+                inserted as i32,
+                deleted as i32,
+                restyled as i32,
+                temp,
+            )
+        }));
+    }
 }
 
 impl std::default::Default for TextBuffer {
@@ -98,29 +100,33 @@ impl TextBuffer {
     /// # Safety
     /// The buffer shouldn't be deleted while the Display widget still needs it
     pub unsafe fn delete_buffer(buf: Self) {
-        Self::delete(buf)
+        unsafe { Self::delete(buf) }
     }
 
     /// Initializes a text buffer from a pointer
     /// # Safety
     /// The pointer must be valid
     pub unsafe fn from_ptr(ptr: *mut Fl_Text_Buffer) -> Self {
-        assert!(!ptr.is_null());
-        let inner = BufWrapper::from(ptr);
-        let ptr = BufWrapper::into_raw(inner);
-        BufWrapper::increment_strong_count(ptr);
-        let inner = BufWrapper::from_raw(ptr);
-        TextBuffer { inner }
+        unsafe {
+            assert!(!ptr.is_null());
+            let inner = BufWrapper::from(ptr);
+            let ptr = BufWrapper::into_raw(inner);
+            BufWrapper::increment_strong_count(ptr);
+            let inner = BufWrapper::from_raw(ptr);
+            TextBuffer { inner }
+        }
     }
 
     /// Returns the inner pointer from a text buffer
     /// # Safety
     /// Can return multiple mutable pointers to the same buffer
     pub unsafe fn as_ptr(&self) -> *mut Fl_Text_Buffer {
-        let ptr = BufWrapper::into_raw(BufWrapper::clone(&self.inner));
-        BufWrapper::increment_strong_count(ptr);
-        let inner = BufWrapper::from_raw(ptr);
-        *inner
+        unsafe {
+            let ptr = BufWrapper::into_raw(BufWrapper::clone(&self.inner));
+            BufWrapper::increment_strong_count(ptr);
+            let inner = BufWrapper::from_raw(ptr);
+            *inner
+        }
     }
 
     /// Sets the text of the buffer

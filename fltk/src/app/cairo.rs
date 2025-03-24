@@ -26,12 +26,12 @@ pub fn cc() -> *mut c_void {
 /// # Safety
 /// Doesn't check the passed context for validity
 pub unsafe fn set_cc(c: *mut c_void, own: bool) {
-    Fl_set_cairo_cc(c, own as i32)
+    unsafe { Fl_set_cairo_cc(c, own as i32) }
 }
 
 /// Flushes the cairo context
 /// # Safety
 /// Doesn't check the passed context for validity
 pub unsafe fn flush(c: *mut c_void) {
-    Fl_cairo_flush(c)
+    unsafe { Fl_cairo_flush(c) }
 }

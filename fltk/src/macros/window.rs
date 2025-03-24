@@ -358,10 +358,10 @@ macro_rules! impl_window_ext {
                     }
                 }
 
-                unsafe fn set_raw_handle(&mut self, handle: RawHandle) {
+                unsafe fn set_raw_handle(&mut self, handle: RawHandle) { unsafe {
                     assert!(handle as isize != 0);
                     Fl_Window_set_raw_handle(self.inner.widget() as *mut Fl_Window, &handle as *const _ as *mut _);
-                }
+                }}
 
                 fn region(&self) -> $crate::draw::Region {
                     unsafe {
@@ -371,10 +371,10 @@ macro_rules! impl_window_ext {
                     }
                 }
 
-                unsafe fn set_region(&mut self, region: $crate::draw::Region) {
+                unsafe fn set_region(&mut self, region: $crate::draw::Region) { unsafe {
                     assert!(!region.0.is_null());
                     [<$flname _set_region>](self.inner.widget() as _, region.0)
-                }
+                }}
 
                 fn iconize(&mut self) {
                     unsafe { [<$flname _iconize>](self.inner.widget() as _) }

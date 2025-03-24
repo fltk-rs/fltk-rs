@@ -27,14 +27,14 @@ macro_rules! impl_menu_ext {
                 ) -> i32 {
                     let temp = CString::safe_new(name);
                     unsafe {
-                    unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
+                    unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) { unsafe {
                             let mut wid = $crate::widget::Widget::from_widget_ptr(wid as *mut _);
                             let a: *mut Box<dyn FnMut(&mut $crate::widget::Widget)> =
                                 data as *mut Box<dyn FnMut(&mut $crate::widget::Widget)>;
                             let f: &mut (dyn FnMut(&mut $crate::widget::Widget)) = &mut **a;
                             let _ =
                                 std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
-                        }
+                        }}
                         let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: Fl_Callback = Some(shim);
@@ -68,14 +68,14 @@ macro_rules! impl_menu_ext {
                     };
                     let temp = CString::safe_new(name);
                     unsafe {
-                    unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
+                    unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) { unsafe {
                             let mut wid = $crate::widget::Widget::from_widget_ptr(wid as *mut _);
                             let a: *mut Box<dyn FnMut(&mut $crate::widget::Widget)> =
                                 data as *mut Box<dyn FnMut(&mut $crate::widget::Widget)>;
                             let f: &mut (dyn FnMut(&mut $crate::widget::Widget)) = &mut **a;
                             let _ =
                                 std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
-                        }
+                        }}
                         let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: Fl_Callback = Some(shim);
@@ -227,7 +227,7 @@ macro_rules! impl_menu_ext {
                     }
                 }
 
-                unsafe fn unsafe_clear(&mut self) {
+                unsafe fn unsafe_clear(&mut self) { unsafe {
                     let sz = self.size();
                     if sz > 0 {
                         for i in 0..sz {
@@ -237,7 +237,7 @@ macro_rules! impl_menu_ext {
                         }
                     }
                     [<$flname _clear>](self.inner.widget() as _);
-                }
+                }}
 
                 fn clear_submenu(&mut self, idx: i32) -> Result<(), FltkError> {
                     unsafe {
@@ -249,7 +249,7 @@ macro_rules! impl_menu_ext {
                     }
                 }
 
-                unsafe fn unsafe_clear_submenu(&mut self, idx: i32) -> Result<(), FltkError> {
+                unsafe fn unsafe_clear_submenu(&mut self, idx: i32) -> Result<(), FltkError> { unsafe {
                     let x = self.at(idx);
                     if x.is_none() {
                         return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
@@ -273,7 +273,7 @@ macro_rules! impl_menu_ext {
                         0 => Ok(()),
                         _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
                     }
-                }
+                }}
 
                 fn size(&self) -> i32 {
                     unsafe { [<$flname _size>](self.inner.widget() as _) as i32 }
@@ -345,9 +345,9 @@ macro_rules! impl_menu_ext {
                     }
                 }
 
-                unsafe fn set_menu(&mut self, item: $crate::menu::MenuItem) {
+                unsafe fn set_menu(&mut self, item: $crate::menu::MenuItem) { unsafe {
                     [<$flname _set_menu>](self.inner.widget() as _, item.as_ptr())
-                }
+                }}
 
                 fn item_pathname(&self, item: Option<&$crate::menu::MenuItem>) -> Result<String, FltkError> {
                     let item = if let Some(item) = item {

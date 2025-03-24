@@ -1097,24 +1097,26 @@ impl TreeItem {
     /// # Safety
     /// The pointer must be valid
     pub unsafe fn from_raw(ptr: *mut Fl_Tree_Item) -> Option<TreeItem> {
-        if ptr.is_null() {
-            None
-        } else {
-            let w = Fl_Tree_Item_tree(ptr) as *mut Fl_Tree;
-            let inner = crate::widget::WidgetTracker::new(w as _);
-            let tree = Tree {
-                inner,
-                is_derived: false,
-            };
-            let parent = Fl_Tree_Item_parent(ptr);
-            let is_root = Fl_Tree_Item_is_root(ptr) != 0;
-            Some(TreeItem {
-                inner: ptr,
-                parent,
-                tree,
-                is_root,
-                is_derived: false,
-            })
+        unsafe {
+            if ptr.is_null() {
+                None
+            } else {
+                let w = Fl_Tree_Item_tree(ptr) as *mut Fl_Tree;
+                let inner = crate::widget::WidgetTracker::new(w as _);
+                let tree = Tree {
+                    inner,
+                    is_derived: false,
+                };
+                let parent = Fl_Tree_Item_parent(ptr);
+                let is_root = Fl_Tree_Item_is_root(ptr) != 0;
+                Some(TreeItem {
+                    inner: ptr,
+                    parent,
+                    tree,
+                    is_root,
+                    is_derived: false,
+                })
+            }
         }
     }
 
@@ -1176,11 +1178,15 @@ impl TreeItem {
                 render: i32,
                 data: *mut raw::c_void,
             ) -> i32 {
-                let mut item = TreeItem::from_raw(item).unwrap();
-                let a = data as *mut Box<dyn FnMut(&mut TreeItem, bool) -> i32>;
-                let f: &mut (dyn FnMut(&mut TreeItem, bool) -> i32) = &mut **a;
-                std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut item, render != 0)))
+                unsafe {
+                    let mut item = TreeItem::from_raw(item).unwrap();
+                    let a = data as *mut Box<dyn FnMut(&mut TreeItem, bool) -> i32>;
+                    let f: &mut (dyn FnMut(&mut TreeItem, bool) -> i32) = &mut **a;
+                    std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                        f(&mut item, render != 0)
+                    }))
                     .unwrap_or_default()
+                }
             }
             let a: *mut Box<dyn FnMut(&mut Self, bool) -> i32> =
                 Box::into_raw(Box::new(Box::new(cb)));
@@ -1209,12 +1215,14 @@ impl TreeItem {
     /// # Safety
     /// Setting the user data doesn't store type information, as such it's on the developer to maintain the correct type
     pub unsafe fn user_data<T: Clone + 'static>(&self) -> Option<T> {
-        let ptr = Fl_Tree_Item_user_data(self.inner);
-        if ptr.is_null() {
-            None
-        } else {
-            let data = ptr as *const _ as *mut T;
-            Some((*data).clone())
+        unsafe {
+            let ptr = Fl_Tree_Item_user_data(self.inner);
+            if ptr.is_null() {
+                None
+            } else {
+                let data = ptr as *const _ as *mut T;
+                Some((*data).clone())
+            }
         }
     }
 

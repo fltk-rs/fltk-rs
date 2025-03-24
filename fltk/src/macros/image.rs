@@ -183,21 +183,21 @@ macro_rules! impl_image_ext {
                     unsafe { [<$flname _inactive>](*self.inner) }
                 }
 
-                unsafe fn delete(img: Self) {
+                unsafe fn delete(img: Self) { unsafe {
                     assert!(!img.inner.is_null());
                     [<$flname _delete>](*img.inner);
-                }
+                }}
 
                 fn was_deleted(&self) -> bool {
                     self.inner.is_null()
                 }
 
-                unsafe fn into_image<I: ImageExt>(self) -> I {
+                unsafe fn into_image<I: ImageExt>(self) -> I { unsafe {
                     let ptr = ImageRC::into_raw(ImageRC::clone(&self.inner));
                     ImageRC::increment_strong_count(ptr);
                     let image = ImageRC::from_raw(ptr);
                     I::from_image_ptr(*image as *mut _)
-                }
+                }}
             }
         }
     };

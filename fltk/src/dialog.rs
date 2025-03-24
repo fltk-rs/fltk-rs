@@ -534,7 +534,6 @@ pub fn beep(tp: BeepType) {
             "Title Of Chooser",     // title
         );
         chooser.show();
-        chooser.window().set_pos(300, 300);
         // Block until user picks something.
         //     (The other way to do this is to use a callback())
         //
@@ -613,7 +612,7 @@ impl FileChooser {
     /// # Safety
     /// Can invalidate the underlying pointer
     pub unsafe fn delete(dlg: Self) {
-        Fl_File_Chooser_delete(dlg.inner)
+        unsafe { Fl_File_Chooser_delete(dlg.inner) }
     }
 
     /// Gets the new button of the `FileChooser`
@@ -664,11 +663,13 @@ impl FileChooser {
         assert!(!self.inner.is_null());
         unsafe {
             unsafe extern "C" fn shim(arg1: *mut Fl_File_Chooser, data: *mut raw::c_void) {
-                let mut wid = FileChooser { inner: arg1 };
-                let a: *mut Box<dyn FnMut(&mut FileChooser)> =
-                    data as *mut Box<dyn FnMut(&mut FileChooser)>;
-                let f: &mut (dyn FnMut(&mut FileChooser)) = &mut **a;
-                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                unsafe {
+                    let mut wid = FileChooser { inner: arg1 };
+                    let a: *mut Box<dyn FnMut(&mut FileChooser)> =
+                        data as *mut Box<dyn FnMut(&mut FileChooser)>;
+                    let f: &mut (dyn FnMut(&mut FileChooser)) = &mut **a;
+                    let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                }
             }
             let _old_data = self.user_data();
             let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
@@ -795,16 +796,18 @@ impl FileChooser {
     }
 
     /// Gets the label of the `FileChooser`
-    pub fn label(&self) -> String {
+    pub fn label(&self) -> Option<String> {
         assert!(!self.inner.is_null());
         unsafe {
             let ptr = Fl_File_Chooser_label(self.inner);
             if ptr.is_null() {
-                String::from("")
+                None
             } else {
-                CStr::from_ptr(ptr as *mut raw::c_char)
-                    .to_string_lossy()
-                    .to_string()
+                Some(
+                    CStr::from_ptr(ptr as *mut raw::c_char)
+                        .to_string_lossy()
+                        .to_string(),
+                )
             }
         }
     }
@@ -817,16 +820,18 @@ impl FileChooser {
     }
 
     /// Gets the label of the Ok button
-    pub fn ok_label(&self) -> String {
+    pub fn ok_label(&self) -> Option<String> {
         assert!(!self.inner.is_null());
         unsafe {
             let ptr = Fl_File_Chooser_ok_label(self.inner);
             if ptr.is_null() {
-                String::from("")
+                None
             } else {
-                CStr::from_ptr(ptr as *mut raw::c_char)
-                    .to_string_lossy()
-                    .to_string()
+                Some(
+                    CStr::from_ptr(ptr as *mut raw::c_char)
+                        .to_string_lossy()
+                        .to_string(),
+                )
             }
         }
     }
@@ -919,14 +924,16 @@ impl FileChooser {
     /// # Safety
     /// Can invalidate the user data while the `FileChooser` is in use
     pub unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>> {
-        let ptr = Fl_File_Chooser_user_data(self.inner);
-        if ptr.is_null() {
-            None
-        } else {
-            let x = ptr as *mut Box<dyn FnMut()>;
-            let x = Box::from_raw(x);
-            Fl_File_Chooser_set_callback(self.inner, None, std::ptr::null_mut());
-            Some(*x)
+        unsafe {
+            let ptr = Fl_File_Chooser_user_data(self.inner);
+            if ptr.is_null() {
+                None
+            } else {
+                let x = ptr as *mut Box<dyn FnMut()>;
+                let x = Box::from_raw(x);
+                Fl_File_Chooser_set_callback(self.inner, None, std::ptr::null_mut());
+                Some(*x)
+            }
         }
     }
 

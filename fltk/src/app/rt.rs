@@ -57,9 +57,11 @@ pub fn awake() {
 pub fn awake_callback<F: FnMut() + 'static>(cb: F) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
-            let mut a: Box<Box<dyn FnMut()>> = Box::from_raw(data as *mut Box<dyn FnMut()>);
-            let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
+            unsafe {
+                let mut a: Box<Box<dyn FnMut()>> = Box::from_raw(data as *mut Box<dyn FnMut()>);
+                let f: &mut (dyn FnMut()) = &mut **a;
+                let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
+            }
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
@@ -161,9 +163,11 @@ pub fn quit() {
 pub type IdleHandle = *mut ();
 
 unsafe extern "C" fn idle_shim(data: *mut raw::c_void) {
-    let a: *mut Box<dyn FnMut(IdleHandle)> = data as *mut Box<dyn FnMut(IdleHandle)>;
-    let f: &mut (dyn FnMut(IdleHandle)) = &mut **a;
-    let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| (*f)(data as _)));
+    unsafe {
+        let a: *mut Box<dyn FnMut(IdleHandle)> = data as *mut Box<dyn FnMut(IdleHandle)>;
+        let f: &mut (dyn FnMut(IdleHandle)) = &mut **a;
+        let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| (*f)(data as _)));
+    }
 }
 
 /// Add an idle callback to run within the event loop.
@@ -233,9 +237,11 @@ pub fn has_check(handle: CheckHandle) -> bool {
 }
 
 unsafe extern "C" fn clipboard_notify_shim(source: i32, data: *mut raw::c_void) {
-    let a: *mut Box<dyn FnMut(i32)> = data as *mut Box<dyn FnMut(i32)>;
-    let f: &mut (dyn FnMut(i32)) = &mut **a;
-    let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| (*f)(source)));
+    unsafe {
+        let a: *mut Box<dyn FnMut(i32)> = data as *mut Box<dyn FnMut(i32)>;
+        let f: &mut (dyn FnMut(i32)) = &mut **a;
+        let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| (*f)(source)));
+    }
 }
 
 /// Register a callback whenever there is a change to the selection buffer or the clipboard.
@@ -266,9 +272,11 @@ pub fn remove_clipboard_notify() {
 pub type TimeoutHandle = *mut ();
 
 unsafe extern "C" fn timeout_shim(data: *mut raw::c_void) {
-    let a: *mut Box<dyn FnMut(TimeoutHandle)> = data as *mut Box<dyn FnMut(TimeoutHandle)>;
-    let f: &mut (dyn FnMut(TimeoutHandle)) = &mut **a;
-    let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| (*f)(data as _)));
+    unsafe {
+        let a: *mut Box<dyn FnMut(TimeoutHandle)> = data as *mut Box<dyn FnMut(TimeoutHandle)>;
+        let f: &mut (dyn FnMut(TimeoutHandle)) = &mut **a;
+        let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| (*f)(data as _)));
+    }
 }
 
 /**
@@ -416,8 +424,10 @@ pub unsafe fn add_system_handler(
     cb: Option<unsafe extern "C" fn(*mut raw::c_void, *mut raw::c_void) -> i32>,
     data: *mut raw::c_void,
 ) {
-    assert!(crate::app::is_ui_thread());
-    fl::Fl_add_system_handler(cb, data);
+    unsafe {
+        assert!(crate::app::is_ui_thread());
+        fl::Fl_add_system_handler(cb, data);
+    }
 }
 
 /// Add a system handler
@@ -426,6 +436,8 @@ pub unsafe fn add_system_handler(
 pub unsafe fn remove_system_handler(
     cb: Option<unsafe extern "C" fn(*mut raw::c_void, *mut raw::c_void) -> i32>,
 ) {
-    assert!(crate::app::is_ui_thread());
-    fl::Fl_remove_system_handler(cb);
+    unsafe {
+        assert!(crate::app::is_ui_thread());
+        fl::Fl_remove_system_handler(cb);
+    }
 }

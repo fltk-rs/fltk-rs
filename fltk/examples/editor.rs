@@ -157,7 +157,7 @@ fn handle_drag_drop(editor: &mut text::TextEditor) {
             }
             Event::Paste => {
                 if dnd && released {
-                    let path = app::event_text();
+                    let path = app::event_text().unwrap();
                     let path = path.trim();
                     let path = path.replace("file://", "");
                     let path = std::path::PathBuf::from(&path);

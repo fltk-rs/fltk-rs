@@ -36,11 +36,13 @@ where
 {
     unsafe {
         unsafe extern "C" fn shim(wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
-            let a: *mut Box<dyn FnMut(&mut dyn WidgetExt)> =
-                data as *mut Box<dyn FnMut(&mut dyn WidgetExt)>;
-            let f: &mut (dyn FnMut(&mut dyn WidgetExt)) = &mut **a;
-            let mut wid = crate::widget::Widget::from_widget_ptr(wid);
-            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f(&mut wid)));
+            unsafe {
+                let a: *mut Box<dyn FnMut(&mut dyn WidgetExt)> =
+                    data as *mut Box<dyn FnMut(&mut dyn WidgetExt)>;
+                let f: &mut (dyn FnMut(&mut dyn WidgetExt)) = &mut **a;
+                let mut wid = crate::widget::Widget::from_widget_ptr(wid);
+                let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f(&mut wid)));
+            }
         }
         let mut _old_data = None;
         if widget.is_derived() {
@@ -87,8 +89,10 @@ pub unsafe fn set_raw_callback<W>(
 ) where
     W: WidgetExt,
 {
-    let cb: Option<unsafe extern "C" fn(WidgetPtr, *mut raw::c_void)> = mem::transmute(cb);
-    fltk_sys::widget::Fl_Widget_set_callback(widget.as_widget_ptr(), cb, data);
+    unsafe {
+        let cb: Option<unsafe extern "C" fn(WidgetPtr, *mut raw::c_void)> = mem::transmute(cb);
+        fltk_sys::widget::Fl_Widget_set_callback(widget.as_widget_ptr(), cb, data);
+    }
 }
 
 /// Returns the first window of the application

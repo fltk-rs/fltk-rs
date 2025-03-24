@@ -35,15 +35,17 @@ pub fn event_key_down(key: Key) -> bool {
 }
 
 /// Returns a textual representation of the latest event
-pub fn event_text() -> String {
+pub fn event_text() -> Option<String> {
     unsafe {
         let text = fl::Fl_event_text();
         if text.is_null() {
-            String::from("")
+            None
         } else {
-            CStr::from_ptr(text as *mut raw::c_char)
-                .to_string_lossy()
-                .to_string()
+            Some(
+                CStr::from_ptr(text as *mut raw::c_char)
+                    .to_string_lossy()
+                    .to_string(),
+            )
         }
     }
 }
@@ -265,7 +267,7 @@ pub fn event_clipboard() -> Option<ClipboardEvent> {
         let txt = fl::Fl_event_clipboard_type();
         let txt = CStr::from_ptr(txt as _).to_string_lossy().to_string();
         if txt == "text/plain" {
-            Some(ClipboardEvent::Text(event_text()))
+            Some(ClipboardEvent::Text(event_text()?))
         } else if txt == "image" {
             Some(ClipboardEvent::Image(event_clipboard_image()))
         } else {
@@ -313,7 +315,7 @@ pub fn event_clipboard() -> Option<ClipboardEvent> {
     The window pointer must be valid
 */
 pub unsafe fn handle_raw(event: Event, w: WindowPtr) -> bool {
-    fl::Fl_handle_(event.bits(), w as _) != 0
+    unsafe { fl::Fl_handle_(event.bits(), w as _) != 0 }
 }
 
 #[allow(clippy::missing_safety_doc)]
@@ -330,7 +332,9 @@ pub unsafe fn handle_raw(event: Event, w: WindowPtr) -> bool {
     The window pointer must not be invalidated
 */
 pub unsafe fn event_dispatch(f: fn(Event, WindowPtr) -> bool) {
-    fl::Fl_event_dispatch(mem::transmute(f));
+    unsafe {
+        fl::Fl_event_dispatch(mem::transmute(f));
+    }
 }
 
 /// Gets the mouse coordinates relative to the screen

@@ -257,25 +257,27 @@ pub fn blit_rgba<'a, T: crate::prelude::WidgetBase>(
 /// # Safety
 /// The data passed should be valid and outlive the widget
 pub unsafe fn blit_rgba_nocopy<T: crate::prelude::WidgetBase>(wid: &mut T, fb: &[u8]) {
-    let ptr = fb.as_ptr();
-    let len = fb.len();
-    let width = wid.w();
-    let height = wid.h();
-    wid.draw(move |s| {
-        let x = s.x();
-        let y = s.y();
-        let w = s.w();
-        let h = s.h();
-        if let Ok(mut img) = crate::image::RgbImage::from_data(
-            std::slice::from_raw_parts(ptr, len),
-            width,
-            height,
-            ColorDepth::Rgba8,
-        ) {
-            img.scale(w, h, false, true);
-            img.draw(x, y, w, h);
-        }
-    });
+    unsafe {
+        let ptr = fb.as_ptr();
+        let len = fb.len();
+        let width = wid.w();
+        let height = wid.h();
+        wid.draw(move |s| {
+            let x = s.x();
+            let y = s.y();
+            let w = s.w();
+            let h = s.h();
+            if let Ok(mut img) = crate::image::RgbImage::from_data(
+                std::slice::from_raw_parts(ptr, len),
+                width,
+                height,
+                ColorDepth::Rgba8,
+            ) {
+                img.scale(w, h, false, true);
+                img.draw(x, y, w, h);
+            }
+        });
+    }
 }
 
 /// Draw a framebuffer (rgba) into a widget
@@ -303,23 +305,25 @@ pub fn blit_rgb<'a, T: crate::prelude::WidgetBase>(
 /// # Safety
 /// The data passed should be valid and outlive the widget
 pub unsafe fn blit_rgb_nocopy<T: crate::prelude::WidgetBase>(wid: &mut T, fb: &[u8]) {
-    let ptr = fb.as_ptr();
-    let len = fb.len();
-    let width = wid.w();
-    let height = wid.h();
-    wid.draw(move |s| {
-        let x = s.x();
-        let y = s.y();
-        let w = s.w();
-        let h = s.h();
-        if let Ok(mut img) = crate::image::RgbImage::from_data(
-            std::slice::from_raw_parts(ptr, len),
-            width,
-            height,
-            ColorDepth::Rgb8,
-        ) {
-            img.scale(w, h, false, true);
-            img.draw(x, y, w, h);
-        }
-    });
+    unsafe {
+        let ptr = fb.as_ptr();
+        let len = fb.len();
+        let width = wid.w();
+        let height = wid.h();
+        wid.draw(move |s| {
+            let x = s.x();
+            let y = s.y();
+            let w = s.w();
+            let h = s.h();
+            if let Ok(mut img) = crate::image::RgbImage::from_data(
+                std::slice::from_raw_parts(ptr, len),
+                width,
+                height,
+                ColorDepth::Rgb8,
+            ) {
+                img.scale(w, h, false, true);
+                img.draw(x, y, w, h);
+            }
+        });
+    }
 }

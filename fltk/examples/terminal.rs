@@ -390,7 +390,7 @@ fn main() {
                             if fltk::app::event_length() == 1 && fltk::app::is_event_ctrl() =>
                         {
                             // We handle control keystroke
-                            let k = fltk::app::event_text();
+                            let k = fltk::app::event_text().unwrap();
                             term.append_utf8(&k);
                             true
                         }
@@ -399,7 +399,7 @@ fn main() {
                             if fltk::app::event_length() == 1 && !fltk::app::is_event_alt() =>
                         {
                             // We handle normal printable keystroke
-                            let k = fltk::app::event_text();
+                            let k = fltk::app::event_text().unwrap();
                             term.take_focus().unwrap();
                             term.append(&k);
                             true
@@ -696,7 +696,7 @@ The highwayman came riding, up to the old inn-door.";
         term.display_columns()
     ));
 
-    term.append(&format!("Selection len: {sel_len}\nSelection: '{sel}'\n"));
+    term.append(&format!("Selection len: {sel_len}\nSelection: '{sel:?}'\n"));
 }
 
 //--------------------------------------------------------------------------------------

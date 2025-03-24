@@ -892,7 +892,9 @@ pub fn draw_check(x: i32, y: i32, w: i32, h: i32, col: Color) {
 /// # Safety
 /// Passing wrong line data can read to over or underflow
 pub unsafe fn draw_image2(data: &[u8], x: i32, y: i32, w: i32, h: i32, depth: i32, line_data: i32) {
-    Fl_draw_image(data.as_ptr(), x, y, w, h, depth, line_data);
+    unsafe {
+        Fl_draw_image(data.as_ptr(), x, y, w, h, depth, line_data);
+    }
 }
 
 /// Draws a rounded box

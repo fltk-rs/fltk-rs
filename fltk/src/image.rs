@@ -814,17 +814,19 @@ impl RgbImage {
         h: i32,
         depth: ColorDepth,
     ) -> Result<RgbImage, FltkError> {
-        let sz = w * h * depth as i32;
-        if sz > data.len() as i32 {
-            return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
-        }
-        let img = Fl_RGB_Image_from_data(data.as_ptr(), w, h, depth as i32, 0);
-        if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
-            Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
-        } else {
-            Ok(RgbImage {
-                inner: ImageRC::from(img),
-            })
+        unsafe {
+            let sz = w * h * depth as i32;
+            if sz > data.len() as i32 {
+                return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+            }
+            let img = Fl_RGB_Image_from_data(data.as_ptr(), w, h, depth as i32, 0);
+            if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
+                Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
+            } else {
+                Ok(RgbImage {
+                    inner: ImageRC::from(img),
+                })
+            }
         }
     }
 
@@ -841,13 +843,15 @@ impl RgbImage {
         depth: i32,
         line_data: i32,
     ) -> Result<RgbImage, FltkError> {
-        let img = Fl_RGB_Image_new(data.as_ptr(), w, h, depth, line_data);
-        if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
-            Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
-        } else {
-            Ok(RgbImage {
-                inner: ImageRC::from(img),
-            })
+        unsafe {
+            let img = Fl_RGB_Image_new(data.as_ptr(), w, h, depth, line_data);
+            if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
+                Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
+            } else {
+                Ok(RgbImage {
+                    inner: ImageRC::from(img),
+                })
+            }
         }
     }
 
@@ -865,13 +869,15 @@ impl RgbImage {
         depth: i32,
         line_data: i32,
     ) -> Result<RgbImage, FltkError> {
-        let img = Fl_RGB_Image_from_data(data.as_ptr(), w, h, depth, line_data);
-        if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
-            Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
-        } else {
-            Ok(RgbImage {
-                inner: ImageRC::from(img),
-            })
+        unsafe {
+            let img = Fl_RGB_Image_from_data(data.as_ptr(), w, h, depth, line_data);
+            if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
+                Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
+            } else {
+                Ok(RgbImage {
+                    inner: ImageRC::from(img),
+                })
+            }
         }
     }
 

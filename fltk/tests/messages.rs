@@ -2,10 +2,7 @@ use fltk::{app, button::Button, frame::Frame, prelude::*, window::Window};
 
 fn main() {
     let app = app::App::default();
-    let mut wind = Window::default()
-        .with_size(400, 300)
-        .center_screen()
-        .with_label("messages");
+    let mut wind = Window::default().with_size(400, 300).with_label("messages");
     let mut frame = Frame::new(0, 0, 400, 200, "");
     let mut but = Button::new(160, 210, 80, 40, "Click me!");
 

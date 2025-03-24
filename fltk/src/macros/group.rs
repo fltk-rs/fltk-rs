@@ -32,9 +32,9 @@ macro_rules! impl_group_ext {
                     }
                 }
 
-                unsafe fn unsafe_clear(&mut self) {
+                unsafe fn unsafe_clear(&mut self) { unsafe {
                     [<$flname _clear>](self.inner.widget() as _);
-                }
+                }}
 
                 fn children(&self) -> i32 {
                     unsafe {
@@ -178,9 +178,9 @@ macro_rules! impl_group_ext {
                     vec
                 }
 
-                unsafe fn into_group(&self) -> $crate::group::Group {
+                unsafe fn into_group(&self) -> $crate::group::Group { unsafe {
                     $crate::group::Group::from_widget_ptr(self.inner.widget() as _)
-                }
+                }}
             }
         }
     };

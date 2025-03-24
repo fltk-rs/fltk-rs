@@ -202,10 +202,12 @@ impl FrameType {
     /// The frametype should be defined using the `app::set_frame_type_cb` function
     #[doc(hidden)]
     pub unsafe fn from_i32(v: i32) -> FrameType {
-        if (0..=56).contains(&v) {
-            *(&v as *const i32 as *const FrameType)
-        } else {
-            FrameType::UserFrameType(UnmappedFrameType::from_i32(v))
+        unsafe {
+            if (0..=56).contains(&v) {
+                *(&v as *const i32 as *const FrameType)
+            } else {
+                FrameType::UserFrameType(UnmappedFrameType::from_i32(v))
+            }
         }
     }
     #[doc(hidden)]

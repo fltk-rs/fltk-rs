@@ -19,7 +19,9 @@ static RECEIVER: LazyLock<crossbeam_channel::Receiver<Box<dyn Any + Send + Sync>
 /// # Safety
 /// The type must be Send and Sync safe
 pub unsafe fn awake_msg<T>(msg: T) {
-    fl::Fl_awake_msg(Box::into_raw(Box::from(msg)) as *mut std::os::raw::c_void);
+    unsafe {
+        fl::Fl_awake_msg(Box::into_raw(Box::from(msg)) as *mut std::os::raw::c_void);
+    }
 }
 
 #[allow(clippy::missing_safety_doc)]
@@ -34,12 +36,14 @@ pub unsafe fn awake_msg<T>(msg: T) {
     The type must correspond to the received message
 */
 pub unsafe fn thread_msg<T>() -> Option<T> {
-    let msg = fl::Fl_thread_msg();
-    if msg.is_null() {
-        None
-    } else {
-        let msg = Box::from_raw(msg as *const _ as *mut T);
-        Some(*msg)
+    unsafe {
+        let msg = fl::Fl_thread_msg();
+        if msg.is_null() {
+            None
+        } else {
+            let msg = Box::from_raw(msg as *const _ as *mut T);
+            Some(*msg)
+        }
     }
 }
 

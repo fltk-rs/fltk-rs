@@ -339,7 +339,7 @@ macro_rules! impl_browser_ext {
                     }
                 }
 
-                unsafe fn data<T: Clone + 'static>(&self, line: i32) -> Option<T> {
+                unsafe fn data<T: Clone + 'static>(&self, line: i32) -> Option<T> { unsafe {
                     if line > 0 && line <= self.size() + 1 {
                         let ptr = [<$flname _data>](self.inner.widget() as _, line);
                         if ptr.is_null() {
@@ -351,7 +351,7 @@ macro_rules! impl_browser_ext {
                     } else {
                         None
                     }
-                }
+                }}
 
                 fn hide_line(&mut self, line: i32) {
                     if line > 0 && line <= self.size() + 1 {

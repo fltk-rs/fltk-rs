@@ -116,7 +116,6 @@ fn main() {
     let app = app::App::default();
     let mut wind = Window::default()
         .with_size(160, 200)
-        .center_screen()
         .with_label("Counter");
     let mut frame = Frame::default()
         .with_size(100, 40)

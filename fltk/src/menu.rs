@@ -179,10 +179,12 @@ impl SysMenuBar {
     pub fn set_about_callback<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
         unsafe {
             unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
-                let mut wid = SysMenuBar::from_widget_ptr(wid as *mut _);
-                let a = data as *mut Box<dyn FnMut(&mut SysMenuBar)>;
-                let f: &mut (dyn FnMut(&mut SysMenuBar)) = &mut **a;
-                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                unsafe {
+                    let mut wid = SysMenuBar::from_widget_ptr(wid as *mut _);
+                    let a = data as *mut Box<dyn FnMut(&mut SysMenuBar)>;
+                    let f: &mut (dyn FnMut(&mut SysMenuBar)) = &mut **a;
+                    let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                }
             }
             let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
@@ -300,22 +302,26 @@ impl MenuItem {
     /// # Safety
     /// The pointer must be valid
     pub unsafe fn from_ptr(ptr: *mut Fl_Menu_Item) -> MenuItem {
-        assert!(!ptr.is_null());
-        let inner = MenuItemWrapper::from(ptr);
-        let ptr = MenuItemWrapper::into_raw(inner);
-        MenuItemWrapper::increment_strong_count(ptr);
-        let inner = MenuItemWrapper::from_raw(ptr);
-        MenuItem { inner }
+        unsafe {
+            assert!(!ptr.is_null());
+            let inner = MenuItemWrapper::from(ptr);
+            let ptr = MenuItemWrapper::into_raw(inner);
+            MenuItemWrapper::increment_strong_count(ptr);
+            let inner = MenuItemWrapper::from_raw(ptr);
+            MenuItem { inner }
+        }
     }
 
     /// Returns the inner pointer from a MenuItem
     /// # Safety
     /// Can return multiple mutable pointers to the same item
     pub unsafe fn as_ptr(&self) -> *mut Fl_Menu_Item {
-        let ptr = MenuItemWrapper::into_raw(MenuItemWrapper::clone(&self.inner));
-        MenuItemWrapper::increment_strong_count(ptr);
-        let inner = MenuItemWrapper::from_raw(ptr);
-        *inner
+        unsafe {
+            let ptr = MenuItemWrapper::into_raw(MenuItemWrapper::clone(&self.inner));
+            MenuItemWrapper::increment_strong_count(ptr);
+            let inner = MenuItemWrapper::from_raw(ptr);
+            *inner
+        }
     }
 
     /// Initializes a new menu item.
@@ -612,14 +618,16 @@ impl MenuItem {
     /// # Safety
     /// Can return multiple mutable instances of the user data, which has a different lifetime than the object
     pub unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>> {
-        let ptr = Fl_Menu_Item_user_data(*self.inner);
-        if ptr.is_null() {
-            None
-        } else {
-            let x = ptr as *mut Box<dyn FnMut()>;
-            let x = Box::from_raw(x);
-            Fl_Menu_Item_set_callback(*self.inner, None, std::ptr::null_mut());
-            Some(*x)
+        unsafe {
+            let ptr = Fl_Menu_Item_user_data(*self.inner);
+            if ptr.is_null() {
+                None
+            } else {
+                let x = ptr as *mut Box<dyn FnMut()>;
+                let x = Box::from_raw(x);
+                Fl_Menu_Item_set_callback(*self.inner, None, std::ptr::null_mut());
+                Some(*x)
+            }
         }
     }
 
@@ -627,11 +635,13 @@ impl MenuItem {
     pub fn set_callback<F: FnMut(&mut Choice) + 'static>(&mut self, cb: F) {
         unsafe {
             unsafe extern "C" fn shim(wid: *mut fltk_sys::menu::Fl_Widget, data: *mut raw::c_void) {
-                let mut wid = crate::widget::Widget::from_widget_ptr(wid as *mut _);
-                let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> =
-                    data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
-                let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
-                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                unsafe {
+                    let mut wid = crate::widget::Widget::from_widget_ptr(wid as *mut _);
+                    let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> =
+                        data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
+                    let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
+                    let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                }
             }
             let _old_data = self.user_data();
             let a: *mut Box<dyn FnMut(&mut Choice)> = Box::into_raw(Box::new(Box::new(cb)));
@@ -690,8 +700,10 @@ impl MenuItem {
     /// Trying to add a label after adding an image might lead to undefined behavior
     #[doc(hidden)]
     pub unsafe fn set_image<I: ImageExt>(&mut self, image: I) {
-        assert!(!image.was_deleted());
-        Fl_Menu_Item_image(*self.inner, image.as_image_ptr() as _)
+        unsafe {
+            assert!(!image.was_deleted());
+            Fl_Menu_Item_image(*self.inner, image.as_image_ptr() as _)
+        }
     }
 
     /**
@@ -750,11 +762,13 @@ impl MenuItem {
         let temp = CString::safe_new(name);
         unsafe {
             unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
-                let mut wid = crate::widget::Widget::from_widget_ptr(wid as *mut _);
-                let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> =
-                    data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
-                let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
-                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                unsafe {
+                    let mut wid = crate::widget::Widget::from_widget_ptr(wid as *mut _);
+                    let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> =
+                        data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
+                    let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
+                    let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                }
             }
             let a: *mut Box<dyn FnMut(&mut Choice)> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
@@ -782,11 +796,13 @@ impl MenuItem {
         let temp = CString::safe_new(name);
         unsafe {
             unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
-                let mut wid = crate::widget::Widget::from_widget_ptr(wid as *mut _);
-                let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> =
-                    data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
-                let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
-                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                unsafe {
+                    let mut wid = crate::widget::Widget::from_widget_ptr(wid as *mut _);
+                    let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> =
+                        data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
+                    let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
+                    let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                }
             }
             let a: *mut Box<dyn FnMut(&mut Choice)> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
@@ -849,16 +865,18 @@ impl MenuItem {
 /// # Safety
 /// The wrapper can't assure use after free when manually deleting a menu item
 pub unsafe fn delete_menu_item(item: MenuItem) {
-    Fl_Menu_Item_delete(*item.inner)
+    unsafe { Fl_Menu_Item_delete(*item.inner) }
 }
 
 /// Set a callback for the "About" item of the system application menu on macOS.
 pub fn mac_set_about<F: FnMut() + 'static>(cb: F) {
     unsafe {
         unsafe extern "C" fn shim(_wid: *mut fltk_sys::menu::Fl_Widget, data: *mut raw::c_void) {
-            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
-            let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(f));
+            unsafe {
+                let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+                let f: &mut (dyn FnMut()) = &mut **a;
+                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(f));
+            }
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut std::ffi::c_void;

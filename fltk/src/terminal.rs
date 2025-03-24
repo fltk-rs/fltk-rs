@@ -948,16 +948,16 @@ impl Terminal {
     }
 
     /// Return text selection (for copy()/paste() operations)
-    pub fn selection_text(&self) -> String {
+    pub fn selection_text(&self) -> Option<String> {
         assert!(self.is_derived);
         unsafe {
             let ptr = Fl_Terminal_selection_text(self.inner.widget() as _);
             if ptr.is_null() {
-                String::new()
+                None
             } else {
                 let result = CStr::from_ptr(ptr).to_string_lossy().to_string();
                 Fl_free_str(ptr);
-                result
+                Some(result)
             }
         }
     }

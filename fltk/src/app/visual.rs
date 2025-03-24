@@ -300,14 +300,14 @@ pub fn redraw() {
 /// # Safety
 /// A correct visual must be set prior to opening the display
 pub unsafe fn open_display() {
-    fl::Fl_open_display()
+    unsafe { fl::Fl_open_display() }
 }
 
 /// Close the current display
 /// # Safety
 /// The display shouldn't be closed while a window is shown
 pub unsafe fn close_display() {
-    fl::Fl_close_display()
+    unsafe { fl::Fl_close_display() }
 }
 
 /// Determines if the currently drawn box is active or inactive

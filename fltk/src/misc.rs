@@ -622,17 +622,17 @@ impl HelpView {
     }
 
     /// Return the filename
-    pub fn filename(&self) -> std::path::PathBuf {
+    pub fn filename(&self) -> Option<std::path::PathBuf> {
         unsafe {
             let x = Fl_Help_View_directory(self.inner.widget() as _);
             if x.is_null() {
-                std::path::PathBuf::from("")
+                None
             } else {
-                std::path::PathBuf::from(
+                Some(std::path::PathBuf::from(
                     CStr::from_ptr(x as *mut raw::c_char)
                         .to_string_lossy()
                         .to_string(),
-                )
+                ))
             }
         }
     }

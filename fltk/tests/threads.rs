@@ -3,10 +3,7 @@ use std::sync::{Arc, Mutex};
 
 fn main() {
     let app = app::App::default();
-    let mut wind = Window::default()
-        .with_size(400, 300)
-        .center_screen()
-        .with_label("threads");
+    let mut wind = Window::default().with_size(400, 300).with_label("threads");
     let frame = Frame::new(0, 0, 400, 200, "");
     let mut but = Button::new(160, 210, 80, 40, "Click me!");
 

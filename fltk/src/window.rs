@@ -156,13 +156,15 @@ macro_rules! impl_top_win {
             /// # Safety
             /// The data must be valid and is OS-dependent.
             pub unsafe fn find_by_handle(handle: RawHandle) -> Option<impl WindowExt> {
-                let ptr = Fl_Window_find_by_handle(handle as *const raw::c_void as *mut _);
-                if ptr.is_null() {
-                    None
-                } else {
-                    Some(Window::from_widget_ptr(
-                        ptr as *mut fltk_sys::widget::Fl_Widget,
-                    ))
+                unsafe {
+                    let ptr = Fl_Window_find_by_handle(handle as *const raw::c_void as *mut _);
+                    if ptr.is_null() {
+                        None
+                    } else {
+                        Some(Window::from_widget_ptr(
+                            ptr as *mut fltk_sys::widget::Fl_Widget,
+                        ))
+                    }
                 }
             }
 
@@ -359,25 +361,25 @@ impl SingleWindow {
             let widget_ptr = Fl_Single_Window_new(x, y, w, h, temp);
             assert!(!widget_ptr.is_null());
             assert!(crate::app::is_ui_thread());
-            let tracker = crate::widget::WidgetTracker::new(
-                widget_ptr as _
-            );
+            let tracker = crate::widget::WidgetTracker::new(widget_ptr as _);
             unsafe extern "C" fn shim(wid: *mut Fl_Widget, _data: *mut std::os::raw::c_void) {
-                let user_data = Fl_Single_Window_user_data(wid as _);
-                let draw_data = Fl_Single_Window_draw_data(wid as _);
-                let handle_data = Fl_Single_Window_handle_data(wid as _);
-                crate::app::add_timeout(0., move |h| {
-                    if !user_data.is_null() {
-                        let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
-                    }
-                    if !draw_data.is_null() {
-                        let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
-                    }
-                    if !handle_data.is_null() {
-                        let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
-                    }
-                    crate::app::remove_timeout(h);
-                });
+                unsafe {
+                    let user_data = Fl_Single_Window_user_data(wid as _);
+                    let draw_data = Fl_Single_Window_draw_data(wid as _);
+                    let handle_data = Fl_Single_Window_handle_data(wid as _);
+                    crate::app::add_timeout(0., move |h| {
+                        if !user_data.is_null() {
+                            let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
+                        }
+                        if !draw_data.is_null() {
+                            let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
+                        }
+                        if !handle_data.is_null() {
+                            let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
+                        }
+                        crate::app::remove_timeout(h);
+                    });
+                }
             }
             Fl_Single_Window_set_deletion_callback(widget_ptr, Some(shim), std::ptr::null_mut());
             Self {
@@ -436,25 +438,25 @@ impl DoubleWindow {
             let widget_ptr = Fl_Double_Window_new(x, y, w, h, temp);
             assert!(!widget_ptr.is_null());
             assert!(crate::app::is_ui_thread());
-            let tracker = crate::widget::WidgetTracker::new(
-                widget_ptr as _
-            );
+            let tracker = crate::widget::WidgetTracker::new(widget_ptr as _);
             unsafe extern "C" fn shim(wid: *mut Fl_Widget, _data: *mut std::os::raw::c_void) {
-                let user_data = Fl_Double_Window_user_data(wid as _);
-                let draw_data = Fl_Double_Window_draw_data(wid as _);
-                let handle_data = Fl_Double_Window_handle_data(wid as _);
-                crate::app::add_timeout(0., move |h| {
-                    if !user_data.is_null() {
-                        let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
-                    }
-                    if !draw_data.is_null() {
-                        let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
-                    }
-                    if !handle_data.is_null() {
-                        let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
-                    }
-                    crate::app::remove_timeout(h);
-                });
+                unsafe {
+                    let user_data = Fl_Double_Window_user_data(wid as _);
+                    let draw_data = Fl_Double_Window_draw_data(wid as _);
+                    let handle_data = Fl_Double_Window_handle_data(wid as _);
+                    crate::app::add_timeout(0., move |h| {
+                        if !user_data.is_null() {
+                            let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
+                        }
+                        if !draw_data.is_null() {
+                            let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
+                        }
+                        if !handle_data.is_null() {
+                            let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
+                        }
+                        crate::app::remove_timeout(h);
+                    });
+                }
             }
             Fl_Double_Window_set_deletion_callback(widget_ptr, Some(shim), std::ptr::null_mut());
             Self {
@@ -576,25 +578,25 @@ impl MenuWindow {
             let widget_ptr = Fl_Menu_Window_new(x, y, w, h, temp);
             assert!(!widget_ptr.is_null());
             assert!(crate::app::is_ui_thread());
-            let tracker = crate::widget::WidgetTracker::new(
-                widget_ptr as _
-            );
+            let tracker = crate::widget::WidgetTracker::new(widget_ptr as _);
             unsafe extern "C" fn shim(wid: *mut Fl_Widget, _data: *mut std::os::raw::c_void) {
-                let user_data = Fl_Menu_Window_user_data(wid as _);
-                let draw_data = Fl_Menu_Window_draw_data(wid as _);
-                let handle_data = Fl_Menu_Window_handle_data(wid as _);
-                crate::app::add_timeout(0., move |h| {
-                    if !user_data.is_null() {
-                        let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
-                    }
-                    if !draw_data.is_null() {
-                        let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
-                    }
-                    if !handle_data.is_null() {
-                        let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
-                    }
-                    crate::app::remove_timeout(h);
-                });
+                unsafe {
+                    let user_data = Fl_Menu_Window_user_data(wid as _);
+                    let draw_data = Fl_Menu_Window_draw_data(wid as _);
+                    let handle_data = Fl_Menu_Window_handle_data(wid as _);
+                    crate::app::add_timeout(0., move |h| {
+                        if !user_data.is_null() {
+                            let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
+                        }
+                        if !draw_data.is_null() {
+                            let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
+                        }
+                        if !handle_data.is_null() {
+                            let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
+                        }
+                        crate::app::remove_timeout(h);
+                    });
+                }
             }
             Fl_Menu_Window_set_deletion_callback(widget_ptr, Some(shim), std::ptr::null_mut());
             Self {
@@ -639,25 +641,25 @@ impl OverlayWindow {
             let widget_ptr = Fl_Overlay_Window_new(x, y, w, h, temp);
             assert!(!widget_ptr.is_null());
             assert!(crate::app::is_ui_thread());
-            let tracker = crate::widget::WidgetTracker::new(
-                widget_ptr as _
-            );
+            let tracker = crate::widget::WidgetTracker::new(widget_ptr as _);
             unsafe extern "C" fn shim(wid: *mut Fl_Widget, _data: *mut std::os::raw::c_void) {
-                let user_data = Fl_Overlay_Window_user_data(wid as _);
-                let draw_data = Fl_Overlay_Window_draw_data(wid as _);
-                let handle_data = Fl_Overlay_Window_handle_data(wid as _);
-                crate::app::add_timeout(0., move |h| {
-                    if !user_data.is_null() {
-                        let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
-                    }
-                    if !draw_data.is_null() {
-                        let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
-                    }
-                    if !handle_data.is_null() {
-                        let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
-                    }
-                    crate::app::remove_timeout(h);
-                });
+                unsafe {
+                    let user_data = Fl_Overlay_Window_user_data(wid as _);
+                    let draw_data = Fl_Overlay_Window_draw_data(wid as _);
+                    let handle_data = Fl_Overlay_Window_handle_data(wid as _);
+                    crate::app::add_timeout(0., move |h| {
+                        if !user_data.is_null() {
+                            let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
+                        }
+                        if !draw_data.is_null() {
+                            let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
+                        }
+                        if !handle_data.is_null() {
+                            let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
+                        }
+                        crate::app::remove_timeout(h);
+                    });
+                }
             }
             Fl_Overlay_Window_set_deletion_callback(widget_ptr, Some(shim), std::ptr::null_mut());
             Self {
@@ -676,12 +678,14 @@ impl OverlayWindow {
         assert!(self.is_derived);
         unsafe {
             unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
-                let mut wid = OverlayWindow::from_widget_ptr(wid as *mut _);
-                wid.assume_derived();
-                let a: *mut Box<dyn FnMut(&mut OverlayWindow)> =
-                    data as *mut Box<dyn FnMut(&mut OverlayWindow)>;
-                let f: &mut (dyn FnMut(&mut OverlayWindow)) = &mut **a;
-                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                unsafe {
+                    let mut wid = OverlayWindow::from_widget_ptr(wid as *mut _);
+                    wid.assume_derived();
+                    let a: *mut Box<dyn FnMut(&mut OverlayWindow)> =
+                        data as *mut Box<dyn FnMut(&mut OverlayWindow)>;
+                    let f: &mut (dyn FnMut(&mut OverlayWindow)) = &mut **a;
+                    let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                }
             }
             let mut _old_data = None;
             if self.is_derived {
@@ -753,9 +757,7 @@ impl GlutWindow {
             let widget_ptr = Fl_Glut_Window_new(x, y, w, h, temp);
             assert!(!widget_ptr.is_null());
             assert!(crate::app::is_ui_thread());
-            let tracker = crate::widget::WidgetTracker::new(
-                widget_ptr as _
-            );
+            let tracker = crate::widget::WidgetTracker::new(widget_ptr as _);
             unsafe extern "C" fn shim(wid: *mut Fl_Widget, _data: *mut std::os::raw::c_void) {
                 let user_data = Fl_Glut_Window_user_data(wid as _);
                 let draw_data = Fl_Glut_Window_draw_data(wid as _);
@@ -961,9 +963,7 @@ pub mod experimental {
                 let widget_ptr = Fl_Gl_Window_new(x, y, w, h, temp);
                 assert!(!widget_ptr.is_null());
                 assert!(crate::app::is_ui_thread());
-                let tracker = crate::widget::WidgetTracker::new(
-                    widget_ptr as _
-                );
+                let tracker = crate::widget::WidgetTracker::new(widget_ptr as _);
                 unsafe extern "C" fn shim(wid: *mut Fl_Widget, _data: *mut std::os::raw::c_void) {
                     let user_data = Fl_Gll_Window_user_data(wid as _);
                     let draw_data = Fl_Gl_Window_draw_data(wid as _);
