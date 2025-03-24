@@ -26,3 +26,4 @@
 - Remove confusing alias FileDialog. Stick to FileChooser and NativeFileChooser.
 - TextBuffer::add_modify_callback() now returns an opaque handle which can be used by remove_modify_callback().
 - draw_rgb* functions moved to utils modules, and renamed to blit_rgb*.
+- Remove SimpleTerminal.

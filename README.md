@@ -382,7 +382,6 @@ cargo build
 - Text display widgets
     - TextDisplay
     - TextEditor
-    - SimpleTerminal
 - Input widgets
     - Input
     - IntInput

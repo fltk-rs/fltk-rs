@@ -1,5 +1,3 @@
-#![allow(deprecated)]
-
 use crate::enums::{Color, Font, Key};
 use crate::prelude::*;
 use crate::utils::FlString;
@@ -745,29 +743,6 @@ crate::macros::display::impl_display_ext!(TextEditor, Fl_Text_Editor);
 /// Alias Fl_Text_Editor for use in `add_key_binding`
 pub type TextEditorPtr = *mut Fl_Text_Editor;
 
-#[doc(hidden)]
-#[deprecated(
-    since = "1.5.0",
-    note = "please use `fltk::terminal::Terminal` instead"
-)]
-/// Creates an editable text display widget to handle terminal-like behavior, such as
-/// logging events or debug information.
-/// `SimpleTerminal` already has an internal buffer.
-/// It is NOT is a full terminal emulator; it does NOT
-/// handle stdio redirection, pipes, pseudo ttys, termio character cooking,
-/// keyboard input processing, screen addressing, random cursor positioning,
-/// curses compatibility, or VT100/xterm emulation.
-#[derive(Debug)]
-pub struct SimpleTerminal {
-    inner: crate::widget::WidgetTracker,
-    is_derived: bool,
-}
-
-crate::macros::widget::impl_widget_ext!(SimpleTerminal, Fl_Simple_Terminal);
-crate::macros::widget::impl_widget_base!(SimpleTerminal, Fl_Simple_Terminal);
-crate::macros::widget::impl_widget_default!(SimpleTerminal);
-crate::macros::display::impl_display_ext!(SimpleTerminal, Fl_Simple_Terminal);
-
 /// The attribute of the style entry
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[repr(u32)]
@@ -1099,105 +1074,5 @@ impl TextEditor {
                 shortcut.bits(),
             );
         }
-    }
-}
-
-impl SimpleTerminal {
-    /// Sets whether the terminal automatically stays at the bottom
-    pub fn set_stay_at_bottom(&mut self, arg1: bool) {
-        assert!(self.has_buffer());
-        unsafe { Fl_Simple_Terminal_set_stay_at_bottom(self.inner.widget() as _, arg1 as i32) }
-    }
-
-    /// Returns whether the terminal automatically stays at the bottom
-    pub fn stay_at_bottom(&self) -> bool {
-        assert!(self.has_buffer());
-        unsafe { Fl_Simple_Terminal_stay_at_bottom(self.inner.widget() as _) != 0 }
-    }
-
-    /// Sets the max lines allowed in history
-    pub fn set_history_lines(&mut self, arg1: i32) {
-        assert!(self.has_buffer());
-        unsafe { Fl_Simple_Terminal_set_history_lines(self.inner.widget() as _, arg1) }
-    }
-
-    /// Gets the max lines allowed in history
-    pub fn history_lines(&self) -> i32 {
-        assert!(self.has_buffer());
-        unsafe { Fl_Simple_Terminal_history_lines(self.inner.widget() as _) }
-    }
-
-    /// Enables ANSI sequences within the text to control text colors
-    pub fn set_ansi(&mut self, val: bool) {
-        assert!(self.has_buffer());
-        unsafe { Fl_Simple_Terminal_set_ansi(self.inner.widget() as _, val as i32) }
-    }
-
-    /// Returns whether ANSI sequences are enabled
-    pub fn ansi(&self) -> bool {
-        assert!(self.has_buffer());
-        unsafe { Fl_Simple_Terminal_ansi(self.inner.widget() as _) != 0 }
-    }
-
-    /// Appends text to the terminal buffer
-    pub fn append(&mut self, s: &str) {
-        assert!(self.has_buffer());
-        let raw_s = CString::safe_new(s).into_raw();
-        unsafe {
-            Fl_Simple_Terminal_append(self.inner.widget() as _, raw_s as _);
-            // Take ownership of raw_s back so it will be dropped
-            let _raw_s = CString::from_raw(raw_s);
-        }
-    }
-
-    /// Appends data to the terminal buffer
-    pub fn append2(&mut self, s: &[u8]) {
-        assert!(self.has_buffer());
-        unsafe {
-            Fl_Simple_Terminal_append2(self.inner.widget() as _, s.as_ptr() as _, s.len() as _)
-        }
-    }
-
-    /// Sets the text of the terminal buffer
-    pub fn set_text(&mut self, s: &str) {
-        assert!(self.has_buffer());
-        let raw_s = CString::safe_new(s).into_raw();
-        unsafe {
-            Fl_Simple_Terminal_set_text(self.inner.widget() as _, raw_s as _);
-            // Take ownership of raw_s back so it will be dropped
-            let _raw_s = CString::from_raw(raw_s);
-        }
-    }
-
-    /// Sets the byte content of the terminal buffer
-    pub fn set_bytes(&mut self, s: &[u8]) {
-        assert!(self.has_buffer());
-        unsafe {
-            Fl_Simple_Terminal_set_text2(self.inner.widget() as _, s.as_ptr() as _, s.len() as _)
-        }
-    }
-
-    /// Gets the text of the terminal buffer
-    pub fn text(&self) -> String {
-        assert!(self.has_buffer());
-        unsafe {
-            let ptr = Fl_Simple_Terminal_text(self.inner.widget() as _);
-            assert!(!ptr.is_null());
-            CStr::from_ptr(ptr as *mut raw::c_char)
-                .to_string_lossy()
-                .to_string()
-        }
-    }
-
-    /// Clears the terminal
-    pub fn clear(&mut self) {
-        assert!(self.has_buffer());
-        unsafe { Fl_Simple_Terminal_clear(self.inner.widget() as _) }
-    }
-
-    /// Removes `count` lines from `start`
-    pub fn remove_lines(&mut self, start: i32, count: i32) {
-        assert!(self.has_buffer());
-        unsafe { Fl_Simple_Terminal_remove_lines(self.inner.widget() as _, start, count) }
     }
 }
