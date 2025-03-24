@@ -398,6 +398,7 @@ cargo build
     - MenuItem
     - Choice (dropdown list)
     - SysMenuBar (MacOS menu bar which appears at the top of the screen)
+    - MenuButton
 - Valuator widgets
     - Slider
     - NiceSlider
