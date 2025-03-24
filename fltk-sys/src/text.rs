@@ -606,12 +606,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Text_Display_set_deleter(
-        arg1: *mut Fl_Text_Display,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Text_Display_visible(self_: *const Fl_Text_Display) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -859,7 +853,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Text_Display_linenumber_fgcolor(self_: *const Fl_Text_Display)
-    -> ::core::ffi::c_uint;
+        -> ::core::ffi::c_uint;
 }
 unsafe extern "C" {
     pub fn Fl_Text_Display_set_linenumber_bgcolor(
@@ -869,7 +863,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Text_Display_linenumber_bgcolor(self_: *const Fl_Text_Display)
-    -> ::core::ffi::c_uint;
+        -> ::core::ffi::c_uint;
 }
 unsafe extern "C" {
     pub fn Fl_Text_Display_set_linenumber_align(
@@ -1240,12 +1234,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Text_Editor,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Text_Editor_set_deleter(
-        arg1: *mut Fl_Text_Editor,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -1915,7 +1903,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Simple_Terminal_selection_color(arg1: *mut Fl_Simple_Terminal)
-    -> ::core::ffi::c_uint;
+        -> ::core::ffi::c_uint;
 }
 unsafe extern "C" {
     pub fn Fl_Simple_Terminal_set_selection_color(
@@ -2017,7 +2005,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Simple_Terminal_as_window(self_: *mut Fl_Simple_Terminal)
-    -> *mut ::core::ffi::c_void;
+        -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Simple_Terminal_as_group(self_: *mut Fl_Simple_Terminal) -> *mut ::core::ffi::c_void;
@@ -2038,12 +2026,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Simple_Terminal,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Simple_Terminal_set_deleter(
-        arg1: *mut Fl_Simple_Terminal,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -2118,7 +2100,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Simple_Terminal_history_lines(self_: *const Fl_Simple_Terminal)
-    -> ::core::ffi::c_int;
+        -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn Fl_Simple_Terminal_set_ansi(self_: *mut Fl_Simple_Terminal, val: ::core::ffi::c_int);

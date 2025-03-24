@@ -306,12 +306,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Window_set_deleter(
-        arg1: *mut Fl_Window,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Window_visible(self_: *const Fl_Window) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -847,7 +841,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Single_Window_handle_data(self_: *const Fl_Single_Window)
-    -> *mut ::core::ffi::c_void;
+        -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Single_Window_set_draw_data(
@@ -900,12 +894,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Single_Window,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Single_Window_set_deleter(
-        arg1: *mut Fl_Single_Window,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -1149,7 +1137,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Single_Window_icon_label(arg1: *const Fl_Single_Window)
-    -> *const ::core::ffi::c_char;
+        -> *const ::core::ffi::c_char;
 }
 unsafe extern "C" {
     pub fn Fl_Single_Window_set_icon_label(
@@ -1430,7 +1418,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Double_Window_handle_data(self_: *const Fl_Double_Window)
-    -> *mut ::core::ffi::c_void;
+        -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Double_Window_set_draw_data(
@@ -1483,12 +1471,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Double_Window,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Double_Window_set_deleter(
-        arg1: *mut Fl_Double_Window,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -1735,7 +1717,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Double_Window_icon_label(arg1: *const Fl_Double_Window)
-    -> *const ::core::ffi::c_char;
+        -> *const ::core::ffi::c_char;
 }
 unsafe extern "C" {
     pub fn Fl_Double_Window_set_icon_label(
@@ -2050,12 +2032,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Menu_Window,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Menu_Window_set_deleter(
-        arg1: *mut Fl_Menu_Window,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -2538,7 +2514,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Overlay_Window_top_window(arg1: *const Fl_Overlay_Window)
-    -> *mut ::core::ffi::c_void;
+        -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Overlay_Window_takes_events(arg1: *const Fl_Overlay_Window) -> ::core::ffi::c_int;
@@ -2571,7 +2547,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Overlay_Window_draw_data(self_: *const Fl_Overlay_Window)
-    -> *mut ::core::ffi::c_void;
+        -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Overlay_Window_handle_data(
@@ -2629,12 +2605,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Overlay_Window,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Overlay_Window_set_deleter(
-        arg1: *mut Fl_Overlay_Window,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -3231,12 +3201,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Gl_Window_set_deleter(
-        arg1: *mut Fl_Gl_Window,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Gl_Window_visible(self_: *const Fl_Gl_Window) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -3311,7 +3275,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Gl_Window_child(arg1: *mut Fl_Gl_Window, index: ::core::ffi::c_int)
-    -> *mut Fl_Widget;
+        -> *mut Fl_Widget;
 }
 unsafe extern "C" {
     pub fn Fl_Gl_Window_resizable(self_: *mut Fl_Gl_Window, arg1: *mut ::core::ffi::c_void);
@@ -3848,12 +3812,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Glut_Window,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Glut_Window_set_deleter(
-        arg1: *mut Fl_Glut_Window,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {

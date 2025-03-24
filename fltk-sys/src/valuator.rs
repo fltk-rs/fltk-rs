@@ -306,12 +306,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Slider_set_deleter(
-        arg1: *mut Fl_Slider,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Slider_visible(self_: *const Fl_Slider) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -713,12 +707,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Nice_Slider_set_deleter(
-        arg1: *mut Fl_Nice_Slider,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Nice_Slider_visible(self_: *const Fl_Nice_Slider) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -1097,12 +1085,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Counter_set_deleter(
-        arg1: *mut Fl_Counter,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Counter_visible(self_: *const Fl_Counter) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -1477,12 +1459,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Dial_set_deleter(
-        arg1: *mut Fl_Dial,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Dial_visible(self_: *const Fl_Dial) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -1568,7 +1544,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Dial_format(arg1: *mut Fl_Dial, arg2: *mut ::core::ffi::c_char)
-    -> ::core::ffi::c_int;
+        -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn Fl_Dial_round(arg1: *mut Fl_Dial, arg2: f64) -> f64;
@@ -1864,12 +1840,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Line_Dial,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Line_Dial_set_deleter(
-        arg1: *mut Fl_Line_Dial,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -2251,12 +2221,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Roller_set_deleter(
-        arg1: *mut Fl_Roller,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Roller_visible(self_: *const Fl_Roller) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -2628,12 +2592,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Scrollbar,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Scrollbar_set_deleter(
-        arg1: *mut Fl_Scrollbar,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -3042,12 +3000,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Value_Slider_set_deleter(
-        arg1: *mut Fl_Value_Slider,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Value_Slider_visible(self_: *const Fl_Value_Slider) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -3444,12 +3396,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Adjuster_set_deleter(
-        arg1: *mut Fl_Adjuster,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Adjuster_visible(self_: *const Fl_Adjuster) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -3831,12 +3777,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Value_Input,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Value_Input_set_deleter(
-        arg1: *mut Fl_Value_Input,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -4254,12 +4194,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Value_Output_set_deleter(
-        arg1: *mut Fl_Value_Output,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Value_Output_visible(self_: *const Fl_Value_Output) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -4662,12 +4596,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Fill_Slider_set_deleter(
-        arg1: *mut Fl_Fill_Slider,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Fill_Slider_visible(self_: *const Fl_Fill_Slider) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -5043,12 +4971,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Fill_Dial,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Fill_Dial_set_deleter(
-        arg1: *mut Fl_Fill_Dial,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -5430,12 +5352,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Hor_Slider_set_deleter(
-        arg1: *mut Fl_Hor_Slider,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Hor_Slider_visible(self_: *const Fl_Hor_Slider) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -5738,7 +5654,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Fill_Slider_selection_color(arg1: *mut Fl_Hor_Fill_Slider)
-    -> ::core::ffi::c_uint;
+        -> ::core::ffi::c_uint;
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Fill_Slider_set_selection_color(
@@ -5840,7 +5756,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Fill_Slider_as_window(self_: *mut Fl_Hor_Fill_Slider)
-    -> *mut ::core::ffi::c_void;
+        -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Fill_Slider_as_group(self_: *mut Fl_Hor_Fill_Slider) -> *mut ::core::ffi::c_void;
@@ -5861,12 +5777,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Hor_Fill_Slider,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Hor_Fill_Slider_set_deleter(
-        arg1: *mut Fl_Hor_Fill_Slider,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -6182,7 +6092,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Nice_Slider_selection_color(arg1: *mut Fl_Hor_Nice_Slider)
-    -> ::core::ffi::c_uint;
+        -> ::core::ffi::c_uint;
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Nice_Slider_set_selection_color(
@@ -6284,7 +6194,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Nice_Slider_as_window(self_: *mut Fl_Hor_Nice_Slider)
-    -> *mut ::core::ffi::c_void;
+        -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Nice_Slider_as_group(self_: *mut Fl_Hor_Nice_Slider) -> *mut ::core::ffi::c_void;
@@ -6305,12 +6215,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Hor_Nice_Slider,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Hor_Nice_Slider_set_deleter(
-        arg1: *mut Fl_Hor_Nice_Slider,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -6658,7 +6562,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Value_Slider_window(arg1: *const Fl_Hor_Value_Slider)
-    -> *mut ::core::ffi::c_void;
+        -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Value_Slider_top_window(
@@ -6667,7 +6571,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Value_Slider_takes_events(arg1: *const Fl_Hor_Value_Slider)
-    -> ::core::ffi::c_int;
+        -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Value_Slider_user_data(
@@ -6770,12 +6674,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Hor_Value_Slider,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Hor_Value_Slider_set_deleter(
-        arg1: *mut Fl_Hor_Value_Slider,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {

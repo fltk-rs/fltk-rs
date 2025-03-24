@@ -306,12 +306,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Group_set_deleter(
-        arg1: *mut Fl_Group,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Group_visible(self_: *const Fl_Group) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -705,12 +699,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Pack_set_deleter(
-        arg1: *mut Fl_Pack,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Pack_visible(self_: *const Fl_Pack) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -1101,12 +1089,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Scroll,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Scroll_set_deleter(
-        arg1: *mut Fl_Scroll,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -1519,12 +1501,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Tabs,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Tabs_set_deleter(
-        arg1: *mut Fl_Tabs,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -1945,12 +1921,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Tile_set_deleter(
-        arg1: *mut Fl_Tile,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Tile_visible(self_: *const Fl_Tile) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -2367,12 +2337,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Wizard_set_deleter(
-        arg1: *mut Fl_Wizard,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Wizard_visible(self_: *const Fl_Wizard) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -2741,7 +2705,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Color_Chooser_handle_data(self_: *const Fl_Color_Chooser)
-    -> *mut ::core::ffi::c_void;
+        -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Color_Chooser_set_draw_data(
@@ -2794,12 +2758,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Color_Chooser,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Color_Chooser_set_deleter(
-        arg1: *mut Fl_Color_Chooser,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -3207,12 +3165,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Flex,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Flex_set_deleter(
-        arg1: *mut Fl_Flex,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -3633,12 +3585,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Grid,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Grid_set_deleter(
-        arg1: *mut Fl_Grid,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -4138,12 +4084,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Terminal,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Terminal_set_deleter(
-        arg1: *mut Fl_Terminal,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {

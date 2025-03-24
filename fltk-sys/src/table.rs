@@ -306,12 +306,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Table_set_deleter(
-        arg1: *mut Fl_Table,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Table_visible(self_: *const Fl_Table) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -510,7 +504,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Table_row_height(self_: *mut Fl_Table, row: ::core::ffi::c_int)
-    -> ::core::ffi::c_int;
+        -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn Fl_Table_set_col_width(
@@ -946,12 +940,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Table_Row_set_deleter(
-        arg1: *mut Fl_Table_Row,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Table_Row_visible(self_: *const Fl_Table_Row) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -1026,7 +1014,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Table_Row_child(arg1: *mut Fl_Table_Row, index: ::core::ffi::c_int)
-    -> *mut Fl_Widget;
+        -> *mut Fl_Widget;
 }
 unsafe extern "C" {
     pub fn Fl_Table_Row_resizable(self_: *mut Fl_Table_Row, arg1: *mut ::core::ffi::c_void);

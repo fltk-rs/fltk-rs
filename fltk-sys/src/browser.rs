@@ -306,12 +306,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Browser_set_deleter(
-        arg1: *mut Fl_Browser,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Browser_visible(self_: *const Fl_Browser) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -380,7 +374,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Browser_select(arg1: *mut Fl_Browser, line: ::core::ffi::c_int)
-    -> ::core::ffi::c_int;
+        -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn Fl_Browser_select_ext(
@@ -818,12 +812,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Hold_Browser,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Hold_Browser_set_deleter(
-        arg1: *mut Fl_Hold_Browser,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -1284,7 +1272,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Select_Browser_top_window(arg1: *const Fl_Select_Browser)
-    -> *mut ::core::ffi::c_void;
+        -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Select_Browser_takes_events(arg1: *const Fl_Select_Browser) -> ::core::ffi::c_int;
@@ -1317,7 +1305,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Select_Browser_draw_data(self_: *const Fl_Select_Browser)
-    -> *mut ::core::ffi::c_void;
+        -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Select_Browser_handle_data(
@@ -1375,12 +1363,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Select_Browser,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Select_Browser_set_deleter(
-        arg1: *mut Fl_Select_Browser,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -1576,7 +1558,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Select_Browser_has_scrollbar(self_: *const Fl_Select_Browser)
-    -> ::core::ffi::c_uchar;
+        -> ::core::ffi::c_uchar;
 }
 unsafe extern "C" {
     pub fn Fl_Select_Browser_set_has_scrollbar(
@@ -1875,7 +1857,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Multi_Browser_handle_data(self_: *const Fl_Multi_Browser)
-    -> *mut ::core::ffi::c_void;
+        -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Multi_Browser_set_draw_data(
@@ -1928,12 +1910,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Multi_Browser,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Multi_Browser_set_deleter(
-        arg1: *mut Fl_Multi_Browser,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -2470,12 +2446,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_File_Browser_set_deleter(
-        arg1: *mut Fl_File_Browser,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_File_Browser_visible(self_: *const Fl_File_Browser) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -2984,7 +2954,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Check_Browser_handle_data(self_: *const Fl_Check_Browser)
-    -> *mut ::core::ffi::c_void;
+        -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Check_Browser_set_draw_data(
@@ -3037,12 +3007,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Check_Browser,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Check_Browser_set_deleter(
-        arg1: *mut Fl_Check_Browser,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -3147,7 +3111,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Check_Browser_scrollbar(self_: *const Fl_Check_Browser)
-    -> *const ::core::ffi::c_void;
+        -> *const ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Check_Browser_hscrollbar(

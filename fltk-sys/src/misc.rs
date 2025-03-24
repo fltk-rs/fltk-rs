@@ -306,12 +306,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Spinner_set_deleter(
-        arg1: *mut Fl_Spinner,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Spinner_visible(self_: *const Fl_Spinner) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -695,12 +689,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Clock_set_deleter(
-        arg1: *mut Fl_Clock,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Clock_visible(self_: *const Fl_Clock) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -1024,12 +1012,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Chart,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Chart_set_deleter(
-        arg1: *mut Fl_Chart,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -1424,12 +1406,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Progress,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Progress_set_deleter(
-        arg1: *mut Fl_Progress,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -1865,12 +1841,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Help_View_set_deleter(
-        arg1: *mut Fl_Help_View,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Help_View_visible(self_: *const Fl_Help_View) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -2276,12 +2246,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Input_Choice,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Input_Choice_set_deleter(
-        arg1: *mut Fl_Input_Choice,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {

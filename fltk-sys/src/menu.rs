@@ -311,12 +311,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Menu_Bar_set_deleter(
-        arg1: *mut Fl_Menu_Bar,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Menu_Bar_visible(self_: *const Fl_Menu_Bar) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -444,7 +438,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Menu_Bar_at(arg1: *const Fl_Menu_Bar, idx: ::core::ffi::c_int)
-    -> *const Fl_Menu_Item;
+        -> *const Fl_Menu_Item;
 }
 unsafe extern "C" {
     pub fn Fl_Menu_Bar_set_mode(
@@ -455,7 +449,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Menu_Bar_mode(self_: *const Fl_Menu_Bar, i: ::core::ffi::c_int)
-    -> ::core::ffi::c_int;
+        -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn Fl_Menu_Bar_find_index(
@@ -792,12 +786,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Menu_Button,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Menu_Button_set_deleter(
-        arg1: *mut Fl_Menu_Button,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -1280,12 +1268,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Choice_set_deleter(
-        arg1: *mut Fl_Choice,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Choice_visible(self_: *const Fl_Choice) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -1755,12 +1737,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Sys_Menu_Bar,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_deleter(
-        arg1: *mut Fl_Sys_Menu_Bar,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {

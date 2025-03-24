@@ -306,12 +306,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Input_set_deleter(
-        arg1: *mut Fl_Input,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Input_visible(self_: *const Fl_Input) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -737,12 +731,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Int_Input,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Int_Input_set_deleter(
-        arg1: *mut Fl_Int_Input,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -1189,12 +1177,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Float_Input_set_deleter(
-        arg1: *mut Fl_Float_Input,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Float_Input_visible(self_: *const Fl_Float_Input) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -1556,7 +1538,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Multiline_Input_selection_color(arg1: *mut Fl_Multiline_Input)
-    -> ::core::ffi::c_uint;
+        -> ::core::ffi::c_uint;
 }
 unsafe extern "C" {
     pub fn Fl_Multiline_Input_set_selection_color(
@@ -1658,7 +1640,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Multiline_Input_as_window(self_: *mut Fl_Multiline_Input)
-    -> *mut ::core::ffi::c_void;
+        -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Multiline_Input_as_group(self_: *mut Fl_Multiline_Input) -> *mut ::core::ffi::c_void;
@@ -1679,12 +1661,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Multiline_Input,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Multiline_Input_set_deleter(
-        arg1: *mut Fl_Multiline_Input,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -2146,12 +2122,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Secret_Input_set_deleter(
-        arg1: *mut Fl_Secret_Input,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Secret_Input_visible(self_: *const Fl_Secret_Input) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -2586,12 +2556,6 @@ unsafe extern "C" {
         arg1: *mut Fl_File_Input,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_File_Input_set_deleter(
-        arg1: *mut Fl_File_Input,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {
@@ -3038,12 +3002,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Output_set_deleter(
-        arg1: *mut Fl_Output,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Output_visible(self_: *const Fl_Output) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -3434,7 +3392,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Multiline_Output_window(arg1: *const Fl_Multiline_Output)
-    -> *mut ::core::ffi::c_void;
+        -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Multiline_Output_top_window(
@@ -3443,7 +3401,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Multiline_Output_takes_events(arg1: *const Fl_Multiline_Output)
-    -> ::core::ffi::c_int;
+        -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn Fl_Multiline_Output_user_data(
@@ -3546,12 +3504,6 @@ unsafe extern "C" {
         arg1: *mut Fl_Multiline_Output,
         arg2: Fl_Callback,
         arg3: *mut ::core::ffi::c_void,
-    );
-}
-unsafe extern "C" {
-    pub fn Fl_Multiline_Output_set_deleter(
-        arg1: *mut Fl_Multiline_Output,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
     );
 }
 unsafe extern "C" {

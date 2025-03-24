@@ -306,12 +306,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Tree_set_deleter(
-        arg1: *mut Fl_Tree,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Tree_visible(self_: *const Fl_Tree) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {

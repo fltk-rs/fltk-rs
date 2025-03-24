@@ -301,12 +301,6 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_Widget_set_deleter(
-        arg1: *mut Fl_Widget,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut ::core::ffi::c_void)>,
-    );
-}
-unsafe extern "C" {
     pub fn Fl_Widget_visible(self_: *const Fl_Widget) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {

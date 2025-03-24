@@ -46,7 +46,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Image_Surface_highres_image(self_: *mut Fl_Image_Surface)
-    -> *mut ::core::ffi::c_void;
+        -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Image_Surface_origin(
