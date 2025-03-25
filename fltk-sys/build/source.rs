@@ -136,7 +136,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             dst.define("CFLTK_USE_OPENGL", "OFF");
         }
 
-        if target_triple.contains("linux") {
+        if target_triple.contains("linux") || target_triple.contains("bsd") {
             if cfg!(feature = "no-pango-cairo") {
                 dst.define("FLTK_USE_PANGO", "OFF");
                 dst.define("FLTK_GRAPHICS_CAIRO", "OFF");
