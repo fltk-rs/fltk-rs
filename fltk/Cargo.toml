@@ -118,3 +118,4 @@ harness = false
 name = "gl"
 path = "tests/gl.rs"
 harness = false
+required-features = ["enable-glwindow"]

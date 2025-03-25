@@ -468,17 +468,6 @@ macro_rules! impl_widget_ext {
                     }
                 }
 
-                unsafe fn image_mut(&self) -> Option<&mut $crate::image::Image> { unsafe {
-                    let image_ptr = [<$flname _image>](self.inner.widget() as _);
-                    if image_ptr.is_null() {
-                        None
-                    } else {
-                        let img =
-                            $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
-                        Some(Box::leak(Box::new(img)))
-                    }
-                }}
-
                 fn set_deimage<I: ImageExt>(&mut self, image: Option<I>) {
                     if let Some(image) = image {
                         assert!(!image.was_deleted());
@@ -530,17 +519,6 @@ macro_rules! impl_widget_ext {
                         }
                     }
                 }
-
-                unsafe fn deimage_mut(&self) -> Option<&mut $crate::image::Image> { unsafe {
-                    let image_ptr = [<$flname _deimage>](self.inner.widget() as _);
-                    if image_ptr.is_null() {
-                        None
-                    } else {
-                        let img =
-                            $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
-                        Some(Box::leak(Box::new(img)))
-                    }
-                }}
 
                 fn set_callback<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
                     unsafe {
@@ -1078,10 +1056,6 @@ macro_rules! impl_widget_ext_via {
                 self.$member.image()
             }
 
-            unsafe fn image_mut(&self) -> Option<&mut $crate::image::Image> {
-                self.$member.image_mut()
-            }
-
             fn set_deimage<I: ImageExt>(&mut self, image: Option<I>) {
                 self.$member.set_deimage(image)
             }
@@ -1092,10 +1066,6 @@ macro_rules! impl_widget_ext_via {
 
             fn deimage(&self) -> Option<Box<dyn ImageExt>> {
                 self.$member.deimage()
-            }
-
-            unsafe fn deimage_mut(&self) -> Option<&mut $crate::image::Image> {
-                self.$member.deimage_mut()
             }
 
             fn set_callback<F: FnMut(&mut Self) + 'static>(&mut self, mut cb: F) {
