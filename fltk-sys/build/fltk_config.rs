@@ -34,7 +34,7 @@ pub fn build(target_triple: &str) {
         args.push("--use-gl");
         use_gl = true;
     }
-    if !cfg!(feature = "no-images") {
+    if cfg!(feature = "use-images") {
         args.push("--use-images");
     }
     let cflags = get_cflags(&args);

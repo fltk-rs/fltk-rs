@@ -116,10 +116,10 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             dst.define("FLTK_USE_SYSTEM_ZLIB", "OFF");
         }
 
-        if cfg!(feature = "no-images") {
-            dst.define("CFLTK_LINK_IMAGES", "OFF");
-        } else {
+        if cfg!(feature = "use-images") {
             dst.define("CFLTK_LINK_IMAGES", "ON");
+        } else {
+            dst.define("CFLTK_LINK_IMAGES", "OFF");
         }
 
         if cfg!(feature = "legacy-opengl") {

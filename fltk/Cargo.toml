@@ -28,7 +28,7 @@ once_cell = "1"
 rwh06 = { package = "raw-window-handle", version = "0.6", optional = true }
 
 [features]
-default = []
+default = ["use-images"]
 # Support for bundled versions of cfltk and fltk (requires curl and tar)
 fltk-bundled = ["fltk-sys/fltk-bundled"] 
 # Support for systems without OpenGL
@@ -50,7 +50,7 @@ system-zlib = ["fltk-sys/system-zlib"]
 # Disable gdiplus drawing
 no-gdiplus = ["fltk-sys/no-gdiplus"] 
 # (Experimental) You can use this feature if your app doesn't use images to reduce binary size
-no-images = ["fltk-sys/no-images"] 
+use-images = ["fltk-sys/use-images"] 
 # (Experimental) Support of Lagacy OpenGL
 legacy-opengl = ["fltk-sys/legacy-opengl"] 
 # (Experimental) Disable multithreading support when linking X11 libs non-mt x11 libs.

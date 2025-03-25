@@ -41,7 +41,7 @@ static UI_THREAD: LazyLock<std::thread::ThreadId> = LazyLock::new(|| std::thread
 
 /// Registers all images supported by `SharedImage`
 pub(crate) fn register_images() {
-    #[cfg(not(feature = "no-images"))]
+    #[cfg(feature = "use-images")]
     unsafe {
         fltk_sys::image::Fl_register_images();
         fltk_sys::fl::Fl_load_system_icons();

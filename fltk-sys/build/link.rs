@@ -17,7 +17,7 @@ pub fn link(target_os: &str, target_triple: &str) {
     if !cfg!(feature = "fltk-shared") {
         println!("cargo:rustc-link-lib=static=fltk");
 
-        if !cfg!(feature = "no-images") {
+        if cfg!(feature = "use-images") {
             println!("cargo:rustc-link-lib=static=fltk_images");
 
             if cfg!(feature = "system-libpng") {
