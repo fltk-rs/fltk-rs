@@ -721,6 +721,7 @@ impl OverlayWindow {
     }
 }
 
+#[cfg(feature = "enable-glwindow")]
 /// A wrapper around a raw OpenGL context
 pub struct GlContext(*mut raw::c_void);
 

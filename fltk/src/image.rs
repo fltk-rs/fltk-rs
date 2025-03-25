@@ -304,14 +304,17 @@ impl SvgImage {
     }
 }
 
+#[cfg(feature = "use-images")]
 /// Creates a struct holding a BMP image
 #[derive(Debug)]
 pub struct BmpImage {
     inner: ImageRC<*mut Fl_BMP_Image>,
 }
 
+#[cfg(feature = "use-images")]
 crate::macros::image::impl_image_ext!(BmpImage, Fl_BMP_Image);
 
+#[cfg(feature = "use-images")]
 impl BmpImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     /// # Errors
@@ -367,14 +370,17 @@ impl BmpImage {
     }
 }
 
+#[cfg(feature = "use-images")]
 /// Creates a struct holding a GIF image
 #[derive(Debug)]
 pub struct GifImage {
     inner: ImageRC<*mut Fl_GIF_Image>,
 }
 
+#[cfg(feature = "use-images")]
 crate::macros::image::impl_image_ext!(GifImage, Fl_GIF_Image);
 
+#[cfg(feature = "use-images")]
 impl GifImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     /// # Errors
@@ -430,6 +436,7 @@ impl GifImage {
     }
 }
 
+#[cfg(feature = "use-images")]
 bitflags::bitflags! {
     /// Defines AnimGifImage flags
     #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -465,14 +472,17 @@ bitflags::bitflags! {
     }
 }
 
+#[cfg(feature = "use-images")]
 /// Creates a struct holding an animated GIF image
 #[derive(Debug)]
 pub struct AnimGifImage {
     inner: ImageRC<*mut Fl_Anim_GIF_Image>,
 }
 
+#[cfg(feature = "use-images")]
 crate::macros::image::impl_image_ext!(AnimGifImage, Fl_Anim_GIF_Image);
 
+#[cfg(feature = "use-images")]
 impl AnimGifImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     /// # Errors
@@ -678,14 +688,17 @@ impl XbmImage {
     }
 }
 
+#[cfg(feature = "use-images")]
 /// Creates a struct holding a PNM image
 #[derive(Debug)]
 pub struct PnmImage {
     inner: ImageRC<*mut Fl_PNM_Image>,
 }
 
+#[cfg(feature = "use-images")]
 crate::macros::image::impl_image_ext!(PnmImage, Fl_PNM_Image);
 
+#[cfg(feature = "use-images")]
 impl PnmImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     /// # Errors
@@ -1264,14 +1277,17 @@ impl RgbImage {
     }
 }
 
+#[cfg(feature = "use-images")]
 /// Creates a struct holding a Windows icon (.ico) image
 #[derive(Debug)]
 pub struct IcoImage {
     inner: ImageRC<*mut Fl_ICO_Image>,
 }
 
+#[cfg(feature = "use-images")]
 crate::macros::image::impl_image_ext!(IcoImage, Fl_ICO_Image);
 
+#[cfg(feature = "use-images")]
 impl IcoImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     /// # Errors
@@ -1336,8 +1352,10 @@ impl IcoImage {
     }
 }
 
+#[cfg(feature = "use-images")]
 use std::os::raw::c_int;
 
+#[cfg(feature = "use-images")]
 /// Icon directory entry
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
