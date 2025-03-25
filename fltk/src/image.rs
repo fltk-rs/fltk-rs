@@ -1,8 +1,8 @@
 use crate::enums::ColorDepth;
 use crate::prelude::*;
-use crate::utils::FlString;
 use fltk_sys::image::*;
 use std::{ffi::CString, mem};
+use crate::utils::FlString;
 
 type ImageRC<T> = std::rc::Rc<T>;
 
@@ -36,14 +36,17 @@ impl Image {
     }
 }
 
+#[cfg(feature = "use-images")]
 /// Creates a struct holding a shared image
 #[derive(Debug)]
 pub struct SharedImage {
     inner: ImageRC<*mut Fl_Shared_Image>,
 }
 
+#[cfg(feature = "use-images")]
 crate::macros::image::impl_image_ext!(SharedImage, Fl_Shared_Image);
 
+#[cfg(feature = "use-images")]
 impl SharedImage {
     /// Loads a `SharedImage` from a path
     /// # Errors
@@ -60,7 +63,7 @@ impl SharedImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
-            let temp = CString::new(temp)?;
+            let temp = CString::safe_new(temp);
             let x = Fl_Shared_Image_get(temp.as_ptr(), 0, 0);
             if x.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -96,14 +99,17 @@ impl SharedImage {
     }
 }
 
+#[cfg(feature = "use-images")]
 /// Creates a struct holding a Jpeg image
 #[derive(Debug)]
 pub struct JpegImage {
     inner: ImageRC<*mut Fl_JPEG_Image>,
 }
 
+#[cfg(feature = "use-images")]
 crate::macros::image::impl_image_ext!(JpegImage, Fl_JPEG_Image);
 
+#[cfg(feature = "use-images")]
 impl JpegImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     /// # Errors
@@ -120,7 +126,7 @@ impl JpegImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
-            let temp = CString::new(temp)?;
+            let temp = CString::safe_new(temp);
             let image_ptr = Fl_JPEG_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -159,14 +165,17 @@ impl JpegImage {
     }
 }
 
+#[cfg(feature = "use-images")]
 /// Creates a struct holding a PNG image
 #[derive(Debug)]
 pub struct PngImage {
     inner: ImageRC<*mut Fl_PNG_Image>,
 }
 
+#[cfg(feature = "use-images")]
 crate::macros::image::impl_image_ext!(PngImage, Fl_PNG_Image);
 
+#[cfg(feature = "use-images")]
 impl PngImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     /// # Errors
@@ -183,7 +192,7 @@ impl PngImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
-            let temp = CString::new(temp)?;
+            let temp = CString::safe_new(temp);
             let image_ptr = Fl_PNG_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -222,14 +231,17 @@ impl PngImage {
     }
 }
 
+#[cfg(feature = "use-images")]
 /// Creates a struct holding an SVG image
 #[derive(Debug)]
 pub struct SvgImage {
     inner: ImageRC<*mut Fl_SVG_Image>,
 }
 
+#[cfg(feature = "use-images")]
 crate::macros::image::impl_image_ext!(SvgImage, Fl_SVG_Image);
 
+#[cfg(feature = "use-images")]
 impl SvgImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     /// # Errors
@@ -246,7 +258,7 @@ impl SvgImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
-            let temp = CString::new(temp)?;
+            let temp = CString::safe_new(temp);
             let image_ptr = Fl_SVG_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -316,7 +328,7 @@ impl BmpImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
-            let temp = CString::new(temp)?;
+            let temp = CString::safe_new(temp);
             let image_ptr = Fl_BMP_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -379,7 +391,7 @@ impl GifImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
-            let temp = CString::new(temp)?;
+            let temp = CString::safe_new(temp);
             let image_ptr = Fl_GIF_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -485,7 +497,7 @@ impl AnimGifImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
-            let temp = CString::new(temp)?;
+            let temp = CString::safe_new(temp);
             let image_ptr =
                 Fl_Anim_GIF_Image_new(temp.as_ptr(), w.as_widget_ptr() as _, flags.bits());
             if image_ptr.is_null() {
@@ -611,7 +623,7 @@ impl XpmImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
-            let temp = CString::new(temp)?;
+            let temp = CString::safe_new(temp);
             let image_ptr = Fl_XPM_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -651,7 +663,7 @@ impl XbmImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
-            let temp = CString::new(temp)?;
+            let temp = CString::safe_new(temp);
             let image_ptr = Fl_XBM_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -691,7 +703,7 @@ impl PnmImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
-            let temp = CString::new(temp)?;
+            let temp = CString::safe_new(temp);
             let image_ptr = Fl_PNM_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -747,7 +759,7 @@ impl Pixmap {
         } else {
             let data: Vec<*const std::ffi::c_char> = data
                 .iter()
-                .map(|x| CString::new(*x).unwrap().into_raw() as *const std::ffi::c_char)
+                .map(|x| CString::safe_new(*x).into_raw() as *const std::ffi::c_char)
                 .collect();
             unsafe {
                 let x = Fl_Pixmap_new(data.as_ptr() as _);
@@ -1277,7 +1289,7 @@ impl IcoImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
-            let temp = CString::new(temp)?;
+            let temp = CString::safe_new(temp);
             let image_ptr = Fl_ICO_Image_new(temp.as_ptr(), -1);
             if image_ptr.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))

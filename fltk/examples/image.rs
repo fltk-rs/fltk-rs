@@ -1,4 +1,4 @@
-use fltk::{app, frame::Frame, image::SharedImage, prelude::*, window::Window};
+use fltk::{app, frame::Frame, image::JpegImage, prelude::*, window::Window};
 use std::error::Error;
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -6,7 +6,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut wind = Window::default().with_size(400, 300);
     let mut frame = Frame::default_fill();
 
-    let mut image = SharedImage::load("screenshots/calc.jpg")?;
+    let mut image = JpegImage::load("screenshots/calc.jpg")?;
     image.scale(200, 200, true, true);
 
     frame.set_image(Some(image));

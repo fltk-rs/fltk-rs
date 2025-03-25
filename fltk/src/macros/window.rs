@@ -149,55 +149,16 @@ macro_rules! impl_window_ext {
                 fn set_icon<T: ImageExt>(&mut self, image: Option<T>) {
                     assert!(
                         std::any::type_name::<T>()
-                            != std::any::type_name::<$crate::image::SharedImage>(),
-                        "SharedImage icons are not supported!"
-                    );
-                    assert!(
-                        std::any::type_name::<T>() != std::any::type_name::<$crate::image::Pixmap>(),
-                        "Pixmap icons are not supported!"
-                    );
-                    assert!(
-                        std::any::type_name::<T>() != std::any::type_name::<$crate::image::XpmImage>(),
-                        "Xpm icons are not supported!"
-                    );
-                    assert!(
-                        std::any::type_name::<T>() != std::any::type_name::<$crate::image::XbmImage>(),
-                        "Xbm icons are not supported!"
-                    );
-                    assert!(
-                        std::any::type_name::<T>() != std::any::type_name::<$crate::image::PnmImage>(),
-                        "Pnm icons are not supported!"
-                    );
-                    assert!(
-                        std::any::type_name::<T>() != std::any::type_name::<$crate::image::GifImage>(),
-                        "Gif icons are not supported!"
-                    );
-                    assert!(
-                        std::any::type_name::<T>() != std::any::type_name::<$crate::image::Image>(),
-                        "Icon images can't be generic!"
-                    );
-                    assert!(
-                        std::any::type_name::<T>() != std::any::type_name::<$crate::image::TiledImage>(),
-                        "TiledImage icons are not supported!"
+                            == std::any::type_name::<$crate::image::RgbImage>()
                     );
                     if let Some(image) = image {
                         assert!(!image.was_deleted());
-                        if std::any::type_name::<T>() == std::any::type_name::<$crate::image::SvgImage>()
-                        {
-                            unsafe {
-                                [<$flname _set_icon>](
-                                    self.inner.widget() as _,
-                                    image.as_image_ptr() as *mut _,
-                                )
-                            }
-                        } else {
-                            // Shouldn't fail after the previous asserts!
-                            unsafe {
-                                [<$flname _set_icon>](
-                                    self.inner.widget() as _,
-                                    image.to_rgb().unwrap().as_image_ptr() as *mut _,
-                                )
-                            }
+                        // Shouldn't fail after the previous asserts!
+                        unsafe {
+                            [<$flname _set_icon>](
+                                self.inner.widget() as _,
+                                image.to_rgb().unwrap().as_image_ptr() as *mut _,
+                            )
                         }
                     } else {
                     unsafe {
@@ -292,40 +253,7 @@ macro_rules! impl_window_ext {
                     assert!(self.h() != 0);
                     assert!(
                         std::any::type_name::<I>()
-                            != std::any::type_name::<$crate::image::SharedImage>(),
-                        "SharedImage is not supported!"
-                    );
-                    assert!(
-                        std::any::type_name::<I>() != std::any::type_name::<$crate::image::XbmImage>(),
-                        "Xbm is not supported!"
-                    );
-                    assert!(
-                        std::any::type_name::<I>() != std::any::type_name::<$crate::image::PnmImage>(),
-                        "Pnm is not supported!"
-                    );
-                    assert!(
-                        std::any::type_name::<I>() != std::any::type_name::<$crate::image::GifImage>(),
-                        "Gif is not supported!"
-                    );
-                    assert!(
-                        std::any::type_name::<I>() != std::any::type_name::<$crate::image::JpegImage>(),
-                        "Jpeg is not supported!"
-                    );
-                    assert!(
-                        std::any::type_name::<I>() != std::any::type_name::<$crate::image::SvgImage>(),
-                        "Svg is not supported!"
-                    );
-                    assert!(
-                        std::any::type_name::<I>() != std::any::type_name::<$crate::image::PngImage>(),
-                        "Png is not supported!"
-                    );
-                    assert!(
-                        std::any::type_name::<I>() != std::any::type_name::<$crate::image::Image>(),
-                        "Images can't be generic!"
-                    );
-                    assert!(
-                        std::any::type_name::<I>() != std::any::type_name::<$crate::image::TiledImage>(),
-                        "TiledImage is not supported!"
+                            == std::any::type_name::<$crate::image::RgbImage>()
                     );
                     unsafe {
                         if let Some(image) = image {
