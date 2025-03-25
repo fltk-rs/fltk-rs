@@ -4,11 +4,13 @@ use crate::utils::FlString;
 use fltk_sys::image::*;
 use std::{ffi::CString, mem};
 
-#[cfg(feature = "single-threaded")]
 type ImageRC<T> = std::rc::Rc<T>;
 
-#[cfg(not(feature = "single-threaded"))]
-type ImageRC<T> = std::sync::Arc<T>;
+/// Wrapper around `Fl_Image`, used to wrap other image types
+#[derive(Debug)]
+pub struct Image {
+    inner: ImageRC<*mut Fl_Image>,
+}
 
 /// The scaling algorithm to use for raster images
 #[repr(i32)]
@@ -18,12 +20,6 @@ pub enum RgbScaling {
     Nearest = 0,
     /// More accurate, but slower RGB image scaling algorithm
     Bilinear,
-}
-
-/// Wrapper around `Fl_Image`, used to wrap other image types
-#[derive(Debug)]
-pub struct Image {
-    inner: ImageRC<*mut Fl_Image>,
 }
 
 crate::macros::image::impl_image_ext!(Image, Fl_Image);

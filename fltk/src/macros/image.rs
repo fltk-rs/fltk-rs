@@ -87,7 +87,10 @@ macro_rules! impl_image_ext {
 
                 fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image {
                     assert!(!self.was_deleted());
-                    *self.inner as *mut fltk_sys::image::Fl_Image
+                    let ptr = std::rc::Rc::into_raw(self.inner.clone());
+                    unsafe {
+                        *ptr as _
+                    }
                 }
 
                 unsafe fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
