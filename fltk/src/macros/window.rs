@@ -3,126 +3,6 @@
 /// Implements WindowExt
 macro_rules! impl_window_ext {
     ($name: ident, $flname: ident) => {
-        #[cfg(any(feature = "raw-window-handle", feature = "rwh05"))]
-        unsafe impl HasRawWindowHandle for $name {
-            fn raw_window_handle(&self) -> RawWindowHandle {
-                #[cfg(target_os = "windows")]
-                {
-                    #[cfg(feature = "rwh05")]
-                    type Handle = Win32WindowHandle;
-                    #[cfg(feature = "raw-window-handle")]
-                    type Handle = Win32Handle;
-                    let mut handle = Handle::empty();
-                    handle.hwnd = self.raw_handle();
-                    handle.hinstance = $crate::app::display();
-                    return RawWindowHandle::Win32(handle);
-                }
-
-                #[cfg(target_os = "macos")]
-                {
-                    let raw = self.raw_handle();
-                    unsafe extern "C" {
-                        pub fn cfltk_getContentView(xid: *mut raw::c_void) -> *mut raw::c_void;
-                    }
-                    let cv = unsafe { cfltk_getContentView(raw) };
-                    #[cfg(feature = "rwh05")]
-                    type Handle = AppKitWindowHandle;
-                    #[cfg(feature = "raw-window-handle")]
-                    type Handle = AppKitHandle;
-                    let mut handle = Handle::empty();
-                    handle.ns_window = raw;
-                    handle.ns_view = cv as _;
-                    return RawWindowHandle::AppKit(handle);
-                }
-
-                #[cfg(target_os = "android")]
-                {
-                    #[cfg(feature = "rwh05")]
-                    type Handle = AndroidNdkWindowHandle;
-                    #[cfg(feature = "raw-window-handle")]
-                    type Handle = AndroidNdkHandle;
-                    let mut handle = Handle::empty();
-                    handle.a_native_window = self.raw_handle();
-                    return RawWindowHandle::AndroidNdk(handle);
-                }
-
-                #[cfg(any(
-                    target_os = "linux",
-                    target_os = "dragonfly",
-                    target_os = "freebsd",
-                    target_os = "netbsd",
-                    target_os = "openbsd",
-                ))]
-                {
-                    if !$crate::app::using_wayland() {
-                        #[cfg(feature = "rwh05")]
-                        type Handle = XlibWindowHandle;
-                        #[cfg(feature = "raw-window-handle")]
-                        type Handle = XlibHandle;
-                        let mut handle = Handle::empty();
-                        handle.window = self.raw_handle() as RawXlibHandle;
-                        return RawWindowHandle::Xlib(handle);
-                    } else {
-                        #[cfg(feature = "rwh05")]
-                        type Handle = WaylandWindowHandle;
-                        #[cfg(feature = "raw-window-handle")]
-                        type Handle = WaylandHandle;
-                        let mut handle = Handle::empty();
-                        handle.surface = unsafe { resolve_raw_handle(self.raw_handle() as *mut raw::c_void) };
-                        return RawWindowHandle::Wayland(handle);
-                    }
-                }
-            }
-        }
-
-        #[cfg(feature = "rwh05")]
-        unsafe impl HasRawDisplayHandle for $name {
-            fn raw_display_handle(&self) -> RawDisplayHandle {
-                #[cfg(target_os = "windows")]
-                {
-                    type Handle = WindowsDisplayHandle;
-                    let handle = Handle::empty();
-                    return RawDisplayHandle::Windows(handle);
-                }
-
-                #[cfg(target_os = "macos")]
-                {
-                    type Handle = AppKitDisplayHandle;
-                    let handle = Handle::empty();
-                    return RawDisplayHandle::AppKit(handle);
-                }
-
-                #[cfg(target_os = "android")]
-                {
-                    type Handle = AndroidDisplayHandle;
-                    let handle = Handle::empty();
-                    return RawDisplayHandle::Android(handle);
-                }
-
-                #[cfg(any(
-                    target_os = "linux",
-                    target_os = "dragonfly",
-                    target_os = "freebsd",
-                    target_os = "netbsd",
-                    target_os = "openbsd",
-                ))]
-                {
-                    if !$crate::app::using_wayland() {
-                        type Handle = XlibDisplayHandle;
-                        let mut handle = Handle::empty();
-                        handle.display = $crate::app::display();
-                        handle.screen = self.screen_num();
-                        return RawDisplayHandle::Xlib(handle);
-                    } else {
-                        type Handle = WaylandDisplayHandle;
-                        let mut handle = Handle::empty();
-                        handle.display = $crate::app::display();
-                        return RawDisplayHandle::Wayland(handle);
-                    }
-                }
-            }
-        }
-
         #[cfg(feature = "rwh06")]
         impl HasWindowHandle for $name {
             fn window_handle(&self) ->  Result<WindowHandle<'_>, HandleError> {
@@ -357,11 +237,6 @@ macro_rules! impl_window_ext {
                         return ptr as RawHandle;
                     }
                 }
-
-                unsafe fn set_raw_handle(&mut self, handle: RawHandle) { unsafe {
-                    assert!(handle as isize != 0);
-                    Fl_Window_set_raw_handle(self.inner.widget() as *mut Fl_Window, &handle as *const _ as *mut _);
-                }}
 
                 fn region(&self) -> $crate::draw::Region {
                     unsafe {

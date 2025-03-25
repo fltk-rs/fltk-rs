@@ -18,7 +18,7 @@ impl PopupButton {
                 true
             }
             Event::Leave => {
-                b.set_color(Color::BackGround);
+                b.set_color(Color::Background);
                 b.top_window().unwrap().redraw();
                 true
             }

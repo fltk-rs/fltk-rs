@@ -37,6 +37,7 @@ where
     unsafe {
         unsafe extern "C" fn shim(wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
             unsafe {
+                #[allow(clippy::type_complexity)]
                 let a: *mut Box<dyn FnMut(&mut dyn WidgetExt)> =
                     data as *mut Box<dyn FnMut(&mut dyn WidgetExt)>;
                 let f: &mut (dyn FnMut(&mut dyn WidgetExt)) = &mut **a;
@@ -48,6 +49,7 @@ where
         if widget.is_derived() {
             _old_data = widget.user_data();
         }
+        #[allow(clippy::type_complexity)]
         let a: *mut Box<dyn FnMut(&mut dyn WidgetExt)> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: fltk_sys::widget::Fl_Callback = Some(shim);

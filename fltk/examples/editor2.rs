@@ -1,6 +1,6 @@
 use fltk::{
     app, dialog,
-    enums::{CallbackTrigger, Color, Event, Font, FrameType, Shortcut},
+    enums::{When, Color, Event, Font, FrameType, Shortcut},
     menu,
     prelude::*,
     printer, text, window,
@@ -75,7 +75,7 @@ impl MyEditor {
         editor.set_text_font(Font::Courier);
         editor.set_linenumber_width(32);
         editor.set_linenumber_fgcolor(Color::from_u32(0x008b_8386));
-        editor.set_trigger(CallbackTrigger::Changed);
+        editor.set_when(When::Changed);
 
         Self { editor }
     }

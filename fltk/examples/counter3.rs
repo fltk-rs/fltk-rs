@@ -63,7 +63,7 @@ fn main() {
     but.set_color(BLUE);
     but.set_selection_color(SEL_BLUE);
     but.set_label_color(Color::White);
-    but.set_frame(FrameType::OFlatFrame);
+    but.set_frame(FrameType::OFlatBox);
     // End theming
 
     but.set_callback(move |_| {

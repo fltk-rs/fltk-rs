@@ -968,17 +968,17 @@ pub fn draw_rbox(x: i32, y: i32, w: i32, h: i32, max_radius: i32, fill: bool, co
 /// Start drawing using OpenGL functions inside a widget's draw routine
 /// # Safety
 /// Requires OpenGL support, Only works with SingleWindow
-pub unsafe fn gl_start() {
+pub unsafe fn gl_start() { unsafe {
     fltk_sys::window::Fl_gl_start();
-}
+}}
 
 #[cfg(feature = "enable-glwindow")]
 /// Finish drawing using OpenGL functions inside a widget's draw routine
 /// # Safety
 /// Requires OpenGL support, Only works with SingleWindow
-pub unsafe fn gl_finish() {
+pub unsafe fn gl_finish() { unsafe {
     fltk_sys::window::Fl_gl_finish();
-}
+}}
 
 /// Draws a rounded rectangle
 pub fn draw_rounded_rect(x: i32, y: i32, w: i32, h: i32, r: i32) {

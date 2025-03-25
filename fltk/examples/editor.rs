@@ -272,7 +272,7 @@ fn main() {
         ed.set_buffer(buf);
         ed.set_linenumber_width(40);
         ed.set_text_font(Font::Courier);
-        ed.set_trigger(CallbackTrigger::Changed);
+        ed.set_when(When::Changed);
         ed.set_callback(editor_cb);
         handle_drag_drop(&mut ed);
         w.resizable(&col);

@@ -59,8 +59,8 @@ impl MyApp {
             inp1.set_value(&format!("{}", 0.0));
             inp2.set_value(&format!("{}", 32.0));
 
-            inp1.set_trigger(CallbackTrigger::Changed);
-            inp2.set_trigger(CallbackTrigger::Changed);
+            inp1.set_when(When::Changed);
+            inp2.set_when(When::Changed);
 
             inp1.emit(s, Message::CelciusChanged);
             inp2.emit(s, Message::FahrenheitChanged);

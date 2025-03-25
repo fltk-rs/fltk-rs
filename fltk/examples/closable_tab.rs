@@ -18,7 +18,7 @@ fn main() {
     // first tab
     {
         let mut col1 = group::Flex::default().with_label("\t\ttab1").column();
-        col1.set_trigger(CallbackTrigger::Closed);
+        col1.set_when(When::Closed);
         col1.set_callback(tab_close_cb);
         // widgets
         col1.end();
@@ -28,7 +28,7 @@ fn main() {
     // second tab
     {
         let mut col2 = group::Flex::default().with_label("\t\ttab2").column();
-        col2.set_trigger(CallbackTrigger::Closed);
+        col2.set_when(When::Closed);
         col2.set_callback(tab_close_cb);
         // widgets
         col2.end();

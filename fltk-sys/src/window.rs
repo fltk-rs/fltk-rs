@@ -581,9 +581,6 @@ unsafe extern "C" {
         argv: *mut *mut ::core::ffi::c_char,
     );
 }
-unsafe extern "C" {
-    pub fn Fl_Window_set_raw_handle(self_: *mut Fl_Window, handle: *mut ::core::ffi::c_void);
-}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Single_Window {

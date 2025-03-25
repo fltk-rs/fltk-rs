@@ -11,11 +11,11 @@ fn main() {
     window.show();
 
     let mut btn = button::Button::from_dyn_widget(&grp.child(0).unwrap()).unwrap();
-    btn.handle(move |w, ev| {
+    btn.handle(move |_w, ev| {
         if ev == enums::Event::Push {
             grp.clear();
             grp.begin();
-            let b = button::Button::new(0, 0, 100, 100, "None");
+            button::Button::new(0, 0, 100, 100, "None");
             grp.end();
             true
         } else {

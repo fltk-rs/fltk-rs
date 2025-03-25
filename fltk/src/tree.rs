@@ -1188,6 +1188,7 @@ impl TreeItem {
                     .unwrap_or_default()
                 }
             }
+            #[allow(clippy::type_complexity)]
             let a: *mut Box<dyn FnMut(&mut Self, bool) -> i32> =
                 Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut raw::c_void;

@@ -13,17 +13,13 @@
 
 use crate::app::screen_size;
 use crate::enums::{
-    Align, CallbackTrigger, Color, Cursor, Damage, Event, Font, FrameType, LabelType, Mode,
+    Align, When, Color, Cursor, Damage, Event, Font, FrameType, LabelType, Mode,
 };
 use crate::image::Image;
 use crate::prelude::*;
 use crate::utils::FlString;
 use crate::widget::Widget;
 use fltk_sys::window::*;
-#[cfg(feature = "raw-window-handle")]
-use raw_window_handle::*;
-#[cfg(feature = "rwh05")]
-use rwh05::*;
 #[cfg(feature = "rwh06")]
 use rwh06::*;
 use std::{
@@ -83,21 +79,37 @@ type RawXlibHandle = u64;
     target_os = "ios",
     target_os = "android",
     target_os = "emscripten",
-    feature = "use-wayland"
 ))]
 pub type RawHandle = *mut raw::c_void;
 
 /// Opaque raw window handle (`*mut c_void` to `HWND` on Windows and `NSWindow` on macOS),
 /// `XID` (`u64`) raw window handle for X11
-#[cfg(not(any(
-    target_os = "windows",
-    target_os = "macos",
-    target_os = "ios",
-    target_os = "android",
-    target_os = "emscripten",
-    feature = "use-wayland"
-)))]
+#[cfg(all(
+    not(any(
+        target_os = "windows",
+        target_os = "macos",
+        target_os = "ios",
+        target_os = "android",
+        target_os = "emscripten"
+    )),
+    feature = "no-wayland"
+))]
 pub type RawHandle = RawXlibHandle;
+
+/// Opaque raw window handle (`*mut c_void` to `HWND` on Windows and `NSWindow` on macOS),
+/// `XID` (`u64`) raw window handle for X11
+#[cfg(all(
+    not(any(
+        target_os = "windows",
+        target_os = "macos",
+        target_os = "ios",
+        target_os = "android",
+        target_os = "emscripten"
+    )),
+    not(feature = "no-wayland")
+))]
+pub type RawHandle = *mut std::os::raw::c_void;
+
 
 /// Creates a window widget
 pub type Window = DoubleWindow;
@@ -725,8 +737,6 @@ crate::macros::widget::impl_widget_ext!(GlutWindow, Fl_Glut_Window);
 #[cfg(feature = "enable-glwindow")]
 crate::macros::widget::impl_widget_base!(GlutWindow, Fl_Glut_Window);
 #[cfg(feature = "enable-glwindow")]
-crate::macros::widget::impl_widget_default!(GlutWindow, Fl_Glut_Window);
-#[cfg(feature = "enable-glwindow")]
 crate::macros::group::impl_group_ext!(GlutWindow, Fl_Glut_Window);
 #[cfg(feature = "enable-glwindow")]
 crate::macros::window::impl_window_ext!(GlutWindow, Fl_Glut_Window);
@@ -759,21 +769,23 @@ impl GlutWindow {
             assert!(crate::app::is_ui_thread());
             let tracker = crate::widget::WidgetTracker::new(widget_ptr as _);
             unsafe extern "C" fn shim(wid: *mut Fl_Widget, _data: *mut std::os::raw::c_void) {
-                let user_data = Fl_Glut_Window_user_data(wid as _);
-                let draw_data = Fl_Glut_Window_draw_data(wid as _);
-                let handle_data = Fl_Glut_Window_handle_data(wid as _);
-                crate::app::add_timeout(0., move |h| {
-                    if !user_data.is_null() {
-                        let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
-                    }
-                    if !draw_data.is_null() {
-                        let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
-                    }
-                    if !handle_data.is_null() {
-                        let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
-                    }
-                    crate::app::remove_timeout(h);
-                });
+                unsafe {
+                    let user_data = Fl_Glut_Window_user_data(wid as _);
+                    let draw_data = Fl_Glut_Window_draw_data(wid as _);
+                    let handle_data = Fl_Glut_Window_handle_data(wid as _);
+                    crate::app::add_timeout(0., move |h| {
+                        if !user_data.is_null() {
+                            let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
+                        }
+                        if !draw_data.is_null() {
+                            let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
+                        }
+                        if !handle_data.is_null() {
+                            let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
+                        }
+                        crate::app::remove_timeout(h);
+                    });
+                }
             }
             Fl_Glut_Window_set_deletion_callback(widget_ptr, Some(shim), std::ptr::null_mut());
             Self {
@@ -832,6 +844,7 @@ impl GlutWindow {
         }
     }
 
+    #[allow(clippy::not_unsafe_ptr_arg_deref)]
     /// Sets the GlContext
     pub fn set_context(&mut self, ctx: GlContext, destroy_flag: bool) {
         assert!(!ctx.is_null());
@@ -929,8 +942,6 @@ pub mod experimental {
     #[cfg(feature = "enable-glwindow")]
     crate::macros::widget::impl_widget_base!(GlWidgetWindow, Fl_Gl_Window);
     #[cfg(feature = "enable-glwindow")]
-    crate::macros::widget::impl_widget_default!(GlWidgetWindow, Fl_Gl_Window);
-    #[cfg(feature = "enable-glwindow")]
     crate::macros::group::impl_group_ext!(GlWidgetWindow, Fl_Gl_Window);
     #[cfg(feature = "enable-glwindow")]
     crate::macros::window::impl_window_ext!(GlWidgetWindow, Fl_Gl_Window);
@@ -964,8 +975,8 @@ pub mod experimental {
                 assert!(!widget_ptr.is_null());
                 assert!(crate::app::is_ui_thread());
                 let tracker = crate::widget::WidgetTracker::new(widget_ptr as _);
-                unsafe extern "C" fn shim(wid: *mut Fl_Widget, _data: *mut std::os::raw::c_void) {
-                    let user_data = Fl_Gll_Window_user_data(wid as _);
+                unsafe extern "C" fn shim(wid: *mut Fl_Widget, _data: *mut std::os::raw::c_void) { unsafe {
+                    let user_data = Fl_Gl_Window_user_data(wid as _);
                     let draw_data = Fl_Gl_Window_draw_data(wid as _);
                     let handle_data = Fl_Gl_Window_handle_data(wid as _);
                     crate::app::add_timeout(0., move |h| {
@@ -980,27 +991,13 @@ pub mod experimental {
                         }
                         crate::app::remove_timeout(h);
                     });
-                }
+                }}
                 Fl_Gl_Window_set_deletion_callback(widget_ptr, Some(shim), std::ptr::null_mut());
                 Self {
                     inner: tracker,
                     is_derived: true,
                 }
             }
-        }
-
-        /// Creates a new GlWidgetWindow
-        pub fn new<'a, T: Into<Option<&'a str>>>(
-            x: i32,
-            y: i32,
-            w: i32,
-            h: i32,
-            label: T,
-        ) -> GlWidgetWindow {
-            let mut win = <GlWidgetWindow as WidgetBase>::new(x, y, w, h, label);
-            win.set_frame(FrameType::FlatBox);
-            win.begin();
-            win
         }
 
         /// Gets an opengl function address
@@ -1052,6 +1049,7 @@ pub mod experimental {
             }
         }
 
+        #[allow(clippy::not_unsafe_ptr_arg_deref)]
         /// Sets the GlContext
         pub fn set_context(&mut self, ctx: GlContext, destroy_flag: bool) {
             assert!(!ctx.is_null());

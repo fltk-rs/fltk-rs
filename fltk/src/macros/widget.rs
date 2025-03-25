@@ -85,14 +85,12 @@ macro_rules! impl_widget_ext {
 
                 fn label(&self) -> Option<String> {
                     unsafe {
-                        fltk_sys::fl::Fl_lock();
                         let ptr = [<$flname _label>](self.inner.widget() as _) as *mut std::os::raw::c_char;
                         let s = if ptr.is_null() {
                             None
                         } else {
                             Some(CStr::from_ptr(ptr).to_string_lossy().to_string())
                         };
-                        fltk_sys::fl::Fl_unlock();
                         s
                     }
                 }
@@ -134,7 +132,6 @@ macro_rules! impl_widget_ext {
                 fn tooltip(&self) -> Option<String> {
                     unsafe {
                         let tooltip_ptr = [<$flname _tooltip>](self.inner.widget() as _);
-                        fltk_sys::fl::Fl_lock();
                         let s = if tooltip_ptr.is_null() {
                             None
                         } else {
@@ -144,7 +141,6 @@ macro_rules! impl_widget_ext {
                                     .to_string(),
                             )
                         };
-                        fltk_sys::fl::Fl_unlock();
                         s
                     }
                 }
@@ -234,11 +230,11 @@ macro_rules! impl_widget_ext {
                     unsafe { [<$flname _set_align>](self.inner.widget() as _, align.bits() as i32) }
                 }
 
-                fn set_trigger(&mut self, trigger: $crate::enums::CallbackTrigger) {
+                fn set_when(&mut self, trigger: $crate::enums::When) {
                     unsafe { [<$flname _set_when>](self.inner.widget() as _, trigger.bits() as i32) }
                 }
 
-                fn trigger(&self) -> $crate::enums::CallbackTrigger {
+                fn when(&self) -> $crate::enums::When {
                     unsafe { std::mem::transmute([<$flname _when>](self.inner.widget() as _)) }
                 }
 
@@ -654,18 +650,16 @@ macro_rules! impl_widget_base {
                     }
                 }
 
-                unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self { unsafe {
+                unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self {
                     assert!(!ptr.is_null());
-                    fltk_sys::fl::Fl_lock();
                     let tracker =
                         $crate::widget::WidgetTracker::new(ptr as _);
                     let temp = $name {
                         inner: tracker,
                         is_derived: false,
                     };
-                    fltk_sys::fl::Fl_unlock();
                     temp
-                }}
+                }
 
                 unsafe fn from_widget<W: WidgetExt>(w: W) -> Self { unsafe {
                     Self::from_widget_ptr(w.as_widget_ptr() as *mut _)
@@ -804,13 +798,11 @@ macro_rules! impl_widget_base {
                         None
                     } else {
                     unsafe {
-                            fltk_sys::fl::Fl_lock();
                             let tracker = $crate::widget::WidgetTracker::new(ptr as _);
                             let temp = Some(Self {
                                 inner: tracker,
                                 is_derived: ![<$flname _from_derived_dyn_ptr>](w as _).is_null(),
                             });
-                            fltk_sys::fl::Fl_unlock();
                             temp
                         }
                     }
@@ -1300,12 +1292,12 @@ macro_rules! impl_widget_ext_via {
                 self.$member.clear_damage()
             }
 
-            fn set_trigger(&mut self, trigger: $crate::enums::CallbackTrigger) {
-                self.$member.set_trigger(trigger)
+            fn set_when(&mut self, trigger: $crate::enums::When) {
+                self.$member.set_when(trigger)
             }
 
-            fn trigger(&self) -> $crate::enums::CallbackTrigger {
-                self.$member.trigger()
+            fn when(&self) -> $crate::enums::When {
+                self.$member.when()
             }
 
             fn as_window(&self) -> Option<Box<dyn WindowExt>> {

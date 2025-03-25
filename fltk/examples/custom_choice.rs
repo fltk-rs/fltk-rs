@@ -109,7 +109,7 @@ impl MyChoice {
         let grp = group::Group::new(x, y, w, h, label).with_align(Align::Left);
         let mut frame = frame::Frame::new(x, y, w - w / 4, h, None);
         frame.set_frame(FrameType::DownBox);
-        frame.set_color(Color::BackGround2);
+        frame.set_color(Color::Background2);
         let mut btn = button::Button::new(x + w - w / 4, y, w / 4, h, "@2>");
         btn.clear_visible_focus();
         grp.end();

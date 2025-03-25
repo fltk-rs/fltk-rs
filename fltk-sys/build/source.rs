@@ -4,10 +4,8 @@ use std::{env, path::Path, process::Command};
 pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     println!("cargo:rerun-if-env-changed=CC");
     println!("cargo:rerun-if-env-changed=CXX");
-    println!("cargo:rerun-if-env-changed=CFLTK_TOOLCHAIN");
     println!("cargo:rerun-if-env-changed=PKG_CONFIG_PATH");
     println!("cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR");
-    println!("cargo:rerun-if-env-changed=CFLTK_WAYLAND_ONLY");
     println!("cargo:rerun-if-env-changed=CFLTK_GENERATE_BUNDLE_DIR");
     println!("cargo:rerun-if-changed=cfltk/CMakeLists.txt");
     println!("cargo:rerun-if-changed=cfltk/include/cfl.h");
@@ -138,10 +136,6 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             dst.define("CFLTK_USE_OPENGL", "OFF");
         }
 
-        if let Ok(toolchain) = env::var("CFLTK_TOOLCHAIN") {
-            dst.define("CMAKE_TOOLCHAIN_FILE", &toolchain);
-        }
-
         if target_triple.contains("linux") {
             if cfg!(feature = "no-pango-cairo") {
                 dst.define("FLTK_USE_PANGO", "OFF");
@@ -150,14 +144,12 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
                 dst.define("FLTK_USE_PANGO", "ON");
                 dst.define("FLTK_GRAPHICS_CAIRO", "ON");
             }
-            if cfg!(feature = "use-wayland") {
+            if !cfg!(feature = "no-wayland") {
                 dst.define("FLTK_BACKEND_WAYLAND", "ON");
                 dst.define("FLTK_USE_LIBDECOR_GTK", "OFF");
                 dst.define("FLTK_USE_SYSTEM_LIBDECOR", "OFF");
-                if let Ok(wayland_only) = std::env::var("CFLTK_WAYLAND_ONLY") {
-                    if wayland_only == "1" {
-                        dst.define("FLTK_BACKEND_X11", "OFF");
-                    }
+                if cfg!(feature = "wayland-only") {
+                    dst.define("FLTK_BACKEND_X11", "OFF");
                 }
             } else {
                 dst.define("FLTK_BACKEND_WAYLAND", "OFF");
@@ -205,7 +197,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             }
         }
 
-        let _dst = dst
+        let dst = dst
             .profile(profile)
             .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
             .define("CFLTK_CARGO_BUILD", "ON")
@@ -217,6 +209,11 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             .define("FLTK_BUILD_HTML_DOCS", "OFF")
             .define("FLTK_BUILD_PDF_DOCS", "OFF")
             .build();
+
+        println!(
+            "cargo:rustc-link-search=native={}",
+            dst.join("lib").display()
+        );
     } else if target_triple.contains("android") {
         crate::android::build(out_dir, target_triple);
     } else {

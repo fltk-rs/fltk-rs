@@ -1,8 +1,9 @@
 use crate::prelude::WidgetExt;
 use std::any::Any;
+use std::cell::RefCell;
 use std::collections::HashMap;
 use std::sync::Mutex;
-use std::sync::{LazyLock, OnceLock};
+use std::sync::OnceLock;
 
 static STATE: OnceLock<Mutex<Box<dyn Any + Send + Sync + 'static>>> = OnceLock::new();
 
@@ -56,8 +57,9 @@ impl<T: Sync + Send + 'static> GlobalState<T> {
     }
 }
 
-static WIDGET_MAP: LazyLock<Mutex<HashMap<String, Box<dyn Any + Send + Sync + 'static>>>> =
-    LazyLock::new(|| Mutex::new(HashMap::default()));
+thread_local! {
+    static WIDGET_MAP: RefCell<HashMap<String, Box<dyn Any>>> = RefCell::new(HashMap::new());
+}
 
 /// Allows setting a an id to a widget.
 /// Will not work with the single-threaded feature.
@@ -75,13 +77,13 @@ where
 
 impl<W> WidgetId<W> for W
 where
-    W: WidgetExt + Send + Sync + Clone + 'static,
+    W: WidgetExt + Clone + 'static,
 {
     fn set_id(&mut self, id: &str) {
-        WIDGET_MAP
-            .lock()
-            .unwrap()
-            .insert(id.to_string(), Box::new(self.clone()));
+        WIDGET_MAP.with(|w| {
+            w.borrow_mut()
+                .insert(id.to_string(), Box::new(self.clone()))
+        });
     }
     fn with_id(mut self, id: &str) -> Self {
         self.set_id(id);
@@ -91,9 +93,11 @@ where
 
 /// Get back the widget thru its id
 pub fn widget_from_id<T: 'static + Clone>(id: &str) -> Option<T> {
-    if let Some(w) = WIDGET_MAP.lock().unwrap().get(id) {
-        w.downcast_ref::<T>().map(|w| (*w).clone())
-    } else {
-        None
-    }
+    WIDGET_MAP.with(|w| {
+        if let Some(w) = w.borrow().get(id) {
+            w.downcast_ref::<T>().map(|w| (*w).clone())
+        } else {
+            None
+        }
+    })
 }

@@ -194,11 +194,7 @@ impl SysMenuBar {
     }
 }
 
-#[cfg(feature = "single-threaded")]
 type MenuItemWrapper = std::rc::Rc<*mut Fl_Menu_Item>;
-
-#[cfg(not(feature = "single-threaded"))]
-type MenuItemWrapper = std::sync::Arc<*mut Fl_Menu_Item>;
 
 /// Creates a menu item
 #[derive(Debug, Clone)]
@@ -246,57 +242,6 @@ impl IntoIterator for MenuItem {
     }
 }
 
-#[doc(hidden)]
-#[derive(Clone, Debug)]
-pub struct CMenuItem {
-    /// menu item text, returned by label()
-    pub text: Option<&'static str>,
-    /// menu item shortcut
-    pub shortcut: Shortcut,
-    /// menu item callback          
-    pub cb: Option<fn(*mut Choice)>,
-    /// menu item flags like FL_MENU_TOGGLE, FL_MENU_RADIO
-    pub flags: MenuFlag,
-    /// how the menu item text looks like  
-    pub labeltype: LabelType,
-    /// which font for this menu item text       
-    pub labelfont: Font,
-    /// size of menu item text     
-    pub labelsize: i32,
-    /// menu item text color
-    pub labelcolor: Color,
-}
-
-impl Default for CMenuItem {
-    fn default() -> Self {
-        Self {
-            text: Some(""),
-            shortcut: Shortcut::None,
-            cb: None,
-            flags: MenuFlag::Normal,
-            labeltype: LabelType::Normal,
-            labelfont: Font::Helvetica,
-            labelsize: crate::app::font_size(),
-            labelcolor: Color::Foreground,
-        }
-    }
-}
-
-impl CMenuItem {
-    pub fn empty() -> Self {
-        Self {
-            text: None,
-            shortcut: Shortcut::None,
-            cb: None,
-            flags: MenuFlag::Normal,
-            labeltype: LabelType::Normal,
-            labelfont: Font::Helvetica,
-            labelsize: crate::app::font_size(),
-            labelcolor: Color::Foreground,
-        }
-    }
-}
-
 impl MenuItem {
     /// Initializes a MenuItem from a pointer
     /// # Safety
@@ -335,53 +280,6 @@ impl MenuItem {
                 temp.push(c.into_raw() as _);
             }
             let item_ptr = Fl_Menu_Item_new(temp.as_ptr() as *mut *mut raw::c_char, sz as i32);
-            assert!(!item_ptr.is_null());
-            MenuItem {
-                inner: MenuItemWrapper::new(item_ptr),
-            }
-        }
-    }
-
-    /// Initializes a MenuItem from a slice of CMenuItem.
-    /// This will allocate a static MenuItem, that is expected to live for the entirety of the program
-    #[doc(hidden)]
-    pub fn new_from_cmenu(choices: &[CMenuItem]) -> MenuItem {
-        unsafe {
-            let sz = choices.len();
-            let mut texts: Vec<*mut raw::c_char> = vec![];
-            let mut shortcuts = vec![];
-            let mut cbs = vec![];
-            let mut flags = vec![];
-            let mut lts = vec![];
-            let mut fs = vec![];
-            let mut sizes = vec![];
-            let mut colors = vec![];
-            for choice in choices {
-                let c = if let Some(text) = choice.text {
-                    CString::safe_new(text).into_raw() as _
-                } else {
-                    std::ptr::null_mut()
-                };
-                texts.push(c);
-                shortcuts.push(choice.shortcut.bits());
-                cbs.push(std::mem::transmute(choice.cb));
-                flags.push(choice.flags.bits());
-                lts.push(choice.labeltype as i32);
-                fs.push(choice.labelfont.bits());
-                sizes.push(choice.labelsize);
-                colors.push(choice.labelcolor.bits());
-            }
-            let item_ptr = Fl_Menu_Item_new2(
-                texts.as_mut_ptr() as *mut *mut raw::c_char,
-                shortcuts.as_mut_ptr(),
-                cbs.as_mut_ptr(),
-                flags.as_mut_ptr(),
-                lts.as_mut_ptr(),
-                fs.as_mut_ptr(),
-                sizes.as_mut_ptr(),
-                colors.as_mut_ptr(),
-                sz as i32,
-            );
             assert!(!item_ptr.is_null());
             MenuItem {
                 inner: MenuItemWrapper::new(item_ptr),

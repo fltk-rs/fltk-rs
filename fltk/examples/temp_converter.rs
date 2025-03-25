@@ -25,8 +25,8 @@ fn main() {
     inp1.set_value(&format!("{}", 0.0));
     inp2.set_value(&format!("{}", 32.0));
 
-    inp1.set_trigger(enums::CallbackTrigger::Changed);
-    inp2.set_trigger(enums::CallbackTrigger::Changed);
+    inp1.set_when(enums::When::Changed);
+    inp2.set_when(enums::When::Changed);
 
     inp1.set_callback({
         let mut inp2 = inp2.clone();

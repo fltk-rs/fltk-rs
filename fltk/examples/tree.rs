@@ -173,7 +173,7 @@ fn main() {
     tree2.add("Second");
     tree2.add("Third");
 
-    tree2.set_trigger(fltk::enums::CallbackTrigger::ReleaseAlways);
+    tree2.set_when(fltk::enums::When::ReleaseAlways);
 
     wind.make_resizable(true);
     wind.show();

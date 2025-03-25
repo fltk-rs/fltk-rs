@@ -1,5 +1,5 @@
 use crate::enums::{
-    Align, CallbackTrigger, Color, ColorDepth, Cursor, Damage, Event, Font, FrameType, LabelType,
+    Align, When, Color, ColorDepth, Cursor, Damage, Event, Font, FrameType, LabelType,
     Shortcut,
 };
 use std::convert::From;
@@ -291,9 +291,9 @@ pub unsafe trait WidgetExt {
     /// Clear the damaged flag
     fn clear_damage(&mut self);
     /// Sets the default callback trigger for a widget, equivalent to `when()`
-    fn set_trigger(&mut self, trigger: CallbackTrigger);
+    fn set_when(&mut self, trigger: When);
     /// Return the callback trigger, equivalent to `when()`
-    fn trigger(&self) -> CallbackTrigger;
+    fn when(&self) -> When;
     /// Return the widget as a window if it's a window
     fn as_window(&self) -> Option<Box<dyn WindowExt>>;
     /// Return the widget as a group widget if it's a group widget
@@ -656,12 +656,6 @@ pub unsafe trait WindowExt: GroupExt {
     fn free_position(&mut self);
     /// Get the raw system handle of the window
     fn raw_handle(&self) -> crate::window::RawHandle;
-    #[doc(hidden)]
-    /// Set the window associated with a raw handle.
-    /// `RawHandle` is a void pointer to: (Windows: `HWND`, X11: `Xid` (`u64`), macOS: `NSWindow`)
-    /// # Safety
-    /// The data must be valid and is OS-dependent. The window must be shown.
-    unsafe fn set_raw_handle(&mut self, handle: crate::window::RawHandle);
     /// Get the graphical draw region of the window
     fn region(&self) -> crate::draw::Region;
     /// Set the graphical draw region of the window

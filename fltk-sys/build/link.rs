@@ -1,38 +1,7 @@
 use crate::utils;
-use std::path::Path;
 use std::process::Command;
 
-pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
-    println!(
-        "cargo:rustc-link-search=native={}",
-        out_dir.join("build").display()
-    );
-
-    println!(
-        "cargo:rustc-link-search=native={}",
-        out_dir.join("build").join("Release").display()
-    );
-
-    println!(
-        "cargo:rustc-link-search=native={}",
-        out_dir.join("lib").display()
-    );
-
-    println!(
-        "cargo:rustc-link-search=native={}",
-        out_dir.join("lib64").display()
-    );
-
-    println!(
-        "cargo:rustc-link-search=native={}",
-        out_dir.join("lib").join("Release").display()
-    );
-
-    println!(
-        "cargo:rustc-link-search=native={}",
-        out_dir.join("lib64").join("Release").display()
-    );
-
+pub fn link(target_os: &str, target_triple: &str) {
     if !cfg!(feature = "fltk-shared") {
         println!("cargo:rustc-link-lib=static=cfltk");
     } else {
@@ -79,7 +48,7 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                     println!("cargo:rustc-link-lib=dylib=glu32");
                 }
                 _ => {
-                    if cfg!(feature = "use-wayland") {
+                    if !cfg!(feature = "no-wayland") {
                         println!("cargo:rustc-link-lib=dylib=wayland-egl");
                         println!("cargo:rustc-link-lib=dylib=EGL");
                     }
@@ -146,15 +115,13 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
             _ => {
                 println!("cargo:rustc-link-lib=dylib=pthread");
                 let mut link_x11 = true;
-                if cfg!(feature = "use-wayland") {
+                if !cfg!(feature = "no-wayland") {
                     println!("cargo:rustc-link-lib=dylib=wayland-client");
                     println!("cargo:rustc-link-lib=dylib=wayland-cursor");
                     println!("cargo:rustc-link-lib=dylib=xkbcommon");
                     println!("cargo:rustc-link-lib=dylib=dbus-1");
-                    if let Ok(wayland_only) = std::env::var("CFLTK_WAYLAND_ONLY") {
-                        if wayland_only == "1" {
-                            link_x11 = false;
-                        }
+                    if cfg!(feature = "wayland-only") {
+                        link_x11 = false;
                     }
                     if cfg!(feature = "gtk-decor") {
                         allow_gtk_plugin();

@@ -254,7 +254,7 @@ Rust (version > 1.63), CMake (version > 3.15), Git and a C++17 compiler need to 
     - MSVC: Windows SDK
     - Gnu: No dependencies
 - MacOS: MacOS SDK (installed as part of xcode or the xcode command line tools).
-- Linux/BSD: X11 (and wayland for `use-wayland` feature flag) and OpenGL development headers need to be installed for development. The libraries themselves are normally available on linux/bsd distros with a graphical user interface.
+- Linux/BSD: X11 (and wayland for if `no-wayland` feature flag isn't used) and OpenGL development headers need to be installed for development. The libraries themselves are normally available on linux/bsd distros with a graphical user interface.
 
 For Debian-based GUI distributions, that means running:
 ```bash
@@ -303,7 +303,7 @@ The following are the features offered by the crate:
 - system-libpng: Uses the system libpng
 - system-libjpeg: Uses the system libjpeg
 - system-zlib: Uses the system zlib
-- use-wayland: Uses FLTK's wayland hybrid backend (runs on wayland when present, and on X11 when not present). Requires libwayland-dev, wayland-protocols, libdbus-1-dev, libxkbcommon-dev, libgtk-3-dev (optional, for the GTK-style titlebar), in addition to the X11 development packages. Sample [CI](https://github.com/MoAlyousef/test_wayland/blob/main/.github/workflows/rust.yml).
+- no-wayland: Disables FLTK's wayland hybrid backend (runs on wayland when present, and on X11 when not present). Requires libwayland-dev, wayland-protocols, libdbus-1-dev, libxkbcommon-dev, libgtk-3-dev (optional, for the GTK-style titlebar), in addition to the X11 development packages. Sample [CI](https://github.com/MoAlyousef/test_wayland/blob/main/.github/workflows/rust.yml).
 - fltk-config: Uses an already installed FLTK's fltk-config to build this crate against. This still requires FLTK 1.5. Useful for reducing build times, testing against a locally built FLTK and doesn't need to invoke neither git nor cmake. 
 
 ## FAQ

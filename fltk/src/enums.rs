@@ -125,8 +125,8 @@ pub enum FrameType {
     OShadowBox,
     /// Oval Frame
     OvalFrame,
-    /// Oval Flat Frame
-    OFlatFrame,
+    /// Oval Flat Box
+    OFlatBox,
     /// Plastic Up Box
     PlasticUpBox,
     /// Plastic Down Box
@@ -160,9 +160,9 @@ pub enum FrameType {
     /// Gtk Thin Down Frame
     GtkThinDownFrame,
     /// Gtk Round Up Frame
-    GtkRoundUpFrame,
+    GtkRoundUpBox,
     /// Gtk Round Down Frame
-    GtkRoundDownFrame,
+    GtkRoundDownBox,
     /// Gleam Up Box
     GleamUpBox,
     /// Gleam Down Box
@@ -186,10 +186,6 @@ pub enum FrameType {
 }
 
 impl FrameType {
-    /// Alias OFlatFrame as OFlatBox
-    pub const OFlatBox: FrameType = FrameType::OFlatFrame;
-    /// Alias GtkRoundDownFrame as GtkRoundDownBox
-    pub const GtkRoundDownBox: FrameType = FrameType::GtkRoundDownFrame;
     /// Get the discriminant value or the user defined frame type
     pub fn as_i32(&self) -> i32 {
         match *self {
@@ -483,12 +479,8 @@ pub struct Color {
 }
 
 impl Color {
-    /// ForeGround, label colors
-    pub const ForeGround: Color = Color { bits: 0 };
     /// Foreground, label colors
     pub const Foreground: Color = Color { bits: 0 };
-    /// BackGround2, Is the color inside input, output and text display widgets
-    pub const BackGround2: Color = Color { bits: 7 };
     /// Background2, Is the color inside input, output and text display widgets
     pub const Background2: Color = Color { bits: 7 };
     /// Inactive
@@ -509,8 +501,6 @@ impl Color {
     pub const Dark1: Color = Color { bits: 47 };
     /// FrameDefault
     pub const FrameDefault: Color = Color { bits: 49 };
-    /// BackGround
-    pub const BackGround: Color = Color { bits: 49 };
     /// Background
     pub const Background: Color = Color { bits: 49 };
     /// Light1
@@ -619,7 +609,7 @@ impl Color {
                 use crate::prelude::WidgetExt;
                 grp.color()
             } else {
-                Color::BackGround
+                Color::Background
             };
             let bg_col = bg_col.to_rgb();
             let alpha = tup.3 as f32 / 255.0;
@@ -767,9 +757,6 @@ impl Color {
 impl std::fmt::Display for Color {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match *self {
-            Color::ForeGround => write!(f, "Color::ForeGround"),
-            Color::BackGround => write!(f, "Color::BackGround"),
-            Color::BackGround2 => write!(f, "Color::BackGround2"),
             Color::Foreground => write!(f, "Color::Foreground"),
             Color::Background => write!(f, "Color::Background"),
             Color::Background2 => write!(f, "Color::Background2"),
@@ -852,6 +839,8 @@ impl Event {
     pub const Focus: Event = Event { bits: 6 };
     /// Unfocus
     pub const Unfocus: Event = Event { bits: 7 };
+    /// Keyboard, equivalent to KeyDown
+    pub const Keyboard: Event = Event { bits: 8 };
     /// KeyDown
     pub const KeyDown: Event = Event { bits: 8 };
     /// KeyUp
@@ -1246,7 +1235,7 @@ impl Shortcut {
 bitflags::bitflags! {
     /// Defines the types of triggers for widget callback functions. Equivalent to FL_WHEN
     #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct CallbackTrigger: i32 {
+    pub struct When: i32 {
         /// Never
         const Never = 0;
         /// Changed

@@ -196,7 +196,7 @@ pub fn set_color(old: Color, r: u8, g: u8, b: u8) {
 #[cfg(any(feature = "enable-glwindow", feature = "cairoext"))]
 /// Swap a color with a custom RGBA value
 pub fn set_color_with_alpha(old: Color, r: u8, g: u8, b: u8, a: u8) {
-    unsafe { fl::Fl_set_color_with_alpha(old.bits() as u32, r, g, b, a) }
+    unsafe { fl::Fl_set_color_with_alpha(old.bits(), r, g, b, a) }
 }
 
 /// Gets the system colors
@@ -242,7 +242,7 @@ pub fn set_visual(mode: Mode) -> Result<(), FltkError> {
 /// Returns Err(FailedOperation) if FLTK failed to set the visual mode
 pub fn set_gl_visual(mode: Mode) -> Result<(), FltkError> {
     unsafe {
-        match fl::Fl_gl_visual(mode.bits() as i32) {
+        match fl::Fl_gl_visual(mode.bits()) {
             0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
             _ => Ok(()),
         }

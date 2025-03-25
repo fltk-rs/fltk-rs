@@ -65,5 +65,5 @@ fn main() {
         source::build(&manifest_dir, &target_triple, &out_dir);
     }
 
-    link::link(&target_os, &target_triple, &out_dir);
+    link::link(&target_os, &target_triple);
 }

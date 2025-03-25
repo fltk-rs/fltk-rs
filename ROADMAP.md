@@ -27,3 +27,6 @@
 - TextBuffer::add_modify_callback() now returns an opaque handle which can be used by remove_modify_callback().
 - draw_rgb* functions moved to utils modules, and renamed to blit_rgb*.
 - Remove SimpleTerminal.
+- On linux/bsd, build hybrid wayland/x11 apps by default.
+- Remove support for older raw-window-handle versions.
+- Rename CallbackTrigger to When, and set_trigger to set_when.

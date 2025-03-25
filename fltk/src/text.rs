@@ -7,11 +7,7 @@ use std::{
     os::raw,
 };
 
-#[cfg(feature = "single-threaded")]
 type BufWrapper = std::rc::Rc<*mut Fl_Text_Buffer>;
-
-#[cfg(not(feature = "single-threaded"))]
-type BufWrapper = std::sync::Arc<*mut Fl_Text_Buffer>;
 
 /// Defines the text cursor styles supported by fltk
 #[repr(i32)]
@@ -42,6 +38,7 @@ type BoxedModifyCallbackHandle = *mut Box<dyn FnMut(i32, i32, i32, i32, Option<&
 /// Handle object for interacting with text buffer modify callbacks
 pub type ModifyCallbackHandle = *mut ();
 
+#[allow(clippy::type_complexity)]
 unsafe extern "C" fn modify_callback_shim(
     pos: raw::c_int,
     inserted: raw::c_int,
@@ -62,10 +59,10 @@ unsafe extern "C" fn modify_callback_shim(
         let f: &mut (dyn FnMut(i32, i32, i32, i32, Option<&str>)) = &mut **a;
         let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
             f(
-                pos as i32,
-                inserted as i32,
-                deleted as i32,
-                restyled as i32,
+                pos,
+                inserted,
+                deleted,
+                restyled,
                 temp,
             )
         }));
