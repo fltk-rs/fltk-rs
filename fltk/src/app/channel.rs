@@ -24,7 +24,6 @@ pub unsafe fn awake_msg<T>(msg: T) {
     }
 }
 
-#[allow(clippy::missing_safety_doc)]
 #[doc(hidden)]
 /**
     Receives a custom message

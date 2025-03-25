@@ -276,7 +276,6 @@ pub fn event_clipboard() -> Option<ClipboardEvent> {
     }
 }
 
-#[allow(clippy::missing_safety_doc)]
 /**
     Send a signal to a window pointer from event_dispatch.
     Returns true if the event was handled.
@@ -318,7 +317,6 @@ pub unsafe fn handle_raw(event: Event, w: WindowPtr) -> bool {
     unsafe { fl::Fl_handle_(event.bits(), w as _) != 0 }
 }
 
-#[allow(clippy::missing_safety_doc)]
 /**
     The event dispatch function is called after native events are converted to
     FLTK events, but before they are handled by FLTK. If the dispatch function

@@ -722,7 +722,7 @@ impl OverlayWindow {
 }
 
 /// A wrapper around a raw OpenGL context
-pub type GlContext = *mut raw::c_void;
+pub struct GlContext(*mut raw::c_void);
 
 /// Creates a OpenGL Glut window widget
 #[cfg(feature = "enable-glwindow")]
@@ -840,15 +840,14 @@ impl GlutWindow {
     pub fn context(&self) -> Option<GlContext> {
         unsafe {
             let ctx = Fl_Glut_Window_context(self.inner.widget() as _);
-            if ctx.is_null() { None } else { Some(ctx) }
+            if ctx.is_null() { None } else { Some(GlContext(ctx)) }
         }
     }
 
-    #[allow(clippy::not_unsafe_ptr_arg_deref)]
     /// Sets the GlContext
     pub fn set_context(&mut self, ctx: GlContext, destroy_flag: bool) {
-        assert!(!ctx.is_null());
-        unsafe { Fl_Glut_Window_set_context(self.inner.widget() as _, ctx, destroy_flag as i32) }
+        assert!(!ctx.0.is_null());
+        unsafe { Fl_Glut_Window_set_context(self.inner.widget() as _, ctx.0, destroy_flag as i32) }
     }
 
     /// Swaps the back and front buffers
@@ -1045,15 +1044,14 @@ pub mod experimental {
         pub fn context(&self) -> Option<GlContext> {
             unsafe {
                 let ctx = Fl_Gl_Window_context(self.inner.widget() as _);
-                if ctx.is_null() { None } else { Some(ctx) }
+                if ctx.is_null() { None } else { Some(GlContext(ctx)) }
             }
         }
 
-        #[allow(clippy::not_unsafe_ptr_arg_deref)]
         /// Sets the GlContext
         pub fn set_context(&mut self, ctx: GlContext, destroy_flag: bool) {
-            assert!(!ctx.is_null());
-            unsafe { Fl_Gl_Window_set_context(self.inner.widget() as _, ctx, destroy_flag as i32) }
+            assert!(!ctx.0.is_null());
+            unsafe { Fl_Gl_Window_set_context(self.inner.widget() as _, ctx.0, destroy_flag as i32) }
         }
 
         /// Swaps the back and front buffers

@@ -582,8 +582,7 @@ impl AnimGifImage {
     }
 
     /// Show the next frame if the animation is stopped. Errors if the Gif has no more frames
-    #[allow(clippy::should_implement_trait)]
-    pub fn next(&mut self) -> Result<(), FltkError> {
+    pub fn next_frame(&mut self) -> Result<(), FltkError> {
         unsafe {
             if Fl_Anim_GIF_Image_next(*self.inner) != 0 {
                 Ok(())

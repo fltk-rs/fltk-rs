@@ -57,7 +57,6 @@ where
     }
 }
 
-#[allow(clippy::missing_safety_doc)]
 /**
     Set a widget callback using a C style API
     ```rust,no_run
