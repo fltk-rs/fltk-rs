@@ -759,7 +759,7 @@ impl Pixmap {
         } else {
             let data: Vec<*const std::ffi::c_char> = data
                 .iter()
-                .map(|x| CString::safe_new(*x).into_raw() as *const std::ffi::c_char)
+                .map(|x| CString::safe_new(x).into_raw() as *const std::ffi::c_char)
                 .collect();
             unsafe {
                 let x = Fl_Pixmap_new(data.as_ptr() as _);
