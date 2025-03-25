@@ -18,7 +18,7 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v4
       - name: Install deps
-        run: git submodule update --init --recursive && sudo apt-get update && sudo apt-get install -y libpango1.0-dev libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpng-dev libgl1-mesa-dev libglu1-mesa-dev
+        run: git submodule update --init --recursive && sudo apt-get update && sudo apt-get install -y libpango1.0-dev libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpng-dev libgl1-mesa-dev libglu1-mesa-dev libxkbcommon-dev libwayland-dev wayland-protocols libdbus-1-dev
       - name: Install toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -36,7 +36,7 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v4
       - name: Install deps
-        run: git submodule update --init --recursive && sudo apt-get update && sudo apt-get install -y libpango1.0-dev libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpng-dev libgl1-mesa-dev libglu1-mesa-dev
+        run: git submodule update --init --recursive && sudo apt-get update && sudo apt-get install -y libpango1.0-dev libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpng-dev libgl1-mesa-dev libglu1-mesa-dev libxkbcommon-dev libwayland-dev wayland-protocols libdbus-1-dev
       - name: Install toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -71,7 +71,7 @@ jobs:
           echo "deb [arch=arm64] http://ports.ubuntu.com/ $(lsb_release -c -s)-backports main multiverse universe" | sudo tee -a /etc/apt/sources.list
           echo "deb [arch=arm64] http://ports.ubuntu.com/ $(lsb_release -c -s)-updates main multiverse universe" | sudo tee -a /etc/apt/sources.list
           sudo apt-get update -y
-          sudo apt-get install -y libpango1.0-dev:arm64 libx11-dev:arm64 libxext-dev:arm64 libxft-dev:arm64 libxinerama-dev:arm64 libxcursor-dev:arm64 libxrender-dev:arm64 libxfixes-dev:arm64 libpng-dev:arm64 libasound2-dev:arm64
+          sudo apt-get install -y libpango1.0-dev:arm64 libx11-dev:arm64 libxext-dev:arm64 libxft-dev:arm64 libxinerama-dev:arm64 libxcursor-dev:arm64 libxrender-dev:arm64 libxfixes-dev:arm64 libpng-dev:arm64 libasound2-dev:arm64 libxkbcommon-dev:arm64 libwayland-dev:arm64 wayland-protocols:arm64 libdbus-1-dev:arm64
           sudo apt-get install g++-aarch64-linux-gnu
       - name: Install toolchain
         uses: dtolnay/rust-toolchain@stable
@@ -107,7 +107,7 @@ jobs:
           echo "deb [arch=i386] http://archive.ubuntu.com/ubuntu/ $(lsb_release -c -s)-backports main multiverse universe" | sudo tee -a /etc/apt/sources.list
           echo "deb [arch=i386] http://archive.ubuntu.com/ubuntu/ $(lsb_release -c -s)-updates main multiverse universe" | sudo tee -a /etc/apt/sources.list
           sudo apt-get update -y
-          sudo apt-get install -y libpango1.0-dev:i386 libx11-dev:i386 libxext-dev:i386 libxft-dev:i386 libxinerama-dev:i386 libxcursor-dev:i386 libxrender-dev:i386 libxfixes-dev:i386 libpng-dev:i386 libasound2-dev:i386
+          sudo apt-get install -y libpango1.0-dev:i386 libx11-dev:i386 libxext-dev:i386 libxft-dev:i386 libxinerama-dev:i386 libxcursor-dev:i386 libxrender-dev:i386 libxfixes-dev:i386 libpng-dev:i386 libasound2-dev:i386 libxkbcommon-dev:i386 libwayland-dev:i386 wayland-protocols:i386 libdbus-1-dev:i386
           sudo apt-get install g++-i686-linux-gnu
       - name: Install toolchain
         uses: dtolnay/rust-toolchain@stable

@@ -258,27 +258,27 @@ Rust (version > 1.63), CMake (version > 3.15), Git and a C++17 compiler need to 
 
 For Debian-based GUI distributions, that means running:
 ```bash
-sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpango1.0-dev libgl1-mesa-dev libglu1-mesa-dev
+sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpango1.0-dev libgl1-mesa-dev libglu1-mesa-dev libxkbcommon-dev libwayland-dev wayland-protocols libdbus-1-dev
 ```
 For RHEL-based GUI distributions, that means running:
 ```bash
-sudo yum groupinstall "X Software Development" && sudo yum install pango-devel libXinerama-devel libstdc++-static
+sudo yum groupinstall "X Software Development" && sudo yum install pango-devel libXinerama-devel libxkbcommon-devel wayland-devel wayland-protocols-devel dbus-devel
 ```
 For Arch-based GUI distributions, that means running:
 ```bash
-sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfixes pango cairo libgl mesa --needed
+sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfixes pango cairo libgl mesa libxkbcommon wayland wayland-protocols dbus --needed
 ```
 For Alpine linux:
 ```bash
-apk add pango-dev fontconfig-dev libxinerama-dev libxfixes-dev libxcursor-dev mesa-gl
+apk add pango-dev fontconfig-dev libxinerama-dev libxfixes-dev libxcursor-dev mesa-gl libxkbcommon-dev wayland-dev wayland-protocols dbus
 ```
 For NixOS (Linux distribution) this `nix-shell` environment can be used:
 ```bash
-nix-shell --packages rustc cmake git gcc xorg.libXext xorg.libXft xorg.libXinerama xorg.libXcursor xorg.libXrender xorg.libXfixes libcerf pango cairo libGL mesa pkg-config
+nix-shell --packages rustc cmake git gcc xorg.libXext xorg.libXft xorg.libXinerama xorg.libXcursor xorg.libXrender xorg.libXfixes libcerf pango cairo libGL mesa pkg-config xorg.libxkbcommon wayland wayland-protocols dbus
 ```
 For Freebsd:
 ```bash
-pkg install -y cairo pango fontconfig freetype2 libX11 libXext libXfixes mesa-libs
+pkg install -y cairo pango fontconfig freetype2 libX11 libXext libXft libXrender libXcursor libXfixes libXinerama mesa-libs libxkbcommon wayland wayland-protocols dbus glu
 # building might require setting `CPATH=/usr/local/include` and `LIBRARY_PATH=$LIBRARY_PATH:/usr/local/lib
 ```
 
