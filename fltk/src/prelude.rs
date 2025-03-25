@@ -316,7 +316,6 @@ pub unsafe trait WidgetExt {
     /// Upcast a `WidgetExt` to some widget type
     /// # Safety
     /// Allows for potentially unsafe casts between incompatible widget types
-    #[allow(clippy::wrong_self_convention)]
     unsafe fn as_widget<W: WidgetBase>(&self) -> W
     where
         Self: Sized;
@@ -601,8 +600,7 @@ pub unsafe trait GroupExt: WidgetExt {
     /// # Safety
     /// If the widget wasn't created by fltk-rs,
     /// vtable differences mean certain methods can't be overridden (e.g. handle & draw)
-    #[allow(clippy::wrong_self_convention)]
-    unsafe fn into_group(&self) -> crate::group::Group;
+    unsafe fn as_group(&self) -> crate::group::Group;
 }
 
 /// Defines the methods implemented by all window widgets.

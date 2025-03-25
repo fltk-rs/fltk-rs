@@ -178,7 +178,7 @@ macro_rules! impl_group_ext {
                     vec
                 }
 
-                unsafe fn into_group(&self) -> $crate::group::Group { unsafe {
+                unsafe fn as_group(&self) -> $crate::group::Group { unsafe {
                     $crate::group::Group::from_widget_ptr(self.inner.widget() as _)
                 }}
             }
@@ -282,7 +282,7 @@ macro_rules! impl_group_ext_via {
                 self.$member.bounds()
             }
 
-            unsafe fn into_group(&self) -> $crate::group::Group {
+            unsafe fn as_group(&self) -> $crate::group::Group {
                 self.$member.into_group()
             }
         }

@@ -2,7 +2,7 @@
 - Refactor drawing code to use Coord and Rect.
 
 ## Done
-- Update to edition2021.
+- Update to edition2024.
 - Rename WidgetExt::into_widget() to as_widget() and GroupExt::into_group() to as_group() to conform to Rust's self convention.
 - WidgetExt::label() returns an `Option<String>`.
 - Rename TreeItem::try_widget() to widget() and remove old widget() method.
@@ -30,3 +30,4 @@
 - On linux/bsd, build hybrid wayland/x11 apps by default.
 - Remove support for older raw-window-handle versions.
 - Rename CallbackTrigger to When, and set_trigger to set_when.
+- Change no-images to use-images and add it to default features.
