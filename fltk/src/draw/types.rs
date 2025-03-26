@@ -75,7 +75,7 @@ impl Size {
     }
 
     /// Returns a tuple of the values
-    pub fn tup(&self) -> (i32, i32) {
+    pub fn tup(self) -> (i32, i32) {
         (self.w, self.h)
     }
 }
@@ -127,7 +127,7 @@ impl Cell {
     }
 
     /// Returns a tuple of the values
-    pub fn tup(&self) -> (i32, i32) {
+    pub fn tup(self) -> (i32, i32) {
         (self.r, self.c)
     }
 }

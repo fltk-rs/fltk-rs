@@ -60,7 +60,7 @@ fn main() {
     let mut frame = Frame::new(-200, 150, 200, 200, "");
     let mut pxm = Pixmap::new(PXM).unwrap();
     pxm.scale(200, 200, true, true);
-    frame.set_image_scaled(Some(pxm));
+    frame.set_image_scaled(Some(&mut pxm));
     wind.set_color(enums::Color::White);
     wind.end();
     wind.show_with_env_args();

@@ -58,13 +58,7 @@ unsafe extern "C" fn modify_callback_shim(
         let a = data as *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, Option<&'r str>)>;
         let f: &mut (dyn FnMut(i32, i32, i32, i32, Option<&str>)) = &mut **a;
         let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-            f(
-                pos,
-                inserted,
-                deleted,
-                restyled,
-                temp,
-            )
+            f(pos, inserted, deleted, restyled, temp);
         }));
     }
 }
@@ -86,7 +80,7 @@ impl TextBuffer {
     /// Deletes the `TextBuffer`
     /// # Safety
     /// The buffer shouldn't be deleted while the Display widget still needs it
-    pub unsafe fn delete(buf: Self) {
+    pub unsafe fn delete(buf: &Self) {
         assert!(!buf.inner.is_null());
         unsafe {
             Fl_Text_Buffer_delete(*buf.inner);
@@ -96,7 +90,7 @@ impl TextBuffer {
     /// Deletes the `TextBuffer`
     /// # Safety
     /// The buffer shouldn't be deleted while the Display widget still needs it
-    pub unsafe fn delete_buffer(buf: Self) {
+    pub unsafe fn delete_buffer(buf: &Self) {
         unsafe { Self::delete(buf) }
     }
 
@@ -131,7 +125,7 @@ impl TextBuffer {
         assert!(!self.inner.is_null());
         unsafe {
             let txt = CString::safe_new(txt);
-            Fl_Text_Buffer_set_text(*self.inner, txt.as_ptr())
+            Fl_Text_Buffer_set_text(*self.inner, txt.as_ptr());
         }
     }
 
@@ -229,6 +223,7 @@ impl TextBuffer {
     }
 
     /// Copies whole text from a source buffer into a new buffer
+    #[must_use]
     pub fn copy(&self) -> TextBuffer {
         assert!(!self.inner.is_null());
         let mut temp = TextBuffer::default();
@@ -267,7 +262,7 @@ impl TextBuffer {
     /// Sets whether the buffer can undo
     pub fn can_undo(&mut self, flag: bool) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_canUndo(*self.inner, flag as raw::c_char) }
+        unsafe { Fl_Text_Buffer_canUndo(*self.inner, raw::c_char::from(flag)) }
     }
 
     /// Gets whether the buffer can undo
@@ -357,8 +352,11 @@ impl TextBuffer {
         unsafe {
             let mut start = 0;
             let mut end = 0;
-            let ret =
-                Fl_Text_Buffer_selection_position(*self.inner, &mut start as _, &mut end as _);
+            let ret = Fl_Text_Buffer_selection_position(
+                *self.inner,
+                std::ptr::from_mut(&mut start),
+                std::ptr::from_mut(&mut end),
+            );
             if ret == 0 {
                 None
             } else {
@@ -419,8 +417,8 @@ impl TextBuffer {
             let mut end = 0;
             let ret = Fl_Text_Buffer_secondary_selection_position(
                 *self.inner,
-                &mut start as _,
-                &mut end as _,
+                std::ptr::from_mut(&mut start),
+                std::ptr::from_mut(&mut end),
             );
             if ret == 0 {
                 None
@@ -480,8 +478,11 @@ impl TextBuffer {
         unsafe {
             let mut start = 0;
             let mut end = 0;
-            let ret =
-                Fl_Text_Buffer_highlight_position(*self.inner, &mut start as _, &mut end as _);
+            let ret = Fl_Text_Buffer_highlight_position(
+                *self.inner,
+                std::ptr::from_mut(&mut start),
+                std::ptr::from_mut(&mut end),
+            );
             if ret == 0 {
                 None
             } else {
@@ -598,8 +599,8 @@ impl TextBuffer {
                 *self.inner,
                 start_pos,
                 search_string.as_ptr() as _,
-                &mut found_pos as _,
-                match_case as _,
+                std::ptr::from_mut(&mut found_pos),
+                match_case.into(),
             );
             if ret == 0 { None } else { Some(found_pos) }
         }
@@ -619,8 +620,8 @@ impl TextBuffer {
                 *self.inner,
                 start_pos,
                 search_string.as_ptr() as _,
-                &mut found_pos as _,
-                match_case as _,
+                std::ptr::from_mut(&mut found_pos),
+                match_case.into(),
             );
             if ret == 0 { None } else { Some(found_pos) }
         }
@@ -634,7 +635,7 @@ impl TextBuffer {
                 *self.inner,
                 start_pos,
                 search_char as _,
-                &mut found_pos as _,
+                std::ptr::from_mut(&mut found_pos),
             );
             if ret == 0 { None } else { Some(found_pos) }
         }
@@ -648,7 +649,7 @@ impl TextBuffer {
                 *self.inner,
                 start_pos,
                 search_char as _,
-                &mut found_pos as _,
+                std::ptr::from_mut(&mut found_pos),
             );
             if ret == 0 { None } else { Some(found_pos) }
         }
@@ -743,7 +744,7 @@ crate::macros::widget::impl_widget_base!(TextEditor, Fl_Text_Editor);
 crate::macros::widget::impl_widget_default!(TextEditor, Fl_Text_Editor);
 crate::macros::display::impl_display_ext!(TextEditor, Fl_Text_Editor);
 
-/// Alias Fl_Text_Editor for use in `add_key_binding`
+/// Alias `Fl_Text_Editor` for use in `add_key_binding`
 pub type TextEditorPtr = *mut Fl_Text_Editor;
 
 /// The attribute of the style entry
@@ -822,7 +823,7 @@ impl TextEditor {
     /// Set to insert mode
     pub fn set_insert_mode(&mut self, b: bool) {
         assert!(self.has_buffer());
-        unsafe { Fl_Text_Editor_set_insert_mode(self.inner.widget() as _, b as i32) }
+        unsafe { Fl_Text_Editor_set_insert_mode(self.inner.widget() as _, i32::from(b)) }
     }
 
     /// Returns whether insert mode is set
@@ -834,7 +835,7 @@ impl TextEditor {
     /// Set tab navigation
     pub fn set_tab_nav(&mut self, val: bool) {
         assert!(self.has_buffer());
-        unsafe { Fl_Text_Editor_set_tab_nav(self.inner.widget() as _, val as i32) }
+        unsafe { Fl_Text_Editor_set_tab_nav(self.inner.widget() as _, i32::from(val)) }
     }
 
     /// Returns whether tab navigation is set

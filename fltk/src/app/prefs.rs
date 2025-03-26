@@ -226,7 +226,7 @@ impl Preferences {
     ) -> Result<(), FltkError> {
         unsafe {
             let entry = CString::safe_new(entry);
-            let ret = Fl_Preferences_setfp(self.inner, entry.as_ptr(), val, precision as i32);
+            let ret = Fl_Preferences_setfp(self.inner, entry.as_ptr(), val, i32::from(precision));
             if ret == 0 {
                 Err(FltkError::Unknown(String::from("Failed to set entry")))
             } else {
@@ -271,7 +271,7 @@ impl Preferences {
     ) -> Result<(), FltkError> {
         unsafe {
             let entry = CString::safe_new(entry);
-            let ret = Fl_Preferences_setdp(self.inner, entry.as_ptr(), val, precision as i32);
+            let ret = Fl_Preferences_setdp(self.inner, entry.as_ptr(), val, i32::from(precision));
             if ret == 0 {
                 Err(FltkError::Unknown(String::from("Failed to set entry")))
             } else {

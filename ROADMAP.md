@@ -31,3 +31,4 @@
 - Remove support for older raw-window-handle versions.
 - Rename CallbackTrigger to When, and set_trigger to set_when.
 - Change no-images to use-images and add it to default features.
+- Pass images by reference.

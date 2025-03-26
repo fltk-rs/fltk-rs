@@ -69,6 +69,8 @@ where
 {
     /// Set the widget's Id
     fn set_id(&mut self, id: &str);
+
+    #[allow(clippy::return_self_not_must_use)]
     /// Construct a widget with an Id
     fn with_id(self, id: &str) -> Self
     where

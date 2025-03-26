@@ -97,7 +97,7 @@ fn main() {
 }
 ```
 Please check the [examples](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples) directory for more examples.
-You will notice that all widgets are instantiated with a new() method, taking the x and y coordinates, the width and height of the widget, as well as a label which can be left blank if needed. Another way to initialize a widget is using the builder pattern: (The following buttons are equivalent)
+You will notice that all widgets are instantiated with a `new()` method, taking the x and y coordinates, the width and height of the widget, as well as a label which can be left blank if needed. Another way to initialize a widget is using the builder pattern: (The following buttons are equivalent)
 
 ```rust,no_run
 use fltk::{button::Button, prelude::*};
@@ -204,7 +204,7 @@ Another way is to use message passing:
 ```
 For the remainder of the code, check the full example [here](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/counter2.rs).
 
-For custom event handling, the handle() method can be used:
+For custom event handling, the `handle()` method can be used:
 ```rust,ignore
     some_widget.handle(move |widget, ev: Event| {
         match ev {
@@ -248,12 +248,12 @@ For default application colors, fltk-rs provides `app::background()`, `app::back
 
 ## Build Dependencies
 
-Rust (version > 1.63), CMake (version > 3.15), Git and a C++17 compiler need to be installed and in your PATH for a cross-platform build from source. [Ninja](https://github.com/ninja-build/ninja) is recommended, but not required. This crate also offers a bundled form of fltk on selected x86_64 and aarch64 platforms (Windows (msvc and gnu), MacOS, Linux), this can be enabled using the fltk-bundled feature flag as mentioned in the usage section (this requires curl and tar to download and unpack the bundled libraries).
+Rust (version > 1.63), `CMake` (version > 3.15), Git and a C++17 compiler need to be installed and in your PATH for a cross-platform build from source. [Ninja](https://github.com/ninja-build/ninja) is recommended, but not required. This crate also offers a bundled form of fltk on selected `x86_64` and aarch64 platforms (Windows (msvc and gnu), `MacOS`, Linux), this can be enabled using the fltk-bundled feature flag as mentioned in the usage section (this requires curl and tar to download and unpack the bundled libraries).
 
 - Windows: 
     - MSVC: Windows SDK
     - Gnu: No dependencies
-- MacOS: MacOS SDK (installed as part of xcode or the xcode command line tools).
+- `MacOS`: `MacOS` SDK (installed as part of xcode or the xcode command line tools).
 - Linux/BSD: X11 (and wayland for if `no-wayland` feature flag isn't used) and OpenGL development headers need to be installed for development. The libraries themselves are normally available on linux/bsd distros with a graphical user interface.
 
 For Debian-based GUI distributions, that means running:
@@ -272,7 +272,7 @@ For Alpine linux:
 ```bash
 apk add pango-dev fontconfig-dev libxinerama-dev libxfixes-dev libxcursor-dev mesa-gl libxkbcommon-dev wayland-dev wayland-protocols dbus
 ```
-For NixOS (Linux distribution) this `nix-shell` environment can be used:
+For `NixOS` (Linux distribution) this `nix-shell` environment can be used:
 ```bash
 nix-shell --packages rustc cmake git gcc xorg.libXext xorg.libXft xorg.libXinerama xorg.libXcursor xorg.libXrender xorg.libXfixes libcerf pango cairo libGL mesa pkg-config xorg.libxkbcommon wayland wayland-protocols dbus
 ```
@@ -284,7 +284,7 @@ pkg install -y cairo pango fontconfig freetype2 libX11 libXext libXft libXrender
 
 ## Runtime Dependencies
 - Windows: None
-- MacOS: None
+- `MacOS`: None
 - Linux: You need X11 libraries, as well as pango and cairo for drawing (and OpenGL if you want to enable the enable-glwindow feature):
 ```bash
 apt-get install -qq --no-install-recommends libx11-6 libxinerama1 libxft2 libxext6 libxcursor1 libxrender1 libxfixes3 libcairo2 libpango-1.0-0 libpangocairo-1.0-0 libpangoxft-1.0-0 libglib2.0-0 libfontconfig1 libglu1-mesa libgl1
@@ -322,130 +322,130 @@ cargo build
 ## Currently implemented types:
 
 ### Image types:
-- SharedImage
-- BmpImage
-- JpegImage
-- GifImage
-- AnimGifImage
-- PngImage
-- SvgImage
-- Pixmap
-- RgbImage
-- XpmImage
-- XbmImage
-- PnmImage
-- TiledImage
+- `SharedImage`
+- `BmpImage`
+- `JpegImage`
+- `GifImage`
+- `AnimGifImage`
+- `PngImage`
+- `SvgImage`
+- `Pixmap`
+- `RgbImage`
+- `XpmImage`
+- `XbmImage`
+- `PnmImage`
+- `TiledImage`
 
 ### Widgets:
 - Buttons
-    - Button
-    - RadioButton
-    - ToggleButton
-    - RoundButton
-    - CheckButton
-    - LightButton
-    - RepeatButton
-    - RadioLightButton
-    - RadioRoundButton
-    - ReturnButton
-    - ShortcutButton
+    - `Button`
+    - `RadioButton`
+    - `ToggleButton`
+    - `RoundButton`
+    - `CheckButton`
+    - `LightButton`
+    - `RepeatButton`
+    - `RadioLightButton`
+    - `RadioRoundButton`
+    - `ReturnButton`
+    - `ShortcutButton`
 - Dialogs
-    - Native FileDialog
-    - FileChooser
-    - HelpDialog
+    - `NativeFileChooser`
+    - `FileChooser`
+    - `HelpDialog`
     - Message dialog
     - Alert dialog
     - Password dialog
     - Choice dialog
     - Input dialog
-    - ColorChooser dialog
-- Frame (Fl_Box)
+    - `ColorChooser` dialog
+- Frame (`Fl_Box`)
 - Windows
-    - Window
-    - SingleWindow (single buffered)
-    - DoubleWindow (double buffered)
-    - MenuWindow
-    - OverlayWindow
-    - GlWindow (requires the "enable-glwindow" flag)
-    - Experimental GlWidgetWindow (requires the "enable-glwindow" flag)
+    - `Window`
+    - `SingleWindow` (single buffered)
+    - `DoubleWindow` (double buffered)
+    - `MenuWindow`
+    - `OverlayWindow`
+    - `GlWindow` (requires the "enable-glwindow" flag)
+    - Experimental `GlWidgetWindow` (requires the "enable-glwindow" flag)
 - Groups
-    - Group
-    - Pack (Horizontal and Vertical)
-    - Tabs
-    - Scroll
-    - Tile
-    - Wizard
-    - ColorChooser
-    - Flex (Column and Row)
-    - Grid
+    - `Group`
+    - `Pack` (Horizontal and Vertical)
+    - `Tabs`
+    - `Scroll`
+    - `Tile`
+    - `Wizard`
+    - `ColorChooser`
+    - `Flex` (Column and Row)
+    - `Grid`
 - Text display widgets
-    - TextDisplay
-    - TextEditor
+    - `TextDisplay`
+    - `TextEditor`
 - Input widgets
-    - Input
-    - IntInput
-    - FloatInput
-    - MultilineInput
-    - SecretInput
-    - FileInput
+    - `Input`
+    - `IntInput`
+    - `FloatInput`
+    - `MultilineInput`
+    - `SecretInput`
+    - `FileInput`
 - Output widgets
-    - Output
-    - MultilineOutput
+    - `Output`
+    - `MultilineOutput`
 - Menu widgets
-    - MenuBar
-    - MenuItem
-    - Choice (dropdown list)
-    - SysMenuBar (MacOS menu bar which appears at the top of the screen)
-    - MenuButton
+    - `MenuBar`
+    - `MenuItem`
+    - `Choice` (dropdown list)
+    - `SysMenuBar` (`MacOS` menu bar which appears at the top of the screen)
+    - `MenuButton`
 - Valuator widgets
-    - Slider
-    - NiceSlider
-    - ValueSlider
-    - Dial
-    - LineDial
-    - Counter
-    - Scrollbar
-    - Roller
-    - Adjuster
-    - ValueInput
-    - ValueOutput
-    - FillSlider
-    - FillDial
-    - HorSlider (Horizontal slider)
-    - HorFillSlider
-    - HorNiceSlider
-    - HorValueSlider
+    - `Slider`
+    - `NiceSlider`
+    - `ValueSlider`
+    - `Dial`
+    - `LineDial`
+    - `Counter`
+    - `Scrollbar`
+    - `Roller`
+    - `Adjuster`
+    - `ValueInput`
+    - `ValueOutput`
+    - `FillSlider`
+    - `FillDial`
+    - `HorSlider` (Horizontal slider)
+    - `HorFillSlider`
+    - `HorNiceSlider`
+    - `HorValueSlider`
 - Browsing widgets
-    - Browser
-    - SelectBrowser
-    - HoldBrowser
-    - MultiBrowser
-    - FileBrowser
-    - CheckBrowser
+    - `Browser`
+    - `SelectBrowser`
+    - `HoldBrowser`
+    - `MultiBrowser`
+    - `FileBrowser`
+    - `CheckBrowser`
 - Miscelaneous widgets
-    - Spinner
-    - Clock (Round and Square)
-    - Chart (several chart types are available)
-    - Progress (progress bar)
-    - Tooltip
-    - InputChoice
-    - HelpView
+    - `Spinner`
+    - `Clock` (Round and Square)
+    - `Chart` (several chart types are available)
+    - `Progress` (progress bar)
+    - `Tooltip`
+    - `InputChoice`
+    - `HelpView`
 - Table widgets
-    - Table
-    - TableRow
-    - SmartTable (via the [fltk-table crate](https://crates.io/crates/fltk-table))
+    - `Table`
+    - `TableRow`
+    - `SmartTable` (via the [fltk-table crate](https://crates.io/crates/fltk-table))
 - Terminal Widget
-    - Terminal
+    - `Terminal`
 - Trees
-    - Tree
-    - TreeItem
+    - `Tree`
+    - `TreeItem`
 
 ### Drawing primitives
 (In the draw module)
 ### Surface types:
 - Printer.
-- ImageSurface.
-- SvgFileSurface.
+- `ImageSurface`.
+- `SvgFileSurface`.
 
 ### GUI designer
 
@@ -475,51 +475,51 @@ Using custom theming and also FLTK provided default schemes like Gtk:
 
 - [hello_svg](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/hello_svg.rs)
 
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/hello.jpg)
+- ![`alt_test`](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/hello.jpg)
 
 - [calculator2](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/calculator2.rs)
 
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/calc2.jpg)
+- ![`alt_test`](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/calc2.jpg)
 
 - [counter3](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/counter3.rs)
 
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/flutter_like.jpg)
+- ![`alt_test`](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/flutter_like.jpg)
 
 - [custom_dial](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/custom_dial.rs)
 
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/dial.jpg)
+- ![`alt_test`](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/dial.jpg)
 
 - [calculator](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/calculator.rs)
 
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/calc.jpg)
+- ![`alt_test`](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/calc.jpg)
 
 - [tabs](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/tabs.rs)
 
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/tabs.jpg)
+- ![`alt_test`](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/tabs.jpg)
 
 - [counter](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/counter.rs)
 
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/counter.jpg)
+- ![`alt_test`](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/counter.jpg)
 
 - [editor](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/editor.rs)
 
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/editor.jpg)
+- ![`alt_test`](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/editor.jpg)
 
 - [table](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/table.rs)
 
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/table.jpg)
+- ![`alt_test`](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/table.jpg)
 
 - [charts](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/charts.rs)
 
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/charts.jpg)
+- ![`alt_test`](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/charts.jpg)
 
 - [pong](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/pong.rs)
 
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/pong.gif)
+- ![`alt_test`](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/pong.gif)
 
 - [frames](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/frames.rs)
 
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/frames.jpg)
+- ![`alt_test`](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/frames.jpg)
 
 Different frame types which can be used with many different widgets such as Frame, Button widgets, In/Output widgets...etc.
 

@@ -207,7 +207,7 @@ impl Screen {
     /// Pass a `value` of `false` to stop recognition of ctrl/+/-/0/
     /// (or cmd/+/-/0/ under macOS) keys as window scaling.
     pub fn keyboard_scaling(value: bool) {
-        unsafe { fl::Fl_keyboard_screen_scaling(value as _) }
+        unsafe { fl::Fl_keyboard_screen_scaling(value.into()) }
     }
 
     // methods
@@ -412,5 +412,5 @@ pub fn screen_work_area(screen_num: i32) -> (i32, i32, i32, i32) {
 /// Pass a `value` of `false` to stop recognition of ctrl/+/-/0/
 /// (or cmd/+/-/0/ under macOS) keys as window scaling.
 pub fn keyboard_screen_scaling(value: bool) {
-    unsafe { fl::Fl_keyboard_screen_scaling(value as _) }
+    unsafe { fl::Fl_keyboard_screen_scaling(value.into()) }
 }

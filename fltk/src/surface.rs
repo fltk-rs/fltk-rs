@@ -53,7 +53,7 @@ impl ImageSurface {
     /// Creates a new image surface
     pub fn new(w: i32, h: i32, high_res: bool) -> ImageSurface {
         unsafe {
-            let ptr = Fl_Image_Surface_new(w, h, high_res as i32);
+            let ptr = Fl_Image_Surface_new(w, h, i32::from(high_res));
             assert!(!ptr.is_null());
             ImageSurface { inner: ptr }
         }
@@ -112,7 +112,7 @@ impl ImageSurface {
                 widget.as_widget_ptr() as *mut _,
                 delta_x,
                 delta_y,
-            )
+            );
         }
     }
 
@@ -124,7 +124,7 @@ impl ImageSurface {
                 win.as_widget_ptr() as *mut _,
                 x_offset,
                 y_offset,
-            )
+            );
         }
     }
 }
@@ -226,7 +226,7 @@ impl SvgFileSurface {
                 widget.as_widget_ptr() as *mut _,
                 delta_x,
                 delta_y,
-            )
+            );
         }
     }
 
@@ -238,7 +238,7 @@ impl SvgFileSurface {
                 win.as_widget_ptr() as *mut _,
                 x_offset,
                 y_offset,
-            )
+            );
         }
     }
 }

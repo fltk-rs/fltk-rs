@@ -37,14 +37,14 @@ pub enum ColorDepth {
     Rgba8 = 4,
 }
 
-/// Implements some convenience methods for ColorDepth
+/// Implements some convenience methods for `ColorDepth`
 impl ColorDepth {
-    /// Create a ColorDepth from an u8 value
+    /// Create a `ColorDepth` from an u8 value
     pub fn from_u8(val: u8) -> Result<ColorDepth, FltkError> {
-        if !(1..=4).contains(&val) {
-            Err(FltkError::Internal(FltkErrorKind::FailedOperation))
-        } else {
+        if (1..=4).contains(&val) {
             Ok(unsafe { mem::transmute(val) })
+        } else {
+            Err(FltkError::Internal(FltkErrorKind::FailedOperation))
         }
     }
 }
@@ -179,7 +179,7 @@ pub enum FrameType {
     GleamRoundUpBox,
     /// Gleam Round Down Box
     GleamRoundDownBox,
-    /// Free BoxType
+    /// Free `BoxType`
     FreeBoxType,
     /// User-defined frame types
     UserFrameType(UnmappedFrameType),
@@ -200,7 +200,7 @@ impl FrameType {
     pub unsafe fn from_i32(v: i32) -> FrameType {
         unsafe {
             if (0..=56).contains(&v) {
-                *(&v as *const i32 as *const FrameType)
+                *(&raw const v as *const FrameType)
             } else {
                 FrameType::UserFrameType(UnmappedFrameType::from_i32(v))
             }
@@ -208,7 +208,7 @@ impl FrameType {
     }
     #[doc(hidden)]
     fn discriminant(&self) -> i32 {
-        unsafe { *(self as *const Self as *const i32) }
+        unsafe { *(std::ptr::from_ref::<Self>(self) as *const i32) }
     }
     /// Gets the Frame type by index
     pub fn by_index(idx: usize) -> FrameType {
@@ -394,12 +394,10 @@ impl Font {
             }
             if let Some(p) = path.to_str() {
                 let font_data = std::fs::read(path)?;
-                let face = match ttf_parser::Face::parse(&font_data, 0) {
-                    Ok(f) => f,
-                    Err(_) => {
-                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
-                    }
+                let Ok(face) = ttf_parser::Face::parse(&font_data, 0) else {
+                    return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                 };
+
                 let family_name = face
                     .names()
                     .into_iter()
@@ -467,10 +465,10 @@ impl std::fmt::Debug for Font {
 /// Colors in this enum don't have an RGB stored. However, custom colors have an RGB, and don't have an index.
 /// The RGBI can be acquired by casting the color to u32 and formatting it to ```0x{08x}```.
 /// The last 2 digits are the hexadecimal representation of the color in this enum.
-/// For example, Color::White, has a hex of 0x000000ff, ff being the 255 value of this enum.
-/// A custom color like Color::from_u32(0x646464), will have an representation as 0x64646400,
+/// For example, `Color::White`, has a hex of 0x000000ff, ff being the 255 value of this enum.
+/// A custom color like `Color::from_u32(0x646464)`, will have an representation as 0x64646400,
 /// of which the final 00 indicates that it is not stored in this enum.
-/// For convenience, the fmt::Display trait is implemented so that the name of the Color is shown
+/// For convenience, the `fmt::Display` trait is implemented so that the name of the Color is shown
 /// when there is one, otherwise the RGB value is given.
 
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -491,7 +489,7 @@ impl Color {
     pub const Free: Color = Color { bits: 16 };
     /// Gray0
     pub const Gray0: Color = Color { bits: 32 };
-    /// GrayRamp
+    /// `GrayRamp`
     pub const GrayRamp: Color = Color { bits: 32 };
     /// Dark3
     pub const Dark3: Color = Color { bits: 39 };
@@ -499,7 +497,7 @@ impl Color {
     pub const Dark2: Color = Color { bits: 45 };
     /// Dark1
     pub const Dark1: Color = Color { bits: 47 };
-    /// FrameDefault
+    /// `FrameDefault`
     pub const FrameDefault: Color = Color { bits: 49 };
     /// Background
     pub const Background: Color = Color { bits: 49 };
@@ -523,55 +521,55 @@ impl Color {
     pub const Magenta: Color = Color { bits: 248 };
     /// Cyan
     pub const Cyan: Color = Color { bits: 223 };
-    /// DarkRed
+    /// `DarkRed`
     pub const DarkRed: Color = Color { bits: 72 };
-    /// DarkGreen
+    /// `DarkGreen`
     pub const DarkGreen: Color = Color { bits: 60 };
-    /// DarkYellow
+    /// `DarkYellow`
     pub const DarkYellow: Color = Color { bits: 76 };
-    /// DarkBlue
+    /// `DarkBlue`
     pub const DarkBlue: Color = Color { bits: 136 };
-    /// DarkMagenta
+    /// `DarkMagenta`
     pub const DarkMagenta: Color = Color { bits: 152 };
-    /// DarkCyan
+    /// `DarkCyan`
     pub const DarkCyan: Color = Color { bits: 140 };
     /// White
     pub const White: Color = Color { bits: 255 };
 
     /// ANSI/xterm Black, not part of FLTK's colormap
-    pub const XtermBlack: Color = Color { bits: 0x00000000 };
+    pub const XtermBlack: Color = Color { bits: 0x0000_0000 };
     /// ANSI/xterm Red, not part of FLTK's colormap
-    pub const XtermRed: Color = Color { bits: 0xd0000000 };
+    pub const XtermRed: Color = Color { bits: 0xd000_0000 };
     /// ANSI/xterm Green, not part of FLTK's colormap
-    pub const XtermGreen: Color = Color { bits: 0x00d00000 };
+    pub const XtermGreen: Color = Color { bits: 0x00d0_0000 };
     /// ANSI/xterm Yellow, not part of FLTK's colormap
-    pub const XtermYellow: Color = Color { bits: 0xd0d00000 };
+    pub const XtermYellow: Color = Color { bits: 0xd0d0_0000 };
     /// ANSI/xterm Blue, not part of FLTK's colormap
-    pub const XtermBlue: Color = Color { bits: 0x0000d000 };
+    pub const XtermBlue: Color = Color { bits: 0x0000_d000 };
     /// ANSI/xterm Magenta, not part of FLTK's colormap
-    pub const XtermMagenta: Color = Color { bits: 0xd000d000 };
+    pub const XtermMagenta: Color = Color { bits: 0xd000_d000 };
     /// ANSI/xterm Cyan, not part of FLTK's colormap
-    pub const XtermCyan: Color = Color { bits: 0x00d0d000 };
+    pub const XtermCyan: Color = Color { bits: 0x00d0_d000 };
     /// ANSI/xterm White, not part of FLTK's colormap
-    pub const XtermWhite: Color = Color { bits: 0xd0d0d000 };
+    pub const XtermWhite: Color = Color { bits: 0xd0d0_d000 };
     /// ANSI/xterm background Red, not part of FLTK's colormap
-    pub const XtermBgRed: Color = Color { bits: 0xc0000000 };
+    pub const XtermBgRed: Color = Color { bits: 0xc000_0000 };
     /// ANSI/xterm background Green, not part of FLTK's colormap
-    pub const XtermBgGreen: Color = Color { bits: 0x00c00000 };
+    pub const XtermBgGreen: Color = Color { bits: 0x00c0_0000 };
     /// ANSI/xterm background Yelllow, not part of FLTK's colormap
-    pub const XtermBgYellow: Color = Color { bits: 0xc0c00000 };
+    pub const XtermBgYellow: Color = Color { bits: 0xc0c0_0000 };
     /// ANSI/xterm background Blue, not part of FLTK's colormap
-    pub const XtermBgBlue: Color = Color { bits: 0x0000c000 };
+    pub const XtermBgBlue: Color = Color { bits: 0x0000_c000 };
     /// ANSI/xterm background Magenta, not part of FLTK's colormap
-    pub const XtermBgMagenta: Color = Color { bits: 0xd000c000 };
+    pub const XtermBgMagenta: Color = Color { bits: 0xd000_c000 };
     /// ANSI/xterm background Cyan, not part of FLTK's colormap
-    pub const XtermBgCyan: Color = Color { bits: 0x00c0c000 };
+    pub const XtermBgCyan: Color = Color { bits: 0x00c0_c000 };
     /// ANSI/xterm background White, not part of FLTK's colormap
-    pub const XtermBgWhite: Color = Color { bits: 0xc0c0c000 };
+    pub const XtermBgWhite: Color = Color { bits: 0xc0c0_c000 };
 
-    /// Special background color value that lets the Terminal widget's box() color show through behind the text.
+    /// Special background color value that lets the Terminal widget's `box()` color show through behind the text.
     /// Not part of FLTK's colormap
-    pub const TransparentBg: Color = Color { bits: 0xffffffff };
+    pub const TransparentBg: Color = Color { bits: 0xffff_ffff };
 
     /// Gets the inner color representation
     pub const fn bits(&self) -> u32 {
@@ -604,7 +602,9 @@ impl Color {
 
     /// Create color from RGBA using alpha compositing. Works for non-group types.
     pub fn from_rgba_tuple(tup: (u8, u8, u8, u8)) -> Color {
-        if tup.3 != 255 {
+        if tup.3 == 255 {
+            Color::from_rgb(tup.0, tup.1, tup.2)
+        } else {
             let bg_col = if let Some(grp) = crate::group::Group::current() {
                 use crate::prelude::WidgetExt;
                 grp.color()
@@ -612,16 +612,14 @@ impl Color {
                 Color::Background
             };
             let bg_col = bg_col.to_rgb();
-            let alpha = tup.3 as f32 / 255.0;
-            let r = alpha * tup.0 as f32 + (1.0 - alpha) * bg_col.0 as f32;
+            let alpha = f32::from(tup.3) / 255.0;
+            let r = alpha * f32::from(tup.0) + (1.0 - alpha) * f32::from(bg_col.0);
             let r = r as u8;
-            let g = alpha * tup.1 as f32 + (1.0 - alpha) * bg_col.1 as f32;
+            let g = alpha * f32::from(tup.1) + (1.0 - alpha) * f32::from(bg_col.1);
             let g = g as u8;
-            let b = alpha * tup.2 as f32 + (1.0 - alpha) * bg_col.2 as f32;
+            let b = alpha * f32::from(tup.2) + (1.0 - alpha) * f32::from(bg_col.2);
             let b = b as u8;
             Color::from_rgb(r, g, b)
-        } else {
-            Color::from_rgb(tup.0, tup.1, tup.2)
         }
     }
 
@@ -667,7 +665,7 @@ impl Color {
         #[cfg(not(feature = "enable-glwindow"))]
         {
             let (r, g, b) = self.to_rgb();
-            format!("#{:02x}{:02x}{:02x}", r, g, b)
+            format!("#{r:02x}{g:02x}{b:02x}")
         }
         #[cfg(feature = "enable-glwindow")]
         {
@@ -678,30 +676,33 @@ impl Color {
 
     /// Returns a color by index of RGBI
     pub fn by_index(idx: u8) -> Color {
-        unsafe { mem::transmute(idx as u32) }
+        unsafe { mem::transmute(u32::from(idx)) }
     }
 
     /// Returns an inactive form of the color
+    #[must_use]
     pub fn inactive(&self) -> Color {
         unsafe { mem::transmute(fl::Fl_inactive(self.bits())) }
     }
 
     /// Returns an darker form of the color
+    #[must_use]
     pub fn darker(&self) -> Color {
         unsafe { mem::transmute(fl::Fl_darker(self.bits())) }
     }
 
     /// Returns an lighter form of the color
+    #[must_use]
     pub fn lighter(&self) -> Color {
         unsafe { mem::transmute(fl::Fl_lighter(self.bits())) }
     }
 
-    /// Returns a gray color value from black (i == 0) to white (i == FL_NUM_GRAY - 1)
+    /// Returns a gray color value from black (i == 0) to white (i == `FL_NUM_GRAY` - 1)
     pub fn gray_ramp(val: i32) -> Color {
         unsafe { mem::transmute(fl::Fl_gray_ramp(val)) }
     }
 
-    /// Returns a gray color value from black (i == 0) to white (i == FL_NUM_GRAY - 1)
+    /// Returns a gray color value from black (i == 0) to white (i == `FL_NUM_GRAY` - 1)
     pub fn color_average(c1: Color, c2: Color, weight: f32) -> Color {
         unsafe { mem::transmute(fl::Fl_color_average(c1.bits(), c2.bits(), weight)) }
     }
@@ -732,7 +733,7 @@ impl Color {
             if (i == 0 && val != 0) || val > 255 {
                 (r, g, b)
             } else {
-                let val = fl::Fl_cmap(i as u32);
+                let val = fl::Fl_cmap(u32::from(i));
                 let r = ((val >> 24) & 0xff) as u8;
                 let g = ((val >> 16) & 0xff) as u8;
                 let b = ((val >> 8) & 0xff) as u8;
@@ -839,11 +840,11 @@ impl Event {
     pub const Focus: Event = Event { bits: 6 };
     /// Unfocus
     pub const Unfocus: Event = Event { bits: 7 };
-    /// Keyboard, equivalent to KeyDown
+    /// Keyboard, equivalent to `KeyDown`
     pub const Keyboard: Event = Event { bits: 8 };
-    /// KeyDown
+    /// `KeyDown`
     pub const KeyDown: Event = Event { bits: 8 };
-    /// KeyUp
+    /// `KeyUp`
     pub const KeyUp: Event = Event { bits: 9 };
     /// Close
     pub const Close: Event = Event { bits: 10 };
@@ -863,9 +864,9 @@ impl Event {
     pub const Paste: Event = Event { bits: 17 };
     /// Selection Clear
     pub const SelectionClear: Event = Event { bits: 18 };
-    /// MouseWheel
+    /// `MouseWheel`
     pub const MouseWheel: Event = Event { bits: 19 };
-    /// DndEnter
+    /// `DndEnter`
     pub const DndEnter: Event = Event { bits: 20 };
     /// Drag n Drop: Drag
     pub const DndDrag: Event = Event { bits: 21 };
@@ -959,17 +960,17 @@ impl Key {
     pub const None: Key = Key { bits: 0 };
     /// Button
     pub const Button: Key = Key { bits: 0xfee8 };
-    /// BackSpace
+    /// `BackSpace`
     pub const BackSpace: Key = Key { bits: 0xff08 };
     /// Tab
     pub const Tab: Key = Key { bits: 0xff09 };
-    /// IsoKey
+    /// `IsoKey`
     pub const IsoKey: Key = Key { bits: 0xff0c };
     /// Enter
     pub const Enter: Key = Key { bits: 0xff0d };
     /// Pause
     pub const Pause: Key = Key { bits: 0xff13 };
-    /// ScrollLock
+    /// `ScrollLock`
     pub const ScrollLock: Key = Key { bits: 0xff14 };
     /// Escape
     pub const Escape: Key = Key { bits: 0xff1b };
@@ -979,7 +980,7 @@ impl Key {
     pub const Eisu: Key = Key { bits: 0xff2f };
     /// Yen
     pub const Yen: Key = Key { bits: 0xff30 };
-    /// JISUnderscore
+    /// `JISUnderscore`
     pub const JISUnderscore: Key = Key { bits: 0xff31 };
     /// Home
     pub const Home: Key = Key { bits: 0xff50 };
@@ -991,9 +992,9 @@ impl Key {
     pub const Right: Key = Key { bits: 0xff53 };
     /// Down
     pub const Down: Key = Key { bits: 0xff54 };
-    /// PageUp
+    /// `PageUp`
     pub const PageUp: Key = Key { bits: 0xff55 };
-    /// PageDown
+    /// `PageDown`
     pub const PageDown: Key = Key { bits: 0xff56 };
     /// End
     pub const End: Key = Key { bits: 0xff57 };
@@ -1005,7 +1006,7 @@ impl Key {
     pub const Menu: Key = Key { bits: 0xff67 };
     /// Help
     pub const Help: Key = Key { bits: 0xff68 };
-    /// NumLock
+    /// `NumLock`
     pub const NumLock: Key = Key { bits: 0xff7f };
     /// Keypad
     pub const KP: Key = Key { bits: 0xff80 };

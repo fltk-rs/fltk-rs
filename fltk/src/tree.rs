@@ -279,7 +279,8 @@ impl Tree {
     pub fn find_clicked(&self, yonly: bool) -> Option<TreeItem> {
         unsafe {
             TreeItem::from_raw(
-                Fl_Tree_find_clicked(self.inner.widget() as _, yonly as i32) as *mut Fl_Tree_Item
+                Fl_Tree_find_clicked(self.inner.widget() as _, i32::from(yonly))
+                    as *mut Fl_Tree_Item,
             )
         }
     }
@@ -359,7 +360,7 @@ impl Tree {
                 self.inner.widget() as _,
                 item.inner,
                 direction_key.bits(),
-                visible as i32,
+                i32::from(visible),
             ))
         }
     }
@@ -409,7 +410,7 @@ impl Tree {
             match Fl_Tree_open(
                 self.inner.widget() as _,
                 path.as_ptr() as *mut raw::c_char,
-                do_callback as i32,
+                i32::from(do_callback),
             ) {
                 0 | 1 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
@@ -420,7 +421,7 @@ impl Tree {
     /// Toggle the open state
     pub fn open_toggle(&mut self, item: &TreeItem, do_callback: bool) {
         assert!(!item.inner.is_null());
-        unsafe { Fl_Tree_open_toggle(self.inner.widget() as _, item.inner, do_callback as i32) }
+        unsafe { Fl_Tree_open_toggle(self.inner.widget() as _, item.inner, i32::from(do_callback)) }
     }
 
     /// Close a tree item, causing the children to be hidden
@@ -432,7 +433,7 @@ impl Tree {
             match Fl_Tree_close(
                 self.inner.widget() as _,
                 path.as_ptr() as *mut raw::c_char,
-                do_callback as i32,
+                i32::from(do_callback),
             ) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
@@ -463,7 +464,7 @@ impl Tree {
             match Fl_Tree_select(
                 self.inner.widget() as _,
                 path.as_ptr() as *mut raw::c_char,
-                do_callback as i32,
+                i32::from(do_callback),
             ) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
@@ -474,7 +475,9 @@ impl Tree {
     /// Toggle the select state of the specified
     pub fn select_toggle(&mut self, item: &TreeItem, do_callback: bool) {
         assert!(!item.inner.is_null());
-        unsafe { Fl_Tree_select_toggle(self.inner.widget() as _, item.inner, do_callback as i32) }
+        unsafe {
+            Fl_Tree_select_toggle(self.inner.widget() as _, item.inner, i32::from(do_callback));
+        }
     }
 
     /// Deselect an item at `path` and determine whether to do the callback
@@ -486,7 +489,7 @@ impl Tree {
             match Fl_Tree_deselect(
                 self.inner.widget() as _,
                 path.as_ptr() as *mut raw::c_char,
-                do_callback as i32,
+                i32::from(do_callback),
             ) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
@@ -502,7 +505,8 @@ impl Tree {
             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
         }
         unsafe {
-            match Fl_Tree_deselect_all(self.inner.widget() as _, item.inner, do_callback as i32) {
+            match Fl_Tree_deselect_all(self.inner.widget() as _, item.inner, i32::from(do_callback))
+            {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
             }
@@ -524,7 +528,7 @@ impl Tree {
             match Fl_Tree_select_only(
                 self.inner.widget() as _,
                 selected_item.inner,
-                do_callback as i32,
+                i32::from(do_callback),
             ) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
@@ -540,7 +544,7 @@ impl Tree {
             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
         }
         unsafe {
-            match Fl_Tree_select_all(self.inner.widget() as _, item.inner, do_callback as i32) {
+            match Fl_Tree_select_all(self.inner.widget() as _, item.inner, i32::from(do_callback)) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
             }
@@ -568,7 +572,7 @@ impl Tree {
                 to.inner,
                 direction_key.bits(),
                 val as i32,
-                visible as i32,
+                i32::from(visible),
             ) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
@@ -595,7 +599,7 @@ impl Tree {
                 from.inner,
                 to.inner,
                 val as i32,
-                visible as i32,
+                i32::from(visible),
             ) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
@@ -778,18 +782,18 @@ impl Tree {
     }
 
     /// Sets the user icon
-    pub fn set_user_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
+    pub fn set_user_icon<Img: ImageExt>(&mut self, image: Option<&Img>) {
         if let Some(image) = image {
             assert!(!image.was_deleted());
             unsafe {
-                Fl_Tree_set_usericon(self.inner.widget() as _, image.as_image_ptr() as *mut _)
+                Fl_Tree_set_usericon(self.inner.widget() as _, image.as_image_ptr() as *mut _);
             }
         } else {
             unsafe {
                 Fl_Tree_set_usericon(
                     self.inner.widget() as _,
                     std::ptr::null_mut::<raw::c_void>(),
-                )
+                );
             }
         }
     }
@@ -809,18 +813,18 @@ impl Tree {
     }
 
     /// Sets the open icon
-    pub fn set_open_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
+    pub fn set_open_icon<Img: ImageExt>(&mut self, image: Option<&Img>) {
         if let Some(image) = image {
             assert!(!image.was_deleted());
             unsafe {
-                Fl_Tree_set_openicon(self.inner.widget() as _, image.as_image_ptr() as *mut _)
+                Fl_Tree_set_openicon(self.inner.widget() as _, image.as_image_ptr() as *mut _);
             }
         } else {
             unsafe {
                 Fl_Tree_set_openicon(
                     self.inner.widget() as _,
                     std::ptr::null_mut::<raw::c_void>(),
-                )
+                );
             }
         }
     }
@@ -840,18 +844,18 @@ impl Tree {
     }
 
     /// Sets the close icon
-    pub fn set_close_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
+    pub fn set_close_icon<Img: ImageExt>(&mut self, image: Option<&Img>) {
         if let Some(image) = image {
             assert!(!image.was_deleted());
             unsafe {
-                Fl_Tree_set_closeicon(self.inner.widget() as _, image.as_image_ptr() as *mut _)
+                Fl_Tree_set_closeicon(self.inner.widget() as _, image.as_image_ptr() as *mut _);
             }
         } else {
             unsafe {
                 Fl_Tree_set_closeicon(
                     self.inner.widget() as _,
                     std::ptr::null_mut::<raw::c_void>(),
-                )
+                );
             }
         }
     }
@@ -863,7 +867,7 @@ impl Tree {
 
     /// Sets whether the collapse icon is enabled
     pub fn set_show_collapse(&mut self, flag: bool) {
-        unsafe { Fl_Tree_set_showcollapse(self.inner.widget() as _, flag as i32) }
+        unsafe { Fl_Tree_set_showcollapse(self.inner.widget() as _, i32::from(flag)) }
     }
 
     /// Returns whether the root is shown
@@ -873,7 +877,7 @@ impl Tree {
 
     /// Sets whether the root is shown
     pub fn set_show_root(&mut self, flag: bool) {
-        unsafe { Fl_Tree_set_showroot(self.inner.widget() as _, flag as i32) }
+        unsafe { Fl_Tree_set_showroot(self.inner.widget() as _, i32::from(flag)) }
     }
 
     /// Gets the connector style
@@ -1120,7 +1124,7 @@ impl TreeItem {
         }
     }
 
-    /// Creates a new TreeItem
+    /// Creates a new `TreeItem`
     pub fn new(tree: &Tree, label: &str) -> Self {
         let label = CString::safe_new(label);
         unsafe {
@@ -1137,7 +1141,7 @@ impl TreeItem {
     }
 
     /**
-    Overrides the draw_item_content method
+    Overrides the `draw_item_content` method
     Example usage:
        ```rust,no_run
        use fltk::{draw, enums::*, tree};
@@ -1159,7 +1163,7 @@ impl TreeItem {
                draw::draw_rect_fill(x, y, w, h, item.label_bgcolor());
                // Draw label
                draw::set_font(Font::Helvetica, 14);
-               draw::set_draw_color(Color::ForeGround); // use recommended fg color
+               draw::set_draw_color(Color::Foreground); // use recommended fg color
                draw::draw_text2(&txt, x, y, w, h, Align::Left); // draw the item's label
            }
            // Rendered or not, we must calculate content's max X position
@@ -1653,7 +1657,7 @@ impl TreeItem {
 
     /// Activate an item
     pub fn activate(&mut self, val: bool) {
-        unsafe { Fl_Tree_Item_activate(self.inner, val as i32) }
+        unsafe { Fl_Tree_Item_activate(self.inner, i32::from(val)) }
     }
 
     /// Returns whether an item is selected
@@ -1692,7 +1696,7 @@ impl TreeItem {
     }
 
     /// Sets the user icon
-    pub fn set_user_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
+    pub fn set_user_icon<Img: ImageExt>(&mut self, image: Option<&Img>) {
         if let Some(image) = image {
             assert!(!image.was_deleted());
             unsafe { Fl_Tree_Item_set_usericon(self.inner, image.as_image_ptr() as *mut _) }
@@ -1716,7 +1720,7 @@ impl Iterator for TreeItem {
 }
 
 impl TreeItemArray {
-    /// Returns the len() of the array
+    /// Returns the `len()` of the array
     fn total(&self) -> i32 {
         unsafe { Fl_Tree_Item_Array_total(self.inner) }
     }

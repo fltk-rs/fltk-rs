@@ -81,7 +81,7 @@ macro_rules! impl_table_ext {
 
                 fn set_row_resize(&mut self, flag: bool) {
                     unsafe {
-                        [<$flname _set_row_resize>](self.inner.widget() as _, flag as i32)
+                        [<$flname _set_row_resize>](self.inner.widget() as _, i32::from(flag))
                     }
                 }
 
@@ -93,7 +93,7 @@ macro_rules! impl_table_ext {
 
                 fn set_col_resize(&mut self, flag: bool) {
                     unsafe {
-                        [<$flname _set_col_resize>](self.inner.widget() as _, flag as i32)
+                        [<$flname _set_col_resize>](self.inner.widget() as _, i32::from(flag))
                     }
                 }
 
@@ -129,7 +129,7 @@ macro_rules! impl_table_ext {
 
                 fn set_row_header(&mut self, flag: bool) {
                     unsafe {
-                        [<$flname _set_row_header>](self.inner.widget() as _, flag as i32)
+                        [<$flname _set_row_header>](self.inner.widget() as _, i32::from(flag))
                     }
                 }
 
@@ -141,7 +141,7 @@ macro_rules! impl_table_ext {
 
                 fn set_col_header(&mut self, flag: bool) {
                     unsafe {
-                        [<$flname _set_col_header>](self.inner.widget() as _, flag as i32)
+                        [<$flname _set_col_header>](self.inner.widget() as _, i32::from(flag))
                     }
                 }
 

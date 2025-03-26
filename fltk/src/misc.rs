@@ -151,7 +151,7 @@ impl Spinner {
     /// Sets wrap for the spinner
     pub fn set_wrap(&mut self, flag: bool) {
         unsafe {
-            Fl_Spinner_set_wrap(self.inner.widget() as _, flag as _);
+            Fl_Spinner_set_wrap(self.inner.widget() as _, flag.into());
         }
     }
 }
@@ -259,7 +259,7 @@ impl Chart {
 
     /// Sets the ability of the chart to be autosizable
     pub fn make_autosize(&mut self, val: bool) {
-        unsafe { Fl_Chart_make_autosize(self.inner.widget() as _, val as i32) }
+        unsafe { Fl_Chart_make_autosize(self.inner.widget() as _, i32::from(val)) }
     }
 }
 
@@ -308,7 +308,7 @@ impl Progress {
     }
 }
 
-/// Controls tooltips on an application-wide basis; use .set_tooltip() to add a tooltip to a particular widget
+/// Controls tooltips on an application-wide basis; use .`set_tooltip()` to add a tooltip to a particular widget
 #[derive(Clone, Debug)]
 pub struct Tooltip {}
 
@@ -350,7 +350,7 @@ impl Tooltip {
 
     /// Sets tooltips to be displayed if b is true; otherwise not to be displayed
     pub fn enable(b: bool) {
-        unsafe { Fl_Tooltip_enable(b as i32) }
+        unsafe { Fl_Tooltip_enable(i32::from(b)) }
     }
 
     /// Disables the display of all tooltips
@@ -360,7 +360,7 @@ impl Tooltip {
 
     /// Used to provide tooltips for internal pieces of your widget.
     /// Check FLTK's [documentation](https://www.fltk.org/doc-1.3/classFl__Tooltip.html#a55b4d5a9a98e69eef5716ca02a16d59e).
-    /// The text of the tooltip must be a static CStr since the data is not copied by FLTK. This also avoid memory leaks in user code.
+    /// The text of the tooltip must be a static `CStr` since the data is not copied by FLTK. This also avoid memory leaks in user code.
     pub fn enter_area<W: WidgetExt>(
         widget: &W,
         x: i32,
@@ -377,7 +377,7 @@ impl Tooltip {
                 w,
                 h,
                 tip.as_ptr(),
-            )
+            );
         }
     }
 

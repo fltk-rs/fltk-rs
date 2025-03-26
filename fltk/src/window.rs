@@ -12,9 +12,7 @@
 //! [`awake_callback`](crate::app::awake_callback)
 
 use crate::app::screen_size;
-use crate::enums::{
-    Align, When, Color, Cursor, Damage, Event, Font, FrameType, LabelType, Mode,
-};
+use crate::enums::{Align, Color, Cursor, Damage, Event, Font, FrameType, LabelType, Mode, When};
 use crate::image::Image;
 use crate::prelude::*;
 use crate::utils::FlString;
@@ -110,7 +108,6 @@ pub type RawHandle = RawXlibHandle;
 ))]
 pub type RawHandle = *mut std::os::raw::c_void;
 
-
 /// Creates a window widget
 pub type Window = DoubleWindow;
 
@@ -149,12 +146,12 @@ macro_rules! impl_ppu {
 
             /// Gets the window's width in pixels
             pub fn pixel_w(&self) -> i32 {
-                (self.pixels_per_unit() * self.w() as f32) as i32
+                (self.pixels_per_unit() as f64 * self.w() as f64) as i32
             }
 
             /// Gets the window's height in pixels
             pub fn pixel_h(&self) -> i32 {
-                (self.pixels_per_unit() * self.h() as f32) as i32
+                (self.pixels_per_unit() as f64 * self.h() as f64) as i32
             }
         }
     };
@@ -327,7 +324,7 @@ macro_rules! impl_top_win {
                 unsafe { Fl_Window_maximize_active(self.inner.widget() as _) != 0 }
             }
 
-            /// Get the default XA_WM_CLASS property for all windows of your application
+            /// Get the default `XA_WM_CLASS` property for all windows of your application
             pub fn default_xclass() -> Option<String> {
                 unsafe {
                     let ptr = Fl_Single_Window_default_xclass();
@@ -339,7 +336,7 @@ macro_rules! impl_top_win {
                 }
             }
 
-            /// Set the default XA_WM_CLASS property for all windows of your application.
+            /// Set the default `XA_WM_CLASS` property for all windows of your application.
             /// This should be called before showing with window
             pub fn set_default_xclass(s: &str) {
                 let s = CString::safe_new(s);
@@ -477,7 +474,7 @@ impl DoubleWindow {
             }
         }
     }
-    /// Forces the window to be drawn, this window is also made current and calls draw()
+    /// Forces the window to be drawn, this window is also made current and calls `draw()`
     pub fn flush(&mut self) {
         unsafe { Fl_Double_Window_flush(self.inner.widget() as _) }
     }
@@ -507,13 +504,13 @@ impl DoubleWindow {
                 target_os = "emscripten"
             )))]
             {
-                if !crate::app::using_wayland() {
+                if crate::app::using_wayland() {
+                    Fl_Double_Window_show(self.inner.widget() as _);
+                } else {
                     unsafe extern "C" {
                         fn cfltk_platform_show(proxy: *mut raw::c_void);
                     }
                     cfltk_platform_show(self.raw_handle() as *mut raw::c_void);
-                } else {
-                    Fl_Double_Window_show(self.inner.widget() as _);
                 }
             }
         }
@@ -544,13 +541,13 @@ impl DoubleWindow {
                 target_os = "emscripten"
             )))]
             {
-                if !crate::app::using_wayland() {
+                if crate::app::using_wayland() {
+                    Fl_Double_Window_hide(self.inner.widget() as _);
+                } else {
                     unsafe extern "C" {
                         fn cfltk_platform_hide(proxy: *mut raw::c_void);
                     }
                     cfltk_platform_hide(self.raw_handle() as *mut raw::c_void);
-                } else {
-                    Fl_Double_Window_hide(self.inner.widget() as _);
                 }
             }
         }
@@ -680,7 +677,7 @@ impl OverlayWindow {
             }
         }
     }
-    /// Forces the window to be drawn, this window is also made current and calls draw()
+    /// Forces the window to be drawn, this window is also made current and calls `draw()`
     pub fn flush(&mut self) {
         unsafe { Fl_Double_Window_flush(self.inner.widget() as _) }
     }
@@ -841,14 +838,20 @@ impl GlutWindow {
     pub fn context(&self) -> Option<GlContext> {
         unsafe {
             let ctx = Fl_Glut_Window_context(self.inner.widget() as _);
-            if ctx.is_null() { None } else { Some(GlContext(ctx)) }
+            if ctx.is_null() {
+                None
+            } else {
+                Some(GlContext(ctx))
+            }
         }
     }
 
     /// Sets the GlContext
     pub fn set_context(&mut self, ctx: GlContext, destroy_flag: bool) {
         assert!(!ctx.0.is_null());
-        unsafe { Fl_Glut_Window_set_context(self.inner.widget() as _, ctx.0, destroy_flag as i32) }
+        unsafe {
+            Fl_Glut_Window_set_context(self.inner.widget() as _, ctx.0, i32::from(destroy_flag))
+        }
     }
 
     /// Swaps the back and front buffers
@@ -975,23 +978,25 @@ pub mod experimental {
                 assert!(!widget_ptr.is_null());
                 assert!(crate::app::is_ui_thread());
                 let tracker = crate::widget::WidgetTracker::new(widget_ptr as _);
-                unsafe extern "C" fn shim(wid: *mut Fl_Widget, _data: *mut std::os::raw::c_void) { unsafe {
-                    let user_data = Fl_Gl_Window_user_data(wid as _);
-                    let draw_data = Fl_Gl_Window_draw_data(wid as _);
-                    let handle_data = Fl_Gl_Window_handle_data(wid as _);
-                    crate::app::add_timeout(0., move |h| {
-                        if !user_data.is_null() {
-                            let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
-                        }
-                        if !draw_data.is_null() {
-                            let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
-                        }
-                        if !handle_data.is_null() {
-                            let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
-                        }
-                        crate::app::remove_timeout(h);
-                    });
-                }}
+                unsafe extern "C" fn shim(wid: *mut Fl_Widget, _data: *mut std::os::raw::c_void) {
+                    unsafe {
+                        let user_data = Fl_Gl_Window_user_data(wid as _);
+                        let draw_data = Fl_Gl_Window_draw_data(wid as _);
+                        let handle_data = Fl_Gl_Window_handle_data(wid as _);
+                        crate::app::add_timeout(0., move |h| {
+                            if !user_data.is_null() {
+                                let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
+                            }
+                            if !draw_data.is_null() {
+                                let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
+                            }
+                            if !handle_data.is_null() {
+                                let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
+                            }
+                            crate::app::remove_timeout(h);
+                        });
+                    }
+                }
                 Fl_Gl_Window_set_deletion_callback(widget_ptr, Some(shim), std::ptr::null_mut());
                 Self {
                     inner: tracker,
@@ -1045,14 +1050,20 @@ pub mod experimental {
         pub fn context(&self) -> Option<GlContext> {
             unsafe {
                 let ctx = Fl_Gl_Window_context(self.inner.widget() as _);
-                if ctx.is_null() { None } else { Some(GlContext(ctx)) }
+                if ctx.is_null() {
+                    None
+                } else {
+                    Some(GlContext(ctx))
+                }
             }
         }
 
         /// Sets the GlContext
         pub fn set_context(&mut self, ctx: GlContext, destroy_flag: bool) {
             assert!(!ctx.0.is_null());
-            unsafe { Fl_Gl_Window_set_context(self.inner.widget() as _, ctx.0, destroy_flag as i32) }
+            unsafe {
+                Fl_Gl_Window_set_context(self.inner.widget() as _, ctx.0, i32::from(destroy_flag))
+            }
         }
 
         /// Swaps the back and front buffers

@@ -140,7 +140,7 @@ macro_rules! impl_browser_ext {
                     }
                 }
 
-                fn set_icon<Img: ImageExt>(&mut self, line: i32, image: Option<Img>) {
+                fn set_icon<Img: ImageExt>(&mut self, line: i32, image: Option<&Img>) {
                     if line > 0 && line <= self.size() + 1 {
                         if let Some(image) = image {
                             assert!(!image.was_deleted());

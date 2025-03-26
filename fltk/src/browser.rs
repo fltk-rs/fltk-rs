@@ -166,7 +166,7 @@ impl FileBrowser {
         let pattern = CString::safe_new(pattern);
         unsafe {
             // This is deleted on the C++ side
-            Fl_File_Browser_set_filter(self.inner.widget() as _, pattern.into_raw() as _)
+            Fl_File_Browser_set_filter(self.inner.widget() as _, pattern.into_raw() as _);
         }
     }
 
@@ -212,7 +212,7 @@ impl CheckBrowser {
     /// Add an item, returns the number of current items
     pub fn add(&mut self, s: &str, checked: bool) -> i32 {
         let s = CString::safe_new(s);
-        unsafe { Fl_Check_Browser_add(self.inner.widget() as _, s.as_ptr(), checked as i32) }
+        unsafe { Fl_Check_Browser_add(self.inner.widget() as _, s.as_ptr(), i32::from(checked)) }
     }
 
     /// Remove item at index, returns the number of current items
@@ -345,7 +345,7 @@ impl CheckBrowser {
     /// Sets the type of scrollbar associated with the browser
     pub fn set_has_scrollbar(&mut self, mode: BrowserScrollbar) {
         unsafe {
-            Fl_Check_Browser_set_has_scrollbar(self.inner.widget() as _, mode as raw::c_uchar)
+            Fl_Check_Browser_set_has_scrollbar(self.inner.widget() as _, mode as raw::c_uchar);
         }
     }
 

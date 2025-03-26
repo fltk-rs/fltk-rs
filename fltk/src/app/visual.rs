@@ -71,7 +71,7 @@ pub fn visible_focus() -> bool {
 
 /// Show focus around widgets
 pub fn set_visible_focus(flag: bool) {
-    unsafe { fl::Fl_set_visible_focus(flag as i32) }
+    unsafe { fl::Fl_set_visible_focus(i32::from(flag)) }
 }
 
 /// Set the app's default frame type
@@ -315,13 +315,13 @@ pub fn draw_frame_active() -> bool {
     unsafe { fl::Fl_draw_box_active() != 0 }
 }
 
-/// Fl::box_color.
+/// `Fl::box_color`.
 /// Gets the current frame color within box/frame drawing mode
 pub fn frame_color(col: Color) -> Color {
     unsafe { mem::transmute(fl::Fl_box_color(col.bits())) }
 }
 
-/// Fl::set_box_color.
+/// `Fl::set_box_color`.
 /// Sets the current frame color within box/frame drawing mode
 pub fn set_frame_color(col: Color) {
     unsafe { fl::Fl_set_box_color(col.bits()) }
@@ -334,7 +334,7 @@ pub fn add_symbol(label: &str, scalable: bool, draw_cb: fn(Color)) -> Result<(),
         let ret = fltk_sys::draw::Fl_add_symbol(
             label.into_raw() as _,
             mem::transmute(Some(draw_cb)),
-            scalable as _,
+            scalable.into(),
         );
         if ret == 0 {
             Err(FltkError::Internal(FltkErrorKind::FailedOperation))

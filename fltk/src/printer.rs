@@ -178,7 +178,7 @@ impl Printer {
                 widget.as_widget_ptr() as *mut _,
                 delta_x,
                 delta_y,
-            )
+            );
         }
     }
 
@@ -190,7 +190,7 @@ impl Printer {
                 win.as_widget_ptr() as *mut _,
                 x_offset,
                 y_offset,
-            )
+            );
         }
     }
 

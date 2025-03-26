@@ -23,7 +23,7 @@ pub enum ColorMode {
     Hsv = 3,
 }
 
-/// FLTK's NativeFileChooser
+/// FLTK's `NativeFileChooser`
 #[derive(Debug)]
 pub struct NativeFileChooser {
     inner: *mut Fl_Native_File_Chooser,
@@ -66,7 +66,7 @@ bitflags::bitflags! {
     }
 }
 
-/// Rusult of try_show
+/// Rusult of `try_show`
 #[derive(Debug, Copy, Clone)]
 pub enum NativeFileChooserAction {
     /// Cancelled operation
@@ -236,7 +236,7 @@ impl Drop for NativeFileChooser {
 pub fn message(x: i32, y: i32, txt: &str) {
     unsafe {
         let txt = CString::safe_new(txt);
-        Fl_message(x, y, txt.as_ptr())
+        Fl_message(x, y, txt.as_ptr());
     }
 }
 
@@ -244,7 +244,7 @@ pub fn message(x: i32, y: i32, txt: &str) {
 pub fn alert(x: i32, y: i32, txt: &str) {
     unsafe {
         let txt = CString::safe_new(txt);
-        Fl_alert(x, y, txt.as_ptr())
+        Fl_alert(x, y, txt.as_ptr());
     }
 }
 
@@ -302,7 +302,7 @@ pub fn password(x: i32, y: i32, txt: &str, deflt: &str) -> Option<String> {
 pub fn message_default(txt: &str) {
     unsafe {
         let txt = CString::safe_new(txt);
-        Fl_message2(txt.as_ptr())
+        Fl_message2(txt.as_ptr());
     }
 }
 
@@ -310,7 +310,7 @@ pub fn message_default(txt: &str) {
 pub fn alert_default(txt: &str) {
     unsafe {
         let txt = CString::safe_new(txt);
-        Fl_alert2(txt.as_ptr())
+        Fl_alert2(txt.as_ptr());
     }
 }
 
@@ -611,7 +611,7 @@ impl FileChooser {
     /// Deletes a `FileChooser`
     /// # Safety
     /// Can invalidate the underlying pointer
-    pub unsafe fn delete(dlg: Self) {
+    pub unsafe fn delete(dlg: &Self) {
         unsafe { Fl_File_Chooser_delete(dlg.inner) }
     }
 
@@ -677,7 +677,7 @@ impl FileChooser {
             let callback: Option<
                 unsafe extern "C" fn(arg1: *mut Fl_File_Chooser, data: *mut raw::c_void),
             > = Some(shim);
-            Fl_File_Chooser_set_callback(self.inner, callback, data)
+            Fl_File_Chooser_set_callback(self.inner, callback, data);
         }
     }
 
@@ -701,7 +701,7 @@ impl FileChooser {
 
     /// Sets the directory of the `FileChooser`
     pub fn set_directory<P: AsRef<Path>>(&mut self, dir: P) {
-        self.set_directory_(dir.as_ref())
+        self.set_directory_(dir.as_ref());
     }
 
     fn set_directory_(&mut self, dir: &Path) {
@@ -839,7 +839,7 @@ impl FileChooser {
     /// Add preview to the `FileChooser`
     pub fn set_preview(&mut self, e: bool) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_File_Chooser_set_preview(self.inner, e as i32) }
+        unsafe { Fl_File_Chooser_set_preview(self.inner, i32::from(e)) }
     }
 
     /// Returns whether preview is enabled for the `FileChooser`
@@ -1126,7 +1126,7 @@ pub fn dir_chooser(message: &str, fname: &str, relative: bool) -> Option<String>
     unsafe {
         let message = CString::safe_new(message);
         let fname = CString::safe_new(fname);
-        let ptr = Fl_dir_chooser(message.as_ptr(), fname.as_ptr(), relative as i32);
+        let ptr = Fl_dir_chooser(message.as_ptr(), fname.as_ptr(), i32::from(relative));
         if ptr.is_null() {
             None
         } else {
@@ -1175,7 +1175,7 @@ fn file_chooser_(message: &str, pattern: &str, dir: &Path, relative: bool) -> Op
                 message.as_ptr(),
                 pattern.as_ptr(),
                 dir.as_ptr(),
-                relative as i32,
+                i32::from(relative),
             );
             if ptr.is_null() {
                 None
@@ -1235,7 +1235,7 @@ pub fn message_icon() -> impl WidgetExt {
 
 /// Set whether hotspot is enabled for FLTK's dialog boxes
 pub fn message_set_hotspot(enabled: bool) {
-    unsafe { Fl_message_set_hotspot(enabled as _) }
+    unsafe { Fl_message_set_hotspot(enabled.into()) }
 }
 
 /// Get whether hotspot is enabled for FLTK's dialog boxes

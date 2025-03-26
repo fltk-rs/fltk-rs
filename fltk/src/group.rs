@@ -6,7 +6,7 @@ use fltk_sys::group::*;
 use std::{
     ffi::{CStr, CString},
     mem,
-    ops::Range,
+    ops::{Range, RangeInclusive},
     sync::atomic::{AtomicBool, Ordering},
 };
 
@@ -37,13 +37,13 @@ impl Group {
         }
     }
 
-    /// Sets the current GroupExt widget which will take children
+    /// Sets the current `GroupExt` widget which will take children
     pub fn set_current(grp: Option<&impl GroupExt>) {
         unsafe {
             if let Some(grp) = grp {
-                Fl_Group_set_current(grp.as_widget_ptr() as _)
+                Fl_Group_set_current(grp.as_widget_ptr() as _);
             } else {
-                Fl_Group_set_current(std::ptr::null_mut())
+                Fl_Group_set_current(std::ptr::null_mut());
             }
         }
     }
@@ -273,7 +273,7 @@ impl Tabs {
         }
     }
 
-    /// This is called by the tab widget's handle() method to set the tab group widget the user last pushed
+    /// This is called by the tab widget's `handle()` method to set the tab group widget the user last pushed
     /// # Errors
     /// Errors if `set_push` can't be set for the group widget
     pub fn set_push<Grp: GroupExt>(&mut self, w: &Grp) -> Result<(), FltkError> {
@@ -313,13 +313,13 @@ impl Tabs {
 
     /// Auto layout a tabs widget
     pub fn auto_layout(&mut self) {
-        for c in self.clone().into_iter() {
+        for c in self.clone() {
             if let Some(mut c) = c.as_group() {
                 c.resize(self.x(), self.y() + 30, self.w(), self.h() - 30);
             }
         }
         self.resize_callback(|t, x, y, w, h| {
-            for c in t.clone().into_iter() {
+            for c in t.clone() {
                 if let Some(mut c) = c.as_group() {
                     c.resize(x, y + 30, w, h - 30);
                 }
@@ -353,12 +353,12 @@ impl Tile {
     This redraws all the necessary children.
 
     If no size ranges are set, the new intersection position is limited to the
-    size of the tile group. The resizable() option is not taken into account here.
+    size of the tile group. The `resizable()` option is not taken into account here.
 
     If size ranges are set, the actual new position of the intersection will
     depend on the size range of every individual child. No child will be smaller
-    than their minw and minh. After the new position is found, move_intersection()
-    will call init_sizes(). The resizable() range is ignored.
+    than their minw and minh. After the new position is found, `move_intersection()`
+    will call `init_sizes()`. The `resizable()` range is ignored.
 
     \param[in] oldx, oldy move the intersection at this coordinate, pass zero to
         disable drag in that direction.
@@ -374,7 +374,7 @@ impl Tile {
     /// Set the allowed size range for the child at the given index
     pub fn size_range_by_index(&mut self, idx: i32, minw: i32, minh: i32, maxw: i32, maxh: i32) {
         unsafe {
-            Fl_Tile_size_range_by_index(self.inner.widget() as _, idx, minw, minh, maxw, maxh)
+            Fl_Tile_size_range_by_index(self.inner.widget() as _, idx, minw, minh, maxw, maxh);
         }
     }
 
@@ -395,7 +395,7 @@ impl Tile {
                 minh,
                 maxw,
                 maxh,
-            )
+            );
         }
     }
 }
@@ -441,7 +441,7 @@ impl Wizard {
             Fl_Wizard_set_value(
                 self.inner.widget() as _,
                 w.as_widget_ptr() as *mut fltk_sys::group::Fl_Widget,
-            )
+            );
         }
     }
 
@@ -490,14 +490,14 @@ impl ColorChooser {
         crate::utils::rgb2hex(r, g, b)
     }
 
-    /// Set the base color of the ColorChooser. Returns an error on failure to change the color (wrong input)
+    /// Set the base color of the `ColorChooser`. Returns an error on failure to change the color (wrong input)
     pub fn set_rgb(&mut self, r: u8, g: u8, b: u8) -> Result<(), FltkError> {
         unsafe {
             let ret = Fl_Color_Chooser_set_rgb(
                 self.inner.widget() as _,
-                r as f64 / 255.0,
-                g as f64 / 255.0,
-                b as f64 / 255.0,
+                f64::from(r) / 255.0,
+                f64::from(g) / 255.0,
+                f64::from(b) / 255.0,
             );
             if ret == 1 {
                 Ok(())
@@ -507,14 +507,14 @@ impl ColorChooser {
         }
     }
 
-    /// Set the base color of the ColorChooser. Returns an error on failure to change the color (wrong input)
+    /// Set the base color of the `ColorChooser`. Returns an error on failure to change the color (wrong input)
     pub fn set_tuple_rgb(&mut self, (r, g, b): (u8, u8, u8)) -> Result<(), FltkError> {
         unsafe {
             let ret = Fl_Color_Chooser_set_rgb(
                 self.inner.widget() as _,
-                r as f64 / 255.0,
-                g as f64 / 255.0,
-                b as f64 / 255.0,
+                f64::from(r) / 255.0,
+                f64::from(g) / 255.0,
+                f64::from(b) / 255.0,
             );
             if ret == 1 {
                 Ok(())
@@ -581,7 +581,7 @@ impl Flex {
         self.recalc();
     }
 
-    /// Set the size of the widget, same as `set_size`, but more inline with the new FLTK Fl_Flex api
+    /// Set the size of the widget, same as `set_size`, but more inline with the new FLTK `Fl_Flex` api
     pub fn fixed<W: WidgetExt>(&mut self, w: &W, size: i32) {
         unsafe { Fl_Flex_set_size(self.inner.widget() as _, w.as_widget_ptr() as _, size) }
     }
@@ -603,6 +603,7 @@ impl Flex {
     }
 
     /// Set the type to be a column
+    #[must_use]
     pub fn column(mut self) -> Self {
         self.set_type(FlexType::Column);
         self.debug_();
@@ -610,6 +611,7 @@ impl Flex {
     }
 
     /// Set the type to a row
+    #[must_use]
     pub fn row(mut self) -> Self {
         self.set_type(FlexType::Row);
         self.debug_();
@@ -689,12 +691,12 @@ pub struct GridRange {
 }
 
 impl GridRange {
-    /// Check the length of the GridRange
+    /// Check the length of the `GridRange`
     pub fn len(&self) -> usize {
         self.end - self.start
     }
 
-    /// Check whether the GridRange is empty
+    /// Check whether the `GridRange` is empty
     pub fn is_empty(&self) -> bool {
         self.len() == 0
     }
@@ -709,9 +711,18 @@ impl From<Range<usize>> for GridRange {
     }
 }
 
+impl From<RangeInclusive<usize>> for GridRange {
+    fn from(val: RangeInclusive<usize>) -> Self {
+        Self {
+            start: *val.start(),
+            end: *val.end(),
+        }
+    }
+}
+
 impl From<usize> for GridRange {
     fn from(val: usize) -> Self {
-        (val..val + 1).into()
+        (val..=val).into()
     }
 }
 
@@ -778,7 +789,7 @@ impl Grid {
     }
     /// Set whether the Grid needs layout
     pub fn set_need_layout(&mut self, set: bool) {
-        unsafe { Fl_Grid_set_need_layout(self.inner.widget() as _, set as _) }
+        unsafe { Fl_Grid_set_need_layout(self.inner.widget() as _, set.into()) }
     }
     /// Get whether the Grid needs layout
     pub fn need_layout(&self) -> bool {
@@ -894,11 +905,11 @@ impl Grid {
     }
     /// Show the grid
     pub fn show_grid(&mut self, set: bool) {
-        unsafe { Fl_Grid_show_grid(self.inner.widget() as _, set as _) }
+        unsafe { Fl_Grid_show_grid(self.inner.widget() as _, set.into()) }
     }
     /// Show the grid with a certain color
     pub fn show_grid_with_color(&mut self, set: bool, col: Color) {
-        unsafe { Fl_Grid_show_grid_with_color(self.inner.widget() as _, set as _, col.bits()) }
+        unsafe { Fl_Grid_show_grid_with_color(self.inner.widget() as _, set.into(), col.bits()) }
     }
     /// Debug the grid
     pub fn debug(&mut self, level: i32) {

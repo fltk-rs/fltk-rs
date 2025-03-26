@@ -9,7 +9,7 @@ pub fn make_current(w: &impl WidgetExt) -> *mut c_void {
 
 /// Sets autolink
 pub fn set_autolink_context(alink: bool) {
-    unsafe { Fl_set_cairo_autolink_context(alink as i32) }
+    unsafe { Fl_set_cairo_autolink_context(i32::from(alink)) }
 }
 
 /// Gets autolink
@@ -26,7 +26,7 @@ pub fn cc() -> *mut c_void {
 /// # Safety
 /// Doesn't check the passed context for validity
 pub unsafe fn set_cc(c: *mut c_void, own: bool) {
-    unsafe { Fl_set_cairo_cc(c, own as i32) }
+    unsafe { Fl_set_cairo_cc(c, i32::from(own)) }
 }
 
 /// Flushes the cairo context

@@ -1,6 +1,6 @@
 use fltk::{
     app, dialog,
-    enums::{When, Color, Event, Font, FrameType, Shortcut},
+    enums::{Color, Event, Font, FrameType, Shortcut, When},
     menu,
     prelude::*,
     printer, text, window,

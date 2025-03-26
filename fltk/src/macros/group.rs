@@ -120,7 +120,7 @@ macro_rules! impl_group_ext {
                 }
 
                 fn set_clip_children(&mut self, flag: bool) {
-                    unsafe { [<$flname _set_clip_children>](self.inner.widget() as _, flag as i32) }
+                    unsafe { [<$flname _set_clip_children>](self.inner.widget() as _, i32::from(flag)) }
                 }
 
                 fn clip_children(&self) -> bool {

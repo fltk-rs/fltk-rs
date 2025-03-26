@@ -114,6 +114,7 @@ impl Offscreen {
     /// Performs a shallow copy of the offscreen
     /// # Safety
     /// This can lead to multiple mutable references to the same offscreen
+    #[must_use]
     pub unsafe fn shallow_copy(&self) -> Offscreen {
         assert!(!self.inner.is_null());
         Offscreen { inner: self.inner }
@@ -190,7 +191,7 @@ pub fn draw_loop3(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>, pos4: Co
     unsafe {
         Fl_loop2(
             pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1,
-        )
+        );
     }
 }
 
@@ -287,7 +288,7 @@ pub fn pop_clip() {
 }
 
 /// Sets the clip region
-pub fn set_clip_region(r: Region) {
+pub fn set_clip_region(r: &Region) {
     assert!(!r.0.is_null());
     unsafe { Fl_set_clip_region(r.0) }
 }
@@ -374,7 +375,7 @@ pub fn draw_polygon3(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>, pos4:
     unsafe {
         Fl_polygon2(
             pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1,
-        )
+        );
     }
 }
 
@@ -383,7 +384,7 @@ pub fn draw_curve(pos1: Coord<f64>, pos2: Coord<f64>, pos3: Coord<f64>, pos4: Co
     unsafe {
         Fl_curve(
             pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1,
-        )
+        );
     }
 }
 
@@ -504,7 +505,7 @@ pub fn begin_complex_polygon() {
     unsafe { Fl_begin_complex_polygon() }
 }
 
-/// Call gap() to separate loops of the path
+/// Call `gap()` to separate loops of the path
 pub fn gap() {
     unsafe { Fl_gap() }
 }
@@ -541,7 +542,7 @@ pub fn set_height(font: Font, size: i32) {
     }
 }
 
-/// Returns the recommended distance above the bottom of a height() tall box to
+/// Returns the recommended distance above the bottom of a `height()` tall box to
 /// draw the text at so it looks centered vertically in that box
 pub fn descent() -> i32 {
     unsafe { Fl_descent() }
@@ -564,7 +565,7 @@ pub fn measure(txt: &str, draw_symbols: bool) -> (i32, i32) {
     let txt = CString::safe_new(txt);
     let (mut x, mut y) = (0, 0);
     unsafe {
-        Fl_measure(txt.as_ptr(), &mut x, &mut y, draw_symbols as i32);
+        Fl_measure(txt.as_ptr(), &mut x, &mut y, i32::from(draw_symbols));
     }
     (x, y)
 }
@@ -576,7 +577,7 @@ pub fn wrap_measure(txt: &str, width: i32, draw_symbols: bool) -> (i32, i32) {
     let txt = CString::safe_new(txt);
     let (mut x, mut y) = (width, 0);
     unsafe {
-        Fl_measure(txt.as_ptr(), &mut x, &mut y, draw_symbols as i32);
+        Fl_measure(txt.as_ptr(), &mut x, &mut y, i32::from(draw_symbols));
     }
     (x, y)
 }
@@ -671,7 +672,7 @@ pub fn draw_frame(string: &str, x: i32, y: i32, width: i32, height: i32) {
 
 /// Draws a series of line segments around the given box
 ///
-/// Differs from frame() by the order of the line segments which is bottom, right, top, left.
+/// Differs from `frame()` by the order of the line segments which is bottom, right, top, left.
 pub fn draw_frame2(string: &str, x: i32, y: i32, width: i32, height: i32) {
     assert!(string.len() % 4 == 0);
     let s = CString::safe_new(string);
@@ -735,7 +736,7 @@ pub fn set_spot<Win: WindowExt>(font: Font, size: i32, x: i32, y: i32, w: i32, h
             w,
             h,
             win.as_widget_ptr() as *mut raw::c_void,
-        )
+        );
     }
 }
 
@@ -854,7 +855,7 @@ pub fn capture_surface(surface: &ImageSurface, w: i32, h: i32) -> Result<RgbImag
 
 /// Draw an image into a widget.
 /// Requires a call to [`app::set_visual(Mode::Rgb8).unwrap()`](`crate::app::set_visual`).
-/// Doesn't support transparency, for that you would have to use RgbImage.
+/// Doesn't support transparency, for that you would have to use `RgbImage`.
 /// # Errors
 /// Errors on invalid or unsupported image formats
 pub fn draw_image(
@@ -916,11 +917,11 @@ pub fn draw_rbox(x: i32, y: i32, w: i32, h: i32, max_radius: i32, fill: bool, co
         rs = 8;
     }
 
-    let rs = rs as f64;
-    let x = x as f64;
-    let y = y as f64;
-    let w = w as f64;
-    let h = h as f64;
+    let rs = f64::from(rs);
+    let x = f64::from(x);
+    let y = f64::from(y);
+    let w = f64::from(w);
+    let h = f64::from(h);
     let old_col = get_color();
     let len = offset.len();
 
@@ -968,17 +969,21 @@ pub fn draw_rbox(x: i32, y: i32, w: i32, h: i32, max_radius: i32, fill: bool, co
 /// Start drawing using OpenGL functions inside a widget's draw routine
 /// # Safety
 /// Requires OpenGL support, Only works with SingleWindow
-pub unsafe fn gl_start() { unsafe {
-    fltk_sys::window::Fl_gl_start();
-}}
+pub unsafe fn gl_start() {
+    unsafe {
+        fltk_sys::window::Fl_gl_start();
+    }
+}
 
 #[cfg(feature = "enable-glwindow")]
 /// Finish drawing using OpenGL functions inside a widget's draw routine
 /// # Safety
 /// Requires OpenGL support, Only works with SingleWindow
-pub unsafe fn gl_finish() { unsafe {
-    fltk_sys::window::Fl_gl_finish();
-}}
+pub unsafe fn gl_finish() {
+    unsafe {
+        fltk_sys::window::Fl_gl_finish();
+    }
+}
 
 /// Draws a rounded rectangle
 pub fn draw_rounded_rect(x: i32, y: i32, w: i32, h: i32, r: i32) {
@@ -997,7 +1002,7 @@ pub fn draw_circle_fill(x: i32, y: i32, d: i32, c: Color) {
     }
 }
 
-/// Like draw_text, however uses FLTK's `fl_draw` which takes the length of the string, so it doesn't need to allocate
+/// Like `draw_text`, however uses FLTK's `fl_draw` which takes the length of the string, so it doesn't need to allocate
 pub fn draw_text_n(string: &str, x: i32, y: i32) {
     let len = string.len();
     if size() == -1 && len == 1 {

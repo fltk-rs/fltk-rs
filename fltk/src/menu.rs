@@ -112,7 +112,7 @@ impl MenuButton {
 ///
 ///fn my_down_box(x: i32, y: i32, w: i32, h: i32, col: Color) {
 ///    draw::draw_rect_fill(x, y, w, h, Color::Red);
-///    draw::draw_rect_fill(x + 1, y + 1, w - 2, h - 2, Color::BackGround2); // change values to change thickness
+///    draw::draw_rect_fill(x + 1, y + 1, w - 2, h - 2, Color::Background2); // change values to change thickness
 ///}
 ///
 ///fn main() {
@@ -141,7 +141,7 @@ crate::macros::widget::impl_widget_base!(Choice, Fl_Choice);
 crate::macros::widget::impl_widget_default!(Choice, Fl_Choice);
 crate::macros::menu::impl_menu_ext!(Choice, Fl_Choice);
 
-/// Defines the window menu style for SysMenuBar
+/// Defines the window menu style for `SysMenuBar`
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum WindowMenuStyle {
@@ -243,7 +243,7 @@ impl IntoIterator for MenuItem {
 }
 
 impl MenuItem {
-    /// Initializes a MenuItem from a pointer
+    /// Initializes a `MenuItem` from a pointer
     /// # Safety
     /// The pointer must be valid
     pub unsafe fn from_ptr(ptr: *mut Fl_Menu_Item) -> MenuItem {
@@ -257,7 +257,7 @@ impl MenuItem {
         }
     }
 
-    /// Returns the inner pointer from a MenuItem
+    /// Returns the inner pointer from a `MenuItem`
     /// # Safety
     /// Can return multiple mutable pointers to the same item
     pub unsafe fn as_ptr(&self) -> *mut Fl_Menu_Item {
@@ -270,7 +270,7 @@ impl MenuItem {
     }
 
     /// Initializes a new menu item.
-    /// This will allocate a static MenuItem, that is expected to live for the entirety of the program.
+    /// This will allocate a static `MenuItem`, that is expected to live for the entirety of the program.
     pub fn new(choices: &[&'static str]) -> MenuItem {
         unsafe {
             let sz = choices.len();
@@ -494,7 +494,7 @@ impl MenuItem {
         i
     }
 
-    /// Get the size of the MenuItem
+    /// Get the size of the `MenuItem`
     pub fn size(&self) -> i32 {
         unsafe { Fl_Menu_Item_children(*self.inner) }
     }
@@ -581,15 +581,17 @@ impl MenuItem {
                 w,
                 h,
                 menu.as_widget_ptr() as _,
-                selected as i32,
-            )
+                i32::from(selected),
+            );
         }
     }
 
     /// Measure the width and height of a menu item
     pub fn measure(&self) -> (i32, i32) {
         let mut h = 0;
-        let ret = unsafe { Fl_Menu_Item_measure(*self.inner, &mut h as _, std::ptr::null()) };
+        let ret = unsafe {
+            Fl_Menu_Item_measure(*self.inner, std::ptr::from_mut(&mut h), std::ptr::null())
+        };
         (ret, h)
     }
 
@@ -597,10 +599,10 @@ impl MenuItem {
     /// # Safety
     /// Trying to add a label after adding an image might lead to undefined behavior
     #[doc(hidden)]
-    pub unsafe fn set_image<I: ImageExt>(&mut self, image: I) {
+    pub unsafe fn set_image<I: ImageExt>(&mut self, image: &I) {
         unsafe {
             assert!(!image.was_deleted());
-            Fl_Menu_Item_image(*self.inner, image.as_image_ptr() as _)
+            Fl_Menu_Item_image(*self.inner, image.as_image_ptr() as _);
         }
     }
 
@@ -634,17 +636,17 @@ impl MenuItem {
             |_| println!("Opened file!"),
         );
         if let Some(mut item) = menu.find_item("&File/Open...\t") {
-            item.add_image(Some(image), true);
+            item.add_image(Some(&image), true);
         }
         ```
     */
-    pub fn add_image<I: ImageExt>(&mut self, image: Option<I>, on_left: bool) {
+    pub fn add_image<I: ImageExt>(&mut self, image: Option<&I>, on_left: bool) {
         unsafe {
             if let Some(image) = image {
                 assert!(!image.was_deleted());
-                Fl_Menu_Item_add_image(*self.inner, image.as_image_ptr() as _, on_left as i32)
+                Fl_Menu_Item_add_image(*self.inner, image.as_image_ptr() as _, i32::from(on_left));
             } else {
-                Fl_Menu_Item_add_image(*self.inner, std::ptr::null_mut(), on_left as i32)
+                Fl_Menu_Item_add_image(*self.inner, std::ptr::null_mut(), i32::from(on_left));
             }
         }
     }
@@ -740,7 +742,7 @@ impl MenuItem {
         msg: T,
     ) -> i32 {
         self.insert(idx, label, shortcut, flag, move |_| {
-            sender.send(msg.clone())
+            sender.send(msg.clone());
         })
     }
 
@@ -762,7 +764,7 @@ impl MenuItem {
 /// Delete a menu item
 /// # Safety
 /// The wrapper can't assure use after free when manually deleting a menu item
-pub unsafe fn delete_menu_item(item: MenuItem) {
+pub unsafe fn delete_menu_item(item: &MenuItem) {
     unsafe { Fl_Menu_Item_delete(*item.inner) }
 }
 
@@ -783,7 +785,7 @@ pub fn mac_set_about<F: FnMut() + 'static>(cb: F) {
     }
 }
 
-/// Wrapper around Fl_Mac_App_Menu which exposes several static methods
+/// Wrapper around `Fl_Mac_App_Menu` which exposes several static methods
 /// allowing the customization of the default system menu bar for the fltk application
 #[derive(Debug, Clone, Copy)]
 pub struct MacAppMenu;
@@ -864,7 +866,7 @@ impl MacAppMenu {
     /// Adds custom menu items to the application menu of the system menu bar.
     /// They are positioned after the "Print Front Window / Toggle printing of titlebar" items,
     /// or at their place if an item is removed by providing empty text
-    pub fn custom_application_menu_items(m: MenuItem) {
+    pub fn custom_application_menu_items(m: &MenuItem) {
         unsafe {
             Fl_Mac_App_Menu_custom_application_menu_items(m.as_ptr());
         }

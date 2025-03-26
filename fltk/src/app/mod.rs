@@ -48,6 +48,7 @@ impl App {
     }
 
     /// Sets the scheme of the application
+    #[must_use]
     pub fn with_scheme(self, scheme: Scheme) -> App {
         set_scheme(scheme);
         self
@@ -72,6 +73,7 @@ impl App {
     }
 
     /// Loads system fonts
+    #[must_use]
     pub fn load_system_fonts(self) -> Self {
         *FONTS.lock().unwrap() = get_font_names();
         self
@@ -118,11 +120,11 @@ impl App {
 
     /// Redraws the app
     pub fn redraw(self) {
-        redraw()
+        redraw();
     }
 
     /// Quit the application
     pub fn quit(self) {
-        quit()
+        quit();
     }
 }

@@ -118,7 +118,7 @@ pub fn should_program_quit() -> bool {
 
 /// Determines whether a program should quit
 pub fn program_should_quit(flag: bool) {
-    unsafe { fl::Fl_program_should_quit(flag as i32) }
+    unsafe { fl::Fl_program_should_quit(i32::from(flag)) }
 }
 
 /// Calling this during a big calculation will keep the screen up to date and the interface responsive.
@@ -132,7 +132,7 @@ pub fn check() -> bool {
     }
 }
 
-/// This is similar to app::check() except this does not call app::flush() or any callbacks,
+/// This is similar to `app::check()` except this does not call `app::flush()` or any callbacks,
 /// which is useful if your program is in a state where such callbacks are illegal.
 pub fn ready() -> bool {
     unsafe {

@@ -1,6 +1,5 @@
 use crate::enums::{
-    Align, When, Color, ColorDepth, Cursor, Damage, Event, Font, FrameType, LabelType,
-    Shortcut,
+    Align, Color, ColorDepth, Cursor, Damage, Event, Font, FrameType, LabelType, Shortcut, When,
 };
 use std::convert::From;
 use std::string::FromUtf8Error;
@@ -70,15 +69,15 @@ impl fmt::Display for FltkError {
         match *self {
             FltkError::IoError(ref err) => err.fmt(f),
             FltkError::NullError(ref err) => err.fmt(f),
-            FltkError::Internal(ref err) => write!(f, "An internal error occurred {:?}", err),
-            FltkError::EnvVarError(ref err) => write!(f, "An env var error occurred {:?}", err),
+            FltkError::Internal(ref err) => write!(f, "An internal error occurred {err:?}"),
+            FltkError::EnvVarError(ref err) => write!(f, "An env var error occurred {err:?}"),
             FltkError::Utf8Error(ref err) => {
-                write!(f, "A UTF8 conversion error occurred {:?}", err)
+                write!(f, "A UTF8 conversion error occurred {err:?}")
             }
             FltkError::ParseIntError(ref err) => {
-                write!(f, "An int parsing error occurred {:?}", err)
+                write!(f, "An int parsing error occurred {err:?}")
             }
-            FltkError::Unknown(ref err) => write!(f, "An unknown error occurred {:?}", err),
+            FltkError::Unknown(ref err) => write!(f, "An unknown error occurred {err:?}"),
         }
     }
 }
@@ -129,7 +128,7 @@ pub trait WidgetType {
 /// # Warning
 /// fltk-rs traits are non-exhaustive,
 /// to avoid future breakage if you try to implement them manually,
-/// use the Deref and DerefMut pattern or the `widget_extends!` macro
+/// use the Deref and `DerefMut` pattern or the `widget_extends!` macro
 pub unsafe trait WidgetExt {
     /// Sets the widget's label.
     /// labels support special symbols preceded by an `@` [sign](https://www.fltk.org/doc-1.3/symbols.png).
@@ -170,11 +169,11 @@ pub unsafe trait WidgetExt {
     where
         Self: Sized;
     /// Sets the image of the widget
-    fn set_image<I: ImageExt>(&mut self, image: Option<I>)
+    fn set_image<I: ImageExt>(&mut self, image: Option<&I>)
     where
         Self: Sized;
     /// Sets the image of the widget scaled to the widget's size
-    fn set_image_scaled<I: ImageExt>(&mut self, image: Option<I>)
+    fn set_image_scaled<I: ImageExt>(&mut self, image: Option<&mut I>)
     where
         Self: Sized;
     /// Gets the image associated with the widget
@@ -182,11 +181,11 @@ pub unsafe trait WidgetExt {
     where
         Self: Sized;
     /// Sets the deactivated image of the widget
-    fn set_deimage<I: ImageExt>(&mut self, image: Option<I>)
+    fn set_deimage<I: ImageExt>(&mut self, image: Option<&I>)
     where
         Self: Sized;
     /// Sets the deactivated image of the widget scaled to the widget's size
-    fn set_deimage_scaled<I: ImageExt>(&mut self, image: Option<I>)
+    fn set_deimage_scaled<I: ImageExt>(&mut self, image: Option<&mut I>)
     where
         Self: Sized;
     /// Gets the deactivated image associated with the widget
@@ -382,7 +381,7 @@ pub unsafe trait WidgetExt {
 /// # Warning
 /// fltk-rs traits are non-exhaustive,
 /// to avoid future breakage if you try to implement them manually,
-/// use the Deref and DerefMut pattern or the `widget_extends!` macro
+/// use the Deref and `DerefMut` pattern or the `widget_extends!` macro
 pub unsafe trait WidgetBase: WidgetExt {
     /// Deletes widgets and their children.
     fn delete(wid: Self)
@@ -463,7 +462,7 @@ pub unsafe trait WidgetBase: WidgetExt {
 /// # Warning
 /// fltk-rs traits are non-exhaustive,
 /// to avoid future breakage if you try to implement them manually,
-/// use the Deref and DerefMut pattern or the `widget_extends!` macro
+/// use the Deref and `DerefMut` pattern or the `widget_extends!` macro
 pub unsafe trait ButtonExt: WidgetExt {
     /// Gets the shortcut associated with a button
     fn shortcut(&self) -> Shortcut;
@@ -492,7 +491,7 @@ pub unsafe trait ButtonExt: WidgetExt {
 
 /// Defines the methods implemented by all group widgets.
 /// These widgets include Window types and others found in the group module: Group, Scroll, Pack, Tile, Flex ...etc.
-/// Widgets implementing the GroupExt trait, are characterized by having to call `::end()` method to basically close them.
+/// Widgets implementing the `GroupExt` trait, are characterized by having to call `::end()` method to basically close them.
 /// More details can be found in the [wiki](https://github.com/fltk-rs/fltk-rs/wiki/group_widgets).
 /// ```rust
 /// use fltk::{app, button::Button, window::Window, prelude::GroupExt};
@@ -503,7 +502,7 @@ pub unsafe trait ButtonExt: WidgetExt {
 /// win.end();
 /// ```
 /// In the above example, the button `btn` will be parented by the window.
-/// After `end`ing such GroupExt widgets, any other widgets instantiated after the `end` call, will be instantiated outside.
+/// After `end`ing such `GroupExt` widgets, any other widgets instantiated after the `end` call, will be instantiated outside.
 /// These can still be added using the `::add(&other_widget)` method (or using `::insert`):
 /// ```rust
 /// use fltk::{app, button::Button, window::Window, prelude::GroupExt};
@@ -529,7 +528,7 @@ pub unsafe trait ButtonExt: WidgetExt {
 /// # Warning
 /// fltk-rs traits are non-exhaustive,
 /// to avoid future breakage if you try to implement them manually,
-/// use the Deref and DerefMut pattern or the `widget_extends!` macro
+/// use the Deref and `DerefMut` pattern or the `widget_extends!` macro
 pub unsafe trait GroupExt: WidgetExt {
     /// Begins a group, used for widgets implementing the group trait
     fn begin(&self);
@@ -596,7 +595,7 @@ pub unsafe trait GroupExt: WidgetExt {
     fn init_sizes(&mut self);
     /// Get the bounds of all children widgets (left, upper, right, bottom)
     fn bounds(&self) -> Vec<(i32, i32, i32, i32)>;
-    /// Converts a widget implementing GroupExt into a Group widget
+    /// Converts a widget implementing `GroupExt` into a Group widget
     /// # Safety
     /// If the widget wasn't created by fltk-rs,
     /// vtable differences mean certain methods can't be overridden (e.g. handle & draw)
@@ -605,13 +604,13 @@ pub unsafe trait GroupExt: WidgetExt {
 
 /// Defines the methods implemented by all window widgets.
 /// More details can be found in the [wiki](https://github.com/fltk-rs/fltk-rs/wiki/windows).
-/// Windows (which can be found in the window module) implement GroupExt as well.
+/// Windows (which can be found in the window module) implement `GroupExt` as well.
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
 /// # Warning
 /// fltk-rs traits are non-exhaustive,
 /// to avoid future breakage if you try to implement them manually,
-/// use the Deref and DerefMut pattern or the `widget_extends!` macro
+/// use the Deref and `DerefMut` pattern or the `widget_extends!` macro
 pub unsafe trait WindowExt: GroupExt {
     /// Positions the window to the center of the screen
     fn set_center_screen(&mut self);
@@ -626,7 +625,7 @@ pub unsafe trait WindowExt: GroupExt {
     fn icon(&self) -> Option<Box<dyn ImageExt>>;
     /// Sets the windows icon.
     /// Supported formats are bmp, jpeg, png and rgb.
-    fn set_icon<T: ImageExt>(&mut self, image: Option<T>)
+    fn set_icon<T: ImageExt>(&mut self, image: Option<&T>)
     where
         Self: Sized;
     /// Sets the cursor style within the window.
@@ -658,7 +657,7 @@ pub unsafe trait WindowExt: GroupExt {
     /// Returns the decorated height
     fn decorated_h(&self) -> i32;
     /// Set the window's minimum width, minimum height, max width and max height.
-    /// You can pass 0 as max_w and max_h to allow unlimited upward resize of the window.
+    /// You can pass 0 as `max_w` and `max_h` to allow unlimited upward resize of the window.
     fn size_range(&mut self, min_w: i32, min_h: i32, max_w: i32, max_h: i32);
     /// Set the hotspot widget of the window
     fn hotspot<W: WidgetExt>(&mut self, w: &W)
@@ -669,7 +668,7 @@ pub unsafe trait WindowExt: GroupExt {
     /// The window covers non-transparent/non-black shape of the image.
     /// The image must not be scaled(resized) beforehand.
     /// The size will be adapted to the window's size
-    fn set_shape<I: ImageExt>(&mut self, image: Option<I>)
+    fn set_shape<I: ImageExt>(&mut self, image: Option<&I>)
     where
         Self: Sized;
     /// Get the shape of the window
@@ -699,9 +698,9 @@ pub unsafe trait WindowExt: GroupExt {
     /// $ xprop -root _NET_SUPPORTED | grep -o _NET_WM_WINDOW_OPACITY
     /// ```
     fn set_opacity(&mut self, val: f64);
-    /// Get the window's XA_WM_CLASS property
+    /// Get the window's `XA_WM_CLASS` property
     fn xclass(&self) -> Option<String>;
-    /// Set the window's XA_WM_CLASS property.
+    /// Set the window's `XA_WM_CLASS` property.
     /// This should be called before showing the window
     fn set_xclass(&mut self, s: &str);
     /// Clear the modal state of the window
@@ -725,7 +724,7 @@ pub unsafe trait WindowExt: GroupExt {
 /// # Warning
 /// fltk-rs traits are non-exhaustive,
 /// to avoid future breakage if you try to implement them manually,
-/// use the Deref and DerefMut pattern or the `widget_extends!` macro
+/// use the Deref and `DerefMut` pattern or the `widget_extends!` macro
 pub unsafe trait InputExt: WidgetExt {
     /// Returns the value inside the input/output widget
     fn value(&self) -> String;
@@ -802,14 +801,14 @@ pub unsafe trait InputExt: WidgetExt {
 }
 
 /// Defines the methods implemented by all menu widgets
-/// These are found in the menu module: MenuBar, SysMenuBar, Choice, MenuButton ...etc.
+/// These are found in the menu module: `MenuBar`, `SysMenuBar`, Choice, `MenuButton` ...etc.
 /// Menus function in 2 main ways which are discussed in the [wiki](https://github.com/fltk-rs/fltk-rs/wiki/menus)
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
 /// # Warning
 /// fltk-rs traits are non-exhaustive,
 /// to avoid future breakage if you try to implement them manually,
-/// use the Deref and DerefMut pattern or the `widget_extends!` macro
+/// use the Deref and `DerefMut` pattern or the `widget_extends!` macro
 pub unsafe trait MenuExt: WidgetExt {
     /// Get a menu item by name
     fn find_item(&self, name: &str) -> Option<crate::menu::MenuItem>;
@@ -934,7 +933,7 @@ pub unsafe trait MenuExt: WidgetExt {
     fn menu(&self) -> Option<crate::menu::MenuItem>;
     /// Set the menu element
     /// # Safety
-    /// The MenuItem must be in a format recognized by FLTK (Empty CMenuItem after submenus and at the end of the menu)
+    /// The `MenuItem` must be in a format recognized by FLTK (Empty `CMenuItem` after submenus and at the end of the menu)
     unsafe fn set_menu(&mut self, item: crate::menu::MenuItem);
     /// Get an item's pathname
     fn item_pathname(&self, item: Option<&crate::menu::MenuItem>) -> Result<String, FltkError>;
@@ -955,7 +954,7 @@ pub unsafe trait MenuExt: WidgetExt {
 /// # Warning
 /// fltk-rs traits are non-exhaustive,
 /// to avoid future breakage if you try to implement them manually,
-/// use the Deref and DerefMut pattern or the `widget_extends!` macro
+/// use the Deref and `DerefMut` pattern or the `widget_extends!` macro
 pub unsafe trait ValuatorExt: WidgetExt {
     /// Set bounds of a valuator
     fn set_bounds(&mut self, a: f64, b: f64);
@@ -999,7 +998,7 @@ pub unsafe trait ValuatorExt: WidgetExt {
 /// # Warning
 /// fltk-rs traits are non-exhaustive,
 /// to avoid future breakage if you try to implement them manually,
-/// use the Deref and DerefMut pattern or the `widget_extends!` macro
+/// use the Deref and `DerefMut` pattern or the `widget_extends!` macro
 pub unsafe trait DisplayExt: WidgetExt {
     /// Check if the Display widget has an associated buffer
     #[doc(hidden)]
@@ -1169,7 +1168,7 @@ pub unsafe trait DisplayExt: WidgetExt {
 /// # Warning
 /// fltk-rs traits are non-exhaustive,
 /// to avoid future breakage if you try to implement them manually,
-/// use the Deref and DerefMut pattern or the `widget_extends!` macro
+/// use the Deref and `DerefMut` pattern or the `widget_extends!` macro
 pub unsafe trait BrowserExt: WidgetExt {
     /// Removes the specified line.
     /// Lines start at 1
@@ -1223,7 +1222,7 @@ pub unsafe trait BrowserExt: WidgetExt {
     fn set_text_size(&mut self, sz: i32);
     /// Sets the icon for browser elements.
     /// Lines start at 1
-    fn set_icon<Img: ImageExt>(&mut self, line: i32, image: Option<Img>);
+    fn set_icon<Img: ImageExt>(&mut self, line: i32, image: Option<&Img>);
     /// Returns the icon of a browser element.
     /// Lines start at 1
     fn icon(&self, line: i32) -> Option<Box<dyn ImageExt>>;
@@ -1301,7 +1300,7 @@ pub unsafe trait BrowserExt: WidgetExt {
 /// # Warning
 /// fltk-rs traits are non-exhaustive,
 /// to avoid future breakage if you try to implement them manually,
-/// use the Deref and DerefMut pattern or the `widget_extends!` macro
+/// use the Deref and `DerefMut` pattern or the `widget_extends!` macro
 pub unsafe trait TableExt: GroupExt {
     /// Clears the table
     fn clear(&mut self);
@@ -1464,13 +1463,15 @@ pub unsafe trait TableExt: GroupExt {
 /// # Warning
 /// fltk-rs traits are non-exhaustive,
 /// to avoid future breakage if you try to implement them manually,
-/// use the Deref and DerefMut pattern
+/// use the Deref and `DerefMut` pattern
 pub unsafe trait ImageExt {
     /// Performs a deep copy of the image
+    #[must_use]
     fn copy(&self) -> Self
     where
         Self: Sized;
     /// Performs a deep copy of the image but to a new size. This will make use of the scaling algorithm when resizing.
+    #[must_use]
     fn copy_sized(&self, w: i32, h: i32) -> Self
     where
         Self: Sized;
@@ -1532,6 +1533,7 @@ pub unsafe trait ImageExt {
         Self: Sized;
 }
 
+#[allow(clippy::return_self_not_must_use)]
 /// Builder pattern helper
 pub trait WidgetProps {
     /// Initialize to a position x, y
@@ -1609,8 +1611,8 @@ pub trait SurfaceDevice {
 }
 
 /// Defines a set of convenience functions for constructing and anchoring custom widgets.
-/// Usage: fltk::widget_extends!(CustomWidget, BaseWidget, member);
-/// It basically implements Deref and DerefMut on the custom widget, and adds the aforementioned methods.
+/// Usage: `fltk::widget_extends!(CustomWidget`, `BaseWidget`, member);
+/// It basically implements Deref and `DerefMut` on the custom widget, and adds the aforementioned methods.
 /// This means you can call widget methods directly, for e.x. `custom_widget.set_color(enums::Color::Red)`.
 /// For your custom widget to be treated as a widget it would need dereferencing: `group.add(&*custom_widget);`
 #[macro_export]

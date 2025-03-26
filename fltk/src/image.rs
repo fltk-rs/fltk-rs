@@ -1,8 +1,8 @@
 use crate::enums::ColorDepth;
 use crate::prelude::*;
+use crate::utils::FlString;
 use fltk_sys::image::*;
 use std::{ffi::CString, mem};
-use crate::utils::FlString;
 
 type ImageRC<T> = std::rc::Rc<T>;
 
@@ -50,7 +50,7 @@ crate::macros::image::impl_image_ext!(SharedImage, Fl_Shared_Image);
 impl SharedImage {
     /// Loads a `SharedImage` from a path
     /// # Errors
-    /// Errors on non-existent path or invalid format, also errors if app::App was not initialized
+    /// Errors on non-existent path or invalid format, also errors if `app::App` was not initialized
     pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<SharedImage, FltkError> {
         Self::load_(path.as_ref())
     }
@@ -81,7 +81,7 @@ impl SharedImage {
     /// Loads a `SharedImage` from an image
     /// # Errors
     /// Errors on unsupported `SharedImage` types
-    pub fn from_image<I: ImageExt>(image: I) -> Result<SharedImage, FltkError> {
+    pub fn from_image<I: ImageExt>(image: &I) -> Result<SharedImage, FltkError> {
         unsafe {
             assert!(!image.was_deleted());
             let x = Fl_Shared_Image_from_rgb(image.as_image_ptr() as *mut Fl_RGB_Image, 1);
@@ -297,7 +297,7 @@ impl SvgImage {
         }
     }
 
-    /// Rasterize an SvgImage
+    /// Rasterize an `SvgImage`
     pub fn normalize(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_SVG_Image_normalize(*self.inner) }
@@ -741,7 +741,7 @@ crate::macros::image::impl_image_ext!(TiledImage, Fl_Tiled_Image);
 
 impl TiledImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
-    pub fn new<Img: ImageExt>(img: Img, w: i32, h: i32) -> TiledImage {
+    pub fn new<Img: ImageExt>(img: &Img, w: i32, h: i32) -> TiledImage {
         unsafe {
             assert!(!img.was_deleted());
             let ptr = Fl_Tiled_Image_new(img.as_image_ptr(), w, h);
@@ -775,9 +775,9 @@ impl Pixmap {
                 .collect();
             unsafe {
                 let x = Fl_Pixmap_new(data.as_ptr() as _);
-                data.iter().for_each(|x| {
+                for x in &data {
                     let _ = CString::from_raw(*x as _);
-                });
+                }
                 if x.is_null() {
                     Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
                 } else {
@@ -901,7 +901,7 @@ impl RgbImage {
         }
     }
 
-    /// Creates an RgbImage from a pixmap
+    /// Creates an `RgbImage` from a pixmap
     pub fn from_pixmap(image: &Pixmap) -> RgbImage {
         unsafe { RgbImage::from_image_ptr(Fl_RGB_Image_from_pixmap(*image.inner as _) as _) }
     }
@@ -915,7 +915,8 @@ impl RgbImage {
         (self.to_rgb_data(), w, h)
     }
 
-    /// Convert from one ColorDepth to another ColorDepth
+    #[allow(clippy::too_many_lines)]
+    /// Convert from one `ColorDepth` to another `ColorDepth`
     pub fn convert(&self, new_depth: ColorDepth) -> Result<RgbImage, FltkError> {
         let depth = self.depth() as i32;
         let new_depth = new_depth as i32;
@@ -999,9 +1000,9 @@ impl RgbImage {
                     1 => {
                         for pixel in data.chunks_exact(3) {
                             temp.push(
-                                (pixel[0] as f32 * 0.299
-                                    + pixel[1] as f32 * 0.587
-                                    + pixel[2] as f32 * 0.114)
+                                (f32::from(pixel[0]) * 0.299
+                                    + f32::from(pixel[1]) * 0.587
+                                    + f32::from(pixel[2]) * 0.114)
                                     as u8,
                             );
                         }
@@ -1011,9 +1012,9 @@ impl RgbImage {
                     2 => {
                         for pixel in data.chunks_exact(3) {
                             temp.push(
-                                (pixel[0] as f32 * 0.299
-                                    + pixel[1] as f32 * 0.587
-                                    + pixel[2] as f32 * 0.114)
+                                (f32::from(pixel[0]) * 0.299
+                                    + f32::from(pixel[1]) * 0.587
+                                    + f32::from(pixel[2]) * 0.114)
                                     as u8,
                             );
                             temp.push(255);
@@ -1037,9 +1038,9 @@ impl RgbImage {
                     1 => {
                         for pixel in data.chunks_exact(4) {
                             temp.push(
-                                (pixel[0] as f32 * 0.299
-                                    + pixel[1] as f32 * 0.587
-                                    + pixel[2] as f32 * 0.114)
+                                (f32::from(pixel[0]) * 0.299
+                                    + f32::from(pixel[1]) * 0.587
+                                    + f32::from(pixel[2]) * 0.114)
                                     as u8,
                             );
                         }
@@ -1049,9 +1050,9 @@ impl RgbImage {
                     2 => {
                         for pixel in data.chunks_exact(4) {
                             temp.push(
-                                (pixel[0] as f32 * 0.299
-                                    + pixel[1] as f32 * 0.587
-                                    + pixel[2] as f32 * 0.114)
+                                (f32::from(pixel[0]) * 0.299
+                                    + f32::from(pixel[1]) * 0.587
+                                    + f32::from(pixel[2]) * 0.114)
                                     as u8,
                             );
                             temp.push(pixel[3]);
@@ -1147,7 +1148,7 @@ impl RgbImage {
             let f = i - half;
             let f = f as f32;
             kernel[i as usize] = ((-f * f / 30.0).exp() * 80.0) as u8;
-            a += kernel[i as usize] as u32;
+            a += u32::from(kernel[i as usize]);
         }
 
         // Horizontally blur from surface -> temp
@@ -1173,10 +1174,10 @@ impl RgbImage {
                     p = s[(j - half + k) as usize];
                     let k = k as usize;
 
-                    x += ((p >> 24) & 0xff) * kernel[k] as u32;
-                    y += ((p >> 16) & 0xff) * kernel[k] as u32;
-                    z += ((p >> 8) & 0xff) * kernel[k] as u32;
-                    w += (p & 0xff) * kernel[k] as u32;
+                    x += ((p >> 24) & 0xff) * u32::from(kernel[k]);
+                    y += ((p >> 16) & 0xff) * u32::from(kernel[k]);
+                    z += ((p >> 8) & 0xff) * u32::from(kernel[k]);
+                    w += (p & 0xff) * u32::from(kernel[k]);
                 }
                 d[j as usize] = ((x / a) << 24) | ((y / a) << 16) | ((z / a) << 8) | (w / a);
             }
@@ -1210,10 +1211,10 @@ impl RgbImage {
                     };
                     p = s[j as usize];
                     let k = k as usize;
-                    x += ((p >> 24) & 0xff) * kernel[k] as u32;
-                    y += ((p >> 16) & 0xff) * kernel[k] as u32;
-                    z += ((p >> 8) & 0xff) * kernel[k] as u32;
-                    w += (p & 0xff) * kernel[k] as u32;
+                    x += ((p >> 24) & 0xff) * u32::from(kernel[k]);
+                    y += ((p >> 16) & 0xff) * u32::from(kernel[k]);
+                    z += ((p >> 8) & 0xff) * u32::from(kernel[k]);
+                    w += (p & 0xff) * u32::from(kernel[k]);
                 }
                 d[j as usize] = ((x / a) << 24) | ((y / a) << 16) | ((z / a) << 8) | (w / a);
             }
@@ -1228,7 +1229,7 @@ impl RgbImage {
         let w = self.w();
         let h = self.h();
         fn correct_gamma(v: f32) -> f32 {
-            if v <= 0.0031308 {
+            if v <= 0.003_130_8 {
                 v * 12.92
             } else {
                 1.055 * v.powf(1.0 / 2.4) - 0.055
@@ -1239,9 +1240,9 @@ impl RgbImage {
         match depth {
             3 => {
                 for pixel in data.chunks_exact(3) {
-                    let r = (correct_gamma(pixel[0] as f32 / 255.0) * 255.0) as u8;
-                    let g = (correct_gamma(pixel[1] as f32 / 255.0) * 255.0) as u8;
-                    let b = (correct_gamma(pixel[2] as f32 / 255.0) * 255.0) as u8;
+                    let r = (correct_gamma(f32::from(pixel[0]) / 255.0) * 255.0) as u8;
+                    let g = (correct_gamma(f32::from(pixel[1]) / 255.0) * 255.0) as u8;
+                    let b = (correct_gamma(f32::from(pixel[2]) / 255.0) * 255.0) as u8;
                     temp.push(r);
                     temp.push(g);
                     temp.push(b);
@@ -1251,9 +1252,9 @@ impl RgbImage {
             }
             4 => {
                 for pixel in data.chunks_exact(4) {
-                    let r = (correct_gamma(pixel[0] as f32 / 255.0) * 255.0) as u8;
-                    let g = (correct_gamma(pixel[1] as f32 / 255.0) * 255.0) as u8;
-                    let b = (correct_gamma(pixel[2] as f32 / 255.0) * 255.0) as u8;
+                    let r = (correct_gamma(f32::from(pixel[0]) / 255.0) * 255.0) as u8;
+                    let g = (correct_gamma(f32::from(pixel[1]) / 255.0) * 255.0) as u8;
+                    let b = (correct_gamma(f32::from(pixel[2]) / 255.0) * 255.0) as u8;
                     temp.push(r);
                     temp.push(g);
                     temp.push(b);

@@ -277,7 +277,7 @@ pub fn event_clipboard() -> Option<ClipboardEvent> {
 }
 
 /**
-    Send a signal to a window pointer from event_dispatch.
+    Send a signal to a window pointer from `event_dispatch`.
     Returns true if the event was handled.
     Returns false if the event was not handled or ignored.
     ```rust,no_run
@@ -345,7 +345,7 @@ pub fn get_mouse() -> (i32, i32) {
     }
 }
 
-/// Text editing widget should call this for each FL_KEYBOARD event.
+/// Text editing widget should call this for each `FL_KEYBOARD` event.
 pub fn compose() -> Option<i32> {
     unsafe {
         let mut del = 0;
@@ -357,14 +357,14 @@ pub fn compose() -> Option<i32> {
     }
 }
 
-/// Reset the length of bytes of app::compose()
+/// Reset the length of bytes of `app::compose()`
 pub fn compose_reset() {
     unsafe {
         fl::Fl_compose_reset();
     }
 }
 
-/// Return the length of bytes written in app::compose()
+/// Return the length of bytes written in `app::compose()`
 pub fn compose_state() -> i32 {
     unsafe { fl::Fl_compose_state() }
 }
@@ -400,7 +400,7 @@ pub enum ClipboardContent {
 
 /// Check the contents of the clipboard
 pub fn clipboard_contains(content: ClipboardContent) -> bool {
-    use ClipboardContent::*;
+    use ClipboardContent::{Image, Text};
     let txt = match content {
         Text => "text/plain",
         Image => "image",
@@ -415,9 +415,9 @@ where
     T: WidgetExt,
 {
     if clipboard_contains(ClipboardContent::Text) {
-        paste_text(widget)
+        paste_text(widget);
     } else if clipboard_contains(ClipboardContent::Image) {
-        paste_image(widget)
+        paste_image(widget);
     } else {
         // Do nothing!
     }
@@ -468,7 +468,7 @@ pub fn add_handler(cb: fn(Event) -> bool) {
     unsafe {
         let callback: Option<unsafe extern "C" fn(ev: raw::c_int) -> raw::c_int> =
             Some(mem::transmute(move |ev| {
-                let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| cb(ev) as i32));
+                let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| i32::from(cb(ev))));
             }));
         fl::Fl_add_handler(callback);
     }

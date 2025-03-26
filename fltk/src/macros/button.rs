@@ -31,7 +31,7 @@ macro_rules! impl_button_ext {
 
                 fn set(&mut self, flag: bool) {
                     unsafe {
-                        [<$flname _set_value>](self.inner.widget() as _, flag as i32)
+                        [<$flname _set_value>](self.inner.widget() as _, i32::from(flag))
                     }
                 }
 
@@ -43,7 +43,7 @@ macro_rules! impl_button_ext {
 
                 fn set_value(&mut self, flag: bool) {
                     unsafe {
-                        [<$flname _set_value>](self.inner.widget() as _, flag as i32)
+                        [<$flname _set_value>](self.inner.widget() as _, i32::from(flag))
                     }
                 }
 

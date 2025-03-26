@@ -77,10 +77,10 @@ pub fn font_name(idx: usize) -> Option<String> {
 /// Returns a list of fonts made available by the OS to the application.
 pub fn get_font_names() -> Vec<String> {
     let mut vec: Vec<String> = vec![];
-    let cnt = set_fonts("*") as usize;
+    let cnt = set_fonts("*");
     for i in 0..cnt {
         let temp = unsafe {
-            CStr::from_ptr(fl::Fl_get_font(i as i32))
+            CStr::from_ptr(fl::Fl_get_font(i))
                 .to_string_lossy()
                 .to_string()
         };
@@ -101,7 +101,7 @@ pub fn font_count() -> usize {
     f.len()
 }
 
-/// Gets a `Vector<String>` of loaded fonts, unless get_font_names() or load_system_fonts() is called,
+/// Gets a `Vector<String>` of loaded fonts, unless `get_font_names()` or `load_system_fonts()` is called,
 /// this will return a Vec with a String representation of the default Fonts shipped by FLTK, which is the same as the `enums::Font`.
 pub fn fonts() -> Vec<String> {
     (FONTS.lock().unwrap()).clone()
@@ -111,11 +111,8 @@ pub fn fonts() -> Vec<String> {
 pub(crate) fn load_font(path: &str) -> Result<String, FltkError> {
     unsafe {
         let font_data = std::fs::read(path)?;
-        let face = match ttf_parser::Face::parse(&font_data, 0) {
-            Ok(f) => f,
-            Err(_) => {
-                return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
-            }
+        let Ok(face) = ttf_parser::Face::parse(&font_data, 0) else {
+            return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
         };
         let family_name = face
             .names()
@@ -130,7 +127,7 @@ pub(crate) fn load_font(path: &str) -> Result<String, FltkError> {
                 if f.len() < 17 {
                     f.push(family_name.clone());
                 } else {
-                    f[16] = family_name.clone();
+                    f[16].clone_from(&family_name);
                 }
                 fl::Fl_set_font2(16, CString::safe_new(&family_name).into_raw() as _);
                 Ok(family_name)

@@ -10,7 +10,7 @@ use crate::prelude::ImageExt;
 #[doc(hidden)]
 /// A helper trait to get CStrings from Strings without panicking
 pub trait FlString {
-    /// Get CStrings from Strings without panicking
+    /// Get `CStrings` from Strings without panicking
     fn safe_new(s: &str) -> CString;
 }
 
@@ -169,7 +169,7 @@ pub fn is_ptr_of<W: crate::prelude::WidgetBase>(w: *mut fltk_sys::widget::Fl_Wid
 }
 
 /// Get the dynamic typeinfo of a widget, useful for debugging.
-/// This prints the mangled name, which can be unmangled using a crate like cpp_demangle
+/// This prints the mangled name, which can be unmangled using a crate like `cpp_demangle`
 pub fn type_name<W: crate::prelude::WidgetExt>(w: &W) -> String {
     unsafe {
         let p = Fl_type_name(w.as_widget_ptr() as _);

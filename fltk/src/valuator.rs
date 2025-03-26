@@ -114,7 +114,7 @@ impl Dial {
     pub fn angles(&self) -> (i32, i32) {
         let angle1 = unsafe { Fl_Dial_angle1(self.inner.widget() as _) };
         let angle2 = unsafe { Fl_Dial_angle2(self.inner.widget() as _) };
-        (angle1 as i32, angle2 as i32)
+        (i32::from(angle1), i32::from(angle2))
     }
 
     /// Set the angles of the dial
@@ -149,7 +149,7 @@ impl LineDial {
     pub fn angles(&self) -> (i32, i32) {
         let angle1 = unsafe { Fl_Dial_angle1(self.inner.widget() as _) };
         let angle2 = unsafe { Fl_Dial_angle2(self.inner.widget() as _) };
-        (angle1 as i32, angle2 as i32)
+        (i32::from(angle1), i32::from(angle2))
     }
 
     /// Set the angles of the dial
@@ -257,7 +257,7 @@ impl Scrollbar {
     /// You should call this every time your window changes size, your data
     /// changes size, or your scroll position changes (even if in response
     /// to a callback from this scrollbar).
-    /// All necessary calls to redraw() are done
+    /// All necessary calls to `redraw()` are done
     pub fn scroll_value(
         &mut self,
         pos: i32,
@@ -381,7 +381,7 @@ impl ValueSlider {
     /// You should call this every time your window changes size, your data
     /// changes size, or your scroll position changes (even if in response
     /// to a callback from this slider).
-    /// All necessary calls to redraw() are done
+    /// All necessary calls to `redraw()` are done
     pub fn scroll_value(
         &mut self,
         pos: i32,
@@ -465,7 +465,7 @@ impl ValueInput {
 
     /// Set whether the user is allowed to drag the value outside the range
     pub fn set_soft(&mut self, val: bool) {
-        unsafe { Fl_Value_Input_set_soft(self.inner.widget() as _, val as raw::c_char) }
+        unsafe { Fl_Value_Input_set_soft(self.inner.widget() as _, raw::c_char::from(val)) }
     }
 }
 
@@ -542,7 +542,7 @@ impl FillDial {
     pub fn angles(&self) -> (i32, i32) {
         let angle1 = unsafe { Fl_Dial_angle1(self.inner.widget() as _) };
         let angle2 = unsafe { Fl_Dial_angle2(self.inner.widget() as _) };
-        (angle1 as i32, angle2 as i32)
+        (i32::from(angle1), i32::from(angle2))
     }
 
     /// Set the angles of the dial

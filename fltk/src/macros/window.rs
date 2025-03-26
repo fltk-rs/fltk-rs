@@ -146,7 +146,7 @@ macro_rules! impl_window_ext {
                     }
                 }
 
-                fn set_icon<T: ImageExt>(&mut self, image: Option<T>) {
+                fn set_icon<T: ImageExt>(&mut self, image: Option<&T>) {
                     assert!(
                         std::any::type_name::<T>()
                             == std::any::type_name::<$crate::image::RgbImage>()
@@ -180,7 +180,7 @@ macro_rules! impl_window_ext {
 
                 fn set_border(&mut self, flag: bool) {
                     assert!($crate::app::is_ui_thread());
-                    unsafe { [<$flname _set_border>](self.inner.widget() as _, flag as i32) }
+                    unsafe { [<$flname _set_border>](self.inner.widget() as _, i32::from(flag)) }
                 }
 
                 fn border(&self) -> bool {
@@ -229,12 +229,12 @@ macro_rules! impl_window_ext {
                 }
 
                 fn size_range(&mut self, min_w: i32, min_h: i32, max_w: i32, max_h: i32) {
-                    let max_w = if max_w > u16::MAX as i32 {
+                    let max_w = if max_w > i32::from(u16::MAX) {
                         0
                     } else {
                         max_w
                     };
-                    let max_h = if max_h > u16::MAX as i32 {
+                    let max_h = if max_h > i32::from(u16::MAX) {
                         0
                     } else {
                         max_h
@@ -248,7 +248,7 @@ macro_rules! impl_window_ext {
                     unsafe { [<$flname _hotspot>](self.inner.widget() as _, w.as_widget_ptr() as _) }
                 }
 
-                fn set_shape<I: ImageExt>(&mut self, image: Option<I>) {
+                fn set_shape<I: ImageExt>(&mut self, image: Option<&I>) {
                     assert!(self.w() != 0);
                     assert!(self.h() != 0);
                     assert!(

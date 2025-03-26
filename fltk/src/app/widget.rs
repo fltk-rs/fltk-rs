@@ -24,7 +24,7 @@ pub fn set_grab<W: WindowExt>(win: Option<W>) {
         win.map_or_else(
             || fl::Fl_set_grab(ptr::null_mut()),
             |w| fl::Fl_set_grab(w.as_widget_ptr() as *mut _),
-        )
+        );
     }
 }
 
@@ -137,7 +137,7 @@ pub fn modal() -> Option<impl WindowExt> {
 
 /// Deletes widgets and their children.
 pub fn delete_widget<Wid: WidgetBase>(wid: Wid) {
-    WidgetBase::delete(wid)
+    WidgetBase::delete(wid);
 }
 
 /// Sets the damage to true or false, eliciting a redraw by the application

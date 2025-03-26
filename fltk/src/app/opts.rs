@@ -25,11 +25,11 @@ pub enum Option {
     /// tooltip text will open a little tooltip window until the mouse leaves
     /// the widget. If disabled, no tooltip is shown.
     ShowTooltips,
-    /// When switched on (default), Fl_Native_File_Chooser runs GTK file dialogs
+    /// When switched on (default), `Fl_Native_File_Chooser` runs GTK file dialogs
     /// if the GTK library is available on the platform (linux/unix only).
     /// When switched off, GTK file dialogs aren't used even if the GTK library is available.
     FnfcUsesGtk,
-    /// When switched on (default), Fl_Printer runs the GTK printer dialog
+    /// When switched on (default), `Fl_Printer` runs the GTK printer dialog
     /// if the GTK library is available on the platform (linux/unix only).
     /// When switched off, the GTK printer dialog isn't used even if the GTK library is available.
     PrinterUsesGtk,
@@ -49,5 +49,5 @@ pub fn option(opt: Option) -> bool {
 
 /// Set the option's value
 pub fn set_option(opt: Option, val: bool) {
-    unsafe { fl::Fl_set_option(opt as i32, val as i32) }
+    unsafe { fl::Fl_set_option(opt as i32, i32::from(val)) }
 }

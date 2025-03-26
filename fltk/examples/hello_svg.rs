@@ -15,12 +15,12 @@ fn main() {
     frame.set_frame(FrameType::EngravedBox);
     let mut image1 = SvgImage::load("screenshots/RustLogo.svg").unwrap();
     image1.scale(200, 200, true, true);
-    frame.set_image(Some(image1));
+    frame.set_image(Some(&image1));
 
     wind.make_resizable(true);
     wind.end();
     wind.show();
-    wind.set_icon(Some(SvgImage::from_data(IMAGE2).unwrap()));
+    wind.set_icon(Some(&SvgImage::from_data(IMAGE2).unwrap()));
 
     app.run().unwrap();
 }

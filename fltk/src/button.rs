@@ -18,7 +18,7 @@ crate::macros::button::impl_button_ext!(Button, Fl_Button);
 impl Button {
     /// Set whether a button is compact
     pub fn set_compact(&mut self, flag: bool) {
-        unsafe { Fl_Button_set_compact(self.inner.widget() as _, flag as _) }
+        unsafe { Fl_Button_set_compact(self.inner.widget() as _, flag.into()) }
     }
 
     /// Get whether a button is compact
@@ -64,7 +64,7 @@ impl RadioButton {
 
     /// Sets whether the `RadioButton` is toggled or not
     pub fn toggle(&mut self, val: bool) {
-        unsafe { Fl_Radio_Button_toggle(self.inner.widget() as _, val as i32) }
+        unsafe { Fl_Radio_Button_toggle(self.inner.widget() as _, i32::from(val)) }
     }
 }
 
@@ -89,7 +89,7 @@ impl RadioRoundButton {
 
     /// Sets whether the `RadioRoundButton` is toggled or not
     pub fn toggle(&mut self, val: bool) {
-        unsafe { Fl_Radio_Round_Button_toggle(self.inner.widget() as _, val as i32) }
+        unsafe { Fl_Radio_Round_Button_toggle(self.inner.widget() as _, i32::from(val)) }
     }
 }
 
@@ -114,7 +114,7 @@ impl RadioLightButton {
 
     /// Sets whether the `RadioLightButton` is toggled or not
     pub fn toggle(&mut self, val: bool) {
-        unsafe { Fl_Radio_Light_Button_toggle(self.inner.widget() as _, val as i32) }
+        unsafe { Fl_Radio_Light_Button_toggle(self.inner.widget() as _, i32::from(val)) }
     }
 }
 
@@ -138,7 +138,7 @@ impl RoundButton {
 
     /// Sets whether the `RoundButton` is toggled or not
     pub fn toggle(&mut self, val: bool) {
-        unsafe { Fl_Round_Button_toggle(self.inner.widget() as _, val as i32) }
+        unsafe { Fl_Round_Button_toggle(self.inner.widget() as _, i32::from(val)) }
     }
 }
 
@@ -163,7 +163,7 @@ impl CheckButton {
     /// Set whether `CheckButton` is checked or not
     pub fn set_checked(&self, checked: bool) {
         unsafe {
-            Fl_Check_Button_set_checked(self.inner.widget() as _, checked as i32);
+            Fl_Check_Button_set_checked(self.inner.widget() as _, i32::from(checked));
         }
     }
 }
@@ -188,7 +188,7 @@ impl ToggleButton {
 
     /// Sets whether the `ToggleButton` is toggled or not
     pub fn toggle(&mut self, val: bool) {
-        unsafe { Fl_Toggle_Button_toggle(self.inner.widget() as _, val as i32) }
+        unsafe { Fl_Toggle_Button_toggle(self.inner.widget() as _, i32::from(val)) }
     }
 }
 
@@ -212,7 +212,7 @@ impl LightButton {
 
     /// Sets whether the `LightButton` is on or not
     pub fn turn_on(&mut self, on: bool) {
-        unsafe { Fl_Light_Button_turn_on(self.inner.widget() as _, on as i32) }
+        unsafe { Fl_Light_Button_turn_on(self.inner.widget() as _, i32::from(on)) }
     }
 }
 

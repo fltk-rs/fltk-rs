@@ -49,7 +49,7 @@ fn main() {
     let win_shape = prep_shape(win.w(), win.h());
 
     // Called after showing window
-    win.set_shape(Some(win_shape));
+    win.set_shape(Some(&win_shape));
 
     win.handle({
         let mut x = 0;
@@ -103,7 +103,7 @@ fn main() {
                 let win_shape = prep_shape(win.w(), win.h());
 
                 win.show();
-                win.set_shape(Some(win_shape));
+                win.set_shape(Some(&win_shape));
 
                 true
             }

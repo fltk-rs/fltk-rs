@@ -6,8 +6,7 @@ fn main() {
     win.set_mode(Mode::MultiSample); // for antialiasing
     win.set_frame(FrameType::FlatBox);
     win.begin();
-    let mut dial =
-        valuator::LineDial::new(100, 50, 200, 200, "Load %");
+    let mut dial = valuator::LineDial::new(100, 50, 200, 200, "Load %");
     dial.set_selection_color(Color::Red);
     dial.set_color(Color::Blue);
     dial.set_value(0.5);
