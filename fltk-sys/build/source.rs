@@ -218,7 +218,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             .build();
     } else if target_triple.contains("android") {
         crate::android::build(out_dir, target_triple);
-    } else {
+    } else if target_triple.contains("emscripten") {
         crate::emscripten::build(out_dir);
     }
 

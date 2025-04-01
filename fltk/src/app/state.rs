@@ -1,18 +1,21 @@
 use crate::prelude::WidgetExt;
-use crate::utils::oncelock::{Lazy, OnceCell};
+use crate::utils::oncelock::*;
 use std::any::Any;
 use std::collections::HashMap;
 use std::sync::Mutex;
+
+#[cfg(feature = "single-threaded")]
+use std::cell::RefCell;
 
 static STATE: OnceCell<Mutex<Box<dyn Any + Send + Sync + 'static>>> = OnceCell::new();
 
 /// Represents global state
 #[derive(Debug, Copy)]
-pub struct GlobalState<T: Send + Sync> {
+pub struct GlobalState<T> {
     marker: std::marker::PhantomData<T>,
 }
 
-impl<T: Send + Sync> Clone for GlobalState<T> {
+impl<T> Clone for GlobalState<T> {
     fn clone(&self) -> Self {
         Self {
             marker: std::marker::PhantomData,
@@ -56,26 +59,34 @@ impl<T: Sync + Send + 'static> GlobalState<T> {
     }
 }
 
+#[cfg(not(feature = "single-threaded"))]
 static WIDGET_MAP: Lazy<Mutex<HashMap<String, Box<dyn Any + Send + Sync + 'static>>>> =
     Lazy::new(|| Mutex::new(HashMap::default()));
 
+#[cfg(feature = "single-threaded")]
+thread_local! {
+    static WIDGET_MAP: RefCell<HashMap<String, Box<dyn Any>>> = RefCell::new(HashMap::new());
+}
+
 /// Allows setting a an id to a widget.
-/// Will not work with the single-threaded feature.
 pub trait WidgetId<W>
 where
     W: WidgetExt,
 {
     /// Set the widget's Id
     fn set_id(&mut self, id: &str);
+
+    #[allow(clippy::return_self_not_must_use)]
     /// Construct a widget with an Id
     fn with_id(self, id: &str) -> Self
     where
         Self: Sized;
 }
 
+#[cfg(not(feature = "single-threaded"))]
 impl<W> WidgetId<W> for W
 where
-    W: WidgetExt + Send + Sync + Clone + 'static,
+    W: WidgetExt + Clone + Send + Sync + 'static,
 {
     fn set_id(&mut self, id: &str) {
         WIDGET_MAP
@@ -89,11 +100,37 @@ where
     }
 }
 
+#[cfg(feature = "single-threaded")]
+impl<W> WidgetId<W> for W
+where
+    W: WidgetExt + Clone + 'static,
+{
+    fn set_id(&mut self, id: &str) {
+        WIDGET_MAP.with(|w| {
+            w.borrow_mut()
+                .insert(id.to_string(), Box::new(self.clone()))
+        });
+    }
+    fn with_id(mut self, id: &str) -> Self {
+        self.set_id(id);
+        self
+    }
+}
+
 /// Get back the widget thru its id
 pub fn widget_from_id<T: 'static + Clone>(id: &str) -> Option<T> {
+    #[cfg(not(feature = "single-threaded"))]
     if let Some(w) = WIDGET_MAP.lock().unwrap().get(id) {
         w.downcast_ref::<T>().map(|w| (*w).clone())
     } else {
         None
     }
+    #[cfg(feature = "single-threaded")]
+    WIDGET_MAP.with(|w| {
+        if let Some(w) = w.borrow().get(id) {
+            w.downcast_ref::<T>().map(|w| (*w).clone())
+        } else {
+            None
+        }
+    })
 }
