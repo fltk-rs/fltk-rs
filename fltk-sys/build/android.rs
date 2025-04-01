@@ -1,7 +1,6 @@
 use std::{
     env, fs,
     path::{Path, PathBuf},
-    process::Command,
 };
 
 pub fn build(out_dir: &Path, target_triple: &str) {
@@ -10,112 +9,63 @@ pub fn build(out_dir: &Path, target_triple: &str) {
 
     let sdk =
         PathBuf::from(env::var("ANDROID_SDK_ROOT").expect("ANDROID_SDK_ROOT needs to be set!"));
-    let mut ndk: Option<PathBuf> = None;
-    if let Ok(root) = env::var("ANDROID_NDK_ROOT") {
-        ndk = Some(PathBuf::from(root));
-    }
-    // fallback to NDK_HOME
-    if ndk.is_none() {
-        ndk = Some(PathBuf::from(
-            env::var("NDK_HOME").expect("ANDROID_NDK_ROOT or NDK_HOME need to be set!"),
-        ));
-    }
+    let ndk = env::var("ANDROID_NDK_ROOT")
+        .or_else(|_| env::var("NDK_HOME"))
+        .expect("ANDROID_NDK_ROOT or NDK_HOME need to be set!");
+    let ndk = PathBuf::from(ndk);
 
-    let ndk = ndk.expect("ANDROID_NDK_ROOT or NDK_HOME need to be set!");
+    let toolchain_file = ndk
+        .join("build")
+        .join("cmake")
+        .join("android.toolchain.cmake");
 
-    let cmake_build_dir = out_dir.join("cmake_build").to_str().unwrap().to_string();
-    let mut cmd = vec![];
-    cmd.push(format!("-B{}", cmake_build_dir));
-    cmd.push("-DFLTK_BUILD_GL=OFF".to_string());
-    cmd.push("-DFLTK_USE_SYSTEM_ZLIB=OFF".to_string());
-    cmd.push("-DCFLTK_USE_OPENGL=OFF".to_string());
-    cmd.push("-DCMAKE_EXPORT_COMPILE_COMMANDS=ON".to_string());
-    cmd.push("-DFLTK_BUILD_EXAMPLES=OFF".to_string());
-    cmd.push("-DFLTK_BUILD_TEST=OFF".to_string());
-    cmd.push("-DFLTK_OPTION_LARGE_FILE=ON".to_string());
-    cmd.push("-DFLTK_BUILD_HTML_DOCS=OFF".to_string());
-    cmd.push("-DFLTK_BUILD_PDF_DOCS=OFF".to_string());
-    cmd.push("-DCMAKE_BUILD_TYPE=Release".to_string());
-    cmd.push("-DCFLTK_SINGLE_THREADED=OFF".to_string());
-    cmd.push("-DCFLTK_CARGO_BUILD=ON".to_string());
-    cmd.push(format!(
-        "-DCMAKE_INSTALL_PREFIX={}",
-        out_dir.to_str().unwrap()
-    ));
-    cmd.push("-GNinja".to_string());
-    cmd.push("-DCMAKE_SYSTEM_NAME=Android".to_string());
-    cmd.push("-DCMAKE_SYSTEM_VERSION=21".to_string());
-    cmd.push("-DANDROID_PLATFORM=android-21".to_string());
-    cmd.push(format!("-DCMAKE_ANDROID_NDK={}", &ndk.to_str().unwrap()));
-    cmd.push(format!("-DANDROID_NDK={}", &ndk.to_str().unwrap()));
-    cmd.push(format!(
-        "-DCMAKE_MAKE_PROGRAM={}",
-        find_ninja(&sdk)
-            .expect("Couldn't find NDK ninja!")
-            .to_str()
-            .unwrap()
-    ));
-    cmd.push(format!(
-        "-DCMAKE_TOOLCHAIN_FILE={}",
-        ndk.join("build")
-            .join("cmake")
-            .join("android.toolchain.cmake")
-            .to_str()
-            .unwrap()
-    ));
-
-    match target_triple {
-        "i686-linux-android" => {
-            cmd.push("-DANDROID_ABI=x86".to_string());
-            cmd.push("-DCMAKE_ANDROID_ARCH_ABI=x86".to_string());
-        }
-        "aarch64-linux-android" => {
-            cmd.push("-DANDROID_ABI=arm64-v8a".to_string());
-            cmd.push("-DCMAKE_ANDROID_ARCH_ABI=arm64-v8a".to_string());
-        }
-        "armv7-linux-androideabi" => {
-            cmd.push("-DANDROID_ABI=armeabi-v7a".to_string());
-            cmd.push("-DCMAKE_ANDROID_ARCH_ABI=armeabi-v7a".to_string());
-        }
-        "x86_64-linux-android" => {
-            cmd.push("-DANDROID_ABI=x86_64".to_string());
-            cmd.push("-DCMAKE_ANDROID_ARCH_ABI=x86_64".to_string());
-        }
+    let abi = match target_triple {
+        "i686-linux-android" => "x86",
+        "aarch64-linux-android" => "arm64-v8a",
+        "armv7-linux-androideabi" => "armeabi-v7a",
+        "x86_64-linux-android" => "x86_64",
         _ => panic!("Unknown android triple"),
-    }
+    };
 
-    Command::new("cmake")
-        .args(&cmd)
-        .current_dir("cfltk")
-        .status()
-        .expect("CMake is needed for android builds!");
+    let ninja_path = find_ninja(&sdk).expect("Couldn't find NDK ninja!");
 
-    Command::new("cmake")
-        .args(["--build", &cmake_build_dir, "--target", "install"])
-        .current_dir("cfltk")
-        .status()
-        .expect("CMake is needed for android builds!");
+    let mut cfg = cmake::Config::new("cfltk");
+
+    cfg.generator("Ninja")
+        .out_dir(out_dir.join("cmake_build"))
+        .define("CMAKE_SYSTEM_NAME", "Android")
+        .define("CMAKE_SYSTEM_VERSION", "21")
+        .define("ANDROID_PLATFORM", "android-21")
+        .define("ANDROID_ABI", abi)
+        .define("CMAKE_ANDROID_ARCH_ABI", abi)
+        .define("CMAKE_ANDROID_NDK", ndk.to_str().unwrap())
+        .define("ANDROID_NDK", ndk.to_str().unwrap())
+        .define("CMAKE_TOOLCHAIN_FILE", toolchain_file.to_str().unwrap())
+        .define("CMAKE_MAKE_PROGRAM", ninja_path.to_str().unwrap())
+        .define("CMAKE_INSTALL_PREFIX", out_dir.to_str().unwrap())
+        .define("CMAKE_BUILD_TYPE", "Release")
+        .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
+        .define("CFLTK_CARGO_BUILD", "ON")
+        .define("CFLTK_SINGLE_THREADED", "OFF")
+        .define("CFLTK_USE_OPENGL", "OFF")
+        .define("FLTK_BUILD_GL", "OFF")
+        .define("FLTK_BUILD_EXAMPLES", "OFF")
+        .define("FLTK_BUILD_TEST", "OFF")
+        .define("FLTK_BUILD_HTML_DOCS", "OFF")
+        .define("FLTK_BUILD_PDF_DOCS", "OFF")
+        .define("FLTK_USE_SYSTEM_ZLIB", "OFF")
+        .define("FLTK_OPTION_LARGE_FILE", "ON")
+        .very_verbose(true)
+        .build();
 }
 
 fn find_ninja(sdk_path: &Path) -> Option<PathBuf> {
     let cmk = sdk_path.join("cmake");
-    for subdir in fs::read_dir(cmk).unwrap() {
-        let subdir = subdir
-            .unwrap() // Shouldn't fail!
-            .path()
-            .file_name()
-            .unwrap()
-            .to_str()
-            .unwrap()
-            .to_owned();
-        if subdir.starts_with("3.") {
-            return Some(
-                sdk_path
-                    .join("cmake")
-                    .join(subdir)
-                    .join("bin")
-                    .join("ninja"),
-            );
+    for subdir in fs::read_dir(&cmk).ok()? {
+        let subdir = subdir.ok()?.path();
+        let name = subdir.file_name()?.to_str()?;
+        if name.starts_with("3.") {
+            return Some(subdir.join("bin").join("ninja"));
         }
     }
     None
