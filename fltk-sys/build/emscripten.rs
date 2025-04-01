@@ -40,10 +40,17 @@ pub fn build(out_dir: &Path) {
         .current_dir(out_dir)
         .status()
         .ok();
-    cmk::Config::new(out_dir.join("fltk_wasm32_emscripten"))
+    cmake::Config::new(out_dir.join("fltk_wasm32_emscripten"))
         .profile("Release")
         .generator("Ninja")
-        .define("FLTK_USE_PTHREADS", "OFF")
+        .define(
+            "FLTK_USE_PTHREADS",
+            if cfg!(feature = "single-threaded") {
+                "OFF"
+            } else {
+                "ON"
+            },
+        )
         .define("FLTK_BUILD_FLUID", "OFF")
         .define("FLTK_BUILD_FLTK_OPTIONS", "OFF")
         .define("FLTK_BUILD_TEST", "OFF")
@@ -53,12 +60,19 @@ pub fn build(out_dir: &Path) {
         .define("CMAKE_TOOLCHAIN_FILE", &toolchain_file)
         .build();
 
-    cmk::Config::new("cfltk")
+    cmake::Config::new("cfltk")
         .profile("Release")
         .generator("Ninja")
         .define("USE_SYSTEM_FLTK", "ON")
         .define("CFLTK_USE_OPENGL", "OFF")
-        .define("CFLTK_SINGLE_THREADED", "ON")
+        .define(
+            "CFLTK_SINGLE_THREADED",
+            if cfg!(feature = "single-threaded") {
+                "ON"
+            } else {
+                "OFF"
+            },
+        )
         .define("CFLTK_CARGO_BUILD", "ON")
         .define("FLTK_DIR", out_dir.join("share").join("fltk"))
         .define("CMAKE_TOOLCHAIN_FILE", toolchain_file)
