@@ -1,19 +1,24 @@
 use crate::prelude::WidgetExt;
 use std::any::Any;
-use std::cell::RefCell;
 use std::collections::HashMap;
 use std::sync::Mutex;
 use std::sync::OnceLock;
+
+#[cfg(not(feature = "single-threaded"))]
+use std::sync::LazyLock;
+
+#[cfg(feature = "single-threaded")]
+use std::cell::RefCell;
 
 static STATE: OnceLock<Mutex<Box<dyn Any + Send + Sync + 'static>>> = OnceLock::new();
 
 /// Represents global state
 #[derive(Debug, Copy)]
-pub struct GlobalState<T: Send + Sync> {
+pub struct GlobalState<T> {
     marker: std::marker::PhantomData<T>,
 }
 
-impl<T: Send + Sync> Clone for GlobalState<T> {
+impl<T> Clone for GlobalState<T> {
     fn clone(&self) -> Self {
         Self {
             marker: std::marker::PhantomData,
@@ -57,12 +62,16 @@ impl<T: Sync + Send + 'static> GlobalState<T> {
     }
 }
 
+#[cfg(not(feature = "single-threaded"))]
+static WIDGET_MAP: LazyLock<Mutex<HashMap<String, Box<dyn Any + Send + Sync + 'static>>>> =
+    LazyLock::new(|| Mutex::new(HashMap::default()));
+
+#[cfg(feature = "single-threaded")]
 thread_local! {
     static WIDGET_MAP: RefCell<HashMap<String, Box<dyn Any>>> = RefCell::new(HashMap::new());
 }
 
 /// Allows setting a an id to a widget.
-/// Will not work with the single-threaded feature.
 pub trait WidgetId<W>
 where
     W: WidgetExt,
@@ -77,6 +86,24 @@ where
         Self: Sized;
 }
 
+#[cfg(not(feature = "single-threaded"))]
+impl<W> WidgetId<W> for W
+where
+    W: WidgetExt + Clone + Send + Sync + 'static,
+{
+    fn set_id(&mut self, id: &str) {
+        WIDGET_MAP
+            .lock()
+            .unwrap()
+            .insert(id.to_string(), Box::new(self.clone()));
+    }
+    fn with_id(mut self, id: &str) -> Self {
+        self.set_id(id);
+        self
+    }
+}
+
+#[cfg(feature = "single-threaded")]
 impl<W> WidgetId<W> for W
 where
     W: WidgetExt + Clone + 'static,
@@ -95,6 +122,13 @@ where
 
 /// Get back the widget thru its id
 pub fn widget_from_id<T: 'static + Clone>(id: &str) -> Option<T> {
+    #[cfg(not(feature = "single-threaded"))]
+    if let Some(w) = WIDGET_MAP.lock().unwrap().get(id) {
+        w.downcast_ref::<T>().map(|w| (*w).clone())
+    } else {
+        None
+    }
+    #[cfg(feature = "single-threaded")]
     WIDGET_MAP.with(|w| {
         if let Some(w) = w.borrow().get(id) {
             w.downcast_ref::<T>().map(|w| (*w).clone())

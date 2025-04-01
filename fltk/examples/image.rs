@@ -5,7 +5,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let app = app::App::default().with_scheme(app::Scheme::Gleam);
     let mut wind = Window::default().with_size(400, 300);
     let mut frame = Frame::default_fill();
-    
+
     {
         let mut image = JpegImage::load("screenshots/calc.jpg")?;
         frame.set_image(Some(&image));
