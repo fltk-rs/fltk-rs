@@ -1,6 +1,12 @@
 # Changelog
 
 
+# [1.5.6] - 2025-04-01
+- Update cmake_minimum_required to 3.15.
+- Set bindgen target to 1.67.
+- Track cfltk branch fltk1.4 and FLTK branch-1.4.
+- Update FLTK branch-1.4.
+
 # [1.5.5] - 2025-03-23
 - Check for stay_at_bottom in SimpleTerminal::draw.
 - Update FLTK.
