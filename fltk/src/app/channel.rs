@@ -47,8 +47,8 @@ pub unsafe fn thread_msg<T>() -> Option<T> {
 }
 
 /// Creates a sender struct
-#[derive(Debug, Copy)]
-pub struct Sender<T: Send + Sync> {
+#[derive(Debug)]
+pub struct Sender<T> {
     data: marker::PhantomData<T>,
 }
 
@@ -63,6 +63,8 @@ impl<T: Send + Sync> Clone for Sender<T> {
         }
     }
 }
+
+impl<T: Send + Sync> Copy for Sender<T> {}
 
 impl<T: 'static + Send + Sync> Sender<T> {
     /// Sends a message
@@ -79,8 +81,8 @@ impl<T: 'static + Send + Sync> Sender<T> {
 }
 
 /// Creates a receiver struct
-#[derive(Debug, Copy)]
-pub struct Receiver<T: Send + Sync> {
+#[derive(Debug)]
+pub struct Receiver<T> {
     data: marker::PhantomData<T>,
 }
 
@@ -95,6 +97,8 @@ impl<T: Send + Sync> Clone for Receiver<T> {
         }
     }
 }
+
+impl<T: Send + Sync> Copy for Receiver<T> {}
 
 impl<T: 'static + Send + Sync> Receiver<T> {
     /// Receives a message
