@@ -44,13 +44,14 @@ pub unsafe fn thread_msg<T>() -> Option<T> {
 }
 
 /// Creates a sender struct
-#[derive(Debug, Copy)]
-pub struct Sender<T: Send + Sync> {
+#[derive(Debug)]
+pub struct Sender<T> {
     data: marker::PhantomData<T>,
 }
 
 unsafe impl<T: Send + Sync> Send for Sender<T> {}
 unsafe impl<T: Send + Sync> Sync for Sender<T> {}
+impl<T: Send + Sync> Copy for Sender<T> {}
 
 // Manually create the impl so there's no Clone bound on T
 impl<T: Send + Sync> Clone for Sender<T> {
@@ -76,13 +77,14 @@ impl<T: 'static + Send + Sync> Sender<T> {
 }
 
 /// Creates a receiver struct
-#[derive(Debug, Copy)]
-pub struct Receiver<T: Send + Sync> {
+#[derive(Debug)]
+pub struct Receiver<T> {
     data: marker::PhantomData<T>,
 }
 
 unsafe impl<T: Send + Sync> Send for Receiver<T> {}
 unsafe impl<T: Send + Sync> Sync for Receiver<T> {}
+impl<T: Send + Sync> Copy for Receiver<T> {}
 
 // Manually create the impl so there's no Clone bound on T
 impl<T: Send + Sync> Clone for Receiver<T> {
