@@ -54,17 +54,14 @@ pub struct Sender<T> {
 
 unsafe impl<T: Send + Sync> Send for Sender<T> {}
 unsafe impl<T: Send + Sync> Sync for Sender<T> {}
+impl<T: Send + Sync> Copy for Sender<T> {}
 
 // Manually create the impl so there's no Clone bound on T
 impl<T: Send + Sync> Clone for Sender<T> {
     fn clone(&self) -> Self {
-        Sender {
-            data: marker::PhantomData,
-        }
+        *self
     }
 }
-
-impl<T: Send + Sync> Copy for Sender<T> {}
 
 impl<T: 'static + Send + Sync> Sender<T> {
     /// Sends a message
@@ -88,17 +85,14 @@ pub struct Receiver<T> {
 
 unsafe impl<T: Send + Sync> Send for Receiver<T> {}
 unsafe impl<T: Send + Sync> Sync for Receiver<T> {}
+impl<T: Send + Sync> Copy for Receiver<T> {}
 
 // Manually create the impl so there's no Clone bound on T
 impl<T: Send + Sync> Clone for Receiver<T> {
     fn clone(&self) -> Self {
-        Receiver {
-            data: marker::PhantomData,
-        }
+        *self
     }
 }
-
-impl<T: Send + Sync> Copy for Receiver<T> {}
 
 impl<T: 'static + Send + Sync> Receiver<T> {
     /// Receives a message

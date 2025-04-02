@@ -360,9 +360,9 @@ impl Tile {
     than their minw and minh. After the new position is found, `move_intersection()`
     will call `init_sizes()`. The `resizable()` range is ignored.
 
-    \param[in] oldx, oldy move the intersection at this coordinate, pass zero to
+    params `oldx`, `oldy` move the intersection at this coordinate, pass zero to
         disable drag in that direction.
-    \param[in] newx, newy move the intersection as close to this new coordinate
+    params `newx`, `newy` move the intersection as close to this new coordinate
         as possible
     */
     pub fn move_intersection(&mut self, oldx: i32, oldy: i32, newx: i32, newy: i32) {
