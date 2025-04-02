@@ -13,6 +13,9 @@ mod source;
 mod utils;
 
 fn main() {
+    if env::var("DOCS_RS").is_ok() || (env::var("RUST_ANALYZER") == Ok("true".to_string())) {
+        return;
+    }
     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
     let manifest_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap());
     let target_triple = env::var("TARGET").unwrap();

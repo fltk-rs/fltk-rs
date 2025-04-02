@@ -1152,7 +1152,7 @@ impl RgbImage {
                     z += ((p >> 8) & 0xff) * kernel[k] as u32;
                     w += (p & 0xff) * kernel[k] as u32;
                 }
-                d[j as usize] = (x / a) << 24 | (y / a) << 16 | (z / a) << 8 | (w / a);
+                d[j as usize] = ((x / a) << 24) | ((y / a) << 16) | ((z / a) << 8) | (w / a);
             }
         }
 
@@ -1189,7 +1189,7 @@ impl RgbImage {
                     z += ((p >> 8) & 0xff) * kernel[k] as u32;
                     w += (p & 0xff) * kernel[k] as u32;
                 }
-                d[j as usize] = (x / a) << 24 | (y / a) << 16 | (z / a) << 8 | (w / a);
+                d[j as usize] = ((x / a) << 24) | ((y / a) << 16) | ((z / a) << 8) | (w / a);
             }
         }
         RgbImage::new(&dst, width, height, depth)

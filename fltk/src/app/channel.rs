@@ -56,9 +56,7 @@ impl<T: Send + Sync> Copy for Sender<T> {}
 // Manually create the impl so there's no Clone bound on T
 impl<T: Send + Sync> Clone for Sender<T> {
     fn clone(&self) -> Self {
-        Sender {
-            data: marker::PhantomData,
-        }
+        *self
     }
 }
 
@@ -89,9 +87,7 @@ impl<T: Send + Sync> Copy for Receiver<T> {}
 // Manually create the impl so there's no Clone bound on T
 impl<T: Send + Sync> Clone for Receiver<T> {
     fn clone(&self) -> Self {
-        Receiver {
-            data: marker::PhantomData,
-        }
+        *self
     }
 }
 
