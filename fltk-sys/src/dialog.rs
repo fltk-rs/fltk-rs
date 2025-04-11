@@ -64,6 +64,22 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Native_File_Chooser_filter(
+        self_: *mut Fl_Native_File_Chooser,
+    ) -> *const ::core::ffi::c_char;
+}
+extern "C" {
+    pub fn Fl_Native_File_Chooser_filter_value(
+        self_: *mut Fl_Native_File_Chooser,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Native_File_Chooser_set_filter_value(
+        self_: *mut Fl_Native_File_Chooser,
+        f: ::core::ffi::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Native_File_Chooser_set_preset_file(
         arg1: *mut Fl_Native_File_Chooser,
         f: *const ::core::ffi::c_char,

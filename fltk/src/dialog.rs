@@ -218,6 +218,35 @@ impl FileDialog {
         unsafe { Fl_Native_File_Chooser_set_filter(self.inner, f.as_ptr()) }
     }
 
+    /// Gets the filter of the `FileChooser`
+    pub fn filter(&self) -> Option<String> {
+        assert!(!self.inner.is_null());
+        unsafe {
+            let ptr = Fl_Native_File_Chooser_filter(self.inner);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(
+                    CStr::from_ptr(ptr as *mut raw::c_char)
+                        .to_string_lossy()
+                        .to_string(),
+                )
+            }
+        }
+    }
+
+    /// Gets the current filename filter selection
+    pub fn filter_value(&self) -> i32 {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_Native_File_Chooser_filter_value(self.inner) }
+    }
+
+    /// Sets the filter value using an index to the '\t'separated filters
+    pub fn set_filter_value(&mut self, f: i32) {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_Native_File_Chooser_set_filter_value(self.inner, f) }
+    }
+
     /// Sets the default filename for the dialog
     pub fn set_preset_file(&mut self, f: &str) {
         assert!(!self.inner.is_null());
