@@ -22,7 +22,7 @@ use std::ffi::{CStr, CString};
 ///         draw::draw_box(w.frame(), w.x(), w.y(), w.w(), w.h(), w.color());
 ///         draw::set_draw_color(enums::Color::Black); // for the text
 ///         draw::set_font(enums::Font::Helvetica, app::font_size());
-///         draw::draw_text2(&w.label().unwrap(), w.x(), w.y(), w.w(), w.h(), w.align());
+///         draw::draw_text_boxed(&w.label().unwrap(), w.x(), w.y(), w.w(), w.h(), w.align());
 ///     });
 ///     a.run().unwrap();
 /// }

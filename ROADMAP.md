@@ -37,3 +37,5 @@
 - Add CopyPasteLocation to be used with app::copy, app::paste_text and app::paste_image.
 - Rename RgbImage::new2 to new_ext, and from_data2 to from_data_ext.
 - Remove deprecated Offscreen type.
+- Change draw::draw_text2 to draw_text_boxed.
+- Change draw::draw_line2 to draw_polyline.

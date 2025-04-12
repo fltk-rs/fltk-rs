@@ -64,18 +64,13 @@ pub fn draw_line(x1: i32, y1: i32, x2: i32, y2: i32) {
 }
 
 /// Draws a line from (x,y) to (x1,y1) and another from (x1,y1) to (x2,y2)
-pub fn draw_line2(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>) {
+pub fn draw_polyline(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>) {
     unsafe { Fl_line2(pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1) }
 }
 
 /// Draws a point
 pub fn draw_point(x: i32, y: i32) {
     unsafe { Fl_point(x, y) }
-}
-
-/// Draws a point
-pub fn draw_point2(pos: Coord<i32>) {
-    unsafe { Fl_point(pos.0, pos.1) }
 }
 
 /// Draws a rectangle
@@ -95,13 +90,8 @@ pub fn draw_loop(x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32) {
     }
 }
 
-/// Draws a non-filled 3-sided polygon
-pub fn draw_loop2(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>) {
-    unsafe { Fl_loop(pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1) }
-}
-
 /// Draws a non-filled 4-sided polygon
-pub fn draw_loop3(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>, pos4: Coord<i32>) {
+pub fn draw_loop_4sided(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>, pos4: Coord<i32>) {
     unsafe {
         Fl_loop2(
             pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1,
@@ -159,7 +149,7 @@ pub fn draw_arc(x: i32, y: i32, width: i32, height: i32, a: f64, b: f64) {
 }
 
 /// Draws an arc
-pub fn draw_arc2(x: f64, y: f64, r: f64, start: f64, end: f64) {
+pub fn draw_arc_with_radius(x: f64, y: f64, r: f64, start: f64, end: f64) {
     unsafe { Fl_arc2(x, y, r, start, end) }
 }
 
@@ -279,13 +269,8 @@ pub fn draw_polygon(x: i32, y: i32, x1: i32, y1: i32, x2: i32, y2: i32) {
     unsafe { Fl_polygon(x, y, x1, y1, x2, y2) }
 }
 
-/// Fills a 3-sided polygon. The polygon must be convex
-pub fn draw_polygon2(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>) {
-    unsafe { Fl_polygon(pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1) }
-}
-
 /// Fills a 4-sided polygon. The polygon must be convex
-pub fn draw_polygon3(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>, pos4: Coord<i32>) {
+pub fn draw_polygon_4sided(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>, pos4: Coord<i32>) {
     unsafe {
         Fl_polygon2(
             pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1,
@@ -464,14 +449,9 @@ pub fn descent() -> i32 {
 
 /// Returns the typographical width of a string
 pub fn width(txt: &str) -> f64 {
+    let len = txt.len();
     let txt = CString::safe_new(txt);
-    unsafe { Fl_width(txt.as_ptr()) }
-}
-
-/// Returns the typographical width of a sequence of n characters
-pub fn width2(txt: &str, n: i32) -> f64 {
-    let txt = CString::safe_new(txt);
-    unsafe { Fl_width2(txt.as_ptr(), n) }
+    unsafe { Fl_width2(txt.as_ptr(), len as _) }
 }
 
 /// Measure the width and height of a text
@@ -546,7 +526,7 @@ pub fn draw_text(txt: &str, x: i32, y: i32) {
 }
 
 /// Draws a string starting at the given x, y location with width and height and alignment
-pub fn draw_text2(string: &str, x: i32, y: i32, width: i32, height: i32, align: Align) {
+pub fn draw_text_boxed(string: &str, x: i32, y: i32, width: i32, height: i32, align: Align) {
     if size() == -1 && string.len() == 1 {
         return;
     }
@@ -780,7 +760,7 @@ pub fn draw_check(x: i32, y: i32, w: i32, h: i32, col: Color) {
 /// Errors on invalid or unsupported image formats
 /// # Safety
 /// Passing wrong line data can read to over or underflow
-pub unsafe fn draw_image2(data: &[u8], x: i32, y: i32, w: i32, h: i32, depth: i32, line_data: i32) {
+pub unsafe fn draw_image_ext(data: &[u8], x: i32, y: i32, w: i32, h: i32, depth: i32, line_data: i32) {
     unsafe {
         Fl_draw_image(data.as_ptr(), x, y, w, h, depth, line_data);
     }
