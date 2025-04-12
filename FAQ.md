@@ -11,7 +11,7 @@ The first tutorial uses the fltk-bundled feature flag, which is only supported f
 If you're not running one of the aforementioned platforms, you'll have to remove the fltk-bundled feature flag in your Cargo.toml file:
 ```toml
 [dependencies]
-fltk = "^1.5"
+fltk2 = "^0.1"
 ```
 Furthermore, the fltk-bundled flag assumes you have curl and tar installed (for Windows, they're available in the Native Tools Command Prompt).
 
@@ -28,7 +28,7 @@ If you're getting "file too small to be an archive" error, you might be hitting 
 If the linking fails because of this [issue](https://github.com/rust-lang/rust/issues/47048) with older toolchains, it should work by using the fltk-shared feature (an issue with older compilers). Which would also generate a dynamic library which would need to be deployed with your application.
 ```toml
 [dependencies]
-fltk = { version = "^1.5", features = ["fltk-shared"] }
+fltk2 = { version = "^0.1", features = ["fltk-shared"] }
 ```
 
 ### Why does my msys2 mingw built fltk app using, fltk-bundled, isn't self-contained and requires several dlls?

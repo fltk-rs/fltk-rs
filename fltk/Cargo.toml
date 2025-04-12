@@ -1,6 +1,6 @@
 [package]
-name = "fltk"
-version = "0.20.0"
+name = "fltk2"
+version = "0.1.0"
 authors = ["The fltk-rs Authors"]
 edition = "2024"
 rust-version = "1.85"
@@ -18,7 +18,7 @@ name = "fltk"
 path = "src/lib.rs"
 
 [dependencies]
-fltk-sys = { path = "../fltk-sys", version = "=0.20.0" }
+fltk2-sys = { path = "../fltk-sys", version = "=0.1.0" }
 bitflags = "^2"
 paste = "1"
 crossbeam-channel = "0.5"
@@ -30,45 +30,45 @@ rwh06 = { package = "raw-window-handle", version = "0.6", optional = true }
 [features]
 default = ["use-images"]
 # Support for bundled versions of cfltk and fltk (requires curl and tar)
-fltk-bundled = ["fltk-sys/fltk-bundled"] 
+fltk-bundled = ["fltk2-sys/fltk-bundled"] 
 # Support for systems without OpenGL
-enable-glwindow = ["fltk-sys/enable-glwindow"] 
+enable-glwindow = ["fltk2-sys/enable-glwindow"] 
 # You can use this if you don't need rtl or cjk unicode support
-no-pango-cairo = ["fltk-sys/no-pango-cairo"] 
+no-pango-cairo = ["fltk2-sys/no-pango-cairo"] 
 # Builds a shared lib of fltk
-fltk-shared = ["fltk-sys/fltk-shared"] 
+fltk-shared = ["fltk2-sys/fltk-shared"] 
 # If you have ninja build installed or it's available, it builds faster than make or VS
-use-ninja = ["fltk-sys/use-ninja"] 
+use-ninja = ["fltk2-sys/use-ninja"] 
 # If you would like to use the installed fltk library, should be FLTK 1.4
-system-fltk = ["fltk-sys/system-fltk"] 
+system-fltk = ["fltk2-sys/system-fltk"] 
 # Uses the system libpng
-system-libpng = ["fltk-sys/system-libpng"] 
+system-libpng = ["fltk2-sys/system-libpng"] 
 # Uses the system libjpeg
-system-libjpeg = ["fltk-sys/system-libjpeg"] 
+system-libjpeg = ["fltk2-sys/system-libjpeg"] 
 # Uses the system zlib
-system-zlib = ["fltk-sys/system-zlib"] 
+system-zlib = ["fltk2-sys/system-zlib"] 
 # Disable gdiplus drawing
-no-gdiplus = ["fltk-sys/no-gdiplus"] 
+no-gdiplus = ["fltk2-sys/no-gdiplus"] 
 # (Experimental) You can use this feature if your app doesn't use images to reduce binary size
-use-images = ["fltk-sys/use-images"] 
+use-images = ["fltk2-sys/use-images"] 
 # (Experimental) Support of Lagacy OpenGL
-legacy-opengl = ["fltk-sys/legacy-opengl"] 
+legacy-opengl = ["fltk2-sys/legacy-opengl"] 
 # (Experimental) Disable multithreading support when linking X11 libs non-mt x11 libs.
-single-threaded = ["fltk-sys/single-threaded"] 
+single-threaded = ["fltk2-sys/single-threaded"] 
 # Don't build a hybrid wayland/x11 app on linux
-no-wayland = ["fltk-sys/no-wayland"] 
+no-wayland = ["fltk2-sys/no-wayland"] 
 # Use FLTK's wayland backend only on linux systems.
-wayland-only = ["fltk-sys/wayland-only"] 
+wayland-only = ["fltk2-sys/wayland-only"] 
 # Ensure MSVCRT is linked statically even if cargo does not pass the flag to the build script.
-static-msvcrt = ["fltk-sys/static-msvcrt"] 
+static-msvcrt = ["fltk2-sys/static-msvcrt"] 
 # Sets FLTK's FLTK_OPTION_CAIRO_EXT which enables user code to get the cairo context for drawing
-cairoext = ["fltk-sys/cairoext"] 
+cairoext = ["fltk2-sys/cairoext"] 
 # Allows the use of an installed instance of FLTK via fltk-config. This requires FLTK 1.4
-fltk-config = ["fltk-sys/fltk-config"]
+fltk-config = ["fltk2-sys/fltk-config"]
 # Allows the use of an installed instance of cfltk via pkg-config.
-pkg-config = ["fltk-sys/pkg-config"]
+pkg-config = ["fltk2-sys/pkg-config"]
 # Enables libdecor gtk plugin. Links Gtk3 libs
-gtk-decor = ["fltk-sys/gtk-decor"]
+gtk-decor = ["fltk2-sys/gtk-decor"]
 
 [package.metadata.docs.rs]
 features = ["enable-glwindow"]
