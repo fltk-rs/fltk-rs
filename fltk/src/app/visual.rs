@@ -74,18 +74,8 @@ pub fn set_visible_focus(flag: bool) {
     unsafe { fl::Fl_set_visible_focus(i32::from(flag)) }
 }
 
-/// Set the app's default frame type
-pub fn set_frame_type(new_frame: FrameType) {
-    unsafe {
-        let new_frame = new_frame.as_i32();
-        let curr = CURRENT_FRAME.load(Ordering::Relaxed);
-        fl::Fl_set_box_type(curr, new_frame);
-        CURRENT_FRAME.store(new_frame, Ordering::Relaxed);
-    }
-}
-
 /// Set the app's default frame type without storing the old type
-pub fn set_frame_type2(old_frame: FrameType, new_frame: FrameType) {
+pub fn set_frame_type(old_frame: FrameType, new_frame: FrameType) {
     unsafe {
         fl::Fl_set_box_type(old_frame.as_i32(), new_frame.as_i32());
     }

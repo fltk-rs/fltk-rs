@@ -32,3 +32,8 @@
 - Rename CallbackTrigger to When, and set_trigger to set_when.
 - Change no-images to use-images and add it to default features.
 - Pass images by reference.
+- WindowExt::set_icon and set_shape now specifically take an RgbImage.
+- Remove ImageExt::to_rgb() and to_raw_data().
+- Add CopyPasteLocation to be used with app::copy, app::paste_text and app::paste_image.
+- Rename RgbImage::new2 to new_ext, and from_data2 to from_data_ext.
+- Remove deprecated Offscreen type.

@@ -370,22 +370,12 @@ pub fn compose_state() -> i32 {
 }
 
 /// Copy text to the clipboard
-pub fn copy(stuff: &str) {
+pub fn copy(stuff: &str, source: CopyPasteLocation) {
     unsafe {
         fl::Fl_open_display();
         let len = stuff.len();
         let stuff = CString::safe_new(stuff);
-        fl::Fl_copy(stuff.as_ptr() as _, len as _, 1);
-    }
-}
-
-/// Copy text to the selection buffer
-pub fn copy2(stuff: &str) {
-    unsafe {
-        fl::Fl_open_display();
-        let len = stuff.len();
-        let stuff = CString::safe_new(stuff);
-        fl::Fl_copy(stuff.as_ptr() as _, len as _, 0);
+        fl::Fl_copy(stuff.as_ptr() as _, len as _, source as i32);
     }
 }
 
@@ -415,51 +405,41 @@ where
     T: WidgetExt,
 {
     if clipboard_contains(ClipboardContent::Text) {
-        paste_text(widget);
+        paste_text(widget, CopyPasteLocation::Clipboard);
     } else if clipboard_contains(ClipboardContent::Image) {
-        paste_image(widget);
+        paste_image(widget, CopyPasteLocation::Clipboard);
     } else {
         // Do nothing!
     }
 }
 
-/// Pastes textual content from the clipboard
-pub fn paste_text<T>(widget: &T)
-where
-    T: WidgetExt,
-{
-    unsafe {
-        fl::Fl_paste_text(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, 1);
-    }
+/// Source of text to be pasted
+#[repr(i32)]
+#[derive(Copy, Clone, Debug, PartialEq, PartialOrd)]
+pub enum CopyPasteLocation {
+    /// Selection buffer when supported
+    SelectionBuffer,
+    /// Clipboard
+    Clipboard,
 }
 
-/// Pastes textual content from the selection buffer
-pub fn paste_text2<T>(widget: &T)
+/// Pastes textual content from the clipboard
+pub fn paste_text<T>(widget: &T, source: CopyPasteLocation)
 where
     T: WidgetExt,
 {
     unsafe {
-        fl::Fl_paste_text(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, 0);
+        fl::Fl_paste_text(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, source as i32);
     }
 }
 
 /// Pastes image content from the clipboard
-pub fn paste_image<T>(widget: &T)
+pub fn paste_image<T>(widget: &T, source: CopyPasteLocation)
 where
     T: WidgetExt,
 {
     unsafe {
-        fl::Fl_paste_image(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, 1);
-    }
-}
-
-/// Pastes image content from the selection buffer
-pub fn paste_image2<T>(widget: &T)
-where
-    T: WidgetExt,
-{
-    unsafe {
-        fl::Fl_paste_image(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, 0);
+        fl::Fl_paste_image(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, source as i32);
     }
 }
 

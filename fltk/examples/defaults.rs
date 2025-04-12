@@ -8,8 +8,8 @@ fn main() {
     app::background2(0, 0, 0);
     app::foreground(255, 255, 255); // labels
     app::set_font_size(16);
-    app::set_frame_type2(FrameType::UpBox, FrameType::RFlatBox);
-    app::set_frame_type2(FrameType::DownBox, FrameType::RFlatBox);
+    app::set_frame_type(FrameType::UpBox, FrameType::RFlatBox);
+    app::set_frame_type(FrameType::DownBox, FrameType::RFlatBox);
     app::set_frame_border_radius_max(15); // set the roundness of the RFlatBox
     app::set_font(Font::Times);
     app::set_visible_focus(false);

@@ -856,7 +856,7 @@ impl RgbImage {
     /// Errors on invalid or unsupported image format
     /// # Safety
     /// Passing wrong line data can read to over or underflow
-    pub unsafe fn new2(
+    pub unsafe fn new_ext(
         data: &[u8],
         w: i32,
         h: i32,
@@ -882,7 +882,7 @@ impl RgbImage {
     /// Errors on invalid or unsupported image format
     /// # Safety
     /// Passing wrong line data can read to over or underflow
-    pub unsafe fn from_data2(
+    pub unsafe fn from_data_ext(
         data: &[u8],
         w: i32,
         h: i32,

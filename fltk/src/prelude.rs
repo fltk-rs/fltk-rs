@@ -625,9 +625,7 @@ pub unsafe trait WindowExt: GroupExt {
     fn icon(&self) -> Option<Box<dyn ImageExt>>;
     /// Sets the windows icon.
     /// Supported formats are bmp, jpeg, png and rgb.
-    fn set_icon<T: ImageExt>(&mut self, image: Option<&T>)
-    where
-        Self: Sized;
+    fn set_icon(&mut self, image: Option<&crate::image::RgbImage>);
     /// Sets the cursor style within the window.
     /// Needs to be called after the window is shown
     fn set_cursor(&mut self, cursor: Cursor);
@@ -668,9 +666,7 @@ pub unsafe trait WindowExt: GroupExt {
     /// The window covers non-transparent/non-black shape of the image.
     /// The image must not be scaled(resized) beforehand.
     /// The size will be adapted to the window's size
-    fn set_shape<I: ImageExt>(&mut self, image: Option<&I>)
-    where
-        Self: Sized;
+    fn set_shape(&mut self, image: Option<&crate::image::RgbImage>);
     /// Get the shape of the window
     fn shape(&self) -> Option<Box<dyn ImageExt>>;
     /// Get the window's x coord from the screen
@@ -1493,12 +1489,6 @@ pub unsafe trait ImageExt {
         Self: Sized;
     /// Returns the underlying raw rgb image data
     fn to_rgb_data(&self) -> Vec<u8>;
-    /// Returns the underlying raw image data
-    fn to_raw_data(&self) -> *const *const u8;
-    /// Transforms the image into an `RgbImage`
-    /// # Errors
-    /// Errors on failure to transform to `RgbImage`
-    fn to_rgb(&self) -> Result<crate::image::RgbImage, FltkError>;
     /// Transforms the image into an `RgbImage`
     /// # Errors
     /// Errors on failure to transform to `RgbImage`

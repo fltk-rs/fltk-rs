@@ -601,7 +601,7 @@ impl Color {
     }
 
     /// Create color from RGBA using alpha compositing. Works for non-group types.
-    pub fn from_rgba_tuple(tup: (u8, u8, u8, u8)) -> Color {
+    pub fn from_composited_rgba8(tup: (u8, u8, u8, u8)) -> Color {
         if tup.3 == 255 {
             Color::from_rgb(tup.0, tup.1, tup.2)
         } else {

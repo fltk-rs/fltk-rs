@@ -48,7 +48,7 @@ fn main() {
     app::background(0, 0, 0);
     let image = image::SharedImage::load("screenshots/calc2.jpg")
         .unwrap()
-        .to_rgb()
+        .to_rgb_image()
         .unwrap();
 
     let mut wind = window::Window::new(100, 100, 800, 400, "Hello from rust");

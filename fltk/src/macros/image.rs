@@ -112,12 +112,7 @@ macro_rules! impl_image_ext {
                     }
                 }
 
-                fn to_raw_data(&self) -> *const *const u8 {
-                    assert!(!self.was_deleted());
-                    unsafe { [<$flname _data>](*self.inner) as *const *const u8 }
-                }
-
-                fn to_rgb(&self) -> Result<$crate::image::RgbImage, FltkError> {
+                fn to_rgb_image(&self) -> Result<$crate::image::RgbImage, FltkError> {
                     assert!(!self.was_deleted());
                     if self.count() != 1 {
                         Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
@@ -127,10 +122,6 @@ macro_rules! impl_image_ext {
                         img.scale(self.w(), self.h(), false, true);
                         Ok(img)
                     }
-                }
-
-                fn to_rgb_image(&self) -> Result<$crate::image::RgbImage, FltkError> {
-                    self.to_rgb()
                 }
 
                 fn scale(&mut self, width: i32, height: i32, proportional: bool, can_expand: bool) {

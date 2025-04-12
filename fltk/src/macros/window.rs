@@ -146,18 +146,14 @@ macro_rules! impl_window_ext {
                     }
                 }
 
-                fn set_icon<T: ImageExt>(&mut self, image: Option<&T>) {
-                    assert!(
-                        std::any::type_name::<T>()
-                            == std::any::type_name::<$crate::image::RgbImage>()
-                    );
+                fn set_icon(&mut self, image: Option<&$crate::image::RgbImage>) {
                     if let Some(image) = image {
                         assert!(!image.was_deleted());
                         // Shouldn't fail after the previous asserts!
                         unsafe {
                             [<$flname _set_icon>](
                                 self.inner.widget() as _,
-                                image.to_rgb().unwrap().as_image_ptr() as *mut _,
+                                image.to_rgb_image().unwrap().as_image_ptr() as *mut _,
                             )
                         }
                     } else {
@@ -248,13 +244,9 @@ macro_rules! impl_window_ext {
                     unsafe { [<$flname _hotspot>](self.inner.widget() as _, w.as_widget_ptr() as _) }
                 }
 
-                fn set_shape<I: ImageExt>(&mut self, image: Option<&I>) {
+                fn set_shape(&mut self, image: Option<&$crate::image::RgbImage>) {
                     assert!(self.w() != 0);
                     assert!(self.h() != 0);
-                    assert!(
-                        std::any::type_name::<I>()
-                            == std::any::type_name::<$crate::image::RgbImage>()
-                    );
                     unsafe {
                         if let Some(image) = image {
                             assert!(!image.was_deleted());

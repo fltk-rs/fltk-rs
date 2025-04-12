@@ -41,92 +41,6 @@ bitflags::bitflags! {
 /// Opaque type around `Fl_Region`
 pub struct Region(pub(crate) *mut raw::c_void);
 
-/// Opaque type around `Fl_Offscreen`
-#[derive(Debug)]
-pub struct Offscreen {
-    inner: *mut raw::c_void,
-}
-
-#[cfg(not(feature = "single-threaded"))]
-unsafe impl Sync for Offscreen {}
-#[cfg(not(feature = "single-threaded"))]
-unsafe impl Send for Offscreen {}
-
-impl PartialEq for Offscreen {
-    fn eq(&self, other: &Self) -> bool {
-        self.inner == other.inner
-    }
-}
-
-impl Eq for Offscreen {}
-
-impl Offscreen {
-    /// Creates a new offscreen type
-    pub fn new(w: i32, h: i32) -> Option<Offscreen> {
-        unsafe {
-            let x = Fl_create_offscreen(w, h);
-            if x.is_null() {
-                None
-            } else {
-                Some(Offscreen { inner: x })
-            }
-        }
-    }
-
-    /// Creates an uninitialized offscreen type
-    /// # Safety
-    /// Leaves the offscreen in an uninitialized state
-    pub unsafe fn uninit() -> Offscreen {
-        Offscreen {
-            inner: std::ptr::null_mut(),
-        }
-    }
-
-    /// Begins drawing in the offscreen
-    pub fn begin(&self) {
-        assert!(!self.inner.is_null());
-        unsafe { Fl_begin_offscreen(self.inner) }
-    }
-
-    /// Ends drawing in the offscreen
-    pub fn end(&self) {
-        assert!(!self.inner.is_null());
-        unsafe { Fl_end_offscreen() }
-    }
-
-    /// Copies the offscreen
-    pub fn copy(&self, x: i32, y: i32, w: i32, h: i32, src_x: i32, src_y: i32) {
-        assert!(!self.inner.is_null());
-        unsafe { Fl_copy_offscreen(x, y, w, h, self.inner, src_x, src_y) }
-    }
-
-    /// Rescales the offscreen
-    pub fn rescale(&mut self) {
-        assert!(!self.inner.is_null());
-        unsafe { Fl_rescale_offscreen(&mut self.inner) }
-    }
-
-    /// Checks the validity of the offscreen
-    pub fn is_valid(&self) -> bool {
-        !self.inner.is_null()
-    }
-
-    /// Performs a shallow copy of the offscreen
-    /// # Safety
-    /// This can lead to multiple mutable references to the same offscreen
-    #[must_use]
-    pub unsafe fn shallow_copy(&self) -> Offscreen {
-        assert!(!self.inner.is_null());
-        Offscreen { inner: self.inner }
-    }
-}
-
-impl Drop for Offscreen {
-    fn drop(&mut self) {
-        unsafe { Fl_delete_offscreen(self.inner) }
-    }
-}
-
 /// Shows a color map
 pub fn show_colormap(old_color: Color) -> Color {
     unsafe { mem::transmute(Fl_show_colormap(old_color.bits())) }
@@ -792,32 +706,6 @@ pub fn capture_window_part<Win: WindowExt>(
     win.show();
     unsafe {
         let x = Fl_capture_window_part(win.as_widget_ptr() as _, x, y, w, h);
-        if x.is_null() {
-            Err(FltkError::Internal(FltkErrorKind::FailedOperation))
-        } else {
-            let x = std::slice::from_raw_parts(x, cp as usize);
-            Ok(RgbImage::new(x, w, h, ColorDepth::Rgb8)?)
-        }
-    }
-}
-
-/**
-    Captures the offscreen and returns raw data.
-    Example usage:
-    ```rust,no_run
-    use fltk::{prelude::*, *};
-    let mut offs = draw::Offscreen::new(100, 100).unwrap();
-    let image = draw::capture_offscreen(&mut offs, 100, 100).unwrap();
-    ```
-    # Errors
-    The api can fail to capture the offscreen object as an image
-*/
-pub fn capture_offscreen(offs: &mut Offscreen, w: i32, h: i32) -> Result<RgbImage, FltkError> {
-    let cp = w * h * 3;
-    unsafe {
-        offs.begin();
-        let x = Fl_read_image(std::ptr::null_mut(), 0, 0, w, h, 0);
-        offs.end();
         if x.is_null() {
             Err(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {

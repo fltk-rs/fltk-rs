@@ -1,9 +1,5 @@
 // Shows how to use SvgImage loaded from a file and loaded from data (&str)
 
-const IMAGE2: &str = r#"<svg viewBox="0 0 100 100">
-<circle fill="red" cx="50" cy="50" r="20"></circle>
-</svg>"#;
-
 use fltk::{app, enums::FrameType, frame::Frame, image::SvgImage, prelude::*, window::Window};
 
 fn main() {
@@ -20,7 +16,6 @@ fn main() {
     wind.make_resizable(true);
     wind.end();
     wind.show();
-    wind.set_icon(Some(&SvgImage::from_data(IMAGE2).unwrap()));
 
     app.run().unwrap();
 }
