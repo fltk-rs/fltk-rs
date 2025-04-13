@@ -169,11 +169,11 @@ pub unsafe trait WidgetExt {
     where
         Self: Sized;
     /// Sets the image of the widget
-    fn set_image<I: ImageExt>(&mut self, image: Option<&I>)
+    fn set_image<I: ImageExt>(&mut self, image: Option<I>)
     where
         Self: Sized;
     /// Sets the image of the widget scaled to the widget's size
-    fn set_image_scaled<I: ImageExt>(&mut self, image: Option<&mut I>)
+    fn set_image_scaled<I: ImageExt>(&mut self, image: Option<I>)
     where
         Self: Sized;
     /// Gets the image associated with the widget
@@ -181,11 +181,11 @@ pub unsafe trait WidgetExt {
     where
         Self: Sized;
     /// Sets the deactivated image of the widget
-    fn set_deimage<I: ImageExt>(&mut self, image: Option<&I>)
+    fn set_deimage<I: ImageExt>(&mut self, image: Option<I>)
     where
         Self: Sized;
     /// Sets the deactivated image of the widget scaled to the widget's size
-    fn set_deimage_scaled<I: ImageExt>(&mut self, image: Option<&mut I>)
+    fn set_deimage_scaled<I: ImageExt>(&mut self, image: Option<I>)
     where
         Self: Sized;
     /// Gets the deactivated image associated with the widget
@@ -625,7 +625,7 @@ pub unsafe trait WindowExt: GroupExt {
     fn icon(&self) -> Option<Box<dyn ImageExt>>;
     /// Sets the windows icon.
     /// Supported formats are bmp, jpeg, png and rgb.
-    fn set_icon(&mut self, image: Option<&crate::image::RgbImage>);
+    fn set_icon(&mut self, image: Option<crate::image::RgbImage>);
     /// Sets the cursor style within the window.
     /// Needs to be called after the window is shown
     fn set_cursor(&mut self, cursor: Cursor);
@@ -666,7 +666,7 @@ pub unsafe trait WindowExt: GroupExt {
     /// The window covers non-transparent/non-black shape of the image.
     /// The image must not be scaled(resized) beforehand.
     /// The size will be adapted to the window's size
-    fn set_shape(&mut self, image: Option<&crate::image::RgbImage>);
+    fn set_shape(&mut self, image: Option<crate::image::RgbImage>);
     /// Get the shape of the window
     fn shape(&self) -> Option<Box<dyn ImageExt>>;
     /// Get the window's x coord from the screen

@@ -17,7 +17,7 @@ fn create_vertical_gradient_frame(
         for i in 0..=imax {
             let w = 1.0 - i as f32 / d as f32;
             set_draw_color(Color::inactive(&Color::color_average(col1, col2, w)));
-            draw_xyline(f.x(), f.y() + i, f.x() + f.w());
+            draw_hline(f.x(), f.y() + i, f.x() + f.w());
         }
         set_draw_color(Color::Black);
         set_font(Font::Helvetica, app::font_size());
@@ -41,7 +41,7 @@ fn create_horizontal_gradient_frame(
         for i in 0..=imax {
             let w = 1.0 - i as f32 / d as f32;
             set_draw_color(Color::inactive(&Color::color_average(col1, col2, w)));
-            draw_yxline(f.x() + i, f.y(), f.y() + f.h());
+            draw_vline(f.x() + i, f.y(), f.y() + f.h());
         }
         set_draw_color(Color::Black);
         set_font(Font::Helvetica, app::font_size());
@@ -104,7 +104,7 @@ fn main() {
         for i in 0..=imax {
             let v = 1.0 - i as f32 / d as f32;
             set_draw_color(Color::color_average(Color::Red, Color::Blue, v));
-            draw_yxline(i, 0, w.h());
+            draw_vline(i, 0, w.h());
         }
         w.draw_children();
     });

@@ -416,7 +416,7 @@ macro_rules! impl_widget_ext {
                     }
                 }
 
-                fn set_image<I: ImageExt>(&mut self, image: Option<&I>) {
+                fn set_image<I: ImageExt>(&mut self, image: Option<I>) {
                     if let Some(image) = image {
                         assert!(!image.was_deleted());
                         unsafe {
@@ -435,8 +435,8 @@ macro_rules! impl_widget_ext {
                     }
                 }
 
-                fn set_image_scaled<I: ImageExt>(&mut self, image: Option<&mut I>) {
-                    if let Some(image) = image {
+                fn set_image_scaled<I: ImageExt>(&mut self, image: Option<I>) {
+                    if let Some(mut image) = image {
                         assert!(!image.was_deleted());
                         image.scale(self.w(), self.h(), false, true);
                         unsafe {
@@ -468,7 +468,7 @@ macro_rules! impl_widget_ext {
                     }
                 }
 
-                fn set_deimage<I: ImageExt>(&mut self, image: Option<&I>) {
+                fn set_deimage<I: ImageExt>(&mut self, image: Option<I>) {
                     if let Some(image) = image {
                         assert!(!image.was_deleted());
                         unsafe {
@@ -487,8 +487,8 @@ macro_rules! impl_widget_ext {
                     }
                 }
 
-                fn set_deimage_scaled<I: ImageExt>(&mut self, image: Option<&mut I>) {
-                    if let Some(image) = image {
+                fn set_deimage_scaled<I: ImageExt>(&mut self, image: Option<I>) {
+                    if let Some(mut image) = image {
                         assert!(!image.was_deleted());
                         image.scale(self.w(), self.h(), false, true);
                         unsafe {
@@ -1044,11 +1044,11 @@ macro_rules! impl_widget_ext_via {
                 self.$member.set_type(typ)
             }
 
-            fn set_image<I: ImageExt>(&mut self, image: Option<&I>) {
+            fn set_image<I: ImageExt>(&mut self, image: Option<I>) {
                 self.$member.set_image(image)
             }
 
-            fn set_image_scaled<I: ImageExt>(&mut self, image: Option<&I>) {
+            fn set_image_scaled<I: ImageExt>(&mut self, image: Option<I>) {
                 self.$member.set_image_scaled(image)
             }
 
@@ -1056,11 +1056,11 @@ macro_rules! impl_widget_ext_via {
                 self.$member.image()
             }
 
-            fn set_deimage<I: ImageExt>(&mut self, image: Option<&I>) {
+            fn set_deimage<I: ImageExt>(&mut self, image: Option<I>) {
                 self.$member.set_deimage(image)
             }
 
-            fn set_deimage_scaled<I: ImageExt>(&mut self, image: Option<&mut I>) {
+            fn set_deimage_scaled<I: ImageExt>(&mut self, image: Option<I>) {
                 self.$member.set_deimage_scaled(image)
             }
 

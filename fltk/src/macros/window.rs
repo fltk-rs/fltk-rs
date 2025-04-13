@@ -146,7 +146,7 @@ macro_rules! impl_window_ext {
                     }
                 }
 
-                fn set_icon(&mut self, image: Option<&$crate::image::RgbImage>) {
+                fn set_icon(&mut self, image: Option<$crate::image::RgbImage>) {
                     if let Some(image) = image {
                         assert!(!image.was_deleted());
                         // Shouldn't fail after the previous asserts!
@@ -244,7 +244,7 @@ macro_rules! impl_window_ext {
                     unsafe { [<$flname _hotspot>](self.inner.widget() as _, w.as_widget_ptr() as _) }
                 }
 
-                fn set_shape(&mut self, image: Option<&$crate::image::RgbImage>) {
+                fn set_shape(&mut self, image: Option<$crate::image::RgbImage>) {
                     assert!(self.w() != 0);
                     assert!(self.h() != 0);
                     unsafe {

@@ -31,7 +31,6 @@
 - Remove support for older raw-window-handle versions.
 - Rename CallbackTrigger to When, and set_trigger to set_when.
 - Change no-images to use-images and add it to default features.
-- Pass images by reference.
 - WindowExt::set_icon and set_shape now specifically take an RgbImage.
 - Remove ImageExt::to_rgb() and to_raw_data().
 - Add CopyPasteLocation to be used with app::copy, app::paste_text and app::paste_image.
@@ -39,3 +38,5 @@
 - Remove deprecated Offscreen type.
 - Change draw::draw_text2 to draw_text_boxed.
 - Change draw::draw_line2 to draw_polyline.
+- Change names of draw_xyline and draw_yxline to be more descriptive (draw_hline, draw_hvline, draw_hvhline, draw_vline, draw_vhline, draw_vhvline).
+- Rename app::Option to Options.

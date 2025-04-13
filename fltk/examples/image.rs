@@ -8,7 +8,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     {
         let mut image = JpegImage::load("screenshots/calc.jpg")?;
-        frame.set_image(Some(&image));
+        frame.set_image(Some(image.clone()));
         image.scale(200, 200, true, true);
     }
 

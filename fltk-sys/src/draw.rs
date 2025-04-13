@@ -128,7 +128,7 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_line2(
+    pub fn Fl_polyline(
         x: ::core::ffi::c_int,
         y: ::core::ffi::c_int,
         x1: ::core::ffi::c_int,
@@ -148,7 +148,7 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_loop2(
+    pub fn Fl_loop_4sided(
         x: ::core::ffi::c_int,
         y: ::core::ffi::c_int,
         x1: ::core::ffi::c_int,
@@ -170,7 +170,7 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_polygon2(
+    pub fn Fl_polygon_4sided(
         x: ::core::ffi::c_int,
         y: ::core::ffi::c_int,
         x1: ::core::ffi::c_int,
@@ -248,10 +248,10 @@ unsafe extern "C" {
     pub fn Fl_pop_matrix();
 }
 unsafe extern "C" {
-    pub fn Fl_scale(x: f64, y: f64);
+    pub fn Fl_scale_xy(x: f64, y: f64);
 }
 unsafe extern "C" {
-    pub fn Fl_scale2(x: f64);
+    pub fn Fl_scale(x: f64);
 }
 unsafe extern "C" {
     pub fn Fl_translate(x: f64, y: f64);
@@ -281,7 +281,7 @@ unsafe extern "C" {
     pub fn Fl_curve(X0: f64, Y0: f64, X1: f64, Y1: f64, X2: f64, Y2: f64, X3: f64, Y3: f64);
 }
 unsafe extern "C" {
-    pub fn Fl_arc2(x: f64, y: f64, r: f64, start: f64, end: f64);
+    pub fn Fl_arc_with_radius(x: f64, y: f64, r: f64, start: f64, end: f64);
 }
 unsafe extern "C" {
     pub fn Fl_circle(x: f64, y: f64, r: f64);
@@ -352,13 +352,10 @@ unsafe extern "C" {
     pub fn Fl_descent() -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
-    pub fn Fl_width(txt: *const ::core::ffi::c_char) -> f64;
+    pub fn Fl_width(txt: *const ::core::ffi::c_char, n: ::core::ffi::c_int) -> f64;
 }
 unsafe extern "C" {
-    pub fn Fl_width2(txt: *const ::core::ffi::c_char, n: ::core::ffi::c_int) -> f64;
-}
-unsafe extern "C" {
-    pub fn Fl_width3(c: ::core::ffi::c_uint) -> f64;
+    pub fn Fl_char_width(c: ::core::ffi::c_uint) -> f64;
 }
 unsafe extern "C" {
     pub fn Fl_text_extents(
@@ -370,7 +367,7 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_text_extents2(
+    pub fn Fl_text_extents_n(
         t: *const ::core::ffi::c_char,
         n: ::core::ffi::c_int,
         dx: *mut ::core::ffi::c_int,
@@ -407,7 +404,7 @@ unsafe extern "C" {
     pub fn Fl_draw(str_: *const ::core::ffi::c_char, x: ::core::ffi::c_int, y: ::core::ffi::c_int);
 }
 unsafe extern "C" {
-    pub fn Fl_draw2(
+    pub fn Fl_draw_text_angled(
         angle: ::core::ffi::c_int,
         str_: *const ::core::ffi::c_char,
         x: ::core::ffi::c_int,
@@ -415,7 +412,7 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_draw3(
+    pub fn Fl_draw_text_n(
         str_: *const ::core::ffi::c_char,
         n: ::core::ffi::c_int,
         x: ::core::ffi::c_int,
@@ -423,7 +420,7 @@ unsafe extern "C" {
     );
 }
 unsafe extern "C" {
-    pub fn Fl_draw4(
+    pub fn Fl_draw_text_angled_n(
         angle: ::core::ffi::c_int,
         str_: *const ::core::ffi::c_char,
         n: ::core::ffi::c_int,
@@ -588,7 +585,7 @@ unsafe extern "C" {
     pub fn Fl_set_cursor(cursor: ::core::ffi::c_int);
 }
 unsafe extern "C" {
-    pub fn Fl_set_cursor2(
+    pub fn Fl_set_cursor_with_color(
         cursor: ::core::ffi::c_int,
         fg: ::core::ffi::c_int,
         bg: ::core::ffi::c_int,
@@ -658,7 +655,7 @@ unsafe extern "C" {
     pub fn Fl_rescale_offscreen(ctx: *mut *mut ::core::ffi::c_void);
 }
 unsafe extern "C" {
-    pub fn Fl_draw_text2(
+    pub fn Fl_draw_text_boxed(
         str_: *const ::core::ffi::c_char,
         x: ::core::ffi::c_int,
         y: ::core::ffi::c_int,

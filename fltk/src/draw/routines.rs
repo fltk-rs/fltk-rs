@@ -1,4 +1,3 @@
-use super::types::Coord;
 use crate::enums::{Align, Color, ColorDepth, Cursor, Font, FrameType, Shortcut};
 use crate::image::RgbImage;
 use crate::prelude::*;
@@ -64,8 +63,8 @@ pub fn draw_line(x1: i32, y1: i32, x2: i32, y2: i32) {
 }
 
 /// Draws a line from (x,y) to (x1,y1) and another from (x1,y1) to (x2,y2)
-pub fn draw_polyline(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>) {
-    unsafe { Fl_line2(pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1) }
+pub fn draw_polyline(x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32) {
+    unsafe { Fl_polyline(x1, y1, x2, y2, x3, y3) }
 }
 
 /// Draws a point
@@ -91,10 +90,10 @@ pub fn draw_loop(x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32) {
 }
 
 /// Draws a non-filled 4-sided polygon
-pub fn draw_loop_4sided(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>, pos4: Coord<i32>) {
+pub fn draw_loop_4sided(x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32, x4: i32, y4: i32) {
     unsafe {
-        Fl_loop2(
-            pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1,
+        Fl_loop_4sided(
+            x1, y1, x2, y2, x3, y3, x4, y4,
         );
     }
 }
@@ -150,7 +149,7 @@ pub fn draw_arc(x: i32, y: i32, width: i32, height: i32, a: f64, b: f64) {
 
 /// Draws an arc
 pub fn draw_arc_with_radius(x: f64, y: f64, r: f64, start: f64, end: f64) {
-    unsafe { Fl_arc2(x, y, r, start, end) }
+    unsafe { Fl_arc_with_radius(x, y, r, start, end) }
 }
 
 /// Draws a filled pie
@@ -270,52 +269,52 @@ pub fn draw_polygon(x: i32, y: i32, x1: i32, y1: i32, x2: i32, y2: i32) {
 }
 
 /// Fills a 4-sided polygon. The polygon must be convex
-pub fn draw_polygon_4sided(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>, pos4: Coord<i32>) {
+pub fn draw_polygon_4sided(x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32, x4: i32, y4: i32) {
     unsafe {
-        Fl_polygon2(
-            pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1,
+        Fl_polygon_4sided(
+            x1, y1, x2, y2, x3, y3, x4, y4,
         );
     }
 }
 
 /// Adds a series of points on a Bezier curve to the path
-pub fn draw_curve(pos1: Coord<f64>, pos2: Coord<f64>, pos3: Coord<f64>, pos4: Coord<f64>) {
+pub fn draw_curve(x1: f64, y1: f64, x2: f64, y2: f64, x3: f64, y3: f64, x4: f64, y4: f64) {
     unsafe {
         Fl_curve(
-            pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1,
+            x1, y1, x2, y2, x3, y3, x4, y4,
         );
     }
 }
 
 /// Draws a horizontal line from (x,y) to (x1,y)
-pub fn draw_xyline(x: i32, y: i32, x1: i32) {
+pub fn draw_hline(x: i32, y: i32, x1: i32) {
     unsafe { Fl_xyline(x, y, x1) }
 }
 
 /// Draws a horizontal line from (x,y) to (x1,y), then vertical from (x1,y) to (x1,y2)
-pub fn draw_xyline2(x: i32, y: i32, x1: i32, y2: i32) {
+pub fn draw_hvline(x: i32, y: i32, x1: i32, y2: i32) {
     unsafe { Fl_xyline2(x, y, x1, y2) }
 }
 
 /// Draws a horizontal line from (x,y) to (x1,y), then a vertical from (x1,y) to (x1,y2)
 /// and then another horizontal from (x1,y2) to (x3,y2)
-pub fn draw_xyline3(x: i32, y: i32, x1: i32, y2: i32, x3: i32) {
+pub fn draw_hvhline(x: i32, y: i32, x1: i32, y2: i32, x3: i32) {
     unsafe { Fl_xyline3(x, y, x1, y2, x3) }
 }
 
 /// Draws a vertical line from (x,y) to (x,y1)
-pub fn draw_yxline(x: i32, y: i32, y1: i32) {
+pub fn draw_vline(x: i32, y: i32, y1: i32) {
     unsafe { Fl_yxline(x, y, y1) }
 }
 
 /// Draws a vertical line from (x,y) to (x,y1), then a horizontal from (x,y1) to (x2,y1)
-pub fn draw_yxline2(x: i32, y: i32, y1: i32, x2: i32) {
+pub fn draw_vhline(x: i32, y: i32, y1: i32, x2: i32) {
     unsafe { Fl_yxline2(x, y, y1, x2) }
 }
 
 /// Draws a vertical line from (x,y) to (x,y1) then a horizontal from (x,y1)
 /// to (x2,y1), then another vertical from (x2,y1) to (x2,y3)
-pub fn draw_yxline3(x: i32, y: i32, y1: i32, x2: i32, y3: i32) {
+pub fn draw_vhvline(x: i32, y: i32, y1: i32, x2: i32, y3: i32) {
     unsafe { Fl_yxline3(x, y, y1, x2, y3) }
 }
 
@@ -331,12 +330,12 @@ pub fn pop_matrix() {
 
 /// Concatenates scaling transformation onto the current one
 pub fn scale_xy(x: f64, y: f64) {
-    unsafe { Fl_scale(x, y) }
+    unsafe { Fl_scale_xy(x, y) }
 }
 
 /// Concatenates scaling transformation onto the current one for both x & y
 pub fn scale(val: f64) {
-    unsafe { Fl_scale2(val) }
+    unsafe { Fl_scale(val) }
 }
 
 /// Concatenates translation transformation onto the current one
@@ -451,7 +450,7 @@ pub fn descent() -> i32 {
 pub fn width(txt: &str) -> f64 {
     let len = txt.len();
     let txt = CString::safe_new(txt);
-    unsafe { Fl_width2(txt.as_ptr(), len as _) }
+    unsafe { Fl_width(txt.as_ptr(), len as _) }
 }
 
 /// Measure the width and height of a text
@@ -489,7 +488,7 @@ pub fn text_extents(txt: &str) -> (i32, i32, i32, i32) {
 
 /// Returns the typographical width of a single character
 pub fn char_width(c: char) -> f64 {
-    unsafe { Fl_width3(c as u32) }
+    unsafe { Fl_char_width(c as u32) }
 }
 
 /// Converts text from Windows/X11 latin1 character set to local encoding
@@ -531,7 +530,7 @@ pub fn draw_text_boxed(string: &str, x: i32, y: i32, width: i32, height: i32, al
         return;
     }
     let s = CString::safe_new(string);
-    unsafe { Fl_draw_text2(s.as_ptr(), x, y, width, height, align.bits()) }
+    unsafe { Fl_draw_text_boxed(s.as_ptr(), x, y, width, height, align.bits()) }
 }
 
 /// Draws a string starting at the given x, y location, rotated to an angle
@@ -540,7 +539,7 @@ pub fn draw_text_angled(angle: i32, txt: &str, x: i32, y: i32) {
         return;
     }
     let txt = CString::safe_new(txt);
-    unsafe { Fl_draw2(angle, txt.as_ptr(), x, y) }
+    unsafe { Fl_draw_text_angled(angle, txt.as_ptr(), x, y) }
 }
 
 /// Draws a UTF-8 string right to left starting at the given x, y location
@@ -611,7 +610,7 @@ pub fn set_cursor(cursor: Cursor) {
 
 /// Sets the cursor style
 pub fn set_cursor_with_color(cursor: Cursor, fg: Color, bg: Color) {
-    unsafe { Fl_set_cursor2(cursor as i32, fg.bits() as i32, bg.bits() as i32) }
+    unsafe { Fl_set_cursor_with_color(cursor as i32, fg.bits() as i32, bg.bits() as i32) }
 }
 
 /// Sets the status
@@ -876,7 +875,7 @@ pub fn draw_text_n(string: &str, x: i32, y: i32) {
     if size() == -1 && len == 1 {
         return;
     }
-    unsafe { Fl_draw3(string.as_ptr() as _, len as _, x, y) }
+    unsafe { Fl_draw_text_n(string.as_ptr() as _, len as _, x, y) }
 }
 
 /// Override the drawing scale

@@ -4,7 +4,7 @@ use fltk_sys::fl;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub enum Option {
+pub enum Options {
     /// When switched on, moving the text cursor beyond the start or end of
     /// a text in a text widget will change focus to the next text widget.
     /// (This is considered 'old' behavior)
@@ -43,11 +43,11 @@ pub enum Option {
 }
 
 /// Get the option's value
-pub fn option(opt: Option) -> bool {
+pub fn option(opt: Options) -> bool {
     unsafe { fl::Fl_option(opt as i32) != 0 }
 }
 
 /// Set the option's value
-pub fn set_option(opt: Option, val: bool) {
+pub fn set_option(opt: Options, val: bool) {
     unsafe { fl::Fl_set_option(opt as i32, i32::from(val)) }
 }
