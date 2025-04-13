@@ -1,3 +1,5 @@
+#![allow(clippy::too_many_arguments)]
+
 use crate::enums::{Align, Color, ColorDepth, Cursor, Font, FrameType, Shortcut};
 use crate::image::RgbImage;
 use crate::prelude::*;
@@ -92,9 +94,7 @@ pub fn draw_loop(x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32) {
 /// Draws a non-filled 4-sided polygon
 pub fn draw_loop_4sided(x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32, x4: i32, y4: i32) {
     unsafe {
-        Fl_loop_4sided(
-            x1, y1, x2, y2, x3, y3, x4, y4,
-        );
+        Fl_loop_4sided(x1, y1, x2, y2, x3, y3, x4, y4);
     }
 }
 
@@ -271,18 +271,14 @@ pub fn draw_polygon(x: i32, y: i32, x1: i32, y1: i32, x2: i32, y2: i32) {
 /// Fills a 4-sided polygon. The polygon must be convex
 pub fn draw_polygon_4sided(x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32, x4: i32, y4: i32) {
     unsafe {
-        Fl_polygon_4sided(
-            x1, y1, x2, y2, x3, y3, x4, y4,
-        );
+        Fl_polygon_4sided(x1, y1, x2, y2, x3, y3, x4, y4);
     }
 }
 
 /// Adds a series of points on a Bezier curve to the path
 pub fn draw_curve(x1: f64, y1: f64, x2: f64, y2: f64, x3: f64, y3: f64, x4: f64, y4: f64) {
     unsafe {
-        Fl_curve(
-            x1, y1, x2, y2, x3, y3, x4, y4,
-        );
+        Fl_curve(x1, y1, x2, y2, x3, y3, x4, y4);
     }
 }
 
@@ -759,7 +755,15 @@ pub fn draw_check(x: i32, y: i32, w: i32, h: i32, col: Color) {
 /// Errors on invalid or unsupported image formats
 /// # Safety
 /// Passing wrong line data can read to over or underflow
-pub unsafe fn draw_image_ext(data: &[u8], x: i32, y: i32, w: i32, h: i32, depth: i32, line_data: i32) {
+pub unsafe fn draw_image_ext(
+    data: &[u8],
+    x: i32,
+    y: i32,
+    w: i32,
+    h: i32,
+    depth: i32,
+    line_data: i32,
+) {
     unsafe {
         Fl_draw_image(data.as_ptr(), x, y, w, h, depth, line_data);
     }

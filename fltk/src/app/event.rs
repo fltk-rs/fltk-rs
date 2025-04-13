@@ -429,7 +429,10 @@ where
     T: WidgetExt,
 {
     unsafe {
-        fl::Fl_paste_text(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, source as i32);
+        fl::Fl_paste_text(
+            widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget,
+            source as i32,
+        );
     }
 }
 
@@ -439,7 +442,10 @@ where
     T: WidgetExt,
 {
     unsafe {
-        fl::Fl_paste_image(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, source as i32);
+        fl::Fl_paste_image(
+            widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget,
+            source as i32,
+        );
     }
 }
 

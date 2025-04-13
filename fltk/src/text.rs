@@ -50,10 +50,8 @@ unsafe extern "C" fn modify_callback_shim(
     unsafe {
         let temp = if deleted_text.is_null() {
             None
-        } else if let Ok(tmp) = CStr::from_ptr(deleted_text).to_str() {
-            Some(tmp)
         } else {
-            None
+            CStr::from_ptr(deleted_text).to_str().ok()
         };
         let a = data as *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, Option<&'r str>)>;
         let f: &mut (dyn FnMut(i32, i32, i32, i32, Option<&str>)) = &mut **a;

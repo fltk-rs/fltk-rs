@@ -1,7 +1,6 @@
-# Roadmap for version 2 (when FLTK 1.4 is released). 
-- Refactor drawing code to use Coord and Rect.
+# Roadmap for version 2 (when FLTK 1.5 is released). 
 
-## Done
+## Changes
 - Update to edition2024.
 - Rename WidgetExt::into_widget() to as_widget() and GroupExt::into_group() to as_group() to conform to Rust's self convention.
 - WidgetExt::label() returns an `Option<String>`.
