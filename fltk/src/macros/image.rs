@@ -100,7 +100,7 @@ macro_rules! impl_image_ext {
                     }
                 }
 
-                fn to_rgb_data(&self) -> Vec<u8> {
+                fn as_rgb_data(&self) -> Vec<u8> {
                     assert!(!self.was_deleted());
                     unsafe {
                         let ptr = [<$flname _data>](*self.inner);
@@ -112,12 +112,12 @@ macro_rules! impl_image_ext {
                     }
                 }
 
-                fn to_rgb_image(&self) -> Result<$crate::image::RgbImage, FltkError> {
+                fn as_rgb_image(&self) -> Result<$crate::image::RgbImage, FltkError> {
                     assert!(!self.was_deleted());
                     if self.count() != 1 {
                         Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
                     } else {
-                        let data = self.to_rgb_data();
+                        let data = self.as_rgb_data();
                         let mut img = $crate::image::RgbImage::new(&data, self.data_w(), self.data_h(), self.depth())?;
                         img.scale(self.w(), self.h(), false, true);
                         Ok(img)

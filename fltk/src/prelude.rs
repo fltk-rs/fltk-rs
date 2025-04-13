@@ -1218,7 +1218,7 @@ pub unsafe trait BrowserExt: WidgetExt {
     fn set_text_size(&mut self, sz: i32);
     /// Sets the icon for browser elements.
     /// Lines start at 1
-    fn set_icon<Img: ImageExt>(&mut self, line: i32, image: Option<&Img>);
+    fn set_icon<Img: ImageExt>(&mut self, line: i32, image: Option<Img>);
     /// Returns the icon of a browser element.
     /// Lines start at 1
     fn icon(&self, line: i32) -> Option<Box<dyn ImageExt>>;
@@ -1488,11 +1488,11 @@ pub unsafe trait ImageExt {
     where
         Self: Sized;
     /// Returns the underlying raw rgb image data
-    fn to_rgb_data(&self) -> Vec<u8>;
+    fn as_rgb_data(&self) -> Vec<u8>;
     /// Transforms the image into an `RgbImage`
     /// # Errors
     /// Errors on failure to transform to `RgbImage`
-    fn to_rgb_image(&self) -> Result<crate::image::RgbImage, FltkError>;
+    fn as_rgb_image(&self) -> Result<crate::image::RgbImage, FltkError>;
     /// Scales the image
     fn scale(&mut self, width: i32, height: i32, proportional: bool, can_expand: bool);
     /// Return the count of pointers in an image (Pixmaps have more than 1, bitmaps have 0, Rgb based images have 1)

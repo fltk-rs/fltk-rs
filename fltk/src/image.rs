@@ -912,7 +912,7 @@ impl RgbImage {
     pub unsafe fn into_parts(self) -> (Vec<u8>, i32, i32) {
         let w = self.data_w();
         let h = self.data_h();
-        (self.to_rgb_data(), w, h)
+        (self.as_rgb_data(), w, h)
     }
 
     #[allow(clippy::too_many_lines)]
@@ -925,7 +925,7 @@ impl RgbImage {
         } else {
             let w = self.data_w();
             let h = self.data_h();
-            let data = self.to_rgb_data();
+            let data = self.as_rgb_data();
             let mut temp = Vec::new();
             match depth {
                 1 => match new_depth {
@@ -1084,7 +1084,7 @@ impl RgbImage {
         } else {
             let w = self.w();
             let h = self.h();
-            let data = self.to_rgb_data();
+            let data = self.as_rgb_data();
             let mut temp = Vec::new();
             match depth {
                 1 => {
@@ -1126,7 +1126,7 @@ impl RgbImage {
     pub fn blur(&self, radius: u32) -> Result<RgbImage, FltkError> {
         assert!(self.depth() == ColorDepth::Rgba8);
         let radius = radius as i32;
-        let mut src = self.to_rgb_data();
+        let mut src = self.as_rgb_data();
         let width = self.w();
         let height = self.h();
         let depth = self.depth();
@@ -1236,7 +1236,7 @@ impl RgbImage {
             }
         }
         let mut temp = vec![];
-        let data = self.to_rgb_data();
+        let data = self.as_rgb_data();
         match depth {
             3 => {
                 for pixel in data.chunks_exact(3) {

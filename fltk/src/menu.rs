@@ -599,7 +599,7 @@ impl MenuItem {
     /// # Safety
     /// Trying to add a label after adding an image might lead to undefined behavior
     #[doc(hidden)]
-    pub unsafe fn set_image<I: ImageExt>(&mut self, image: &I) {
+    pub unsafe fn set_image<I: ImageExt>(&mut self, image: I) {
         unsafe {
             assert!(!image.was_deleted());
             Fl_Menu_Item_image(*self.inner, image.as_image_ptr() as _);
@@ -636,11 +636,11 @@ impl MenuItem {
             |_| println!("Opened file!"),
         );
         if let Some(mut item) = menu.find_item("&File/Open...\t") {
-            item.add_image(Some(&image), true);
+            item.add_image(Some(image), true);
         }
         ```
     */
-    pub fn add_image<I: ImageExt>(&mut self, image: Option<&I>, on_left: bool) {
+    pub fn add_image<I: ImageExt>(&mut self, image: Option<I>, on_left: bool) {
         unsafe {
             if let Some(image) = image {
                 assert!(!image.was_deleted());

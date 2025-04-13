@@ -153,7 +153,7 @@ macro_rules! impl_window_ext {
                         unsafe {
                             [<$flname _set_icon>](
                                 self.inner.widget() as _,
-                                image.to_rgb_image().unwrap().as_image_ptr() as *mut _,
+                                image.as_rgb_image().unwrap().as_image_ptr() as *mut _,
                             )
                         }
                     } else {
