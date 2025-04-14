@@ -775,34 +775,13 @@ pub struct StyleTableEntry {
     pub font: Font,
     /// Font size
     pub size: i32,
-}
-
-impl Default for StyleTableEntry {
-    fn default() -> Self {
-        Self {
-            color: Color::Foreground,
-            font: Font::Helvetica,
-            size: crate::app::font_size(),
-        }
-    }
-}
-
-/// Defines the styles used in the `set_highlight_data`, which is used with style buffers
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct StyleTableEntryExt {
-    /// Font color
-    pub color: Color,
-    /// Font type
-    pub font: Font,
-    /// Font size
-    pub size: i32,
     /// attribute
     pub attr: TextAttr,
     /// background color
     pub bgcolor: Color,
 }
 
-impl Default for StyleTableEntryExt {
+impl Default for StyleTableEntry {
     fn default() -> Self {
         Self {
             color: Color::Foreground,

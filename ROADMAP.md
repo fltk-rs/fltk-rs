@@ -40,3 +40,5 @@
 - Change draw::draw_line2 to draw_polyline.
 - Change names of draw_xyline and draw_yxline to be more descriptive (draw_hline, draw_hvline, draw_hvhline, draw_vline, draw_vhline, draw_vhvline).
 - Rename app::Option to Options.
+- Expose dialog::message_position and remove dialog::*_default variants.
+- Merge StyleTableEntry and StyleTableEntryExt and set_highlight_data.

@@ -8,19 +8,19 @@ use fltk::{
     menu::Choice,
     misc::Spinner,
     prelude::*,
-    text::{StyleTableEntryExt, TextAttr, TextBuffer, TextEditor},
+    text::{StyleTableEntry, TextAttr, TextBuffer, TextEditor},
     window::Window,
 };
 use std::{cell::RefCell, char, rc::Rc};
 
 struct Style {
-    style_table: Vec<StyleTableEntryExt>,
+    style_table: Vec<StyleTableEntry>,
 }
 
 impl Style {
     fn new() -> Style {
         Style {
-            style_table: Vec::<StyleTableEntryExt>::new(),
+            style_table: Vec::<StyleTableEntry>::new(),
         }
     }
 
@@ -50,7 +50,7 @@ impl Style {
             }) {
                 Some(i) => ((i + 65) as u8 as char).to_string(),
                 None => {
-                    self.style_table.push(StyleTableEntryExt {
+                    self.style_table.push(StyleTableEntry {
                         color,
                         font,
                         size,
@@ -112,7 +112,7 @@ impl Style {
         // remove unused indexes
         //self.style_table = self.style_table.drain(in_buff.len()..).collect();
         self.style_table.truncate(style_index.len());
-        text_editor.set_highlight_data_ext(style_buffer, self.style_table.to_owned());
+        text_editor.set_highlight_data(style_buffer, self.style_table.to_owned());
 
         // uncomment this line to see that the style_table is compact
         // println!("total styles: {}", self.style_table.len());
