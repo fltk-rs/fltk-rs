@@ -1016,6 +1016,6 @@ fn error_box(msg: String) {
     fltk::dialog::message_title("Error");
     fltk::dialog::message_set_hotspot(true);
     fltk::dialog::message_icon_label("!");
-    fltk::dialog::message_default(&msg);
+    fltk::dialog::message(&msg);
     fltk::app::unlock();
 }

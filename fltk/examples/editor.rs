@@ -101,7 +101,7 @@ fn nfc_get_file(mode: dialog::NativeFileChooserType) -> Option<PathBuf> {
             dialog::NativeFileChooserAction::Success => {
                 let name = nfc.filename();
                 if name.as_os_str().is_empty() {
-                    dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!");
+                    dialog::alert("Please specify a file!");
                     None
                 } else {
                     Some(name)
@@ -117,7 +117,7 @@ fn quit_cb() {
         if s.saved {
             app::quit();
         } else {
-            let c = dialog::choice_default(
+            let c = dialog::choice(
                 "Are you sure you want to exit without saving?",
                 "&Yes",
                 "&No",
@@ -167,7 +167,7 @@ fn handle_drag_drop(editor: &mut text::TextEditor) {
                             let mut buf = buf.clone();
                             move |_| match buf.load_file(&path) {
                                 Ok(_) => (),
-                                Err(e) => dialog::alert_default(&format!(
+                                Err(e) => dialog::alert(&format!(
                                     "An issue occured while loading the file: {e}"
                                 )),
                             }
@@ -197,7 +197,7 @@ fn menu_cb(m: &mut impl MenuExt) {
             "&File/&New...\t" => {
                 STATE.with(|s| {
                     if !s.buf.text().is_empty() {
-                        let c = dialog::choice_default(
+                        let c = dialog::choice(
                             "Are you sure you want to clear the buffer?",
                             "&Yes",
                             "&No",
@@ -241,9 +241,7 @@ fn menu_cb(m: &mut impl MenuExt) {
             "&Edit/Cu&t\t" => ed.cut(),
             "&Edit/&Copy\t" => ed.copy(),
             "&Edit/&Paste\t" => ed.paste(),
-            "&Help/&About\t" => {
-                dialog::message_default("A minimal text editor written using fltk-rs!")
-            }
+            "&Help/&About\t" => dialog::message("A minimal text editor written using fltk-rs!"),
             _ => unreachable!(),
         }
     }

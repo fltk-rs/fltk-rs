@@ -91,19 +91,13 @@ unsafe extern "C" {
     ) -> *const ::core::ffi::c_char;
 }
 unsafe extern "C" {
-    pub fn Fl_message(
-        x: ::core::ffi::c_int,
-        y: ::core::ffi::c_int,
-        txt: *const ::core::ffi::c_char,
-    );
+    pub fn Fl_message(txt: *const ::core::ffi::c_char);
 }
 unsafe extern "C" {
-    pub fn Fl_alert(x: ::core::ffi::c_int, y: ::core::ffi::c_int, txt: *const ::core::ffi::c_char);
+    pub fn Fl_alert(txt: *const ::core::ffi::c_char);
 }
 unsafe extern "C" {
     pub fn Fl_choice(
-        x: ::core::ffi::c_int,
-        y: ::core::ffi::c_int,
         txt: *const ::core::ffi::c_char,
         b0: *const ::core::ffi::c_char,
         b1: *const ::core::ffi::c_char,
@@ -112,8 +106,6 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_choice_n(
-        x: ::core::ffi::c_int,
-        y: ::core::ffi::c_int,
         txt: *const ::core::ffi::c_char,
         b0: *const ::core::ffi::c_char,
         b1: *const ::core::ffi::c_char,
@@ -122,50 +114,12 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_input(
-        x: ::core::ffi::c_int,
-        y: ::core::ffi::c_int,
         txt: *const ::core::ffi::c_char,
         deflt: *const ::core::ffi::c_char,
     ) -> *const ::core::ffi::c_char;
 }
 unsafe extern "C" {
     pub fn Fl_password(
-        x: ::core::ffi::c_int,
-        y: ::core::ffi::c_int,
-        txt: *const ::core::ffi::c_char,
-        deflt: *const ::core::ffi::c_char,
-    ) -> *const ::core::ffi::c_char;
-}
-unsafe extern "C" {
-    pub fn Fl_message2(txt: *const ::core::ffi::c_char);
-}
-unsafe extern "C" {
-    pub fn Fl_alert2(txt: *const ::core::ffi::c_char);
-}
-unsafe extern "C" {
-    pub fn Fl_choice2(
-        txt: *const ::core::ffi::c_char,
-        b0: *const ::core::ffi::c_char,
-        b1: *const ::core::ffi::c_char,
-        b2: *const ::core::ffi::c_char,
-    ) -> ::core::ffi::c_int;
-}
-unsafe extern "C" {
-    pub fn Fl_choice2_n(
-        txt: *const ::core::ffi::c_char,
-        b0: *const ::core::ffi::c_char,
-        b1: *const ::core::ffi::c_char,
-        b2: *const ::core::ffi::c_char,
-    ) -> ::core::ffi::c_int;
-}
-unsafe extern "C" {
-    pub fn Fl_input2(
-        txt: *const ::core::ffi::c_char,
-        deflt: *const ::core::ffi::c_char,
-    ) -> *const ::core::ffi::c_char;
-}
-unsafe extern "C" {
-    pub fn Fl_password2(
         txt: *const ::core::ffi::c_char,
         deflt: *const ::core::ffi::c_char,
     ) -> *const ::core::ffi::c_char;
@@ -501,4 +455,7 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_message_icon_label(label: *const ::core::ffi::c_char);
+}
+unsafe extern "C" {
+    pub fn Fl_message_position(x: ::core::ffi::c_int, y: ::core::ffi::c_int);
 }

@@ -49,7 +49,7 @@ unsafe extern "C" {
     pub fn Fl_Text_Buffer_append(self_: *mut Fl_Text_Buffer, txt: *const ::core::ffi::c_char);
 }
 unsafe extern "C" {
-    pub fn Fl_Text_Buffer_append2(
+    pub fn Fl_Text_Buffer_append_bytes(
         self_: *mut Fl_Text_Buffer,
         txt: *const ::core::ffi::c_char,
         len: ::core::ffi::c_int,

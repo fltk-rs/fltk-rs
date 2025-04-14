@@ -165,7 +165,7 @@ impl TextBuffer {
     /// Append bytes to the buffer
     pub fn append_bytes(&mut self, text: &[u8]) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_append2(*self.inner, text.as_ptr() as _, text.len() as _) }
+        unsafe { Fl_Text_Buffer_append_bytes(*self.inner, text.as_ptr() as _, text.len() as _) }
     }
 
     /// Get the length of the buffer

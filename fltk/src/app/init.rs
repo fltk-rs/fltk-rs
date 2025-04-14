@@ -1,20 +1,11 @@
 use fltk_sys::fl;
 use std::sync::{
     Arc, LazyLock, Mutex,
-    atomic::{AtomicBool, AtomicI32, Ordering},
+    atomic::{AtomicBool, Ordering},
 };
 
 /// Basically a check for global locking
 pub(crate) static IS_INIT: AtomicBool = AtomicBool::new(false);
-
-/// Currently loaded fonts
-pub(crate) static LOADED_FONT: Option<&'static str> = None;
-
-/// The currently chosen font
-pub(crate) static CURRENT_FONT: AtomicI32 = AtomicI32::new(0);
-
-/// The currently chosen frame type
-pub(crate) static CURRENT_FRAME: AtomicI32 = AtomicI32::new(2);
 
 /// The fonts associated with the application
 pub(crate) static FONTS: LazyLock<Arc<Mutex<Vec<String>>>> = LazyLock::new(|| {

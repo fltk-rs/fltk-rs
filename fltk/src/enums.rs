@@ -369,7 +369,7 @@ impl Font {
     pub fn set_font(old: Font, new: &str) {
         let new = CString::safe_new(new);
         unsafe {
-            fl::Fl_set_font2(old.bits(), new.into_raw() as _);
+            fl::Fl_set_font_by_name(old.bits(), new.into_raw() as _);
         }
     }
 
@@ -714,7 +714,7 @@ impl Color {
 
     /// Returns the color closest to the passed grayscale value
     pub fn gray_scale(g: u8) -> Color {
-        unsafe { mem::transmute(fl::Fl_rgb_color2(g)) }
+        unsafe { mem::transmute(fl::Fl_rgb_color_grayscale(g)) }
     }
 
     /// Returns the color closest to the passed rgb value

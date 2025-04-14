@@ -544,7 +544,7 @@ pub fn handle_main<I: Into<Event> + Copy + PartialEq + PartialOrd>(
 /// use fltk::{app, dialog};
 /// app::raw_open_callback(Some(|s| {
 ///    let name = unsafe { std::ffi::CStr::from_ptr(s).to_string_lossy().to_string() };
-///    dialog::message_default(&format!("You dropped {}", name));
+///    dialog::message(&format!("You dropped {}", name));
 /// }));
 /// ```
 pub fn raw_open_callback(cb: Option<fn(*const raw::c_char)>) {

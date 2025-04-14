@@ -1905,10 +1905,10 @@ unsafe extern "C" {
     pub fn Fl_Help_View_select_all(self_: *mut Fl_Help_View);
 }
 unsafe extern "C" {
-    pub fn Fl_Help_View_set_topline(self_: *mut Fl_Help_View, n: *const ::core::ffi::c_char);
+    pub fn Fl_Help_View_set_topline_str(self_: *mut Fl_Help_View, n: *const ::core::ffi::c_char);
 }
 unsafe extern "C" {
-    pub fn Fl_Help_View_set_topline2(self_: *mut Fl_Help_View, arg1: ::core::ffi::c_int);
+    pub fn Fl_Help_View_set_topline(self_: *mut Fl_Help_View, arg1: ::core::ffi::c_int);
 }
 unsafe extern "C" {
     pub fn Fl_Help_View_topline(self_: *const Fl_Help_View) -> ::core::ffi::c_int;
@@ -2303,13 +2303,13 @@ unsafe extern "C" {
     pub fn Fl_Input_Choice_value(self_: *const Fl_Input_Choice) -> *const ::core::ffi::c_char;
 }
 unsafe extern "C" {
-    pub fn Fl_Input_Choice_value2(self_: *mut Fl_Input_Choice) -> ::core::ffi::c_int;
+    pub fn Fl_Input_Choice_value_index(self_: *mut Fl_Input_Choice) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn Fl_Input_Choice_set_value(self_: *mut Fl_Input_Choice, val: *const ::core::ffi::c_char);
 }
 unsafe extern "C" {
-    pub fn Fl_Input_Choice_set_value2(self_: *mut Fl_Input_Choice, val: ::core::ffi::c_int);
+    pub fn Fl_Input_Choice_set_value_index(self_: *mut Fl_Input_Choice, val: ::core::ffi::c_int);
 }
 unsafe extern "C" {
     pub fn Fl_Input_Choice_input(self_: *mut Fl_Input_Choice) -> *mut ::core::ffi::c_void;

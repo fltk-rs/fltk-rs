@@ -1,9 +1,8 @@
-use crate::app::init::CURRENT_FRAME;
 use crate::enums::{Color, FrameType, Mode};
 use crate::prelude::*;
 use crate::utils::FlString;
 use fltk_sys::fl;
-use std::{ffi::CString, mem, os::raw, sync::atomic::Ordering};
+use std::{ffi::CString, mem, os::raw};
 
 /// Set the app scheme
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
@@ -92,24 +91,6 @@ pub fn set_frame_type_cb(
 ) {
     unsafe {
         fl::Fl_set_box_type_cb(old_frame.as_i32(), Some(mem::transmute(cb)), x, y, w, h);
-    }
-}
-
-/// Get the app's frame type
-pub fn frame_type() -> FrameType {
-    let curr = CURRENT_FRAME.load(Ordering::Relaxed);
-    FrameType::by_index(curr as _)
-}
-
-/// Swap the default frame type with a new frame type
-pub fn swap_frame_type(new_frame: FrameType) {
-    unsafe {
-        let new_frame = new_frame.as_i32();
-        let curr = CURRENT_FRAME.load(Ordering::Relaxed);
-        fl::Fl_set_box_type(56, curr);
-        fl::Fl_set_box_type(curr, new_frame);
-        fl::Fl_set_box_type(new_frame, 56);
-        CURRENT_FRAME.store(new_frame, Ordering::Relaxed);
     }
 }
 

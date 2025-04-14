@@ -206,7 +206,7 @@ unsafe extern "C" {
     pub fn Fl_get_font_name(idx: ::core::ffi::c_int) -> *const ::core::ffi::c_char;
 }
 unsafe extern "C" {
-    pub fn Fl_get_font_name2(
+    pub fn Fl_get_font_name_with_attr(
         idx: ::core::ffi::c_int,
         attributes: *mut ::core::ffi::c_int,
     ) -> *const ::core::ffi::c_char;
@@ -224,7 +224,7 @@ unsafe extern "C" {
     pub fn Fl_set_font(arg1: ::core::ffi::c_int, arg2: ::core::ffi::c_int);
 }
 unsafe extern "C" {
-    pub fn Fl_set_font2(arg1: ::core::ffi::c_int, arg2: *const ::core::ffi::c_char);
+    pub fn Fl_set_font_by_name(arg1: ::core::ffi::c_int, arg2: *const ::core::ffi::c_char);
 }
 unsafe extern "C" {
     pub fn Fl_set_font_size(arg1: ::core::ffi::c_int);
@@ -648,7 +648,7 @@ unsafe extern "C" {
     ) -> ::core::ffi::c_uint;
 }
 unsafe extern "C" {
-    pub fn Fl_rgb_color2(g: ::core::ffi::c_uchar) -> ::core::ffi::c_uint;
+    pub fn Fl_rgb_color_grayscale(g: ::core::ffi::c_uchar) -> ::core::ffi::c_uint;
 }
 unsafe extern "C" {
     pub fn Fl_cmap(c: ::core::ffi::c_uint) -> ::core::ffi::c_uint;

@@ -48,7 +48,7 @@ fn nfc_get_file(mode: dialog::NativeFileChooserType) -> Option<PathBuf> {
             dialog::NativeFileChooserAction::Success => {
                 let name = nfc.filename();
                 if name.as_os_str().is_empty() {
-                    dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!");
+                    dialog::alert("Please specify a file!");
                     None
                 } else {
                     Some(name)
@@ -234,11 +234,7 @@ impl MyApp {
             match buf.load_file(&args[1]) {
                 Ok(_) => Some(PathBuf::from(args[1].clone())),
                 Err(e) => {
-                    dialog::alert(
-                        center().0 - 200,
-                        center().1 - 100,
-                        &format!("An issue occured while loading the file: {e}"),
-                    );
+                    dialog::alert(&format!("An issue occured while loading the file: {e}"));
                     None
                 }
             }
@@ -273,11 +269,9 @@ impl MyApp {
                                 let mut buf = buf.clone();
                                 move |_| match buf.load_file(&path) {
                                     Ok(_) => (),
-                                    Err(e) => dialog::alert(
-                                        center().0 - 200,
-                                        center().1 - 100,
-                                        &format!("An issue occured while loading the file: {e}"),
-                                    ),
+                                    Err(e) => dialog::alert(&format!(
+                                        "An issue occured while loading the file: {e}"
+                                    )),
                                 }
                             });
                         }
@@ -397,8 +391,6 @@ impl MyApp {
                     New => {
                         if self.buf.text() != "" {
                             let clear = if let Some(x) = dialog::choice(
-                                center().0 - 200,
-                                center().1 - 100,
                                 "File unsaved, Do you wish to continue?",
                                 "&Yes",
                                 "&No!",
@@ -418,18 +410,12 @@ impl MyApp {
                             if c.exists() {
                                 match self.buf.load_file(&c) {
                                     Ok(_) => self.filename = Some(c),
-                                    Err(e) => dialog::alert(
-                                        center().0 - 200,
-                                        center().1 - 100,
-                                        &format!("An issue occured while loading the file: {e}"),
-                                    ),
+                                    Err(e) => dialog::alert(&format!(
+                                        "An issue occured while loading the file: {e}"
+                                    )),
                                 }
                             } else {
-                                dialog::alert(
-                                    center().0 - 200,
-                                    center().1 - 100,
-                                    "File does not exist!",
-                                )
+                                dialog::alert("File does not exist!")
                             }
                         }
                     }
@@ -467,8 +453,6 @@ impl MyApp {
                     Quit => {
                         if self.modified {
                             match dialog::choice(
-                                center().0 - 200,
-                                center().1 - 100,
                                 "Would you like to save your work?",
                                 "&Yes",
                                 "&No",
@@ -490,8 +474,6 @@ impl MyApp {
                     Copy => self.editor.copy(),
                     Paste => self.editor.paste(),
                     About => dialog::message(
-                        center().0 - 300,
-                        center().1 - 100,
                         "This is an example application written in Rust and using the FLTK Gui library.",
                     ),
                 }

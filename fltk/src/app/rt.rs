@@ -1,6 +1,4 @@
-use crate::app::{
-    font::unload_font, init::LOADED_FONT, init::init_all, init::is_initialized, widget::windows,
-};
+use crate::app::{init::init_all, init::is_initialized, widget::windows};
 use crate::prelude::*;
 use fltk_sys::fl;
 use std::{mem, os::raw, panic, thread, time};
@@ -146,10 +144,6 @@ pub fn ready() -> bool {
 
 /// Quit the app
 pub fn quit() {
-    if let Some(loaded_font) = LOADED_FONT {
-        // Shouldn't fail
-        unload_font(loaded_font).unwrap_or(());
-    }
     if let Some(wins) = windows() {
         for mut i in wins {
             if i.shown() {

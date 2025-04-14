@@ -1,4 +1,4 @@
-use crate::app::init::{CURRENT_FONT, FONTS};
+use crate::app::init::FONTS;
 use crate::enums::Font;
 use crate::prelude::*;
 use crate::utils::FlString;
@@ -7,18 +7,12 @@ use std::{
     ffi::{CStr, CString},
     os::raw,
     path,
-    sync::atomic::Ordering,
 };
 
 /// Set the app's font
-pub fn set_font(new_font: Font) {
+pub fn set_font(old_font: Font, new_font: Font) {
     unsafe {
-        let new_font = new_font.bits();
-        let f = CURRENT_FONT.load(Ordering::Relaxed);
-        fl::Fl_set_font(15, f);
-        fl::Fl_set_font(0, new_font);
-        fl::Fl_set_font(new_font, f);
-        CURRENT_FONT.store(new_font, Ordering::Relaxed);
+        fl::Fl_set_font(old_font.bits(), new_font.bits());
     }
 }
 
@@ -129,7 +123,7 @@ pub(crate) fn load_font(path: &str) -> Result<String, FltkError> {
                 } else {
                     f[16].clone_from(&family_name);
                 }
-                fl::Fl_set_font2(16, CString::safe_new(&family_name).into_raw() as _);
+                fl::Fl_set_font_by_name(16, CString::safe_new(&family_name).into_raw() as _);
                 Ok(family_name)
             } else {
                 Err(FltkError::Internal(FltkErrorKind::FailedOperation))
@@ -141,7 +135,7 @@ pub(crate) fn load_font(path: &str) -> Result<String, FltkError> {
 }
 
 /// Unload a loaded font
-pub(crate) fn unload_font(path: &str) -> Result<(), FltkError> {
+pub fn unload_font(path: &str) -> Result<(), FltkError> {
     unsafe {
         let check = path::Path::new(path);
         if !check.exists() {

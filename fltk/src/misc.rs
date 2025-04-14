@@ -522,7 +522,7 @@ impl InputChoice {
 
     /// Get the value index of the current input choice
     pub fn value_index(&self) -> i32 {
-        unsafe { Fl_Input_Choice_value2(self.inner.widget() as _) }
+        unsafe { Fl_Input_Choice_value_index(self.inner.widget() as _) }
     }
 
     /// Set the value to a string
@@ -533,7 +533,7 @@ impl InputChoice {
 
     /// Set the value of the input choice to the element at `idx`
     pub fn set_value_index(&mut self, idx: i32) {
-        unsafe { Fl_Input_Choice_set_value2(self.inner.widget() as _, idx) }
+        unsafe { Fl_Input_Choice_set_value_index(self.inner.widget() as _, idx) }
     }
 
     /// Get the associated input widget
@@ -680,12 +680,12 @@ impl HelpView {
     /// Set the top line string
     pub fn set_top_line_string(&mut self, n: &str) {
         let n = CString::safe_new(n);
-        unsafe { Fl_Help_View_set_topline(self.inner.widget() as _, n.as_ptr()) }
+        unsafe { Fl_Help_View_set_topline_str(self.inner.widget() as _, n.as_ptr()) }
     }
 
     /// Set the top line position
     pub fn set_top_line(&mut self, line: i32) {
-        unsafe { Fl_Help_View_set_topline2(self.inner.widget() as _, line) }
+        unsafe { Fl_Help_View_set_topline(self.inner.widget() as _, line) }
     }
 
     /// Get the top line position

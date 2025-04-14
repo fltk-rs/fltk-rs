@@ -262,41 +262,41 @@ impl Drop for NativeFileChooser {
 }
 
 /// Displays a message box
-pub fn message(x: i32, y: i32, txt: &str) {
+pub fn message(txt: &str) {
     unsafe {
         let txt = CString::safe_new(txt);
-        Fl_message(x, y, txt.as_ptr());
+        Fl_message(txt.as_ptr());
     }
 }
 
 /// Displays an alert box
-pub fn alert(x: i32, y: i32, txt: &str) {
+pub fn alert(txt: &str) {
     unsafe {
         let txt = CString::safe_new(txt);
-        Fl_alert(x, y, txt.as_ptr());
+        Fl_alert(txt.as_ptr());
     }
 }
 
 /// Displays a choice box with up to three choices.
 /// Closing the dialog returns None. Choosing a value returns its index from the arguments.
-pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
+pub fn choice(txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
     unsafe {
         let txt = CString::safe_new(txt);
         let b0 = CString::safe_new(b0);
         let b1 = CString::safe_new(b1);
         let b2 = CString::safe_new(b2);
-        let ret = Fl_choice_n(x, y, txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr());
+        let ret = Fl_choice_n(txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr());
         if ret < 0 { None } else { Some(ret) }
     }
 }
 
 /// Displays an input box, which returns the inputted string.
 /// Can be used for gui io
-pub fn input(x: i32, y: i32, txt: &str, deflt: &str) -> Option<String> {
+pub fn input(txt: &str, deflt: &str) -> Option<String> {
     unsafe {
         let temp = CString::safe_new(deflt);
         let txt = CString::safe_new(txt);
-        let x = Fl_input(x, y, txt.as_ptr(), temp.as_ptr());
+        let x = Fl_input(txt.as_ptr(), temp.as_ptr());
         if x.is_null() {
             None
         } else {
@@ -310,80 +310,11 @@ pub fn input(x: i32, y: i32, txt: &str, deflt: &str) -> Option<String> {
 }
 
 /// Shows an input box, but with hidden string
-pub fn password(x: i32, y: i32, txt: &str, deflt: &str) -> Option<String> {
+pub fn password(txt: &str, deflt: &str) -> Option<String> {
     unsafe {
         let temp = CString::safe_new(deflt);
         let txt = CString::safe_new(txt);
-        let x = Fl_password(x, y, txt.as_ptr(), temp.as_ptr());
-        if x.is_null() {
-            None
-        } else {
-            Some(
-                CStr::from_ptr(x as *const raw::c_char)
-                    .to_string_lossy()
-                    .to_string(),
-            )
-        }
-    }
-}
-
-/// Displays a message box, the dialog is positioned at the pointer hotspot
-pub fn message_default(txt: &str) {
-    unsafe {
-        let txt = CString::safe_new(txt);
-        Fl_message2(txt.as_ptr());
-    }
-}
-
-/// Displays an alert box, the dialog is positioned at the pointer hotspot
-pub fn alert_default(txt: &str) {
-    unsafe {
-        let txt = CString::safe_new(txt);
-        Fl_alert2(txt.as_ptr());
-    }
-}
-
-/// Displays a choice box with up to three choices.
-/// An empty choice will not be shown. Closing the dialog returns None. Choosing a value returns its index from the arguments.
-/// The dialog is positioned at the pointer hotspot
-pub fn choice_default(txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
-    unsafe {
-        let txt = CString::safe_new(txt);
-        let b0 = CString::safe_new(b0);
-        let b1 = CString::safe_new(b1);
-        let b2 = CString::safe_new(b2);
-        let ret = Fl_choice2_n(txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr());
-        if ret < 0 { None } else { Some(ret) }
-    }
-}
-
-/// Displays an input box, which returns the inputted string.
-/// Can be used for gui io.
-/// The dialog is positioned at the pointer hotspot
-pub fn input_default(txt: &str, deflt: &str) -> Option<String> {
-    unsafe {
-        let temp = CString::safe_new(deflt);
-        let txt = CString::safe_new(txt);
-        let x = Fl_input2(txt.as_ptr(), temp.as_ptr());
-        if x.is_null() {
-            None
-        } else {
-            Some(
-                CStr::from_ptr(x as *const raw::c_char)
-                    .to_string_lossy()
-                    .to_string(),
-            )
-        }
-    }
-}
-
-/// Shows an input box, but with hidden string.
-/// The dialog is positioned at the pointer hotspot
-pub fn password_default(txt: &str, deflt: &str) -> Option<String> {
-    unsafe {
-        let temp = CString::safe_new(deflt);
-        let txt = CString::safe_new(txt);
-        let x = Fl_password2(txt.as_ptr(), temp.as_ptr());
+        let x = Fl_password(txt.as_ptr(), temp.as_ptr());
         if x.is_null() {
             None
         } else {
@@ -1281,4 +1212,9 @@ pub fn message_set_font(font: Font, sz: i32) {
 pub fn message_icon_label(label: &str) {
     let label = CString::safe_new(label);
     unsafe { Fl_message_icon_label(label.into_raw() as _) }
+}
+
+/// Set the next dialog's position
+pub fn message_position(x: i32, y: i32) {
+    unsafe { Fl_message_position(x, y) }
 }
