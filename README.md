@@ -23,7 +23,7 @@ Resources:
 - Erco's FLTK cheat [page](http://seriss.com/people/erco/fltk/), which is an excellent FLTK C++ reference. 
 
 Why choose FLTK?
-- Lightweight. Small binary, around 1.5mb after stripping. [Small memory footprint](https://szibele.com/memory-footprint-of-gui-toolkits/).
+- Lightweight. Small binary, around 1mb after stripping. [Small memory footprint](https://szibele.com/memory-footprint-of-gui-toolkits/).
 - Speed. Fast to install, fast to build, fast at startup and fast at runtime. 
 - Single executable. No DLLs to deploy.
 - Supports old architectures. 
