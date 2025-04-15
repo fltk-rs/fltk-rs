@@ -28,7 +28,7 @@ fn get_lflags() -> Vec<String> {
             } else {
                 ""
             },
-            "cfltk",
+            "cfltk2",
         ])
         .output()
     {

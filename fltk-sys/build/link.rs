@@ -3,9 +3,9 @@ use std::process::Command;
 
 pub fn link(target_os: &str, target_triple: &str) {
     if !cfg!(feature = "fltk-shared") {
-        println!("cargo:rustc-link-lib=static=cfltk");
+        println!("cargo:rustc-link-lib=static=cfltk2");
     } else {
-        println!("cargo:rustc-link-lib=dylib=cfltk");
+        println!("cargo:rustc-link-lib=dylib=cfltk2");
     }
 
     if cfg!(feature = "system-fltk")

@@ -11,7 +11,7 @@ keywords = ["gui", "bindings", "graphics"]
 categories = ["gui"]
 readme = "README.md"
 license = "MIT"
-links = "cfltk"
+links = "cfltk2"
 
 [lib]
 name = "fltk_sys"
