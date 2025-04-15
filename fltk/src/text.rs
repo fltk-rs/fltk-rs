@@ -9,11 +9,7 @@ use std::{
     os::raw,
 };
 
-#[cfg(feature = "single-threaded")]
 type BufWrapper = std::rc::Rc<*mut Fl_Text_Buffer>;
-
-#[cfg(not(feature = "single-threaded"))]
-type BufWrapper = std::sync::Arc<*mut Fl_Text_Buffer>;
 
 /// Defines the text cursor styles supported by fltk
 #[repr(i32)]

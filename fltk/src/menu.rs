@@ -192,11 +192,7 @@ impl SysMenuBar {
     }
 }
 
-#[cfg(feature = "single-threaded")]
 type MenuItemWrapper = std::rc::Rc<*mut Fl_Menu_Item>;
-
-#[cfg(not(feature = "single-threaded"))]
-type MenuItemWrapper = std::sync::Arc<*mut Fl_Menu_Item>;
 
 /// Creates a menu item
 #[derive(Debug, Clone)]

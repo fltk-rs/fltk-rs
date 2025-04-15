@@ -21,6 +21,7 @@ pub mod prefs;
 pub mod printer;
 pub mod surface;
 pub mod table;
+pub mod term;
 pub mod text;
 pub mod tree;
 pub mod utils;

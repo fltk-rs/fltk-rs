@@ -32,6 +32,8 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     println!("cargo:rerun-if-changed=cfltk/include/cfl_macros.h");
     println!("cargo:rerun-if-changed=cfltk/include/cfl_lock.h");
     println!("cargo:rerun-if-changed=cfltk/include/cfl_prefs.h");
+    println!("cargo:rerun-if-changed=cfltk/include/cfl_term.h");
+    println!("cargo:rerun-if-changed=cfltk/src/Fl_Simple_Terminal.H");
     println!("cargo:rerun-if-changed=cfltk/include/cfl_widget.hpp");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_lock.cpp");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_new.cpp");
@@ -60,6 +62,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     println!("cargo:rerun-if-changed=cfltk/src/Fl_Simple_Terminal.cxx");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_nswindow.m");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_platform.cpp");
+    println!("cargo:rerun-if-changed=cfltk/src/cfl_term.cpp");
     println!("cargo:rerun-if-changed=cfltk/fltk.patch");
 
     if target_triple.contains("windows") {

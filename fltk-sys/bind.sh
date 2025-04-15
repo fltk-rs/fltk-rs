@@ -19,3 +19,4 @@ bindgen --use-core --rust-target 1.67 fltk-sys/cfltk/include/cfl_surface.h -o fl
 bindgen --use-core --rust-target 1.67 fltk-sys/cfltk/include/cfl_printer.h -o fltk-sys/src/printer.rs
 bindgen --use-core --rust-target 1.67 fltk-sys/cfltk/include/cfl_utils.h -o fltk-sys/src/utils.rs
 bindgen --use-core --rust-target 1.67 fltk-sys/cfltk/include/cfl_prefs.h -o fltk-sys/src/prefs.rs
+bindgen --use-core --rust-target 1.67 fltk-sys/cfltk/include/cfl_term.h -o fltk-sys/src/term.rs 

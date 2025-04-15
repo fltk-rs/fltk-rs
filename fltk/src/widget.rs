@@ -42,13 +42,7 @@ pub type WidgetTrackerPtr = *mut fltk_sys::fl::Fl_Widget_Tracker;
 
 /// Widget Tracker Wrapper
 #[doc(hidden)]
-#[cfg(feature = "single-threaded")]
 pub type WidgetTrackerWrapper = std::rc::Rc<WidgetTrackerPtr>;
-
-/// Widget Tracker
-#[doc(hidden)]
-#[cfg(not(feature = "single-threaded"))]
-pub type WidgetTrackerWrapper = std::sync::Arc<WidgetTrackerPtr>;
 
 /// Widget Tracker
 #[derive(Debug, Clone)]
