@@ -926,211 +926,205 @@ impl GlutWindow {
 /// Alias GlutWindow as GlWindow
 pub type GlWindow = GlutWindow;
 
-#[doc(hidden)]
-/// An experimental space for unstable Windowing widgets, currently the GlWidgetWindow
-pub mod experimental {
-    use super::*;
+/// Creates a OpenGL Glut window widget
+#[cfg(feature = "enable-glwindow")]
+#[derive(Debug)]
+pub struct GlWidgetWindow {
+    inner: crate::widget::WidgetTracker,
+    is_derived: bool,
+}
 
-    /// Creates a OpenGL Glut window widget
-    #[cfg(feature = "enable-glwindow")]
-    #[derive(Debug)]
-    pub struct GlWidgetWindow {
-        inner: crate::widget::WidgetTracker,
-        is_derived: bool,
+#[cfg(feature = "enable-glwindow")]
+crate::macros::widget::impl_widget_ext!(GlWidgetWindow, Fl_Gl_Window);
+#[cfg(feature = "enable-glwindow")]
+crate::macros::widget::impl_widget_base!(GlWidgetWindow, Fl_Gl_Window);
+#[cfg(feature = "enable-glwindow")]
+crate::macros::group::impl_group_ext!(GlWidgetWindow, Fl_Gl_Window);
+#[cfg(feature = "enable-glwindow")]
+crate::macros::window::impl_window_ext!(GlWidgetWindow, Fl_Gl_Window);
+
+#[cfg(feature = "enable-glwindow")]
+impl_top_win!(GlWidgetWindow);
+
+#[cfg(feature = "enable-glwindow")]
+impl Default for GlWidgetWindow {
+    fn default() -> GlWidgetWindow {
+        assert!(crate::app::is_ui_thread());
+        let mut win = GlWidgetWindow::new(0, 0, 0, 0, None);
+        win.free_position();
+        win.set_frame(FrameType::FlatBox);
+        win.begin();
+        win
     }
+}
 
-    #[cfg(feature = "enable-glwindow")]
-    crate::macros::widget::impl_widget_ext!(GlWidgetWindow, Fl_Gl_Window);
-    #[cfg(feature = "enable-glwindow")]
-    crate::macros::widget::impl_widget_base!(GlWidgetWindow, Fl_Gl_Window);
-    #[cfg(feature = "enable-glwindow")]
-    crate::macros::group::impl_group_ext!(GlWidgetWindow, Fl_Gl_Window);
-    #[cfg(feature = "enable-glwindow")]
-    crate::macros::window::impl_window_ext!(GlWidgetWindow, Fl_Gl_Window);
-
-    #[cfg(feature = "enable-glwindow")]
-    impl_top_win!(GlWidgetWindow);
-
-    #[cfg(feature = "enable-glwindow")]
-    impl Default for GlWidgetWindow {
-        fn default() -> GlWidgetWindow {
+#[cfg(feature = "enable-glwindow")]
+impl GlWidgetWindow {
+    /// Creates a new window, with title as its window title if the window is decorated
+    pub fn new<'a, T: Into<Option<&'a str>>>(x: i32, y: i32, w: i32, h: i32, title: T) -> Self {
+        let temp = if let Some(title) = title.into() {
+            CString::safe_new(title).into_raw()
+        } else {
+            std::ptr::null_mut()
+        };
+        unsafe {
+            let widget_ptr = Fl_Gl_Window_new(x, y, w, h, temp);
+            assert!(!widget_ptr.is_null());
             assert!(crate::app::is_ui_thread());
-            let mut win = GlWidgetWindow::new(0, 0, 0, 0, None);
-            win.free_position();
-            win.set_frame(FrameType::FlatBox);
-            win.begin();
-            win
+            let tracker = crate::widget::WidgetTracker::new(widget_ptr as _);
+            unsafe extern "C" fn shim(wid: *mut Fl_Widget, _data: *mut std::os::raw::c_void) {
+                unsafe {
+                    let user_data = Fl_Gl_Window_user_data(wid as _);
+                    let draw_data = Fl_Gl_Window_draw_data(wid as _);
+                    let handle_data = Fl_Gl_Window_handle_data(wid as _);
+                    crate::app::add_timeout(0., move |h| {
+                        if !user_data.is_null() {
+                            let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
+                        }
+                        if !draw_data.is_null() {
+                            let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
+                        }
+                        if !handle_data.is_null() {
+                            let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
+                        }
+                        crate::app::remove_timeout(h);
+                    });
+                }
+            }
+            Fl_Gl_Window_set_deletion_callback(widget_ptr, Some(shim), std::ptr::null_mut());
+            Self {
+                inner: tracker,
+                is_derived: true,
+            }
         }
     }
 
-    #[cfg(feature = "enable-glwindow")]
-    impl GlWidgetWindow {
-        /// Creates a new window, with title as its window title if the window is decorated
-        pub fn new<'a, T: Into<Option<&'a str>>>(x: i32, y: i32, w: i32, h: i32, title: T) -> Self {
-            let temp = if let Some(title) = title.into() {
-                CString::safe_new(title).into_raw()
+    /// Gets an opengl function address
+    pub fn get_proc_address(&self, s: &str) -> *const raw::c_void {
+        unsafe extern "C" {
+            pub fn get_proc(name: *const raw::c_char) -> *mut raw::c_void;
+        }
+        let s = CString::safe_new(s);
+        let ret = unsafe { get_proc(s.as_ptr() as _) };
+        if !ret.is_null() {
+            ret as *const _
+        } else {
+            unsafe {
+                Fl_Gl_Window_get_proc_address(self.inner.widget() as _, s.as_ptr()) as *const _
+            }
+        }
+    }
+
+    /// Forces the window to be drawn, this window is also made current and calls draw()
+    pub fn flush(&mut self) {
+        unsafe { Fl_Gl_Window_flush(self.inner.widget() as _) }
+    }
+
+    /// Returns whether the OpeGL context is still valid
+    pub fn valid(&self) -> bool {
+        unsafe { Fl_Gl_Window_valid(self.inner.widget() as _) != 0 }
+    }
+
+    /// Mark the OpeGL context as still valid
+    pub fn set_valid(&mut self, v: bool) {
+        unsafe { Fl_Gl_Window_set_valid(self.inner.widget() as _, v as raw::c_char) }
+    }
+
+    /// Returns whether the context is valid upon creation
+    pub fn context_valid(&self) -> bool {
+        unsafe { Fl_Gl_Window_context_valid(self.inner.widget() as _) != 0 }
+    }
+
+    /// Mark the context as valid upon creation
+    pub fn set_context_valid(&mut self, v: bool) {
+        unsafe { Fl_Gl_Window_set_context_valid(self.inner.widget() as _, v as raw::c_char) }
+    }
+
+    /// Returns the GlContext
+    pub fn context(&self) -> Option<GlContext> {
+        unsafe {
+            let ctx = Fl_Gl_Window_context(self.inner.widget() as _);
+            if ctx.is_null() {
+                None
             } else {
-                std::ptr::null_mut()
-            };
-            unsafe {
-                let widget_ptr = Fl_Gl_Window_new(x, y, w, h, temp);
-                assert!(!widget_ptr.is_null());
-                assert!(crate::app::is_ui_thread());
-                let tracker = crate::widget::WidgetTracker::new(widget_ptr as _);
-                unsafe extern "C" fn shim(wid: *mut Fl_Widget, _data: *mut std::os::raw::c_void) {
-                    unsafe {
-                        let user_data = Fl_Gl_Window_user_data(wid as _);
-                        let draw_data = Fl_Gl_Window_draw_data(wid as _);
-                        let handle_data = Fl_Gl_Window_handle_data(wid as _);
-                        crate::app::add_timeout(0., move |h| {
-                            if !user_data.is_null() {
-                                let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
-                            }
-                            if !draw_data.is_null() {
-                                let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
-                            }
-                            if !handle_data.is_null() {
-                                let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
-                            }
-                            crate::app::remove_timeout(h);
-                        });
-                    }
-                }
-                Fl_Gl_Window_set_deletion_callback(widget_ptr, Some(shim), std::ptr::null_mut());
-                Self {
-                    inner: tracker,
-                    is_derived: true,
-                }
+                Some(GlContext(ctx))
             }
         }
+    }
 
-        /// Gets an opengl function address
-        pub fn get_proc_address(&self, s: &str) -> *const raw::c_void {
-            unsafe extern "C" {
-                pub fn get_proc(name: *const raw::c_char) -> *mut raw::c_void;
-            }
-            let s = CString::safe_new(s);
-            let ret = unsafe { get_proc(s.as_ptr() as _) };
-            if !ret.is_null() {
-                ret as *const _
-            } else {
-                unsafe {
-                    Fl_Gl_Window_get_proc_address(self.inner.widget() as _, s.as_ptr()) as *const _
-                }
-            }
+    /// Sets the GlContext
+    pub fn set_context(&mut self, ctx: GlContext, destroy_flag: bool) {
+        assert!(!ctx.0.is_null());
+        unsafe {
+            Fl_Gl_Window_set_context(self.inner.widget() as _, ctx.0, i32::from(destroy_flag))
         }
+    }
 
-        /// Forces the window to be drawn, this window is also made current and calls draw()
-        pub fn flush(&mut self) {
-            unsafe { Fl_Gl_Window_flush(self.inner.widget() as _) }
-        }
+    /// Swaps the back and front buffers
+    pub fn swap_buffers(&mut self) {
+        unsafe { Fl_Gl_Window_swap_buffers(self.inner.widget() as _) }
+    }
 
-        /// Returns whether the OpeGL context is still valid
-        pub fn valid(&self) -> bool {
-            unsafe { Fl_Gl_Window_valid(self.inner.widget() as _) != 0 }
-        }
+    /// Gets the swap interval
+    pub fn swap_interval(&self) -> i32 {
+        unsafe { Fl_Gl_Window_swap_interval(self.inner.widget() as _) }
+    }
 
-        /// Mark the OpeGL context as still valid
-        pub fn set_valid(&mut self, v: bool) {
-            unsafe { Fl_Gl_Window_set_valid(self.inner.widget() as _, v as raw::c_char) }
-        }
+    /// Sets the swap interval
+    pub fn set_swap_interval(&mut self, frames: i32) {
+        unsafe { Fl_Gl_Window_set_swap_interval(self.inner.widget() as _, frames) }
+    }
 
-        /// Returns whether the context is valid upon creation
-        pub fn context_valid(&self) -> bool {
-            unsafe { Fl_Gl_Window_context_valid(self.inner.widget() as _) != 0 }
-        }
+    /// Sets the projection so 0,0 is in the lower left of the window
+    /// and each pixel is 1 unit wide/tall.
+    pub fn ortho(&mut self) {
+        unsafe { Fl_Gl_Window_ortho(self.inner.widget() as _) }
+    }
 
-        /// Mark the context as valid upon creation
-        pub fn set_context_valid(&mut self, v: bool) {
-            unsafe { Fl_Gl_Window_set_context_valid(self.inner.widget() as _, v as raw::c_char) }
-        }
+    /// Returns whether the GlutWindow can do overlay
+    pub fn can_do_overlay(&self) -> bool {
+        unsafe { Fl_Gl_Window_can_do_overlay(self.inner.widget() as _) != 0 }
+    }
 
-        /// Returns the GlContext
-        pub fn context(&self) -> Option<GlContext> {
-            unsafe {
-                let ctx = Fl_Gl_Window_context(self.inner.widget() as _);
-                if ctx.is_null() {
-                    None
-                } else {
-                    Some(GlContext(ctx))
-                }
-            }
-        }
+    /// Redraws the overlay
+    pub fn redraw_overlay(&mut self) {
+        unsafe { Fl_Gl_Window_redraw_overlay(self.inner.widget() as _) }
+    }
 
-        /// Sets the GlContext
-        pub fn set_context(&mut self, ctx: GlContext, destroy_flag: bool) {
-            assert!(!ctx.0.is_null());
-            unsafe {
-                Fl_Gl_Window_set_context(self.inner.widget() as _, ctx.0, i32::from(destroy_flag))
-            }
-        }
+    /// Hides the overlay
+    pub fn hide_overlay(&mut self) {
+        unsafe { Fl_Gl_Window_hide_overlay(self.inner.widget() as _) }
+    }
 
-        /// Swaps the back and front buffers
-        pub fn swap_buffers(&mut self) {
-            unsafe { Fl_Gl_Window_swap_buffers(self.inner.widget() as _) }
-        }
+    /// Makes the overlay current
+    pub fn make_overlay_current(&mut self) {
+        unsafe { Fl_Gl_Window_make_overlay_current(self.inner.widget() as _) }
+    }
 
-        /// Gets the swap interval
-        pub fn swap_interval(&self) -> i32 {
-            unsafe { Fl_Gl_Window_swap_interval(self.inner.widget() as _) }
-        }
+    /// Returns the pixels per unit/point
+    pub fn pixels_per_unit(&self) -> f32 {
+        unsafe { Fl_Gl_Window_pixels_per_unit(self.inner.widget() as _) }
+    }
 
-        /// Sets the swap interval
-        pub fn set_swap_interval(&mut self, frames: i32) {
-            unsafe { Fl_Gl_Window_set_swap_interval(self.inner.widget() as _, frames) }
-        }
+    /// Gets the window's width in pixels
+    pub fn pixel_w(&self) -> i32 {
+        unsafe { Fl_Gl_Window_pixel_w(self.inner.widget() as _) }
+    }
 
-        /// Sets the projection so 0,0 is in the lower left of the window
-        /// and each pixel is 1 unit wide/tall.
-        pub fn ortho(&mut self) {
-            unsafe { Fl_Gl_Window_ortho(self.inner.widget() as _) }
-        }
+    /// Gets the window's height in pixels
+    pub fn pixel_h(&self) -> i32 {
+        unsafe { Fl_Gl_Window_pixel_h(self.inner.widget() as _) }
+    }
 
-        /// Returns whether the GlutWindow can do overlay
-        pub fn can_do_overlay(&self) -> bool {
-            unsafe { Fl_Gl_Window_can_do_overlay(self.inner.widget() as _) != 0 }
-        }
+    /// Get the Mode of the GlutWindow
+    pub fn mode(&self) -> Mode {
+        unsafe { mem::transmute(Fl_Gl_Window_mode(self.inner.widget() as _)) }
+    }
 
-        /// Redraws the overlay
-        pub fn redraw_overlay(&mut self) {
-            unsafe { Fl_Gl_Window_redraw_overlay(self.inner.widget() as _) }
-        }
-
-        /// Hides the overlay
-        pub fn hide_overlay(&mut self) {
-            unsafe { Fl_Gl_Window_hide_overlay(self.inner.widget() as _) }
-        }
-
-        /// Makes the overlay current
-        pub fn make_overlay_current(&mut self) {
-            unsafe { Fl_Gl_Window_make_overlay_current(self.inner.widget() as _) }
-        }
-
-        /// Returns the pixels per unit/point
-        pub fn pixels_per_unit(&self) -> f32 {
-            unsafe { Fl_Gl_Window_pixels_per_unit(self.inner.widget() as _) }
-        }
-
-        /// Gets the window's width in pixels
-        pub fn pixel_w(&self) -> i32 {
-            unsafe { Fl_Gl_Window_pixel_w(self.inner.widget() as _) }
-        }
-
-        /// Gets the window's height in pixels
-        pub fn pixel_h(&self) -> i32 {
-            unsafe { Fl_Gl_Window_pixel_h(self.inner.widget() as _) }
-        }
-
-        /// Get the Mode of the GlutWindow
-        pub fn mode(&self) -> Mode {
-            unsafe { mem::transmute(Fl_Gl_Window_mode(self.inner.widget() as _)) }
-        }
-
-        /// Set the Mode of the GlutWindow
-        pub fn set_mode(&mut self, mode: Mode) {
-            unsafe {
-                Fl_Gl_Window_set_mode(self.inner.widget() as _, mode.bits());
-            }
+    /// Set the Mode of the GlutWindow
+    pub fn set_mode(&mut self, mode: Mode) {
+        unsafe {
+            Fl_Gl_Window_set_mode(self.inner.widget() as _, mode.bits());
         }
     }
 }

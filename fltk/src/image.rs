@@ -2,7 +2,28 @@ use crate::enums::ColorDepth;
 use crate::prelude::*;
 use crate::utils::FlString;
 use fltk_sys::image::*;
-use std::{ffi::CString, mem};
+use std::{
+    ffi::CString,
+    mem,
+    sync::atomic::{AtomicBool, Ordering},
+};
+
+/// Basically a check for image support
+static IMAGES_REGISTERED: AtomicBool = AtomicBool::new(false);
+
+/// Check if fltk-rs was initialized
+fn images_registered() -> bool {
+    IMAGES_REGISTERED.load(Ordering::Relaxed)
+}
+
+/// Registers all images supported by `SharedImage`
+fn register_images() {
+    #[cfg(feature = "use-images")]
+    unsafe {
+        fltk_sys::image::Fl_register_images();
+        fltk_sys::fl::Fl_load_system_icons();
+    }
+}
 
 type ImageRC<T> = std::rc::Rc<T>;
 
@@ -63,6 +84,9 @@ impl SharedImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
+            if !images_registered() {
+                register_images();
+            }
             let temp = CString::safe_new(temp);
             let x = Fl_Shared_Image_get(temp.as_ptr(), 0, 0);
             if x.is_null() {
@@ -126,6 +150,9 @@ impl JpegImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
+            if !images_registered() {
+                register_images();
+            }
             let temp = CString::safe_new(temp);
             let image_ptr = Fl_JPEG_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
@@ -149,6 +176,9 @@ impl JpegImage {
             if data.is_empty() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
+                if !images_registered() {
+                    register_images();
+                }
                 let x = Fl_JPEG_Image_from(data.as_ptr());
                 if x.is_null() {
                     Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -192,6 +222,9 @@ impl PngImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
+            if !images_registered() {
+                register_images();
+            }
             let temp = CString::safe_new(temp);
             let image_ptr = Fl_PNG_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
@@ -215,6 +248,9 @@ impl PngImage {
             if data.is_empty() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
+                if !images_registered() {
+                    register_images();
+                }
                 let x = Fl_PNG_Image_from(data.as_ptr(), data.len() as i32);
                 if x.is_null() {
                     Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -258,6 +294,9 @@ impl SvgImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
+            if !images_registered() {
+                register_images();
+            }
             let temp = CString::safe_new(temp);
             let image_ptr = Fl_SVG_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
@@ -281,6 +320,9 @@ impl SvgImage {
             Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
         } else {
             let data = CString::safe_new(data);
+            if !images_registered() {
+                register_images();
+            }
             unsafe {
                 let x = Fl_SVG_Image_from(data.as_ptr());
                 if x.is_null() {
@@ -331,6 +373,9 @@ impl BmpImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
+            if !images_registered() {
+                register_images();
+            }
             let temp = CString::safe_new(temp);
             let image_ptr = Fl_BMP_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
@@ -354,6 +399,9 @@ impl BmpImage {
             if data.is_empty() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
+                if !images_registered() {
+                    register_images();
+                }
                 let x = Fl_BMP_Image_from(data.as_ptr(), data.len() as _);
                 if x.is_null() {
                     Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -397,6 +445,9 @@ impl GifImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
+            if !images_registered() {
+                register_images();
+            }
             let temp = CString::safe_new(temp);
             let image_ptr = Fl_GIF_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
@@ -420,6 +471,9 @@ impl GifImage {
             if data.is_empty() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
+                if !images_registered() {
+                    register_images();
+                }
                 let x = Fl_GIF_Image_from(data.as_ptr(), data.len() as _);
                 if x.is_null() {
                     Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -507,6 +561,9 @@ impl AnimGifImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
+            if !images_registered() {
+                register_images();
+            }
             let temp = CString::safe_new(temp);
             let image_ptr =
                 Fl_Anim_GIF_Image_new(temp.as_ptr(), w.as_widget_ptr() as _, flags.bits());
@@ -535,6 +592,9 @@ impl AnimGifImage {
             if data.is_empty() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
+                if !images_registered() {
+                    register_images();
+                }
                 let x = Fl_Anim_GIF_Image_from(
                     std::ptr::null() as _,
                     data.as_ptr(),
@@ -715,6 +775,9 @@ impl PnmImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
+            if !images_registered() {
+                register_images();
+            }
             let temp = CString::safe_new(temp);
             let image_ptr = Fl_PNM_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
@@ -1305,6 +1368,9 @@ impl IcoImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
+            if !images_registered() {
+                register_images();
+            }
             let temp = CString::safe_new(temp);
             let image_ptr = Fl_ICO_Image_new(temp.as_ptr(), -1);
             if image_ptr.is_null() {
@@ -1328,6 +1394,9 @@ impl IcoImage {
             if data.is_empty() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
+                if !images_registered() {
+                    register_images();
+                }
                 let x = Fl_ICO_Image_from_data(data.as_ptr(), data.len() as _, -1);
                 if x.is_null() {
                     Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))

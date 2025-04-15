@@ -156,14 +156,8 @@ fn main() {
                 Color::XtermGreen,
                 "Default cursor bg at startup"
             );
-            assert_eq!(
-                term.cursor_fg_color(),
-                Color::from_hex(0xff_ff_f0),
-                "Default cursor fg at startup"
-            );
             term.set_cursor_bg_color(Color::Red);
             assert_eq!(term.cursor_bg_color(), Color::Red);
-            assert_eq!(term.cursor_fg_color(), Color::from_hex(0xff_ff_f0));
             term.set_cursor_fg_color(Color::Blue);
             assert_eq!(term.cursor_bg_color(), Color::Red);
             assert_eq!(term.cursor_fg_color(), Color::Blue);

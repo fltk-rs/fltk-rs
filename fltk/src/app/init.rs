@@ -30,15 +30,6 @@ pub(crate) static FONTS: LazyLock<Arc<Mutex<Vec<String>>>> = LazyLock::new(|| {
 });
 static UI_THREAD: LazyLock<std::thread::ThreadId> = LazyLock::new(|| std::thread::current().id());
 
-/// Registers all images supported by `SharedImage`
-pub(crate) fn register_images() {
-    #[cfg(feature = "use-images")]
-    unsafe {
-        fltk_sys::image::Fl_register_images();
-        fltk_sys::fl::Fl_load_system_icons();
-    }
-}
-
 /// Inits all styles, fonts and images available to FLTK.
 /// Also initializes global locking
 /// # Panics
@@ -48,7 +39,6 @@ pub fn init_all() {
         fl::Fl_init_all();
         #[cfg(not(feature = "single-threaded"))]
         assert!((fl::Fl_lock() == 0), "fltk-rs requires threading support!");
-        register_images();
         #[cfg(feature = "enable-glwindow")]
         {
             unsafe extern "C" {
