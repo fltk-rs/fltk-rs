@@ -25,6 +25,7 @@ const CPP_SRC: &[&str] = &[
     "cfltk/src/cfl_font.cpp",
     "cfltk/src/cfl_utils.cpp",
     "cfltk/src/cfl_printer.cpp",
+    "cfltk/src/cfl_term.cpp"
 ];
 
 pub fn build(target_triple: &str) {

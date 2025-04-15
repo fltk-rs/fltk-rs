@@ -1,7 +1,7 @@
 use crate::enums::{Color, Font};
 use crate::prelude::*;
 use crate::utils::FlString;
-use fltk_sys::group::*;
+use fltk_sys::term::*;
 use std::{
     ffi::{CStr, CString},
     os::raw::c_char,

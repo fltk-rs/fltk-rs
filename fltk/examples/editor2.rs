@@ -27,10 +27,6 @@ pub enum Message {
     About,
 }
 
-pub fn center() -> (i32, i32) {
-    (app::screen_size().0 / 2, app::screen_size().1 / 2)
-}
-
 fn nfc_get_file(mode: dialog::NativeFileChooserType) -> Option<PathBuf> {
     let mut nfc = dialog::NativeFileChooser::new(mode);
     if mode == dialog::NativeFileChooserType::BrowseSaveFile {
