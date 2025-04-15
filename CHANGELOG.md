@@ -7,6 +7,7 @@
 - Add filter_value setter and getter for FileDialog.
 - Make Widget::with_id work in single-threaded mode.
 - Relax trait bound requirements for Sender and Receiver.
+- Update FLTK branch 1.4
 
 # [1.5.6] - 2025-04-01
 - Update cmake_minimum_required to 3.15.
