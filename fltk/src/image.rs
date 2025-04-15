@@ -2,13 +2,36 @@ use crate::enums::ColorDepth;
 use crate::prelude::*;
 use crate::utils::FlString;
 use fltk_sys::image::*;
-use std::{ffi::CString, mem};
+use std::{
+    ffi::CString,
+    mem,
+    sync::atomic::{AtomicBool, Ordering},
+};
 
-#[cfg(feature = "single-threaded")]
+/// Basically a check for image support
+static IMAGES_REGISTERED: AtomicBool = AtomicBool::new(false);
+
+/// Check if fltk-rs was initialized
+fn images_registered() -> bool {
+    IMAGES_REGISTERED.load(Ordering::Relaxed)
+}
+
+/// Registers all images supported by `SharedImage`
+fn register_images() {
+    #[cfg(not(feature = "no-images"))]
+    unsafe {
+        fltk_sys::image::Fl_register_images();
+        fltk_sys::fl::Fl_load_system_icons();
+    }
+}
+
 type ImageRC<T> = std::rc::Rc<T>;
 
-#[cfg(not(feature = "single-threaded"))]
-type ImageRC<T> = std::sync::Arc<T>;
+/// Wrapper around `Fl_Image`, used to wrap other image types
+#[derive(Debug)]
+pub struct Image {
+    inner: ImageRC<*mut Fl_Image>,
+}
 
 /// The scaling algorithm to use for raster images
 #[repr(i32)]
@@ -18,12 +41,6 @@ pub enum RgbScaling {
     Nearest = 0,
     /// More accurate, but slower RGB image scaling algorithm
     Bilinear,
-}
-
-/// Wrapper around `Fl_Image`, used to wrap other image types
-#[derive(Debug)]
-pub struct Image {
-    inner: ImageRC<*mut Fl_Image>,
 }
 
 crate::macros::image::impl_image_ext!(Image, Fl_Image);
@@ -40,18 +57,21 @@ impl Image {
     }
 }
 
+#[cfg(not(feature = "no-images"))]
 /// Creates a struct holding a shared image
 #[derive(Debug)]
 pub struct SharedImage {
     inner: ImageRC<*mut Fl_Shared_Image>,
 }
 
+#[cfg(not(feature = "no-images"))]
 crate::macros::image::impl_image_ext!(SharedImage, Fl_Shared_Image);
 
+#[cfg(not(feature = "no-images"))]
 impl SharedImage {
     /// Loads a `SharedImage` from a path
     /// # Errors
-    /// Errors on non-existent path or invalid format, also errors if app::App was not initialized
+    /// Errors on non-existent path or invalid format, also errors if `app::App` was not initialized
     pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<SharedImage, FltkError> {
         Self::load_(path.as_ref())
     }
@@ -64,7 +84,10 @@ impl SharedImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
-            let temp = CString::new(temp)?;
+            if !images_registered() {
+                register_images();
+            }
+            let temp = CString::safe_new(temp);
             let x = Fl_Shared_Image_get(temp.as_ptr(), 0, 0);
             if x.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -82,7 +105,7 @@ impl SharedImage {
     /// Loads a `SharedImage` from an image
     /// # Errors
     /// Errors on unsupported `SharedImage` types
-    pub fn from_image<I: ImageExt>(image: I) -> Result<SharedImage, FltkError> {
+    pub fn from_image<I: ImageExt>(image: &I) -> Result<SharedImage, FltkError> {
         unsafe {
             assert!(!image.was_deleted());
             let x = Fl_Shared_Image_from_rgb(image.as_image_ptr() as *mut Fl_RGB_Image, 1);
@@ -100,14 +123,17 @@ impl SharedImage {
     }
 }
 
+#[cfg(not(feature = "no-images"))]
 /// Creates a struct holding a Jpeg image
 #[derive(Debug)]
 pub struct JpegImage {
     inner: ImageRC<*mut Fl_JPEG_Image>,
 }
 
+#[cfg(not(feature = "no-images"))]
 crate::macros::image::impl_image_ext!(JpegImage, Fl_JPEG_Image);
 
+#[cfg(not(feature = "no-images"))]
 impl JpegImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     /// # Errors
@@ -124,7 +150,10 @@ impl JpegImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
-            let temp = CString::new(temp)?;
+            if !images_registered() {
+                register_images();
+            }
+            let temp = CString::safe_new(temp);
             let image_ptr = Fl_JPEG_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -147,6 +176,9 @@ impl JpegImage {
             if data.is_empty() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
+                if !images_registered() {
+                    register_images();
+                }
                 let x = Fl_JPEG_Image_from(data.as_ptr());
                 if x.is_null() {
                     Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -163,14 +195,17 @@ impl JpegImage {
     }
 }
 
+#[cfg(not(feature = "no-images"))]
 /// Creates a struct holding a PNG image
 #[derive(Debug)]
 pub struct PngImage {
     inner: ImageRC<*mut Fl_PNG_Image>,
 }
 
+#[cfg(not(feature = "no-images"))]
 crate::macros::image::impl_image_ext!(PngImage, Fl_PNG_Image);
 
+#[cfg(not(feature = "no-images"))]
 impl PngImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     /// # Errors
@@ -187,7 +222,10 @@ impl PngImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
-            let temp = CString::new(temp)?;
+            if !images_registered() {
+                register_images();
+            }
+            let temp = CString::safe_new(temp);
             let image_ptr = Fl_PNG_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -210,6 +248,9 @@ impl PngImage {
             if data.is_empty() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
+                if !images_registered() {
+                    register_images();
+                }
                 let x = Fl_PNG_Image_from(data.as_ptr(), data.len() as i32);
                 if x.is_null() {
                     Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -226,14 +267,17 @@ impl PngImage {
     }
 }
 
+#[cfg(not(feature = "no-images"))]
 /// Creates a struct holding an SVG image
 #[derive(Debug)]
 pub struct SvgImage {
     inner: ImageRC<*mut Fl_SVG_Image>,
 }
 
+#[cfg(not(feature = "no-images"))]
 crate::macros::image::impl_image_ext!(SvgImage, Fl_SVG_Image);
 
+#[cfg(not(feature = "no-images"))]
 impl SvgImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     /// # Errors
@@ -250,7 +294,10 @@ impl SvgImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
-            let temp = CString::new(temp)?;
+            if !images_registered() {
+                register_images();
+            }
+            let temp = CString::safe_new(temp);
             let image_ptr = Fl_SVG_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -273,6 +320,9 @@ impl SvgImage {
             Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
         } else {
             let data = CString::safe_new(data);
+            if !images_registered() {
+                register_images();
+            }
             unsafe {
                 let x = Fl_SVG_Image_from(data.as_ptr());
                 if x.is_null() {
@@ -289,21 +339,24 @@ impl SvgImage {
         }
     }
 
-    /// Rasterize an SvgImage
+    /// Rasterize an `SvgImage`
     pub fn normalize(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_SVG_Image_normalize(*self.inner) }
     }
 }
 
+#[cfg(not(feature = "no-images"))]
 /// Creates a struct holding a BMP image
 #[derive(Debug)]
 pub struct BmpImage {
     inner: ImageRC<*mut Fl_BMP_Image>,
 }
 
+#[cfg(not(feature = "no-images"))]
 crate::macros::image::impl_image_ext!(BmpImage, Fl_BMP_Image);
 
+#[cfg(not(feature = "no-images"))]
 impl BmpImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     /// # Errors
@@ -320,7 +373,10 @@ impl BmpImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
-            let temp = CString::new(temp)?;
+            if !images_registered() {
+                register_images();
+            }
+            let temp = CString::safe_new(temp);
             let image_ptr = Fl_BMP_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -343,6 +399,9 @@ impl BmpImage {
             if data.is_empty() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
+                if !images_registered() {
+                    register_images();
+                }
                 let x = Fl_BMP_Image_from(data.as_ptr(), data.len() as _);
                 if x.is_null() {
                     Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -359,14 +418,17 @@ impl BmpImage {
     }
 }
 
+#[cfg(not(feature = "no-images"))]
 /// Creates a struct holding a GIF image
 #[derive(Debug)]
 pub struct GifImage {
     inner: ImageRC<*mut Fl_GIF_Image>,
 }
 
+#[cfg(not(feature = "no-images"))]
 crate::macros::image::impl_image_ext!(GifImage, Fl_GIF_Image);
 
+#[cfg(not(feature = "no-images"))]
 impl GifImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     /// # Errors
@@ -383,7 +445,10 @@ impl GifImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
-            let temp = CString::new(temp)?;
+            if !images_registered() {
+                register_images();
+            }
+            let temp = CString::safe_new(temp);
             let image_ptr = Fl_GIF_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -406,6 +471,9 @@ impl GifImage {
             if data.is_empty() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
+                if !images_registered() {
+                    register_images();
+                }
                 let x = Fl_GIF_Image_from(data.as_ptr(), data.len() as _);
                 if x.is_null() {
                     Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -422,6 +490,7 @@ impl GifImage {
     }
 }
 
+#[cfg(not(feature = "no-images"))]
 bitflags::bitflags! {
     /// Defines AnimGifImage flags
     #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -457,14 +526,17 @@ bitflags::bitflags! {
     }
 }
 
+#[cfg(not(feature = "no-images"))]
 /// Creates a struct holding an animated GIF image
 #[derive(Debug)]
 pub struct AnimGifImage {
     inner: ImageRC<*mut Fl_Anim_GIF_Image>,
 }
 
+#[cfg(not(feature = "no-images"))]
 crate::macros::image::impl_image_ext!(AnimGifImage, Fl_Anim_GIF_Image);
 
+#[cfg(not(feature = "no-images"))]
 impl AnimGifImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     /// # Errors
@@ -489,7 +561,10 @@ impl AnimGifImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
-            let temp = CString::new(temp)?;
+            if !images_registered() {
+                register_images();
+            }
+            let temp = CString::safe_new(temp);
             let image_ptr =
                 Fl_Anim_GIF_Image_new(temp.as_ptr(), w.as_widget_ptr() as _, flags.bits());
             if image_ptr.is_null() {
@@ -517,6 +592,9 @@ impl AnimGifImage {
             if data.is_empty() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
+                if !images_registered() {
+                    register_images();
+                }
                 let x = Fl_Anim_GIF_Image_from(
                     std::ptr::null() as _,
                     data.as_ptr(),
@@ -574,8 +652,7 @@ impl AnimGifImage {
     }
 
     /// Show the next frame if the animation is stopped. Errors if the Gif has no more frames
-    #[allow(clippy::should_implement_trait)]
-    pub fn next(&mut self) -> Result<(), FltkError> {
+    pub fn next_frame(&mut self) -> Result<(), FltkError> {
         unsafe {
             if Fl_Anim_GIF_Image_next(*self.inner) != 0 {
                 Ok(())
@@ -615,7 +692,7 @@ impl XpmImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
-            let temp = CString::new(temp)?;
+            let temp = CString::safe_new(temp);
             let image_ptr = Fl_XPM_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -655,7 +732,7 @@ impl XbmImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
-            let temp = CString::new(temp)?;
+            let temp = CString::safe_new(temp);
             let image_ptr = Fl_XBM_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -671,14 +748,17 @@ impl XbmImage {
     }
 }
 
+#[cfg(not(feature = "no-images"))]
 /// Creates a struct holding a PNM image
 #[derive(Debug)]
 pub struct PnmImage {
     inner: ImageRC<*mut Fl_PNM_Image>,
 }
 
+#[cfg(not(feature = "no-images"))]
 crate::macros::image::impl_image_ext!(PnmImage, Fl_PNM_Image);
 
+#[cfg(not(feature = "no-images"))]
 impl PnmImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     /// # Errors
@@ -695,7 +775,10 @@ impl PnmImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
-            let temp = CString::new(temp)?;
+            if !images_registered() {
+                register_images();
+            }
+            let temp = CString::safe_new(temp);
             let image_ptr = Fl_PNM_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -721,7 +804,7 @@ crate::macros::image::impl_image_ext!(TiledImage, Fl_Tiled_Image);
 
 impl TiledImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
-    pub fn new<Img: ImageExt>(img: Img, w: i32, h: i32) -> TiledImage {
+    pub fn new<Img: ImageExt>(img: &Img, w: i32, h: i32) -> TiledImage {
         unsafe {
             assert!(!img.was_deleted());
             let ptr = Fl_Tiled_Image_new(img.as_image_ptr(), w, h);
@@ -751,13 +834,13 @@ impl Pixmap {
         } else {
             let data: Vec<*const std::ffi::c_char> = data
                 .iter()
-                .map(|x| CString::new(*x).unwrap().into_raw() as *const std::ffi::c_char)
+                .map(|x| CString::safe_new(x).into_raw() as *const std::ffi::c_char)
                 .collect();
             unsafe {
                 let x = Fl_Pixmap_new(data.as_ptr() as _);
-                data.iter().for_each(|x| {
+                for x in &data {
                     let _ = CString::from_raw(*x as _);
-                });
+                }
                 if x.is_null() {
                     Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
                 } else {
@@ -814,17 +897,19 @@ impl RgbImage {
         h: i32,
         depth: ColorDepth,
     ) -> Result<RgbImage, FltkError> {
-        let sz = w * h * depth as i32;
-        if sz > data.len() as i32 {
-            return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
-        }
-        let img = Fl_RGB_Image_from_data(data.as_ptr(), w, h, depth as i32, 0);
-        if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
-            Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
-        } else {
-            Ok(RgbImage {
-                inner: ImageRC::from(img),
-            })
+        unsafe {
+            let sz = w * h * depth as i32;
+            if sz > data.len() as i32 {
+                return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+            }
+            let img = Fl_RGB_Image_from_data(data.as_ptr(), w, h, depth as i32, 0);
+            if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
+                Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
+            } else {
+                Ok(RgbImage {
+                    inner: ImageRC::from(img),
+                })
+            }
         }
     }
 
@@ -834,20 +919,22 @@ impl RgbImage {
     /// Errors on invalid or unsupported image format
     /// # Safety
     /// Passing wrong line data can read to over or underflow
-    pub unsafe fn new2(
+    pub unsafe fn new_ext(
         data: &[u8],
         w: i32,
         h: i32,
         depth: i32,
         line_data: i32,
     ) -> Result<RgbImage, FltkError> {
-        let img = Fl_RGB_Image_new(data.as_ptr(), w, h, depth, line_data);
-        if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
-            Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
-        } else {
-            Ok(RgbImage {
-                inner: ImageRC::from(img),
-            })
+        unsafe {
+            let img = Fl_RGB_Image_new(data.as_ptr(), w, h, depth, line_data);
+            if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
+                Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
+            } else {
+                Ok(RgbImage {
+                    inner: ImageRC::from(img),
+                })
+            }
         }
     }
 
@@ -858,24 +945,26 @@ impl RgbImage {
     /// Errors on invalid or unsupported image format
     /// # Safety
     /// Passing wrong line data can read to over or underflow
-    pub unsafe fn from_data2(
+    pub unsafe fn from_data_ext(
         data: &[u8],
         w: i32,
         h: i32,
         depth: i32,
         line_data: i32,
     ) -> Result<RgbImage, FltkError> {
-        let img = Fl_RGB_Image_from_data(data.as_ptr(), w, h, depth, line_data);
-        if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
-            Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
-        } else {
-            Ok(RgbImage {
-                inner: ImageRC::from(img),
-            })
+        unsafe {
+            let img = Fl_RGB_Image_from_data(data.as_ptr(), w, h, depth, line_data);
+            if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
+                Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
+            } else {
+                Ok(RgbImage {
+                    inner: ImageRC::from(img),
+                })
+            }
         }
     }
 
-    /// Creates an RgbImage from a pixmap
+    /// Creates an `RgbImage` from a pixmap
     pub fn from_pixmap(image: &Pixmap) -> RgbImage {
         unsafe { RgbImage::from_image_ptr(Fl_RGB_Image_from_pixmap(*image.inner as _) as _) }
     }
@@ -889,7 +978,8 @@ impl RgbImage {
         (self.to_rgb_data(), w, h)
     }
 
-    /// Convert from one ColorDepth to another ColorDepth
+    #[allow(clippy::too_many_lines)]
+    /// Convert from one `ColorDepth` to another `ColorDepth`
     pub fn convert(&self, new_depth: ColorDepth) -> Result<RgbImage, FltkError> {
         let depth = self.depth() as i32;
         let new_depth = new_depth as i32;
@@ -973,9 +1063,9 @@ impl RgbImage {
                     1 => {
                         for pixel in data.chunks_exact(3) {
                             temp.push(
-                                (pixel[0] as f32 * 0.299
-                                    + pixel[1] as f32 * 0.587
-                                    + pixel[2] as f32 * 0.114)
+                                (f32::from(pixel[0]) * 0.299
+                                    + f32::from(pixel[1]) * 0.587
+                                    + f32::from(pixel[2]) * 0.114)
                                     as u8,
                             );
                         }
@@ -985,9 +1075,9 @@ impl RgbImage {
                     2 => {
                         for pixel in data.chunks_exact(3) {
                             temp.push(
-                                (pixel[0] as f32 * 0.299
-                                    + pixel[1] as f32 * 0.587
-                                    + pixel[2] as f32 * 0.114)
+                                (f32::from(pixel[0]) * 0.299
+                                    + f32::from(pixel[1]) * 0.587
+                                    + f32::from(pixel[2]) * 0.114)
                                     as u8,
                             );
                             temp.push(255);
@@ -1011,9 +1101,9 @@ impl RgbImage {
                     1 => {
                         for pixel in data.chunks_exact(4) {
                             temp.push(
-                                (pixel[0] as f32 * 0.299
-                                    + pixel[1] as f32 * 0.587
-                                    + pixel[2] as f32 * 0.114)
+                                (f32::from(pixel[0]) * 0.299
+                                    + f32::from(pixel[1]) * 0.587
+                                    + f32::from(pixel[2]) * 0.114)
                                     as u8,
                             );
                         }
@@ -1023,9 +1113,9 @@ impl RgbImage {
                     2 => {
                         for pixel in data.chunks_exact(4) {
                             temp.push(
-                                (pixel[0] as f32 * 0.299
-                                    + pixel[1] as f32 * 0.587
-                                    + pixel[2] as f32 * 0.114)
+                                (f32::from(pixel[0]) * 0.299
+                                    + f32::from(pixel[1]) * 0.587
+                                    + f32::from(pixel[2]) * 0.114)
                                     as u8,
                             );
                             temp.push(pixel[3]);
@@ -1121,7 +1211,7 @@ impl RgbImage {
             let f = i - half;
             let f = f as f32;
             kernel[i as usize] = ((-f * f / 30.0).exp() * 80.0) as u8;
-            a += kernel[i as usize] as u32;
+            a += u32::from(kernel[i as usize]);
         }
 
         // Horizontally blur from surface -> temp
@@ -1147,10 +1237,10 @@ impl RgbImage {
                     p = s[(j - half + k) as usize];
                     let k = k as usize;
 
-                    x += ((p >> 24) & 0xff) * kernel[k] as u32;
-                    y += ((p >> 16) & 0xff) * kernel[k] as u32;
-                    z += ((p >> 8) & 0xff) * kernel[k] as u32;
-                    w += (p & 0xff) * kernel[k] as u32;
+                    x += ((p >> 24) & 0xff) * u32::from(kernel[k]);
+                    y += ((p >> 16) & 0xff) * u32::from(kernel[k]);
+                    z += ((p >> 8) & 0xff) * u32::from(kernel[k]);
+                    w += (p & 0xff) * u32::from(kernel[k]);
                 }
                 d[j as usize] = ((x / a) << 24) | ((y / a) << 16) | ((z / a) << 8) | (w / a);
             }
@@ -1184,10 +1274,10 @@ impl RgbImage {
                     };
                     p = s[j as usize];
                     let k = k as usize;
-                    x += ((p >> 24) & 0xff) * kernel[k] as u32;
-                    y += ((p >> 16) & 0xff) * kernel[k] as u32;
-                    z += ((p >> 8) & 0xff) * kernel[k] as u32;
-                    w += (p & 0xff) * kernel[k] as u32;
+                    x += ((p >> 24) & 0xff) * u32::from(kernel[k]);
+                    y += ((p >> 16) & 0xff) * u32::from(kernel[k]);
+                    z += ((p >> 8) & 0xff) * u32::from(kernel[k]);
+                    w += (p & 0xff) * u32::from(kernel[k]);
                 }
                 d[j as usize] = ((x / a) << 24) | ((y / a) << 16) | ((z / a) << 8) | (w / a);
             }
@@ -1202,7 +1292,7 @@ impl RgbImage {
         let w = self.w();
         let h = self.h();
         fn correct_gamma(v: f32) -> f32 {
-            if v <= 0.0031308 {
+            if v <= 0.003_130_8 {
                 v * 12.92
             } else {
                 1.055 * v.powf(1.0 / 2.4) - 0.055
@@ -1213,9 +1303,9 @@ impl RgbImage {
         match depth {
             3 => {
                 for pixel in data.chunks_exact(3) {
-                    let r = (correct_gamma(pixel[0] as f32 / 255.0) * 255.0) as u8;
-                    let g = (correct_gamma(pixel[1] as f32 / 255.0) * 255.0) as u8;
-                    let b = (correct_gamma(pixel[2] as f32 / 255.0) * 255.0) as u8;
+                    let r = (correct_gamma(f32::from(pixel[0]) / 255.0) * 255.0) as u8;
+                    let g = (correct_gamma(f32::from(pixel[1]) / 255.0) * 255.0) as u8;
+                    let b = (correct_gamma(f32::from(pixel[2]) / 255.0) * 255.0) as u8;
                     temp.push(r);
                     temp.push(g);
                     temp.push(b);
@@ -1225,9 +1315,9 @@ impl RgbImage {
             }
             4 => {
                 for pixel in data.chunks_exact(4) {
-                    let r = (correct_gamma(pixel[0] as f32 / 255.0) * 255.0) as u8;
-                    let g = (correct_gamma(pixel[1] as f32 / 255.0) * 255.0) as u8;
-                    let b = (correct_gamma(pixel[2] as f32 / 255.0) * 255.0) as u8;
+                    let r = (correct_gamma(f32::from(pixel[0]) / 255.0) * 255.0) as u8;
+                    let g = (correct_gamma(f32::from(pixel[1]) / 255.0) * 255.0) as u8;
+                    let b = (correct_gamma(f32::from(pixel[2]) / 255.0) * 255.0) as u8;
                     temp.push(r);
                     temp.push(g);
                     temp.push(b);
@@ -1251,14 +1341,17 @@ impl RgbImage {
     }
 }
 
+#[cfg(not(feature = "no-images"))]
 /// Creates a struct holding a Windows icon (.ico) image
 #[derive(Debug)]
 pub struct IcoImage {
     inner: ImageRC<*mut Fl_ICO_Image>,
 }
 
+#[cfg(not(feature = "no-images"))]
 crate::macros::image::impl_image_ext!(IcoImage, Fl_ICO_Image);
 
+#[cfg(not(feature = "no-images"))]
 impl IcoImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     /// # Errors
@@ -1275,7 +1368,10 @@ impl IcoImage {
             let temp = path.to_str().ok_or_else(|| {
                 FltkError::Unknown(String::from("Failed to convert path to string"))
             })?;
-            let temp = CString::new(temp)?;
+            if !images_registered() {
+                register_images();
+            }
+            let temp = CString::safe_new(temp);
             let image_ptr = Fl_ICO_Image_new(temp.as_ptr(), -1);
             if image_ptr.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -1298,6 +1394,9 @@ impl IcoImage {
             if data.is_empty() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
+                if !images_registered() {
+                    register_images();
+                }
                 let x = Fl_ICO_Image_from_data(data.as_ptr(), data.len() as _, -1);
                 if x.is_null() {
                     Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -1323,8 +1422,10 @@ impl IcoImage {
     }
 }
 
+#[cfg(not(feature = "no-images"))]
 use std::os::raw::c_int;
 
+#[cfg(not(feature = "no-images"))]
 /// Icon directory entry
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]

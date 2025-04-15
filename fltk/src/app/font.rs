@@ -144,7 +144,7 @@ pub(crate) fn load_font(path: &str) -> Result<String, FltkError> {
 }
 
 /// Unload a loaded font
-pub(crate) fn unload_font(path: &str) -> Result<(), FltkError> {
+pub fn unload_font(path: &str) -> Result<(), FltkError> {
     unsafe {
         let check = path::Path::new(path);
         if !check.exists() {

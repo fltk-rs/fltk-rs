@@ -8,9 +8,6 @@ use std::sync::{
 /// Basically a check for global locking
 pub(crate) static IS_INIT: AtomicBool = AtomicBool::new(false);
 
-/// Currently loaded fonts
-pub(crate) static LOADED_FONT: Option<&'static str> = None;
-
 /// The currently chosen font
 pub(crate) static CURRENT_FONT: AtomicI32 = AtomicI32::new(0);
 
@@ -40,15 +37,6 @@ pub(crate) static FONTS: Lazy<Arc<Mutex<Vec<String>>>> = Lazy::new(|| {
 });
 static UI_THREAD: Lazy<std::thread::ThreadId> = Lazy::new(|| std::thread::current().id());
 
-/// Registers all images supported by `SharedImage`
-pub(crate) fn register_images() {
-    #[cfg(not(feature = "no-images"))]
-    unsafe {
-        fltk_sys::image::Fl_register_images();
-        fltk_sys::fl::Fl_load_system_icons();
-    }
-}
-
 /// Inits all styles, fonts and images available to FLTK.
 /// Also initializes global locking
 /// # Panics
@@ -60,7 +48,6 @@ pub fn init_all() {
         if fl::Fl_lock() != 0 {
             panic!("fltk-rs requires threading support!");
         }
-        register_images();
         #[cfg(feature = "enable-glwindow")]
         {
             extern "C" {
