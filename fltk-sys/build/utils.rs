@@ -23,10 +23,8 @@ pub fn use_static_msvcrt() -> bool {
     cfg!(target_feature = "crt-static") || cfg!(feature = "static-msvcrt")
 }
 
-pub fn get_taget_darwin_major_version() -> Option<i32> {
+pub fn get_macos_deployment_target() -> i32 {
     let env = std::env::var("MACOSX_DEPLOYMENT_TARGET");
-    let target = std::env::var("TARGET").unwrap();
-    let host = std::env::var("HOST").unwrap();
     if let Ok(env) = env {
         let val: i32 = env
             .trim()
@@ -35,8 +33,16 @@ pub fn get_taget_darwin_major_version() -> Option<i32> {
             .expect("Couldn't get macos version!")
             .parse()
             .expect("Counldn't get macos version!");
-        Some(val + 9)
-    } else if target.contains("darwin") && host.contains("darwin") {
+        val
+    } else {
+        10
+    }
+}
+
+pub fn get_taget_darwin_major_version() -> Option<i32> {
+    let target = std::env::var("TARGET").unwrap();
+    let host = std::env::var("HOST").unwrap();
+    if target.contains("darwin") && host.contains("darwin") {
         let val = proc_output(&["uname", "-r"])
             .trim()
             .split('.')
@@ -46,6 +52,6 @@ pub fn get_taget_darwin_major_version() -> Option<i32> {
             .expect("Counldn't get macos version!");
         Some(val)
     } else {
-        Some(19)
+        None
     }
 }

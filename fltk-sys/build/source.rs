@@ -202,7 +202,11 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             if target_triple != host_triple {
                 dst.define(
                     "CMAKE_SYSTEM_VERSION",
-                    format!("{}.0.0", utils::get_taget_darwin_major_version().unwrap()),
+                    format!(
+                        "{}.0.0",
+                        utils::get_taget_darwin_major_version()
+                            .unwrap_or(utils::get_macos_deployment_target() + 9)
+                    ),
                 );
             }
         }

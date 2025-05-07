@@ -1,6 +1,4 @@
-use crate::app::{
-    init::init_all, init::is_initialized, widget::windows,
-};
+use crate::app::{init::init_all, init::is_initialized, widget::windows};
 use crate::prelude::*;
 use fltk_sys::fl;
 use std::{mem, os::raw, panic, thread, time};
