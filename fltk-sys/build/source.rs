@@ -2,6 +2,7 @@ use crate::utils;
 use std::{env, path::Path, process::Command};
 
 pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
+    utils::check_cfltk_empty();
     println!("cargo:rerun-if-env-changed=CC");
     println!("cargo:rerun-if-env-changed=CXX");
     println!("cargo:rerun-if-env-changed=CFLTK_TOOLCHAIN");

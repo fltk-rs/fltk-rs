@@ -1,9 +1,11 @@
+use crate::utils;
 use std::{
     env, fs,
     path::{Path, PathBuf},
 };
 
 pub fn build(out_dir: &Path, target_triple: &str) {
+    utils::check_cfltk_empty();
     println!("cargo:rerun-if-env-changed=ANDROID_SDK_ROOT");
     println!("cargo:rerun-if-env-changed=ANDROID_NDK_ROOT");
 

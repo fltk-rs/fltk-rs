@@ -1,4 +1,18 @@
-use std::{env, path::Path, process::Command};
+use std::{
+    env,
+    path::{Path, PathBuf},
+    process::Command,
+};
+
+pub fn check_cfltk_empty() {
+    if PathBuf::from("cfltk")
+        .read_dir()
+        .map(|mut i| i.next().is_none())
+        .unwrap_or(false)
+    {
+        panic!("cfltk submodule not initialized! Run: git submodule update --init --recursive");
+    }
+}
 
 pub fn has_program(prog: &str) -> bool {
     match Command::new(prog).arg("--version").output() {
