@@ -193,10 +193,8 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
         };
 
         if target_triple.contains("darwin") {
-            let darwin_version = utils::get_taget_darwin_major_version().unwrap_or(19);
-            let deployment_target = format!("{}", darwin_version - 9);
-            std::env::set_var("MACOSX_DEPLOYMENT_TARGET", &deployment_target);
-            dst.define("CMAKE_OSX_DEPLOYMENT_TARGET", &deployment_target);
+            let deployment_target = utils::get_macos_deployment_target();
+            dst.define("CMAKE_OSX_DEPLOYMENT_TARGET", &format!("{}", deployment_target));
             if target_triple == "aarch64-apple-darwin" {
                 dst.define("CMAKE_OSX_ARCHITECTURES", "arm64");
             } else if target_triple == "x86_64-apple-darwin" {
@@ -204,6 +202,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             }
             let host_triple = std::env::var("HOST").unwrap();
             if target_triple != host_triple {
+                let darwin_version = utils::get_taget_darwin_major_version().unwrap_or(deployment_target + 9);
                 dst.define("CMAKE_SYSTEM_VERSION", format!("{}.0.0", darwin_version));
             }
         }
