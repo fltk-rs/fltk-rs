@@ -67,7 +67,7 @@ pub fn link(target_os: &str, target_triple: &str) {
                     ("UniformTypeIdentifiers", 11),
                     ("ScreenCaptureKit", 15),
                 ]);
-                println!("cargo:rustc-link-lib=c++abi");
+                println!("cargo:rustc-link-lib=c++");
             }
             "windows" => {
                 let linkage = if crate::utils::use_static_msvcrt() {
