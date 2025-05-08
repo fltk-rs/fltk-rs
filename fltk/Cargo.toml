@@ -1,6 +1,6 @@
 [package]
 name = "fltk2"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["The fltk-rs Authors"]
 edition = "2024"
 rust-version = "1.85"
@@ -18,7 +18,7 @@ name = "fltk"
 path = "src/lib.rs"
 
 [dependencies]
-fltk2-sys = { path = "../fltk-sys", version = "=0.1.1" }
+fltk2-sys = { path = "../fltk-sys", version = "=0.1.2" }
 bitflags = "^2"
 paste = "1"
 crossbeam-channel = "0.5"
@@ -30,7 +30,7 @@ rwh06 = { package = "raw-window-handle", version = "0.6", optional = true }
 [features]
 default = ["use-images"]
 # Support for bundled versions of cfltk and fltk (requires curl and tar)
-fltk-bundled = ["fltk2-sys/fltk-bundled"] 
+cfltk-bundled = ["fltk2-sys/cfltk-bundled"] 
 # Support for systems without OpenGL
 enable-glwindow = ["fltk2-sys/enable-glwindow"] 
 # You can use this if you don't need rtl or cjk unicode support

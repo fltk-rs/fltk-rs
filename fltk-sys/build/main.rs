@@ -28,7 +28,7 @@ fn main() {
 
     println!("cargo:rerun-if-changed=build");
 
-    if cfg!(feature = "fltk-bundled") {
+    if cfg!(feature = "cfltk-bundled") {
         bundled::get(&target_triple, &out_dir);
     } else if cfg!(feature = "fltk-config") {
         let version = utils::proc_output(&["fltk-config", "--api-version"]);
@@ -46,9 +46,9 @@ fn main() {
         return;
     } else {
         const MSG: &str = r#"Perhaps you would prefer to use a bundled version of fltk. 
-            You would need to enable the fltk-bundled feature.
+            You would need to enable the cfltk-bundled feature.
             Or if you have an installation of FLTK 1.4 and a working fltk-config executable, you can use the fltk-config feature.
-            Features can be enabled in your Cargo.toml or from the command line using the --features=fltk/fltk-bundled argument to cargo."#;
+            Features can be enabled in your Cargo.toml or from the command line using the --features=fltk/cfltk-bundled argument to cargo."#;
 
         if !utils::has_program("cmake") {
             panic!(

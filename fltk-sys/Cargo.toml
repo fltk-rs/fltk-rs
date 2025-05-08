@@ -1,6 +1,6 @@
 [package]
 name = "fltk2-sys"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["The fltk-rs Authors"]
 build = "build/main.rs"
 edition = "2024"
@@ -35,7 +35,7 @@ system-libpng = []
 system-libjpeg = []
 system-zlib = []
 legacy-opengl = []
-fltk-bundled = []
+cfltk-bundled = []
 enable-glwindow = []
 use-images = []
 no-pango-cairo = []
