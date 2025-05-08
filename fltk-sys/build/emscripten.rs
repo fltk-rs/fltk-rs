@@ -7,6 +7,11 @@ use std::{
 
 pub fn build(out_dir: &Path) {
     utils::check_cfltk_empty();
+    if !utils::has_program("ninja") {
+        panic!("Ninja is required for emscripten builds");
+    }
+    println!("cargo:rerun-if-env-changed=EMSDK");
+    println!("cargo:rerun-if-env-changed=EMSCRIPTEN_ROOT");
     println!("cargo:rerun-if-changed=cfltk/CMakeLists.txt");
     println!("cargo:rerun-if-changed=cfltk/fltk.patch");
     println!("cargo:rerun-if-changed=cfltk/include");

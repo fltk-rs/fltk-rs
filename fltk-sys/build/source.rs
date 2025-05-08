@@ -151,7 +151,9 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
                 "CMAKE_OSX_DEPLOYMENT_TARGET",
                 &format!("{}", deployment_target),
             );
-            dst.define("CMAKE_OSX_SYSROOT", "macosx");
+            if env::var("SDKROOT").is_err() {
+                dst.define("CMAKE_OSX_SYSROOT", "macosx");
+            }
             if target_triple == "aarch64-apple-darwin" {
                 dst.define("CMAKE_OSX_ARCHITECTURES", "arm64");
             } else if target_triple == "x86_64-apple-darwin" {
@@ -159,7 +161,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             }
         }
 
-        let _dst = dst
+        let dst = dst
             .profile(profile)
             .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
             .define("CFLTK_CARGO_BUILD", "ON")
@@ -171,6 +173,11 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             .define("FLTK_BUILD_HTML_DOCS", "OFF")
             .define("FLTK_BUILD_PDF_DOCS", "OFF")
             .build();
+
+        println!(
+            "cargo:rustc-link-search=native={}",
+            dst.join("lib").display()
+        );
     } else if target_triple.contains("android") {
         crate::android::build(out_dir, target_triple);
     } else if target_triple.contains("emscripten") {

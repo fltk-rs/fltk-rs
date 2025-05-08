@@ -32,8 +32,6 @@ const CPP_SRC: &[&str] = &[
 
 pub fn build(target_triple: &str) {
     utils::check_cfltk_empty();
-    println!("cargo:rerun-if-changed=cfltk/CMakeLists.txt");
-    println!("cargo:rerun-if-changed=cfltk/fltk.patch");
     println!("cargo:rerun-if-changed=cfltk/include");
     println!("cargo:rerun-if-changed=cfltk/src");
     let mut args = vec![];
