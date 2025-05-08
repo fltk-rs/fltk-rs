@@ -1,9 +1,9 @@
 [package]
 name = "fltk"
-version = "1.5.7"
+version = "1.5.8"
 authors = ["The fltk-rs Authors"]
 edition = "2021"
-rust-version = "1.64"
+rust-version = "1.67"
 description = "Rust bindings for the FLTK GUI library"
 repository = "https://github.com/fltk-rs/fltk-rs"
 documentation = "https://docs.rs/fltk"
@@ -18,7 +18,7 @@ name = "fltk"
 path = "src/lib.rs"
 
 [dependencies]
-fltk-sys = { path = "../fltk-sys", version = "=1.5.7" }
+fltk-sys = { path = "../fltk-sys", version = "=1.5.8" }
 bitflags = "^2"
 paste = "1"
 crossbeam-channel = "0.5"

@@ -1,6 +1,13 @@
 # Changelog
 
 
+# [1.5.8] - 2025-05-09
+- Fix compatibility with CMake 4.0:
+    - FLTK no longer requires CMAKE_SYSTEM_VERSION on macos, so the code was removed.
+    - Try to locate macos ScreenCaptureKit and UniformTypeIdentifiers frameworks, which might not be found with CMake 4.0.
+- Check for submodule initialization during the build.
+- Update FLTK branch 1.4.
+
 # [1.5.7] - 2025-04-15
 - Refactor image registering to only occur when loading an image from memory or disk.
 - feature no-images shouldn't expose image symbols.
