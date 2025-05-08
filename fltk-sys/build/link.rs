@@ -91,16 +91,10 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
 
         match target_os {
             "macos" => {
-                let target = utils::get_macos_deployment_target();
-                if target > 10 {
-                    println!("cargo:rustc-link-lib=framework=UniformTypeIdentifiers");
-                }
-                if target >= 14 {
-                    println!("cargo:rustc-link-lib=framework=ScreenCaptureKit");
-                }
                 println!("cargo:rustc-link-lib=framework=Carbon");
                 println!("cargo:rustc-link-lib=framework=Cocoa");
                 println!("cargo:rustc-link-lib=framework=ApplicationServices");
+                utils::link_macos_framework_if_exists(&[("UniformTypeIdentifiers", 11), ("ScreenCaptureKit", 15)]);
                 println!("cargo:rustc-link-lib=c++abi");
             }
             "windows" => {

@@ -1,3 +1,8 @@
+use std::{
+    path::Path,
+    process::Command,
+};
+
 pub fn has_program(prog: &str) -> bool {
     match std::process::Command::new(prog).arg("--version").output() {
         Ok(out) => !out.stdout.is_empty(),
@@ -36,5 +41,39 @@ pub fn get_macos_deployment_target() -> i32 {
         val
     } else {
         11
+    }
+}
+
+pub fn link_macos_framework_if_exists(frameworks: &[(&str, i32)]) {
+    let target = get_macos_deployment_target();
+    let sdk = Command::new("xcrun")
+        .args(&["--sdk", "macosx", "--show-sdk-path"])
+        .output()
+        .ok()
+        .and_then(|o| String::from_utf8(o.stdout).ok())
+        .map(|s| s.trim_end().to_owned())
+        .unwrap_or_default();
+
+    for f in frameworks {
+        let framework = f.0;
+        if target >= f.1 {
+            let candidates = [
+                &format!("/System/Library/Frameworks/{framework}.framework"),
+                &format!("/System/Library/PrivateFrameworks/{framework}.framework"),
+                &format!("{sdk}/System/Library/Frameworks/{framework}.framework"),
+                &format!("{sdk}/System/Library/PrivateFrameworks/{framework}.framework"),
+            ];
+        
+            let found_path = candidates.iter().find(|p| Path::new(p).exists());
+        
+            if let Some(path) = found_path {
+                println!("cargo:rustc-link-lib=framework={framework}");
+                if path.starts_with("/System/Library/PrivateFrameworks") {
+                    println!("cargo:rustc-link-search=framework=/System/Library/PrivateFrameworks");
+                }
+            } else {
+                println!("cargo:warning={framework} not found ─ building without it");
+            }
+        }
     }
 }

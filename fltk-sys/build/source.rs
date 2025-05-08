@@ -13,6 +13,10 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     println!("cargo:rerun-if-changed=cfltk/fltk.patch");
     println!("cargo:rerun-if-changed=cfltk/include");
     println!("cargo:rerun-if-changed=cfltk/src");
+    if target_triple.contains("darwin") {
+        println!("cargo:rerun-if-env-changed=SDKROOT");
+    }
+    
 
     if target_triple.contains("windows") {
         if !crate::utils::has_program("git") {
