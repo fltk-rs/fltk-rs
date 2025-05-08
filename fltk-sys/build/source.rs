@@ -151,6 +151,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
                 "CMAKE_OSX_DEPLOYMENT_TARGET",
                 &format!("{}", deployment_target),
             );
+            dst.define("CMAKE_OSX_SYSROOT", "macosx");
             if target_triple == "aarch64-apple-darwin" {
                 dst.define("CMAKE_OSX_ARCHITECTURES", "arm64");
             } else if target_triple == "x86_64-apple-darwin" {
