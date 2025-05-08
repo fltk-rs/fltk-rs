@@ -1,10 +1,7 @@
-use std::{
-    path::Path,
-    process::Command,
-};
+use std::{env, path::Path, process::Command};
 
 pub fn has_program(prog: &str) -> bool {
-    match std::process::Command::new(prog).arg("--version").output() {
+    match Command::new(prog).arg("--version").output() {
         Ok(out) => !out.stdout.is_empty(),
         _ => {
             println!("cargo:warning=Could not find invokable {}!", prog);
@@ -14,10 +11,7 @@ pub fn has_program(prog: &str) -> bool {
 }
 
 pub fn proc_output(args: &[&str]) -> String {
-    let out = match std::process::Command::new(args[0])
-        .args(&args[1..])
-        .output()
-    {
+    let out = match Command::new(args[0]).args(&args[1..]).output() {
         Ok(out) => out.stdout,
         _ => vec![],
     };
@@ -29,7 +23,7 @@ pub fn use_static_msvcrt() -> bool {
 }
 
 pub fn get_macos_deployment_target() -> i32 {
-    let env = std::env::var("MACOSX_DEPLOYMENT_TARGET");
+    let env = env::var("MACOSX_DEPLOYMENT_TARGET");
     if let Ok(env) = env {
         let val: i32 = env
             .trim()
@@ -63,9 +57,9 @@ pub fn link_macos_framework_if_exists(frameworks: &[(&str, i32)]) {
                 &format!("{sdk}/System/Library/Frameworks/{framework}.framework"),
                 &format!("{sdk}/System/Library/PrivateFrameworks/{framework}.framework"),
             ];
-        
+
             let found_path = candidates.iter().find(|p| Path::new(p).exists());
-        
+
             if let Some(path) = found_path {
                 println!("cargo:rustc-link-lib=framework={framework}");
                 if path.starts_with("/System/Library/PrivateFrameworks") {

@@ -16,7 +16,6 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     if target_triple.contains("darwin") {
         println!("cargo:rerun-if-env-changed=SDKROOT");
     }
-    
 
     if target_triple.contains("windows") {
         if !crate::utils::has_program("git") {
@@ -147,7 +146,10 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
 
         if target_triple.contains("darwin") {
             let deployment_target = utils::get_macos_deployment_target();
-            dst.define("CMAKE_OSX_DEPLOYMENT_TARGET", &format!("{}", deployment_target));
+            dst.define(
+                "CMAKE_OSX_DEPLOYMENT_TARGET",
+                &format!("{}", deployment_target),
+            );
             if target_triple == "aarch64-apple-darwin" {
                 dst.define("CMAKE_OSX_ARCHITECTURES", "arm64");
             } else if target_triple == "x86_64-apple-darwin" {
