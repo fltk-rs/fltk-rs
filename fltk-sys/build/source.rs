@@ -4,62 +4,18 @@ use std::{env, path::Path, process::Command};
 pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     println!("cargo:rerun-if-env-changed=CC");
     println!("cargo:rerun-if-env-changed=CXX");
+    println!("cargo:rerun-if-env-changed=CFLTK_TOOLCHAIN");
     println!("cargo:rerun-if-env-changed=PKG_CONFIG_PATH");
     println!("cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR");
+    println!("cargo:rerun-if-env-changed=CFLTK_WAYLAND_ONLY");
     println!("cargo:rerun-if-env-changed=CFLTK_GENERATE_BUNDLE_DIR");
     println!("cargo:rerun-if-changed=cfltk/CMakeLists.txt");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_widget.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_group.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_input.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_window.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_button.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_box.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_menu.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_dialog.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_valuator.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_browser.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_misc.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_text.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_image.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_draw.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_table.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_surface.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_printer.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_utils.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_macros.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_lock.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_prefs.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_term.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_widget.hpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_lock.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_new.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_widget.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_group.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_window.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_button.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_box.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_menu.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_dialog.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_valuator.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_browser.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_misc.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_text.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_image.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_input.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_draw.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_table.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_tree.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_surface.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_printer.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_font.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_utils.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_prefs.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_nswindow.m");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_platform.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_term.cpp");
     println!("cargo:rerun-if-changed=cfltk/fltk.patch");
+    println!("cargo:rerun-if-changed=cfltk/include");
+    println!("cargo:rerun-if-changed=cfltk/src");
+    if target_triple.contains("darwin") {
+        println!("cargo:rerun-if-env-changed=SDKROOT");
+    }
 
     if target_triple.contains("windows") {
         if !crate::utils::has_program("git") {
@@ -185,17 +141,15 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
         };
 
         if target_triple.contains("darwin") {
+            let deployment_target = utils::get_macos_deployment_target();
+            dst.define(
+                "CMAKE_OSX_DEPLOYMENT_TARGET",
+                format!("{deployment_target}"),
+            );
             if target_triple == "aarch64-apple-darwin" {
                 dst.define("CMAKE_OSX_ARCHITECTURES", "arm64");
             } else if target_triple == "x86_64-apple-darwin" {
                 dst.define("CMAKE_OSX_ARCHITECTURES", "x86_64");
-            }
-            let host_triple = std::env::var("HOST").unwrap();
-            if target_triple != host_triple {
-                dst.define(
-                    "CMAKE_SYSTEM_VERSION",
-                    format!("{}.0.0", utils::get_taget_darwin_major_version().unwrap()),
-                );
             }
         }
 
