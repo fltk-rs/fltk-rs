@@ -35,7 +35,7 @@ pub fn get_macos_deployment_target() -> i32 {
             .expect("Counldn't get macos version!");
         val
     } else {
-        10
+        11
     }
 }
 
