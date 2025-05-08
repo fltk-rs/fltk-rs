@@ -2,6 +2,7 @@ use crate::utils;
 use std::{env, path::Path, process::Command};
 
 pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
+    utils::check_cfltk_empty();
     println!("cargo:rerun-if-env-changed=CC");
     println!("cargo:rerun-if-env-changed=CXX");
     println!("cargo:rerun-if-env-changed=CFLTK_TOOLCHAIN");
@@ -146,6 +147,9 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
                 "CMAKE_OSX_DEPLOYMENT_TARGET",
                 format!("{deployment_target}"),
             );
+            if env::var("SDKROOT").is_err() {
+                dst.define("CMAKE_OSX_SYSROOT", "macosx");
+            }
             if target_triple == "aarch64-apple-darwin" {
                 dst.define("CMAKE_OSX_ARCHITECTURES", "arm64");
             } else if target_triple == "x86_64-apple-darwin" {

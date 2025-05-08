@@ -1,4 +1,18 @@
-use std::{env, path::Path, process::Command};
+use std::{
+    env,
+    path::{Path, PathBuf},
+    process::Command,
+};
+
+pub fn check_cfltk_empty() {
+    if PathBuf::from("cfltk")
+        .read_dir()
+        .map(|mut i| i.next().is_none())
+        .unwrap_or(false)
+    {
+        panic!("cfltk submodule not initialized! Run: git submodule update --init --recursive");
+    }
+}
 
 pub fn has_program(prog: &str) -> bool {
     match Command::new(prog).arg("--version").output() {
@@ -39,13 +53,17 @@ pub fn get_macos_deployment_target() -> i32 {
 
 pub fn link_macos_framework_if_exists(frameworks: &[(&str, i32)]) {
     let target = get_macos_deployment_target();
-    let sdk = Command::new("xcrun")
-        .args(["--sdk", "macosx", "--show-sdk-path"])
-        .output()
-        .ok()
-        .and_then(|o| String::from_utf8(o.stdout).ok())
-        .map(|s| s.trim_end().to_owned())
-        .unwrap_or_default();
+    let sdk = if let Ok(p) = env::var("SDKROOT") {
+        p
+    } else {
+        Command::new("xcrun")
+            .args(["--sdk", "macosx", "--show-sdk-path"])
+            .output()
+            .ok()
+            .and_then(|o| String::from_utf8(o.stdout).ok())
+            .map(|s| s.trim_end().to_owned())
+            .unwrap_or_default()
+    };
 
     for f in frameworks {
         let framework = f.0;

@@ -26,14 +26,7 @@ fn main() {
         }
     }
 
-    println!("cargo:rerun-if-changed=build/android.rs");
-    println!("cargo:rerun-if-changed=build/bundled.rs");
-    println!("cargo:rerun-if-changed=build/link.rs");
-    println!("cargo:rerun-if-changed=build/main.rs");
-    println!("cargo:rerun-if-changed=build/source.rs");
-    println!("cargo:rerun-if-changed=build/utils.rs");
-    println!("cargo:rerun-if-changed=build/fltk_config.rs");
-    println!("cargo:rerun-if-changed=build/pkg_config.rs");
+    println!("cargo:rerun-if-changed=build");
 
     if cfg!(feature = "fltk-bundled") {
         bundled::get(&target_triple, &out_dir);
