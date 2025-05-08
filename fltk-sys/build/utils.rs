@@ -38,14 +38,3 @@ pub fn get_macos_deployment_target() -> i32 {
         11
     }
 }
-
-pub fn get_taget_darwin_major_version() -> Option<i32> {
-    let val = proc_output(&["uname", "-r"])
-        .trim()
-        .split('.')
-        .next()
-        .expect("Couldn't get macos version!")
-        .parse()
-        .expect("Counldn't get macos version!");
-    Some(val)
-}
