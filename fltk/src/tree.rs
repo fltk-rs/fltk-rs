@@ -435,8 +435,8 @@ impl Tree {
                 path.as_ptr() as *mut raw::c_char,
                 i32::from(do_callback),
             ) {
-                0 => Ok(()),
-                _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+                -1 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+                _ => Ok(()),
             }
         }
     }
