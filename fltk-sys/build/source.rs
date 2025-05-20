@@ -147,10 +147,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
 
         if target_triple.contains("darwin") {
             let deployment_target = utils::get_macos_deployment_target();
-            dst.define(
-                "CMAKE_OSX_DEPLOYMENT_TARGET",
-                &format!("{}", deployment_target),
-            );
+            dst.define("CMAKE_OSX_DEPLOYMENT_TARGET", deployment_target);
             if env::var("SDKROOT").is_err() {
                 dst.define("CMAKE_OSX_SYSROOT", "macosx");
             }

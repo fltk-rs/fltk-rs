@@ -36,24 +36,23 @@ pub fn use_static_msvcrt() -> bool {
     cfg!(target_feature = "crt-static") || cfg!(feature = "static-msvcrt")
 }
 
-pub fn get_macos_deployment_target() -> i32 {
+pub fn get_macos_deployment_target() -> String {
     let env = env::var("MACOSX_DEPLOYMENT_TARGET");
     if let Ok(env) = env {
-        let val: i32 = env
-            .trim()
-            .split('.')
-            .next()
-            .expect("Couldn't get macos version!")
-            .parse()
-            .expect("Counldn't get macos version!");
-        val
+        env
     } else {
-        11
+        "11.0.0".to_string()
     }
 }
 
 pub fn link_macos_framework_if_exists(frameworks: &[(&str, i32)]) {
-    let target = get_macos_deployment_target();
+    let target: i32 = get_macos_deployment_target()
+        .trim()
+        .split('.')
+        .next()
+        .expect("Couldn't get macos version!")
+        .parse()
+        .expect("Counldn't get macos version!");
     let sdk = if let Ok(p) = env::var("SDKROOT") {
         p
     } else {
