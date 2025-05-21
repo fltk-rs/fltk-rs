@@ -1,6 +1,11 @@
 # Changelog
 
 
+# [1.5.9] - 2025-05-21
+- Fix MACOSX_DEPLOYMENT_TARGET for versions below 11.0.0.
+- Fix return value for Tree::close.
+- Update FLTK branch 1.4.
+
 # [1.5.8] - 2025-05-09
 - Fix compatibility with CMake 4.0:
     - FLTK no longer requires CMAKE_SYSTEM_VERSION on macos, so the code was removed.
