@@ -645,6 +645,9 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 extern "C" {
+    pub fn Fl_Table_scroll(arg1: *const Fl_Table) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Table_cursor2rowcol(
         self_: *const Fl_Table,
         r: *mut ::core::ffi::c_int,
@@ -1286,6 +1289,9 @@ extern "C" {
         w: *mut ::core::ffi::c_int,
         h: *mut ::core::ffi::c_int,
     ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_Row_scroll(arg1: *const Fl_Table_Row) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Table_Row_cursor2rowcol(
