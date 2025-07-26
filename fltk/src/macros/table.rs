@@ -498,6 +498,19 @@ macro_rules! impl_table_ext {
                         )
                     }
                 }
+                
+                fn scroll(&self) -> Option<$crate::group::Scroll> {
+                    unsafe {
+                        let ptr = [<$flname _scroll>](self.inner.widget() as _);
+                        if ptr.is_null() {
+                            None
+                        } else {
+                            Some($crate::group::Scroll::from_widget_ptr(
+                                ptr as *mut fltk_sys::widget::Fl_Widget,
+                            ))
+                        }
+                    }
+                }
 
                 fn find_cell(
                     &self,
