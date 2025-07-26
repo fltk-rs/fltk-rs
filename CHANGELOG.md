@@ -1,6 +1,10 @@
 # Changelog
 
 
+# [1.5.10] - 2025-07-26
+- Add Table::scroll().
+- Update FLTK.
+
 # [1.5.9] - 2025-05-21
 - Fix MACOSX_DEPLOYMENT_TARGET for versions below 11.0.0.
 - Fix return value for Tree::close.
