@@ -644,7 +644,7 @@ unsafe extern "C" {
         h: *mut ::core::ffi::c_int,
     ) -> ::core::ffi::c_int;
 }
-extern "C" {
+unsafe extern "C" {
     pub fn Fl_Table_scroll(arg1: *const Fl_Table) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
@@ -1290,7 +1290,7 @@ unsafe extern "C" {
         h: *mut ::core::ffi::c_int,
     ) -> ::core::ffi::c_int;
 }
-extern "C" {
+unsafe extern "C" {
     pub fn Fl_Table_Row_scroll(arg1: *const Fl_Table_Row) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {

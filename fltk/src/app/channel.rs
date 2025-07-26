@@ -1,4 +1,3 @@
-use fltk_sys::fl;
 use std::any::Any;
 use std::marker;
 use std::sync::LazyLock;
@@ -13,38 +12,6 @@ static SENDER: LazyLock<crossbeam_channel::Sender<Box<dyn Any + Send + Sync>>> =
     LazyLock::new(|| CHANNEL.clone().0);
 static RECEIVER: LazyLock<crossbeam_channel::Receiver<Box<dyn Any + Send + Sync>>> =
     LazyLock::new(|| CHANNEL.clone().1);
-
-#[doc(hidden)]
-/// Sends a custom message
-/// # Safety
-/// The type must be Send and Sync safe
-pub unsafe fn awake_msg<T>(msg: T) {
-    unsafe {
-        fl::Fl_awake_msg(Box::into_raw(Box::from(msg)) as *mut std::os::raw::c_void);
-    }
-}
-
-#[doc(hidden)]
-/**
-    Receives a custom message
-    ```rust,no_run
-    use fltk::{prelude::*, *};
-    if let Some(msg) = unsafe { app::thread_msg::<i32>() } { /* do something */ }
-    ```
-    # Safety
-    The type must correspond to the received message
-*/
-pub unsafe fn thread_msg<T>() -> Option<T> {
-    unsafe {
-        let msg = fl::Fl_thread_msg();
-        if msg.is_null() {
-            None
-        } else {
-            let msg = Box::from_raw(msg as *const _ as *mut T);
-            Some(*msg)
-        }
-    }
-}
 
 /// Creates a sender struct
 #[derive(Debug)]

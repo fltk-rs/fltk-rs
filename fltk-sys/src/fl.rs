@@ -22,9 +22,6 @@ unsafe extern "C" {
     pub fn Fl_ready() -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
-    pub fn Fl_release();
-}
-unsafe extern "C" {
     pub fn Fl_reload_scheme() -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -238,12 +235,6 @@ unsafe extern "C" {
             unsafe extern "C" fn(ev: ::core::ffi::c_int) -> ::core::ffi::c_int,
         >,
     );
-}
-unsafe extern "C" {
-    pub fn Fl_awake_msg(msg: *mut ::core::ffi::c_void);
-}
-unsafe extern "C" {
-    pub fn Fl_thread_msg() -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_wait() -> ::core::ffi::c_int;
