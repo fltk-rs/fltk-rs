@@ -71,6 +71,7 @@ impl ImageSurface {
         }
     }
 
+    #[cfg(not(feature = "no-images"))]
     /// Gets the high resolution image of an image surface as a shared image
     pub fn highres_image(&self) -> Option<crate::image::SharedImage> {
         unsafe {

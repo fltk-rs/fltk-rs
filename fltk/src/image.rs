@@ -9,14 +9,17 @@ use std::{
 };
 
 /// Basically a check for image support
+#[allow(dead_code)]
 static IMAGES_REGISTERED: AtomicBool = AtomicBool::new(false);
 
 /// Check if fltk-rs was initialized
+#[allow(dead_code)]
 fn images_registered() -> bool {
     IMAGES_REGISTERED.load(Ordering::Relaxed)
 }
 
 /// Registers all images supported by `SharedImage`
+#[allow(dead_code)]
 fn register_images() {
     #[cfg(not(feature = "no-images"))]
     unsafe {
