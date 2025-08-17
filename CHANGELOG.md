@@ -1,6 +1,9 @@
 # Changelog
 
 
+# [1.5.11] - 2025-08-17
+- Fix builds using the no-images feature flag.
+
 # [1.5.10] - 2025-07-26
 - Add Table::scroll().
 - Update FLTK.

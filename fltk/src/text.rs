@@ -52,9 +52,6 @@ impl TextBuffer {
     /// Deletes the `TextBuffer`
     /// # Safety
     /// The buffer shouldn't be deleted while the Display widget still needs it
-    /// 
-    /// Note: This method is deprecated. The buffer is automatically cleaned up when dropped.
-    #[deprecated(since = "1.5.10", note = "TextBuffer is automatically cleaned up when dropped")]
     pub unsafe fn delete(buf: Self) {
         // Just drop the buffer, the Drop implementation handles cleanup
         drop(buf);
@@ -63,9 +60,6 @@ impl TextBuffer {
     /// Deletes the `TextBuffer`
     /// # Safety
     /// The buffer shouldn't be deleted while the Display widget still needs it
-    /// 
-    /// Note: This method is deprecated. The buffer is automatically cleaned up when dropped.
-    #[deprecated(since = "1.5.10", note = "TextBuffer is automatically cleaned up when dropped")]
     pub unsafe fn delete_buffer(buf: Self) {
         Self::delete(buf)
     }
