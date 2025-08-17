@@ -498,7 +498,7 @@ macro_rules! impl_table_ext {
                         )
                     }
                 }
-                
+
                 fn scroll(&self) -> Option<$crate::group::Scroll> {
                     unsafe {
                         let ptr = [<$flname _scroll>](self.inner.widget() as _);
