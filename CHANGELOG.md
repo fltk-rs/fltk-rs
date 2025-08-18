@@ -1,6 +1,9 @@
 # Changelog
 
 
+# [1.5.12] - 2025-08-18
+- Fix svg window icons.
+
 # [1.5.11] - 2025-08-17
 - Fix builds using the no-images feature flag.
 
