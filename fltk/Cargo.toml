@@ -1,6 +1,6 @@
 [package]
 name = "fltk"
-version = "1.5.12"
+version = "1.5.13"
 authors = ["The fltk-rs Authors"]
 edition = "2021"
 rust-version = "1.67"
