@@ -270,7 +270,7 @@ macro_rules! impl_window_ext {
                 fn set_icon<T: ImageExt>(&mut self, image: Option<T>) {
                     #[cfg(not(feature = "no-images"))]
                     {
-                        assert!(
+                    assert!(
                         std::any::type_name::<T>()
                             != std::any::type_name::<$crate::image::SharedImage>(),
                         "SharedImage icons are not supported!"
@@ -306,11 +306,20 @@ macro_rules! impl_window_ext {
                     if let Some(image) = image {
                         assert!(!image.was_deleted());
                         // Shouldn't fail after the previous asserts!
-                        unsafe {
-                            [<$flname _set_icon>](
-                                self.inner.widget() as _,
-                                image.to_rgb().unwrap().as_image_ptr() as *mut _,
-                            )
+                        if std::any::type_name::<T>() == std::any::type_name::<$crate::image::SvgImage>() {
+                            unsafe {
+                                [<$flname _set_icon>](
+                                    self.inner.widget() as _,
+                                    image.as_image_ptr() as *mut _,
+                                )
+                            }
+                        } else {
+                            unsafe {
+                                [<$flname _set_icon>](
+                                    self.inner.widget() as _,
+                                    image.to_rgb().unwrap().as_image_ptr() as *mut _,
+                                )
+                            }
                         }
                     } else {
                         unsafe {
@@ -428,7 +437,7 @@ macro_rules! impl_window_ext {
                     assert!(self.h() != 0);
                     #[cfg(not(feature = "no-images"))]
                     {
-assert!(
+                    assert!(
                         std::any::type_name::<I>()
                             != std::any::type_name::<$crate::image::SharedImage>(),
                         "SharedImage is not supported!"
