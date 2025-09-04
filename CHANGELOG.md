@@ -1,6 +1,11 @@
 # Changelog
 
 
+# [1.5.14] - TBA
+- Update FLTK.
+- Fl_draw_text shouldn't draw symbols by default.
+- Automatically load icons with FileBrowser and FileChooser when not building with no-images.
+
 # [1.5.13] - 2025-08-18
 - Fix svg window icons.
 

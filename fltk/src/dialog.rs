@@ -1,6 +1,6 @@
 use crate::enums::{Color, Font};
 use crate::prelude::*;
-use crate::utils::FlString;
+use crate::utils::{FlString, register_images, images_registered};
 use fltk_sys::dialog::*;
 use std::{
     ffi::{CStr, CString},
@@ -686,6 +686,9 @@ impl FileChooser {
     }
 
     fn new_(dir: &Path, pattern: &str, typ: FileChooserType, title: &str) -> FileChooser {
+        if !images_registered() {
+            register_images();
+        }
         let dir = dir.to_str().unwrap_or(".");
         let dir = CString::safe_new(dir);
         let pattern = CString::safe_new(pattern);

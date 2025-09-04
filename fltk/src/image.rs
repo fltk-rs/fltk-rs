@@ -1,32 +1,12 @@
 use crate::enums::ColorDepth;
 use crate::prelude::*;
-use crate::utils::FlString;
+#[allow(unused_imports)]
+use crate::utils::{FlString, register_images, images_registered};
 use fltk_sys::image::*;
 use std::{
     ffi::CString,
     mem,
-    sync::atomic::{AtomicBool, Ordering},
 };
-
-/// Basically a check for image support
-#[allow(dead_code)]
-static IMAGES_REGISTERED: AtomicBool = AtomicBool::new(false);
-
-/// Check if fltk-rs was initialized
-#[allow(dead_code)]
-fn images_registered() -> bool {
-    IMAGES_REGISTERED.load(Ordering::Relaxed)
-}
-
-/// Registers all images supported by `SharedImage`
-#[allow(dead_code)]
-fn register_images() {
-    #[cfg(not(feature = "no-images"))]
-    unsafe {
-        fltk_sys::image::Fl_register_images();
-        fltk_sys::fl::Fl_load_system_icons();
-    }
-}
 
 type ImageRC<T> = std::rc::Rc<T>;
 

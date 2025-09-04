@@ -4,6 +4,7 @@ pub mod oncelock;
 use fltk_sys::utils::*;
 use std::ffi::{CStr, CString};
 use std::os::raw;
+use std::sync::atomic::{AtomicBool, Ordering};
 
 use crate::prelude::FltkError;
 use crate::prelude::FltkErrorKind;
@@ -230,5 +231,25 @@ pub fn em_write_to_file(path: &str, data: &[u8]) -> Result<(), FltkError> {
         } else {
             Ok(())
         }
+    }
+}
+
+/// Basically a check for image support
+#[allow(dead_code)]
+pub(crate) static IMAGES_REGISTERED: AtomicBool = AtomicBool::new(false);
+
+/// Check if fltk-rs was initialized
+#[allow(dead_code)]
+pub(crate) fn images_registered() -> bool {
+    IMAGES_REGISTERED.load(Ordering::Relaxed)
+}
+
+/// Registers all images supported by `SharedImage`
+#[allow(dead_code)]
+pub(crate) fn register_images() {
+    #[cfg(not(feature = "no-images"))]
+    unsafe {
+        fltk_sys::image::Fl_register_images();
+        fltk_sys::fl::Fl_load_system_icons();
     }
 }
