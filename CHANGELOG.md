@@ -1,7 +1,11 @@
 # Changelog
 
 
-# [1.5.14] - TBA
+# [1.5.15] - TBA
+- Add TextBuffer::line_end.
+- Add TextDisplay::redisplay_range.
+
+# [1.5.14] - 2025-09-07
 - Update FLTK.
 - Fl_draw_text shouldn't draw symbols by default.
 - Automatically load icons with FileBrowser and FileChooser when not building with no-images.

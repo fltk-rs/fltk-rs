@@ -1263,6 +1263,8 @@ pub unsafe trait DisplayExt: WidgetExt {
     fn secondary_selection_color(&self) -> Color;
     /// Scrolls the text buffer to show the current insert position
     fn show_insert_position(&mut self);
+    /// Redisplay a range of text
+    fn redisplay_range(&mut self, start: i32, end: i32);
 }
 
 /// Defines the methods implemented by all browser types

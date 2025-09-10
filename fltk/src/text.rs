@@ -483,6 +483,12 @@ impl TextBuffer {
         unsafe { Fl_Text_Buffer_line_start(*self.inner, pos) }
     }
 
+    /// Returns the index of the line's end position at pos
+    pub fn line_end(&self, pos: i32) -> i32 {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_Text_Buffer_line_end(*self.inner, pos) }
+    }
+
     /// Returns the index of the first character of a word at pos
     pub fn word_start(&self, pos: i32) -> i32 {
         assert!(!self.inner.is_null());

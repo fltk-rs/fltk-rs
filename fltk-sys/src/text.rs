@@ -228,6 +228,12 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 extern "C" {
+    pub fn Fl_Text_Buffer_line_end(
+        self_: *const Fl_Text_Buffer,
+        pos: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
     pub fn Fl_Text_Buffer_word_start(
         self_: *const Fl_Text_Buffer,
         pos: ::core::ffi::c_int,
@@ -943,6 +949,13 @@ extern "C" {
         text: *const ::core::ffi::c_char,
     );
 }
+extern "C" {
+    pub fn Fl_Text_Display_redisplay_range(
+        self_: *mut Fl_Text_Display,
+        start: ::core::ffi::c_int,
+        end: ::core::ffi::c_int,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Text_Editor {
@@ -1556,6 +1569,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Editor_overstrike(self_: *mut Fl_Text_Editor, text: *const ::core::ffi::c_char);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_redisplay_range(
+        self_: *mut Fl_Text_Editor,
+        start: ::core::ffi::c_int,
+        end: ::core::ffi::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Text_Editor_kf_copy(e: *mut Fl_Text_Editor) -> ::core::ffi::c_int;
@@ -2453,6 +2473,13 @@ extern "C" {
     pub fn Fl_Simple_Terminal_overstrike(
         self_: *mut Fl_Simple_Terminal,
         text: *const ::core::ffi::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_redisplay_range(
+        self_: *mut Fl_Simple_Terminal,
+        start: ::core::ffi::c_int,
+        end: ::core::ffi::c_int,
     );
 }
 extern "C" {

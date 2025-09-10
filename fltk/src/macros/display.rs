@@ -606,6 +606,12 @@ macro_rules! impl_display_ext {
                         [<$flname _show_insert_position>](self.inner.widget() as _);
                     }
                 }
+                fn redisplay_range(&mut self, start: i32, end: i32) {
+                    unsafe {
+                        assert!(self.has_buffer());
+                        [<$flname _redisplay_range>](self.inner.widget() as _, start as i32, end as i32);
+                    }
+                }
             }
         }
     };
