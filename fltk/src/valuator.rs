@@ -205,6 +205,18 @@ pub enum CounterType {
 
 crate::macros::widget::impl_widget_type!(CounterType);
 
+/// Creates a simple counter widget (single-arrow style)
+#[derive(Debug)]
+pub struct SimpleCounter {
+    inner: crate::widget::WidgetTracker,
+    is_derived: bool,
+}
+
+crate::macros::widget::impl_widget_ext!(SimpleCounter, Fl_Simple_Counter);
+crate::macros::widget::impl_widget_base!(SimpleCounter, Fl_Simple_Counter);
+crate::macros::widget::impl_widget_default!(SimpleCounter);
+crate::macros::valuator::impl_valuator_ext!(SimpleCounter, Fl_Simple_Counter);
+
 /// Creates a scrollbar widget
 #[derive(Debug)]
 pub struct Scrollbar {

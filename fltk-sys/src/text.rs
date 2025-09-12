@@ -28,6 +28,13 @@ pub type Fl_Text_Modify_Cb = ::core::option::Option<
         cbArg: *mut ::core::ffi::c_void,
     ),
 >;
+pub type Fl_Text_Predelete_Cb = ::core::option::Option<
+    unsafe extern "C" fn(
+        pos: ::core::ffi::c_int,
+        nDeleted: ::core::ffi::c_int,
+        cbArg: *mut ::core::ffi::c_void,
+    ),
+>;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Text_Buffer {
@@ -253,6 +260,42 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 extern "C" {
+    pub fn Fl_Text_Buffer_char_at(
+        self_: *const Fl_Text_Buffer,
+        pos: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_uint;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_byte_at(
+        self_: *const Fl_Text_Buffer,
+        pos: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_address(
+        self_: *const Fl_Text_Buffer,
+        pos: ::core::ffi::c_int,
+    ) -> *const ::core::ffi::c_char;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_address2(
+        self_: *mut Fl_Text_Buffer,
+        pos: ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_char;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_utf8_align(
+        self_: *const Fl_Text_Buffer,
+        pos: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_is_word_separator(
+        self_: *const Fl_Text_Buffer,
+        pos: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
     pub fn Fl_Text_Buffer_add_modify_callback(
         self_: *mut Fl_Text_Buffer,
         bufModifiedCB: Fl_Text_Modify_Cb,
@@ -311,6 +354,47 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Buffer_can_redo(self_: *const Fl_Text_Buffer) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_insertfile(
+        self_: *mut Fl_Text_Buffer,
+        file: *const ::core::ffi::c_char,
+        pos: ::core::ffi::c_int,
+        buflen: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_appendfile(
+        self_: *mut Fl_Text_Buffer,
+        file: *const ::core::ffi::c_char,
+        buflen: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_outputfile(
+        self_: *mut Fl_Text_Buffer,
+        file: *const ::core::ffi::c_char,
+        start: ::core::ffi::c_int,
+        end: ::core::ffi::c_int,
+        buflen: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_add_predelete_callback(
+        self_: *mut Fl_Text_Buffer,
+        bufPredeleteCB: Fl_Text_Predelete_Cb,
+        cbArg: *mut ::core::ffi::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_remove_predelete_callback(
+        self_: *mut Fl_Text_Buffer,
+        bufPredeleteCB: Fl_Text_Predelete_Cb,
+        cbArg: *mut ::core::ffi::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_call_predelete_callbacks(self_: *mut Fl_Text_Buffer);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -956,6 +1040,50 @@ extern "C" {
         end: ::core::ffi::c_int,
     );
 }
+extern "C" {
+    pub fn Fl_Text_Display_set_linenumber_format(
+        self_: *mut Fl_Text_Display,
+        val: *const ::core::ffi::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_linenumber_format(
+        self_: *const Fl_Text_Display,
+    ) -> *const ::core::ffi::c_char;
+}
+extern "C" {
+    pub fn Fl_Text_Display_position_style(
+        self_: *const Fl_Text_Display,
+        lineStartPos: ::core::ffi::c_int,
+        lineLen: ::core::ffi::c_int,
+        lineIndex: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_maintain_absolute_top_line_number(
+        self_: *mut Fl_Text_Display,
+        state: ::core::ffi::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_get_absolute_top_line_number(
+        self_: *const Fl_Text_Display,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_absolute_top_line_number(
+        self_: *mut Fl_Text_Display,
+        oldFirstChar: ::core::ffi::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_maintaining_absolute_top_line_number(
+        self_: *const Fl_Text_Display,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_reset_absolute_top_line_number(self_: *mut Fl_Text_Display);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Text_Editor {
@@ -1576,6 +1704,50 @@ extern "C" {
         start: ::core::ffi::c_int,
         end: ::core::ffi::c_int,
     );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_linenumber_format(
+        self_: *mut Fl_Text_Editor,
+        val: *const ::core::ffi::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_linenumber_format(
+        self_: *const Fl_Text_Editor,
+    ) -> *const ::core::ffi::c_char;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_position_style(
+        self_: *const Fl_Text_Editor,
+        lineStartPos: ::core::ffi::c_int,
+        lineLen: ::core::ffi::c_int,
+        lineIndex: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_maintain_absolute_top_line_number(
+        self_: *mut Fl_Text_Editor,
+        state: ::core::ffi::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_get_absolute_top_line_number(
+        self_: *const Fl_Text_Editor,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_absolute_top_line_number(
+        self_: *mut Fl_Text_Editor,
+        oldFirstChar: ::core::ffi::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_maintaining_absolute_top_line_number(
+        self_: *const Fl_Text_Editor,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_reset_absolute_top_line_number(self_: *mut Fl_Text_Editor);
 }
 extern "C" {
     pub fn Fl_Text_Editor_kf_copy(e: *mut Fl_Text_Editor) -> ::core::ffi::c_int;
@@ -2481,6 +2653,50 @@ extern "C" {
         start: ::core::ffi::c_int,
         end: ::core::ffi::c_int,
     );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_linenumber_format(
+        self_: *mut Fl_Simple_Terminal,
+        val: *const ::core::ffi::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_linenumber_format(
+        self_: *const Fl_Simple_Terminal,
+    ) -> *const ::core::ffi::c_char;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_position_style(
+        self_: *const Fl_Simple_Terminal,
+        lineStartPos: ::core::ffi::c_int,
+        lineLen: ::core::ffi::c_int,
+        lineIndex: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_maintain_absolute_top_line_number(
+        self_: *mut Fl_Simple_Terminal,
+        state: ::core::ffi::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_get_absolute_top_line_number(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_absolute_top_line_number(
+        self_: *mut Fl_Simple_Terminal,
+        oldFirstChar: ::core::ffi::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_maintaining_absolute_top_line_number(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_reset_absolute_top_line_number(self_: *mut Fl_Simple_Terminal);
 }
 extern "C" {
     pub fn Fl_delete_stable(arg1: *mut ::core::ffi::c_void);

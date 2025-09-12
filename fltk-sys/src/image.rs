@@ -81,6 +81,25 @@ extern "C" {
     pub fn Fl_Image_from_dyn_ptr(other: *mut Fl_Image) -> *mut Fl_Image;
 }
 extern "C" {
+    pub fn Fl_Image_color_average(
+        self_: *mut Fl_Image,
+        c: ::core::ffi::c_uint,
+        i: f32,
+    );
+}
+extern "C" {
+    pub fn Fl_Image_desaturate(self_: *mut Fl_Image);
+}
+extern "C" {
+    pub fn Fl_Image_uncache(self_: *mut Fl_Image);
+}
+extern "C" {
+    pub fn Fl_Image_label_widget(self_: *mut Fl_Image, w: *mut ::core::ffi::c_void);
+}
+extern "C" {
+    pub fn Fl_Image_label_menu_item(self_: *mut Fl_Image, m: *mut ::core::ffi::c_void);
+}
+extern "C" {
     pub fn Fl_Image_set_scaling_algorithm(algorithm: ::core::ffi::c_int);
 }
 extern "C" {

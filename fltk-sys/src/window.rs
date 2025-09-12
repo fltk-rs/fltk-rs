@@ -584,6 +584,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Window_set_raw_handle(self_: *mut Fl_Window, handle: *mut ::core::ffi::c_void);
 }
+extern "C" {
+    pub fn Fl_Window_allow_expand_outside_parent(self_: *mut Fl_Window);
+}
+extern "C" {
+    pub fn Fl_Window_os_id(self_: *mut Fl_Window) -> usize;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Single_Window {

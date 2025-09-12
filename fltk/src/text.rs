@@ -9,6 +9,40 @@ use std::{
     os::raw,
 };
 
+// Stable shims for callbacks (must be outside functions so add/remove use same fn ptr)
+unsafe extern "C" fn text_modify_shim(
+    pos: raw::c_int,
+    inserted: raw::c_int,
+    deleted: raw::c_int,
+    restyled: raw::c_int,
+    deleted_text: *const raw::c_char,
+    data: *mut raw::c_void,
+) {
+    let temp = if deleted_text.is_null() {
+        String::from("")
+    } else {
+        CStr::from_ptr(deleted_text).to_string_lossy().to_string()
+    };
+    let a: *mut Box<dyn FnMut(i32, i32, i32, i32, &str)> =
+        data as *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, &'r str)>;
+    let f: &mut (dyn FnMut(i32, i32, i32, i32, &str)) = &mut **a;
+    let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+        f(pos, inserted, deleted, restyled, &temp)
+    }));
+}
+
+unsafe extern "C" fn text_predelete_shim(
+    pos: raw::c_int,
+    deleted: raw::c_int,
+    data: *mut raw::c_void,
+) {
+    let a: *mut Box<dyn FnMut(i32, i32)> = data as *mut Box<dyn FnMut(i32, i32)>;
+    let f: &mut (dyn FnMut(i32, i32)) = &mut **a;
+    let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+        f(pos, deleted)
+    }));
+}
+
 type BufWrapper = std::rc::Rc<*mut Fl_Text_Buffer>;
 
 /// Defines the text cursor styles supported by fltk
@@ -283,6 +317,81 @@ impl TextBuffer {
         }
     }
 
+    /// Inserts a file at a position in the buffer
+    /// # Errors
+    /// Errors on failure to open or read file
+    pub fn insert_file<P: AsRef<std::path::Path>>(
+        &mut self,
+        path: P,
+        pos: i32,
+        buflen: i32,
+    ) -> Result<(), FltkError> {
+        assert!(!self.inner.is_null());
+        let path_ref = path.as_ref();
+        if !path_ref.exists() {
+            return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+        }
+        let path = path_ref
+            .to_str()
+            .ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
+        let path = CString::new(path)?;
+        unsafe {
+            match Fl_Text_Buffer_insertfile(*self.inner, path.as_ptr(), pos, buflen) {
+                0 => Ok(()),
+                _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+            }
+        }
+    }
+
+    /// Appends a file to the end of the buffer
+    /// # Errors
+    /// Errors on failure to open or read file
+    pub fn append_file<P: AsRef<std::path::Path>>(
+        &mut self,
+        path: P,
+        buflen: i32,
+    ) -> Result<(), FltkError> {
+        assert!(!self.inner.is_null());
+        let path_ref = path.as_ref();
+        if !path_ref.exists() {
+            return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+        }
+        let path = path_ref
+            .to_str()
+            .ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
+        let path = CString::new(path)?;
+        unsafe {
+            match Fl_Text_Buffer_appendfile(*self.inner, path.as_ptr(), buflen) {
+                0 => Ok(()),
+                _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+            }
+        }
+    }
+
+    /// Outputs a slice of the buffer into a file
+    /// # Errors
+    /// Errors on failure to open or write file
+    pub fn output_file<P: AsRef<std::path::Path>>(
+        &mut self,
+        path: P,
+        start: i32,
+        end: i32,
+        buflen: i32,
+    ) -> Result<(), FltkError> {
+        assert!(!self.inner.is_null());
+        let path_ref = path.as_ref();
+        let path = path_ref
+            .to_str()
+            .ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
+        let path = CString::new(path)?;
+        unsafe {
+            match Fl_Text_Buffer_outputfile(*self.inner, path.as_ptr(), start, end, buflen) {
+                0 => Ok(()),
+                _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+            }
+        }
+    }
+
     /// Returns the tab distance for the buffer
     pub fn tab_distance(&self) -> i32 {
         assert!(!self.inner.is_null());
@@ -513,36 +622,22 @@ impl TextBuffer {
         unsafe { Fl_Text_Buffer_call_modify_callbacks(*self.inner) }
     }
 
+    /// Calls the pre-delete callbacks
+    pub fn call_predelete_callbacks(&mut self) {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_Text_Buffer_call_predelete_callbacks(*self.inner) }
+    }
+
     /// Adds a modify callback.
     /// callback args:
     /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, `deleted_text`
     pub fn add_modify_callback<F: FnMut(i32, i32, i32, i32, &str) + 'static>(&mut self, cb: F) {
         assert!(!self.inner.is_null());
         unsafe {
-            unsafe extern "C" fn shim(
-                pos: raw::c_int,
-                inserted: raw::c_int,
-                deleted: raw::c_int,
-                restyled: raw::c_int,
-                deleted_text: *const raw::c_char,
-                data: *mut raw::c_void,
-            ) {
-                let temp = if deleted_text.is_null() {
-                    String::from("")
-                } else {
-                    CStr::from_ptr(deleted_text).to_string_lossy().to_string()
-                };
-                let a: *mut Box<dyn FnMut(i32, i32, i32, i32, &str)> =
-                    data as *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, &'r str)>;
-                let f: &mut (dyn FnMut(i32, i32, i32, i32, &str)) = &mut **a;
-                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-                    f(pos, inserted, deleted, restyled, &temp)
-                }));
-            }
             let a: *mut Box<dyn FnMut(i32, i32, i32, i32, &str)> =
                 Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
-            let callback: Fl_Text_Modify_Cb = Some(shim);
+            let callback: Fl_Text_Modify_Cb = Some(text_modify_shim);
             Fl_Text_Buffer_add_modify_callback(*self.inner, callback, data);
         }
     }
@@ -553,31 +648,35 @@ impl TextBuffer {
     pub fn remove_modify_callback<F: FnMut(i32, i32, i32, i32, &str) + 'static>(&mut self, cb: F) {
         assert!(!self.inner.is_null());
         unsafe {
-            unsafe extern "C" fn shim(
-                pos: raw::c_int,
-                inserted: raw::c_int,
-                deleted: raw::c_int,
-                restyled: raw::c_int,
-                deleted_text: *const raw::c_char,
-                data: *mut raw::c_void,
-            ) {
-                let temp = if deleted_text.is_null() {
-                    String::from("")
-                } else {
-                    CStr::from_ptr(deleted_text).to_string_lossy().to_string()
-                };
-                let a: *mut Box<dyn FnMut(i32, i32, i32, i32, &str)> =
-                    data as *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, &'r str)>;
-                let f: &mut (dyn FnMut(i32, i32, i32, i32, &str)) = &mut **a;
-                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-                    f(pos, inserted, deleted, restyled, &temp)
-                }));
-            }
             let a: *mut Box<dyn FnMut(i32, i32, i32, i32, &str)> =
                 Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
-            let callback: Fl_Text_Modify_Cb = Some(shim);
+            let callback: Fl_Text_Modify_Cb = Some(text_modify_shim);
             Fl_Text_Buffer_remove_modify_callback(*self.inner, callback, data);
+        }
+    }
+
+    /// Adds a pre-delete callback.
+    /// callback args: pos: i32, deleted items: i32
+    pub fn add_predelete_callback<F: FnMut(i32, i32) + 'static>(&mut self, cb: F) {
+        assert!(!self.inner.is_null());
+        unsafe {
+            let a: *mut Box<dyn FnMut(i32, i32)> = Box::into_raw(Box::new(Box::new(cb)));
+            let data: *mut raw::c_void = a as *mut std::ffi::c_void;
+            let callback: Fl_Text_Predelete_Cb = Some(text_predelete_shim);
+            Fl_Text_Buffer_add_predelete_callback(*self.inner, callback, data);
+        }
+    }
+
+    /// Removes a pre-delete callback.
+    /// callback args: pos: i32, deleted items: i32
+    pub fn remove_predelete_callback<F: FnMut(i32, i32) + 'static>(&mut self, cb: F) {
+        assert!(!self.inner.is_null());
+        unsafe {
+            let a: *mut Box<dyn FnMut(i32, i32)> = Box::into_raw(Box::new(Box::new(cb)));
+            let data: *mut raw::c_void = a as *mut std::ffi::c_void;
+            let callback: Fl_Text_Predelete_Cb = Some(text_predelete_shim);
+            Fl_Text_Buffer_remove_predelete_callback(*self.inner, callback, data);
         }
     }
 
@@ -665,6 +764,47 @@ impl TextBuffer {
                 Some(found_pos)
             }
         }
+    }
+
+    /// Returns the Unicode character at byte position `pos` (aligned to UTF-8 boundary)
+    pub fn char_at(&self, pos: i32) -> Option<char> {
+        assert!(!self.inner.is_null());
+        unsafe {
+            let ch = Fl_Text_Buffer_char_at(*self.inner, pos);
+            std::char::from_u32(ch)
+        }
+    }
+
+    /// Returns the raw byte at byte position `pos`
+    pub fn byte_at(&self, pos: i32) -> u8 {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_Text_Buffer_byte_at(*self.inner, pos) as u8 }
+    }
+
+    /// Returns a raw pointer to the underlying buffer at byte position `pos`
+    /// Safety: The pointer becomes invalid on subsequent mutations of the buffer.
+    pub unsafe fn address(&self, pos: i32) -> *const raw::c_char {
+        assert!(!self.inner.is_null());
+        Fl_Text_Buffer_address(*self.inner as *const _, pos)
+    }
+
+    /// Returns a mutable raw pointer to the underlying buffer at byte position `pos`
+    /// Safety: The pointer becomes invalid on subsequent mutations of the buffer.
+    pub unsafe fn address_mut(&mut self, pos: i32) -> *mut raw::c_char {
+        assert!(!self.inner.is_null());
+        Fl_Text_Buffer_address2(*self.inner, pos)
+    }
+
+    /// Align an index into the buffer to the current or previous UTF-8 boundary.
+    pub fn utf8_align(&self, pos: i32) -> i32 {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_Text_Buffer_utf8_align(*self.inner as *const _, pos) }
+    }
+
+    /// Returns true if position `pos` is a word separator
+    pub fn is_word_separator(&self, pos: i32) -> bool {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_Text_Buffer_is_word_separator(*self.inner as *const _, pos) != 0 }
     }
 }
 
