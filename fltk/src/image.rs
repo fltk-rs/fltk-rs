@@ -1,12 +1,9 @@
 use crate::enums::ColorDepth;
 use crate::prelude::*;
 #[allow(unused_imports)]
-use crate::utils::{FlString, register_images, images_registered};
+use crate::utils::{images_registered, register_images, FlString};
 use fltk_sys::image::*;
-use std::{
-    ffi::CString,
-    mem,
-};
+use std::{ffi::CString, mem};
 
 type ImageRC<T> = std::rc::Rc<T>;
 

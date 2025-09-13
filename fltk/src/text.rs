@@ -38,9 +38,7 @@ unsafe extern "C" fn text_predelete_shim(
 ) {
     let a: *mut Box<dyn FnMut(i32, i32)> = data as *mut Box<dyn FnMut(i32, i32)>;
     let f: &mut (dyn FnMut(i32, i32)) = &mut **a;
-    let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-        f(pos, deleted)
-    }));
+    let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(pos, deleted)));
 }
 
 type BufWrapper = std::rc::Rc<*mut Fl_Text_Buffer>;
@@ -782,14 +780,16 @@ impl TextBuffer {
     }
 
     /// Returns a raw pointer to the underlying buffer at byte position `pos`
-    /// Safety: The pointer becomes invalid on subsequent mutations of the buffer.
+    /// # Safety
+    /// The pointer becomes invalid on subsequent mutations of the buffer.
     pub unsafe fn address(&self, pos: i32) -> *const raw::c_char {
         assert!(!self.inner.is_null());
         Fl_Text_Buffer_address(*self.inner as *const _, pos)
     }
 
     /// Returns a mutable raw pointer to the underlying buffer at byte position `pos`
-    /// Safety: The pointer becomes invalid on subsequent mutations of the buffer.
+    /// # Safety
+    /// The pointer becomes invalid on subsequent mutations of the buffer.
     pub unsafe fn address_mut(&mut self, pos: i32) -> *mut raw::c_char {
         assert!(!self.inner.is_null());
         Fl_Text_Buffer_address2(*self.inner, pos)

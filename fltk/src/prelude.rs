@@ -1676,6 +1676,12 @@ pub unsafe trait ImageExt {
     fn desaturate(&mut self);
     /// Clear internal caches
     fn uncache(&mut self);
+    #[doc(hidden)]
+    /// Set this image as the label image for a widget
+    fn label_for_widget<W: WidgetExt>(&self, item: &mut W)
+    where
+        Self: Sized;
+    #[doc(hidden)]
     /// Set this image as the label image for a menu item
     fn label_for_menu_item(&self, item: &mut crate::menu::MenuItem);
     #[doc(hidden)]

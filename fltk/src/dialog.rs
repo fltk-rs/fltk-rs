@@ -1,6 +1,6 @@
 use crate::enums::{Color, Font};
 use crate::prelude::*;
-use crate::utils::{FlString, register_images, images_registered};
+use crate::utils::{images_registered, register_images, FlString};
 use fltk_sys::dialog::*;
 use std::{
     ffi::{CStr, CString},

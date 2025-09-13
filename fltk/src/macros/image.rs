@@ -241,10 +241,10 @@ macro_rules! impl_image_ext {
                     unsafe { Fl_Image_uncache(*self.inner as *mut _) }
                 }
 
-                // fn label_for_widget<W: $crate::prelude::WidgetExt>(&self, w: &mut W) {
-                //     assert!(!self.was_deleted());
-                //     unsafe { Fl_Image_label_widget(*self.inner as *mut _, w.as_widget_ptr() as *mut _) }
-                // }
+                fn label_for_widget<W: $crate::prelude::WidgetExt>(&self, w: &mut W) {
+                    assert!(!self.was_deleted());
+                    unsafe { Fl_Image_label_widget(*self.inner as *mut _, w.as_widget_ptr() as *mut _) }
+                }
 
                 fn label_for_menu_item(&self, item: &mut $crate::menu::MenuItem) {
                     assert!(!self.was_deleted());

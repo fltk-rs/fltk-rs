@@ -81,11 +81,7 @@ extern "C" {
     pub fn Fl_Image_from_dyn_ptr(other: *mut Fl_Image) -> *mut Fl_Image;
 }
 extern "C" {
-    pub fn Fl_Image_color_average(
-        self_: *mut Fl_Image,
-        c: ::core::ffi::c_uint,
-        i: f32,
-    );
+    pub fn Fl_Image_color_average(self_: *mut Fl_Image, c: ::core::ffi::c_uint, i: f32);
 }
 extern "C" {
     pub fn Fl_Image_desaturate(self_: *mut Fl_Image);
