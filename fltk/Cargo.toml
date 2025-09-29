@@ -1,6 +1,6 @@
 [package]
 name = "fltk"
-version = "1.5.14"
+version = "1.5.15"
 authors = ["The fltk-rs Authors"]
 edition = "2021"
 rust-version = "1.67"
@@ -18,7 +18,7 @@ name = "fltk"
 path = "src/lib.rs"
 
 [dependencies]
-fltk-sys = { path = "../fltk-sys", version = "=1.5.14" }
+fltk-sys = { path = "../fltk-sys", version = "=1.5.15" }
 bitflags = "^2"
 paste = "1"
 crossbeam-channel = "0.5"
