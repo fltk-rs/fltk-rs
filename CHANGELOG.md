@@ -1,9 +1,10 @@
 # Changelog
 
 
-# [1.5.15] - TBA
-- Add TextBuffer::line_end.
-- Add TextDisplay::redisplay_range.
+# [1.5.15] - 2025-09-29
+- Add TextBuffer::line_end and several other methods.
+- Add TextDisplay::redisplay_range and several other methods.
+- Update FLTK.
 
 # [1.5.14] - 2025-09-07
 - Update FLTK.
