@@ -1670,7 +1670,7 @@ pub unsafe trait ImageExt {
     unsafe fn into_image<I: ImageExt>(self) -> I
     where
         Self: Sized;
-    /// Blend the image with color c with weight i in range [0,1]
+    /// Blend the image with color c with weight i in range 0 to 1
     fn color_average(&mut self, c: crate::enums::Color, i: f32);
     /// Desaturate (grayscale) the image
     fn desaturate(&mut self);
