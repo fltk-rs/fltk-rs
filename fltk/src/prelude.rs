@@ -1287,6 +1287,14 @@ pub unsafe trait DisplayExt: WidgetExt {
     fn overstrike(&mut self, text: &str);
     /// Redisplay a range of text
     fn redisplay_range(&mut self, start: i32, end: i32);
+    /// Converts x and y pixel positions into a position in the text buffer
+    fn xy_to_position(&self, x: i32, y: i32, pos_type: crate::text::PositionType) -> i32;
+    /// Converts x and y pixel positions into a column and row number
+    fn xy_to_rowcol(&self, x: i32, y: i32, pos_type: crate::text::PositionType) -> (i32, i32);
+    /// Returns the number of rows
+    fn scroll_row(&self) -> i32;
+    /// Returns the number of columns
+    fn scroll_col(&self) -> i32;
 }
 
 /// Defines the methods implemented by all browser types

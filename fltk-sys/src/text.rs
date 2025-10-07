@@ -1084,6 +1084,30 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Display_reset_absolute_top_line_number(self_: *mut Fl_Text_Display);
 }
+extern "C" {
+    pub fn Fl_Text_Display_scroll_row(self_: *const Fl_Text_Display) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_scroll_col(self_: *const Fl_Text_Display) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_xy_to_position(
+        self_: *const Fl_Text_Display,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        PosType: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_xy_to_rowcol(
+        self_: *const Fl_Text_Display,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        row: *mut ::core::ffi::c_int,
+        column: *mut ::core::ffi::c_int,
+        PosType: ::core::ffi::c_int,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Text_Editor {
@@ -1748,6 +1772,30 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Editor_reset_absolute_top_line_number(self_: *mut Fl_Text_Editor);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_scroll_row(self_: *const Fl_Text_Editor) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_scroll_col(self_: *const Fl_Text_Editor) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_xy_to_position(
+        self_: *const Fl_Text_Editor,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        PosType: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_xy_to_rowcol(
+        self_: *const Fl_Text_Editor,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        row: *mut ::core::ffi::c_int,
+        column: *mut ::core::ffi::c_int,
+        PosType: ::core::ffi::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Text_Editor_kf_copy(e: *mut Fl_Text_Editor) -> ::core::ffi::c_int;
@@ -2697,6 +2745,30 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_reset_absolute_top_line_number(self_: *mut Fl_Simple_Terminal);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_scroll_row(self_: *const Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_scroll_col(self_: *const Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_xy_to_position(
+        self_: *const Fl_Simple_Terminal,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        PosType: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_xy_to_rowcol(
+        self_: *const Fl_Simple_Terminal,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        row: *mut ::core::ffi::c_int,
+        column: *mut ::core::ffi::c_int,
+        PosType: ::core::ffi::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_delete_stable(arg1: *mut ::core::ffi::c_void);

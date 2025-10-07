@@ -662,6 +662,37 @@ macro_rules! impl_display_ext {
                         [<$flname _redisplay_range>](self.inner.widget() as _, start as i32, end as i32);
                     }
                 }
+
+                fn xy_to_position(&self, x: i32, y: i32, pos_type: $crate::text::PositionType) -> i32 {
+                    unsafe {
+                        assert!(self.has_buffer());
+                        [<$flname _xy_to_position>](self.inner.widget() as _, x as i32, y as i32, pos_type as i32) as i32
+                    }
+                }
+
+                fn xy_to_rowcol(&self, x: i32, y: i32, pos_type: $crate::text::PositionType) -> (i32, i32) {
+                    unsafe {
+                        assert!(self.has_buffer());
+                        let mut row: i32 = 0;
+                        let mut col: i32 = 0;
+                        [<$flname _xy_to_rowcol>](self.inner.widget() as _, x as i32, y as i32, &mut row, &mut col, pos_type as i32);
+                        (row, col)
+                    }
+                }
+
+                fn scroll_row(&self) -> i32 {
+                    unsafe {
+                        assert!(self.has_buffer());
+                        [<$flname _scroll_row>](self.inner.widget() as _)
+                    }
+                }
+
+                fn scroll_col(&self) -> i32 {
+                    unsafe {
+                        assert!(self.has_buffer());
+                        [<$flname _scroll_col>](self.inner.widget() as _)
+                    }
+                }
             }
         }
     };

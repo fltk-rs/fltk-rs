@@ -43,6 +43,18 @@ unsafe extern "C" fn text_predelete_shim(
 
 type BufWrapper = std::rc::Rc<*mut Fl_Text_Buffer>;
 
+/// the character position is the left edge of a character, whereas
+/// the cursor is thought to be between the centers of two consecutive
+/// characters.
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub enum PositionType {
+    /// The position is before the character
+    Cursor,
+    /// The position is after the character
+    Character,
+}
+
 /// Defines the text cursor styles supported by fltk
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
