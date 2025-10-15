@@ -37,17 +37,10 @@ crate::macros::widget::impl_widget_ext!(Widget, Fl_Widget);
 crate::macros::widget::impl_widget_base!(Widget, Fl_Widget);
 crate::macros::widget::impl_widget_default!(Widget);
 
-/// An alias exposing the Widget tracker
-pub type WidgetTrackerPtr = *mut fltk_sys::fl::Fl_Widget_Tracker;
-
-/// Widget Tracker Wrapper
-#[doc(hidden)]
-pub type WidgetTrackerWrapper = std::rc::Rc<WidgetTrackerPtr>;
-
 /// Widget Tracker
 #[derive(Debug, Clone)]
 pub struct WidgetTracker {
-    inner: WidgetTrackerWrapper,
+    inner: *mut Fl_Widget,
 }
 
 #[cfg(not(feature = "single-threaded"))]
@@ -58,33 +51,28 @@ unsafe impl Sync for WidgetTracker {}
 
 impl Drop for WidgetTracker {
     fn drop(&mut self) {
-        if WidgetTrackerWrapper::strong_count(&self.inner) == 1 {
-            unsafe {
-                fltk_sys::fl::Fl_Widget_Tracker_delete(*self.inner);
-            }
-        }
+        unsafe { fltk_sys::fl::Fl_watch_widget_pointer(self.inner as _) };
     }
 }
 
 impl WidgetTracker {
     /// Creates a new widget tracker
     pub fn new(w: *mut Fl_Widget) -> Self {
-        let ptr = unsafe { fltk_sys::fl::Fl_Widget_Tracker_new(w as _) };
-        assert!(!ptr.is_null());
+        assert!(!w.is_null());
+        unsafe { fltk_sys::fl::Fl_watch_widget_pointer(w as _) };
         Self {
-            inner: WidgetTrackerWrapper::new(ptr),
+            inner: w,
         }
     }
 
     /// Checks if the wrapped widget was deleted
     pub fn deleted(&self) -> bool {
-        unsafe { fltk_sys::fl::Fl_Widget_Tracker_deleted(*self.inner) != 0 }
+        self.inner.is_null()
     }
 
     /// Gets the wrapped widget
     pub fn widget(&self) -> *mut Fl_Widget {
-        let w = unsafe { fltk_sys::fl::Fl_Widget_Tracker_widget(*self.inner) };
-        assert!(!w.is_null());
-        w as _
+        assert!(!self.inner.is_null());
+        self.inner
     }
 }

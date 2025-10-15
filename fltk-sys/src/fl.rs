@@ -780,3 +780,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_using_wayland() -> ::core::ffi::c_int;
 }
+extern "C" {
+    pub fn Fl_watch_widget_pointer(w: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_release_widget_pointer(w: *mut Fl_Widget);
+}
