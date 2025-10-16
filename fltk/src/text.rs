@@ -666,6 +666,26 @@ impl TextBuffer {
         }
     }
 
+    /// Adds a modify callback.
+    /// callback args:
+    /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, `deleted_text`
+    pub fn add_modify_callback2<F: FnMut(&mut Self, i32, i32, i32, i32, &str) + 'static>(&mut self, mut cb: F) {
+        let mut s = self.clone();
+        self.add_modify_callback(move |pos, ins, del, restyled, txt| {
+            cb(&mut s, pos, ins, del, restyled, txt);
+        })
+    }
+
+    /// Removes a modify callback.
+    /// callback args:
+    /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, `deleted_text`
+    pub fn remove_modify_callback2<F: FnMut(&mut Self, i32, i32, i32, i32, &str) + 'static>(&mut self, mut cb: F) {
+        let mut s = self.clone();
+        self.remove_modify_callback(move |pos, ins, del, restyled, txt| {
+            cb(&mut s, pos, ins, del, restyled, txt);
+        })
+    }
+
     /// Adds a pre-delete callback.
     /// callback args: pos: i32, deleted items: i32
     pub fn add_predelete_callback<F: FnMut(i32, i32) + 'static>(&mut self, cb: F) {
@@ -688,6 +708,24 @@ impl TextBuffer {
             let callback: Fl_Text_Predelete_Cb = Some(text_predelete_shim);
             Fl_Text_Buffer_remove_predelete_callback(*self.inner, callback, data);
         }
+    }
+
+    /// Adds a pre-delete callback.
+    /// callback args: pos: i32, deleted items: i32
+    pub fn add_predelete_callback2<F: FnMut(&mut Self, i32, i32) + 'static>(&mut self, mut cb: F) {
+        let mut s = self.clone();
+        self.add_predelete_callback(move |pos, del| {
+            cb(&mut s, pos, del);
+        })
+    }
+
+    /// Removes a pre-delete callback.
+    /// callback args: pos: i32, deleted items: i32
+    pub fn remove_predelete_callback2<F: FnMut(&mut Self, i32, i32) + 'static>(&mut self, mut cb: F) {
+        let mut s = self.clone();
+        self.remove_predelete_callback(move |pos, del| {
+            cb(&mut s, pos, del);
+        })
     }
 
     /// Forward search for a string
