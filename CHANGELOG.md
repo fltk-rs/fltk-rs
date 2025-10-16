@@ -1,6 +1,9 @@
 # Changelog
 
 
+# [1.5.19] - 2025-10-16
+- Revert to using WidgetTracker on the FLTK side since it needs a stable address.
+
 # [1.5.18] - 2025-10-16
 - Add Fl_Text_Display::xy_to_position() and xy_to_rowcol().
 - Add variants to TextBuffer modify/predelete callbacks.
