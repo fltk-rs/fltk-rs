@@ -1,6 +1,15 @@
 # Changelog
 
 
+# [1.5.18] - 2025-10-16
+- Add Fl_Text_Display::xy_to_position() and xy_to_rowcol().
+- Add variants to TextBuffer modify/predelete callbacks.
+- Implement WidgetTracker on the Rust side.
+- Update FLTK.
+
+# [1.5.16-17] - 2025-10-3
+- Remove doc_auto_cfg thus fixing docsrs build
+
 # [1.5.15] - 2025-09-29
 - Add TextBuffer::line_end and several other methods.
 - Add TextDisplay::redisplay_range and several other methods.
