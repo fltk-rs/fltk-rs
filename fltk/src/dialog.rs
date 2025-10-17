@@ -1,6 +1,6 @@
 use crate::enums::{Color, Font};
 use crate::prelude::*;
-use crate::utils::FlString;
+use crate::utils::{FlString, images_registered, register_images};
 use fltk_sys::dialog::*;
 use std::{
     ffi::{CStr, CString},
@@ -553,6 +553,9 @@ impl FileChooser {
     }
 
     fn new_(dir: &Path, pattern: &str, typ: FileChooserType, title: &str) -> FileChooser {
+        if !images_registered() {
+            register_images();
+        }
         let dir = dir.to_str().unwrap_or(".");
         let dir = CString::safe_new(dir);
         let pattern = CString::safe_new(pattern);
@@ -627,7 +630,7 @@ impl FileChooser {
                     let mut wid = FileChooser { inner: arg1 };
                     let a: *mut Box<dyn FnMut(&mut FileChooser)> =
                         data as *mut Box<dyn FnMut(&mut FileChooser)>;
-                    let f: &mut (dyn FnMut(&mut FileChooser)) = &mut **a;
+                    let f: &mut dyn FnMut(&mut FileChooser) = &mut **a;
                     let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
                 }
             }

@@ -114,6 +114,9 @@ macro_rules! impl_browser_ext {
                 }
 
                 fn load<P: AsRef<std::path::Path>>(&mut self, path: P) -> Result<(), FltkError> {
+                    if !$crate::utils::images_registered() {
+                        $crate::utils::register_images();
+                    }
                     if !path.as_ref().exists() {
                         return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
                     }

@@ -6806,3 +6806,420 @@ unsafe extern "C" {
         arg3: ::core::ffi::c_int,
     ) -> f64;
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Simple_Counter {
+    _unused: [u8; 0],
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_new(
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        title: *const ::core::ffi::c_char,
+    ) -> *mut Fl_Simple_Counter;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_x(arg1: *mut Fl_Simple_Counter) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_y(arg1: *mut Fl_Simple_Counter) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_width(arg1: *mut Fl_Simple_Counter) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_height(arg1: *mut Fl_Simple_Counter) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_label(arg1: *mut Fl_Simple_Counter) -> *const ::core::ffi::c_char;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_label(
+        arg1: *mut Fl_Simple_Counter,
+        title: *const ::core::ffi::c_char,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_redraw(arg1: *mut Fl_Simple_Counter);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_show(arg1: *mut Fl_Simple_Counter);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_hide(arg1: *mut Fl_Simple_Counter);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_activate(arg1: *mut Fl_Simple_Counter);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_deactivate(arg1: *mut Fl_Simple_Counter);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_redraw_label(arg1: *mut Fl_Simple_Counter);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_resize(
+        arg1: *mut Fl_Simple_Counter,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_widget_resize(
+        arg1: *mut Fl_Simple_Counter,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_tooltip(arg1: *mut Fl_Simple_Counter) -> *const ::core::ffi::c_char;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_tooltip(
+        arg1: *mut Fl_Simple_Counter,
+        txt: *const ::core::ffi::c_char,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_get_type(arg1: *mut Fl_Simple_Counter) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_type(arg1: *mut Fl_Simple_Counter, typ: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_color(arg1: *mut Fl_Simple_Counter) -> ::core::ffi::c_uint;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_color(arg1: *mut Fl_Simple_Counter, color: ::core::ffi::c_uint);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_measure_label(
+        arg1: *const Fl_Simple_Counter,
+        arg2: *mut ::core::ffi::c_int,
+        arg3: *mut ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_label_color(arg1: *mut Fl_Simple_Counter) -> ::core::ffi::c_uint;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_label_color(
+        arg1: *mut Fl_Simple_Counter,
+        color: ::core::ffi::c_uint,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_label_font(arg1: *mut Fl_Simple_Counter) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_label_font(arg1: *mut Fl_Simple_Counter, font: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_label_size(arg1: *mut Fl_Simple_Counter) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_label_size(arg1: *mut Fl_Simple_Counter, sz: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_label_type(arg1: *mut Fl_Simple_Counter) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_label_type(arg1: *mut Fl_Simple_Counter, typ: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_box(arg1: *mut Fl_Simple_Counter) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_box(arg1: *mut Fl_Simple_Counter, typ: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_changed(arg1: *mut Fl_Simple_Counter) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_changed(arg1: *mut Fl_Simple_Counter);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_clear_changed(arg1: *mut Fl_Simple_Counter);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_align(arg1: *mut Fl_Simple_Counter) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_align(arg1: *mut Fl_Simple_Counter, typ: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_delete(arg1: *mut Fl_Simple_Counter);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_image(
+        arg1: *mut Fl_Simple_Counter,
+        arg2: *mut ::core::ffi::c_void,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_handle(
+        self_: *mut Fl_Simple_Counter,
+        cb: custom_handler_callback,
+        data: *mut ::core::ffi::c_void,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_handle_event(
+        self_: *mut Fl_Simple_Counter,
+        event: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_draw(
+        self_: *mut Fl_Simple_Counter,
+        cb: custom_draw_callback,
+        data: *mut ::core::ffi::c_void,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_resize_callback(
+        self_: *mut Fl_Simple_Counter,
+        cb: ::core::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::core::ffi::c_int,
+                y: ::core::ffi::c_int,
+                w: ::core::ffi::c_int,
+                h: ::core::ffi::c_int,
+                arg2: *mut ::core::ffi::c_void,
+            ),
+        >,
+        data: *mut ::core::ffi::c_void,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_when(arg1: *mut Fl_Simple_Counter, arg2: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_when(arg1: *const Fl_Simple_Counter) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_image(arg1: *const Fl_Simple_Counter) -> *const ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_parent(self_: *const Fl_Simple_Counter) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_selection_color(arg1: *mut Fl_Simple_Counter) -> ::core::ffi::c_uint;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_selection_color(
+        arg1: *mut Fl_Simple_Counter,
+        color: ::core::ffi::c_uint,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_do_callback(arg1: *mut Fl_Simple_Counter);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_inside(
+        self_: *const Fl_Simple_Counter,
+        arg1: *mut ::core::ffi::c_void,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_window(arg1: *const Fl_Simple_Counter) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_top_window(arg1: *const Fl_Simple_Counter)
+    -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_takes_events(arg1: *const Fl_Simple_Counter) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_user_data(arg1: *const Fl_Simple_Counter) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_take_focus(self_: *mut Fl_Simple_Counter) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_visible_focus(self_: *mut Fl_Simple_Counter);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_clear_visible_focus(self_: *mut Fl_Simple_Counter);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_visible_focus(self_: *mut Fl_Simple_Counter, v: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_has_visible_focus(
+        self_: *mut Fl_Simple_Counter,
+    ) -> ::core::ffi::c_uint;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_user_data(
+        arg1: *mut Fl_Simple_Counter,
+        data: *mut ::core::ffi::c_void,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_draw_data(self_: *const Fl_Simple_Counter)
+    -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_handle_data(
+        self_: *const Fl_Simple_Counter,
+    ) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_draw_data(
+        self_: *mut Fl_Simple_Counter,
+        data: *mut ::core::ffi::c_void,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_handle_data(
+        self_: *mut Fl_Simple_Counter,
+        data: *mut ::core::ffi::c_void,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_damage(self_: *const Fl_Simple_Counter) -> ::core::ffi::c_uchar;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_damage(self_: *mut Fl_Simple_Counter, flag: ::core::ffi::c_uchar);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_damage_area(
+        self_: *mut Fl_Simple_Counter,
+        flag: ::core::ffi::c_uchar,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        w: ::core::ffi::c_int,
+        h: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_clear_damage(self_: *mut Fl_Simple_Counter);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_as_window(self_: *mut Fl_Simple_Counter) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_as_group(self_: *mut Fl_Simple_Counter) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_deimage(
+        arg1: *mut Fl_Simple_Counter,
+        arg2: *mut ::core::ffi::c_void,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_deimage(arg1: *const Fl_Simple_Counter) -> *const ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_callback(
+        arg1: *mut Fl_Simple_Counter,
+        arg2: Fl_Callback,
+        arg3: *mut ::core::ffi::c_void,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_visible(self_: *const Fl_Simple_Counter) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_visible_r(self_: *const Fl_Simple_Counter) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_active(self_: *const Fl_Simple_Counter) -> ::core::ffi::c_uint;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_active_r(self_: *const Fl_Simple_Counter) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_callback(self_: *const Fl_Simple_Counter) -> Fl_Callback;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_deletion_callback(
+        self_: *mut Fl_Simple_Counter,
+        arg1: ::core::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::core::ffi::c_void),
+        >,
+        data: *mut ::core::ffi::c_void,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Simple_Counter;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Simple_Counter;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_super_draw(ptr: *mut Fl_Widget, flag: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_super_draw_first(ptr: *mut Fl_Widget, flag: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_super_handle_first(ptr: *mut Fl_Widget, flag: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_bounds(arg1: *mut Fl_Simple_Counter, a: f64, b: f64);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_minimum(arg1: *mut Fl_Simple_Counter) -> f64;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_minimum(arg1: *mut Fl_Simple_Counter, a: f64);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_maximum(arg1: *mut Fl_Simple_Counter) -> f64;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_maximum(arg1: *mut Fl_Simple_Counter, a: f64);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_range(arg1: *mut Fl_Simple_Counter, a: f64, b: f64);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_step(arg1: *mut Fl_Simple_Counter, a: f64, b: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_step(arg1: *mut Fl_Simple_Counter) -> f64;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_precision(
+        arg1: *mut Fl_Simple_Counter,
+        digits: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_value(arg1: *mut Fl_Simple_Counter) -> f64;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_set_value(
+        arg1: *mut Fl_Simple_Counter,
+        arg2: f64,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_format(
+        arg1: *mut Fl_Simple_Counter,
+        arg2: *mut ::core::ffi::c_char,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_round(arg1: *mut Fl_Simple_Counter, arg2: f64) -> f64;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_clamp(arg1: *mut Fl_Simple_Counter, arg2: f64) -> f64;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_increment(
+        arg1: *mut Fl_Simple_Counter,
+        arg2: f64,
+        arg3: ::core::ffi::c_int,
+    ) -> f64;
+}

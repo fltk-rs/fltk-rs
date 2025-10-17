@@ -40,7 +40,7 @@ where
                 #[allow(clippy::type_complexity)]
                 let a: *mut Box<dyn FnMut(&mut dyn WidgetExt)> =
                     data as *mut Box<dyn FnMut(&mut dyn WidgetExt)>;
-                let f: &mut (dyn FnMut(&mut dyn WidgetExt)) = &mut **a;
+                let f: &mut dyn FnMut(&mut dyn WidgetExt) = &mut **a;
                 let mut wid = crate::widget::Widget::from_widget_ptr(wid);
                 let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f(&mut wid)));
             }

@@ -728,3 +728,15 @@ impl HorValueSlider {
         unsafe { Fl_Slider_set_slider_box(self.inner.widget() as _, c.as_i32()) }
     }
 }
+
+/// Creates a simple counter widget
+#[derive(Debug)]
+pub struct SimpleCounter {
+    inner: crate::widget::WidgetTracker,
+    is_derived: bool,
+}
+
+crate::macros::widget::impl_widget_ext!(SimpleCounter, Fl_Simple_Counter);
+crate::macros::widget::impl_widget_base!(SimpleCounter, Fl_Simple_Counter);
+crate::macros::widget::impl_widget_default!(SimpleCounter, Fl_Simple_Counter);
+crate::macros::valuator::impl_valuator_ext!(SimpleCounter, Fl_Simple_Counter);

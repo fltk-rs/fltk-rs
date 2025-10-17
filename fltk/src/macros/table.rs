@@ -420,7 +420,7 @@ macro_rules! impl_table_ext {
                                     i32,
                                 ),
                             >;
-                            let f: &mut (dyn FnMut(
+                            let f: &mut dyn FnMut(
                                 &mut $name,
                                 $crate::table::TableContext,
                                 i32,
@@ -429,7 +429,7 @@ macro_rules! impl_table_ext {
                                 i32,
                                 i32,
                                 i32,
-                            )) = &mut **a;
+                            ) = &mut **a;
                             let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
                                 f(&mut wid, ctx, arg2, arg3, arg4, arg5, arg6, arg7)
                             }));

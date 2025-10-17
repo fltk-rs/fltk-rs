@@ -544,6 +544,94 @@ macro_rules! impl_display_ext {
                         [<$flname _show_insert_position>](self.inner.widget() as _);
                     }
                 }
+
+                fn set_linenumber_format(&mut self, fmt: &str) {
+                    let fmt = CString::safe_new(fmt);
+                    unsafe { [<$flname _set_linenumber_format>](self.inner.widget() as _, fmt.as_ptr()) }
+                }
+
+                fn linenumber_format(&self) -> Option<String> {
+                    unsafe {
+                        let ptr = [<$flname _linenumber_format>](self.inner.widget() as _);
+                        if ptr.is_null() { None } else { Some(CStr::from_ptr(ptr as _).to_string_lossy().to_string()) }
+                    }
+                }
+
+                fn position_style(&self, line_start_pos: i32, line_len: i32, line_index: i32) -> i32 {
+                    unsafe {
+                        [<$flname _position_style>](
+                            self.inner.widget() as _,
+                            line_start_pos,
+                            line_len,
+                            line_index,
+                        )
+                    }
+                }
+
+                fn maintain_absolute_top_line_number(&mut self, state: bool) {
+                    unsafe { [<$flname _maintain_absolute_top_line_number>](self.inner.widget() as _, state as i32) }
+                }
+
+                fn get_absolute_top_line_number(&self) -> i32 {
+                    unsafe { [<$flname _get_absolute_top_line_number>](self.inner.widget() as _) }
+                }
+
+                fn absolute_top_line_number(&mut self, old_first_char: i32) {
+                    unsafe { [<$flname _absolute_top_line_number>](self.inner.widget() as _, old_first_char) }
+                }
+
+                fn maintaining_absolute_top_line_number(&self) -> bool {
+                    unsafe { [<$flname _maintaining_absolute_top_line_number>](self.inner.widget() as _) != 0 }
+                }
+
+                fn reset_absolute_top_line_number(&mut self) {
+                    unsafe { [<$flname _reset_absolute_top_line_number>](self.inner.widget() as _) }
+                }
+
+                fn overstrike(&mut self, text: &str) {
+                    let text = CString::safe_new(text);
+                    unsafe {
+                        assert!(self.has_buffer());
+                        [<$flname _overstrike>](self.inner.widget() as _, text.as_ptr());
+                    }
+                }
+                fn redisplay_range(&mut self, start: i32, end: i32) {
+                    unsafe {
+                        assert!(self.has_buffer());
+                        [<$flname _redisplay_range>](self.inner.widget() as _, start as i32, end as i32);
+                    }
+                }
+
+                fn xy_to_position(&self, x: i32, y: i32, pos_type: $crate::text::PositionType) -> i32 {
+                    unsafe {
+                        assert!(self.has_buffer());
+                        [<$flname _xy_to_position>](self.inner.widget() as _, x as i32, y as i32, pos_type as i32) as i32
+                    }
+                }
+
+                fn xy_to_rowcol(&self, x: i32, y: i32, pos_type: $crate::text::PositionType) -> (i32, i32) {
+                    unsafe {
+                        assert!(self.has_buffer());
+                        let mut row: i32 = 0;
+                        let mut col: i32 = 0;
+                        [<$flname _xy_to_rowcol>](self.inner.widget() as _, x as i32, y as i32, &mut row, &mut col, pos_type as i32);
+                        (row, col)
+                    }
+                }
+
+                fn scroll_row(&self) -> i32 {
+                    unsafe {
+                        assert!(self.has_buffer());
+                        [<$flname _scroll_row>](self.inner.widget() as _)
+                    }
+                }
+
+                fn scroll_col(&self) -> i32 {
+                    unsafe {
+                        assert!(self.has_buffer());
+                        [<$flname _scroll_col>](self.inner.widget() as _)
+                    }
+                }
             }
         }
     };

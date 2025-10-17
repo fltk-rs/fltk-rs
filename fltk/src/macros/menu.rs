@@ -31,7 +31,7 @@ macro_rules! impl_menu_ext {
                             let mut wid = $crate::widget::Widget::from_widget_ptr(wid as *mut _);
                             let a: *mut Box<dyn FnMut(&mut $crate::widget::Widget)> =
                                 data as *mut Box<dyn FnMut(&mut $crate::widget::Widget)>;
-                            let f: &mut (dyn FnMut(&mut $crate::widget::Widget)) = &mut **a;
+                            let f: &mut dyn FnMut(&mut $crate::widget::Widget) = &mut **a;
                             let _ =
                                 std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
                         }}
@@ -72,7 +72,7 @@ macro_rules! impl_menu_ext {
                             let mut wid = $crate::widget::Widget::from_widget_ptr(wid as *mut _);
                             let a: *mut Box<dyn FnMut(&mut $crate::widget::Widget)> =
                                 data as *mut Box<dyn FnMut(&mut $crate::widget::Widget)>;
-                            let f: &mut (dyn FnMut(&mut $crate::widget::Widget)) = &mut **a;
+                            let f: &mut dyn FnMut(&mut $crate::widget::Widget) = &mut **a;
                             let _ =
                                 std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
                         }}

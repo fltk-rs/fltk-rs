@@ -1,6 +1,7 @@
 use fltk_sys::utils::*;
 use std::ffi::{CStr, CString};
 use std::os::raw;
+use std::sync::atomic::{AtomicBool, Ordering};
 
 use crate::enums::ColorDepth;
 use crate::prelude::FltkError;
@@ -325,5 +326,25 @@ pub unsafe fn blit_rgb_nocopy<T: crate::prelude::WidgetBase>(wid: &mut T, fb: &[
                 img.draw(x, y, w, h);
             }
         });
+    }
+}
+
+/// Basically a check for image support
+#[allow(dead_code)]
+pub(crate) static IMAGES_REGISTERED: AtomicBool = AtomicBool::new(false);
+
+/// Check if fltk-rs was initialized
+#[allow(dead_code)]
+pub(crate) fn images_registered() -> bool {
+    IMAGES_REGISTERED.load(Ordering::Relaxed)
+}
+
+/// Registers all images supported by `SharedImage`
+#[allow(dead_code)]
+pub(crate) fn register_images() {
+    #[cfg(feature = "use-images")]
+    unsafe {
+        fltk_sys::image::Fl_register_images();
+        fltk_sys::fl::Fl_load_system_icons();
     }
 }

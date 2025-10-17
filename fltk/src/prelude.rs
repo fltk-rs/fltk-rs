@@ -711,6 +711,10 @@ pub unsafe trait WindowExt: GroupExt {
     fn set_icon_label(&mut self, label: &str);
     /// Get the icon label
     fn icon_label(&self) -> Option<String>;
+    /// Allow the window to expand outside its parent (if supported by the platform/driver)
+    fn allow_expand_outside_parent(&mut self);
+    /// Return the OS-specific window id/handle as an integer (useful for interop)
+    fn os_id(&self) -> usize;
 }
 
 /// Defines the methods implemented by all input and output widgets.
@@ -1121,6 +1125,22 @@ pub unsafe trait DisplayExt: WidgetExt {
     fn set_linenumber_align(&mut self, align: Align);
     /// Gets the linenumber alignment
     fn linenumber_align(&self) -> Align;
+    /// Sets the line number format string
+    fn set_linenumber_format(&mut self, fmt: &str);
+    /// Gets the current line number format string
+    fn linenumber_format(&self) -> Option<String>;
+    /// Query style position in line
+    fn position_style(&self, line_start_pos: i32, line_len: i32, line_index: i32) -> i32;
+    /// Maintain absolute top line number state
+    fn maintain_absolute_top_line_number(&mut self, state: bool);
+    /// Get absolute top line number
+    fn get_absolute_top_line_number(&self) -> i32;
+    /// Update absolute top line number with old first char
+    fn absolute_top_line_number(&mut self, old_first_char: i32);
+    /// Return whether maintaining absolute top line number is enabled
+    fn maintaining_absolute_top_line_number(&self) -> bool;
+    /// Reset absolute top line number tracking
+    fn reset_absolute_top_line_number(&mut self);
     /// Checks whether a pixel is within a text selection
     fn in_selection(&self, x: i32, y: i32) -> bool;
     /// Sets the wrap mode of the Display widget.
@@ -1146,6 +1166,18 @@ pub unsafe trait DisplayExt: WidgetExt {
     fn secondary_selection_color(&self) -> Color;
     /// Scrolls the text buffer to show the current insert position
     fn show_insert_position(&mut self);
+    /// Overstrikes the current selection or inserts text at cursor
+    fn overstrike(&mut self, text: &str);
+    /// Redisplay a range of text
+    fn redisplay_range(&mut self, start: i32, end: i32);
+    /// Converts x and y pixel positions into a position in the text buffer
+    fn xy_to_position(&self, x: i32, y: i32, pos_type: crate::text::PositionType) -> i32;
+    /// Converts x and y pixel positions into a column and row number
+    fn xy_to_rowcol(&self, x: i32, y: i32, pos_type: crate::text::PositionType) -> (i32, i32);
+    /// Returns the number of rows
+    fn scroll_row(&self) -> i32;
+    /// Returns the number of columns
+    fn scroll_col(&self) -> i32;
 }
 
 /// Defines the methods implemented by all browser types
@@ -1514,6 +1546,14 @@ pub unsafe trait ImageExt {
     unsafe fn into_image<I: ImageExt>(self) -> I
     where
         Self: Sized;
+    /// Blend the image with color c with weight i in range [0,1]
+    fn color_average(&mut self, c: crate::enums::Color, i: f32);
+    /// Desaturate (grayscale) the image
+    fn desaturate(&mut self);
+    /// Clear internal caches
+    fn uncache(&mut self);
+    /// Set this image as the label image for a menu item
+    fn label_for_menu_item(&self, item: &mut crate::menu::MenuItem);
 }
 
 #[allow(clippy::return_self_not_must_use)]

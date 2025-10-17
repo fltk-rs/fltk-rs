@@ -384,6 +384,14 @@ macro_rules! impl_window_ext {
                         }
                     }
                 }
+
+                fn allow_expand_outside_parent(&mut self) {
+                    unsafe { fltk_sys::window::Fl_Window_allow_expand_outside_parent(self.inner.widget() as *mut fltk_sys::window::Fl_Window) }
+                }
+
+                fn os_id(&self) -> usize {
+                    unsafe { fltk_sys::window::Fl_Window_os_id(self.inner.widget() as *mut fltk_sys::window::Fl_Window) }
+                }
             }
         }
     };

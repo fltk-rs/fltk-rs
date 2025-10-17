@@ -691,7 +691,7 @@ impl OverlayWindow {
                     wid.assume_derived();
                     let a: *mut Box<dyn FnMut(&mut OverlayWindow)> =
                         data as *mut Box<dyn FnMut(&mut OverlayWindow)>;
-                    let f: &mut (dyn FnMut(&mut OverlayWindow)) = &mut **a;
+                    let f: &mut dyn FnMut(&mut OverlayWindow) = &mut **a;
                     let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
                 }
             }

@@ -192,6 +192,31 @@ macro_rules! impl_image_ext {
                     let image = ImageRC::from_raw(ptr);
                     I::from_image_ptr(*image as *mut _)
                 }}
+
+                fn color_average(&mut self, c: $crate::enums::Color, i: f32) {
+                    assert!(!self.was_deleted());
+                    unsafe { Fl_Image_color_average(*self.inner as *mut _, c.bits(), i) }
+                }
+
+                fn desaturate(&mut self) {
+                    assert!(!self.was_deleted());
+                    unsafe { Fl_Image_desaturate(*self.inner as *mut _) }
+                }
+
+                fn uncache(&mut self) {
+                    assert!(!self.was_deleted());
+                    unsafe { Fl_Image_uncache(*self.inner as *mut _) }
+                }
+
+                // fn label_for_widget<W: $crate::prelude::WidgetExt>(&self, w: &mut W) {
+                //     assert!(!self.was_deleted());
+                //     unsafe { Fl_Image_label_widget(*self.inner as *mut _, w.as_widget_ptr() as *mut _) }
+                // }
+
+                fn label_for_menu_item(&self, item: &mut $crate::menu::MenuItem) {
+                    assert!(!self.was_deleted());
+                    unsafe { Fl_Image_label_menu_item(*self.inner as *mut _, item.as_ptr() as *mut _) }
+                }
             }
         }
     };

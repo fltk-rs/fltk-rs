@@ -28,6 +28,13 @@ pub type Fl_Text_Modify_Cb = ::core::option::Option<
         cbArg: *mut ::core::ffi::c_void,
     ),
 >;
+pub type Fl_Text_Predelete_Cb = ::core::option::Option<
+    unsafe extern "C" fn(
+        pos: ::core::ffi::c_int,
+        nDeleted: ::core::ffi::c_int,
+        cbArg: *mut ::core::ffi::c_void,
+    ),
+>;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Text_Buffer {
@@ -49,7 +56,7 @@ unsafe extern "C" {
     pub fn Fl_Text_Buffer_append(self_: *mut Fl_Text_Buffer, txt: *const ::core::ffi::c_char);
 }
 unsafe extern "C" {
-    pub fn Fl_Text_Buffer_append_bytes(
+    pub fn Fl_Text_Buffer_append2(
         self_: *mut Fl_Text_Buffer,
         txt: *const ::core::ffi::c_char,
         len: ::core::ffi::c_int,
@@ -228,6 +235,12 @@ unsafe extern "C" {
     ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
+    pub fn Fl_Text_Buffer_line_end(
+        self_: *const Fl_Text_Buffer,
+        pos: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
     pub fn Fl_Text_Buffer_word_start(
         self_: *const Fl_Text_Buffer,
         pos: ::core::ffi::c_int,
@@ -244,6 +257,42 @@ unsafe extern "C" {
         self_: *const Fl_Text_Buffer,
         startPos: ::core::ffi::c_int,
         endPos: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Buffer_char_at(
+        self_: *const Fl_Text_Buffer,
+        pos: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_uint;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Buffer_byte_at(
+        self_: *const Fl_Text_Buffer,
+        pos: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_uchar;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Buffer_address(
+        self_: *const Fl_Text_Buffer,
+        pos: ::core::ffi::c_int,
+    ) -> *const ::core::ffi::c_char;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Buffer_address2(
+        self_: *mut Fl_Text_Buffer,
+        pos: ::core::ffi::c_int,
+    ) -> *mut ::core::ffi::c_char;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Buffer_utf8_align(
+        self_: *const Fl_Text_Buffer,
+        pos: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Buffer_is_word_separator(
+        self_: *const Fl_Text_Buffer,
+        pos: ::core::ffi::c_int,
     ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -305,6 +354,47 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Text_Buffer_can_redo(self_: *const Fl_Text_Buffer) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Buffer_insertfile(
+        self_: *mut Fl_Text_Buffer,
+        file: *const ::core::ffi::c_char,
+        pos: ::core::ffi::c_int,
+        buflen: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Buffer_appendfile(
+        self_: *mut Fl_Text_Buffer,
+        file: *const ::core::ffi::c_char,
+        buflen: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Buffer_outputfile(
+        self_: *mut Fl_Text_Buffer,
+        file: *const ::core::ffi::c_char,
+        start: ::core::ffi::c_int,
+        end: ::core::ffi::c_int,
+        buflen: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Buffer_add_predelete_callback(
+        self_: *mut Fl_Text_Buffer,
+        bufPredeleteCB: Fl_Text_Predelete_Cb,
+        cbArg: *mut ::core::ffi::c_void,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Buffer_remove_predelete_callback(
+        self_: *mut Fl_Text_Buffer,
+        bufPredeleteCB: Fl_Text_Predelete_Cb,
+        cbArg: *mut ::core::ffi::c_void,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Buffer_call_predelete_callbacks(self_: *mut Fl_Text_Buffer);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -943,6 +1033,81 @@ unsafe extern "C" {
         text: *const ::core::ffi::c_char,
     );
 }
+unsafe extern "C" {
+    pub fn Fl_Text_Display_redisplay_range(
+        self_: *mut Fl_Text_Display,
+        start: ::core::ffi::c_int,
+        end: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Display_set_linenumber_format(
+        self_: *mut Fl_Text_Display,
+        val: *const ::core::ffi::c_char,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Display_linenumber_format(
+        self_: *const Fl_Text_Display,
+    ) -> *const ::core::ffi::c_char;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Display_position_style(
+        self_: *const Fl_Text_Display,
+        lineStartPos: ::core::ffi::c_int,
+        lineLen: ::core::ffi::c_int,
+        lineIndex: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Display_maintain_absolute_top_line_number(
+        self_: *mut Fl_Text_Display,
+        state: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Display_get_absolute_top_line_number(
+        self_: *const Fl_Text_Display,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Display_absolute_top_line_number(
+        self_: *mut Fl_Text_Display,
+        oldFirstChar: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Display_maintaining_absolute_top_line_number(
+        self_: *const Fl_Text_Display,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Display_reset_absolute_top_line_number(self_: *mut Fl_Text_Display);
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Display_scroll_row(self_: *const Fl_Text_Display) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Display_scroll_col(self_: *const Fl_Text_Display) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Display_xy_to_position(
+        self_: *const Fl_Text_Display,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        PosType: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Display_xy_to_rowcol(
+        self_: *const Fl_Text_Display,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        row: *mut ::core::ffi::c_int,
+        column: *mut ::core::ffi::c_int,
+        PosType: ::core::ffi::c_int,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Text_Editor {
@@ -1558,6 +1723,81 @@ unsafe extern "C" {
     pub fn Fl_Text_Editor_overstrike(self_: *mut Fl_Text_Editor, text: *const ::core::ffi::c_char);
 }
 unsafe extern "C" {
+    pub fn Fl_Text_Editor_redisplay_range(
+        self_: *mut Fl_Text_Editor,
+        start: ::core::ffi::c_int,
+        end: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Editor_set_linenumber_format(
+        self_: *mut Fl_Text_Editor,
+        val: *const ::core::ffi::c_char,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Editor_linenumber_format(
+        self_: *const Fl_Text_Editor,
+    ) -> *const ::core::ffi::c_char;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Editor_position_style(
+        self_: *const Fl_Text_Editor,
+        lineStartPos: ::core::ffi::c_int,
+        lineLen: ::core::ffi::c_int,
+        lineIndex: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Editor_maintain_absolute_top_line_number(
+        self_: *mut Fl_Text_Editor,
+        state: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Editor_get_absolute_top_line_number(
+        self_: *const Fl_Text_Editor,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Editor_absolute_top_line_number(
+        self_: *mut Fl_Text_Editor,
+        oldFirstChar: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Editor_maintaining_absolute_top_line_number(
+        self_: *const Fl_Text_Editor,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Editor_reset_absolute_top_line_number(self_: *mut Fl_Text_Editor);
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Editor_scroll_row(self_: *const Fl_Text_Editor) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Editor_scroll_col(self_: *const Fl_Text_Editor) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Editor_xy_to_position(
+        self_: *const Fl_Text_Editor,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        PosType: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Text_Editor_xy_to_rowcol(
+        self_: *const Fl_Text_Editor,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        row: *mut ::core::ffi::c_int,
+        column: *mut ::core::ffi::c_int,
+        PosType: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
     pub fn Fl_Text_Editor_kf_copy(e: *mut Fl_Text_Editor) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -1689,6 +1929,845 @@ unsafe extern "C" {
         self_: *mut Fl_Text_Editor,
         key: ::core::ffi::c_int,
         state: ::core::ffi::c_int,
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Simple_Terminal {
+    _unused: [u8; 0],
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_new(
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        title: *const ::core::ffi::c_char,
+    ) -> *mut Fl_Simple_Terminal;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_x(arg1: *mut Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_y(arg1: *mut Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_width(arg1: *mut Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_height(arg1: *mut Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_label(arg1: *mut Fl_Simple_Terminal) -> *const ::core::ffi::c_char;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_label(
+        arg1: *mut Fl_Simple_Terminal,
+        title: *const ::core::ffi::c_char,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_redraw(arg1: *mut Fl_Simple_Terminal);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_show(arg1: *mut Fl_Simple_Terminal);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_hide(arg1: *mut Fl_Simple_Terminal);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_activate(arg1: *mut Fl_Simple_Terminal);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_deactivate(arg1: *mut Fl_Simple_Terminal);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_redraw_label(arg1: *mut Fl_Simple_Terminal);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_resize(
+        arg1: *mut Fl_Simple_Terminal,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_widget_resize(
+        arg1: *mut Fl_Simple_Terminal,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_tooltip(arg1: *mut Fl_Simple_Terminal) -> *const ::core::ffi::c_char;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_tooltip(
+        arg1: *mut Fl_Simple_Terminal,
+        txt: *const ::core::ffi::c_char,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_get_type(arg1: *mut Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_type(arg1: *mut Fl_Simple_Terminal, typ: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_color(arg1: *mut Fl_Simple_Terminal) -> ::core::ffi::c_uint;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_color(arg1: *mut Fl_Simple_Terminal, color: ::core::ffi::c_uint);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_measure_label(
+        arg1: *const Fl_Simple_Terminal,
+        arg2: *mut ::core::ffi::c_int,
+        arg3: *mut ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_label_color(arg1: *mut Fl_Simple_Terminal) -> ::core::ffi::c_uint;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_label_color(
+        arg1: *mut Fl_Simple_Terminal,
+        color: ::core::ffi::c_uint,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_label_font(arg1: *mut Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_label_font(
+        arg1: *mut Fl_Simple_Terminal,
+        font: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_label_size(arg1: *mut Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_label_size(arg1: *mut Fl_Simple_Terminal, sz: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_label_type(arg1: *mut Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_label_type(
+        arg1: *mut Fl_Simple_Terminal,
+        typ: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_box(arg1: *mut Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_box(arg1: *mut Fl_Simple_Terminal, typ: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_changed(arg1: *mut Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_changed(arg1: *mut Fl_Simple_Terminal);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_clear_changed(arg1: *mut Fl_Simple_Terminal);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_align(arg1: *mut Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_align(arg1: *mut Fl_Simple_Terminal, typ: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_delete(arg1: *mut Fl_Simple_Terminal);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_image(
+        arg1: *mut Fl_Simple_Terminal,
+        arg2: *mut ::core::ffi::c_void,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_handle(
+        self_: *mut Fl_Simple_Terminal,
+        cb: custom_handler_callback,
+        data: *mut ::core::ffi::c_void,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_handle_event(
+        self_: *mut Fl_Simple_Terminal,
+        event: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_draw(
+        self_: *mut Fl_Simple_Terminal,
+        cb: custom_draw_callback,
+        data: *mut ::core::ffi::c_void,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_resize_callback(
+        self_: *mut Fl_Simple_Terminal,
+        cb: ::core::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::core::ffi::c_int,
+                y: ::core::ffi::c_int,
+                w: ::core::ffi::c_int,
+                h: ::core::ffi::c_int,
+                arg2: *mut ::core::ffi::c_void,
+            ),
+        >,
+        data: *mut ::core::ffi::c_void,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_when(arg1: *mut Fl_Simple_Terminal, arg2: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_when(arg1: *const Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_image(arg1: *const Fl_Simple_Terminal) -> *const ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_parent(self_: *const Fl_Simple_Terminal) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_selection_color(arg1: *mut Fl_Simple_Terminal)
+    -> ::core::ffi::c_uint;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_selection_color(
+        arg1: *mut Fl_Simple_Terminal,
+        color: ::core::ffi::c_uint,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_do_callback(arg1: *mut Fl_Simple_Terminal);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_inside(
+        self_: *const Fl_Simple_Terminal,
+        arg1: *mut ::core::ffi::c_void,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_window(arg1: *const Fl_Simple_Terminal) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_top_window(
+        arg1: *const Fl_Simple_Terminal,
+    ) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_takes_events(arg1: *const Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_user_data(
+        arg1: *const Fl_Simple_Terminal,
+    ) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_take_focus(self_: *mut Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_visible_focus(self_: *mut Fl_Simple_Terminal);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_clear_visible_focus(self_: *mut Fl_Simple_Terminal);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_visible_focus(self_: *mut Fl_Simple_Terminal, v: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_has_visible_focus(
+        self_: *mut Fl_Simple_Terminal,
+    ) -> ::core::ffi::c_uint;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_user_data(
+        arg1: *mut Fl_Simple_Terminal,
+        data: *mut ::core::ffi::c_void,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_draw_data(
+        self_: *const Fl_Simple_Terminal,
+    ) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_handle_data(
+        self_: *const Fl_Simple_Terminal,
+    ) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_draw_data(
+        self_: *mut Fl_Simple_Terminal,
+        data: *mut ::core::ffi::c_void,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_handle_data(
+        self_: *mut Fl_Simple_Terminal,
+        data: *mut ::core::ffi::c_void,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_damage(self_: *const Fl_Simple_Terminal) -> ::core::ffi::c_uchar;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_damage(
+        self_: *mut Fl_Simple_Terminal,
+        flag: ::core::ffi::c_uchar,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_damage_area(
+        self_: *mut Fl_Simple_Terminal,
+        flag: ::core::ffi::c_uchar,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        w: ::core::ffi::c_int,
+        h: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_clear_damage(self_: *mut Fl_Simple_Terminal);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_as_window(self_: *mut Fl_Simple_Terminal)
+    -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_as_group(self_: *mut Fl_Simple_Terminal) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_deimage(
+        arg1: *mut Fl_Simple_Terminal,
+        arg2: *mut ::core::ffi::c_void,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_deimage(
+        arg1: *const Fl_Simple_Terminal,
+    ) -> *const ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_callback(
+        arg1: *mut Fl_Simple_Terminal,
+        arg2: Fl_Callback,
+        arg3: *mut ::core::ffi::c_void,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_visible(self_: *const Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_visible_r(self_: *const Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_active(self_: *const Fl_Simple_Terminal) -> ::core::ffi::c_uint;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_active_r(self_: *const Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_callback(self_: *const Fl_Simple_Terminal) -> Fl_Callback;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_deletion_callback(
+        self_: *mut Fl_Simple_Terminal,
+        arg1: ::core::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::core::ffi::c_void),
+        >,
+        data: *mut ::core::ffi::c_void,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Simple_Terminal;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Simple_Terminal;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_super_draw(ptr: *mut Fl_Widget, flag: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_super_draw_first(ptr: *mut Fl_Widget, flag: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_super_handle_first(ptr: *mut Fl_Widget, flag: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_init(arg1: *mut Fl_Simple_Terminal);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_get_buffer(arg1: *mut Fl_Simple_Terminal) -> *mut Fl_Text_Buffer;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_buffer(arg1: *mut Fl_Simple_Terminal, arg2: *mut Fl_Text_Buffer);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_get_style_buffer(
+        arg1: *mut Fl_Simple_Terminal,
+    ) -> *mut Fl_Text_Buffer;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_stay_at_bottom(
+        self_: *mut Fl_Simple_Terminal,
+        arg1: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_stay_at_bottom(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_history_lines(
+        self_: *mut Fl_Simple_Terminal,
+        arg1: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_history_lines(self_: *const Fl_Simple_Terminal)
+    -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_ansi(self_: *mut Fl_Simple_Terminal, val: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_ansi(self_: *const Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_append(self_: *mut Fl_Simple_Terminal, s: *const ::core::ffi::c_char);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_append2(
+        self_: *mut Fl_Simple_Terminal,
+        s: *const ::core::ffi::c_char,
+        len: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_text(
+        self_: *mut Fl_Simple_Terminal,
+        s: *const ::core::ffi::c_char,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_text2(
+        self_: *mut Fl_Simple_Terminal,
+        s: *const ::core::ffi::c_char,
+        len: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_text(self_: *const Fl_Simple_Terminal) -> *const ::core::ffi::c_char;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_clear(self_: *mut Fl_Simple_Terminal);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_remove_lines(
+        self_: *mut Fl_Simple_Terminal,
+        start: ::core::ffi::c_int,
+        count: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_text_font(arg1: *const Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_text_font(arg1: *mut Fl_Simple_Terminal, s: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_text_size(arg1: *const Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_text_size(arg1: *mut Fl_Simple_Terminal, s: ::core::ffi::c_int);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_text_color(arg1: *const Fl_Simple_Terminal) -> ::core::ffi::c_uint;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_text_color(arg1: *mut Fl_Simple_Terminal, n: ::core::ffi::c_uint);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_scroll(
+        arg1: *mut Fl_Simple_Terminal,
+        topLineNum: ::core::ffi::c_int,
+        horizOffset: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_insert(
+        arg1: *mut Fl_Simple_Terminal,
+        text: *const ::core::ffi::c_char,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_insert_position(
+        arg1: *mut Fl_Simple_Terminal,
+        newPos: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_insert_position(
+        arg1: *const Fl_Simple_Terminal,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_position_to_xy(
+        self_: *const Fl_Simple_Terminal,
+        pos: ::core::ffi::c_int,
+        x: *mut ::core::ffi::c_int,
+        y: *mut ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_count_lines(
+        arg1: *const Fl_Simple_Terminal,
+        start: ::core::ffi::c_int,
+        end: ::core::ffi::c_int,
+        start_pos_is_line_start: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_move_right(arg1: *mut Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_move_left(arg1: *mut Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_move_up(arg1: *mut Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_move_down(arg1: *mut Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_show_cursor(
+        arg1: *mut Fl_Simple_Terminal,
+        boolean: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_highlight_data(
+        self_: *mut Fl_Simple_Terminal,
+        sbuff: *mut ::core::ffi::c_void,
+        color: *mut ::core::ffi::c_uint,
+        font: *mut ::core::ffi::c_int,
+        fontsz: *mut ::core::ffi::c_int,
+        attr: *mut ::core::ffi::c_uint,
+        bgcolor: *mut ::core::ffi::c_uint,
+        sz: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_cursor_style(
+        arg1: *mut Fl_Simple_Terminal,
+        style: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_cursor_color(
+        arg1: *mut Fl_Simple_Terminal,
+        color: ::core::ffi::c_uint,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_scrollbar_size(
+        arg1: *mut Fl_Simple_Terminal,
+        newSize: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_scrollbar_align(
+        arg1: *mut Fl_Simple_Terminal,
+        align: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_cursor_style(arg1: *mut Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_cursor_color(arg1: *mut Fl_Simple_Terminal) -> ::core::ffi::c_uint;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_scrollbar_size(arg1: *mut Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_scrollbar_align(arg1: *mut Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_line_start(
+        self_: *const Fl_Simple_Terminal,
+        pos: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_line_end(
+        self_: *const Fl_Simple_Terminal,
+        startPos: ::core::ffi::c_int,
+        startPosIsLineStart: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_skip_lines(
+        self_: *mut Fl_Simple_Terminal,
+        startPos: ::core::ffi::c_int,
+        nLines: ::core::ffi::c_int,
+        startPosIsLineStart: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_rewind_lines(
+        self_: *mut Fl_Simple_Terminal,
+        startPos: ::core::ffi::c_int,
+        nLines: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_next_word(self_: *mut Fl_Simple_Terminal);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_previous_word(self_: *mut Fl_Simple_Terminal);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_word_start(
+        self_: *const Fl_Simple_Terminal,
+        pos: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_word_end(
+        self_: *const Fl_Simple_Terminal,
+        pos: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_x_to_col(self_: *const Fl_Simple_Terminal, x: f64) -> f64;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_col_to_x(self_: *const Fl_Simple_Terminal, col: f64) -> f64;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_linenumber_width(
+        self_: *mut Fl_Simple_Terminal,
+        width: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_linenumber_width(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_linenumber_font(
+        self_: *mut Fl_Simple_Terminal,
+        val: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_linenumber_font(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_linenumber_size(
+        self_: *mut Fl_Simple_Terminal,
+        val: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_linenumber_size(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_linenumber_fgcolor(
+        self_: *mut Fl_Simple_Terminal,
+        val: ::core::ffi::c_uint,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_linenumber_fgcolor(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::core::ffi::c_uint;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_linenumber_bgcolor(
+        self_: *mut Fl_Simple_Terminal,
+        val: ::core::ffi::c_uint,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_linenumber_bgcolor(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::core::ffi::c_uint;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_linenumber_align(
+        self_: *mut Fl_Simple_Terminal,
+        val: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_linenumber_align(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_in_selection(
+        self_: *const Fl_Simple_Terminal,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_wrap_mode(
+        self_: *mut Fl_Simple_Terminal,
+        wrap: ::core::ffi::c_int,
+        wrap_margin: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_wrapped_column(
+        self_: *const Fl_Simple_Terminal,
+        row: ::core::ffi::c_int,
+        column: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_wrapped_row(
+        self_: *const Fl_Simple_Terminal,
+        row: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_grammar_underline_color(
+        self_: *mut Fl_Simple_Terminal,
+        color: ::core::ffi::c_uint,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_grammar_underline_color(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::core::ffi::c_uint;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_spelling_underline_color(
+        self_: *mut Fl_Simple_Terminal,
+        color: ::core::ffi::c_uint,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_spelling_underline_color(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::core::ffi::c_uint;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_secondary_selection_color(
+        self_: *mut Fl_Simple_Terminal,
+        color: ::core::ffi::c_uint,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_secondary_selection_color(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::core::ffi::c_uint;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_show_insert_position(self_: *mut Fl_Simple_Terminal);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_overstrike(
+        self_: *mut Fl_Simple_Terminal,
+        text: *const ::core::ffi::c_char,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_redisplay_range(
+        self_: *mut Fl_Simple_Terminal,
+        start: ::core::ffi::c_int,
+        end: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_set_linenumber_format(
+        self_: *mut Fl_Simple_Terminal,
+        val: *const ::core::ffi::c_char,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_linenumber_format(
+        self_: *const Fl_Simple_Terminal,
+    ) -> *const ::core::ffi::c_char;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_position_style(
+        self_: *const Fl_Simple_Terminal,
+        lineStartPos: ::core::ffi::c_int,
+        lineLen: ::core::ffi::c_int,
+        lineIndex: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_maintain_absolute_top_line_number(
+        self_: *mut Fl_Simple_Terminal,
+        state: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_get_absolute_top_line_number(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_absolute_top_line_number(
+        self_: *mut Fl_Simple_Terminal,
+        oldFirstChar: ::core::ffi::c_int,
+    );
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_maintaining_absolute_top_line_number(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_reset_absolute_top_line_number(self_: *mut Fl_Simple_Terminal);
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_scroll_row(self_: *const Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_scroll_col(self_: *const Fl_Simple_Terminal) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_xy_to_position(
+        self_: *const Fl_Simple_Terminal,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        PosType: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Terminal_xy_to_rowcol(
+        self_: *const Fl_Simple_Terminal,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        row: *mut ::core::ffi::c_int,
+        column: *mut ::core::ffi::c_int,
+        PosType: ::core::ffi::c_int,
     );
 }
 unsafe extern "C" {

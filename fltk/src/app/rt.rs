@@ -57,7 +57,7 @@ pub fn awake_callback<F: FnMut() + 'static>(cb: F) {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             unsafe {
                 let mut a: Box<Box<dyn FnMut()>> = Box::from_raw(data as *mut Box<dyn FnMut()>);
-                let f: &mut (dyn FnMut()) = &mut **a;
+                let f: &mut dyn FnMut() = &mut **a;
                 let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
             }
         }
@@ -159,7 +159,7 @@ pub type IdleHandle = *mut ();
 unsafe extern "C" fn idle_shim(data: *mut raw::c_void) {
     unsafe {
         let a: *mut Box<dyn FnMut(IdleHandle)> = data as *mut Box<dyn FnMut(IdleHandle)>;
-        let f: &mut (dyn FnMut(IdleHandle)) = &mut **a;
+        let f: &mut dyn FnMut(IdleHandle) = &mut **a;
         let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| (*f)(data as _)));
     }
 }
@@ -233,7 +233,7 @@ pub fn has_check(handle: CheckHandle) -> bool {
 unsafe extern "C" fn clipboard_notify_shim(source: i32, data: *mut raw::c_void) {
     unsafe {
         let a: *mut Box<dyn FnMut(i32)> = data as *mut Box<dyn FnMut(i32)>;
-        let f: &mut (dyn FnMut(i32)) = &mut **a;
+        let f: &mut dyn FnMut(i32) = &mut **a;
         let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| (*f)(source)));
     }
 }
@@ -268,7 +268,7 @@ pub type TimeoutHandle = *mut ();
 unsafe extern "C" fn timeout_shim(data: *mut raw::c_void) {
     unsafe {
         let a: *mut Box<dyn FnMut(TimeoutHandle)> = data as *mut Box<dyn FnMut(TimeoutHandle)>;
-        let f: &mut (dyn FnMut(TimeoutHandle)) = &mut **a;
+        let f: &mut dyn FnMut(TimeoutHandle) = &mut **a;
         let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| (*f)(data as _)));
     }
 }

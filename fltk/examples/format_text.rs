@@ -283,7 +283,7 @@ fn main() {
                     if let Some(t) = buff.text_range(i, i + 1) {
                         if !t.is_empty() {
                             let style = style_rc1.borrow_mut();
-                            if let Some(i) = t.chars().next().map(|c| (c as usize - 65)) {
+                            if let Some(i) = t.chars().next().map(|c| c as usize - 65) {
                                 if let Some(style) = style.style_table.get(i) {
                                     if let Some(mn) = font1.find_item(&format!("{:?}", style.font))
                                     {

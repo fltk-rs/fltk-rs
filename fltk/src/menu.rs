@@ -182,7 +182,7 @@ impl SysMenuBar {
                 unsafe {
                     let mut wid = SysMenuBar::from_widget_ptr(wid as *mut _);
                     let a = data as *mut Box<dyn FnMut(&mut SysMenuBar)>;
-                    let f: &mut (dyn FnMut(&mut SysMenuBar)) = &mut **a;
+                    let f: &mut dyn FnMut(&mut SysMenuBar) = &mut **a;
                     let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
                 }
             }
@@ -537,7 +537,7 @@ impl MenuItem {
                     let mut wid = crate::widget::Widget::from_widget_ptr(wid as *mut _);
                     let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> =
                         data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
-                    let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
+                    let f: &mut dyn FnMut(&mut crate::widget::Widget) = &mut **a;
                     let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
                 }
             }
@@ -655,7 +655,7 @@ impl MenuItem {
                     let mut wid = crate::widget::Widget::from_widget_ptr(wid as *mut _);
                     let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> =
                         data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
-                    let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
+                    let f: &mut dyn FnMut(&mut crate::widget::Widget) = &mut **a;
                     let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
                 }
             }
@@ -689,7 +689,7 @@ impl MenuItem {
                     let mut wid = crate::widget::Widget::from_widget_ptr(wid as *mut _);
                     let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> =
                         data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
-                    let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
+                    let f: &mut dyn FnMut(&mut crate::widget::Widget) = &mut **a;
                     let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
                 }
             }
@@ -763,7 +763,7 @@ pub fn mac_set_about<F: FnMut() + 'static>(cb: F) {
         unsafe extern "C" fn shim(_wid: *mut fltk_sys::menu::Fl_Widget, data: *mut raw::c_void) {
             unsafe {
                 let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
-                let f: &mut (dyn FnMut()) = &mut **a;
+                let f: &mut dyn FnMut() = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(f));
             }
         }

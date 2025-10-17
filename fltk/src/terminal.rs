@@ -1046,7 +1046,7 @@ impl Terminal {
 
     /// Return u8c for beginning of row drow of the display.
     /// *This is a low-level "protected" function of the fltk library*
-    pub fn u8c_disp_row(&self, drow: i32) -> BuffRow {
+    pub fn u8c_disp_row(&self, drow: i32) -> BuffRow<'_> {
         // Fl_Terminal_u8c_disp_row returns pointer to the first C++ Utf8Char object,
         //  which becomes the `inner` element in the Rust BuffRow object
         let row_p = unsafe { Fl_Terminal_u8c_disp_row(self.inner.widget() as _, drow) };
@@ -1055,7 +1055,7 @@ impl Terminal {
 
     /// Return u8c for beginning of row hrow inside the scrollback history.
     /// *This is a low-level "protected" function of the fltk library*
-    pub fn u8c_hist_row(&self, hrow: i32) -> BuffRow {
+    pub fn u8c_hist_row(&self, hrow: i32) -> BuffRow<'_> {
         // Fl_Terminal_u8c_hist_row returns pointer to the first C++ Utf8Char object,
         //  which becomes the `inner` element in the Rust BuffRow object
         let row_p = unsafe { Fl_Terminal_u8c_hist_row(self.inner.widget() as _, hrow) };
@@ -1064,7 +1064,7 @@ impl Terminal {
 
     /// Return u8c for beginning of row hurow inside the 'in use' part of the\n scrollback history.
     /// *This is a low-level "protected" function of the fltk library*
-    pub fn u8c_hist_use_row(&self, hurow: i32) -> BuffRow {
+    pub fn u8c_hist_use_row(&self, hurow: i32) -> BuffRow<'_> {
         // Fl_Terminal_u8c_hist_use_row returns pointer to the first  C++ Utf8Char object,
         //  which becomes the `inner` element in the Rust BuffRow object
         let row_p = unsafe { Fl_Terminal_u8c_hist_use_row(self.inner.widget() as _, hurow) };
@@ -1073,7 +1073,7 @@ impl Terminal {
 
     /// Return u8c for beginning of row grow in the ring buffer.
     /// *This is a low-level "protected" function of the fltk library*
-    pub fn u8c_ring_row(&self, grow: i32) -> BuffRow {
+    pub fn u8c_ring_row(&self, grow: i32) -> BuffRow<'_> {
         // Fl_Terminal_u8c_ring_use_row returns pointer to the first  C++ Utf8Char object,
         //  which becomes the `inner` element in the Rust BuffRow object
         let row_p = unsafe { Fl_Terminal_u8c_ring_row(self.inner.widget() as _, grow) };
@@ -1255,7 +1255,7 @@ impl<'a> BuffRow<'a> {
     }
 
     /// Iterator object to step through a sequence of `Utf8Char` in a `BuffRow`
-    pub fn iter(&self) -> BuffRowIter {
+    pub fn iter(&self) -> BuffRowIter<'_> {
         BuffRowIter::new(self, self.length)
     }
 }
