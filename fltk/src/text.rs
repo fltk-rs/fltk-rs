@@ -9,8 +9,7 @@ use std::{
     os::raw,
 };
 
-type ModifyCbPtr =
-    *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, Option<&'r str>)>;
+type ModifyCbPtr = *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, Option<&'r str>)>;
 
 #[allow(clippy::type_complexity)]
 unsafe extern "C" fn text_modify_shim(
