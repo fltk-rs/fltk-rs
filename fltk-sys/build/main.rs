@@ -14,7 +14,10 @@ mod source;
 mod utils;
 
 fn main() {
-    if env::var("DOCS_RS").is_ok() || (env::var("RUST_ANALYZER") == Ok("true".to_string())) {
+    if env::var("DOCS_RS").is_ok()
+        || (env::var("RUST_ANALYZER") == Ok("true".to_string()))
+        || std::env::var("CARGO_CHECK").is_ok()
+    {
         return;
     }
     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());

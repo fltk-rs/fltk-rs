@@ -669,7 +669,10 @@ impl TextBuffer {
     /// Adds a modify callback.
     /// callback args:
     /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, `deleted_text`
-    pub fn add_modify_callback2<F: FnMut(&mut Self, i32, i32, i32, i32, &str) + 'static>(&mut self, mut cb: F) {
+    pub fn add_modify_callback2<F: FnMut(&mut Self, i32, i32, i32, i32, &str) + 'static>(
+        &mut self,
+        mut cb: F,
+    ) {
         let mut s = self.clone();
         self.add_modify_callback(move |pos, ins, del, restyled, txt| {
             cb(&mut s, pos, ins, del, restyled, txt);
@@ -679,7 +682,10 @@ impl TextBuffer {
     /// Removes a modify callback.
     /// callback args:
     /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, `deleted_text`
-    pub fn remove_modify_callback2<F: FnMut(&mut Self, i32, i32, i32, i32, &str) + 'static>(&mut self, mut cb: F) {
+    pub fn remove_modify_callback2<F: FnMut(&mut Self, i32, i32, i32, i32, &str) + 'static>(
+        &mut self,
+        mut cb: F,
+    ) {
         let mut s = self.clone();
         self.remove_modify_callback(move |pos, ins, del, restyled, txt| {
             cb(&mut s, pos, ins, del, restyled, txt);
@@ -721,7 +727,10 @@ impl TextBuffer {
 
     /// Removes a pre-delete callback.
     /// callback args: pos: i32, deleted items: i32
-    pub fn remove_predelete_callback2<F: FnMut(&mut Self, i32, i32) + 'static>(&mut self, mut cb: F) {
+    pub fn remove_predelete_callback2<F: FnMut(&mut Self, i32, i32) + 'static>(
+        &mut self,
+        mut cb: F,
+    ) {
         let mut s = self.clone();
         self.remove_predelete_callback(move |pos, del| {
             cb(&mut s, pos, del);

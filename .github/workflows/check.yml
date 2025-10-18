@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  CARGO_CHECK: "1"
+
 jobs:
   check-x64:
     name: Check-x64
