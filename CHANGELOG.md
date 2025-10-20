@@ -1,6 +1,10 @@
 # Changelog
 
 
+# [1.5.20] - 2025-10-20
+- Replace `paste` crate which flagged RUSTSEC warnings on `cargo audit/vet` due to unmaintainability.
+- cfltk: Modernize and refactor cmake scripts.
+
 # [1.5.19] - 2025-10-16
 - Revert to using WidgetTracker on the FLTK side since it needs a stable address.
 
