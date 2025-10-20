@@ -441,18 +441,6 @@ pub unsafe trait WidgetExt {
     fn is_derived(&self) -> bool {
         unimplemented!();
     }
-    /// Get a reference type of the widget's image
-    /// # Safety
-    /// The widget needs to be still around when the image is accessed
-    unsafe fn image_mut(&self) -> Option<&mut crate::image::Image> {
-        None
-    }
-    /// Get a reference type of the widget's deactivated image
-    /// # Safety
-    /// The widget needs to be still around when the image is accessed
-    unsafe fn deimage_mut(&self) -> Option<&mut crate::image::Image> {
-        None
-    }
 }
 
 /// Defines the extended methods implemented by all widgets

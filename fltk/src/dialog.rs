@@ -762,7 +762,7 @@ impl FileChooser {
                 let mut wid = FileChooser { inner: arg1 };
                 let a: *mut Box<dyn FnMut(&mut FileChooser)> =
                     data as *mut Box<dyn FnMut(&mut FileChooser)>;
-                let f: &mut (dyn FnMut(&mut FileChooser)) = &mut **a;
+                let f: &mut dyn FnMut(&mut FileChooser) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
             }
             let _old_data = self.user_data();

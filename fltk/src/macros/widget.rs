@@ -651,17 +651,6 @@ macro_rules! impl_widget_ext {
                     }
                 }
 
-                unsafe fn image_mut(&self) -> Option<&mut $crate::image::Image> {
-                    let image_ptr = [<$flname _image>](self.inner.widget() as _);
-                    if image_ptr.is_null() {
-                        None
-                    } else {
-                        let img =
-                            $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
-                        Some(Box::leak(Box::new(img)))
-                    }
-                }
-
                 fn set_deimage<I: ImageExt>(&mut self, image: Option<I>) {
                     if let Some(image) = image {
                         assert!(!image.was_deleted());
@@ -711,17 +700,6 @@ macro_rules! impl_widget_ext {
                                 $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
                             Some(Box::new(img))
                         }
-                    }
-                }
-
-                unsafe fn deimage_mut(&self) -> Option<&mut $crate::image::Image> {
-                    let image_ptr = [<$flname _deimage>](self.inner.widget() as _);
-                    if image_ptr.is_null() {
-                        None
-                    } else {
-                        let img =
-                            $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
-                        Some(Box::leak(Box::new(img)))
                     }
                 }
 

@@ -7,9 +7,9 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut frame = Frame::default_fill();
 
     let mut image = SharedImage::load("screenshots/calc.jpg")?;
-    image.scale(200, 200, true, true);
-
+    
     frame.set_image(Some(image));
+    frame.image().unwrap().scale(200, 200, true, true);
 
     // // To remove an image
     // frame.set_image(None::<SharedImage>);

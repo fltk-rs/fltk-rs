@@ -25,7 +25,7 @@ unsafe extern "C" fn text_modify_shim(
     };
     let a: *mut Box<dyn FnMut(i32, i32, i32, i32, &str)> =
         data as *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, &'r str)>;
-    let f: &mut (dyn FnMut(i32, i32, i32, i32, &str)) = &mut **a;
+    let f: &mut dyn FnMut(i32, i32, i32, i32, &str) = &mut **a;
     let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
         f(pos, inserted, deleted, restyled, &temp)
     }));
@@ -37,7 +37,7 @@ unsafe extern "C" fn text_predelete_shim(
     data: *mut raw::c_void,
 ) {
     let a: *mut Box<dyn FnMut(i32, i32)> = data as *mut Box<dyn FnMut(i32, i32)>;
-    let f: &mut (dyn FnMut(i32, i32)) = &mut **a;
+    let f: &mut dyn FnMut(i32, i32) = &mut **a;
     let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(pos, deleted)));
 }
 

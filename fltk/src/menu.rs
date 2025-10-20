@@ -181,7 +181,7 @@ impl SysMenuBar {
             unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
                 let mut wid = SysMenuBar::from_widget_ptr(wid as *mut _);
                 let a = data as *mut Box<dyn FnMut(&mut SysMenuBar)>;
-                let f: &mut (dyn FnMut(&mut SysMenuBar)) = &mut **a;
+                let f: &mut dyn FnMut(&mut SysMenuBar) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
             }
             let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
@@ -362,7 +362,7 @@ impl MenuItem {
                 colors.push(choice.labelcolor.bits());
             }
             let item_ptr = Fl_Menu_Item_new2(
-                texts.as_mut_ptr() as *mut *mut raw::c_char,
+                texts.as_mut_ptr() as _,
                 shortcuts.as_mut_ptr(),
                 cbs.as_mut_ptr(),
                 flags.as_mut_ptr(),
@@ -626,7 +626,7 @@ impl MenuItem {
                 let mut wid = crate::widget::Widget::from_widget_ptr(wid as *mut _);
                 let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> =
                     data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
-                let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
+                let f: &mut dyn FnMut(&mut crate::widget::Widget) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
             }
             let _old_data = self.user_data();
@@ -749,7 +749,7 @@ impl MenuItem {
                 let mut wid = crate::widget::Widget::from_widget_ptr(wid as *mut _);
                 let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> =
                     data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
-                let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
+                let f: &mut dyn FnMut(&mut crate::widget::Widget) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
             }
             let a: *mut Box<dyn FnMut(&mut Choice)> = Box::into_raw(Box::new(Box::new(cb)));
@@ -781,7 +781,7 @@ impl MenuItem {
                 let mut wid = crate::widget::Widget::from_widget_ptr(wid as *mut _);
                 let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> =
                     data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
-                let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
+                let f: &mut dyn FnMut(&mut crate::widget::Widget) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
             }
             let a: *mut Box<dyn FnMut(&mut Choice)> = Box::into_raw(Box::new(Box::new(cb)));
@@ -853,7 +853,7 @@ pub fn mac_set_about<F: FnMut() + 'static>(cb: F) {
     unsafe {
         unsafe extern "C" fn shim(_wid: *mut fltk_sys::menu::Fl_Widget, data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
-            let f: &mut (dyn FnMut()) = &mut **a;
+            let f: &mut dyn FnMut() = &mut **a;
             let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(f));
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));

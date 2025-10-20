@@ -2,10 +2,7 @@
 #![allow(non_upper_case_globals)]
 #![allow(clippy::needless_doctest_main)]
 #![allow(clippy::type_complexity)]
-#![allow(clippy::unnecessary_cast)]
-#![allow(clippy::arc_with_non_send_sync)]
 #![allow(clippy::missing_transmute_annotations)]
-#![allow(unused_parens)]
 #![warn(missing_docs)]
 
 /// Application related methods and functions
