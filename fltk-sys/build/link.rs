@@ -143,6 +143,10 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
             _ => {
                 println!("cargo:rustc-link-lib=dylib=pthread");
                 let mut link_x11 = true;
+                if cfg!(target_os = "openbsd") {
+                    println!("cargo:rustc-link-search=/usr/X11R6/lib");
+                    println!("cargo:rustc-link-search=/usr/local/lib");
+                }
                 if cfg!(feature = "use-wayland") {
                     println!("cargo:rustc-link-lib=dylib=wayland-client");
                     println!("cargo:rustc-link-lib=dylib=wayland-cursor");
@@ -176,7 +180,7 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                 }
                 if target_triple.contains("gnu") || target_triple.contains("musl") {
                     println!("cargo:rustc-link-lib=supc++");
-                } else {
+                } else if !cfg!(target_os = "openbsd") {
                     println!("cargo:rustc-link-lib=cxxrt");
                 }
             }
