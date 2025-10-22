@@ -112,6 +112,10 @@ pub fn link(target_os: &str, target_triple: &str) {
             _ => {
                 println!("cargo:rustc-link-lib=dylib=pthread");
                 let mut link_x11 = true;
+                if cfg!(target_os = "openbsd") || cfg!(target_os = "freebsd") {
+                    println!("cargo:rustc-link-search=/usr/X11R6/lib");
+                    println!("cargo:rustc-link-search=/usr/local/lib");
+                }
                 if !cfg!(feature = "no-wayland") {
                     println!("cargo:rustc-link-lib=dylib=wayland-client");
                     println!("cargo:rustc-link-lib=dylib=wayland-cursor");
