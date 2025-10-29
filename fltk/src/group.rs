@@ -49,6 +49,18 @@ impl Group {
     }
 }
 
+/// Creates an overlay group widget
+#[derive(Debug)]
+pub struct OverlayGroup {
+    inner: crate::widget::WidgetTracker,
+    is_derived: bool,
+}
+
+crate::macros::widget::impl_widget_ext!(OverlayGroup, Fl_Overlay_Group);
+crate::macros::widget::impl_widget_base!(OverlayGroup, Fl_Overlay_Group);
+crate::macros::widget::impl_widget_default!(OverlayGroup, Fl_Overlay_Group);
+crate::macros::group::impl_group_ext!(OverlayGroup, Fl_Overlay_Group);
+
 /// Creates a widget pack
 #[derive(Debug)]
 pub struct Pack {
