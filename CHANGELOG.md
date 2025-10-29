@@ -1,6 +1,11 @@
 # Changelog
 
 
+# [1.5.21] - TBA
+- Add OverlayGroup.
+- Fix linking on OpenBSD and NetBSD.
+- Update FLTK.
+
 # [1.5.20] - 2025-10-20
 - Replace `paste` crate which flagged RUSTSEC warnings on `cargo audit/vet` due to unmaintainability.
 - cfltk: Modernize and refactor cmake scripts.

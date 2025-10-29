@@ -413,6 +413,421 @@ extern "C" {
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
+pub struct Fl_Overlay_Group {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_new(
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        title: *const ::core::ffi::c_char,
+    ) -> *mut Fl_Overlay_Group;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_x(arg1: *mut Fl_Overlay_Group) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_y(arg1: *mut Fl_Overlay_Group) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_width(arg1: *mut Fl_Overlay_Group) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_height(arg1: *mut Fl_Overlay_Group) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_label(arg1: *mut Fl_Overlay_Group) -> *const ::core::ffi::c_char;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_label(
+        arg1: *mut Fl_Overlay_Group,
+        title: *const ::core::ffi::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_redraw(arg1: *mut Fl_Overlay_Group);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_show(arg1: *mut Fl_Overlay_Group);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_hide(arg1: *mut Fl_Overlay_Group);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_activate(arg1: *mut Fl_Overlay_Group);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_deactivate(arg1: *mut Fl_Overlay_Group);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_redraw_label(arg1: *mut Fl_Overlay_Group);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_resize(
+        arg1: *mut Fl_Overlay_Group,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_widget_resize(
+        arg1: *mut Fl_Overlay_Group,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_tooltip(arg1: *mut Fl_Overlay_Group) -> *const ::core::ffi::c_char;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_tooltip(
+        arg1: *mut Fl_Overlay_Group,
+        txt: *const ::core::ffi::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_get_type(arg1: *mut Fl_Overlay_Group) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_type(arg1: *mut Fl_Overlay_Group, typ: ::core::ffi::c_int);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_color(arg1: *mut Fl_Overlay_Group) -> ::core::ffi::c_uint;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_color(arg1: *mut Fl_Overlay_Group, color: ::core::ffi::c_uint);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_measure_label(
+        arg1: *const Fl_Overlay_Group,
+        arg2: *mut ::core::ffi::c_int,
+        arg3: *mut ::core::ffi::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_label_color(arg1: *mut Fl_Overlay_Group) -> ::core::ffi::c_uint;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_label_color(
+        arg1: *mut Fl_Overlay_Group,
+        color: ::core::ffi::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_label_font(arg1: *mut Fl_Overlay_Group) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_label_font(arg1: *mut Fl_Overlay_Group, font: ::core::ffi::c_int);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_label_size(arg1: *mut Fl_Overlay_Group) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_label_size(arg1: *mut Fl_Overlay_Group, sz: ::core::ffi::c_int);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_label_type(arg1: *mut Fl_Overlay_Group) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_label_type(arg1: *mut Fl_Overlay_Group, typ: ::core::ffi::c_int);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_box(arg1: *mut Fl_Overlay_Group) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_box(arg1: *mut Fl_Overlay_Group, typ: ::core::ffi::c_int);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_changed(arg1: *mut Fl_Overlay_Group) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_changed(arg1: *mut Fl_Overlay_Group);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_clear_changed(arg1: *mut Fl_Overlay_Group);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_align(arg1: *mut Fl_Overlay_Group) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_align(arg1: *mut Fl_Overlay_Group, typ: ::core::ffi::c_int);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_delete(arg1: *mut Fl_Overlay_Group);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_image(arg1: *mut Fl_Overlay_Group, arg2: *mut ::core::ffi::c_void);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_handle(
+        self_: *mut Fl_Overlay_Group,
+        cb: custom_handler_callback,
+        data: *mut ::core::ffi::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_handle_event(
+        self_: *mut Fl_Overlay_Group,
+        event: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_draw(
+        self_: *mut Fl_Overlay_Group,
+        cb: custom_draw_callback,
+        data: *mut ::core::ffi::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_resize_callback(
+        self_: *mut Fl_Overlay_Group,
+        cb: ::core::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::core::ffi::c_int,
+                y: ::core::ffi::c_int,
+                w: ::core::ffi::c_int,
+                h: ::core::ffi::c_int,
+                arg2: *mut ::core::ffi::c_void,
+            ),
+        >,
+        data: *mut ::core::ffi::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_when(arg1: *mut Fl_Overlay_Group, arg2: ::core::ffi::c_int);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_when(arg1: *const Fl_Overlay_Group) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_image(arg1: *const Fl_Overlay_Group) -> *const ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_parent(self_: *const Fl_Overlay_Group) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_selection_color(arg1: *mut Fl_Overlay_Group) -> ::core::ffi::c_uint;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_selection_color(
+        arg1: *mut Fl_Overlay_Group,
+        color: ::core::ffi::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_do_callback(arg1: *mut Fl_Overlay_Group);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_inside(
+        self_: *const Fl_Overlay_Group,
+        arg1: *mut ::core::ffi::c_void,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_window(arg1: *const Fl_Overlay_Group) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_top_window(arg1: *const Fl_Overlay_Group) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_takes_events(arg1: *const Fl_Overlay_Group) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_user_data(arg1: *const Fl_Overlay_Group) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_take_focus(self_: *mut Fl_Overlay_Group) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_visible_focus(self_: *mut Fl_Overlay_Group);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_clear_visible_focus(self_: *mut Fl_Overlay_Group);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_visible_focus(self_: *mut Fl_Overlay_Group, v: ::core::ffi::c_int);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_has_visible_focus(self_: *mut Fl_Overlay_Group) -> ::core::ffi::c_uint;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_user_data(
+        arg1: *mut Fl_Overlay_Group,
+        data: *mut ::core::ffi::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_draw_data(self_: *const Fl_Overlay_Group) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_handle_data(self_: *const Fl_Overlay_Group)
+        -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_draw_data(
+        self_: *mut Fl_Overlay_Group,
+        data: *mut ::core::ffi::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_handle_data(
+        self_: *mut Fl_Overlay_Group,
+        data: *mut ::core::ffi::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_damage(self_: *const Fl_Overlay_Group) -> ::core::ffi::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_damage(self_: *mut Fl_Overlay_Group, flag: ::core::ffi::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_damage_area(
+        self_: *mut Fl_Overlay_Group,
+        flag: ::core::ffi::c_uchar,
+        x: ::core::ffi::c_int,
+        y: ::core::ffi::c_int,
+        w: ::core::ffi::c_int,
+        h: ::core::ffi::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_clear_damage(self_: *mut Fl_Overlay_Group);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_as_window(self_: *mut Fl_Overlay_Group) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_as_group(self_: *mut Fl_Overlay_Group) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_deimage(
+        arg1: *mut Fl_Overlay_Group,
+        arg2: *mut ::core::ffi::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_deimage(arg1: *const Fl_Overlay_Group) -> *const ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_callback(
+        arg1: *mut Fl_Overlay_Group,
+        arg2: Fl_Callback,
+        arg3: *mut ::core::ffi::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_visible(self_: *const Fl_Overlay_Group) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_visible_r(self_: *const Fl_Overlay_Group) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_active(self_: *const Fl_Overlay_Group) -> ::core::ffi::c_uint;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_active_r(self_: *const Fl_Overlay_Group) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_callback(self_: *const Fl_Overlay_Group) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_deletion_callback(
+        self_: *mut Fl_Overlay_Group,
+        arg1: ::core::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::core::ffi::c_void),
+        >,
+        data: *mut ::core::ffi::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Overlay_Group;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_from_derived_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Overlay_Group;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_super_draw(ptr: *mut Fl_Widget, flag: ::core::ffi::c_int);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_super_draw_first(ptr: *mut Fl_Widget, flag: ::core::ffi::c_int);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_super_handle_first(ptr: *mut Fl_Widget, flag: ::core::ffi::c_int);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_begin(self_: *mut Fl_Overlay_Group);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_end(self_: *mut Fl_Overlay_Group);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_find(
+        self_: *mut Fl_Overlay_Group,
+        arg1: *const ::core::ffi::c_void,
+    ) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_add(self_: *mut Fl_Overlay_Group, arg1: *mut ::core::ffi::c_void);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_insert(
+        self_: *mut Fl_Overlay_Group,
+        arg1: *mut ::core::ffi::c_void,
+        pos: ::core::ffi::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_remove(self_: *mut Fl_Overlay_Group, wid: *mut ::core::ffi::c_void);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_remove_by_index(self_: *mut Fl_Overlay_Group, idx: ::core::ffi::c_int);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_clear(self_: *mut Fl_Overlay_Group);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_children(self_: *mut Fl_Overlay_Group) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_child(
+        arg1: *mut Fl_Overlay_Group,
+        index: ::core::ffi::c_int,
+    ) -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_resizable(self_: *mut Fl_Overlay_Group, arg1: *mut ::core::ffi::c_void);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_set_clip_children(self_: *mut Fl_Overlay_Group, c: ::core::ffi::c_int);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_clip_children(self_: *mut Fl_Overlay_Group) -> ::core::ffi::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_init_sizes(self_: *mut Fl_Overlay_Group);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_draw_child(self_: *const Fl_Overlay_Group, w: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_update_child(self_: *const Fl_Overlay_Group, w: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_draw_outside_label(self_: *const Fl_Overlay_Group, w: *const Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Overlay_Group_draw_children(self_: *mut Fl_Overlay_Group);
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
 pub struct Fl_Pack {
     _unused: [u8; 0],
 }
