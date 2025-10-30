@@ -59,7 +59,7 @@ impl Group {
     }
 }
 
-/// Creates a group widget
+/// Creates an overlay group widget which resizes itself to cover its own size
 #[derive(Debug)]
 pub struct OverlayGroup {
     inner: crate::widget::WidgetTracker,

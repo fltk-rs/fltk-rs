@@ -1,7 +1,7 @@
 # Changelog
 
 
-# [1.5.21] - TBA
+# [1.5.21] - 2025-10-30
 - Add OverlayGroup.
 - Fix linking on OpenBSD and NetBSD.
 - Update FLTK.
