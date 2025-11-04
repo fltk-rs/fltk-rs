@@ -3,6 +3,12 @@ use std::path::Path;
 use std::process::Command;
 
 pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
+    if cfg!(feature = "system-fltk") && std::env::var("MINGW_PREFIX").is_ok() {
+        let pref = std::path::PathBuf::from(std::env::var("MINGW_PREFIX").unwrap());
+        println!(
+            "cargo:rustc-link-search=native={}", pref.join("lib").display()
+        );
+    } 
     println!(
         "cargo:rustc-link-search=native={}",
         out_dir.join("build").display()

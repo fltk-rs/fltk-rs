@@ -450,11 +450,13 @@ pub fn password_default(txt: &str, deflt: &str) -> Option<String> {
 }
 
 /// Creates a help dialog
+#[cfg(not(feature = "no-images"))]
 #[derive(Debug)]
 pub struct HelpDialog {
     inner: *mut Fl_Help_Dialog,
 }
 
+#[cfg(not(feature = "no-images"))]
 impl Default for HelpDialog {
     fn default() -> Self {
         unsafe {
@@ -465,6 +467,7 @@ impl Default for HelpDialog {
     }
 }
 
+#[cfg(not(feature = "no-images"))]
 impl HelpDialog {
     /// Creates a new Help dialog with position(x, y) and size(w, h)
     pub fn new(x: i32, y: i32, w: i32, h: i32) -> HelpDialog {
@@ -582,6 +585,7 @@ impl HelpDialog {
     }
 }
 
+#[cfg(not(feature = "no-images"))]
 impl Drop for HelpDialog {
     fn drop(&mut self) {
         unsafe { Fl_Help_Dialog_delete(self.inner) }

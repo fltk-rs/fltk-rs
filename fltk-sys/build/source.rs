@@ -56,20 +56,26 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
         }
 
         if cfg!(feature = "system-libpng") {
+            dst.define("CFLTK_SYSTEM_PNG", "ON");
             dst.define("FLTK_USE_SYSTEM_LIBPNG", "ON");
         } else {
+            dst.define("CFLTK_SYSTEM_PNG", "OFF");
             dst.define("FLTK_USE_SYSTEM_LIBPNG", "OFF");
         }
 
         if cfg!(feature = "system-libjpeg") {
+            dst.define("CFLTK_SYSTEM_JPEG", "ON");
             dst.define("FLTK_USE_SYSTEM_LIBJPEG", "ON");
         } else {
+            dst.define("CFLTK_SYSTEM_PNG", "OFF");
             dst.define("FLTK_USE_SYSTEM_LIBJPEG", "OFF");
         }
 
         if cfg!(feature = "system-zlib") {
+            dst.define("CFLTK_SYSTEM_ZLIB", "ON");
             dst.define("FLTK_USE_SYSTEM_ZLIB", "ON");
         } else {
+            dst.define("CFLTK_SYSTEM_PNG", "OFF");
             dst.define("FLTK_USE_SYSTEM_ZLIB", "OFF");
         }
 

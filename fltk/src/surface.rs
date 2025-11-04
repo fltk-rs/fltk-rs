@@ -1,3 +1,4 @@
+#![allow(unused_imports)]
 use crate::prelude::*;
 use crate::utils::FlString;
 use fltk_sys::surface::*;
@@ -152,10 +153,12 @@ impl Drop for ImageSurface {
     }
     ```
 */
+#[cfg(not(feature = "no-images"))]
 pub struct SvgFileSurface {
     inner: *mut Fl_SVG_File_Surface,
 }
 
+#[cfg(not(feature = "no-images"))]
 impl SurfaceDevice for SvgFileSurface {
     fn is_current(&self) -> bool {
         unsafe { Fl_Surface_Device_is_current(self.inner as *mut _) != 0 }
@@ -182,6 +185,7 @@ impl SurfaceDevice for SvgFileSurface {
     }
 }
 
+#[cfg(not(feature = "no-images"))]
 impl SvgFileSurface {
     /// Returns a new `SvgFileSurface`. The path if non-existent will be created
     /// # Panics
@@ -243,6 +247,7 @@ impl SvgFileSurface {
     }
 }
 
+#[cfg(not(feature = "no-images"))]
 impl Drop for SvgFileSurface {
     fn drop(&mut self) {
         unsafe { Fl_SVG_File_Surface_delete(self.inner) }
