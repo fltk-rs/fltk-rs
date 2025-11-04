@@ -24,14 +24,6 @@ pub fn has_program(prog: &str) -> bool {
     }
 }
 
-pub fn proc_output(args: &[&str]) -> String {
-    let out = match Command::new(args[0]).args(&args[1..]).output() {
-        Ok(out) => out.stdout,
-        _ => vec![],
-    };
-    String::from_utf8_lossy(&out).to_string().trim().to_string()
-}
-
 pub fn use_static_msvcrt() -> bool {
     cfg!(target_feature = "crt-static") || cfg!(feature = "static-msvcrt")
 }
