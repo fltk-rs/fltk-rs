@@ -128,7 +128,9 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                 if !cfg!(feature = "no-gdiplus") {
                     println!("cargo:rustc-link-lib{}gdiplus", linkage);
                 }
-                if target_triple.contains("gnu") {
+                if target_triple.contains("gnullvm") {
+                    println!("cargo:rustc-link-lib=c++");
+                } else if target_triple.contains("gnu") {
                     println!("cargo:rustc-link-lib=supc++");
                     println!("cargo:rustc-link-lib=gcc");
                 }
