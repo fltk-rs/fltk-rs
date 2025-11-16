@@ -1,6 +1,10 @@
 # Changelog
 
 
+# [1.5.22] - 2025-11-16
+- Fix system-fltk builds on msys2.
+- Update FLTK.
+
 # [1.5.21] - 2025-10-30
 - Add OverlayGroup.
 - Fix linking on OpenBSD and NetBSD.
