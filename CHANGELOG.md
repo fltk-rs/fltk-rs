@@ -1,6 +1,10 @@
 # Changelog
 
 
+# [1.5.23] - TBA
+- Add Tree::add_to_parent.
+- Update FLTK.
+
 # [1.5.22] - 2025-11-16
 - Fix system-fltk builds on msys2.
 - Update FLTK.

@@ -383,6 +383,13 @@ extern "C" {
     ) -> *mut Fl_Tree_Item;
 }
 extern "C" {
+    pub fn Fl_Tree_add_to_parent(
+        self_: *mut Fl_Tree,
+        parent_item: *mut Fl_Tree_Item,
+        name: *const ::core::ffi::c_char,
+    ) -> *mut Fl_Tree_Item;
+}
+extern "C" {
     pub fn Fl_Tree_insert_above(
         self_: *mut Fl_Tree,
         above: *mut Fl_Tree_Item,

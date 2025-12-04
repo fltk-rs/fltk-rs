@@ -203,6 +203,22 @@ impl Tree {
         }
     }
 
+    /// Inserts a `TreeItem` at a position `pos`
+    pub fn add_to_parent(&mut self, parent_item: &TreeItem, name: &str) -> Option<TreeItem> {
+        if parent_item.inner.is_null() {
+            return None;
+        }
+        let name = CString::safe_new(name);
+        unsafe {
+            let x = Fl_Tree_add_to_parent(
+                self.inner.widget() as _,
+                parent_item.inner,
+                name.as_ptr() as *mut raw::c_char,
+            );
+            TreeItem::from_raw(x)
+        }
+    }
+
     /// Inserts a `TreeItem` above another tree item
     pub fn insert_above(&mut self, above: &TreeItem, name: &str) -> Option<TreeItem> {
         if above.inner.is_null() {
