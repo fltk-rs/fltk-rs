@@ -518,7 +518,7 @@ impl Tree {
                 path.as_ptr() as *mut raw::c_char,
                 do_callback as i32,
             ) {
-                0 => Ok(()),
+                0 | 1 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
             }
         }
@@ -527,15 +527,12 @@ impl Tree {
     /// Deselect all items
     /// # Errors
     /// Errors on failure to deselect all items
-    pub fn deselect_all(&mut self, item: &TreeItem, do_callback: bool) -> Result<(), FltkError> {
+    pub fn deselect_all(&mut self, item: &TreeItem, do_callback: bool) -> Result<i32, FltkError> {
         if item.inner.is_null() {
             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
         }
         unsafe {
-            match Fl_Tree_deselect_all(self.inner.widget() as _, item.inner, do_callback as i32) {
-                0 => Ok(()),
-                _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
-            }
+            Ok(Fl_Tree_deselect_all(self.inner.widget() as _, item.inner, do_callback as i32))
         }
     }
 
@@ -546,34 +543,28 @@ impl Tree {
         &mut self,
         selected_item: &TreeItem,
         do_callback: bool,
-    ) -> Result<(), FltkError> {
+    ) -> Result<i32, FltkError> {
         if selected_item.inner.is_null() {
             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
         }
         unsafe {
-            match Fl_Tree_select_only(
+            Ok(Fl_Tree_select_only(
                 self.inner.widget() as _,
                 selected_item.inner,
                 do_callback as i32,
-            ) {
-                0 => Ok(()),
-                _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
-            }
+            ))
         }
     }
 
     /// Select all items
     /// # Errors
     /// Errors on failure to select an item
-    pub fn select_all(&mut self, item: &TreeItem, do_callback: bool) -> Result<(), FltkError> {
+    pub fn select_all(&mut self, item: &TreeItem, do_callback: bool) -> Result<i32, FltkError> {
         if item.inner.is_null() {
             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
         }
         unsafe {
-            match Fl_Tree_select_all(self.inner.widget() as _, item.inner, do_callback as i32) {
-                0 => Ok(()),
-                _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
-            }
+            Ok(Fl_Tree_select_all(self.inner.widget() as _, item.inner, do_callback as i32))
         }
     }
 
