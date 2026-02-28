@@ -3,6 +3,8 @@
 
 # [1.5.23] - TBA
 - Add Tree::add_to_parent.
+- Fix Tree::deselect_all and some other method return types.
+- Fix CFLTK_WAYLAND_ONLY=1 for only wayland apps.
 - Update FLTK.
 
 # [1.5.22] - 2025-11-16
