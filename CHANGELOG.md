@@ -5,7 +5,7 @@
 - Add Tree::add_to_parent.
 - Fix Tree::deselect_all and some other method return types.
 - Fix CFLTK_WAYLAND_ONLY=1 for only wayland apps.
-- Update rust-version to 1.68 as per proc-macro2 requirement.
+- Update rust-version to 1.71 as per unicode-ident requirement.
 - Update FLTK.
 
 # [1.5.22] - 2025-11-16
