@@ -21,7 +21,7 @@ path = "src/lib.rs"
 cc = { version = "1", features = ["parallel"], optional = true }
 
 [target.'cfg(not(any(target_os = "emscripten", target_os = "android")))'.build-dependencies]
-cmake = { version = "0.1.51" }
+cmake = { version = "0.1.58" }
 
 [target.'cfg(target_os = "emscripten")'.build-dependencies]
 cmake = { package = "cmk" , version = "0.1.2" }
