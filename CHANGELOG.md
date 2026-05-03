@@ -1,12 +1,13 @@
 # Changelog
 
 
-# [1.5.23] - TBA
+# [1.5.23] - 2026-05-04
 - Add Tree::add_to_parent.
 - Fix Tree::deselect_all and some other method return types.
 - Fix CFLTK_WAYLAND_ONLY=1 for only wayland apps.
 - Update rust-version to 1.71 as per unicode-ident requirement.
-- Update FLTK.
+- Bump cmake-rs version to build with 32-bit toolchain by @Postrediori.
+- Update to FLTK 1.4.5.
 
 # [1.5.22] - 2025-11-16
 - Fix system-fltk builds on msys2.
