@@ -513,6 +513,32 @@ impl Default for OverlayWindow {
 impl_top_win!(OverlayWindow);
 impl_ppu!(OverlayWindow);
 
+/// The deletion callback of an `OverlayWindow` which has an overlay closure, passed as `overlay_data`
+unsafe extern "C" fn overlay_deleter(wid: *mut Fl_Widget, overlay_data: *mut raw::c_void) {
+    let user_data = Fl_Overlay_Window_user_data(wid as _);
+    let draw_data = Fl_Overlay_Window_draw_data(wid as _);
+    let handle_data = Fl_Overlay_Window_handle_data(wid as _);
+    let resize_data = Fl_Overlay_Window_resize_data(wid as _);
+    crate::app::add_timeout3(0., move |h| {
+        if !user_data.is_null() {
+            drop(Box::from_raw(user_data as *mut crate::widget::WidgetCb));
+        }
+        if !draw_data.is_null() {
+            drop(Box::from_raw(draw_data as *mut crate::widget::WidgetCb));
+        }
+        if !handle_data.is_null() {
+            drop(Box::from_raw(handle_data as *mut crate::widget::HandleCb));
+        }
+        if !resize_data.is_null() {
+            drop(Box::from_raw(resize_data as *mut crate::widget::ResizeCb));
+        }
+        if !overlay_data.is_null() {
+            drop(Box::from_raw(overlay_data as *mut crate::widget::WidgetCb));
+        }
+        crate::app::remove_timeout3(h);
+    });
+}
+
 impl OverlayWindow {
     /// Forces the window to be drawn, this window is also made current and calls draw()
     pub fn flush(&mut self) {
@@ -520,25 +546,35 @@ impl OverlayWindow {
     }
 
     /// Draw overlay
-    pub fn draw_overlay<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
+    pub fn draw_overlay<F: FnMut(&mut Self) + 'static>(&mut self, mut cb: F) {
         assert!(self.is_derived);
         unsafe {
             unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
-                let mut wid = OverlayWindow::from_widget_ptr(wid as *mut _);
-                wid.assume_derived();
-                let a: *mut Box<dyn FnMut(&mut OverlayWindow)> =
-                    data as *mut Box<dyn FnMut(&mut OverlayWindow)>;
-                let f: &mut dyn FnMut(&mut OverlayWindow) = &mut **a;
-                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                let a = data as *mut crate::widget::WidgetCb;
+                let f = &mut **a;
+                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(wid as *mut _)));
             }
-            let mut _old_data = None;
-            if self.is_derived {
-                _old_data = self.draw_data();
-            }
-            let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
+            // The overlay closure has its own slot, separate from the draw closure
+            let old_data = Fl_Overlay_Window_overlay_draw_data(self.inner.widget() as _);
+            let a: *mut crate::widget::WidgetCb = Box::into_raw(Box::new(Box::new(
+                move |wid: *mut fltk_sys::widget::Fl_Widget| {
+                    let mut wid = OverlayWindow::from_widget_ptr(wid);
+                    wid.assume_derived();
+                    cb(&mut wid)
+                },
+            )));
             let data: *mut raw::c_void = a as *mut raw::c_void;
             let callback: custom_draw_callback = Some(shim);
             Fl_Overlay_Window_draw_overlay(self.inner.widget() as _, callback, data);
+            // Passed to the deletion callback so the closure is freed along with the window
+            Fl_Overlay_Window_set_deletion_callback(
+                self.inner.widget() as _,
+                Some(overlay_deleter),
+                data,
+            );
+            if !old_data.is_null() {
+                drop(Box::from_raw(old_data as *mut crate::widget::WidgetCb));
+            }
         }
     }
 

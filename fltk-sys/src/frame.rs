@@ -260,6 +260,9 @@ extern "C" {
     pub fn Fl_Box_handle_data(self_: *const Fl_Box) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Box_resize_data(self_: *const Fl_Box) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Box_set_draw_data(self_: *mut Fl_Box, data: *mut ::core::ffi::c_void);
 }
 extern "C" {

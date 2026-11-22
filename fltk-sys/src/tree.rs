@@ -262,6 +262,9 @@ extern "C" {
     pub fn Fl_Tree_handle_data(self_: *const Fl_Tree) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Tree_resize_data(self_: *const Fl_Tree) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Tree_set_draw_data(self_: *mut Fl_Tree, data: *mut ::core::ffi::c_void);
 }
 extern "C" {

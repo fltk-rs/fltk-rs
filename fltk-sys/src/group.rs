@@ -262,6 +262,9 @@ extern "C" {
     pub fn Fl_Group_handle_data(self_: *const Fl_Group) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Group_resize_data(self_: *const Fl_Group) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Group_set_draw_data(self_: *mut Fl_Group, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
@@ -671,6 +674,10 @@ extern "C" {
         -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Overlay_Group_resize_data(self_: *const Fl_Overlay_Group)
+        -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Overlay_Group_set_draw_data(
         self_: *mut Fl_Overlay_Group,
         data: *mut ::core::ffi::c_void,
@@ -1070,6 +1077,9 @@ extern "C" {
     pub fn Fl_Pack_handle_data(self_: *const Fl_Pack) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Pack_resize_data(self_: *const Fl_Pack) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Pack_set_draw_data(self_: *mut Fl_Pack, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
@@ -1461,6 +1471,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scroll_handle_data(self_: *const Fl_Scroll) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Scroll_resize_data(self_: *const Fl_Scroll) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Scroll_set_draw_data(self_: *mut Fl_Scroll, data: *mut ::core::ffi::c_void);
@@ -1873,6 +1886,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tabs_handle_data(self_: *const Fl_Tabs) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Tabs_resize_data(self_: *const Fl_Tabs) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Tabs_set_draw_data(self_: *mut Fl_Tabs, data: *mut ::core::ffi::c_void);
@@ -2292,6 +2308,9 @@ extern "C" {
     pub fn Fl_Tile_handle_data(self_: *const Fl_Tile) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Tile_resize_data(self_: *const Fl_Tile) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Tile_set_draw_data(self_: *mut Fl_Tile, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
@@ -2706,6 +2725,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_handle_data(self_: *const Fl_Wizard) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Wizard_resize_data(self_: *const Fl_Wizard) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Wizard_set_draw_data(self_: *mut Fl_Wizard, data: *mut ::core::ffi::c_void);
@@ -3123,6 +3145,10 @@ extern "C" {
         -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Color_Chooser_resize_data(self_: *const Fl_Color_Chooser)
+        -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Color_Chooser_set_draw_data(
         self_: *mut Fl_Color_Chooser,
         data: *mut ::core::ffi::c_void,
@@ -3537,6 +3563,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Flex_handle_data(self_: *const Fl_Flex) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Flex_resize_data(self_: *const Fl_Flex) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Flex_set_draw_data(self_: *mut Fl_Flex, data: *mut ::core::ffi::c_void);
@@ -3957,6 +3986,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Grid_handle_data(self_: *const Fl_Grid) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Grid_resize_data(self_: *const Fl_Grid) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Grid_set_draw_data(self_: *mut Fl_Grid, data: *mut ::core::ffi::c_void);

@@ -262,6 +262,9 @@ extern "C" {
     pub fn Fl_Spinner_handle_data(self_: *const Fl_Spinner) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Spinner_resize_data(self_: *const Fl_Spinner) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Spinner_set_draw_data(self_: *mut Fl_Spinner, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
@@ -645,6 +648,9 @@ extern "C" {
     pub fn Fl_Clock_handle_data(self_: *const Fl_Clock) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Clock_resize_data(self_: *const Fl_Clock) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Clock_set_draw_data(self_: *mut Fl_Clock, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
@@ -969,6 +975,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Chart_handle_data(self_: *const Fl_Chart) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Chart_resize_data(self_: *const Fl_Chart) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Chart_set_draw_data(self_: *mut Fl_Chart, data: *mut ::core::ffi::c_void);
@@ -1363,6 +1372,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Progress_handle_data(self_: *const Fl_Progress) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Progress_resize_data(self_: *const Fl_Progress) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Progress_set_draw_data(self_: *mut Fl_Progress, data: *mut ::core::ffi::c_void);
@@ -1797,6 +1809,9 @@ extern "C" {
     pub fn Fl_Help_View_handle_data(self_: *const Fl_Help_View) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Help_View_resize_data(self_: *const Fl_Help_View) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Help_View_set_draw_data(self_: *mut Fl_Help_View, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
@@ -2197,6 +2212,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Input_Choice_handle_data(self_: *const Fl_Input_Choice) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Input_Choice_resize_data(self_: *const Fl_Input_Choice) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Input_Choice_set_draw_data(

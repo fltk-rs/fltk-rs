@@ -262,6 +262,9 @@ extern "C" {
     pub fn Fl_Table_handle_data(self_: *const Fl_Table) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Table_resize_data(self_: *const Fl_Table) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Table_set_draw_data(self_: *mut Fl_Table, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
@@ -897,6 +900,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Table_Row_handle_data(self_: *const Fl_Table_Row) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Table_Row_resize_data(self_: *const Fl_Table_Row) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Table_Row_set_draw_data(self_: *mut Fl_Table_Row, data: *mut ::core::ffi::c_void);

@@ -18,6 +18,10 @@ pub type WidgetCb = Box<dyn FnMut(*mut Fl_Widget)>;
 /// The type under which handle closures are stored on the FLTK side
 pub type HandleCb = Box<dyn FnMut(*mut Fl_Widget, crate::enums::Event) -> bool>;
 
+#[doc(hidden)]
+/// The type under which resize closures are stored on the FLTK side
+pub type ResizeCb = Box<dyn FnMut(*mut Fl_Widget, i32, i32, i32, i32)>;
+
 /// An empty widget. Instantiating a Widget requires that you at least add a draw callback for it to show anything
 /// ```rust,no_run
 /// use fltk::{prelude::*, *};

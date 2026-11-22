@@ -262,6 +262,9 @@ extern "C" {
     pub fn Fl_Input_handle_data(self_: *const Fl_Input) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Input_resize_data(self_: *const Fl_Input) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Input_set_draw_data(self_: *mut Fl_Input, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
@@ -688,6 +691,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Int_Input_handle_data(self_: *const Fl_Int_Input) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Int_Input_resize_data(self_: *const Fl_Int_Input) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Int_Input_set_draw_data(self_: *mut Fl_Int_Input, data: *mut ::core::ffi::c_void);
@@ -1128,6 +1134,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Float_Input_handle_data(self_: *const Fl_Float_Input) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Float_Input_resize_data(self_: *const Fl_Float_Input) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Float_Input_set_draw_data(self_: *mut Fl_Float_Input, data: *mut ::core::ffi::c_void);
@@ -1605,6 +1614,11 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Multiline_Input_resize_data(
+        self_: *const Fl_Multiline_Input,
+    ) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Multiline_Input_set_draw_data(
         self_: *mut Fl_Multiline_Input,
         data: *mut ::core::ffi::c_void,
@@ -2072,6 +2086,9 @@ extern "C" {
     pub fn Fl_Secret_Input_handle_data(self_: *const Fl_Secret_Input) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Secret_Input_resize_data(self_: *const Fl_Secret_Input) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Secret_Input_set_draw_data(
         self_: *mut Fl_Secret_Input,
         data: *mut ::core::ffi::c_void,
@@ -2515,6 +2532,9 @@ extern "C" {
     pub fn Fl_File_Input_handle_data(self_: *const Fl_File_Input) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_File_Input_resize_data(self_: *const Fl_File_Input) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_File_Input_set_draw_data(self_: *mut Fl_File_Input, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
@@ -2956,6 +2976,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Output_handle_data(self_: *const Fl_Output) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Output_resize_data(self_: *const Fl_Output) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Output_set_draw_data(self_: *mut Fl_Output, data: *mut ::core::ffi::c_void);
@@ -3441,6 +3464,11 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Multiline_Output_handle_data(
+        self_: *const Fl_Multiline_Output,
+    ) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_resize_data(
         self_: *const Fl_Multiline_Output,
     ) -> *mut ::core::ffi::c_void;
 }

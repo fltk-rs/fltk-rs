@@ -625,6 +625,35 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_set_box_type_with_focus_cb(
+        arg1: ::core::ffi::c_int,
+        cb: ::core::option::Option<
+            unsafe extern "C" fn(
+                arg1: ::core::ffi::c_int,
+                arg2: ::core::ffi::c_int,
+                arg3: ::core::ffi::c_int,
+                arg4: ::core::ffi::c_int,
+                arg5: ::core::ffi::c_uint,
+            ),
+        >,
+        arg2: ::core::ffi::c_int,
+        arg3: ::core::ffi::c_int,
+        arg4: ::core::ffi::c_int,
+        arg5: ::core::ffi::c_int,
+        cbf: ::core::option::Option<
+            unsafe extern "C" fn(
+                arg1: ::core::ffi::c_int,
+                arg2: ::core::ffi::c_int,
+                arg3: ::core::ffi::c_int,
+                arg4: ::core::ffi::c_int,
+                arg5: ::core::ffi::c_int,
+                arg6: ::core::ffi::c_uint,
+                arg7: ::core::ffi::c_uint,
+            ),
+        >,
+    );
+}
+extern "C" {
     pub fn Fl_draw_box_active() -> ::core::ffi::c_int;
 }
 extern "C" {

@@ -267,6 +267,9 @@ extern "C" {
     pub fn Fl_Menu_Bar_handle_data(self_: *const Fl_Menu_Bar) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Menu_Bar_resize_data(self_: *const Fl_Menu_Bar) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Menu_Bar_set_draw_data(self_: *mut Fl_Menu_Bar, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
@@ -740,6 +743,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Button_handle_data(self_: *const Fl_Menu_Button) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_resize_data(self_: *const Fl_Menu_Button) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Menu_Button_set_draw_data(self_: *mut Fl_Menu_Button, data: *mut ::core::ffi::c_void);
@@ -1224,6 +1230,9 @@ extern "C" {
     pub fn Fl_Choice_handle_data(self_: *const Fl_Choice) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Choice_resize_data(self_: *const Fl_Choice) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Choice_set_draw_data(self_: *mut Fl_Choice, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
@@ -1688,6 +1697,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_handle_data(self_: *const Fl_Sys_Menu_Bar) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_resize_data(self_: *const Fl_Sys_Menu_Bar) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_set_draw_data(

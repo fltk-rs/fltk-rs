@@ -444,6 +444,9 @@ extern "C" {
     pub fn Fl_Window_handle_data(self_: *const Fl_Window) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Window_resize_data(self_: *const Fl_Window) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Window_set_draw_data(self_: *mut Fl_Window, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
@@ -1032,6 +1035,10 @@ extern "C" {
         -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Single_Window_resize_data(self_: *const Fl_Single_Window)
+        -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Single_Window_set_draw_data(
         self_: *mut Fl_Single_Window,
         data: *mut ::core::ffi::c_void,
@@ -1609,6 +1616,10 @@ extern "C" {
         -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Double_Window_resize_data(self_: *const Fl_Double_Window)
+        -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Double_Window_set_draw_data(
         self_: *mut Fl_Double_Window,
         data: *mut ::core::ffi::c_void,
@@ -2174,6 +2185,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Window_handle_data(self_: *const Fl_Menu_Window) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_resize_data(self_: *const Fl_Menu_Window) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Menu_Window_set_draw_data(self_: *mut Fl_Menu_Window, data: *mut ::core::ffi::c_void);
@@ -2743,6 +2757,11 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Overlay_Window_resize_data(
+        self_: *const Fl_Overlay_Window,
+    ) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Overlay_Window_set_draw_data(
         self_: *mut Fl_Overlay_Window,
         data: *mut ::core::ffi::c_void,
@@ -2916,6 +2935,11 @@ extern "C" {
         cb: custom_draw_callback,
         data: *mut ::core::ffi::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_overlay_draw_data(
+        self_: *const Fl_Overlay_Window,
+    ) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Overlay_Window_redraw_overlay(self_: *mut Fl_Overlay_Window);
@@ -3343,6 +3367,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Gl_Window_handle_data(self_: *const Fl_Gl_Window) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_resize_data(self_: *const Fl_Gl_Window) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Gl_Window_set_draw_data(self_: *mut Fl_Gl_Window, data: *mut ::core::ffi::c_void);
@@ -3954,6 +3981,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Glut_Window_handle_data(self_: *const Fl_Glut_Window) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_resize_data(self_: *const Fl_Glut_Window) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Glut_Window_set_draw_data(self_: *mut Fl_Glut_Window, data: *mut ::core::ffi::c_void);

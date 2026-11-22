@@ -646,6 +646,9 @@ extern "C" {
     pub fn Fl_Text_Display_handle_data(self_: *const Fl_Text_Display) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Text_Display_resize_data(self_: *const Fl_Text_Display) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Text_Display_set_draw_data(
         self_: *mut Fl_Text_Display,
         data: *mut ::core::ffi::c_void,
@@ -1353,6 +1356,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Editor_handle_data(self_: *const Fl_Text_Editor) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_resize_data(self_: *const Fl_Text_Editor) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_draw_data(self_: *mut Fl_Text_Editor, data: *mut ::core::ffi::c_void);
@@ -2206,6 +2212,11 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_handle_data(
+        self_: *const Fl_Simple_Terminal,
+    ) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_resize_data(
         self_: *const Fl_Simple_Terminal,
     ) -> *mut ::core::ffi::c_void;
 }

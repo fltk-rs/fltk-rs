@@ -829,6 +829,7 @@ macro_rules! impl_widget_base {
                             let user_data = [<$flname _user_data>](wid as _);
                             let draw_data = [<$flname _draw_data>](wid as _);
                             let handle_data = [<$flname _handle_data>](wid as _);
+                            let resize_data = [<$flname _resize_data>](wid as _);
                             $crate::app::add_timeout3(0., move |h| {
                                 if !user_data.is_null() {
                                     let _x = Box::from_raw(user_data as *mut $crate::widget::WidgetCb);
@@ -838,6 +839,9 @@ macro_rules! impl_widget_base {
                                 }
                                 if !handle_data.is_null() {
                                     let _x = Box::from_raw(handle_data as *mut $crate::widget::HandleCb);
+                                }
+                                if !resize_data.is_null() {
+                                    let _x = Box::from_raw(resize_data as *mut $crate::widget::ResizeCb);
                                 }
                                 $crate::app::remove_timeout3(h);
                             });
@@ -967,7 +971,7 @@ macro_rules! impl_widget_base {
 
                 fn resize_callback<F: FnMut(&mut Self, i32, i32, i32, i32) + 'static>(
                     &mut self,
-                    cb: F,
+                    mut cb: F,
                 ) {
                     assert!(self.is_derived);
                     unsafe {
@@ -979,22 +983,28 @@ macro_rules! impl_widget_base {
                             h: i32,
                             data: *mut std::os::raw::c_void,
                         ) {
-                            let mut wid = $name::from_widget_ptr(wid as *mut _);
-                            wid.assume_derived();
-                            let a: *mut Box<dyn FnMut(&mut $name, i32, i32, i32, i32)> =
-                                data as *mut Box<dyn FnMut(&mut $name, i32, i32, i32, i32)>;
-                            let f: &mut (dyn FnMut(&mut $name, i32, i32, i32, i32)) = &mut **a;
+                            let a = data as *mut $crate::widget::ResizeCb;
+                            let f = &mut **a;
                             let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-                                f(&mut wid, x, y, w, h)
+                                f(wid as *mut _, x, y, w, h)
                             }));
                         }
-                        let a: *mut Box<dyn FnMut(&mut Self, i32, i32, i32, i32)> =
-                            Box::into_raw(Box::new(Box::new(cb)));
+                        let old_data = [<$flname _resize_data>](self.inner.widget() as _);
+                        let a: *mut $crate::widget::ResizeCb = Box::into_raw(Box::new(Box::new(
+                            move |wid: *mut fltk_sys::widget::Fl_Widget, x, y, w, h| {
+                                let mut wid = $name::from_widget_ptr(wid);
+                                wid.assume_derived();
+                                cb(&mut wid, x, y, w, h)
+                            },
+                        )));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: Option<
                             unsafe extern "C" fn(*mut Fl_Widget, i32, i32, i32, i32, *mut std::os::raw::c_void),
                         > = Some(shim);
                         [<$flname _resize_callback>](self.inner.widget() as _, callback, data);
+                        if !old_data.is_null() {
+                            drop(Box::from_raw(old_data as *mut $crate::widget::ResizeCb));
+                        }
                     }
                 }
 

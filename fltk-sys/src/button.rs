@@ -262,6 +262,9 @@ extern "C" {
     pub fn Fl_Button_handle_data(self_: *const Fl_Button) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Button_resize_data(self_: *const Fl_Button) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Button_set_draw_data(self_: *mut Fl_Button, data: *mut ::core::ffi::c_void);
 }
 extern "C" {
@@ -619,6 +622,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Check_Button_handle_data(self_: *const Fl_Check_Button) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Check_Button_resize_data(self_: *const Fl_Check_Button) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Check_Button_set_draw_data(
@@ -990,6 +996,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Radio_Button_handle_data(self_: *const Fl_Radio_Button) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Radio_Button_resize_data(self_: *const Fl_Radio_Button) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Radio_Button_set_draw_data(
@@ -1373,6 +1382,10 @@ extern "C" {
         -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Toggle_Button_resize_data(self_: *const Fl_Toggle_Button)
+        -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Toggle_Button_set_draw_data(
         self_: *mut Fl_Toggle_Button,
         data: *mut ::core::ffi::c_void,
@@ -1748,6 +1761,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Round_Button_handle_data(self_: *const Fl_Round_Button) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Round_Button_resize_data(self_: *const Fl_Round_Button) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
     pub fn Fl_Round_Button_set_draw_data(
@@ -2184,6 +2200,11 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_handle_data(
+        self_: *const Fl_Radio_Round_Button,
+    ) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_resize_data(
         self_: *const Fl_Radio_Round_Button,
     ) -> *mut ::core::ffi::c_void;
 }
@@ -2666,6 +2687,11 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Radio_Light_Button_resize_data(
+        self_: *const Fl_Radio_Light_Button,
+    ) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Radio_Light_Button_set_draw_data(
         self_: *mut Fl_Radio_Light_Button,
         data: *mut ::core::ffi::c_void,
@@ -3077,6 +3103,9 @@ extern "C" {
     pub fn Fl_Light_Button_handle_data(self_: *const Fl_Light_Button) -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Light_Button_resize_data(self_: *const Fl_Light_Button) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Light_Button_set_draw_data(
         self_: *mut Fl_Light_Button,
         data: *mut ::core::ffi::c_void,
@@ -3458,6 +3487,10 @@ extern "C" {
         -> *mut ::core::ffi::c_void;
 }
 extern "C" {
+    pub fn Fl_Repeat_Button_resize_data(self_: *const Fl_Repeat_Button)
+        -> *mut ::core::ffi::c_void;
+}
+extern "C" {
     pub fn Fl_Repeat_Button_set_draw_data(
         self_: *mut Fl_Repeat_Button,
         data: *mut ::core::ffi::c_void,
@@ -3836,6 +3869,10 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Return_Button_handle_data(self_: *const Fl_Return_Button)
+        -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Return_Button_resize_data(self_: *const Fl_Return_Button)
         -> *mut ::core::ffi::c_void;
 }
 extern "C" {
@@ -4235,6 +4272,11 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Shortcut_Button_handle_data(
+        self_: *const Fl_Shortcut_Button,
+    ) -> *mut ::core::ffi::c_void;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_resize_data(
         self_: *const Fl_Shortcut_Button,
     ) -> *mut ::core::ffi::c_void;
 }
