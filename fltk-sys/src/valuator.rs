@@ -262,6 +262,9 @@ unsafe extern "C" {
     pub fn Fl_Slider_handle_data(self_: *const Fl_Slider) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
+    pub fn Fl_Slider_resize_data(self_: *const Fl_Slider) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
     pub fn Fl_Slider_set_draw_data(self_: *mut Fl_Slider, data: *mut ::core::ffi::c_void);
 }
 unsafe extern "C" {
@@ -660,6 +663,9 @@ unsafe extern "C" {
     pub fn Fl_Nice_Slider_handle_data(self_: *const Fl_Nice_Slider) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
+    pub fn Fl_Nice_Slider_resize_data(self_: *const Fl_Nice_Slider) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
     pub fn Fl_Nice_Slider_set_draw_data(self_: *mut Fl_Nice_Slider, data: *mut ::core::ffi::c_void);
 }
 unsafe extern "C" {
@@ -1041,6 +1047,9 @@ unsafe extern "C" {
     pub fn Fl_Counter_handle_data(self_: *const Fl_Counter) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
+    pub fn Fl_Counter_resize_data(self_: *const Fl_Counter) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
     pub fn Fl_Counter_set_draw_data(self_: *mut Fl_Counter, data: *mut ::core::ffi::c_void);
 }
 unsafe extern "C" {
@@ -1413,6 +1422,9 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Dial_handle_data(self_: *const Fl_Dial) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Dial_resize_data(self_: *const Fl_Dial) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Dial_set_draw_data(self_: *mut Fl_Dial, data: *mut ::core::ffi::c_void);
@@ -1799,6 +1811,9 @@ unsafe extern "C" {
     pub fn Fl_Line_Dial_handle_data(self_: *const Fl_Line_Dial) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
+    pub fn Fl_Line_Dial_resize_data(self_: *const Fl_Line_Dial) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
     pub fn Fl_Line_Dial_set_draw_data(self_: *mut Fl_Line_Dial, data: *mut ::core::ffi::c_void);
 }
 unsafe extern "C" {
@@ -2177,6 +2192,9 @@ unsafe extern "C" {
     pub fn Fl_Roller_handle_data(self_: *const Fl_Roller) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
+    pub fn Fl_Roller_resize_data(self_: *const Fl_Roller) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
     pub fn Fl_Roller_set_draw_data(self_: *mut Fl_Roller, data: *mut ::core::ffi::c_void);
 }
 unsafe extern "C" {
@@ -2549,6 +2567,9 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Scrollbar_handle_data(self_: *const Fl_Scrollbar) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Scrollbar_resize_data(self_: *const Fl_Scrollbar) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Scrollbar_set_draw_data(self_: *mut Fl_Scrollbar, data: *mut ::core::ffi::c_void);
@@ -2948,6 +2969,9 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Value_Slider_handle_data(self_: *const Fl_Value_Slider) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Value_Slider_resize_data(self_: *const Fl_Value_Slider) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Value_Slider_set_draw_data(
@@ -3352,6 +3376,9 @@ unsafe extern "C" {
     pub fn Fl_Adjuster_handle_data(self_: *const Fl_Adjuster) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
+    pub fn Fl_Adjuster_resize_data(self_: *const Fl_Adjuster) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
     pub fn Fl_Adjuster_set_draw_data(self_: *mut Fl_Adjuster, data: *mut ::core::ffi::c_void);
 }
 unsafe extern "C" {
@@ -3731,6 +3758,9 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Value_Input_handle_data(self_: *const Fl_Value_Input) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Value_Input_resize_data(self_: *const Fl_Value_Input) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Value_Input_set_draw_data(self_: *mut Fl_Value_Input, data: *mut ::core::ffi::c_void);
@@ -4144,6 +4174,9 @@ unsafe extern "C" {
     pub fn Fl_Value_Output_handle_data(self_: *const Fl_Value_Output) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
+    pub fn Fl_Value_Output_resize_data(self_: *const Fl_Value_Output) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
     pub fn Fl_Value_Output_set_draw_data(
         self_: *mut Fl_Value_Output,
         data: *mut ::core::ffi::c_void,
@@ -4549,6 +4582,9 @@ unsafe extern "C" {
     pub fn Fl_Fill_Slider_handle_data(self_: *const Fl_Fill_Slider) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
+    pub fn Fl_Fill_Slider_resize_data(self_: *const Fl_Fill_Slider) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
     pub fn Fl_Fill_Slider_set_draw_data(self_: *mut Fl_Fill_Slider, data: *mut ::core::ffi::c_void);
 }
 unsafe extern "C" {
@@ -4930,6 +4966,9 @@ unsafe extern "C" {
     pub fn Fl_Fill_Dial_handle_data(self_: *const Fl_Fill_Dial) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
+    pub fn Fl_Fill_Dial_resize_data(self_: *const Fl_Fill_Dial) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
     pub fn Fl_Fill_Dial_set_draw_data(self_: *mut Fl_Fill_Dial, data: *mut ::core::ffi::c_void);
 }
 unsafe extern "C" {
@@ -5306,6 +5345,9 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Slider_handle_data(self_: *const Fl_Hor_Slider) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Hor_Slider_resize_data(self_: *const Fl_Hor_Slider) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Slider_set_draw_data(self_: *mut Fl_Hor_Slider, data: *mut ::core::ffi::c_void);
@@ -5717,6 +5759,11 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Fill_Slider_handle_data(
+        self_: *const Fl_Hor_Fill_Slider,
+    ) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Hor_Fill_Slider_resize_data(
         self_: *const Fl_Hor_Fill_Slider,
     ) -> *mut ::core::ffi::c_void;
 }
@@ -6155,6 +6202,11 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Hor_Nice_Slider_handle_data(
+        self_: *const Fl_Hor_Nice_Slider,
+    ) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Hor_Nice_Slider_resize_data(
         self_: *const Fl_Hor_Nice_Slider,
     ) -> *mut ::core::ffi::c_void;
 }
@@ -6615,6 +6667,11 @@ unsafe extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
+    pub fn Fl_Hor_Value_Slider_resize_data(
+        self_: *const Fl_Hor_Value_Slider,
+    ) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
     pub fn Fl_Hor_Value_Slider_set_draw_data(
         self_: *mut Fl_Hor_Value_Slider,
         data: *mut ::core::ffi::c_void,
@@ -7070,6 +7127,11 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Simple_Counter_handle_data(
+        self_: *const Fl_Simple_Counter,
+    ) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Simple_Counter_resize_data(
         self_: *const Fl_Simple_Counter,
     ) -> *mut ::core::ffi::c_void;
 }

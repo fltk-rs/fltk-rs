@@ -262,6 +262,9 @@ unsafe extern "C" {
     pub fn Fl_Browser_handle_data(self_: *const Fl_Browser) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
+    pub fn Fl_Browser_resize_data(self_: *const Fl_Browser) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
     pub fn Fl_Browser_set_draw_data(self_: *mut Fl_Browser, data: *mut ::core::ffi::c_void);
 }
 unsafe extern "C" {
@@ -763,6 +766,9 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Hold_Browser_handle_data(self_: *const Fl_Hold_Browser) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Hold_Browser_resize_data(self_: *const Fl_Hold_Browser) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_Hold_Browser_set_draw_data(
@@ -1309,6 +1315,11 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Select_Browser_handle_data(
+        self_: *const Fl_Select_Browser,
+    ) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Select_Browser_resize_data(
         self_: *const Fl_Select_Browser,
     ) -> *mut ::core::ffi::c_void;
 }
@@ -1860,6 +1871,10 @@ unsafe extern "C" {
     -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
+    pub fn Fl_Multi_Browser_resize_data(self_: *const Fl_Multi_Browser)
+    -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
     pub fn Fl_Multi_Browser_set_draw_data(
         self_: *mut Fl_Multi_Browser,
         data: *mut ::core::ffi::c_void,
@@ -2394,6 +2409,9 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_File_Browser_handle_data(self_: *const Fl_File_Browser) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_File_Browser_resize_data(self_: *const Fl_File_Browser) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
     pub fn Fl_File_Browser_set_draw_data(
@@ -2954,6 +2972,10 @@ unsafe extern "C" {
 }
 unsafe extern "C" {
     pub fn Fl_Check_Browser_handle_data(self_: *const Fl_Check_Browser)
+    -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
+    pub fn Fl_Check_Browser_resize_data(self_: *const Fl_Check_Browser)
     -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {

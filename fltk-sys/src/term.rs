@@ -262,6 +262,9 @@ unsafe extern "C" {
     pub fn Fl_Terminal_handle_data(self_: *const Fl_Terminal) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
+    pub fn Fl_Terminal_resize_data(self_: *const Fl_Terminal) -> *mut ::core::ffi::c_void;
+}
+unsafe extern "C" {
     pub fn Fl_Terminal_set_draw_data(self_: *mut Fl_Terminal, data: *mut ::core::ffi::c_void);
 }
 unsafe extern "C" {
