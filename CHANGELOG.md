@@ -5,6 +5,11 @@
 - Update FLTK to latest branch 1.4.
 - Fix pixmap construction not being validated on the FLTK side, run validation on the Rust side.
 - Fix fltk.patch by @dheijl (issue https://github.com/fltk-rs/fltk-rs/issues/1706).
+- Fix "app::wait_for() erroneously treats poll() return values > 1 as errors on Linux/X11".
+- Remove the unmaintained ttf-parser dependency, font names are now read by a small internal reader (issue https://github.com/fltk-rs/fltk-rs/issues/1702).
+- Fix BrowserExt::set_column_widths freeing the previous widths with the wrong layout (issue https://github.com/fltk-rs/fltk-rs/issues/1698).
+- Fix callback, draw and handle closures being stored as one closure type and freed as another (issue https://github.com/fltk-rs/fltk-rs/issues/1700).
+- Fix OverlayWindow::draw_overlay removing the window's draw callback, and free overlay and resize closures when they are replaced or the widget is deleted.
 
 - 
 # [1.5.23] - 2026-05-04
