@@ -246,14 +246,30 @@ macro_rules! impl_browser_ext {
 
                 fn set_column_widths(&mut self, arr: &[i32]) {
                     debug_assert!(!arr.contains(&0), "FLTK uses 0 as a sentinel value for the array/slice. To hide a column, use -1!");
+                    // FLTK only stores the pointer, so the array is owned here.
+                    // An array we allocated always starts with a non-zero width and has
+                    // a single 0 at its end, which is how it's recognized and sized later.
+                    static NO_COLUMNS: [i32; 1] = [0];
+                    let len = arr.iter().position(|&w| w == 0).unwrap_or(arr.len());
                     unsafe {
                         let old = [<$flname _column_widths>](self.inner.widget() as _);
-                        let mut v = arr.to_vec();
-                        v.push(0);
-                        let v = v.into_boxed_slice();
-                        [<$flname _set_column_widths>](self.inner.widget() as _, Box::into_raw(v) as _);
-                        if !old.is_null() && *old.offset(0) != 0 {
-                            let _ = Box::from_raw(old as *mut i32);
+                        let new = if len == 0 {
+                            NO_COLUMNS.as_ptr()
+                        } else {
+                            let mut v = arr[..len].to_vec();
+                            v.push(0);
+                            Box::into_raw(v.into_boxed_slice()) as *const i32
+                        };
+                        [<$flname _set_column_widths>](self.inner.widget() as _, new);
+                        if !old.is_null() && *old != 0 {
+                            let mut old_len = 0;
+                            while *old.add(old_len) != 0 {
+                                old_len += 1;
+                            }
+                            drop(Box::from_raw(std::ptr::slice_from_raw_parts_mut(
+                                old as *mut i32,
+                                old_len + 1,
+                            )));
                         }
                     }
                 }
