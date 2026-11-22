@@ -76,7 +76,7 @@ pub fn set_visible_focus(flag: bool) {
 /// Set the app's default frame type without storing the old type
 pub fn set_frame_type(old_frame: FrameType, new_frame: FrameType) {
     unsafe {
-        fl::Fl_set_box_type(old_frame.as_i32(), new_frame.as_i32());
+        crate::enums::copy_frame_type(old_frame.as_i32(), new_frame.as_i32());
     }
 }
 
@@ -91,6 +91,43 @@ pub fn set_frame_type_cb(
 ) {
     unsafe {
         fl::Fl_set_box_type_cb(old_frame.as_i32(), Some(mem::transmute(cb)), x, y, w, h);
+    }
+    crate::enums::set_frame_focus_cb(old_frame.as_i32(), None);
+}
+
+/// Set the app's default frame type, along with a function to draw its focus rectangle.
+/// `focus_cb` receives the frame type being drawn, the widget's area, and the foreground and background colors
+/// ```rust,no_run
+/// use fltk::{prelude::*, enums::*, *};
+/// fn frame(x: i32, y: i32, w: i32, h: i32, c: Color) {
+///     draw::draw_rect_fill(x, y, w, h, c);
+/// }
+/// fn focus(_frame: FrameType, x: i32, y: i32, w: i32, h: i32, fg: Color, _bg: Color) {
+///     draw::set_draw_color(fg);
+///     draw::draw_rect(x + 2, y + 2, w - 4, h - 4);
+/// }
+/// app::set_frame_type_with_focus_cb(FrameType::UpBox, frame, 0, 0, 0, 0, focus);
+/// ```
+pub fn set_frame_type_with_focus_cb(
+    old_frame: FrameType,
+    cb: fn(x: i32, y: i32, w: i32, h: i32, c: Color),
+    x: i32,
+    y: i32,
+    w: i32,
+    h: i32,
+    focus_cb: fn(frame: FrameType, x: i32, y: i32, w: i32, h: i32, fg: Color, bg: Color),
+) {
+    crate::enums::set_frame_focus_cb(old_frame.as_i32(), Some(focus_cb));
+    unsafe {
+        fl::Fl_set_box_type_with_focus_cb(
+            old_frame.as_i32(),
+            Some(mem::transmute(cb)),
+            x,
+            y,
+            w,
+            h,
+            Some(crate::enums::frame_focus_shim),
+        );
     }
 }
 
