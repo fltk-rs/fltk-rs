@@ -502,3 +502,33 @@ extern "C" {
 extern "C" {
     pub fn Fl_message_icon_label(label: *const ::core::ffi::c_char);
 }
+extern "C" {
+    pub fn Fl_dialog_no_label() -> *const ::core::ffi::c_char;
+}
+extern "C" {
+    pub fn Fl_dialog_set_no_label(label: *const ::core::ffi::c_char);
+}
+extern "C" {
+    pub fn Fl_dialog_yes_label() -> *const ::core::ffi::c_char;
+}
+extern "C" {
+    pub fn Fl_dialog_set_yes_label(label: *const ::core::ffi::c_char);
+}
+extern "C" {
+    pub fn Fl_dialog_ok_label() -> *const ::core::ffi::c_char;
+}
+extern "C" {
+    pub fn Fl_dialog_set_ok_label(label: *const ::core::ffi::c_char);
+}
+extern "C" {
+    pub fn Fl_dialog_cancel_label() -> *const ::core::ffi::c_char;
+}
+extern "C" {
+    pub fn Fl_dialog_set_cancel_label(label: *const ::core::ffi::c_char);
+}
+extern "C" {
+    pub fn Fl_dialog_close_label() -> *const ::core::ffi::c_char;
+}
+extern "C" {
+    pub fn Fl_dialog_set_close_label(label: *const ::core::ffi::c_char);
+}

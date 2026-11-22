@@ -11,6 +11,7 @@
 - Fix callback, draw and handle closures being stored as one closure type and freed as another (issue https://github.com/fltk-rs/fltk-rs/issues/1700).
 - Fix OverlayWindow::draw_overlay removing the window's draw callback, and free overlay and resize closures when they are replaced or the widget is deleted.
 - Add app::set_frame_type_with_focus_cb, cfltk part by @dibok (https://github.com/MoAlyousef/cfltk/pull/258).
+- Add getters and setters for the button labels of FLTK's dialogs: dialog::set_no_label, set_yes_label, set_ok_label, set_cancel_label and set_close_label (issue https://github.com/MoAlyousef/cfltk/issues/256).
 
 - 
 # [1.5.23] - 2026-05-04
