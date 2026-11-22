@@ -1222,6 +1222,48 @@ pub fn message_icon_label(label: &str) {
     unsafe { Fl_message_icon_label(label.into_raw() as _) }
 }
 
+macro_rules! dialog_button_label {
+    ($get:ident, $set:ident, $ffi_get:ident, $ffi_set:ident, $name:literal) => {
+        #[doc = concat!("Get the label of the \"", $name, "\" button of FLTK's dialog boxes")]
+        pub fn $get() -> String {
+            unsafe {
+                let ptr = $ffi_get();
+                if ptr.is_null() {
+                    String::new()
+                } else {
+                    CStr::from_ptr(ptr).to_string_lossy().to_string()
+                }
+            }
+        }
+
+        #[doc = concat!("Set the label of the \"", $name, "\" button of FLTK's dialog boxes, for example to translate it.")]
+        /// It applies to the dialogs shown afterwards
+        pub fn $set(label: &str) {
+            let label = CString::safe_new(label);
+            // The label is copied on the FLTK side
+            unsafe { $ffi_set(label.as_ptr()) }
+        }
+    };
+}
+
+dialog_button_label!(no_label, set_no_label, Fl_dialog_no_label, Fl_dialog_set_no_label, "No");
+dialog_button_label!(yes_label, set_yes_label, Fl_dialog_yes_label, Fl_dialog_set_yes_label, "Yes");
+dialog_button_label!(ok_label, set_ok_label, Fl_dialog_ok_label, Fl_dialog_set_ok_label, "OK");
+dialog_button_label!(
+    cancel_label,
+    set_cancel_label,
+    Fl_dialog_cancel_label,
+    Fl_dialog_set_cancel_label,
+    "Cancel"
+);
+dialog_button_label!(
+    close_label,
+    set_close_label,
+    Fl_dialog_close_label,
+    Fl_dialog_set_close_label,
+    "Close"
+);
+
 /// Set the next dialog's position
 pub fn message_position(x: i32, y: i32) {
     unsafe { Fl_message_position(x, y) }
