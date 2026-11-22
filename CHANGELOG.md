@@ -10,6 +10,7 @@
 - Fix BrowserExt::set_column_widths freeing the previous widths with the wrong layout (issue https://github.com/fltk-rs/fltk-rs/issues/1698).
 - Fix callback, draw and handle closures being stored as one closure type and freed as another (issue https://github.com/fltk-rs/fltk-rs/issues/1700).
 - Fix OverlayWindow::draw_overlay removing the window's draw callback, and free overlay and resize closures when they are replaced or the widget is deleted.
+- Add app::set_frame_type_with_focus_cb, cfltk part by @dibok (https://github.com/MoAlyousef/cfltk/pull/258).
 
 - 
 # [1.5.23] - 2026-05-04

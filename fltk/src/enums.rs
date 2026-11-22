@@ -62,6 +62,66 @@ impl UnmappedFrameType {
     }
 }
 
+/// A function drawing the focus rectangle of a frame type
+pub(crate) type FrameFocusCb =
+    fn(frame: FrameType, x: i32, y: i32, w: i32, h: i32, fg: Color, bg: Color);
+
+/// The focus functions set from Rust, indexed by frame type like FLTK's own table
+static FRAME_FOCUS_CBS: std::sync::Mutex<[Option<FrameFocusCb>; 256]> =
+    std::sync::Mutex::new([None; 256]);
+
+fn frame_focus_cbs() -> std::sync::MutexGuard<'static, [Option<FrameFocusCb>; 256]> {
+    FRAME_FOCUS_CBS.lock().unwrap_or_else(|e| e.into_inner())
+}
+
+/// Records the focus function of a frame type, or removes it
+pub(crate) fn set_frame_focus_cb(frame: i32, cb: Option<FrameFocusCb>) {
+    let mut cbs = frame_focus_cbs();
+    if let Some(slot) = usize::try_from(frame).ok().and_then(|idx| cbs.get_mut(idx)) {
+        *slot = cb;
+    }
+}
+
+/// Copies a frame type's drawing functions onto another one. FLTK copies the focus function
+/// along with the drawing function, so the Rust table has to follow
+pub(crate) unsafe fn copy_frame_type(to: i32, from: i32) {
+    unsafe { fl::Fl_set_box_type(to, from) }
+    if let (Ok(to), Ok(from)) = (usize::try_from(to), usize::try_from(from)) {
+        let mut cbs = frame_focus_cbs();
+        if to < cbs.len() && from < cbs.len() {
+            cbs[to] = cbs[from];
+        }
+    }
+}
+
+/// Called by FLTK to draw the focus rectangle of a frame type set from Rust
+pub(crate) unsafe extern "C" fn frame_focus_shim(
+    frame: std::os::raw::c_int,
+    x: std::os::raw::c_int,
+    y: std::os::raw::c_int,
+    w: std::os::raw::c_int,
+    h: std::os::raw::c_int,
+    fg: std::os::raw::c_uint,
+    bg: std::os::raw::c_uint,
+) {
+    let cb = usize::try_from(frame)
+        .ok()
+        .and_then(|idx| frame_focus_cbs().get(idx).copied().flatten());
+    if let Some(cb) = cb {
+        let _ = std::panic::catch_unwind(|| {
+            cb(
+                FrameType::from_i32(frame),
+                x,
+                y,
+                w,
+                h,
+                Color::from_rgbi(fg),
+                Color::from_rgbi(bg),
+            );
+        });
+    }
+}
+
 /// Defines the frame types which can be set using the `set_frame()` and `set_down_frame()` methods
 #[repr(i32)]
 #[non_exhaustive]
@@ -243,7 +303,7 @@ impl FrameType {
         unsafe {
             let new_frame = new_frame.as_i32();
             let old_frame = old_frame.as_i32();
-            fl::Fl_set_box_type(old_frame, new_frame);
+            copy_frame_type(old_frame, new_frame);
         }
     }
 }
