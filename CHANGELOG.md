@@ -1,7 +1,7 @@
 # Changelog
 
 
-# [1.5.24] - TBA
+# [1.5.24] - 2026-11-23
 - Update FLTK to latest branch 1.4.
 - Fix pixmap construction not being validated on the FLTK side, run validation on the Rust side.
 - Fix fltk.patch by @dheijl (issue https://github.com/fltk-rs/fltk-rs/issues/1706).
