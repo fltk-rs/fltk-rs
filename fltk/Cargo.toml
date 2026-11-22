@@ -22,7 +22,6 @@ fltk2-sys = { path = "../fltk-sys", version = "=0.1.7" }
 bitflags = "^2"
 paste = { package = "minipaste", version = "0.1" }
 crossbeam-channel = "0.5"
-ttf-parser = { version = "0.25", default-features = false, features = ["std", "opentype-layout", "apple-layout"] }
 once_cell = "1"
 # Enables getting a raw window handle on supported platforms, fixed at version 0.6 for fltk 1.* compat
 rwh06 = { package = "raw-window-handle", version = "0.6", optional = true }

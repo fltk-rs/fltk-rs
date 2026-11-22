@@ -105,14 +105,7 @@ pub fn fonts() -> Vec<String> {
 pub(crate) fn load_font(path: &str) -> Result<String, FltkError> {
     unsafe {
         let font_data = std::fs::read(path)?;
-        let Ok(face) = ttf_parser::Face::parse(&font_data, 0) else {
-            return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
-        };
-        let family_name = face
-            .names()
-            .into_iter()
-            .find(|name| name.name_id == ttf_parser::name_id::FULL_NAME && name.is_unicode())
-            .and_then(|name| name.to_string());
+        let family_name = crate::utils::font_full_name(&font_data);
         let path = CString::new(path)?;
         let ret = fl::Fl_load_font(path.as_ptr());
         if let Some(family_name) = family_name {

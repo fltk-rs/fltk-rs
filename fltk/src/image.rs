@@ -805,6 +805,37 @@ pub struct Pixmap {
 crate::macros::image::impl_image_ext!(Pixmap, Fl_Pixmap);
 
 impl Pixmap {
+    /// Checks that `data` holds everything the XPM header claims.
+    /// Returns the number of lines FLTK will read (header + colors + pixel rows).
+    fn validate_xpm(data: &[&str]) -> Option<usize> {
+        let mut it = data.first()?.split_ascii_whitespace();
+        let mut next = || it.next()?.parse::<i32>().ok();
+        let (w, h, ncolors, cpp) = (next()?, next()?, next()?, next()?);
+        // Negative ncolors (FLTK's binary colormap) can't be carried by a &str
+        if w <= 0 || h <= 0 || ncolors <= 0 || !(1..=2).contains(&cpp) {
+            return None;
+        }
+        let (w, h, ncolors, cpp) = (w as usize, h as usize, ncolors as usize, cpp as usize);
+        if ncolors > 1 << (8 * cpp) {
+            return None;
+        }
+        let rows = 1usize.checked_add(ncolors)?.checked_add(h)?;
+        if data.len() < rows {
+            return None;
+        }
+        if data[..rows].iter().any(|s| s.as_bytes().contains(&0)) {
+            return None;
+        }
+        if data[1..=ncolors].iter().any(|s| s.len() < cpp) {
+            return None;
+        }
+        let row_len = w.checked_mul(cpp)?;
+        if data[1 + ncolors..rows].iter().any(|s| s.len() < row_len) {
+            return None;
+        }
+        Some(rows)
+    }
+
     /// Creates a new Pixmap image
     /// # Errors
     /// Errors on invalid or unsupported image format
@@ -812,15 +843,28 @@ impl Pixmap {
         if data.is_empty() {
             Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
         } else {
-            let data: Vec<*const std::ffi::c_char> = data
+            // FLTK trusts the XPM header and never learns the slice length,
+            // so everything it will read has to be checked here.
+            let rows = Self::validate_xpm(data)
+                .ok_or(FltkError::Internal(FltkErrorKind::ImageFormatError))?;
+            // Each line gets 2 trailing NULs: FLTK's color parser can step one
+            // byte past the terminator.
+            let lines: Vec<Vec<u8>> = data[..rows]
                 .iter()
-                .map(|x| CString::safe_new(x).into_raw() as *const std::ffi::c_char)
+                .map(|s| {
+                    let mut v = Vec::with_capacity(s.len() + 2);
+                    v.extend_from_slice(s.as_bytes());
+                    v.extend_from_slice(&[0, 0]);
+                    v
+                })
+                .collect();
+            let ptrs: Vec<*const std::ffi::c_char> = lines
+                .iter()
+                .map(|v| v.as_ptr() as *const std::ffi::c_char)
                 .collect();
             unsafe {
-                let x = Fl_Pixmap_new(data.as_ptr() as _);
-                for x in &data {
-                    let _ = CString::from_raw(*x as _);
-                }
+                // Fl_Pixmap_new copies the data, so `lines` only has to outlive the call
+                let x = Fl_Pixmap_new(ptrs.as_ptr() as _);
                 if x.is_null() {
                     Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
                 } else {
