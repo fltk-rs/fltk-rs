@@ -366,7 +366,7 @@ macro_rules! impl_table_ext {
                         + 'static,
                 >(
                     &mut self,
-                    cb: F,
+                    mut cb: F,
                 ) {
                     assert!(self.is_derived);
                     pub type CustomDrawCellCallback = Option<
@@ -394,62 +394,24 @@ macro_rules! impl_table_ext {
                             arg7: std::os::raw::c_int,
                             data: *mut std::os::raw::c_void,
                         ) { unsafe {
-                            let mut wid = $name::from_widget_ptr(wid as *mut _);
-                            wid.assume_derived();
                             let ctx: TableContext = std::mem::transmute(ctx);
-                            let a: *mut Box<
-                                dyn FnMut(
-                                    &mut $name,
-                                    $crate::table::TableContext,
-                                    i32,
-                                    i32,
-                                    i32,
-                                    i32,
-                                    i32,
-                                    i32,
-                                ),
-                            > = data as *mut Box<
-                                dyn FnMut(
-                                    &mut $name,
-                                    $crate::table::TableContext,
-                                    i32,
-                                    i32,
-                                    i32,
-                                    i32,
-                                    i32,
-                                    i32,
-                                ),
-                            >;
-                            let f: &mut dyn FnMut(
-                                &mut $name,
-                                $crate::table::TableContext,
-                                i32,
-                                i32,
-                                i32,
-                                i32,
-                                i32,
-                                i32,
-                            ) = &mut **a;
+                            let a = data as *mut $crate::table::DrawCellCb;
+                            let f = &mut **a;
                             let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-                                f(&mut wid, ctx, arg2, arg3, arg4, arg5, arg6, arg7)
+                                f(wid as *mut _, ctx, arg2, arg3, arg4, arg5, arg6, arg7)
                             }));
                         }}
                         let mut _old_data = None;
                         if self.is_derived {
                             _old_data = self.draw_cell_data();
                         }
-                        let a: *mut Box<
-                            dyn FnMut(
-                                &mut Self,
-                                $crate::table::TableContext,
-                                i32,
-                                i32,
-                                i32,
-                                i32,
-                                i32,
-                                i32,
-                            ),
-                        > = Box::into_raw(Box::new(Box::new(cb)));
+                        let a: *mut $crate::table::DrawCellCb = Box::into_raw(Box::new(Box::new(
+                            move |wid: *mut fltk_sys::widget::Fl_Widget, ctx, a2, a3, a4, a5, a6, a7| {
+                                let mut wid = $name::from_widget_ptr(wid);
+                                wid.assume_derived();
+                                cb(&mut wid, ctx, a2, a3, a4, a5, a6, a7)
+                            },
+                        )));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: CustomDrawCellCallback = Some(shim);
                         [<$flname _draw_cell>](self.inner.widget() as _, callback, data);
@@ -461,9 +423,11 @@ macro_rules! impl_table_ext {
                     if ptr.is_null() {
                         None
                     } else {
-                        let data = ptr as *mut Box<dyn FnMut()>;
-                        let data = Box::from_raw(data);
-                        Some(*data)
+                        // The returned closure only owns the data, calling it does nothing
+                        let data = Box::from_raw(ptr as *mut $crate::table::DrawCellCb);
+                        Some(Box::new(move || {
+                            let _ = &data;
+                        }))
                     }
                 }}
 

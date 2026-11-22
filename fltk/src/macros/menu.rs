@@ -23,19 +23,23 @@ macro_rules! impl_menu_ext {
                     name: &str,
                     shortcut: $crate::enums::Shortcut,
                     flag: MenuFlag,
-                    cb: F,
+                    mut cb: F,
                 ) -> i32 {
                     let temp = CString::safe_new(name);
                     unsafe {
                     unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) { unsafe {
-                            let mut wid = $crate::widget::Widget::from_widget_ptr(wid as *mut _);
-                            let a: *mut Box<dyn FnMut(&mut $crate::widget::Widget)> =
-                                data as *mut Box<dyn FnMut(&mut $crate::widget::Widget)>;
-                            let f: &mut dyn FnMut(&mut $crate::widget::Widget) = &mut **a;
-                            let _ =
-                                std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                            let a = data as *mut $crate::widget::WidgetCb;
+                            let f = &mut **a;
+                            let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                                f(wid as *mut _)
+                            }));
                         }}
-                        let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
+                        let a: *mut $crate::widget::WidgetCb = Box::into_raw(Box::new(Box::new(
+                            move |wid: *mut fltk_sys::widget::Fl_Widget| {
+                                let mut wid = $name::from_widget_ptr(wid);
+                                cb(&mut wid)
+                            },
+                        )));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: Fl_Callback = Some(shim);
                         [<$flname _add>](
@@ -55,7 +59,7 @@ macro_rules! impl_menu_ext {
                     name: &str,
                     shortcut: $crate::enums::Shortcut,
                     flag: MenuFlag,
-                    cb: F,
+                    mut cb: F,
                 ) -> i32 {
                     let idx = if idx < self.size() && idx >= 0 {
                         idx
@@ -69,14 +73,18 @@ macro_rules! impl_menu_ext {
                     let temp = CString::safe_new(name);
                     unsafe {
                     unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) { unsafe {
-                            let mut wid = $crate::widget::Widget::from_widget_ptr(wid as *mut _);
-                            let a: *mut Box<dyn FnMut(&mut $crate::widget::Widget)> =
-                                data as *mut Box<dyn FnMut(&mut $crate::widget::Widget)>;
-                            let f: &mut dyn FnMut(&mut $crate::widget::Widget) = &mut **a;
-                            let _ =
-                                std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                            let a = data as *mut $crate::widget::WidgetCb;
+                            let f = &mut **a;
+                            let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                                f(wid as *mut _)
+                            }));
                         }}
-                        let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
+                        let a: *mut $crate::widget::WidgetCb = Box::into_raw(Box::new(Box::new(
+                            move |wid: *mut fltk_sys::widget::Fl_Widget| {
+                                let mut wid = $name::from_widget_ptr(wid);
+                                cb(&mut wid)
+                            },
+                        )));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: Fl_Callback = Some(shim);
                         [<$flname _insert>](

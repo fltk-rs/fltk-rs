@@ -377,13 +377,13 @@ impl SingleWindow {
                     let handle_data = Fl_Single_Window_handle_data(wid as _);
                     crate::app::add_timeout(0., move |h| {
                         if !user_data.is_null() {
-                            let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
+                            let _x = Box::from_raw(user_data as *mut crate::widget::WidgetCb);
                         }
                         if !draw_data.is_null() {
-                            let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
+                            let _x = Box::from_raw(draw_data as *mut crate::widget::WidgetCb);
                         }
                         if !handle_data.is_null() {
-                            let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
+                            let _x = Box::from_raw(handle_data as *mut crate::widget::HandleCb);
                         }
                         crate::app::remove_timeout(h);
                     });
@@ -454,13 +454,13 @@ impl DoubleWindow {
                     let handle_data = Fl_Double_Window_handle_data(wid as _);
                     crate::app::add_timeout(0., move |h| {
                         if !user_data.is_null() {
-                            let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
+                            let _x = Box::from_raw(user_data as *mut crate::widget::WidgetCb);
                         }
                         if !draw_data.is_null() {
-                            let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
+                            let _x = Box::from_raw(draw_data as *mut crate::widget::WidgetCb);
                         }
                         if !handle_data.is_null() {
-                            let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
+                            let _x = Box::from_raw(handle_data as *mut crate::widget::HandleCb);
                         }
                         crate::app::remove_timeout(h);
                     });
@@ -594,13 +594,13 @@ impl MenuWindow {
                     let handle_data = Fl_Menu_Window_handle_data(wid as _);
                     crate::app::add_timeout(0., move |h| {
                         if !user_data.is_null() {
-                            let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
+                            let _x = Box::from_raw(user_data as *mut crate::widget::WidgetCb);
                         }
                         if !draw_data.is_null() {
-                            let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
+                            let _x = Box::from_raw(draw_data as *mut crate::widget::WidgetCb);
                         }
                         if !handle_data.is_null() {
-                            let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
+                            let _x = Box::from_raw(handle_data as *mut crate::widget::HandleCb);
                         }
                         crate::app::remove_timeout(h);
                     });
@@ -657,13 +657,13 @@ impl OverlayWindow {
                     let handle_data = Fl_Overlay_Window_handle_data(wid as _);
                     crate::app::add_timeout(0., move |h| {
                         if !user_data.is_null() {
-                            let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
+                            let _x = Box::from_raw(user_data as *mut crate::widget::WidgetCb);
                         }
                         if !draw_data.is_null() {
-                            let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
+                            let _x = Box::from_raw(draw_data as *mut crate::widget::WidgetCb);
                         }
                         if !handle_data.is_null() {
-                            let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
+                            let _x = Box::from_raw(handle_data as *mut crate::widget::HandleCb);
                         }
                         crate::app::remove_timeout(h);
                     });
@@ -772,13 +772,13 @@ impl GlutWindow {
                     let handle_data = Fl_Glut_Window_handle_data(wid as _);
                     crate::app::add_timeout(0., move |h| {
                         if !user_data.is_null() {
-                            let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
+                            let _x = Box::from_raw(user_data as *mut crate::widget::WidgetCb);
                         }
                         if !draw_data.is_null() {
-                            let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
+                            let _x = Box::from_raw(draw_data as *mut crate::widget::WidgetCb);
                         }
                         if !handle_data.is_null() {
-                            let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
+                            let _x = Box::from_raw(handle_data as *mut crate::widget::HandleCb);
                         }
                         crate::app::remove_timeout(h);
                     });
@@ -979,13 +979,13 @@ impl GlWidgetWindow {
                     let handle_data = Fl_Gl_Window_handle_data(wid as _);
                     crate::app::add_timeout(0., move |h| {
                         if !user_data.is_null() {
-                            let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
+                            let _x = Box::from_raw(user_data as *mut crate::widget::WidgetCb);
                         }
                         if !draw_data.is_null() {
-                            let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
+                            let _x = Box::from_raw(draw_data as *mut crate::widget::WidgetCb);
                         }
                         if !handle_data.is_null() {
-                            let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
+                            let _x = Box::from_raw(handle_data as *mut crate::widget::HandleCb);
                         }
                         crate::app::remove_timeout(h);
                     });

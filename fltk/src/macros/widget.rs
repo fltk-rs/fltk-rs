@@ -300,10 +300,10 @@ macro_rules! impl_widget_ext {
                     if ptr.is_null() {
                         None
                     } else {
-                        let x = ptr as *mut Box<dyn FnMut()>;
-                        let x = Box::from_raw(x);
+                        let mut x = Box::from_raw(ptr as *mut $crate::widget::WidgetCb);
                         [<$flname _set_callback>](self.inner.widget() as _, None, std::ptr::null_mut());
-                        Some(*x)
+                        let wid = self.as_widget_ptr();
+                        Some(Box::new(move || x(wid)))
                     }
                 }}
 
@@ -520,30 +520,31 @@ macro_rules! impl_widget_ext {
                     }
                 }
 
-                fn set_callback<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
+                fn set_callback<F: FnMut(&mut Self) + 'static>(&mut self, mut cb: F) {
                     unsafe {
-                        unsafe extern "C" fn shim_derived(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) { unsafe {
-                            let mut wid = $name::from_widget_ptr(wid as *mut _);
-                            wid.assume_derived();
-                            let a = data as *mut Box<dyn FnMut(&mut $name)>;
-                            let f: &mut dyn FnMut(&mut $name) = &mut **a;
-                            let _ =
-                                std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
-                        }}
-                        unsafe extern "C" fn shim_not_derived(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) { unsafe {
-                            let mut wid = $name::from_widget_ptr(wid as *mut _);
-                            let a = data as *mut Box<dyn FnMut(&mut $name)>;
-                            let f: &mut dyn FnMut(&mut $name) = &mut **a;
-                            let _ =
-                                std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                        unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) { unsafe {
+                            let a = data as *mut $crate::widget::WidgetCb;
+                            let f = &mut **a;
+                            let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                                f(wid as *mut _)
+                            }));
                         }}
                         let mut _old_data = None;
                         if self.is_derived {
                             _old_data = self.user_data();
                         }
-                        let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
+                        let is_derived = self.is_derived;
+                        let a: *mut $crate::widget::WidgetCb = Box::into_raw(Box::new(Box::new(
+                            move |wid: *mut fltk_sys::widget::Fl_Widget| {
+                                let mut wid = $name::from_widget_ptr(wid);
+                                if is_derived {
+                                    wid.assume_derived();
+                                }
+                                cb(&mut wid)
+                            },
+                        )));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
-                        let callback: Fl_Callback = Some(if self.is_derived { shim_derived } else { shim_not_derived });
+                        let callback: Fl_Callback = Some(shim);
                         [<$flname _set_callback>](self.inner.widget() as _, callback, data);
                     }
                 }
@@ -643,7 +644,7 @@ macro_rules! impl_widget_base {
                     Self::from_widget_ptr(w.as_widget_ptr() as *mut _)
                 }}
 
-                fn handle<F: FnMut(&mut Self, $crate::enums::Event) -> bool + 'static>(&mut self, cb: F) {
+                fn handle<F: FnMut(&mut Self, $crate::enums::Event) -> bool + 'static>(&mut self, mut cb: F) {
                     assert!(self.is_derived);
                     // if cfg!(target_os = "macos") && self.as_window().is_some() {
                     //     assert!(self.takes_events());
@@ -654,53 +655,52 @@ macro_rules! impl_widget_base {
                             ev: std::os::raw::c_int,
                             data: *mut std::os::raw::c_void,
                         ) -> i32 { unsafe {
-                                let mut wid = $name::from_widget_ptr(wid as *mut _);
-                                wid.assume_derived();
                                 let ev: $crate::enums::Event = std::mem::transmute(ev);
-                                let a: *mut Box<dyn FnMut(&mut $name, $crate::enums::Event) -> bool> =
-                                    data as *mut Box<dyn FnMut(&mut $name, $crate::enums::Event) -> bool>;
-                                let f: &mut dyn FnMut(&mut $name, $crate::enums::Event) -> bool = &mut **a;
+                                let a = data as *mut $crate::widget::HandleCb;
+                                let f = &mut **a;
                                 let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-                                    match f(&mut wid, ev) {
-                                        true => return 1,
-                                        false => return 0,
-                                    }
+                                    f(wid as *mut _, ev)
                                 }));
-                                if let Ok(ret) = result {
-                                    ret
-                                } else {
-                                    0
-                                }
+                                matches!(result, Ok(true)) as i32
                         }}
                         let mut _old_data = None;
                         if self.is_derived {
                             _old_data = self.handle_data();
                         }
-                        let a: *mut Box<dyn FnMut(&mut Self, $crate::enums::Event) -> bool> =
-                            Box::into_raw(Box::new(Box::new(cb)));
+                        let a: *mut $crate::widget::HandleCb = Box::into_raw(Box::new(Box::new(
+                            move |wid: *mut fltk_sys::widget::Fl_Widget, ev: $crate::enums::Event| {
+                                let mut wid = $name::from_widget_ptr(wid);
+                                wid.assume_derived();
+                                cb(&mut wid, ev)
+                            },
+                        )));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: custom_handler_callback = Some(shim);
                         [<$flname _handle>](self.inner.widget() as _, callback, data);
                     }
                 }
 
-                fn draw<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
+                fn draw<F: FnMut(&mut Self) + 'static>(&mut self, mut cb: F) {
                     assert!(self.is_derived);
                     unsafe {
                     unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) { unsafe {
-                            let mut wid = $name::from_widget_ptr(wid as *mut _);
-                            wid.assume_derived();
-                            let a: *mut Box<dyn FnMut(&mut $name)> =
-                                data as *mut Box<dyn FnMut(&mut $name)>;
-                            let f: &mut dyn FnMut(&mut $name) = &mut **a;
-                            let _ =
-                                std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                            let a = data as *mut $crate::widget::WidgetCb;
+                            let f = &mut **a;
+                            let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                                f(wid as *mut _)
+                            }));
                         }}
                         let mut _old_data = None;
                         if self.is_derived {
                             _old_data = self.draw_data();
                         }
-                        let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
+                        let a: *mut $crate::widget::WidgetCb = Box::into_raw(Box::new(Box::new(
+                            move |wid: *mut fltk_sys::widget::Fl_Widget| {
+                                let mut wid = $name::from_widget_ptr(wid);
+                                wid.assume_derived();
+                                cb(&mut wid)
+                            },
+                        )));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: custom_draw_callback = Some(shim);
                         [<$flname _draw>](self.inner.widget() as _, callback, data);
@@ -712,10 +712,10 @@ macro_rules! impl_widget_base {
                     if ptr.is_null() {
                         return None;
                     }
-                    let data = ptr as *mut Box<dyn FnMut()>;
-                    let data = Box::from_raw(data);
+                    let mut data = Box::from_raw(ptr as *mut $crate::widget::WidgetCb);
                     [<$flname _draw>](self.inner.widget() as _, None, std::ptr::null_mut());
-                    Some(*data)
+                    let wid = self.as_widget_ptr();
+                    Some(Box::new(move || data(wid)))
                 }}
 
                 unsafe fn handle_data(&self) -> Option<Box<dyn FnMut($crate::enums::Event) -> bool>> { unsafe {
@@ -723,10 +723,10 @@ macro_rules! impl_widget_base {
                     if ptr.is_null() {
                         return None;
                     }
-                    let data = ptr as *mut Box<dyn FnMut($crate::enums::Event) -> bool>;
-                    let data = Box::from_raw(data);
+                    let mut data = Box::from_raw(ptr as *mut $crate::widget::HandleCb);
                     [<$flname _handle>](self.inner.widget() as _, None, std::ptr::null_mut());
-                    Some(*data)
+                    let wid = self.as_widget_ptr();
+                    Some(Box::new(move |ev| data(wid, ev)))
                 }}
 
                 fn resize_callback<F: FnMut(&mut Self, i32, i32, i32, i32) + 'static>(
@@ -857,13 +857,13 @@ macro_rules! impl_widget_default {
                             let handle_data = [<$flname _handle_data>](wid as _);
                             $crate::app::add_timeout(0., move |h| {
                                 if !user_data.is_null() {
-                                    let _x = Box::from_raw(user_data as *mut Box<dyn FnMut()>);
+                                    let _x = Box::from_raw(user_data as *mut $crate::widget::WidgetCb);
                                 }
                                 if !draw_data.is_null() {
-                                    let _x = Box::from_raw(draw_data as *mut Box<dyn FnMut()>);
+                                    let _x = Box::from_raw(draw_data as *mut $crate::widget::WidgetCb);
                                 }
                                 if !handle_data.is_null() {
-                                    let _x = Box::from_raw(handle_data as *mut Box<dyn FnMut()>);
+                                    let _x = Box::from_raw(handle_data as *mut $crate::widget::HandleCb);
                                 }
                                 $crate::app::remove_timeout(h);
                             });

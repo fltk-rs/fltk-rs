@@ -29,7 +29,7 @@ pub fn set_grab<W: WindowExt>(win: Option<W>) {
 }
 
 /// Sets the callback of a widget
-pub fn set_callback<F, W>(widget: &mut W, cb: F)
+pub fn set_callback<F, W>(widget: &mut W, mut cb: F)
 where
     F: FnMut(&mut dyn WidgetExt),
     W: WidgetExt,
@@ -37,20 +37,22 @@ where
     unsafe {
         unsafe extern "C" fn shim(wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
             unsafe {
-                #[allow(clippy::type_complexity)]
-                let a: *mut Box<dyn FnMut(&mut dyn WidgetExt)> =
-                    data as *mut Box<dyn FnMut(&mut dyn WidgetExt)>;
-                let f: &mut dyn FnMut(&mut dyn WidgetExt) = &mut **a;
-                let mut wid = crate::widget::Widget::from_widget_ptr(wid);
-                let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f(&mut wid)));
+                let a = data as *mut crate::widget::WidgetCb;
+                let f = &mut **a;
+                let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f(wid)));
             }
         }
         let mut _old_data = None;
         if widget.is_derived() {
             _old_data = widget.user_data();
         }
-        #[allow(clippy::type_complexity)]
-        let a: *mut Box<dyn FnMut(&mut dyn WidgetExt)> = Box::into_raw(Box::new(Box::new(cb)));
+        // Stored as a `WidgetCb`, the thin pointer cast below erases the closure's lifetime
+        let a: *mut Box<dyn FnMut(*mut fltk_sys::widget::Fl_Widget) + '_> = Box::into_raw(
+            Box::new(Box::new(move |wid: *mut fltk_sys::widget::Fl_Widget| {
+                let mut wid = crate::widget::Widget::from_widget_ptr(wid);
+                cb(&mut wid)
+            })),
+        );
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: fltk_sys::widget::Fl_Callback = Some(shim);
         fltk_sys::widget::Fl_Widget_set_callback(widget.as_widget_ptr(), callback, data);
