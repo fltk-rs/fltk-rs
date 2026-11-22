@@ -253,3 +253,69 @@ pub(crate) fn register_images() {
         fltk_sys::fl::Fl_load_system_icons();
     }
 }
+
+/// Reads the full name (name ID 4) of the first face in TrueType/OpenType font data.
+/// Only the `name` table is parsed, every read is bounds-checked.
+pub(crate) fn font_full_name(data: &[u8]) -> Option<String> {
+    fn u16_at(d: &[u8], off: usize) -> Option<usize> {
+        let b = d.get(off..off.checked_add(2)?)?;
+        Some(u16::from_be_bytes([b[0], b[1]]) as usize)
+    }
+    fn u32_at(d: &[u8], off: usize) -> Option<usize> {
+        let b = d.get(off..off.checked_add(4)?)?;
+        usize::try_from(u32::from_be_bytes([b[0], b[1], b[2], b[3]])).ok()
+    }
+    const FULL_NAME: usize = 4;
+    const PLATFORM_UNICODE: usize = 0;
+    const PLATFORM_WINDOWS: usize = 3;
+
+    // A collection starts with a list of face offsets, take the first face
+    let mut face = 0;
+    if data.get(..4)? == b"ttcf" {
+        if u32_at(data, 8)? == 0 {
+            return None;
+        }
+        face = u32_at(data, 12)?;
+    }
+    match data.get(face..face.checked_add(4)?)? {
+        [0, 1, 0, 0] | b"true" | b"OTTO" => (),
+        _ => return None,
+    }
+
+    // Table directory: 12 byte header, then 16 byte records (tag, checksum, offset, length)
+    let num_tables = u16_at(data, face.checked_add(4)?)?;
+    let name = (0..num_tables).find_map(|i| {
+        let rec = face.checked_add(12 + i * 16)?;
+        if data.get(rec..rec.checked_add(4)?)? == b"name" {
+            let off = u32_at(data, rec + 8)?;
+            let len = u32_at(data, rec + 12)?;
+            data.get(off..off.checked_add(len)?)
+        } else {
+            None
+        }
+    })?;
+
+    // Name table: version, count, storage offset, then 12 byte records
+    // (platform, encoding, language, name id, length, offset into storage)
+    let count = u16_at(name, 2)?;
+    let storage = name.get(u16_at(name, 4)?..)?;
+    (0..count).find_map(|i| {
+        let rec = 6 + i * 12;
+        let platform = u16_at(name, rec)?;
+        let encoding = u16_at(name, rec + 2)?;
+        // Both of these store the string as UTF-16BE
+        let is_unicode =
+            platform == PLATFORM_UNICODE || (platform == PLATFORM_WINDOWS && encoding <= 1);
+        if u16_at(name, rec + 6)? != FULL_NAME || !is_unicode {
+            return None;
+        }
+        let len = u16_at(name, rec + 8)?;
+        let off = u16_at(name, rec + 10)?;
+        let units: Vec<u16> = storage
+            .get(off..off + len)?
+            .chunks_exact(2)
+            .map(|c| u16::from_be_bytes([c[0], c[1]]))
+            .collect();
+        String::from_utf16(&units).ok()
+    })
+}
