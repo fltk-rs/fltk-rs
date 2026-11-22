@@ -9,6 +9,15 @@ use crate::utils::FlString;
 use fltk_sys::widget::*;
 use std::ffi::{CStr, CString};
 
+#[doc(hidden)]
+/// The type under which callback and draw closures are stored on the FLTK side.
+/// Every closure is stored, called and freed as this one type, whatever the widget's type
+pub type WidgetCb = Box<dyn FnMut(*mut Fl_Widget)>;
+
+#[doc(hidden)]
+/// The type under which handle closures are stored on the FLTK side
+pub type HandleCb = Box<dyn FnMut(*mut Fl_Widget, crate::enums::Event) -> bool>;
+
 /// An empty widget. Instantiating a Widget requires that you at least add a draw callback for it to show anything
 /// ```rust,no_run
 /// use fltk::{prelude::*, *};

@@ -3,6 +3,11 @@ use crate::utils::FlString;
 use fltk_sys::table::*;
 use std::ffi::{CStr, CString};
 
+#[doc(hidden)]
+/// The type under which draw_cell closures are stored on the FLTK side
+pub type DrawCellCb =
+    Box<dyn FnMut(*mut fltk_sys::widget::Fl_Widget, TableContext, i32, i32, i32, i32, i32, i32)>;
+
 /// Creates a table
 /// For a simpler boilerplate-less table, check the [fltk-table crate](https://crates.io/crates/fltk-table)
 #[derive(Debug)]
